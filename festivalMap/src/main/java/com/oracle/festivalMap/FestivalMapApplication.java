@@ -1,3 +1,6 @@
+/**
+ * @author 이규현,
+ */
 package com.oracle.festivalMap;
 
 import org.springframework.boot.SpringApplication;
