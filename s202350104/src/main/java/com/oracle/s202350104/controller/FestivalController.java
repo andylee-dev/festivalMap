@@ -20,13 +20,12 @@ public class FestivalController {
 	
 	@RequestMapping(value = "/festival")
 	public String festival() {
+		List<Festivals> listFestivals = fs.listFestivals();
 		return "festival/festivalList";
 	}
 	
 	@RequestMapping(value = "/festival/detail")
 	public String festivalDetail() {
-		
-		List<Festivals> listFestivals = fs.listFestivals();
 		
 		return "festival/festivalDetail";
 	}

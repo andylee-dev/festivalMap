@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.oracle.s202350104.AccomodationMapper">
+<mapper namespace="com.oracle.s202350104.AccomodationsMapper">
 	
-	<select id="accomodationAll" resultType="Accomodation">
+	<select id="accomodationAll" resultType="Accomodations">
 	
-		select * FROM Accomodation
+		select * FROM Accomodations
+	
 	</select>
 
 

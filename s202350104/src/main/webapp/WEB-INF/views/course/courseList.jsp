@@ -20,5 +20,6 @@
 <body>
 	<%@ include file="/WEB-INF/components/SideBar.jsp" %>
 	<h1>여기는 코스 입니다.</h1>
+	${sourses.courseCount }
 </body>
 </html>
