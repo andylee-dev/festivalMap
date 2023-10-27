@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FestivalRecommedation</title>
+<title>ID Search Result</title>
 </head>
 <body>
-	<h1>Festival Recommendation</h1>
+	<h1>ID Search Result</h1>
 </body>
 </html>

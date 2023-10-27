@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<header id="main_menu">
-	<!-- <nav class="navbar navbar-expand-md navbar-light fixed-top">-->
-	<nav class="navbar navbar-expand-lg">
+<header id="topbar">
+	<nav class="navbar navbar-expand-md navbar-light fixed-top">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="main.do">Navbar</a>
+			<a class="navbar-brand" href="main.do">Festimap</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -20,7 +19,7 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="festival">축제리스트</a></li>
 							<li><a class="dropdown-item" href="festival/detail">축제상세</a></li>
-							<li><a class="dropdown-item" href="festival/recommendation">축제맞춤추천</a></li>
+							<li><a class="dropdown-item" href="festival/recommend">축제맞춤추천</a></li>
 							<li><a class="dropdown-item" href="festival/test">축제추천테스트</a></li>
 							<li><a class="dropdown-item" href="festival/calendar">축제캘린더</a></li>
 						</ul></li>
@@ -80,10 +79,10 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							인증인가 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="itemList.do">회원가입</a></li>
-							<li><a class="dropdown-item" href="itemList.do">로그인</a></li>
-							<li><a class="dropdown-item" href="itemList.do">아이디찾기</a></li>
-							<li><a class="dropdown-item" href="itemList.do">비밀번호찾기</a></li>
+							<li><a class="dropdown-item" href="user/join">회원가입</a></li>
+							<li><a class="dropdown-item" href="user/login">로그인</a></li>
+							<li><a class="dropdown-item" href="user/idSearch">아이디찾기</a></li>
+							<li><a class="dropdown-item" href="user/passwordSearch">비밀번호찾기</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
