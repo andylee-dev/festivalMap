@@ -13,6 +13,11 @@ public class SpotController {
 
 	@RequestMapping(value = "/spot")
 	public String spot() {
-		return "spot/index";
+		return "spot/spotList";
+	}
+	
+	@RequestMapping(value = "/spot/detail")
+	public String spotDetail() {
+		return "spot/spotDetail";
 	}
 }

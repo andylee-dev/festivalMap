@@ -15,6 +15,26 @@ public class UserController {
 	public String userList() {
 		return "user";
 	}
+	
+	@RequestMapping(value = "/user/join")
+	public String userJoin() {
+		return "auth/join";
+	}
+	
+	@RequestMapping(value = "/user/login")
+	public String userLogin() {
+		return "auth/login";
+	}
+	
+	@RequestMapping(value = "/user/idSearch")
+	public String userIdSearch() {
+		return "auth/idSearch";
+	}
+	
+	@RequestMapping(value = "/user/passwordSearch")
+	public String userPwSearch() {
+		return "auth/passwordSearch";
+	}
 
 
 }
