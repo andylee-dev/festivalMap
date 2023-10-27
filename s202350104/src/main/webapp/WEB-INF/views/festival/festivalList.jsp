@@ -7,24 +7,31 @@
 <head>
 <meta charset="UTF-8">
 <title>FestivalList</title>
+<style type="text/css">
+	.card-text {
+		overflow : hidden;
+		/* text-overflow: ellipsis; */
+	}
+</style>
 </head>
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	
 	<h1>Festival List</h1>
-	<table>
-		<tr><th>아이디</th><th>축제명</th><th>축제기간</th><th>주최자</th><th>행사장소</th></tr>
 		<c:forEach var="festival" items="${listFestivals}">
-			<tr>
-				<td>${festival.content_id}</td>
-				<td>${festival.title}</td>
-				<td>${festival.start_date} ~ ${festival.end_date}</td>
-				<td>${festival.sponsor}</td>
-				<td>${festival.eventplace}</td>
-			</tr>
+			<div class="card" style="width: 18rem;">
+  				<img src="${festival.img1}" class="card-img-top" alt="${festival.title}이미지" style="height: 190px;">
+  				<div class="card-body">
+    				<p class="card-text" style="height: 240px;">
+    					축제명 : ${festival.title} <br>
+    					축제기간 : ${festival.start_date} ~ ${festival.end_date} <br>
+    					${festival.content}
+    				</p>
+    				<a href="festival/detail?content_id=${festival.content_id}" class="btn btn-primary">더보기</a>
+ 				 </div>	
+			</div>
 		</c:forEach>
-	</table>
 	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>

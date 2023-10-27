@@ -8,4 +8,6 @@ public interface FestivalsDao {
 
 	List<Festivals> listFestivals();
 
+	Festivals detailFestivals(int contentId);
+
 }

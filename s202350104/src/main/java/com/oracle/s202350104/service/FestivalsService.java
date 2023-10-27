@@ -8,4 +8,6 @@ public interface FestivalsService {
 
 	List<Festivals> listFestivals();
 
+	Festivals detailFestivals(int contentId);
+
 }

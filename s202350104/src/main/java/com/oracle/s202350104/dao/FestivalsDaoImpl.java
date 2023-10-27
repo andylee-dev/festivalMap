@@ -26,5 +26,16 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		}
 		return listFestivals;
 	}
+
+	@Override
+	public Festivals detailFestivals(int contentId) {
+		Festivals festival = new Festivals();
+		try {
+			festival = session.selectOne("festivalsDetail", contentId);
+		} catch (Exception e) {
+			System.out.println("FestivalsDaoImpl detailFestivals() => " + e.getMessage());
+		}
+		return festival;
+	}
 	
 }

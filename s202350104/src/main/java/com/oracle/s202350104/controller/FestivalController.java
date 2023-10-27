@@ -29,7 +29,11 @@ public class FestivalController {
 	}
 	
 	@RequestMapping(value = "festival/detail")
-	public String festivalDetail() {
+	public String festivalDetail(int contentId, Model model) {
+		Festivals festival = fs.detailFestivals(contentId);
+		
+		model.addAttribute("festival", festival);
+		
 		return "festival/festivalDetail";
 	}
 	

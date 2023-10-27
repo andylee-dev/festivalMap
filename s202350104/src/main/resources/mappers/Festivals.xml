@@ -8,4 +8,11 @@
 		FROM  festivals, contents
 		WHERE festivals.content_id = contents.id
 	</select>
+	
+	<select id="festivalsDetail" resultType="Festivals" parameterType="int">
+		SELECT *
+		FROM  festivals f, contents c
+		WHERE f.content_id = c.id
+		AND   f.content_id = #{content_id}
+	</select>
 </mapper>

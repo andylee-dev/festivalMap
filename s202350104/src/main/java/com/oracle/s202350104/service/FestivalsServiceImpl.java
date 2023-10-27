@@ -22,4 +22,11 @@ public class FestivalsServiceImpl implements FestivalsService {
 		return listFestivals;
 	}
 
+	@Override
+	public Festivals detailFestivals(int contentId) {
+		Festivals festival = fd.detailFestivals(contentId);
+		
+		return festival;
+	}
+
 }
