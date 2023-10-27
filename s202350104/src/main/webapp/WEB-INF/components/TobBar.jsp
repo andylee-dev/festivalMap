@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<header id="main_menu">
-	<!-- <nav class="navbar navbar-expand-md navbar-light fixed-top">-->
-	<nav class="navbar navbar-expand-lg">
+<header id="topbar">
+	<nav class="navbar navbar-expand-md navbar-light fixed-top">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="main.do">Navbar</a>
+			<a class="navbar-brand" href="main.do">Festimap</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
