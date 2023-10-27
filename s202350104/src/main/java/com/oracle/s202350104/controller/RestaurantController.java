@@ -20,7 +20,7 @@ public class RestaurantController {
 	private final RestaurantService rs;
 	
 	@RequestMapping(value = "/restaurant")
-	public String restaurant(Restaurant restaurant, String currentPage, Model model) {
+	public String restaurant(Restaurant restaurant, Model model) {
 		System.out.println("RestaurantController listRestaurant Start...");
 		
 		// int totalRestaurant = rs.totalRestaurant();
