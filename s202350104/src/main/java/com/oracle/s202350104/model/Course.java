@@ -9,4 +9,9 @@ public class Course {
 	private String  course_info;
 	private String  time;
 	private String  schedule;
+	
+	// CourseContent
+	private int 	content_id;
+	private int 	course_id;
+	private int 	order_num;
 }
