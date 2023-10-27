@@ -1,5 +1,5 @@
 /**
- * @author 이규현,
+ * @author 이규현
  */
 package com.oracle.s202350104;
 
