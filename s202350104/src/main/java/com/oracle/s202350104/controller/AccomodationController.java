@@ -25,7 +25,7 @@ public class AccomodationController {
 	}
 	
 	@RequestMapping(value = "/accomodations/detail")
-	public String festivalDetail() {
+	public String accomodationsDetail() {
 		
 		List<Accomodations> listAccomodations = as.listAccomodations();
 		
