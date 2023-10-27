@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ExperienceController {
 
 	@RequestMapping(value = "/experience")
-	public String Experience() {
-		return "Experience/ExperienceList";
+	public String experience() {
+		return "experience/experienceList";
 	}
 	
 	@RequestMapping(value = "/experience/detail")

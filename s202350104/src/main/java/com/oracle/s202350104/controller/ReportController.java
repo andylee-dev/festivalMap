@@ -12,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ReportController {
 
 	@RequestMapping(value = "/report")
-	public String experience() {
+	public String report() {
 		return "report/reportList";
 	}
 	
 	@RequestMapping(value = "/report/detail")
-	public String experienceDetatil() {
+	public String reportDetail() {
 		return "report/reportDetail";
 	}
 }
