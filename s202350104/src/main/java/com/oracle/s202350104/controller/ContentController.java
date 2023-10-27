@@ -15,4 +15,5 @@ public class ContentController {
 	public String home() {
 		return "home";
 	}
+
 }

@@ -20,6 +20,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		List<Festivals> listFestivals = null;
 		try {
 			listFestivals = session.selectList("festivalsListAll");
+			System.out.println("listFestivals() => " + listFestivals.size());
 		} catch (Exception e) {
 			System.out.println("FestivalsDaoImpl listFestivals() => " + e.getMessage());
 		}

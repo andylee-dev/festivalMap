@@ -3,6 +3,7 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Festivals;
@@ -18,15 +19,17 @@ public class FestivalController {
 	
 	private final FestivalsService fs;
 	
-	@RequestMapping(value = "/festival")
-	public String festival() {
+	@RequestMapping(value = "festival")
+	public String festival(Model model) {
 		List<Festivals> listFestivals = fs.listFestivals();
+		
+		model.addAttribute("listFestivals", listFestivals);
+		
 		return "festival/festivalList";
 	}
 	
 	@RequestMapping(value = "/festival/detail")
 	public String festivalDetail() {
-		
 		return "festival/festivalDetail";
 	}
 	

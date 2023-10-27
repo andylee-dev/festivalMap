@@ -17,7 +17,6 @@ public class FestivalsServiceImpl implements FestivalsService {
 	
 	@Override
 	public List<Festivals> listFestivals() {
-		
 		List<Festivals> listFestivals = fd.listFestivals();
 	
 		return listFestivals;

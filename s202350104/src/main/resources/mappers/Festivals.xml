@@ -4,6 +4,8 @@
 
 <mapper namespace="com.oracle.s202350104.FestivalsMapper">
 	<select id="festivalsListAll" resultType="Festivals">
-		SELECT * FROM festivals
+		SELECT *
+		FROM  festivals, contents
+		WHERE festivals.content_id = contents.id
 	</select>
 </mapper>
