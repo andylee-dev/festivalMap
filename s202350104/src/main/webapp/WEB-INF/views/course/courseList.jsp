@@ -18,8 +18,8 @@
     ></script>
 </head>
 <body>
-	<%@ include file="/WEB-INF/components/SideBar.jsp" %>
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>여기는 코스 입니다.</h1>
-	${sourses.courseCount }
+	<h2>코스 수 : ${courseCount }</h2>
 </body>
 </html>

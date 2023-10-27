@@ -23,10 +23,12 @@ public class CourseController {
 		int courseCount = cs.courseCount(course);
 		System.out.println("CourseController course courseCount ->" + courseCount);
 		
-		return "course/coursesList";
+		model.addAttribute("courseCount", courseCount);
+		
+		return "course/courseList";
 	}
 	
-	@RequestMapping(value = "courses/detail")
+	@RequestMapping(value = "course/detail")
 	public String courseDetail() {
 		return "course/courseDetail";
 	}
