@@ -41,9 +41,9 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
-							주문관리 </a>
+							관리자 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="orderList.do">주문조회</a></li>
+							<li><a class="dropdown-item" href="/admin">관리자홈</a></li>
 							<li><a class="dropdown-item" href="orderInsertForm.do">주문등록</a></li>
 						</ul></li>
 				</ul>
