@@ -16,24 +16,24 @@ public class ContentController {
 		return "home";
 	}
 
-	@RequestMapping(value = "/festival/index")
+	@RequestMapping(value = "/festival")
 	public String festival() {
 		return "festival/index";
 	}
 
-	@RequestMapping(value = "/restaurant/index")
+	@RequestMapping(value = "/restaurant")
 	public String restaurant() {
 		return "restaurant/index";
 	}
-	@RequestMapping(value = "/accomodation/index")
+	@RequestMapping(value = "/accomodation")
 	public String accomodation() {
 		return "accomodation/index";
 	}
-	@RequestMapping(value = "/spot/index")
+	@RequestMapping(value = "/spot")
 	public String spot() {
 		return "spot/index";
 	}
-	@RequestMapping(value = "/experience/index")
+	@RequestMapping(value = "/experience")
 	public String experience() {
 		return "experience/index";
 	}
