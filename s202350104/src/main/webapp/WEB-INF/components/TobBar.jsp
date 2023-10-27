@@ -18,51 +18,51 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							축제 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="festival">축제리스트</a></li>
-							<li><a class="dropdown-item" href="festival/detail">축제상세</a></li>
-							<li><a class="dropdown-item" href="festival/recommend">축제맞춤추천</a></li>
-							<li><a class="dropdown-item" href="festival/test">축제추천테스트</a></li>
-							<li><a class="dropdown-item" href="festival/calendar">축제캘린더</a></li>
+							<li><a class="dropdown-item" href="/festival">축제리스트</a></li>
+							<li><a class="dropdown-item" href="/festival/detail">축제상세</a></li>
+							<li><a class="dropdown-item" href="/festival/recommend">축제맞춤추천</a></li>
+							<li><a class="dropdown-item" href="/festival/test">축제추천테스트</a></li>
+							<li><a class="dropdown-item" href="/festival/calendar">축제캘린더</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							맛집 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="restaurant">맛집리스트</a></li>
-							<li><a class="dropdown-item" href="restaurant/detail">맛집상세</a></li>
+							<li><a class="dropdown-item" href="/restaurant">맛집리스트</a></li>
+							<li><a class="dropdown-item" href="/restaurant/detail">맛집상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							숙박 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="accomodations">숙박리스트</a></li>
-							<li><a class="dropdown-item" href="accomodations/detail">숙박상세</a></li>
+							<li><a class="dropdown-item" href="/accomodations">숙박리스트</a></li>
+							<li><a class="dropdown-item" href="/accomodations/detail">숙박상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							명소 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="spot">명소리스트</a></li>
-							<li><a class="dropdown-item" href="spot/detail">명소상세</a></li>
+							<li><a class="dropdown-item" href="/spot">명소리스트</a></li>
+							<li><a class="dropdown-item" href="/spot/detail">명소상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							체험 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="experience">체험리스트</a></li>
-							<li><a class="dropdown-item" href="experience/detail">체험상세</a></li>
+							<li><a class="dropdown-item" href="/experience">체험리스트</a></li>
+							<li><a class="dropdown-item" href="/experience/detail">체험상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							코스 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="courses">코스리스트</a></li>
-							<li><a class="dropdown-item" href="courses/detail">코스상세</a></li>
+							<li><a class="dropdown-item" href="/course">코스리스트</a></li>
+							<li><a class="dropdown-item" href="/course/detail">코스상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
