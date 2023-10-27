@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>join</title>
 </head>
 <body>
-
+	<h1>일반 join or biz join 선택</h1>
 </body>
 </html>
