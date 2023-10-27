@@ -4,7 +4,7 @@
 
 <mapper namespace="com.oracle.s202350104.AccomodationMapper">
 	
-	<select id="accomodationListAll" resultType="Accomodation">
+	<select id="accomodationAll" resultType="Accomodation">
 	
 		select * FROM Accomodation
 	</select>
