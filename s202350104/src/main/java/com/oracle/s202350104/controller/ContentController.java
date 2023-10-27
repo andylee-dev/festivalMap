@@ -15,34 +15,4 @@ public class ContentController {
 	public String home() {
 		return "home";
 	}
-
-	@RequestMapping(value = "/festival")
-	public String festival() {
-		return "festivals/index";
-	}
-
-	@RequestMapping(value = "/restaurant")
-	public String restaurant() {
-		return "restaurant/index";
-	}
-
-	@RequestMapping(value = "/accomodation")
-	public String accomodation() {
-		return "accomodation/index";
-	}
-
-	@RequestMapping(value = "/spot")
-	public String spot() {
-		return "spot/index";
-	}
-
-	@RequestMapping(value = "/experience")
-	public String experience() {
-		return "experience/index";
-	}
-
-	@RequestMapping(value = "/courses")
-	public String courses() {
-		return "courses/index";
-	}
 }
