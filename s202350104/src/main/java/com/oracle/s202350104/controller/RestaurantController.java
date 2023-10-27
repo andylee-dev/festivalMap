@@ -14,7 +14,7 @@ public class RestaurantController {
 	
 	@RequestMapping(value = "/restaurant")
 	public String restaurant() {
-		return "restaurant/restaurantIndex";
+		return "restaurant/restaurant";
 	}
 	
 	@RequestMapping(value= "/restaurant/detail")
