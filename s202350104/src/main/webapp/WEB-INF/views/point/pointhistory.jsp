@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원포인트내역</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,6 +18,7 @@
     ></script>
 </head>
 <body>
- <%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+ <%@ include file="/WEB-INF/components/SideBar.jsp" %>
+ <h1>회원포인트내역</h1>
 </body>
 </html>
