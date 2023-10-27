@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,33 +27,31 @@
 	</div>
 		
 	<div class="container border p-5">			
-		<table>
-	 	<tr>
-	 		<th>콘텐츠_id</th>
-	 		<th>추천메뉴</th>
-	 		<th>메뉴</th>
-	 		<th>영업시간</th>
-	 		<th>휴무일</th>
-	 		<th>금연가능유무</th>
-	 		<th>포장가능유무</th>
-	 		<th>주차가능유무</th>
-	 	</tr>
-	 	<c:forEach var="rs" items="${listRestaurant}">
+		<table border="1">
 	 		<tr>
-	 			<td>${num}</td>
-	 			<td>${rs.content_id}</td>
-	 			<td>${rs.first_menu}</td>
-	 			<td>${rs.menu}</td>
-	 			<td>${rs.open_time}</td>
-	 			<td>${rs.rest_date}</td>
-	 			<td>${rs.is_smoking}</td>
-	 			<td>${rs.is_packing}</td>
-	 			<td>${rs.is_parking}</td>
-	 		</tr>
-	 	 </c:forEach>
+		 		<th>콘텐츠_id</th>
+		 		<th>추천메뉴</th>
+		 		<th>메뉴</th>
+		 		<th>영업시간</th>
+		 		<th>휴무일</th>
+		 		<th>금연가능유무</th>
+		 		<th>포장가능유무</th>
+		 		<th>주차가능유무</th>
+		 	</tr>
+		 	<c:forEach var="restaurant" items="${listRestaurant}">
+		 		<tr>
+		 			<td>${restaurant.content_id}</td>
+		 			<td>${restaurant.first_menu}</td>
+		 			<td>${restaurant.menu}</td>
+		 			<td>${restaurant.open_time}</td>
+		 			<td>${restaurant.rest_date}</td>
+		 			<td>${restaurant.is_smoking}</td>
+		 			<td>${restaurant.is_packing}</td>
+		 			<td>${restaurant.is_parking}</td>
+		 		</tr>
+	 	 	</c:forEach>
 	 	 </table>			
 	</div>
-
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>	

@@ -1,5 +1,7 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +23,17 @@ public class RestaurantController {
 	public String restaurant(Restaurant restaurant, String currentPage, Model model) {
 		System.out.println("RestaurantController listRestaurant Start...");
 		
-//		int totalRestaurant = rs.totalRestaurant();
+		// int totalRestaurant = rs.totalRestaurant();
 		
+		List<Restaurant> listRestaurant = rs.listRestaurant(restaurant);
+		System.out.println("RestaurantController listRestaurant.size()->" + listRestaurant.size());
 		
-		
-		
+		// model.addAttribute("totalRestaurant", totalRestaurant);
+		model.addAttribute("listRestaurant", listRestaurant);
+				
 		return "restaurant/restaurantIndex";
 	}
+	
 	
 	@RequestMapping(value= "/restaurant/detail")
 	public String restuarntDetail() {

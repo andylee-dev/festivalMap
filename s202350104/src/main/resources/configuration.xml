@@ -11,5 +11,8 @@
 	<typeAliases>
 		<typeAlias alias="Festivals" type="com.oracle.s202350104.model.Festivals"/>
 		<typeAlias alias="Accomodation" type="com.oracle.s202350104.model.Accomodation"/>
+		<typeAlias alias="Restaurant" type="com.oracle.s202350104.model.Restaurant"/>
 	</typeAliases>
+	
+	
 </configuration>
