@@ -7,6 +7,8 @@
 <title>login</title>
 </head>
 <body>
+	<!-- Top bar -->
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>login</h1>
 </body>
 </html>

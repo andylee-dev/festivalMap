@@ -7,6 +7,8 @@
 <title>FestivalRecommed</title>
 </head>
 <body>
+	<!-- Top bar -->
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>Festival Recommend</h1>
 </body>
 </html>

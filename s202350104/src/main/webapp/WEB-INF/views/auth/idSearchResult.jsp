@@ -7,6 +7,8 @@
 <title>ID Search Result</title>
 </head>
 <body>
+	<!-- Top bar -->
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>ID Search Result</h1>
 </body>
 </html>

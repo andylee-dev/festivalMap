@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oracle.s202350104.model.Accomodation;
-import com.oracle.s202350104.service.AccomodationService;
+import com.oracle.s202350104.model.Accomodations;
+import com.oracle.s202350104.service.AccomodationsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,20 +16,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccomodationController {
 	
-	private final AccomodationService as;
+	private final AccomodationsService as;
 	
-	@RequestMapping(value = "/accomodation")
-	public String accomodation() {
-		return "accomodation/accomodation";
+	@RequestMapping(value = "/accomodations")
+	public String accomodations() {
+		return "accomodations/accomodationsIndex";
 
 	}
 	
-	@RequestMapping(value = "/accomodation/detail")
+	@RequestMapping(value = "/accomodations/detail")
 	public String festivalDetail() {
 		
-		List<Accomodation> listAccomodation = as.listAccomodation();
+		List<Accomodations> listAccomodations = as.listAccomodations();
 		
-		return "accomodation/accomodationDetail";
+		return "accomodations/accomodationsDetail";
 	}
 	
 	

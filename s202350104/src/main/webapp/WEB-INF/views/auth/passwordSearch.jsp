@@ -7,6 +7,8 @@
 <title>password search</title>
 </head>
 <body>
+	<!-- Top bar -->
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>password search</h1>
 </body>
 </html>
