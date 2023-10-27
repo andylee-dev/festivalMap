@@ -16,12 +16,14 @@ public class AccomodationsDaoImpl implements AccomodationsDao {
 	private final SqlSession session;
 
 	@Override
-	public List<Accomodations> listAccomodations() {
+	public List<Accomodations> listAccomodations(Accomodations accomodations) {
+		
 		List<Accomodations> listAccomodations = null;
 		try {
-			listAccomodations = session.selectList("accomodationAll");
+			listAccomodations = session.selectList("accomodationAll",accomodations);
 			
 		} catch(Exception e) {
+			
 			System.out.println("AccomodationsDaoImpl listAccomodations()"+ e.getMessage());
 		}
 		

@@ -16,9 +16,9 @@ public class AccomodationsServiceImpl implements AccomodationsService {
 	private final AccomodationsDao ad;
 
 	@Override
-	public List<Accomodations> listAccomodations() {
+	public List<Accomodations> listAccomodations(Accomodations accomodations) {
 		
-		List<Accomodations> listAccomodations = ad.listAccomodations();
+		List<Accomodations> listAccomodations = ad.listAccomodations(accomodations);
 		
 		return listAccomodations;
 	}

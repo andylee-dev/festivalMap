@@ -6,6 +6,8 @@ import com.oracle.s202350104.model.Accomodations;
 
 public interface AccomodationsDao {
 
-	List<Accomodations>        listAccomodations();
+	List<Accomodations>        listAccomodations(Accomodations accomodations);
+
+
 
 }

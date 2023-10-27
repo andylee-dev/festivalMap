@@ -20,5 +20,15 @@
 <body>
 	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	 <h1>숙박</h1>
+	 <table>
+		<tr><th>컨텐츠아이디</th><th>객실수</th><th>예약처</th><th>환불규정</th><th>입실시간</th><th>퇴실시간</th><th>픽업가능</th><th>조리가능</th><th>주차시설</th></tr>
+		<c:forEach var="Accomodations" items="${listAccomodations}">
+			<tr><td>${Accomodations.content_id }</td><td>${Accomodations.room_count }</td>
+				<td>${Accomodations.reservation_url }</td><td>${Accomodations.refund }</td>
+				<td>${Accomodations.check_in }</td><td>${Accomodations.check_out }</td>
+				<td>${Accomodations.is_pickup }</td><td>${Accomodations.is_cook }</td>
+				<td>${Accomodations.is_parking }</td></tr>
+		</c:forEach>
+	</table>
 </body>
 </html>

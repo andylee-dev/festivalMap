@@ -6,7 +6,7 @@
 	
 	<select id="accomodationAll" resultType="Accomodations">
 	
-		select * FROM Accomodations
+		SELECT * FROM Accomodations
 	
 	</select>
 
