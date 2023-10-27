@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>festival content</title>
+<title>FestivalRecommed</title>
 </head>
 <body>
-	<h1>festival content list</h1>
+	<h1>Festival Recommend</h1>
 </body>
 </html>

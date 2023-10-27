@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>festival content</title>
+<title>biz Join Form</title>
 </head>
 <body>
-	<h1>festival content list</h1>
+	<h1>biz회원 Join Form</h1>
 </body>
 </html>
