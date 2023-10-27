@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ID search</title>
 </head>
 <body>
-
+	<h1>ID 찾기</h1>
 </body>
 </html>
