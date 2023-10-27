@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <header id="topbar">
-	<nav class="navbar navbar-expand-md navbar-light fixed-top">
+
+	<nav class="navbar navbar-expand-md bg-body-tertiary navbar-light fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Festimap</a>
 			<button class="navbar-toggler" type="button"
@@ -116,4 +117,7 @@
 			</div>
 		</div>
 	</nav>
+	<div class="container mb-5 border">
+		--	
+	</div>
 </header>
