@@ -18,6 +18,6 @@
     ></script>
 </head>
 <body>
- <%@ include file="/WEB-INF/components/SideBar.jsp" %>
+ <%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 </body>
 </html>
