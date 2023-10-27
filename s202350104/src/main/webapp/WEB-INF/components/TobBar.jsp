@@ -19,10 +19,10 @@
 							축제 </a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="festival">축제리스트</a></li>
-							<li><a class="dropdown-item" href="festival/festivalDetail">축제상세</a></li>
-							<li><a class="dropdown-item" href="festival/festivalRecommendation">축제맞춤추천</a></li>
-							<li><a class="dropdown-item" href="festival/festivalTest">축제추천테스트</a></li>
-							<li><a class="dropdown-item" href="festival/festivalCalendar">축제캘린더</a></li>
+							<li><a class="dropdown-item" href="festival/detail">축제상세</a></li>
+							<li><a class="dropdown-item" href="festival/recommendation">축제맞춤추천</a></li>
+							<li><a class="dropdown-item" href="festival/test">축제추천테스트</a></li>
+							<li><a class="dropdown-item" href="festival/calendar">축제캘린더</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
