@@ -21,9 +21,8 @@ public class RestaurantController {
 	public String restaurant(Restaurant restaurant, String currentPage, Model model) {
 		System.out.println("RestaurantController listRestaurant Start...");
 		
-		int totalRestaurant = rs.totalRestaurant();
+//		int totalRestaurant = rs.totalRestaurant();
 		
-		Paging page = new Paging(totalRestaurant, currentPage);
 		
 		
 		

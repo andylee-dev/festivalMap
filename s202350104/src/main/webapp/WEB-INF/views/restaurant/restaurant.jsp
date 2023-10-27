@@ -19,8 +19,15 @@
     ></script>
 </head>
 <body>
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>		
-	<table>
+	<!-- Top bar -->
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+
+	<div id="content_title" class="container border p-5">
+		<h1>Restaurant List</h1>
+	</div>
+		
+	<div class="container border p-5">			
+		<table>
 	 	<tr>
 	 		<th>콘텐츠_id</th>
 	 		<th>추천메뉴</th>
@@ -43,18 +50,13 @@
 	 			<td>${rs.is_packing}</td>
 	 			<td>${rs.is_parking}</td>
 	 		</tr>
-	 	<c:set var="num" value="${num - 1 }"></c:set>	
-	 	</c:forEach>	
-	 </table>
-	 <c:if test="${page.startPage > page.pageBlock }">
-		<a href="listRestaurant?currentPage=${page.startPage-page.pageBlock }">[이전]</a>
-	 </c:if>
-	 <c:forEach var="i" begin="${page.startPage }" end="${page.endPage }">
-		<a href="listRestaurant?currentPage=${i}">[${i}]</a>
-	 </c:forEach>	
-	 <c:if test="${page.endPage > page.totalPage }">
-		<a href="listRestaurant?currentPage=${page.startPage+page.pageBlock }">[다음]</a>
-	</c:if>
-	
+	 	 </c:forEach>
+	 	 </table>			
+	</div>
+
+
+	<!-- Footer -->
+	<%@ include file="/WEB-INF/components/Footer.jsp" %>	
+		
 </body>
 </html>

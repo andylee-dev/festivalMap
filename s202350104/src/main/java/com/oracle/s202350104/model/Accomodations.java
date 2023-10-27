@@ -3,7 +3,7 @@ package com.oracle.s202350104.model;
 import lombok.Data;
 
 @Data
-public class Accomodation {
+public class Accomodations {
 	private int content_id;
 	private int room_count;
 	private String reservation_url;
