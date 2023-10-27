@@ -4,9 +4,10 @@
 
 <mapper namespace="com.oracle.s202350104.AccomodationMapper">
 	
-	<select id="accomodationAll" resultType="Accomodation">
+	<select id="accomodationAll" resultType="Accomodations">
 	
-		select * FROM Accomodation
+		select * FROM Accomodations
+	
 	</select>
 
 
