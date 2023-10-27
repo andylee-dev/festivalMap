@@ -28,22 +28,22 @@ public class FestivalController {
 		return "festival/festivalList";
 	}
 	
-	@RequestMapping(value = "/festival/detail")
+	@RequestMapping(value = "festival/detail")
 	public String festivalDetail() {
 		return "festival/festivalDetail";
 	}
 	
-	@RequestMapping(value = "/festival/recommend")
+	@RequestMapping(value = "festival/recommend")
 	public String festivalRecommendation() {
 		return "festival/festivalRecommend";
 	}
 	
-	@RequestMapping(value = "/festival/test")
+	@RequestMapping(value = "festival/test")
 	public String festivalTest() {
 		return "festival/festivalTest";
 	}
 	
-	@RequestMapping(value = "/festival/calendar")
+	@RequestMapping(value = "festival/calendar")
 	public String festivalCalendar() {
 		return "festival/festivalCalendar";
 	}
