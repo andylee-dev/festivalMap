@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>포인트정보</title>
+<title>신고</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,7 +18,7 @@
     ></script>
 </head>
 <body>
- <%@ include file="/WEB-INF/components/SideBar.jsp" %>
- <h1>포인트정보</h1>
+	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	 <h1>신고</h1>
 </body>
 </html>
