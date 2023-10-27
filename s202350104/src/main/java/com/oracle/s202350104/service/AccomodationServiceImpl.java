@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.oracle.s202350104.dao.AccomodationDao;
-import com.oracle.s202350104.model.Accomodation;
+import com.oracle.s202350104.dao.AccomodationsDao;
+import com.oracle.s202350104.model.Accomodations;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,14 +13,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccomodationServiceImpl implements AccomodationService {
 	
-	private final AccomodationDao ad;
+	private final AccomodationsDao ad;
 
 	@Override
-	public List<Accomodation> listAccomodation() {
+	public List<Accomodations> listAccomodations() {
 		
-		List<Accomodation> listAccomodation = ad.listAccomodation();
+		List<Accomodations> listAccomodations = ad.listAccomodations();
 		
-		return listAccomodation;
+		return listAccomodations;
 	}
 
 }
