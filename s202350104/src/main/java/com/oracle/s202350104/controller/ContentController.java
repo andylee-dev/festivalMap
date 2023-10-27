@@ -18,7 +18,7 @@ public class ContentController {
 
 	@RequestMapping(value = "/festival")
 	public String festival() {
-		return "festival/index";
+		return "festivals/index";
 	}
 
 	@RequestMapping(value = "/restaurant")

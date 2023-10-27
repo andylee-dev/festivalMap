@@ -16,28 +16,83 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
-							회원관리 </a>
+							축제 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="sawonList.do">회원조회</a></li>
-							<li><a class="dropdown-item" href="sawonInsertForm.do">회원등록</a>
+							<li><a class="dropdown-item" href="/festivals">축제리스트</a></li>
+							<li><a class="dropdown-item" href="/festivals/detail">축제상세</a>
 							</li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
-							제품관리 </a>
+							맛집 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="itemList.do">제품조회</a></li>
-							<li><a class="dropdown-item" href="itemInsertForm.do">제품등록</a></li>
+							<li><a class="dropdown-item" href="customList.do">맛집리스트</a></li>
+							<li><a class="dropdown-item" href="customInsertForm.do">맛집상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
-							거래처관리 </a>
+							숙박 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="customList.do">거래처조회</a></li>
-							<li><a class="dropdown-item" href="customInsertForm.do">거래처등록</a></li>
+							<li><a class="dropdown-item" href="itemList.do">숙박리스트</a></li>
+							<li><a class="dropdown-item" href="itemInsertForm.do">숙박상세</a></li>
 						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							명소 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="itemList.do">명소리스트</a></li>
+							<li><a class="dropdown-item" href="itemInsertForm.do">명소상세</a></li>
+						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							체험 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="itemList.do">체험리스트</a></li>
+							<li><a class="dropdown-item" href="itemInsertForm.do">체험상세</a></li>
+						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							코스 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="itemList.do">코스리스트</a></li>
+							<li><a class="dropdown-item" href="itemInsertForm.do">코스상세</a></li>
+						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							커뮤니티 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="itemList.do">자유게시판</a></li>
+							<li><a class="dropdown-item" href="itemList.do">공지사항</a></li>
+							<li><a class="dropdown-item" href="itemList.do">여행꾹꾹</a></li>
+							<li><a class="dropdown-item" href="itemList.do">이달의 소식</a></li>
+							<li><a class="dropdown-item" href="itemList.do">이벤트</a></li>
+						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							마이페이지 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="itemList.do">내정보</a></li>
+							<li><a class="dropdown-item" href="itemList.do">내 축제</a></li>
+							<li><a class="dropdown-item" href="itemList.do">내 관심사</a></li>
+							<li><a class="dropdown-item" href="itemList.do">1:1문의</a></li>
+						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							비즈니스 페이지 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="itemList.do">내정보</a></li>
+							<li><a class="dropdown-item" href="itemList.do">내 컨텐츠 등록</a></li>
+							<li><a class="dropdown-item" href="itemList.do">1:1문의</a></li>
+						</ul></li>
+
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
