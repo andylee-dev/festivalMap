@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Festival</title>
+<title>FestivalList</title>
 </head>
 <body>
-	<h1>Festival</h1>
+	<h1>Festival List</h1>
 </body>
 </html>
