@@ -14,7 +14,7 @@ public class AccomodationController {
 	
 	@RequestMapping(value = "/accomodation")
 	public String accomodation() {
-		return "accomodation/accomodations";
+		return "accomodation/accomodation";
 
 	}
 	

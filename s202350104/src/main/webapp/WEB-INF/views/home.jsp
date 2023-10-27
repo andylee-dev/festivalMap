@@ -9,10 +9,9 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-		 
 	<section>
 	
 	</section>
-	
+	<%@ include file="/WEB-INF/components/Footer.jsp" %>	
 </body>
 </html>
