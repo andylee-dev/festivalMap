@@ -37,5 +37,9 @@ public class ContentController {
 	public String experience() {
 		return "experience/index";
 	}
+	@RequestMapping(value = "/courses")
+	public String courses() {
+		return "courses/index";
+	}
 
 }
