@@ -21,6 +21,16 @@ public class UserController {
 		return "auth/join";
 	}
 	
+	@RequestMapping(value = "/user/joinForm")
+	public String userJoinForm() {
+		return "auth/joinForm";
+	}
+	
+	@RequestMapping(value = "/user/bizJoinForm")
+	public String bizJoinForm() {
+		return "auth/bzJoinForm";
+	}
+	
 	@RequestMapping(value = "/user/login")
 	public String userLogin() {
 		return "auth/login";
@@ -31,9 +41,19 @@ public class UserController {
 		return "auth/idSearch";
 	}
 	
+	@RequestMapping(value = "/user/idSearchResult")
+	public String idSearchResult() {
+		return "auth/idSearchResult";
+	}
+	
 	@RequestMapping(value = "/user/passwordSearch")
 	public String userPwSearch() {
 		return "auth/passwordSearch";
+	}
+	
+	@RequestMapping(value = "/user/passwordSearchResult")
+	public String pwSearchResult() {
+		return "auth/passwordSearchResult";
 	}
 
 

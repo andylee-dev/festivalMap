@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>festival content</title>
+<title>password Search Result</title>
 </head>
 <body>
-	<h1>festival content list</h1>
+	<h1>password Search Result</h1>
 </body>
 </html>

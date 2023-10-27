@@ -21,9 +21,9 @@ public class FestivalController {
 		return "festival/festivalDetail";
 	}
 	
-	@RequestMapping(value = "/festival/recommendation")
+	@RequestMapping(value = "/festival/recommend")
 	public String festivalRecommendation() {
-		return "festival/festivalRecommendation";
+		return "festival/festivalRecommend";
 	}
 	
 	@RequestMapping(value = "/festival/test")
