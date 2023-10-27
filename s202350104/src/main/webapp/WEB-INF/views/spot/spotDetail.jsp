@@ -7,6 +7,7 @@
 <title>Spot</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>Spot</h1>
 </body>
 </html>
