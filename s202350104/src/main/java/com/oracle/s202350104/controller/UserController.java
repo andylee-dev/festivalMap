@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserController {
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/user")
 	public String userList() {
 		return "user";
 	}
