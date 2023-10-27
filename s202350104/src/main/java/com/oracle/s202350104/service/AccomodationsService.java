@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.oracle.s202350104.model.Accomodations;
 
-public interface AccomodationService {
+public interface AccomodationsService {
 
 	List<Accomodations>         listAccomodations();
 

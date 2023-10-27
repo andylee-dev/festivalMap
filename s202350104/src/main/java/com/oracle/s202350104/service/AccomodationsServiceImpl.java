@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AccomodationServiceImpl implements AccomodationService {
+public class AccomodationsServiceImpl implements AccomodationsService {
 	
 	private final AccomodationsDao ad;
 
