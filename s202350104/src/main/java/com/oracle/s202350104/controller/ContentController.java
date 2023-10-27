@@ -25,21 +25,24 @@ public class ContentController {
 	public String restaurant() {
 		return "restaurant/index";
 	}
+
 	@RequestMapping(value = "/accomodation")
 	public String accomodation() {
 		return "accomodation/index";
 	}
+
 	@RequestMapping(value = "/spot")
 	public String spot() {
 		return "spot/index";
 	}
+
 	@RequestMapping(value = "/experience")
 	public String experience() {
 		return "experience/index";
 	}
+
 	@RequestMapping(value = "/courses")
 	public String courses() {
 		return "courses/index";
 	}
-
 }
