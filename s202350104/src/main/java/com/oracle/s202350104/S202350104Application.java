@@ -1,5 +1,5 @@
 /**
- * @author 이규현, 황남오, 정송환
+ * @author 이규현, 황남오, 정송환, 전준오
  */
 package com.oracle.s202350104;
 
