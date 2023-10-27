@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,7 @@
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	
 	<h1>Festival List</h1>
 	<table>
 		<tr><th>아이디</th><th>축제시간</th><th>축제기간</th><th>주최자</th><th>행사장소</th></tr>
@@ -22,5 +24,8 @@
 			</tr>
 		</c:forEach>
 	</table>
+	
+	<!-- Footer -->
+	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
 </html>
