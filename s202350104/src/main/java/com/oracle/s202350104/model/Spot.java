@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class Spot {
-	private int 	contentId;
-	private String	openingHours;
-	private String	restDate;
-	private String	entranceFee;
-	private String	isRestroom;
-	private String	isWheelchair;
-	private String	isStroller;
-	private String	isPet;
-	private String	isParking;
+	private int 	content_id;
+	private String	opening_hours;
+	private String	rest_date;
+	private String	entrance_fee;
+	private String	is_restroom;
+	private String	is_wheelchair;
+	private String	is_stroller;
+	private String	is_pet;
+	private String	is_parking;
 	
 
 }
