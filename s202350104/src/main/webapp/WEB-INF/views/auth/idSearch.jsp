@@ -7,6 +7,8 @@
 <title>ID search</title>
 </head>
 <body>
+	<!-- Top bar -->
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>ID 찾기</h1>
 </body>
 </html>
