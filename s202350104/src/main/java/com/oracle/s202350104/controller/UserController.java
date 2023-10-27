@@ -55,6 +55,40 @@ public class UserController {
 	public String pwSearchResult() {
 		return "auth/passwordSearchResult";
 	}
+	
+	@RequestMapping(value = "/user/mypage/myInfo")
+	public String myInfo() {
+		return "user/mypage/myInfo";
+	}
+	
+	@RequestMapping(value = "/user/mypage/myLike")
+	public String myLike() {
+		return "user/mypage/myLike";
+	}
+	
+	@RequestMapping(value = "/user/mypage/myPoint")
+	public String myPoint() {
+		return "user/mypage/myPoint";
+	}
+	
+	@RequestMapping(value = "/user/mypage/QnaDetail")
+	public String QnaDetail() {
+		return "user/mypage/QnaDetail";
+	}
 
+	@RequestMapping(value = "/user/mypage/QnaForm")
+	public String QnaForm() {
+		return "user/mypage/QnaForm";
+	}
+	
+	@RequestMapping(value = "/user/mypage/QnaList")
+	public String QnaList() {
+		return "user/mypage/QnaList";
+	}
+	
+	@RequestMapping(value = "/user/mypage/myTag")
+	public String myTag() {
+		return "user/mypage/myTag";
+	}
 
 }

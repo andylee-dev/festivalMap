@@ -90,7 +90,7 @@
 							마이페이지 </a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="itemList.do">내정보</a></li>
-							<li><a class="dropdown-item" href="itemList.do">내 축제</a></li>
+							<li><a class="dropdown-item" href="itemList.do">내 찜목록</a></li>
 							<li><a class="dropdown-item" href="itemList.do">내 관심사</a></li>
 							<li><a class="dropdown-item" href="itemList.do">1:1문의</a></li>
 						</ul></li>
