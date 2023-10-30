@@ -28,7 +28,7 @@ public class UserController {
 	
 	@RequestMapping(value = "user/bizJoinForm")
 	public String bizJoinForm() {
-		return "auth/bzJoinForm";
+		return "auth/bizJoinForm";
 	}
 	
 	@RequestMapping(value = "user/login")
