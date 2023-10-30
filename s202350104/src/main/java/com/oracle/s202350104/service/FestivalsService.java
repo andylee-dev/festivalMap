@@ -3,11 +3,12 @@ package com.oracle.s202350104.service;
 import java.util.List;
 
 import com.oracle.s202350104.model.Festivals;
+import com.oracle.s202350104.model.FestivalsContent;
 
 public interface FestivalsService {
 
-	List<Festivals> listFestivals();
+	List<FestivalsContent> listFestivals();
 
-	Festivals detailFestivals(int contentId);
+	FestivalsContent       detailFestivals(int contentId);
 
 }

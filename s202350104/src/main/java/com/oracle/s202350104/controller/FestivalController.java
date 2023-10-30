@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Festivals;
+import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class FestivalController {
 	
 	@RequestMapping(value = "festival")
 	public String festival(Model model) {
-		List<Festivals> listFestivals = fs.listFestivals();
+		List<FestivalsContent> listFestivals = fs.listFestivals();
 		
 		model.addAttribute("listFestivals", listFestivals);
 		
@@ -30,7 +31,7 @@ public class FestivalController {
 	
 	@RequestMapping(value = "festival/detail")
 	public String festivalDetail(int contentId, Model model) {
-		Festivals festival = fs.detailFestivals(contentId);
+		FestivalsContent festival = fs.detailFestivals(contentId);
 		
 		model.addAttribute("festival", festival);
 		
