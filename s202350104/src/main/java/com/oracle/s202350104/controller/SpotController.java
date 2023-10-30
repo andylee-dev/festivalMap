@@ -19,17 +19,17 @@ import lombok.extern.slf4j.Slf4j;
 public class SpotController {
 	private final SpotService ss;
 
-	@RequestMapping(value = "/spot")
+	@RequestMapping(value = "spot")
 	public String spot(SpotContent spotContent, Model model) {
 		
-		List<Spot> listSpot = ss.listSpot(spotContent);
-		
+		List<SpotContent> listSpot = ss.listSpot(spotContent);
+		log.info("SpotController list listSpot.size()=>"+listSpot.size());
 		model.addAttribute("listSpot", listSpot);
 		
 		return "spot/spotList";
 	}
 	
-	@RequestMapping(value = "/spot/detail")
+	@RequestMapping(value = "spot/detail")
 	public String spotDetail() {
 		return "spot/spotDetail";
 	}

@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.SpotMapper">
-	<select id="spotListAll" resultType="Spot">
+	<select id="dhSpotListAll" resultType="SpotContent" parameterType="SpotContent">
 		SELECT 	* 
 		FROM 	spot, contents
 		WHERE	spot.content_id = contents.id

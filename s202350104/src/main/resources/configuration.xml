@@ -17,6 +17,7 @@
 		<typeAlias alias="Experience"       type="com.oracle.s202350104.model.Experience"/>
 		<typeAlias alias="ExperienceContent" type="com.oracle.s202350104.model.ExperienceContent"/>
 		<typeAlias alias="Spot"		        type="com.oracle.s202350104.model.Spot"/>
+		<typeAlias alias="SpotContent"		type="com.oracle.s202350104.model.SpotContent"/>
 	</typeAliases>
 	
 	

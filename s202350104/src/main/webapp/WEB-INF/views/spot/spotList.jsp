@@ -9,7 +9,15 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<h1>Spot</h1>
+		<h1>주변명소</h1>
+	<table>
+		 	<c:forEach var="spot" items="${listSpot}">
+		<tr><td><img src="${spot.img1}"></td>
+			<td><a href="detailSpot?=${spot.content_id}">${spot.title}</a></td>
+			<td>${spot.rest_date}</td>
+			</c:forEach>
+	</table>
+
 <%@ include file="/WEB-INF/components/Footer.jsp" %>	
 </body>
 </html>

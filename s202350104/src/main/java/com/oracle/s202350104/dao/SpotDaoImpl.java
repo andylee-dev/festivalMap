@@ -5,24 +5,29 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s202350104.controller.SpotController;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class SpotDaoImpl implements SpotDao {
 
 	private final SqlSession session;
 
 	@Override
-	public List<Spot> listSpot(SpotContent spotContent) {
-		List<Spot> spotList = null;
+	public List<SpotContent> listSpot(SpotContent spotContent) {
+		List<SpotContent> spotList = null;
 			
 			try {
 				spotList = session.selectList("dhSpotListAll", spotContent);
+				log.info("SpotDaoImpl listSpot spotList.size()->"+spotList.size());
 			} catch (Exception e) {
+				log.info("SpotDaoImpl listSpot e.getMessage()->"+e.getMessage());
 			}
 		return spotList;
 	}
