@@ -4,6 +4,8 @@
 
 <mapper namespace="com.oracle.s202350104.SpotMapper">
 	<select id="spotListAll" resultType="Spot">
-		SELECT * FROM spot
+		SELECT 	* 
+		FROM 	spot, contents
+		WHERE	spot.content_id = contents.id
 	</select>
 </mapper>

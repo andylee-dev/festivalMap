@@ -1,7 +1,14 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.oracle.s202350104.model.Spot;
+import com.oracle.s202350104.model.SpotContent;
+import com.oracle.s202350104.service.SpotService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class SpotController {
+	private final SpotService ss;
 
 	@RequestMapping(value = "/spot")
-	public String spot() {
+	public String spot(SpotContent spotContent, Model model) {
+		
+		List<Spot> listSpot = ss.listSpot(spotContent);
+		
+		model.addAttribute("listSpot", listSpot);
+		
 		return "spot/spotList";
 	}
 	
