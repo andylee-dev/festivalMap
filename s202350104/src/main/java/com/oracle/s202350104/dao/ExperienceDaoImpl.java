@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s202350104.model.Experience;
+import com.oracle.s202350104.model.ExperienceContent;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +28,17 @@ public class ExperienceDaoImpl implements ExperienceDao {
 			System.out.println(e.getMessage());
 		}
 		return listExperience;
+	}
+
+	@Override
+	public ExperienceContent detailExperience(int content_id) {
+		ExperienceContent experience = new ExperienceContent();
+		try {
+			experience = session.selectOne("shExperienceDetail", content_id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return experience;
 	}
 
 }
