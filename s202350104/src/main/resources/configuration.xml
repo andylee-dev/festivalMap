@@ -15,6 +15,7 @@
 		<typeAlias alias="Accomodations"    type="com.oracle.s202350104.model.Accomodations"/>
 		<typeAlias alias="Course"           type="com.oracle.s202350104.model.Course"/>
 		<typeAlias alias="Experience"       type="com.oracle.s202350104.model.Experience"/>
+		<typeAlias alias="Spot"		        type="com.oracle.s202350104.model.Spot"/>
 	</typeAliases>
 	
 	
