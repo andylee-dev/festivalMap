@@ -1,5 +1,8 @@
 package com.oracle.s202350104.model;
 
+import lombok.Data;
+
+@Data
 public class Course {
 	
 	private int		id;

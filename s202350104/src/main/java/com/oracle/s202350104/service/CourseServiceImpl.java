@@ -1,5 +1,7 @@
 package com.oracle.s202350104.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.oracle.s202350104.dao.CourseDao;
@@ -21,5 +23,15 @@ public class CourseServiceImpl implements CourseService {
 		System.out.println("CourseServiceImpl courseCount courseCount ->" + courseCount);
 		
 		return courseCount;
+	}
+
+	@Override
+	public List<Course> courseList(Course course) {
+		List<Course> courseList = null;
+		System.out.println("CourseServiceImpl courseList start...");
+		courseList = cd.courseList(course);
+		System.out.println("CourseServiceImpl courseList courseList.size() ->" + courseList.size());
+		
+		return courseList;
 	}
 }
