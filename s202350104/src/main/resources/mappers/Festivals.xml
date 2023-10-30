@@ -5,8 +5,8 @@
 <mapper namespace="com.oracle.s202350104.FestivalsMapper">
 	<select id="nhFestivalsListAll" resultType="FestivalsContent">
 		SELECT *
-		FROM  festivals, contents
-		WHERE festivals.content_id = contents.id
+		FROM  festivals f, contents c
+		WHERE f.content_id = c.id
 	</select>
 	
 	<select id="nhFestivalsDetail" resultType="FestivalsContent" parameterType="int">

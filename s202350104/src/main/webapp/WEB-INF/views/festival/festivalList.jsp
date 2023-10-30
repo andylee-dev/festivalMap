@@ -4,16 +4,16 @@
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>FestivalList</title>
-<style type="text/css">
-	.card-text {
-		overflow : hidden;
-		/* text-overflow: ellipsis; */
-	}
-</style>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>FestivalList</title>
+		<style type="text/css">
+			.card-text {
+				overflow : hidden;
+				/* text-overflow: ellipsis; */
+			}
+		</style>
+	</head>
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -28,7 +28,7 @@
     					축제기간 : ${festival.start_date} ~ ${festival.end_date} <br>
     					${festival.content}
     				</p>
-    				<a href="festival/detail?content_id=${festival.content_id}" class="btn btn-primary">더보기</a>
+    				<a href="festival/detail?contentId=${festival.content_id}" class="btn btn-primary">더보기</a>
  				 </div>	
 			</div>
 		</c:forEach>

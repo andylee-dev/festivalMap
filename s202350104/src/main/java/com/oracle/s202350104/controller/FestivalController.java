@@ -33,6 +33,7 @@ public class FestivalController {
 	public String festivalDetail(int contentId, Model model) {
 		FestivalsContent festival = fs.detailFestivals(contentId);
 		
+		model.addAttribute("contentId", contentId);
 		model.addAttribute("festival", festival);
 		
 		return "festival/festivalDetail";
