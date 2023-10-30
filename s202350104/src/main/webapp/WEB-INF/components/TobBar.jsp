@@ -80,10 +80,10 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							인증인가 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="user/join">회원가입</a></li>
-							<li><a class="dropdown-item" href="user/login">로그인</a></li>
-							<li><a class="dropdown-item" href="user/idSearch">아이디찾기</a></li>
-							<li><a class="dropdown-item" href="user/passwordSearch">비밀번호찾기</a></li>
+							<li><a class="dropdown-item" href="/user/join">회원가입</a></li>
+							<li><a class="dropdown-item" href="/user/login">로그인</a></li>
+							<li><a class="dropdown-item" href="/user/idSearch">아이디찾기</a></li>
+							<li><a class="dropdown-item" href="/user/passwordSearch">비밀번호찾기</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
