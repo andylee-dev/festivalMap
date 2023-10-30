@@ -15,6 +15,5 @@ public class Festivals {
 	private String is_parking;
 	private String is_stroller;
 	private String is_wheelchair;
-	private String is_restroom;
-	
+	private String is_restroom;	
 }

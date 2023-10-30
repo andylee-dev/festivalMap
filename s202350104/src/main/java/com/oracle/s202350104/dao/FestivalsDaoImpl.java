@@ -22,7 +22,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	public List<FestivalsContent> listFestivals() {
 		List<FestivalsContent> listFestivals = null;
 		try {
-			listFestivals = session.selectList("festivalsListAll");
+			listFestivals = session.selectList("nhFestivalsListAll");
 			log.info("listFestivals() => " + listFestivals.size());
 		} catch (Exception e) {
 			log.info("FestivalsDaoImpl listFestivals() => " + e.getMessage());
@@ -34,7 +34,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	public FestivalsContent detailFestivals(int contentId) {
 		FestivalsContent festival = new FestivalsContent();
 		try {
-			festival = session.selectOne("festivalsDetail", contentId);
+			festival = session.selectOne("nhFestivalsDetail", contentId);
 			log.info("FestivalsDaoImpl detailFestivals() festival.getTitle => " + festival.getTitle());
 		} catch (Exception e) {
 			log.info("FestivalsDaoImpl detailFestivals() => " + e.getMessage());
