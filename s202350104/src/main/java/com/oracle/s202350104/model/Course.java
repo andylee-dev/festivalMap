@@ -9,6 +9,7 @@ public class Course {
 	private String  course_info;
 	private String  time;
 	private String  schedule;
+	private String  course_title;
 	
 	// CourseContent
 	private int 	content_id;
