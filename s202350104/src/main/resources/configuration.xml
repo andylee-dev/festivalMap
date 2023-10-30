@@ -8,4 +8,13 @@
 		<typeAlias alias="Emp" 
 				   type="com.oracle.oBootMyBatis01.model.Emp" />		
 	</typeAliases> -->
+	<typeAliases>
+		<typeAlias alias="Festivals" type="com.oracle.s202350104.model.Festivals"/>
+		<typeAlias alias="Restaurant" type="com.oracle.s202350104.model.Restaurant"/>
+		<typeAlias alias="Accomodations" type="com.oracle.s202350104.model.Accomodations"/>
+		<typeAlias alias="Course" type="com.oracle.s202350104.model.Course"/>
+		<typeAlias alias="Experience" type="com.oracle.s202350104.model.Experience"/>
+	</typeAliases>
+	
+	
 </configuration>

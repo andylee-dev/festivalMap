@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.FestivalsMapper">
+	<select id="festivalsListAll" resultType="Festivals">
+		SELECT *
+		FROM  festivals, contents
+		WHERE festivals.content_id = contents.id
+	</select>
+	
+	<select id="festivalsDetail" resultType="Festivals" parameterType="int">
+		SELECT *
+		FROM  festivals f, contents c
+		WHERE f.content_id = c.id
+		AND   f.content_id = #{content_id}
+	</select>
+</mapper>
