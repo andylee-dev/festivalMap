@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oracle.s202350104.model.Restaurant;
+import com.oracle.s202350104.model.Restaurants;
+import com.oracle.s202350104.model.RestaurantsContent;
 import com.oracle.s202350104.service.RestaurantService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,23 +21,26 @@ public class RestaurantController {
 	private final RestaurantService rs;
 	
 	@RequestMapping(value = "/restaurant")
-	public String restaurant(Restaurant restaurant, Model model) {
-		System.out.println("RestaurantController listRestaurant Start...");
-		
-		// int totalRestaurant = rs.totalRestaurant();
-		
-		List<Restaurant> listRestaurant = rs.listRestaurant(restaurant);
-		System.out.println("RestaurantController listRestaurant.size()->" + listRestaurant.size());
-		
-		// model.addAttribute("totalRestaurant", totalRestaurant);
+	public String restaurant(Model model) {
+		log.info("RestaurantController listRestaurant Start...");
+				
+		List<Restaurants> listRestaurant = rs.listRestaurant();
+		log.info("RestaurantController listRestaurant.size()->" + listRestaurant.size());
+				
 		model.addAttribute("listRestaurant", listRestaurant);
 				
-		return "restaurant/restaurantIndex";
+		return "restaurant/restaurantList";
 	}
 	
 	
 	@RequestMapping(value= "/restaurant/detail")
-	public String restuarntDetail() {
+	public String restuarntDetail(int content_id, Model model) {
+		log.info("RestaurantController detailRestaurant Start...");
+		
+		RestaurantsContent restaurant = rs.detailRestaurant(content_id);
+		
+		model.addAttribute("restaurant", restaurant);
+		
 		return "restaurant/restaurantDetail";
 	}
 	
