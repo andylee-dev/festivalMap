@@ -14,7 +14,7 @@
 			<th>ID</th>
 			<th>제목</th>
 			<th>작성일</th>
-			<th>조회수32</th>
+			<th>조회수2</th>
 		</tr>
 		<c:forEach var="board" items="${freeBoard }">
 			<td>${board.id }</td>
