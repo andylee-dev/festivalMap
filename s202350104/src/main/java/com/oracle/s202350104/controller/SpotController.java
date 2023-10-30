@@ -21,7 +21,7 @@ public class SpotController {
 
 	@RequestMapping(value = "spot")
 	public String spot(SpotContent spotContent, Model model) {
-		
+	
 		List<SpotContent> listSpot = ss.listSpot(spotContent);
 		log.info("SpotController list listSpot.size()=>"+listSpot.size());
 		model.addAttribute("listSpot", listSpot);

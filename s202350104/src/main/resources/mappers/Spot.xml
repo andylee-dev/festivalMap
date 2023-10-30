@@ -8,4 +8,15 @@
 		FROM 	spot, contents
 		WHERE	spot.content_id = contents.id
 	</select>
+	
+	<select id="dhSpotListAll2" resultType="SpotContent" parameterType="SpotContent">
+		SELECT	*
+		FORM
+		(
+			SELECT rownum rn, a.*
+			FROM
+					(select * from spot order by content_id) a	
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
 </mapper>

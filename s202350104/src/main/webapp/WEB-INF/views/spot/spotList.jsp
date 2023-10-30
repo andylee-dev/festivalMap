@@ -24,7 +24,8 @@
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<div class="container-fluid border p-5">		
 		<h1>주변명소</h1>
 		 	<c:forEach var="spot" items="${listSpot}">
 		 	<div class="first">
@@ -35,12 +36,13 @@
 							축제명 : 	${spot.title} <br>
     						축제기간 : ${spot.rest_date}<br>
     								${spot.content}
-    					</p><br>
+    					</p>
     					<a href="spot/detail?content_id=${spot.content_id}" class="btn btn-primary">더보기</a>
  					</div>	
 				</div>
 			</div>			
 			</c:forEach>
-<%@ include file="/WEB-INF/components/Footer.jsp" %>	
+	</div>
+	<%@ include file="/WEB-INF/components/Footer.jsp" %>	
 </body>
 </html>

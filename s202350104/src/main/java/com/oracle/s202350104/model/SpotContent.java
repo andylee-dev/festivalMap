@@ -36,6 +36,12 @@ public class SpotContent {
 	private String	is_stroller;
 	private String	is_pet;
 	private String	is_parking;
-
 	
+	// 조회용
+	private String search;
+	private String keyWord;
+	private String pageNum;
+	private int	   start;
+	private int	   end;
+
 }
