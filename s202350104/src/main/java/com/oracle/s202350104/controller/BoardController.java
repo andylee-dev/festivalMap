@@ -25,7 +25,7 @@ public class BoardController {
 		List<Board> freeAllList = boardService.getFreeAllList();
 		log.info("controller freeAllList size --> " + freeAllList.size());
 		
-		model.addAttribute("freeAllList", freeAllList);
+		model.addAttribute("freeBoard", freeAllList);
 
 		return "board/freeBoardList";
 	}
