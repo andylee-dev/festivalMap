@@ -19,6 +19,7 @@
 </head>
 <body>
  <%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+
  <h1>여기는 관리자 홈</h1>
 </body>
 </html>
