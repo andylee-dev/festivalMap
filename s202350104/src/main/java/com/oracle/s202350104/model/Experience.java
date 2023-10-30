@@ -22,5 +22,6 @@ public class Experience {
 	private String title;
 	private String content;
 	private String img1;
+	private int    id;
 	
 }
