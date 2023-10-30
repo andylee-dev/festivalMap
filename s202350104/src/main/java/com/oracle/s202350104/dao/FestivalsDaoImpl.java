@@ -23,8 +23,8 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		List<FestivalsContent> listFestivals = null;
 		try {
 			listFestivals = session.selectList("nhFestivalsListAll");
-			log.info("listFestivals() => " + listFestivals.size());
-		} catch (Exception e) {
+			log.info("FestivalsDaoImpl listFestivals() => " + listFestivals.size());
+		} catch(Exception e) {
 			log.info("FestivalsDaoImpl listFestivals() => " + e.getMessage());
 		}
 		return listFestivals;
@@ -36,7 +36,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		try {
 			festival = session.selectOne("nhFestivalsDetail", contentId);
 			log.info("FestivalsDaoImpl detailFestivals() festival.getTitle => " + festival.getTitle());
-		} catch (Exception e) {
+		} catch(Exception e) {
 			log.info("FestivalsDaoImpl detailFestivals() => " + e.getMessage());
 		}
 		return festival;
