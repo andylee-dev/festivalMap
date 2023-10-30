@@ -15,6 +15,7 @@
 	<h1>일반회원 회원가입</h1>
 	<div class="container border p-5">
 		<form action="insertUser">
+			<input type="hidden" name="status" value="2">
 			아이디 <input type="text" name="id" placeholder="아이디를 입력하세요"><p>
 			비밀번호 <input type="password" name="password" placeholder="비밀번호를 입력하세요"><p>
 			비밀번호 확인 <input type="password" placeholder="비밀번호를 다시 한 번 입력하세요"><p>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Festivals;
@@ -20,7 +21,7 @@ public class FestivalController {
 	
 	private final FestivalsService fs;
 	
-	@RequestMapping(value = "festival")
+	@GetMapping(value = "festival")
 	public String festival(Model model) {
 		List<FestivalsContent> listFestivals = fs.listFestivals();
 		
@@ -29,7 +30,7 @@ public class FestivalController {
 		return "festival/festivalList";
 	}
 	
-	@RequestMapping(value = "festival/detail")
+	@GetMapping(value = "festival/detail")
 	public String festivalDetail(int contentId, Model model) {
 		FestivalsContent festival = fs.detailFestivals(contentId);
 		
