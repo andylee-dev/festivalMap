@@ -8,6 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>체험정보2211</title>
+<style type="text/css">
+	.card-text {
+		overflow : hidden;
+		/* text-overflow: ellipsis; */
+	}
+</style>
 </head>
 <body>
 	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -25,5 +31,6 @@
 			</div>
 		</c:forEach>
 
+	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
 </html>
