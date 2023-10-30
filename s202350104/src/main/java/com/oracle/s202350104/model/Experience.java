@@ -15,4 +15,12 @@ public class Experience {
 	private String is_pet;
 	private String is_parking;
 	private String is_stroller;	
+	
+	//contents 조회용 
+	private int    area;
+	private int    sigungu;
+	private String title;
+	private String content;
+	private String img1;
+	
 }

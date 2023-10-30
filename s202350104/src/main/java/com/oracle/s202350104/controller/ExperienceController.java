@@ -1,7 +1,13 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.oracle.s202350104.model.Experience;
+import com.oracle.s202350104.service.ExperienceService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExperienceController {
 
+	private final ExperienceService es;
+	
 	@RequestMapping(value = "experience")
-	public String experience() {
+	public String experience(Model model) {
+		System.out.println("ExperienceController start listExperience  kkk");
+		List<Experience> listExperience = es.listExperience();
+		System.out.println("ExperienceController list listExperience.size()->"+listExperience.size());
+		
+		model.addAttribute("listExperience", listExperience);
+		
 		return "experience/experienceList";
 	}
 	

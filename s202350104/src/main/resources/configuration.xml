@@ -13,7 +13,7 @@
 		<typeAlias alias="Restaurant" type="com.oracle.s202350104.model.Restaurant"/>
 		<typeAlias alias="Accomodations" type="com.oracle.s202350104.model.Accomodations"/>
 		<typeAlias alias="Course" type="com.oracle.s202350104.model.Course"/>
-
+		<typeAlias alias="Experience" type="com.oracle.s202350104.model.Experience"/>
 	</typeAliases>
 	
 	
