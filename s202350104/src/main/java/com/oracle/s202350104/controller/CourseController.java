@@ -1,5 +1,7 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,11 @@ public class CourseController {
 		int courseCount = cs.courseCount(course);
 		System.out.println("CourseController course courseCount ->" + courseCount);
 		
+		List<Course> CourseList = cs.courseList(course);
+		System.out.println("CourseController course CourseList.size() ->" + CourseList.size());
+		
 		model.addAttribute("courseCount", courseCount);
+		model.addAttribute("CourseList", CourseList);
 		
 		return "course/courseList";
 	}
