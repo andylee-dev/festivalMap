@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.oracle.s202350104.model.Festivals;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class FestivalsDaoImpl implements FestivalsDao {
 
 	private final SqlSession session;
@@ -20,9 +22,9 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		List<Festivals> listFestivals = null;
 		try {
 			listFestivals = session.selectList("festivalsListAll");
-			System.out.println("listFestivals() => " + listFestivals.size());
+			log.info("listFestivals() => " + listFestivals.size());
 		} catch (Exception e) {
-			System.out.println("FestivalsDaoImpl listFestivals() => " + e.getMessage());
+			log.info("FestivalsDaoImpl listFestivals() => " + e.getMessage());
 		}
 		return listFestivals;
 	}
@@ -32,8 +34,9 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		Festivals festival = new Festivals();
 		try {
 			festival = session.selectOne("festivalsDetail", contentId);
+			log.info("FestivalsDaoImpl detailFestivals() festival.getTitle => " + festival.getTitle());
 		} catch (Exception e) {
-			System.out.println("FestivalsDaoImpl detailFestivals() => " + e.getMessage());
+			log.info("FestivalsDaoImpl detailFestivals() => " + e.getMessage());
 		}
 		return festival;
 	}
