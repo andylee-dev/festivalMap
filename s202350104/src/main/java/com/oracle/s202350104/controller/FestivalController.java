@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +24,16 @@ public class FestivalController {
 	
 	@GetMapping(value = "festival")
 	public String festival(Model model) {
-		List<FestivalsContent> listFestivals = fs.listFestivals();
-		
-		model.addAttribute("listFestivals", listFestivals);
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}.{}:{}",transactionId, this.getClass().getName(), "festival", "start");
+			List<FestivalsContent> listFestivals = fs.listFestivals();
+			model.addAttribute("listFestivals", listFestivals);
+		} catch (Exception e) {
+			log.error("[{}]{}.{}:{}",transactionId, this.getClass().getName(), "festival", e.getMessage());
+		} finally {
+			log.info("[{}]{}.{}:{}",transactionId, this.getClass().getName(), "festival", "end");
+		}
 		
 		return "festival/festivalList";
 	}
