@@ -1,7 +1,9 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
+import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,17 +93,27 @@ public class UserController {
 	
 	@RequestMapping(value = "user/mypage/QnaList")
 	public String QnaList(Qna qna , String currentPage, Model model) {
-		int totalQnaList = qs.totalQnaList();
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "QnaList", "start");
+			int totalQnaList = qs.totalQnaList();
+			log.info("totalQnaList=>"+totalQnaList);
 		
-		Paging page = new Paging(totalQnaList, currentPage);
+			Paging page = new Paging(totalQnaList, currentPage);
 		
-		qna.setStart(page.getStart());
-		qna.setEnd(page.getEnd());
+			qna.setStart(page.getStart());
+			qna.setEnd(page.getEnd());
 		
-		List<Qna> listQnaList = qs.listQnaList(qna);
-		model.addAttribute("totalQnaList",totalQnaList);
-		model.addAttribute("listQnaList",listQnaList);
-		model.addAttribute("page",page);
+			List<Qna> listQnaList = qs.listQnaList(qna);
+			log.info("listQnaList=>"+listQnaList.size());
+			model.addAttribute("totalQnaList",totalQnaList);
+			model.addAttribute("listQnaList",listQnaList);
+			model.addAttribute("page",page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "QnaList", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "QnaList", "end");
+		}	
 		return "user/mypage/myQnaList";
 	}
 	
