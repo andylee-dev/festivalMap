@@ -24,10 +24,11 @@ public class Paging {
 		totalPage = (int) Math.ceil((double)total / rowPage);
 		
 		startPage = currentPage - (currentPage - 1) % pageBlock;
-		endPage = startPage + pageBlock -1;
+		endPage   = startPage + pageBlock - 1;
 		
-		if (endPage > totalPage) {
+		if(endPage > totalPage) {
 			endPage = totalPage;
 		}
+	
 	}
 }

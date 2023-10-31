@@ -4,9 +4,18 @@
 
 <mapper namespace="com.oracle.s202350104.AccomodationsMapper">
 	
-	<select id="accomodationAll" resultType="Accomodations">
+	<select id="accomodationAll" resultType="AccomodationsContent">
+		SELECT * 
+		FROM   accomodations, contents
+		WHERE  accomodations.content_id = contents.id
+		
+	</select>
 	
-		SELECT * FROM Accomodations
+	<select id="accomodationsDetail" resultType="AccomodationsContent" parameterType="int">
+		SELECT 	*
+		FROM 	contents c, accomodations a
+		WHERE 	c.id = a.content_id
+		AND 	a.content_id = #{content_id}
 	
 	</select>
 

@@ -12,4 +12,8 @@ public class Report {
 	private String status;
 	private Date created_at;
 	private Date updated_at;
+	
+	//조회용
+	private String content;
+	
 }

@@ -5,8 +5,16 @@
 <mapper namespace="com.oracle.s202350104.FestivalsMapper">
 	<select id="nhFestivalsListAll" resultType="FestivalsContent">
 		SELECT *
-		FROM  festivals f, contents c
-		WHERE f.content_id = c.id
+		FROM
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT *
+			 FROM festivals f, contents c
+			 WHERE f.content_id = c.id
+			 ORDER BY content_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
 	<select id="nhFestivalsDetail" resultType="FestivalsContent" parameterType="int">
@@ -14,5 +22,11 @@
 		FROM  festivals f, contents c
 		WHERE f.content_id = c.id
 		AND   f.content_id = #{content_id}
+	</select>
+	
+	<select id="nhFestivalsTotal" resultType="int">
+		SELECT count(*)
+		FROM   festivals f, contents c
+		WHERE  f.content_id = c.id
 	</select>
 </mapper>

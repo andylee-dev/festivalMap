@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
+import com.oracle.s202350104.model.Report;
 import com.oracle.s202350104.service.ExperienceService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,8 @@ public class ExperienceController {
 	
 	@RequestMapping(value = "experience")
 	public String experience(Model model) {
-		System.out.println("ExperienceController start listExperience  kkk");
+
 		List<Experience> listExperience = es.listExperience();
-		System.out.println("ExperienceController list listExperience.size()->"+listExperience.size());
-		
 		model.addAttribute("listExperience", listExperience);
 		
 		return "experience/experienceList";
@@ -38,4 +37,11 @@ public class ExperienceController {
 		
 		return "experience/experienceDetail";
 	}
+	
+	@RequestMapping(value = "experience/writeForm")
+	public String writeFormExperience(Model model) {
+		
+		return "experience/writeFormExperience";
+	}
+	
 }
