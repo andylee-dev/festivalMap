@@ -14,5 +14,12 @@ public class Qna {
 	private String	answer_content;
 	private Date	created_at;
 	private	Date	updated_at;
+	
+	// 조회용
+	private String search;
+	private String keyWord;
+	private String pageNum;
+	private int	   start;
+	private int	   end;
 
 }

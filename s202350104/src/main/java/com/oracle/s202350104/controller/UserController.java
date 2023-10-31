@@ -1,7 +1,14 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.oracle.s202350104.model.Qna;
+import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.QnaListService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
+	private final QnaListService qs;
 
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -82,8 +90,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "user/mypage/QnaList")
-	public String QnaList() {
-		return "user/mypage/QnaList";
+	public String QnaList(Qna qna , String currentPage, Model model) {
+		int totalQnaList = qs.totalQnaList();
+		
+		Paging page = new Paging(totalQnaList, currentPage);
+		
+		qna.setStart(page.getStart());
+		qna.setEnd(page.getEnd());
+		
+		List<Qna> listQnaList = qs.listQnaList(qna);
+		model.addAttribute("totalQnaList",totalQnaList);
+		model.addAttribute("listQnaList",listQnaList);
+		model.addAttribute("page",page);
+		return "user/mypage/myQnaList";
 	}
 	
 	@RequestMapping(value = "user/mypage/myTag")
