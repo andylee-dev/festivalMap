@@ -8,5 +8,10 @@ public class Tags {
 	private String name;
 	private int board_id;
 	private int content_id;
-	private int user_id;	
+	private int user_id;
+	
+	// 페이징 처리용
+	private String pageNum;
+	private int    start;
+	private int    end;
 }

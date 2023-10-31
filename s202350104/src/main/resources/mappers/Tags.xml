@@ -4,6 +4,10 @@
 
 <mapper namespace="com.oracle.s202350104.TagsMapper">
 	<select id="nhTagsListAll" resultType="Tags">
-		SELECT * FROM Tags
+		SELECT * FROM tags
+	</select>
+	
+	<select id="nhTagsTotal" resultType="int">
+		SELECT count(*) FROM Tags
 	</select>
 </mapper>
