@@ -143,10 +143,10 @@
             <div class="collapse" id="content-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="/admin/content/festival" class="link-body-emphasis d-inline-flex text-decoration-none rounded">축제</a></li>
-                <li><a href="/admin/content//restaurant" class="link-body-emphasis d-inline-flex text-decoration-none rounded">맛집</a></li>
-                <li><a href="/admin/content//accomodation" class="link-body-emphasis d-inline-flex text-decoration-none rounded">숙박</a></li>
-                <li><a href="/admin/content//spot" class="link-body-emphasis d-inline-flex text-decoration-none rounded">명소</a></li>
-                <li><a href="/admin/content//experience" class="link-body-emphasis d-inline-flex text-decoration-none rounded">체험</a></li>
+                <li><a href="/admin/content/restaurant" class="link-body-emphasis d-inline-flex text-decoration-none rounded">맛집</a></li>
+                <li><a href="/admin/content/accomodation" class="link-body-emphasis d-inline-flex text-decoration-none rounded">숙박</a></li>
+                <li><a href="/admin/content/spot" class="link-body-emphasis d-inline-flex text-decoration-none rounded">명소</a></li>
+                <li><a href="/admin/content/experience" class="link-body-emphasis d-inline-flex text-decoration-none rounded">체험</a></li>
               </ul>
             </div>
           </li>
