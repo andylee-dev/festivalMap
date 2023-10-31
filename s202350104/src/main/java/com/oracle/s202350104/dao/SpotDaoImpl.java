@@ -20,6 +20,18 @@ public class SpotDaoImpl implements SpotDao {
 	private final SqlSession session;
 
 	@Override
+	public int totalSpot() {
+		int totSpotCount = 0;
+		
+		try {
+			totSpotCount = session.selectOne("spotTotal");
+			
+		} catch (Exception e) {
+		}
+		return totSpotCount;
+	}
+	
+	@Override
 	public List<SpotContent> listSpot(SpotContent spotContent) {
 		List<SpotContent> spotList = null;
 			
@@ -31,16 +43,5 @@ public class SpotDaoImpl implements SpotDao {
 			}
 		return spotList;
 	}
-
-	@Override
-	public int totalSpot() {
-		int totSpotCount = 0;
-		
-		try {
-			totSpotCount = session.selectOne("spotTotal");
-			
-		} catch (Exception e) {
-		}
-		return totSpotCount;
-	}
 }
+

@@ -32,8 +32,9 @@ public class SpotController {
 		
 		List<SpotContent> listSpot = ss.listSpot(spotContent);
 		log.info("SpotController list listSpot.size()=>"+listSpot.size());
+		model.addAttribute("totalSpot",totalSpot);
 		model.addAttribute("listSpot", listSpot);
-		
+		model.addAttribute("page",page);
 		return "spot/spotList";
 	}
 	

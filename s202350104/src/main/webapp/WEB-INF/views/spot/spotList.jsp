@@ -41,27 +41,29 @@
 									alt="${spot.title}이미지" style="height: 190px;">
 								<div class="card-body">
 									<p class="card-text" style="height: 240px;">
-										축제명 : ${spot.title} <br> 축제기간 : ${spot.rest_date}<br>
+										축제명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
 										${spot.content}
 									</p>
 									<a href="spot/detail?content_id=${spot.content_id}"
 										class="btn btn-primary">더보기</a>
+									<c:set var="card" value="${card - 1}"></c:set>
 								</div>
 							</div>
 						</div>
 					</c:forEach>
+					
 				</div>
 			</div>
 		</div>
 	</main>
 	<c:if test="${page.startPage > page.pageBlock}">
-			<a href="listSpot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+			<a href="spot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="listSpot?currentPage=${i}">[${i}]</a>
+			<a href="spot?currentPage=${i}">[${i}]</a>
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="listSpot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+			<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 		</c:if>
 
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
