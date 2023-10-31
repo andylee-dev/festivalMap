@@ -26,13 +26,13 @@ public class FestivalController {
 	public String festival(Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}.{}:{}",transactionId, this.getClass().getName(), "festival", "start");
+			log.info("[{}]{}:{}",transactionId, "festival", "start");
 			List<FestivalsContent> listFestivals = fs.listFestivals();
 			model.addAttribute("listFestivals", listFestivals);
 		} catch (Exception e) {
-			log.error("[{}]{}.{}:{}",transactionId, this.getClass().getName(), "festival", e.getMessage());
+			log.error("[{}]{}:{}",transactionId,  "festival", e.getMessage());
 		} finally {
-			log.info("[{}]{}.{}:{}",transactionId, this.getClass().getName(), "festival", "end");
+			log.info("[{}]{}:{}",transactionId, "festival", "end");
 		}
 		
 		return "festival/festivalList";
