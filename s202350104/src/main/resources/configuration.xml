@@ -21,8 +21,8 @@
 		<typeAlias alias="SpotContent"		 type="com.oracle.s202350104.model.SpotContent"/>
 		<typeAlias alias="Tags"              type="com.oracle.s202350104.model.Tags"/>
 		<typeAlias alias="Users"			 type="com.oracle.s202350104.model.Users"/>
+		<typeAlias alias="Board" type="com.oracle.s202350104.model.Board"/>
 	</typeAliases>
 	
 	
 </configuration>
-
