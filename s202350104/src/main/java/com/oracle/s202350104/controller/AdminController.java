@@ -1,7 +1,11 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,11 +13,18 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping(value = "/admin")
 public class AdminController {
-
-	@RequestMapping(value = "/admin")
+	
+	
+	@RequestMapping(value = "")
 	public String home() {
 		return "admin/index";
 	}
 
+
+
+
+	
+	
 }

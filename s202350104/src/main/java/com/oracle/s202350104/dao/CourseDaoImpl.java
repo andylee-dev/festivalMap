@@ -1,5 +1,7 @@
 package com.oracle.s202350104.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +26,20 @@ public class CourseDaoImpl implements CourseDao {
 			System.out.println("CourseDaoImpl courseCount e.getMessage() ->" + e.getMessage());
 		}
 		return courseCount;
+	}
+
+	@Override
+	public List<Course> courseList(Course course) {
+		List<Course> courseList = null;
+		System.out.println("CourseDaoImpl courseList start...");
+		try {
+			courseList = session.selectList("courseListAll", course);
+			System.out.println("CourseDaoImpl courseList courseList.size() ->" + courseList.size());
+			
+		} catch (Exception e) {
+			System.out.println("CourseDaoImpl courseList e.getMessage() ->" + e.getMessage());
+		}
+		
+		return courseList;
 	}
 }

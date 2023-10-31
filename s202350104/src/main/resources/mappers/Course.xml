@@ -8,4 +8,8 @@
 			select Count(*) from courses
 		</select>
 		
+		<select id="courseListAll" parameterType="Course" resultType="Course">
+			select * from courses
+		</select>
+		
 	</mapper>

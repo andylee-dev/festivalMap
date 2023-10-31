@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.SpotMapper">
+	<select id="dhSpotListAll" resultType="SpotContent" parameterType="SpotContent">
+		SELECT *
+		FROM 
+		(   
+    			SELECT rownum rn, a.*
+    			FROM 
+            	(select *
+            	 from spot s, contents c
+             	 where s.content_id = c.id
+             	 order by content_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	<select id="spotTotal" resultType="int">
+	SELECT	count(*)
+	FROM	spot s , contents c
+	WHERE	s.content_id = c.id
+	</select>
+</mapper>	
