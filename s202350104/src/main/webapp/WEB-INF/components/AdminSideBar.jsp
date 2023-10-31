@@ -174,7 +174,7 @@
             </div>
           </li>
           <li class="mb-1">
-              <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="board-collapse" aria-expanded="false">
+              <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#board-collapse" aria-expanded="false">
                 커뮤니티
             </button>
             <div class="collapse" id="board-collapse">
@@ -188,7 +188,7 @@
               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#point-collapse" aria-expanded="false">
                 포인트
             </button>
-            <div class="collapse" id="#point-collapse">
+            <div class="collapse" id="point-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">포인트 관리</a></li>
                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">포인트 내역</a></li>
@@ -196,7 +196,7 @@
             </div>
           </li>
           <li class="mb-1">
-              <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="tag-collapse" aria-expanded="false">
+              <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#tag-collapse" aria-expanded="false">
                 태그관리
             </button>
             <div class="collapse" id="tag-collapse">
@@ -212,7 +212,7 @@
               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#admin-collapse" aria-expanded="false">
                 관리자 설정
             </button>
-            <div class="collapse" id="#admin-collapse">
+            <div class="collapse" id="admin-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자리스트</a></li>
                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">공통코드관리</a></li>
