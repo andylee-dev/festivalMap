@@ -36,24 +36,19 @@
 							<th scope="col">문의내용</th>
 							<th scope="col">작성일</th>
 							<th scope="col">진행상태</th>
-							<th scope="col">phone_num</th>
-							<th scope="col">email</th>
-							<th scope="col">address</th>
-							<th scope="col">status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="user" items="${listUsers}">
+						<c:forEach var="qna" items="${listQna}">
 							<tr>
-								<td>${user.id}</td>
-								<td>${user.name}</td>
-								<td>${user.password}</td>
-								<td>${user.nickname}</td>
-								<td>${user.birthday}</td>
-								<td>${user.phone_num}</td>
-								<td>${user.email}</td>
-								<td>${user.address}</td>
-								<td>${user.status}</td>
+								<td>${qna.id}</td>
+								<td>${qna.name}</td>
+								<td>${qna.question_title}</td>
+								<td>${qna.question_content}</td>
+								<td>${qna.answer_title}</td>
+								<td>${qna.answer_content}</td>
+								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/DD"/></td>
+								<td>${qna.status}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
