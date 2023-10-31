@@ -65,7 +65,6 @@
 		<c:if test="${page.endPage < page.totalPage}">
 			<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 		</c:if>
-
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 </body>
 </html>
