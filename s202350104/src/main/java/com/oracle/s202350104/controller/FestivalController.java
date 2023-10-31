@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FestivalController {
 	
 	private final FestivalsService fs;
+
 	
 	@GetMapping(value = "festival")
 	public String festival(Model model) {
