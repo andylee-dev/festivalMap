@@ -226,9 +226,9 @@
             </button>
             <div class="collapse" id="admin-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="/admin/adminList" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자리스트</a></li>
-                <li><a href="/admin/commonCode" class="link-body-emphasis d-inline-flex text-decoration-none rounded">공통코드관리</a></li>
-                <li><a href="/admin/areaCode" class="link-body-emphasis d-inline-flex text-decoration-none rounded">지역코드관리</a></li>
+                <li><a href="/admin/admin/adminList" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자리스트</a></li>
+                <li><a href="/admin/admin/commonCode" class="link-body-emphasis d-inline-flex text-decoration-none rounded">공통코드관리</a></li>
+                <li><a href="/admin/admin/areaCode" class="link-body-emphasis d-inline-flex text-decoration-none rounded">지역코드관리</a></li>
               </ul>
             </div>
           </li>
