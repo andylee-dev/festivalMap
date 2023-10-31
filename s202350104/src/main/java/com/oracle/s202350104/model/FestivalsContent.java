@@ -1,5 +1,7 @@
 package com.oracle.s202350104.model;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -24,6 +26,9 @@ public class FestivalsContent {
 	private String homepage;
 	private int    readcount;
 	private String user_id;
+	private Date created_at;
+	private Date deleted_at;
+	private String is_deleted;
 	
 	// Festivals 컬럼
 	private int    content_id;
@@ -44,4 +49,7 @@ public class FestivalsContent {
 	private int    start;
 	private int    end;
 	
+	// 지역코드 조회용
+	private String area_content;    // 시도
+	private String sigungu_content; // 시군구
 }

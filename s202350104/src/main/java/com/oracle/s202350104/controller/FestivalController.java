@@ -57,7 +57,7 @@ public class FestivalController {
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("festival", festival);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "festival/detail", e.getMessage());
+			log.error("[{}]{}:{}",transactionId, "festival/detail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "festival/detail", "end");
 		}
