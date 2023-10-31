@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
+import com.oracle.s202350104.service.Paging;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,33 +20,48 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class FestivalController {
-	
+
 	private final FestivalsService fs;
 
-	
+
 	@GetMapping(value = "festival")
-	public String festival(Model model) {
+	public String festival(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
-			List<FestivalsContent> listFestivals = fs.listFestivals();
+			int totalFestivals = fs.totalFestivals();
+			
+			Paging page = new Paging(totalFestivals, currentPage);
+			festival.setStart(page.getStart());
+			festival.setEnd(page.getEnd());
+			
+			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
+			
+			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
+			model.addAttribute("page", page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "festival", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "festival", "end");
-		}
-		
+		}		
 		return "festival/festivalList";
 	}
 	
 	@GetMapping(value = "festival/detail")
 	public String festivalDetail(int contentId, Model model) {
-		FestivalsContent festival = fs.detailFestivals(contentId);
-		
-		model.addAttribute("contentId", contentId);
-		model.addAttribute("festival", festival);
-		
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "festival/detail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "festival/detail", "end");
+		}
 		return "festival/festivalDetail";
 	}
 	

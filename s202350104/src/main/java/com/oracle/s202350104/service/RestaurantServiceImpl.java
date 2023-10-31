@@ -2,7 +2,9 @@ package com.oracle.s202350104.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.RestaurantDao;
 import com.oracle.s202350104.model.Restaurants;
@@ -20,10 +22,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 	
 	@Override
 	public List<Restaurants> listRestaurant() {
-		List<Restaurants> listRestaurant = null;
-		log.info("RestaurantImpl listManager Start...");
-		listRestaurant = rd.listRestaurant();
+		List<Restaurants> listRestaurant = rd.listRestaurant();
 		
+		if(listRestaurant == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "식당 리스트가 존재하지 않습니다.");
+		}
 		return listRestaurant;
 	}
 

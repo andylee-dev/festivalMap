@@ -20,10 +20,19 @@ public class SpotServiceImpl implements SpotService {
 	private final SpotDao sd;
 
 	@Override
+	public int totalSpot() {
+		int totSpotCnt = sd.totalSpot();
+		
+		return totSpotCnt;
+	}
+	
+	@Override
 	public List<SpotContent> listSpot(SpotContent spotContent) {
 		List<SpotContent> spotList = sd.listSpot(spotContent);
 		log.info("SpotServiceImpl listSpot spotList.size()->"+spotList.size());
 		return spotList;
 	}
+
+
 
 }

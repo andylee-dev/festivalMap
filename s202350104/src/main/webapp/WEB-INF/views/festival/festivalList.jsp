@@ -10,9 +10,9 @@
 		<style type="text/css">
 			.card-text {
 				overflow: hidden;
-				text-overflow: ellipsis;
+				text-overflow: ellipsis; /* 말줄임표 */
 				display: -webkit-box;
-				-webkit-line-clamp: 10;
+				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
 				-webkit-box-orient: vertical;
 			}
 		</style>
@@ -29,6 +29,9 @@
 	<div class="container border p-5">
 		<form action="festival"></form>
 	</div> -->
+	
+		<c:set var="num" value="${page.total-page.start+1}"></c:set>
+	
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -46,10 +49,21 @@
 				 				 </div>	
 				 			</div>
 						</div>
+						<c:set var="num" value="${num-1}"></c:set>
 					</c:forEach>
 				</div>
 			</div>
 		</div>
+		
+		<c:if test="${page.startPage > page.pageBlock}">
+			<a href="festival?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+		</c:if>
+		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+			<a href="festival?currentPage=${i}">[${i}]</a>
+		</c:forEach>
+		<c:if test="${page.endPage < page.totalPage}">
+			<a href="festival?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+		</c:if>
 	</main>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
