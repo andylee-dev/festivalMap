@@ -14,6 +14,7 @@ public class Qna {
 	private String	answer_content;
 	private Date	created_at;
 	private	Date	updated_at;
+	private String	status;
 	
 	// 조회용
 	private String search;

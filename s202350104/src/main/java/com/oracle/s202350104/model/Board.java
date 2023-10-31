@@ -12,7 +12,7 @@ public class Board {
 	private int big_code;
 	private int small_code;
 	private String title;
-	private String contnet;
+	private String content;
 	private String status;
 	private int read_count;
 	private int score;
@@ -25,5 +25,14 @@ public class Board {
 	private Date created_at;
 	private Date updated_at;
 	private String is_deleted;
+	
+	// 조회용
+	private String name;
+	private String search;
+	private String keyword;
+	private String pageNum;
+	private int start;
+	private int end;
+
 	
 }
