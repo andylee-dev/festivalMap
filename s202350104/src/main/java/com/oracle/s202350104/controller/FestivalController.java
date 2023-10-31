@@ -19,10 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class FestivalController {
-	//a
+
 	private final FestivalsService fs;
 
-	
+
 	@GetMapping(value = "festival")
 	public String festival(Model model) {
 		UUID transactionId = UUID.randomUUID();
