@@ -63,7 +63,7 @@
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
 			<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-		</c:if>
+		</c:if>	
 	</main>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>

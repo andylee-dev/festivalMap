@@ -23,6 +23,12 @@ public class FestivalsServiceImpl implements FestivalsService {
 	@Override
 	public List<FestivalsContent> listFestivals(FestivalsContent festival) {
 		List<FestivalsContent> listFestivals = fd.listFestivals(festival);
+		
+		/* 시도, 시군구 내용 확인
+		 * for(FestivalsContent festi : listFestivals) {
+		 * festi.setArea_content(ad.areaContent(festi.getArea()));
+		 * festi.setSigungu_content(ad.sigunguContent(festi.getSigungu())); }
+		 */
 
 		if(listFestivals == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 리스트가 존재하지 않습니다.");
