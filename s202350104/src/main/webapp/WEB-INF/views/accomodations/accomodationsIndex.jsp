@@ -18,7 +18,7 @@
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	
-	<h1>Restaurant List</h1>
+	<h1>어디서 주무시겠어요?</h1>
 		<c:forEach var="accomodations" items="${listAccomodations}">
 			<div class="card" style="width: 18rem;">
   				<img src="${accomodations.img1}" class="card-img-top" alt="${accomodations.title}이미지" style="height: 190px;">
