@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
+import com.oracle.s202350104.service.Paging;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +24,24 @@ public class FestivalController {
 	private final FestivalsService fs;
 	
 	@GetMapping(value = "festival")
-	public String festival(Model model) {
+	public String festival(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
-			List<FestivalsContent> listFestivals = fs.listFestivals();
+			int totalFestivals = fs.totalFestivals();
+			log.info("totalFestivals" + totalFestivals);
+			
+			Paging page = new Paging(totalFestivals, currentPage);
+			festival.setStart(page.getStart());
+			festival.setEnd(page.getEnd());
+			log.info("StartPage" + page.getStartPage());
+			
+			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
+			log.info("FestivalCotroller listFestivals.size => " + listFestivals.size());
+			
+			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
+			model.addAttribute("page", page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "festival", e.getMessage());
 		} finally {

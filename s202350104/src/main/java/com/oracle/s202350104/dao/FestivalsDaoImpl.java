@@ -19,10 +19,10 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	private final SqlSession session;
 
 	@Override
-	public List<FestivalsContent> listFestivals() {
+	public List<FestivalsContent> listFestivals(FestivalsContent festival) {
 		List<FestivalsContent> listFestivals = null;
 		try {
-			listFestivals = session.selectList("nhFestivalsListAll");
+			listFestivals = session.selectList("nhFestivalsListAll", festival);
 			log.info("FestivalsDaoImpl listFestivals() => " + listFestivals.size());
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl listFestivals() => " + e.getMessage());
@@ -40,6 +40,18 @@ public class FestivalsDaoImpl implements FestivalsDao {
 			log.info("FestivalsDaoImpl detailFestivals() => " + e.getMessage());
 		}
 		return festival;
+	}
+
+	@Override
+	public int totalFestivals() {
+		int totalFestCnt = 0;
+		try {
+			totalFestCnt = session.selectOne("nhFestivalsTotal");
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl totalFestivals Exception => " + e.getMessage());
+		}
+		
+		return totalFestCnt;
 	}
 	
 }
