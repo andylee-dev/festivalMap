@@ -3,8 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.TagsMapper">
-	<select id="nhTagsListAll" resultType="Tags">
-		SELECT * FROM tags
+	<select id="nhTagsListAll" resultType="Tags" parameterType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT * FROM tags ORDER BY id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
 	<select id="nhTagsTotal" resultType="int">

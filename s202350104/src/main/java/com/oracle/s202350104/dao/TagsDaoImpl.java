@@ -21,7 +21,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhTagsListAll");
+			listTags = session.selectList("nhTagsListAll", tags);
 			log.info("TagsDaoImpl listTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listTags() => " + e.getMessage());
@@ -37,7 +37,6 @@ public class TagsDaoImpl implements TagsDao {
 		} catch(Exception e) {
 			log.info("TagsDaoImpl totalTags() => " + e.getMessage());
 		}
-		
 		return totalTagsCnt;
 	}
 
