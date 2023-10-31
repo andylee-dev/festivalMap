@@ -21,10 +21,10 @@ public class FestivalsServiceImpl implements FestivalsService {
 	private final FestivalsDao fd;
 	
 	@Override
-	public List<FestivalsContent> listFestivals() {
-		List<FestivalsContent> listFestivals = fd.listFestivals();
+	public List<FestivalsContent> listFestivals(FestivalsContent festival) {
+		List<FestivalsContent> listFestivals = fd.listFestivals(festival);
 
-		if(listFestivals==null) {
+		if(listFestivals == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 리스트가 존재하지 않습니다.");
 		}
 
@@ -36,6 +36,12 @@ public class FestivalsServiceImpl implements FestivalsService {
 		FestivalsContent festival = fd.detailFestivals(contentId);
 		
 		return festival;
+	}
+
+	@Override
+	public int totalFestivals() {
+		int totalFestCnt = fd.totalFestivals();
+		return totalFestCnt;
 	}
 
 }

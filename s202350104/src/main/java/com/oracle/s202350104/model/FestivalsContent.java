@@ -39,4 +39,9 @@ public class FestivalsContent {
 	private String is_wheelchair;
 	private String is_restroom;
 	
+	// 페이징 처리용
+	private String pageNum;
+	private int    start;
+	private int    end;
+	
 }
