@@ -39,16 +39,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="qna" items="${listQna}">
+						<c:forEach var="qna" items="${listQnaList}">
 							<tr>
 								<td>${qna.id}</td>
-								<td>${qna.name}</td>
-								<td>${qna.question_title}</td>
+								<td><a href="QnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
 								<td>${qna.question_content}</td>
-								<td>${qna.answer_title}</td>
-								<td>${qna.answer_content}</td>
-								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/DD"/></td>
-								<td>${qna.status}</td>
+								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
+								<td><c:if test="${qna.status == 0}">답변대기</c:if>
+									<c:if test="${qna.status == 1}">답변완료</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -57,5 +56,14 @@
 		</main>
 	</div>
 	</div>
+	<c:if test="${page.startPage > page.pageBlock}">
+			<a href="qna?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+		</c:if>
+		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+			<a href="qna?currentPage=${i}">[${i}]</a>
+		</c:forEach>
+		<c:if test="${page.endPage < page.totalPage}">
+			<a href="qna?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+		</c:if>
 </body>
 </html>

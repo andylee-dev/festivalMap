@@ -23,8 +23,8 @@ public class QnaListDaoImpl implements QnaListDao {
 		
 		try {
 			totQnaCount = session.selectOne("qnaTotal");
-			
 		} catch (Exception e) {
+			log.info("QnaListDaoImpl totalQnaList Exception => " + e.getMessage());
 		}
 		return totQnaCount;
 	}
@@ -35,7 +35,9 @@ public class QnaListDaoImpl implements QnaListDao {
 		
 		try {
 			qnaList = session.selectList("dhQnaListAll", qna);
+			log.info("QnaListDaoImpl qnaList() => " + qnaList.size());
 		} catch (Exception e) {
+			log.info("QnaListDaoImpl qnaList() => " + e.getMessage());
 		}
 		return qnaList;
 	}
