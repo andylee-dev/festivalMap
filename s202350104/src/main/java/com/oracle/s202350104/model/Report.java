@@ -15,5 +15,6 @@ public class Report {
 	
 	//조회용
 	private String content;
+	private int count;
 	
 }

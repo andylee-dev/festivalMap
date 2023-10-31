@@ -4,10 +4,11 @@
 
 <mapper namespace="com.oracle.s202350104.ReportMapper">
 	<select id="shReportListAll" resultType="Report">
-		select board_id, COUNT(*) as count 
-		from report 
-		where status = 1 
-		group by board_id 
-		ORDER BY count DESC
+		select r.board_id, b.content ,b.user_id ,count(r.user_id) as count 
+		from  board b  
+		inner join report r on
+		b.id = r.board_id 
+		group by b.content, r.board_id, b.user_id
+		order by count desc
 	</select>
 </mapper>	
