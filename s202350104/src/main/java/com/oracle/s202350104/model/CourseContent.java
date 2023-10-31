@@ -3,7 +3,7 @@ package com.oracle.s202350104.model;
 import lombok.Data;
 
 @Data
-public class courseContent {
+public class CourseContent {
 	
 	private int content_id;
 	private int course_id;
