@@ -26,4 +26,11 @@ public class SpotServiceImpl implements SpotService {
 		return spotList;
 	}
 
+	@Override
+	public int totalSpot() {
+		int totSpotCnt = sd.totalSpot();
+		
+		return totSpotCnt;
+	}
+
 }
