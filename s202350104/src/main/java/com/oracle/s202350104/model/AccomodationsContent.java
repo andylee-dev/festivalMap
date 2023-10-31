@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AccomodationsContent {
-	// Contents 컬럼
+		// Contents 컬럼
 		private int    area;
 		private int    sigungu;
 		private int    big_code;
@@ -24,7 +24,8 @@ public class AccomodationsContent {
 		private String homepage;
 		private int    readcount;
 		private String user_id;
-	// Accomodations 컬럼
+		
+		// Accommodations 컬럼
 		private int    content_id;
 		private int	   room_count;
 		private String reservation_url;
