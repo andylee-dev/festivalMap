@@ -15,19 +15,73 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class BoardServiceImpl implements BoardService{
-	
+public class BoardServiceImpl implements BoardService {
+
 	private final BoardDao boardDao;
 
 	@Override
-	public List<Board> getFreeAllList() {
+	public int boardCount() {
+		int countBoard = boardDao.boardCount();
+		return countBoard;
+	}
 
-		
-		List<Board> freeAllList = boardDao.getFreeAllList();
-				
-		log.info("service freeAllList size --> " + freeAllList.size());
-		
+	// 공지사항
+	@Override
+	public List<Board> getNoticAllList(Board board) {
+		List<Board> noticAllList = boardDao.getNoticAllList(board);
+
+		log.info("service noticAllList size : {}", noticAllList.size());
+
+		return noticAllList;
+	}
+
+	// 이달의 소식
+	@Override
+	public List<Board> getMagazinAllList(Board board) {
+
+		List<Board> magazinAllList = boardDao.getMagazinAllList(board);
+
+		log.info("service magazinAllList size : {}", magazinAllList.size());
+
+		return magazinAllList;
+	}
+
+	// 자유게시판
+	@Override
+	public List<Board> getFreeAllList(Board board) {
+
+		List<Board> freeAllList = boardDao.getFreeAllList(board);
+
+		log.info("service freeAllList size : {}", freeAllList.size());
+
 		return freeAllList;
 	}
 	
+	// 포토게시판
+	@Override
+	public List<Board> getPhotoAllList(Board board) {
+		
+		List<Board> phothAllList = boardDao.getPhotoAllList(board);
+		
+		return phothAllList;
+	}	
+
+	@Override
+	public Board boardDetail(int boardId) {
+
+		log.info("service boardId : {}", boardId);
+
+		Board boards = boardDao.boardDetail(boardId);
+
+		return boards;
+	}
+
+	@Override
+	public int boardUpdate(Board board) {
+
+		int updateBoard = boardDao.boardUpdate(board);
+
+		return updateBoard;
+	}
+
 }
