@@ -14,6 +14,7 @@
 		<typeAlias alias="Restaurants"       type="com.oracle.s202350104.model.Restaurants"/>
 		<typeAlias alias="RestaurantsContent" type="com.oracle.s202350104.model.RestaurantsContent"/>
 		<typeAlias alias="Accomodations"     type="com.oracle.s202350104.model.Accomodations"/>
+		<typeAlias alias="AccomodationsContent"     type="com.oracle.s202350104.model.AccomodationsContent"/>
 		<typeAlias alias="Course"            type="com.oracle.s202350104.model.Course"/>
 		<typeAlias alias="Experience"        type="com.oracle.s202350104.model.Experience"/>
 		<typeAlias alias="ExperienceContent" type="com.oracle.s202350104.model.ExperienceContent"/>
