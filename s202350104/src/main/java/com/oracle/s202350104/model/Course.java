@@ -1,5 +1,8 @@
 package com.oracle.s202350104.model;
 
+import lombok.Data;
+
+@Data
 public class Course {
 	
 	private int		id;
@@ -9,6 +12,7 @@ public class Course {
 	private String  course_info;
 	private String  time;
 	private String  schedule;
+	private String  course_title;
 	
 	// CourseContent
 	private int 	content_id;

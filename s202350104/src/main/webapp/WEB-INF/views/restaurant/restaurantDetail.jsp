@@ -1,78 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/components/header.jsp" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Restaurant Detail</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"
-    ></script>
 </head>
 <body>
 	 <!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-
-	<div id="content_title" class="container border p-5">
-		<h1>제목입니다.</h1>
+	
+	<h1>Restaurant Detail</h1>
+	<div class="container border p-5">
+	<table>
+		<tr><th>음식점명</th><td>${restaurant.title}</td></tr>
+		<tr><th>내용</th><td>${restaurant.content}</td></tr>
+		<tr><th>주소</th><td>${restaurant.address}</td></tr>
+		<tr><th>메뉴</th><td>${restaurant.menu}</td></tr>
+		<tr><th>운영시간</th><td>${restaurant.open_time}</td></tr>
+		<tr><th>휴무일</th><td>${restaurant.rest_date}</td></tr>
+	</table>
 	</div>
-
-	<!-- Section1 -->
-	<div class="container border p-5">			
-		컨텐츠 페이지입니다1
-	</div>
-
-	<!-- Section2 -->
-	<div class="container border p-5">			
-		컨텐츠 페이지입니다2
-	</div>
-
-	<!-- Section3 -->
-	<div class="container border p-5">			
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-		<h2>컨텐츠 페이지입니다3</h2>
-
-	</div>
-
-
+	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>

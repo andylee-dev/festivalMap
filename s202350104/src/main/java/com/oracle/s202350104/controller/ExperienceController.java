@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Experience;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.service.ExperienceService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,10 @@ public class ExperienceController {
 	}
 	
 	@RequestMapping(value = "experience/detail")
-	public String experienceDetail() {
+	public String experienceDetail(int content_id, Model model) {
+		ExperienceContent experience = es.detailExperience(content_id);
+		model.addAttribute("experience", experience);
+		
 		return "experience/experienceDetail";
 	}
 }

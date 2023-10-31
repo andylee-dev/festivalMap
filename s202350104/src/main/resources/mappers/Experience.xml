@@ -3,9 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.ExperienceMapper">
-	<select id="shExperienceListAll" resultType="Experience">
+	<select id="shExperienceListAll" resultType="ExperienceContent">
 		SELECT *
 		FROM  contents
 		WHERE big_code = 15
+	</select>
+	
+	
+	<select id="shExperienceDetail" resultType="ExperienceContent" parameterType="int">
+		select *
+		from contents c, experience e
+		where c.id = e.content_id
+		and e.content_id = #{content_id}
+	
 	</select>
 </mapper>	

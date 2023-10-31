@@ -9,11 +9,19 @@
 				   type="com.oracle.oBootMyBatis01.model.Emp" />		
 	</typeAliases> -->
 	<typeAliases>
-		<typeAlias alias="Festivals" type="com.oracle.s202350104.model.Festivals"/>
-		<typeAlias alias="Restaurant" type="com.oracle.s202350104.model.Restaurant"/>
-		<typeAlias alias="Accomodations" type="com.oracle.s202350104.model.Accomodations"/>
-		<typeAlias alias="Course" type="com.oracle.s202350104.model.Course"/>
-		<typeAlias alias="Experience" type="com.oracle.s202350104.model.Experience"/>
+		<typeAlias alias="Festivals"         type="com.oracle.s202350104.model.Festivals"/>
+		<typeAlias alias="FestivalsContent"  type="com.oracle.s202350104.model.FestivalsContent"/>
+		<typeAlias alias="Restaurants"       type="com.oracle.s202350104.model.Restaurants"/>
+		<typeAlias alias="RestaurantsContent" type="com.oracle.s202350104.model.RestaurantsContent"/>
+		<typeAlias alias="Accomodations"     type="com.oracle.s202350104.model.Accomodations"/>
+		<typeAlias alias="Course"            type="com.oracle.s202350104.model.Course"/>
+		<typeAlias alias="Experience"        type="com.oracle.s202350104.model.Experience"/>
+		<typeAlias alias="ExperienceContent" type="com.oracle.s202350104.model.ExperienceContent"/>
+		<typeAlias alias="Spot"		         type="com.oracle.s202350104.model.Spot"/>
+		<typeAlias alias="SpotContent"		 type="com.oracle.s202350104.model.SpotContent"/>
+		<typeAlias alias="Tags"              type="com.oracle.s202350104.model.Tags"/>
+		<typeAlias alias="Users"			 type="com.oracle.s202350104.model.Users"/>
+		<typeAlias alias="Board" type="com.oracle.s202350104.model.Board"/>
 	</typeAliases>
 	
 	
