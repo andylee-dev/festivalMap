@@ -9,10 +9,16 @@
 		(   
     			SELECT rownum rn, a.*
     			FROM 
-            			(select * from spot, contents
-             			 where spot.content_id = contents.id
-             			 order by content_id) a
+            	(select *
+            	 from spot s, contents c
+             	 where s.content_id = c.id
+             	 order by content_id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	<select id="spotTotal" resultType="int">
+	SELECT	count(*)
+	FROM	spot s , contents c
+	WHERE	s.content_id = c.id
 	</select>
 </mapper>	
