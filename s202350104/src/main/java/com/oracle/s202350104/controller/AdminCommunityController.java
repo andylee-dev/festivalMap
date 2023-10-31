@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(value = "/admin/board")
-public class AdminBoardController {
+@RequestMapping(value = "/admin/community")
+public class AdminCommunityController {
 
 }
