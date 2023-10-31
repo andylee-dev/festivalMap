@@ -26,6 +26,7 @@
 		<typeAlias alias="Report" 			 type="com.oracle.s202350104.model.Report"/>
 		<typeAlias alias="Qna" 				 type="com.oracle.s202350104.model.Qna"/>
 		<typeAlias alias="Point" 			 type="com.oracle.s202350104.model.Point"/>
+		<typeAlias alias="PointHistory"		 type="com.oracle.s202350104.model.PointHistory"/>
 	</typeAliases>
 	
 	

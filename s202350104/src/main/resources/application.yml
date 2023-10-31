@@ -14,7 +14,7 @@ spring:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@172.30.1.26:1521/xe
     #url: jdbc:oracle:thin:@localhost:1521/xe
-    username: s202350104 
+    username: s20235010104
     password: tiger
     
 # JPA Setting
