@@ -20,6 +20,12 @@ public class TagsServiceImpl implements TagsService {
 	private final TagsDao td;
 	
 	@Override
+	public int totalTags() {
+		int totalTagsCnt = td.totalTags();
+		return totalTagsCnt;
+	}
+	
+	@Override
 	public List<Tags> listTags(Tags tags) {
 		List<Tags> listTags = td.listTags(tags);
 		
@@ -31,9 +37,54 @@ public class TagsServiceImpl implements TagsService {
 	}
 
 	@Override
-	public int totalTags() {
-		int totalTagsCnt = td.totalTags();
+	public int totalUserTags() {
+		int totalTagsCnt = td.totalUserTags();
 		return totalTagsCnt;
+	}
+
+	@Override
+	public List<Tags> listUserTags(Tags tags) {
+		List<Tags> listTags = td.listUserTags(tags);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
+
+	@Override
+	public int totalBoardTags() {
+		int totalTagsCnt = td.totalBoardTags();
+		return totalTagsCnt;
+	}
+
+	@Override
+	public List<Tags> listBoardTags(Tags tags) {
+		List<Tags> listTags = td.listBoardTags(tags);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시판 태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
+
+	@Override
+	public int totalContentTags() {
+		int totalTagsCnt = td.totalContentTags();
+		return totalTagsCnt;
+	}
+
+	@Override
+	public List<Tags> listContentTags(Tags tags) {
+		List<Tags> listTags = td.listContentTags(tags);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "콘텐츠 태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
 	}
 
 }

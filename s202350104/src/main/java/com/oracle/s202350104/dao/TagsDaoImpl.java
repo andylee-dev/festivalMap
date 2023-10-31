@@ -18,6 +18,17 @@ public class TagsDaoImpl implements TagsDao {
 	private final SqlSession session;
 
 	@Override
+	public int totalTags() {
+		int totalTagsCnt = 0;
+		try {
+			totalTagsCnt = session.selectOne("nhTagsTotal");
+		} catch(Exception e) {
+			log.info("TagsDaoImpl totalTags() => " + e.getMessage());
+		}
+		return totalTagsCnt;
+	}
+	
+	@Override
 	public List<Tags> listTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
@@ -30,14 +41,39 @@ public class TagsDaoImpl implements TagsDao {
 	}
 
 	@Override
-	public int totalTags() {
-		int totalTagsCnt = 0;
-		try {
-			totalTagsCnt = session.selectOne("nhTagsTotal");
-		} catch(Exception e) {
-			log.info("TagsDaoImpl totalTags() => " + e.getMessage());
-		}
-		return totalTagsCnt;
+	public int totalUserTags() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Tags> listUserTags(Tags tags) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int totalBoardTags() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Tags> listBoardTags(Tags tags) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int totalContentTags() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Tags> listContentTags(Tags tags) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 		/*
