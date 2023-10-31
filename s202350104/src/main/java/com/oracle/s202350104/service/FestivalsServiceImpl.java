@@ -35,6 +35,10 @@ public class FestivalsServiceImpl implements FestivalsService {
 	public FestivalsContent detailFestivals(int contentId) {
 		FestivalsContent festival = fd.detailFestivals(contentId);
 		
+		if(festival == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 축제 정보가 존재하지 않습니다.");
+		}
+		
 		return festival;
 	}
 

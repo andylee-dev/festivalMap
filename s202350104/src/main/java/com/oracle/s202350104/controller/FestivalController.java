@@ -29,15 +29,12 @@ public class FestivalController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
 			int totalFestivals = fs.totalFestivals();
-			log.info("totalFestivals" + totalFestivals);
 			
 			Paging page = new Paging(totalFestivals, currentPage);
 			festival.setStart(page.getStart());
 			festival.setEnd(page.getEnd());
-			log.info("StartPage" + page.getStartPage());
 			
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
-			log.info("FestivalCotroller listFestivals.size => " + listFestivals.size());
 			
 			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
@@ -46,18 +43,24 @@ public class FestivalController {
 			log.error("[{}]{}:{}",transactionId,  "festival", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "festival", "end");
-		}
-		
+		}		
 		return "festival/festivalList";
 	}
 	
 	@GetMapping(value = "festival/detail")
 	public String festivalDetail(int contentId, Model model) {
-		FestivalsContent festival = fs.detailFestivals(contentId);
-		
-		model.addAttribute("contentId", contentId);
-		model.addAttribute("festival", festival);
-		
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "festival/detail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "festival/detail", "end");
+		}
 		return "festival/festivalDetail";
 	}
 	
