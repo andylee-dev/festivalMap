@@ -22,6 +22,7 @@
 		<typeAlias alias="Tags"              type="com.oracle.s202350104.model.Tags"/>
 		<typeAlias alias="Users"			 type="com.oracle.s202350104.model.Users"/>
 		<typeAlias alias="Board" type="com.oracle.s202350104.model.Board"/>
+		<typeAlias alias="Report" type="com.oracle.s202350104.model.Report"/>
 	</typeAliases>
 	
 	
