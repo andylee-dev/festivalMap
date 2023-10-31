@@ -4,12 +4,76 @@
 
 <mapper namespace="com.oracle.s202350104.BoardMapper">
 
-	<select id="freeAllList" resultType="Board">
+	<select id="boardCount" resultType="int">
 
-		select *
-		from board
-		where small_code = 1
+		select count(*)
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = 1
 
 	</select>
+
+	<select id="readCountUp" resultType="int">
+		update board 
+		set read_count = read_count + 1 
+		where id = #{boardId}
+
+	</select>
+	
+	<select id="noticAllList" resultType="Board">
+
+		select a.id, a.title, b.name, a.created_at, a.read_count
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = 1
+
+	</select>
+
+	<select id="magazinAllList" resultType="Board">
+
+		select a.id, a.title, b.name, a.created_at, a.read_count
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = 2
+
+	</select>
+
+	<select id="freeAllList" resultType="Board">
+
+		select a.id, a.title, b.name, a.created_at, a.read_count
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = 3
+
+	</select>
+	
+	<select id="photoAllList" resultType="Board">
+
+		select a.id, a.title, b.name, a.created_at, a.read_count
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = 4
+
+	</select>
+
+	<select id="boardDetail" parameterType="int" resultType="Board">
+
+		select a.id, a.title, b.name, a.content, a.created_at, a.updated_at
+		from board a, users b
+		where a.user_id = b.id
+		and a.id = #{boardId}
+
+	</select>
+	
+	<select id="boardUpdate" parameterType="Board" resultType="Board">
+
+		update board
+		set
+			title = #{title},
+			content = #{content},
+			updated_at = sysdate
+		where id = #{id}
+
+	</select>	
 
 </mapper>

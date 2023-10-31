@@ -21,6 +21,7 @@ spring:
   jpa:
     show-sql: true
     
+    
 # Operation --> create / none
     hibernate:
       ddl-auto: create
