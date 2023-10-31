@@ -8,13 +8,16 @@
 		<meta charset="UTF-8">
 		<title>FestivalList</title>
 		<style type="text/css">
+			.pageblock {
+				text-align: center;
+			}
 			.card-text {
 				overflow: hidden;
 				text-overflow: ellipsis; /* 말줄임표 */
 				display: -webkit-box;
 				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
 				-webkit-box-orient: vertical;
-			}
+			}	
 		</style>
 	</head>
 <body>
@@ -29,8 +32,6 @@
 	<div class="container border p-5">
 		<form action="festival"></form>
 	</div> -->
-	
-		<c:set var="num" value="${page.total-page.start+1}"></c:set>
 	
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
@@ -49,20 +50,19 @@
 				 				 </div>	
 				 			</div>
 						</div>
-						<c:set var="num" value="${num-1}"></c:set>
 					</c:forEach>
 				</div>
 			</div>
 		</div>
 		
 		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="festival?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+			<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="festival?currentPage=${i}">[${i}]</a>
+			<a href="festival?currentPage=${i}" class="pageblock">[${i}]</a>
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="festival?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+			<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 		</c:if>
 	</main>
 	<!-- Footer -->

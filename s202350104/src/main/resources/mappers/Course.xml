@@ -9,7 +9,14 @@
 		</select>
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
-			select * from courses
+			SELECT * 
+			FROM   contents
+			WHERE  id = ( 
+						 SELECT Content_id
+						 FROM   CourseContents
+						 WHERE  Course_id = ${CourseList.id }
+						 AND    Order_num = ${CourseList.order_num }
+						)
 		</select>
 		
 	</mapper>

@@ -9,6 +9,7 @@ public interface RestaurantDao {
 
 	List<Restaurants> 	listRestaurant();
 	RestaurantsContent 	detailRestaurant(int content_id);
-
+	
+	
 }
 	

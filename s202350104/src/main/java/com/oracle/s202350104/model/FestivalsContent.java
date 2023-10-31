@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.oracle.s202350104.model;
 
 import lombok.Data;
@@ -45,3 +46,60 @@ public class FestivalsContent {
 	private int    end;
 	
 }
+=======
+package com.oracle.s202350104.model;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class FestivalsContent {
+	// Contents 컬럼
+	private int    area;
+	private int    sigungu;
+	private int    big_code;
+	private int    small_code;
+	private String title;
+	private String content;
+	private String status;
+	private String img1;
+	private String img2;
+	private String img3;
+	private String address;
+	private int    postcode;
+	private String mapx;
+	private String mapy;
+	private String email;
+	private String phone;
+	private String homepage;
+	private int    readcount;
+	private String user_id;
+	private Date created_at;
+	private Date deleted_at;
+	private String is_deleted;
+	
+	// Festivals 컬럼
+	private int    content_id;
+	private String hours;
+	private String start_date;
+	private String end_date;
+	private String sponsor;
+	private String eventplace;
+	private String cost;
+	private String overview;
+	private String is_parking;
+	private String is_stroller;
+	private String is_wheelchair;
+	private String is_restroom;
+	
+	// 페이징 처리용
+	private String pageNum;
+	private int    start;
+	private int    end;
+	
+	// 지역코드 조회용
+	private String area_content;    // 시도
+	private String sigungu_content; // 시군구
+}
+>>>>>>> b49bf25e221460c879683f4c0c2e88ef6b38a302

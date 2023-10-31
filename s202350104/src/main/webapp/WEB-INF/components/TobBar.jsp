@@ -93,7 +93,7 @@
 							<li><a class="dropdown-item" href="itemList.do">내정보</a></li>
 							<li><a class="dropdown-item" href="itemList.do">내 찜목록</a></li>
 							<li><a class="dropdown-item" href="itemList.do">내 관심사</a></li>
-							<li><a class="dropdown-item" href="itemList.do">1:1문의</a></li>
+							<li><a class="dropdown-item" href="user/mypage/QnaList">1:1문의</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
