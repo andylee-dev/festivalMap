@@ -8,4 +8,8 @@ public interface ReportDao {
 
 	List<Report> listReport();
 
+	Report detailBoard(int board_id);
+
+	List<Report> reportDetail(int board_id);
+
 }

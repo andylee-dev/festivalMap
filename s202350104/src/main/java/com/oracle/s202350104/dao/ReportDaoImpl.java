@@ -26,4 +26,28 @@ public class ReportDaoImpl implements ReportDao {
 		return listReport;
 	}
 
+	@Override
+	public Report detailBoard(int board_id) {
+		Report detailBoard = new Report();
+		try {
+			detailBoard = session.selectOne("shBoardDetail",board_id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return detailBoard;
+	}
+
+	@Override
+	public List<Report> reportDetail(int board_id) {
+		List<Report> reportDetail = null;
+		try {
+			reportDetail = session.selectList("shReportDetail", board_id);
+		} catch (Exception e) {
+			
+		}
+		
+		
+		return reportDetail;
+	}
+
 }

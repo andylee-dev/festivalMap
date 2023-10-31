@@ -25,6 +25,18 @@ public class AdminCsController {
 		model.addAttribute("listReport",listReport);
 		return "admin/cs/report";
 	}
+	
+	@RequestMapping(value = "admin/cs/reportDetail")
+	public String reportDetail(int board_id, Model model) {
+		Report boardDetail = res.boardDetail(board_id);
+		List<Report> reportDetail = res.reportDetail(board_id);
+		model.addAttribute("boardDetail", boardDetail);
+		model.addAttribute("reportDetail", reportDetail);
+		
+		
+		return "admin/cs/reportDetail";
+		
+	}
 
 }
 

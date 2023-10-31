@@ -20,4 +20,16 @@ public class ReportServiceImpl implements ReportService {
 		return listReport;
 	}
 
+	@Override
+	public Report boardDetail(int board_id) {
+		Report boardDetail = rd.detailBoard(board_id);
+		return boardDetail;
+	}
+
+	@Override
+	public List<Report> reportDetail(int board_id) {
+		List<Report> reportDetail = rd.reportDetail(board_id);
+		return reportDetail;
+	}
+
 }

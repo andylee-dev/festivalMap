@@ -11,4 +11,15 @@
 		group by b.content, r.board_id, b.user_id
 		order by count desc
 	</select>
+	
+	<select id="shReportDetail" resultType="Report" parameterType="int">
+		select * from report where board_id= #{board_id}
+	</select>
+	
+	<select id="shBoardDetail" resultType="Report" parameterType="int">
+		select id, title, content,user_id from board where id= #{board_id}
+	</select>
+	
+	
+	
 </mapper>	

@@ -8,4 +8,8 @@ public interface ReportService {
 
 	List<Report> listReport();
 
+	Report boardDetail(int board_id);
+
+	List<Report> reportDetail(int board_id);
+
 }
