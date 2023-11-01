@@ -32,7 +32,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhTagsListAll", tags);
+			listTags = session.selectList("nhTagsListPage", tags);
 			log.info("TagsDaoImpl listTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listTags() => " + e.getMessage());
@@ -55,7 +55,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listUserTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhUserTagsListAll", tags);
+			listTags = session.selectList("nhUserTagsListPage", tags);
 			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
@@ -78,7 +78,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listBoardTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhBoardTagsListAll", tags);
+			listTags = session.selectList("nhBoardTagsListPage", tags);
 			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listBoardTags() => " + e.getMessage());
@@ -101,10 +101,22 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listContentTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhContentTagsListAll", tags);
+			listTags = session.selectList("nhContentTagsListPage", tags);
 			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
+		}
+		return listTags;
+	}
+
+	@Override
+	public List<Tags> listTagsAll() {
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhTagsListAll");
+			log.info("TagsDaoImpl listTagsAll() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listTagsAll() => " + e.getMessage());
 		}
 		return listTags;
 	}
