@@ -3,6 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.TagsMapper">
+	<select id="nhTagsTotal" resultType="int">
+		SELECT count(*) FROM Tags
+	</select>
+
 	<select id="nhTagsListAll" resultType="Tags" parameterType="Tags">
 		SELECT * 
 		FROM 
@@ -14,7 +18,63 @@
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
-	<select id="nhTagsTotal" resultType="int">
-		SELECT count(*) FROM Tags
+	<select id="nhUserTagsTotal" resultType="int">
+		SELECT count(*) FROM UserTags
+	</select>
+	
+	<select id="nhUserTagsListAll" resultType="Tags" parameterType="Tags">
+		SELECT *
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT user_id, tag_id AS id, name
+			 FROM usertags u, tags t
+			 WHERE u.tag_id = t.id 
+			 GROUP BY user_id, tag_id, name
+			 ORDER BY user_id, tag_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="nhBoardTagsTotal" resultType="int">
+		SELECT count(*) FROM BoardTags
+	</select>
+	
+	<select id="nhBoardTagsListAll" resultType="Tags" parameterType="Tags">
+		SELECT *
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT board_id, tag_id AS id, name
+			 FROM boardtags b, tags t
+			 WHERE b.tag_id = t.id 
+			 GROUP BY board_id, tag_id, name
+			 ORDER BY board_id, tag_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="nhContentTagsTotal" resultType="int">
+		SELECT count(*) FROM ContentTags
+	</select>
+	
+	<select id="nhContentTagsListAll" resultType="Tags" parameterType="Tags">
+		SELECT *
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT content_id, tag_id AS id, name, c.title, cc.content AS cc_content
+			 FROM contenttags ct, tags t, contents c, commoncodes cc 
+			 WHERE ct.tag_id = t.id 
+			 AND   ct.content_id = c.id
+             AND   c.big_code = cc.big_code
+             AND   cc.small_code = 999
+			 GROUP BY content_id, tag_id, name, c.title, cc.content
+			 ORDER BY content_id, tag_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 </mapper>

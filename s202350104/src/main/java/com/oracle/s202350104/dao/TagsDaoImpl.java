@@ -42,38 +42,71 @@ public class TagsDaoImpl implements TagsDao {
 
 	@Override
 	public int totalUserTags() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalTagsCnt = 0;
+		try {
+			totalTagsCnt = session.selectOne("nhUserTagsTotal");
+		} catch(Exception e) {
+			log.info("TagsDaoImpl totalUserTags() => " + e.getMessage());
+		}
+		return totalTagsCnt;
 	}
 
 	@Override
 	public List<Tags> listUserTags(Tags tags) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhUserTagsListAll", tags);
+			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
+		}
+		return listTags;
 	}
 
 	@Override
 	public int totalBoardTags() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalTagsCnt = 0;
+		try {
+			totalTagsCnt = session.selectOne("nhBoardTagsTotal");
+		} catch(Exception e) {
+			log.info("TagsDaoImpl totalBoardTags() => " + e.getMessage());
+		}
+		return totalTagsCnt;
 	}
 
 	@Override
 	public List<Tags> listBoardTags(Tags tags) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhBoardTagsListAll", tags);
+			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listBoardTags() => " + e.getMessage());
+		}
+		return listTags;
 	}
 
 	@Override
 	public int totalContentTags() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalTagsCnt = 0;
+		try {
+			totalTagsCnt = session.selectOne("nhContentTagsTotal");
+		} catch(Exception e) {
+			log.info("TagsDaoImpl totalContentTags() => " + e.getMessage());
+		}
+		return totalTagsCnt;
 	}
 
 	@Override
 	public List<Tags> listContentTags(Tags tags) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhContentTagsListAll", tags);
+			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
+		}
+		return listTags;
 	}
 
 		/*
