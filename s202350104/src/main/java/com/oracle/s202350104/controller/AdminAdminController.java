@@ -9,24 +9,24 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(value = "/admin/admin")
+@RequestMapping(value = "/admin/admin/*")
 public class AdminAdminController {
 	
 	// private final AdminService as;
 	
-	@RequestMapping(value = "adminList")
+	@RequestMapping(value = "/adminList")
 	public String adminList() {
 			
 		return "admin/admin/adminList";
 	}
 	
-	@RequestMapping(value = "areaCode")
+	@RequestMapping(value = "/areaCode")
 	public String areaCode() {
 		
 		return "admin/admin/areaCode";
 	}
 	
-	@RequestMapping(value = "commonCode")
+	@RequestMapping(value = "/commonCode")
 	public String commonCode() {
 		
 		return "admin/admin/commonCode";

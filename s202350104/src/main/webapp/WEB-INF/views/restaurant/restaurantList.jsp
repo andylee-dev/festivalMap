@@ -10,8 +10,8 @@
 		<style type="text/css">
 		.card-text {
 			overflow: 			hidden;
-			text-overflow: 		ellipsis;
-			diplay: 		    -webkit-box;
+			text-overflow: 		ellipsis; /* 말줄임표 */
+			diplay: 		    -webkit-box; /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
 			-webkit-line-clamp: 10;
 			-webkit-box-orient: vertical;
 		}
@@ -50,6 +50,16 @@
 					</div>
 				</div>		
 			</div>
+			
+			<c:if test="${page.startPage > page.pageBlock}">
+				<a href="restaurant?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			</c:if>
+			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+				<a href="restaurant?currentPage=${i}" class="pageblock">[${i}]</a>
+			</c:forEach>
+			<c:if test="${page.endPage < page.totalPage}">
+				<a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			</c:if>
 		</main>			
 		
 		<!-- Footer -->

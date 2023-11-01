@@ -13,11 +13,9 @@ import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.SpotService;
-import com.oracle.s202350104.service.user.UserService;
-import com.oracle.s202350104.model.Restaurants;
+/*import com.oracle.s202350104.service.user.UserService;
+import com.oracle.s202350104.model.Restaurants;*/
 import com.oracle.s202350104.model.SpotContent;
-import com.oracle.s202350104.service.content.ContentService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +27,6 @@ public class AdminContentController {
 	
 	private final ExperienceService es;
 	private final FestivalsService fs;
-	private final ContentService cs;
 	private final SpotService ss;
 	
 	@RequestMapping(value = "festival")
@@ -63,12 +60,12 @@ public class AdminContentController {
 		return "admin/content/experience";
 	}
 
-	@RequestMapping(value = "restaurant")
-	public String restaurant(Model model) {
-		List<Restaurants> listRestaurant = cs.listRestaurant();
-		model.addAttribute("listRestaurant", listRestaurant);
-		return "admin/content/restaurant";
-	}
+	/*
+	 * @RequestMapping(value = "restaurant") public String restaurant(Model model) {
+	 * List<Restaurants> listRestaurant = cs.listRestaurant();
+	 * model.addAttribute("listRestaurant", listRestaurant); return
+	 * "admin/content/restaurant"; }
+	 */
 
 	@RequestMapping(value = "spot")
 	public String spot(SpotContent spotContent, String currentPage, Model model) {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.oracle.s202350104.model.Restaurants;
 import com.oracle.s202350104.model.RestaurantsContent;
+import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.RestaurantService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,21 @@ public class RestaurantController {
 	private final RestaurantService rs;
 	
 	@GetMapping(value = "/restaurant")
-	public String restaurant(Model model) {
+	public String restaurant(RestaurantsContent restaurant, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}", transactionId, "restaurant", "start");
-			List<Restaurants> listRestaurant = rs.listRestaurant();
+			int totalRestaurant = rs.totalRestaurant();
+			
+			Paging page = new Paging(totalRestaurant, currentPage);
+			restaurant.setStart(page.getStart());
+			restaurant.setEnd(page.getEnd());
+			
+			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			
+			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("page", page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "restaurant", e.getMessage());
 		} finally {

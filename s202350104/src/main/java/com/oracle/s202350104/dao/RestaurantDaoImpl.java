@@ -19,8 +19,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	private final SqlSession session;
 
 	@Override
-	public List<Restaurants> listRestaurant() {
-		List<Restaurants> restaurantList = null;
+	public List<RestaurantsContent> listRestaurant(RestaurantsContent restaurant) {
+		List<RestaurantsContent> restaurantList = null;
 		log.info("RestaurantImpl listRestaurant Start...");
 		
 		try {
@@ -44,6 +44,18 @@ public class RestaurantDaoImpl implements RestaurantDao {
 			log.info("RestaurantsContent detailRestaurant() ->" + e.getMessage());
 		}
 		return restaurant;
+	}
+
+	@Override
+	public int totalRestaurant() {
+		int totalRestaurant = 0;
+		try {
+			totalRestaurant = session.selectOne("joRestaurantTotal");
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl totalRestaurant() Exception ->" + e.getMessage());
+		}
+		
+		return totalRestaurant;
 	}
 	
 }

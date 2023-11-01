@@ -21,8 +21,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 	private final RestaurantDao rd;
 	
 	@Override
-	public List<Restaurants> listRestaurant() {
-		List<Restaurants> listRestaurant = rd.listRestaurant();
+	public List<RestaurantsContent> listRestaurant(RestaurantsContent restaurant) {
+		List<RestaurantsContent> listRestaurant = rd.listRestaurant(restaurant);
 		
 		if(listRestaurant == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "식당 리스트가 존재하지 않습니다.");
@@ -37,6 +37,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 		restaurant = rd.detailRestaurant(content_id);
 		
 		return restaurant;
+	}
+
+	@Override
+	public int totalRestaurant() {
+		int totalRestaurant = 0;
+		totalRestaurant = rd.totalRestaurant();
+		return totalRestaurant;
 	}
 
 }
