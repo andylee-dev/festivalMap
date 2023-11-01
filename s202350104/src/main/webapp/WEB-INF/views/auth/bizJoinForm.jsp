@@ -28,12 +28,7 @@
 			이메일 <input type="email" name="email"><p> <!-- 이메일 도메인 주소를 select할 수 있도록 바꾸기 -->
 			주소 <!-- 우편번호 검색 api 및 기본주소 자동입력 -->
 				<input type="text" name="address"><p>
-			관심사 <select name="tags_id"> <!-- 컬럼 이름 바꿔야 함! -->
-					<c:forEach var="tag" items="${listTags}"> <!-- UserService에서 TagsDaoImpl로 값 받아와야 함 -->
-						<option value="${tag.id}">${tag.content}</option>
-					</c:forEach>
-				</select><p>
-				<!-- 선택한 관심사를 박스 안에서 보여주고 삭제할 수 있는 기능 -->
+			사업자 증빙자료 <!-- 파일 찾아보기 & 업로드 기능 0831 -->
 			<button type="submit">회원가입</button>
 			<button type="reset">초기화</button>
 		</form>

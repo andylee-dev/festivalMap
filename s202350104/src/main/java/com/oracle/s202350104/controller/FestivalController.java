@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
 
@@ -22,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FestivalController {
 
 	private final FestivalsService fs;
+	private final AreaService as;
 
 	@GetMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -35,12 +38,14 @@ public class FestivalController {
 			festival.setEnd(page.getEnd());
 			
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
+			List<Areas> listAreas = as.listPoint();
 			
 			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
+			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "festival", e.getMessage());
+			log.error("[{}]{}:{}",transactionId, "festival", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "festival", "end");
 		}		
