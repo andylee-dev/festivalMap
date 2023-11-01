@@ -5,15 +5,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>포인트정보</title>
+<title>포인트관리</title>
 </head>
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<h1>포인트정보</h1>
-	<div class="container border p-5">
-	<table>
-		<tr><th>포인트ID</th><th>포인트작성일</th><th>포인트이름</th><th>포인트내용</th><th>포인트점수</th></tr>
+	<h1>포인트관리</h1>
+	<div class="border p-3 m-3">
+				<button type="button" class="btn btn-outline-secondary">등록</button>
+				<table class="table table-striped table-sm">
+					<thead>
+						<tr>
+							<th scope="col">포인트번호</th>
+							<th scope="col">생성날짜</th>
+							<th scope="col">포인트이름</th>
+							<th scope="col">포인트내용</th>
+							<th scope="col">포인트점수</th>
+						</tr>
+					</thead>
 		<c:forEach var="point" items="${listPoint}">
 		<tr>
 		<td>${point.id }</td>
@@ -25,8 +34,6 @@
 		</c:forEach>
 	</table>
 	</div>
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 
 </body>
 </html>
