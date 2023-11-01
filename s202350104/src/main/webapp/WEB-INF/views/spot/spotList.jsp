@@ -38,8 +38,14 @@
 		</div>
 		<div>
 		<select name="area">
-		<c:forEach var="spot" items="${listSpot}">
-				<option value="${spot.area}">${spot.ac_content}</option>
+		<c:forEach var="areas" items="${listAreas}">
+				<option value="${areas.area}">${areas.content}</option>
+		</c:forEach></select>
+		</div>
+		<div>
+		<select name="sigungu">
+		<c:forEach var="areas" items="${listAreas}">
+				<option value="${areas.sigungu}">${areas.content}</option>
 		</c:forEach></select>
 		</div>
 		<div class="album py-5 bg-body-tertiary">
