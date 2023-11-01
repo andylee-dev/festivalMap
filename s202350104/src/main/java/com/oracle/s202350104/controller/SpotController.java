@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,19 +23,25 @@ public class SpotController {
 
 	@RequestMapping(value = "spot")
 	public String spot(SpotContent spotContent,String currentPage, Model model) {
-	
-		int totalSpot = ss.totalSpot();
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "spot", "start");
+			int totalSpot = ss.totalSpot();
 		
-		Paging page = new Paging(totalSpot, currentPage);
+			Paging page = new Paging(totalSpot, currentPage);
+			spotContent.setStart(page.getStart());
+			spotContent.setEnd(page.getEnd());
 		
-		spotContent.setStart(page.getStart());
-		spotContent.setEnd(page.getEnd());
+			List<SpotContent> listSpot = ss.listSpot(spotContent);
 		
-		List<SpotContent> listSpot = ss.listSpot(spotContent);
-		log.info("SpotController list listSpot.size()=>"+listSpot.size());
-		model.addAttribute("totalSpot",totalSpot);
-		model.addAttribute("listSpot", listSpot);
-		model.addAttribute("page",page);
+			model.addAttribute("totalSpot",totalSpot);
+			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("page",page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "spot", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "spot", "end");
+		}
 		return "spot/spotList";
 	}
 	

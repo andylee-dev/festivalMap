@@ -1,5 +1,7 @@
 package com.oracle.s202350104.model;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -25,6 +27,10 @@ public class SpotContent {
 	private String 	homepage;
 	private int    	readcount;
 	private String 	user_id;
+	private	Date	created_at;
+	private Date	updated_at;
+	private String	is_deleted;
+	
 	
 	// Spot 컬럼
 	private int 	content_id;

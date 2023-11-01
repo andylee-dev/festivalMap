@@ -12,8 +12,10 @@ import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.user.UserService;
 import com.oracle.s202350104.model.Restaurants;
+import com.oracle.s202350104.model.SpotContent;
 import com.oracle.s202350104.service.content.ContentService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class AdminContentController {
 	private final ExperienceService es;
 	private final FestivalsService fs;
 	private final ContentService cs;
+	private final SpotService ss;
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -68,7 +71,26 @@ public class AdminContentController {
 	}
 
 	@RequestMapping(value = "spot")
-	public String spot() {
+	public String spot(SpotContent spotContent, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin spot", "start");
+			int totalSpot = ss.totalSpot();
+		
+			Paging page = new Paging(totalSpot, currentPage);
+			spotContent.setStart(page.getStart());
+			spotContent.setEnd(page.getEnd());
+		
+			List<SpotContent> listSpot = ss.listSpot(spotContent);
+		
+			model.addAttribute("totalSpot",totalSpot);
+			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("page",page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "admin spot", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "admin spot", "end");
+		}
 		return "admin/content/spot";
 	}
 
