@@ -32,4 +32,18 @@ public class ReportServiceImpl implements ReportService {
 		return reportDetail;
 	}
 
+	@Override
+	public int reportBoardUpdate(int id) {
+		int updateBoard = 0;
+		updateBoard = rd.updateBoard(id);
+		return updateBoard;
+	}
+
+	@Override
+	public int reportUpdate(int id) {
+		int reportUpdate = 0;
+		reportUpdate = rd.reportUpdate(id);
+		return reportUpdate;
+	}
+
 }

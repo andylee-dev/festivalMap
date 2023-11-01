@@ -31,9 +31,9 @@
 					<thead>
 						<tr>
 							<th scope="col">신고ID</th>
-							<th scope="col"></th>
 							<th scope="col">글내용</th>
-							<th scope="col">작성자</th>
+							<th scope="col">작성일</th>
+							<th scope="col">상태</th>
 							
 						</tr>
 					</thead>
@@ -45,9 +45,13 @@
 								<td>${report.created_at}</td>
 								<td>${report.status}</td>
 							</tr>
+							<tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				<button onclick="location.href='reportBoardUpdate?id=${boardDetail.id}'">게시글삭제</button>
+				<button onclick="location.href='reportUpdate?id=${boardDetail.id}'">신고글반려</button>
+				<button onclick="location.href='report'">이전</button>
 			</div>			
 		</main>
 	</div>
