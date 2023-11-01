@@ -18,16 +18,43 @@
 	crossorigin="anonymous">
 	
 </script>
+<!-- jQuery 라이브러리 불러오기 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	function closeAndRedirect(smallCode) {
+	    $.ajax({
+	        url: '/',
+	        method: 'GET',
+	        success: function () {
+	            // 취소 버튼 실행 시 이전페이지 이동 + 새로고침
+	           	if (smallCode === 1) {
+	                // 공지사항 게시판으로 리디렉션
+	                location.href = '/noticBoardList';
+	            } else if(smallCode === 2) {
+	            	// 이달의 소식 게시판으로 리디렉션
+	                location.href = '/magazinBoardList';
+	            } else if(smallCode === 3){
+	            	// 자유게시판으로 리디렉션
+	                location.href = '/freeBoardList';
+	            } else{
+	            	// 기본 & 오류 처리
+	            	location.href = '/home';
+	            }
+	        }
+	    });
+	}
+</script>
 </head>
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 
-	<div id="content_title" class="container border p-5 mb-4">
-		<h1>게시판 상세정보</h1>
+	<div class="container mt-4">
+		<h1 class="text-center">게시판 상세정보</h1>
 	</div>
-	<div class="container border p-5">
-		<table class="table">
+	<div class="container border p-4 mb-4">
+		<table class="table table-bordered">
 			<tr class="table-primary">
 				<th scope="col">제목</th>
 				<td>${board.title }</td>
@@ -35,12 +62,12 @@
 				<td>${board.name }</td>
 				<th scope="col">작성일</th>
 				<td><fmt:formatDate value="${board.created_at }" type="date"
-									pattern="YYYY/MM/dd"/>
+									pattern="yyyy/MM/dd"/>
 				</td>
 				<c:if test="${board.updated_at != null}">
         			<th scope="col">수정일</th>
        		   		<td><fmt:formatDate value="${board.updated_at}" type="date" 
-       		   							pattern="YYYY/MM/dd" />
+       		   							pattern="yyyy/MM/dd" />
        		   		</td>
     			</c:if>
 			</tr>
@@ -48,13 +75,12 @@
 				<th scope="col">내용</th>
 				<td>${board.content }</td>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="button" value="수정" onclick="location.href='boardUpdateForm?id=${board.id}'">
-					<input type="button" value="삭제" onclick="location.href='boardDelete?id=${board.id}'">
-				</td>
-			</tr>
 		</table>
+	</div>
+	<div class="text-center">
+		<button class="btn btn-primary" onclick="location.href='boardUpdateForm?id=${board.id}'">수정</button>
+		<button class="btn btn-danger" onclick="location.href='boardDelete?id=${board.id}&smallCode=${board.small_code }'">삭제</button>
+		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
 	</div>
 </body>
 </html>

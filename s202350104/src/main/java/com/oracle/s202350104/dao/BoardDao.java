@@ -6,7 +6,7 @@ import com.oracle.s202350104.model.Board;
 
 public interface BoardDao {
 	
-	int boardCount();
+	int boardCount(int smallCode);
 
 	List<Board> getNoticAllList(Board board);
 
@@ -15,10 +15,17 @@ public interface BoardDao {
 	List<Board> getFreeAllList(Board board);
 	
 	List<Board> getPhotoAllList(Board board);
+	
+	List<Board> getEventAllList(Board board);
 
 	Board boardDetail(int boardId);
 
 	int boardUpdate(Board board);
+
+	int boardDelete(int boardId);
+
+	int boardInsert(Board board);
+
 
 
 

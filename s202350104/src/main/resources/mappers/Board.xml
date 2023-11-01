@@ -9,7 +9,7 @@
 		select count(*)
 		from board a, users b
 		where a.user_id = b.id
-		and a.small_code = 1
+		and a.small_code = #{smallCode}
 
 	</select>
 
@@ -22,7 +22,7 @@
 	
 	<select id="noticAllList" resultType="Board">
 
-		select a.id, a.title, b.name, a.created_at, a.read_count
+		select *
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = 1
@@ -31,7 +31,7 @@
 
 	<select id="magazinAllList" resultType="Board">
 
-		select a.id, a.title, b.name, a.created_at, a.read_count
+		select *
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = 2
@@ -40,7 +40,7 @@
 
 	<select id="freeAllList" resultType="Board">
 
-		select a.id, a.title, b.name, a.created_at, a.read_count
+		select *
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = 3
@@ -49,23 +49,32 @@
 	
 	<select id="photoAllList" resultType="Board">
 
-		select a.id, a.title, b.name, a.created_at, a.read_count
+		select *
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = 4
 
 	</select>
+	
+	<select id="eventAllList" resultType="Board">
+
+		select *
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = 5
+
+	</select>
 
 	<select id="boardDetail" parameterType="int" resultType="Board">
 
-		select a.id, a.title, b.name, a.content, a.created_at, a.updated_at
+		select *
 		from board a, users b
 		where a.user_id = b.id
 		and a.id = #{boardId}
 
 	</select>
 	
-	<select id="boardUpdate" parameterType="Board" resultType="Board">
+	<update id="boardUpdate" parameterType="Board">
 
 		update board
 		set
@@ -74,6 +83,22 @@
 			updated_at = sysdate
 		where id = #{id}
 
-	</select>	
+	</update>
+		
+	<delete id="boardDelete" parameterType="int">
+
+		delete from board where id = #{boardId}
+
+	</delete>	
+	
+	<insert id="boardInsert" parameterType="Board">
+		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
+			select board_seq_generator.nextval from dual
+		</selectKey>
+		insert into board (id, user_id, big_code, small_code, 
+						   title, content, read_count, created_at) 
+		values(#{id}, #{user_id}, #{big_code},
+			   #{small_code}, #{title}, #{content}, 0, sysdate)		
+	</insert>
 
 </mapper>
