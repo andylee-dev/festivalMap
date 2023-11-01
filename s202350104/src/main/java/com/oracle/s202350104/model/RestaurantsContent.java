@@ -2,6 +2,8 @@ package com.oracle.s202350104.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
@@ -45,5 +47,8 @@ public class RestaurantsContent {
 	private int    start;
 	private int    end;
 	
+	// join용
+	private String area_content;
+	private String sigungu_content;
 	
 }
