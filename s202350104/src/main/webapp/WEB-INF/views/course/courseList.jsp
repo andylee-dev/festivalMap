@@ -8,16 +8,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Course List</title>
-</style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<h1>여기는 코       스 입니다.</h1>
+	<h1>여기는 코스 입니다.</h1>
 	<h2>코스 수 : ${courseCount }</h2>
 	
-	<c:forEach var="course" items="${CourseList }">
+	<c:forEach var="course" items="${courseList }">
 		<div class="card" style="width: 18em;">
-			<img src="" alt="" /> 
+			<img src="${course.img1 }" class="card-img-top" alt="${course.course_title }" /> 
 			<div class="card-body">
 				<h5 class="card-title">코스이름 : ${course.course_title }</h5>
 				<p class="card-text">코스 제목 : ${course.course_info }</p>
