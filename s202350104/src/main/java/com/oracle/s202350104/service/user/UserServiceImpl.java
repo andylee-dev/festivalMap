@@ -29,9 +29,4 @@ public class UserServiceImpl implements UserService {
 		return listUsers;
 	}
 
-	@Override
-	public Users findUser() {
-		return null;
-	}
-
 }

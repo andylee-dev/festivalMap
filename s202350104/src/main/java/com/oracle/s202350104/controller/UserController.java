@@ -21,23 +21,22 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(value = "/user/*")
 public class UserController {
 	
 	private final QnaListService qs;
 	private final TagsService ts;
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "user")
 	public String userList() {
 		return "user";
 	}
 	
-	@RequestMapping(value = "/join")
+	@RequestMapping(value = "user/join")
 	public String userJoin() {
 		return "auth/join";
 	}
 	
-	@RequestMapping(value = "/joinForm")
+	@RequestMapping(value = "user/joinForm")
 	public String userJoinForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
@@ -52,59 +51,62 @@ public class UserController {
 		return "auth/joinForm";
 	}
 	
-	@RequestMapping(value = "/bizJoinForm")
+	@RequestMapping(value = "user/bizJoinForm")
 	public String bizJoinForm() {
 		return "auth/bizJoinForm";
 	}
 	
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "user/login")
 	public String userLogin() {
 		return "auth/login";
 	}
 	
-	@RequestMapping(value = "/idSearch")
+	@RequestMapping(value = "user/idSearch")
 	public String userIdSearch() {
 		return "auth/idSearch";
 	}
 	
-	@RequestMapping(value = "/idSearchResult")
+	@RequestMapping(value = "user/idSearchResult")
 	public String idSearchResult() {
 		return "auth/idSearchResult";
 	}
 	
-	@RequestMapping(value = "/passwordSearch")
+	@RequestMapping(value = "user/passwordSearch")
 	public String userPwSearch() {
 		return "auth/passwordSearch";
 	}
 	
-	@RequestMapping(value = "/passwordSearchResult")
+	@RequestMapping(value = "user/passwordSearchResult")
 	public String pwSearchResult() {
 		return "auth/passwordSearchResult";
 	}
 	
-	@RequestMapping(value = "/myPage")
-	public String myPage() {
-		return "user/myPage/index";
+	@RequestMapping(value = "user/mypage/myInfo")
+	public String myInfo() {
+		return "user/mypage/myInfo";
 	}
 	
-	@RequestMapping(value = "/myPage/myLike")
+	@RequestMapping(value = "user/mypage/myLike")
 	public String myLike() {
-		return "user/myPage/myLike";
+		return "user/mypage/myLike";
 	}
 	
-
+	@RequestMapping(value = "user/mypage/myPoint")
+	public String myPoint() {
+		return "user/mypage/myPoint";
+	}
 	
-	@RequestMapping(value = "/myPage/QnaDetail")
+	@RequestMapping(value = "user/mypage/QnaDetail")
 	public String QnaDetail() {
-		return "user/myPage/QnaDetail";
+		return "user/mypage/QnaDetail";
 	}
 
-	@RequestMapping(value = "/myPage/QnaForm")
+	@RequestMapping(value = "user/mypage/QnaForm")
 	public String QnaForm() {
-		return "user/myPage/QnaForm";
+		return "user/mypage/QnaForm";
 	}
 	
-	@RequestMapping(value = "/myPage/QnaList")
+	@RequestMapping(value = "user/mypage/QnaList")
 	public String QnaList(Qna qna , String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
@@ -127,31 +129,12 @@ public class UserController {
 		}finally { 
 			log.info("[{}]{}:{}",transactionId, "QnaList", "end");
 		}	
-		return "user/myPage/myQnaList";
+		return "user/mypage/myQnaList";
 	}
 	
-	@RequestMapping(value = "/myPage/myTag")
+	@RequestMapping(value = "user/mypage/myTag")
 	public String myTag() {
-		return "user/myPage/myTag";
-	}
-
-	@RequestMapping(value = "/myPage/myPost")
-	public String myPost() {
-		return "user/myPage/myPost";
-	}
-
-	@RequestMapping(value = "/bizPage")
-	public String bizPage() {
-		return "user/bizPage/index";
-	}
-
-	@RequestMapping(value = "/bizPage/content")
-	public String bizContent() {
-		return "user/bizPage/bizContent";
-	}
-	@RequestMapping(value = "/bizPage/qna")
-	public String bizQna() {
-		return "user/bizPage/bizQna";
+		return "user/mypage/myTag";
 	}
 
 }
