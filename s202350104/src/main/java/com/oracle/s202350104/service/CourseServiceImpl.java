@@ -42,24 +42,15 @@ public class CourseServiceImpl implements CourseService {
 		return courseList;
 	}
 
-//	@Override
-//	public List<Course> courseDetail(Course course) {
-//		List<Course> courseDetail = null;
-//		courseDetail = cd.courseDetail(course);
-//		
-//		if(courseDetail == null) {
-//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 아디가 없습니다.");
-//		}
-//		
-//		return courseDetail;
-//	}
-
 	@Override
-	public CourseContent detailList(int course_id) {
+	public List<CourseContent> courseDetail(int course_id) {
 		System.out.println("course_id ->" + course_id);
-		CourseContent detailList = null;
-		detailList = cd.detailList(course_id);
+		List<CourseContent> courseDetailList = cd.courseDetail(course_id);
 		
-		return detailList;
+		if(courseDetailList == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 상세 리스트가 없습니다.");
+		}
+		
+		return courseDetailList;
 	}
 }

@@ -46,31 +46,17 @@ public class CourseDaoImpl implements CourseDao {
 		return courseList;
 	}
 
-
-//	@Override
-//	public List<Course> courseDetail(Course course) {
-//		List<Course> courseDetail = null;
-//		log.info("CourseDaoImpl courseDetail cstart...");
-//		try {
-//			courseDetail = session.selectOne("courseDetail", course);
-//			log.info("CourseDaoImpl courseDetail courseDetail ->" + courseDetail);
-//			
-//		} catch (Exception e) {
-//			log.info("CourseDaoImpl courseDetail e.getMessage() ->" + e.getMessage());
-//		}
-//		return courseDetail;
-//	}
-
 	@Override
-	public CourseContent detailList(int course_id) {
+	public List<CourseContent> courseDetail(int course_id) {
 		System.out.println("course_id ->" + course_id);
+		List<CourseContent> courseDetailList = null;
 		try {
-			CourseContent detailList = null;
-			detailList = session.selectOne("detailList", course_id);
+			courseDetailList = session.selectList("noCourseDetailList", course_id);
+			log.info("CourseDaoImpl courseDetail courseDetailList.size() ->" + courseDetailList.size());
 			
 		} catch (Exception e) {
-			System.out.println("CourseDaoImpl detailList e.getMessage() ->" + e.getMessage());
+			log.info("CourseDaoImpl courseDetail e.getMessage() ->" + e.getMessage());
 		}
-		return detailList(course_id);
+		return courseDetailList;
 	}
 }

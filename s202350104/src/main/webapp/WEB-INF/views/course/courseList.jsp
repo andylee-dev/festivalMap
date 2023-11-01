@@ -41,7 +41,7 @@
 									<br class="card-text">${course.time }</br>
 									<p class="card-text">${course.distance }</p>
 									<p class="card-text">${course.course_info }</p>
-									<a href="course/detail?id=${course.course_id }" class="btn btn-primary">상세보기 : ${course.course_id }</a>
+									<a href="course/detail?course_id=${course.course_id }" class="btn btn-primary">상세보기 : ${course.course_id }</a>
 								</div>
 							</div>
 						</div>
