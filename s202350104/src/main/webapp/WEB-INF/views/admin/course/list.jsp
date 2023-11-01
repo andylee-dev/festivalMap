@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -50,7 +51,7 @@
 									<td>${course.course_title }</td>
 									<td>${course.distance }</td>
 									<td>${course.time }</td>
-									<td>${course.created_at }</td>
+									<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td>-</td>
 									<td><input type="button" value="수정"></td>
 									<td><input type="button" value="삭제"></td>

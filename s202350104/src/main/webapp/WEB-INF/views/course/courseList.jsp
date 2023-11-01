@@ -37,9 +37,11 @@
 							<div class="card" style="width: 20em;">
 								<img src="${course.img1 }" class="card-img-top" alt="${course.course_title }" style="height: 190px;" /> 
 								<div class="card-text" style="height: 240px;">
-									<h5 class="card-title">코스이름 : ${course.course_title }</h5>
-									<p class="card-text">코스 제목 : ${course.course_info }</p>
-									<a href="#" class="btn btn-primary">상세보기</a>
+									<h5 class="card-title">${course.course_title }</h5>
+									<br class="card-text">${course.time }</br>
+									<p class="card-text">${course.distance }</p>
+									<p class="card-text">${course.course_info }</p>
+									<a href="course/detail?id=${course.course_id }" class="btn btn-primary">상세보기 : ${course.course_id }</a>
 								</div>
 							</div>
 						</div>
@@ -47,15 +49,17 @@
 				</div>
 			</div>
 		</div>
-		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="course?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="course?currentPage=${i}" class="pageblock">[${i}]</a>
-		</c:forEach>
-		<c:if test="${page.endPage < page.totalPage}">
-			<a href="course?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-		</c:if>
+		<div align="center">
+			<c:if test="${page.startPage > page.pageBlock}">
+				<a href="course?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			</c:if>
+			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+				<a href="course?currentPage=${i}" class="pageblock">[${i}]</a>
+			</c:forEach>
+			<c:if test="${page.endPage < page.totalPage}">
+				<a href="course?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			</c:if>
+		</div>
 	</main>	
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>

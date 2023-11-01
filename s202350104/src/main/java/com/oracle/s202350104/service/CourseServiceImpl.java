@@ -2,12 +2,14 @@ package com.oracle.s202350104.service;
 
 import java.util.List;
 
+import org.springframework.boot.context.annotation.DeterminableImports;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.CourseDao;
 import com.oracle.s202350104.model.Course;
+import com.oracle.s202350104.model.CourseContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,5 +40,26 @@ public class CourseServiceImpl implements CourseService {
 		}
 		
 		return courseList;
+	}
+
+//	@Override
+//	public List<Course> courseDetail(Course course) {
+//		List<Course> courseDetail = null;
+//		courseDetail = cd.courseDetail(course);
+//		
+//		if(courseDetail == null) {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 아디가 없습니다.");
+//		}
+//		
+//		return courseDetail;
+//	}
+
+	@Override
+	public CourseContent detailList(int course_id) {
+		System.out.println("course_id ->" + course_id);
+		CourseContent detailList = null;
+		detailList = cd.detailList(course_id);
+		
+		return detailList;
 	}
 }

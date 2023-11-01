@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Course;
+import com.oracle.s202350104.model.CourseContent;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.Paging;
 
@@ -47,8 +49,18 @@ public class CourseController {
 	}
 	
 	
-	@RequestMapping(value = "course/detail")
-	public String courseDetail() {
+	@GetMapping(value = "course/detail")
+	public String courseDetail(int course_id, Model model) {
+		System.out.println("course_id ->" + course_id);
+		try {
+			CourseContent detailList = cs.detailList(course_id);
+			
+		} catch (Exception e) {
+			log.error("CourseController courseDetail e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("CourseController courseDetail end...");
+		}
+		
 		return "course/courseDetail";
 	}
 }

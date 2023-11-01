@@ -21,4 +21,22 @@
 			ORDER  by b.id ASC
 		</select>
 		
+		<select id="courseDetail" parameterType="Course" resultType="Course">
+			select *
+			from     courseContents a
+			JOIN     courses b 
+			ON       a.course_id = b.id
+			WHERE    a.course_id = #{course_id}
+			ORDER    by b.id ASC
+			
+			<!-- SELECT   *
+			FROM     courseContents a
+			JOIN     courses b 
+			ON       a.course_id = b.id
+			JOIN     contents c
+			ON       a.content_id = c.id
+			WHERE    a.course_id = #{course_id}
+			ORDER    by b.id ASC -->
+		</select>
+		
 	</mapper>
