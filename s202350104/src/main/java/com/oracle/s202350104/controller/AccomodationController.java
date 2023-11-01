@@ -20,7 +20,7 @@ public class AccomodationController {
 	
 	private final AccomodationsService as;
 	
-	@GetMapping(value = "accomodations")
+	@GetMapping(value = "/accomodations")
 	public String accomodations(Accomodations accomodations, Model model) {
 		
 		List<Accomodations> listAccomodations = as.listAccomodations();
@@ -31,7 +31,7 @@ public class AccomodationController {
 
 	}
 	
-	@GetMapping(value = "accomodations/detail")
+	@GetMapping(value = "/accomodations/detail")
 	public String accomodationsDetail(int content_id, Model model) {
 		log.info("AccomodationController detailAccomodations Start...");
 		

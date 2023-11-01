@@ -34,9 +34,11 @@ public class AccomodationsServiceImpl implements AccomodationsService {
 
 	@Override
 	public AccomodationsContent detailAccomodations(int content_id) {
-		AccomodationsContent accomodations = null;
+		AccomodationsContent accomodations = ad.detailAccomodations(content_id);
 		log.info("AccomodationsImpl detailAccomodation Strart...");
-		accomodations = ad.detailAccomodations(content_id);
+		if(accomodations==null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "숙소 정보가 존재하지 않습니다");
+		}
 		
 		return accomodations;
 	}

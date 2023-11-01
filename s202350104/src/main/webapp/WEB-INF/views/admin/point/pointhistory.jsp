@@ -26,7 +26,7 @@
 		<td>${pointhistory.user_id }</td>
 		<td>${pointhistory.point_id }</td>
 		<td>${pointhistory.created_at }</td>
-		<td><button onclick="delete">삭제</button></td>
+		<td><button onclick="pointhistorydelete">삭제</button></td>
 						
 		</tr>
 		</c:forEach>

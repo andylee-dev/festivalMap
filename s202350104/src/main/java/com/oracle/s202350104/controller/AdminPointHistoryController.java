@@ -29,5 +29,7 @@ public class AdminPointHistoryController {
 		return "admin/point/pointhistory";
 		
 	}
+	
+	
 
 }

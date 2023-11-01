@@ -11,7 +11,7 @@
 		
 	</select>
 	
-	<select id="accomodationsDetail" resultType="AccomodationsContent" parameterType="int">
+	<select id="AccomodationsDetail" resultType="AccomodationsContent" parameterType="int">
 		SELECT 	*
 		FROM 	contents c, accomodations a
 		WHERE 	c.id = a.content_id

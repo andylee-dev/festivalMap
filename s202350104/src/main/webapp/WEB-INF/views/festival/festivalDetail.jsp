@@ -14,12 +14,13 @@
 		
 		<h1>Festival Detail</h1>
 		<div class="container border p-5">
-			<img alt="${festival.title}이미지1" src="${festival.img1}">
+		<img alt="${festival.title}이미지1" src="${festival.img1}">
 		</div>
 		<div class="container border p-5">
 			<img alt="${festival.title}이미지2" src="${festival.img2}">
 		</div>
 		<div class="container border p-5">
+			
 			<ul>
 				<li>축제명 : ${festival.title}
 				<li>개요 : ${festival.content}
