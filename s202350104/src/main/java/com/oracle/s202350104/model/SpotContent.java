@@ -52,4 +52,5 @@ public class SpotContent {
 	
 	//분류
 	private String cc_content;
+	private String ac_content;
 }

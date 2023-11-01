@@ -31,6 +31,17 @@
 			class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
 			<h1>주변명소</h1>
 		</div>
+		<div class="border p-3 m-3">
+				<h1 class="border">검색폼</h1>
+				<button type="button" class="btn btn-outline-secondary">검색</button>
+				<button type="button" class="btn btn-outline-secondary">초기화</button>
+		</div>
+		<div>
+		<select name="area">
+		<c:forEach var="spot" items="${listSpot}">
+				<option value="${spot.area}">${spot.ac_content}</option>
+		</c:forEach></select>
+		</div>
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
