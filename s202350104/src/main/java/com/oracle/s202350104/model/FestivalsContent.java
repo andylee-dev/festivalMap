@@ -49,4 +49,8 @@ public class FestivalsContent {
 	private int    start;
 	private int    end;
 	
+	// join용
+	private String area_content;
+	private String sigungu_content;
+	
 }

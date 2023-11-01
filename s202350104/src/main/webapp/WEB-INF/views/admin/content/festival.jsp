@@ -48,7 +48,7 @@
 							<c:forEach var="festival" items="${listFestivals}">
 								<tr>
 									<td>${num}</td>
-									<td></td>
+									<td>${festival.area_content} ${festival.sigungu_content}</td>
 									<td>${festival.title}</td>
 									<td>${festival.sponsor}</td>
 									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
