@@ -69,20 +69,24 @@
 			</c:forEach>
 		</table>
 		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item">
-					<a class="page-link" href="freeBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-				</li>				
-				
-				<li class="page-item">
-					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage }">
-						<a class="page-link" href="freeBoardList?currentPage=${i }">${i }</a>
-					</c:forEach>
-				</li>
-				
-				<li class="page-item">
-					<a class="page-link" href="freeBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-				</li>
+			<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
+			    <li class="page-item">
+			        <c:if test="${page.startPage > page.pageBlock }">
+			            <a class="page-link" href="freeBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
+			        </c:if>
+			    </li>
+			
+			    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage }">
+			        <li class="page-item">
+			            <a class="page-link" href="freeBoardList?currentPage=${i }">${i }</a>
+			        </li>
+			    </c:forEach>
+			
+			    <li class="page-item">
+			        <c:if test="${page.endPage < page.totalPage }">
+			            <a class="page-link" href="freeBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
+			        </c:if>
+			    </li>
 			</ul>
 		</nav>
 	</div>

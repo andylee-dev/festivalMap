@@ -69,10 +69,10 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							커뮤니티 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/freeBoardList">자유게시판</a></li>
 							<li><a class="dropdown-item" href="/noticBoardList">공지사항</a></li>
-							<li><a class="dropdown-item" href="/photoBoardList">여행꾹꾹</a></li>
 							<li><a class="dropdown-item" href="/magazinBoardList">이달의 소식</a></li>
+							<li><a class="dropdown-item" href="/freeBoardList">자유게시판</a></li>							
+							<li><a class="dropdown-item" href="/photoBoardList">여행꾹꾹</a></li>
 							<li><a class="dropdown-item" href="/eventBoardList">이벤트</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
