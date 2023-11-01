@@ -31,5 +31,7 @@ public class AdminPointController {
 		return "admin/point/point";
 	}
 	
+	
+	
 
 }

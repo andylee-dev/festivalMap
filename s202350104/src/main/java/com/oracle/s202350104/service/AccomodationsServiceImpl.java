@@ -21,9 +21,9 @@ public class AccomodationsServiceImpl implements AccomodationsService {
 	private final AccomodationsDao ad;
 
 	@Override
-	public List<Accomodations> listAccomodations() {
+	public List<AccomodationsContent> listAccomodations(AccomodationsContent accomodations) {
 		
-		List<Accomodations> listAccomodations = ad.listAccomodations();
+		List<AccomodationsContent> listAccomodations = ad.listAccomodations(accomodations);
 		
 		if(listAccomodations==null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "숙소 리스트가 존재하지 않습니다");
@@ -41,6 +41,13 @@ public class AccomodationsServiceImpl implements AccomodationsService {
 		}
 		
 		return accomodations;
+	}
+
+	@Override
+	public int totalAccomodations() {
+		int totalAccomodations = 0;
+		totalAccomodations = ad.totalAccomodations();
+		return totalAccomodations;
 	}
 
 }

@@ -4,12 +4,22 @@
 
 <mapper namespace="com.oracle.s202350104.AccomodationsMapper">
 	
-	<select id="accomodationAll" resultType="AccomodationsContent">
-		SELECT * 
-		FROM   accomodations, contents
-		WHERE  accomodations.content_id = contents.id
-		
+	<select id="accomodationAll" resultType="AccomodationsContent" parameterType="AccomodationsContent">
+    SELECT * 
+    FROM   
+   	 (
+        SELECT ROWNUM rn, b.*
+        FROM
+        (
+            SELECT *
+            FROM accomodations a, contents c
+            WHERE a.content_id = c.id
+            ORDER BY content_id
+       	 ) b
+ 	   )
+   	 WHERE rn BETWEEN #{start} and #{end}
 	</select>
+
 	
 	<select id="AccomodationsDetail" resultType="AccomodationsContent" parameterType="int">
 		SELECT 	*
@@ -17,6 +27,13 @@
 		WHERE 	c.id = a.content_id
 		AND 	a.content_id = #{content_id}
 	
+	</select>
+	
+	<select id="AccomodationsTotal" resultType="int">
+		SELECT count(*)
+		FROM   accomodations a, contents c
+		WHERE  a.content_id = c.id
+		
 	</select>
 
 

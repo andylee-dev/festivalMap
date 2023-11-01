@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Restaurant Index</title>
+<title>숙박 리스트</title>
 <style type="text/css">
 	.card-text {
 		overflow : hidden;
@@ -17,9 +17,10 @@
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	
+	<main>
 	<h1>어디서 주무시겠어요?</h1>
 	<div class="album py-5 bg-body-tertiary">
+		</div>
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 					<c:forEach var="accomodations" items="${listAccomodations}">
@@ -39,7 +40,19 @@
 				</c:forEach>
 				</div>
 			</div>
-	</div>
+			<div align="center">
+			<c:if test="${page.startPage > page.pageBlock}">
+				<a href="spot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+			</c:if>
+			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+				<a href="spot?currentPage=${i}">[${i}]</a>
+			</c:forEach>
+			<c:if test="${page.endPage < page.totalPage}">
+				<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+			</c:if>
+		</div>
+	</main>
+	
 	
 	
 	<!-- Footer -->

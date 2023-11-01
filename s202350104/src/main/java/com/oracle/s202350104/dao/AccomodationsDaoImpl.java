@@ -20,15 +20,16 @@ public class AccomodationsDaoImpl implements AccomodationsDao {
 	private final SqlSession session;
 
 	@Override
-	public List<Accomodations> listAccomodations() {
+	public List<AccomodationsContent> listAccomodations(AccomodationsContent accomodations) {
 		
-		List<Accomodations> listAccomodations = null;
+		List<AccomodationsContent> listAccomodations = null;
+		log.info("AccomodationsImpl listAccomodations Start...");
+		
 		try {
-			listAccomodations = session.selectList("accomodationAll");
-			
-		} catch(Exception e) {
-			
-			System.out.println("AccomodationsDaoImpl listAccomodations()"+ e.getMessage());
+			listAccomodations = session.selectList("accomodationAll", accomodations);
+			log.info("AccomodationsDaoImpl listRestaurant AccomodationsList.size()->" + listAccomodations.size());
+		} catch (Exception e) {
+			log.info("AccomodationsDaoImpl listAccomodations e.getMessage()->" + e.getMessage());
 		}
 		
 		return listAccomodations;
@@ -46,5 +47,17 @@ public class AccomodationsDaoImpl implements AccomodationsDao {
 			log.info("accomodationsContent detailaccomodations() ->" + e.getMessage());
 		}
 		return accomodations;
+	}
+
+	@Override
+	public int totalAccomodations() {
+		int totAccomodationsCount = 0;
+		
+		try {
+			totAccomodationsCount = session.selectOne("AccomodationsTotal");
+		} catch (Exception e) {
+			log.info("AccomodationsDaoImpl totalAccomodations Exception => " + e.getMessage());
+		}
+		return totAccomodationsCount;
 	}
 }
