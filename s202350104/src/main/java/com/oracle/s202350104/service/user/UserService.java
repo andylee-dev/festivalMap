@@ -7,6 +7,6 @@ import com.oracle.s202350104.model.Users;
 public interface UserService {
 
 	List<Users> listUsers();
-	
+	Users findUser();
 }
 	
