@@ -64,6 +64,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<p>총 건수 : ${totalFestivals}</p>
 				</div>		
 			</main>
 		</div>

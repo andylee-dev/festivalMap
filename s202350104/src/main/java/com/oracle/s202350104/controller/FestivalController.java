@@ -23,7 +23,6 @@ public class FestivalController {
 
 	private final FestivalsService fs;
 
-
 	@GetMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();

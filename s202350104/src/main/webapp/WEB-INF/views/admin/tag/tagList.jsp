@@ -50,6 +50,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<p>총 건수 : ${totalTags}</p>
 				</div>		
 			</main>
 		</div>
