@@ -50,20 +50,23 @@
 						</tbody>
 					</table>
 					<p>총 건수 : ${totalTags}</p>
+					
+					<div align="center">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<a href="userTag?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<a href="userTag?currentPage=${i}" class="pageblock">[${i}]</a>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<a href="userTag?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+						</c:if>
+					</div>
+					
 				</div>		
 			</main>
 		</div>
 		</div>
 		<!-- 태그별로 해당 태그를 관심태그로 추가한 회원수 볼 수 있는 기능 추가하기 -->
-		
-		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="userTag?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="userTag?currentPage=${i}" class="pageblock">[${i}]</a>
-		</c:forEach>
-		<c:if test="${page.endPage < page.totalPage}">
-			<a href="userTag?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-		</c:if>
 	</body>
 </html>

@@ -65,19 +65,21 @@
 						</tbody>
 					</table>
 					<p>총 건수 : ${totalFestivals}</p>
+					
+					<div align="center">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<a href="festival?currentPage=${i}" class="pageblock">[${i}]</a>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+						</c:if>
+					</div>
 				</div>		
 			</main>
 		</div>
 		</div>
-		
-		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="festival?currentPage=${i}" class="pageblock">[${i}]</a>
-		</c:forEach>
-		<c:if test="${page.endPage < page.totalPage}">
-			<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-		</c:if>
 	</body>
 </html>
