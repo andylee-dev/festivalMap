@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Experience;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
@@ -56,9 +57,27 @@ public class AdminContentController {
 	}
 
 	@RequestMapping(value = "experience")
-	public String experience(Model model) {
-		List<Experience> listExperience = es.listExperience();
-		model.addAttribute("listExperience", listExperience);
+	public String experience(ExperienceContent experience,String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "experience", "start");
+			int totalExperience = es.totalExperience();
+			
+			Paging page = new Paging(totalExperience, currentPage);
+			experience.setStart(page.getStart());
+			experience.setEnd(page.getEnd());
+			
+			List<ExperienceContent> listExperience = es.listExperience(experience);
+			
+			model.addAttribute("totalExperience", totalExperience);
+			model.addAttribute("listExperience", listExperience);
+			model.addAttribute("page", page);
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "experience", "end");
+		}
 		return "admin/content/experience";
 	}
 	

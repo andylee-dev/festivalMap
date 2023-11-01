@@ -43,7 +43,7 @@
 					<tbody>
 						<c:forEach var="experience" items="${listExperience}">
 							<tr>
-								<td>${experience.id}</td>
+								<td>${experience.content_id}</td>
 								<td>${experience.title}</td>
 								<td>${experience.status}</td>
 								<td>${experience.address}</td>
@@ -60,5 +60,16 @@
 		</main>
 	</div>
 	</div>
+	
+	<c:if test="${page.startPage > page.pageBlock}">
+			<a href="experience?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+		</c:if>
+		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+			<a href="experience?currentPage=${i}" class="pageblock">[${i}]</a>
+		</c:forEach>
+		<c:if test="${page.endPage < page.totalPage}">
+			<a href="experience?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+		</c:if>
+	
 </body>
 </html>

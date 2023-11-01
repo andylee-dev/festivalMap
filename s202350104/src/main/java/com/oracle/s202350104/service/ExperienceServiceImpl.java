@@ -9,16 +9,18 @@ import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExperienceServiceImpl implements ExperienceService {
 
 	private final ExperienceDao ed;
 	
 	@Override
-	public List<Experience> listExperience() {
-		List<Experience> listExperience = ed.listExperience();
+	public List<ExperienceContent> listExperience(ExperienceContent experience) {
+		List<ExperienceContent> listExperience = ed.listExperience(experience);
 		return listExperience;
 	}
 
@@ -26,6 +28,12 @@ public class ExperienceServiceImpl implements ExperienceService {
 	public ExperienceContent detailExperience(int content_id) {
 		ExperienceContent experience = ed.detailExperience(content_id);
 		return experience;
+	}
+
+	@Override
+	public int totalExperience() {
+		int totalExperienceCnt = ed.totalExperience();
+		return totalExperienceCnt;
 	}
 
 }
