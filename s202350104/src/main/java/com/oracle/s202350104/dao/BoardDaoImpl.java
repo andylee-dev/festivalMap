@@ -79,7 +79,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<Board> getFreeAllList(Board board) {
 
-		List<Board> freeAllList = null;
+		List<Board> freeAllList = null; 
 
 		try {
 			freeAllList = session.selectList("freeAllList", board);
