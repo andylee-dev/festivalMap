@@ -9,9 +9,11 @@
 		(   
     			SELECT rownum rn, a.*
     			FROM 
-            	(select *
-            	 from spot s, contents c
+            	(select s.*, c.*, cc.content cc_content
+            	 from spot s, contents c , commoncodes cc
              	 where s.content_id = c.id
+             	 and c.big_code = cc.big_code
+             	 and c.small_code = cc.small_code
              	 order by content_id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}

@@ -49,5 +49,7 @@ public class SpotContent {
 	private String pageNum;
 	private int	   start;
 	private int	   end;
-
+	
+	//분류
+	private String cc_content;
 }

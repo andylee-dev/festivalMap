@@ -44,7 +44,6 @@ public class AdminCsController {
 	
 	@RequestMapping(value = "admin/cs/reportUpdate")
 	public String reportUpdate(int id, Model model ) {
-		int reportUpdate = res.reportUpdate(id);
 		
 		return "redirect:report";
 	}

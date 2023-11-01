@@ -48,7 +48,7 @@
 							<c:forEach var="spot" items="${listSpot}">
 								<tr>
 									<td>${num}</td>
-									<td>${big_code}</td>
+									<td>${spot.cc_content}</td>
 									<td>${spot.title}</td>
 									<td>${spot.address}</td>
 									<td><fmt:formatDate value="${spot.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
