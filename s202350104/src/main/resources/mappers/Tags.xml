@@ -47,10 +47,13 @@
 		(
 			SELECT ROWNUM rn, a.*
 			FROM
-			(SELECT board_id, tag_id AS id, name
-			 FROM boardtags b, tags t
-			 WHERE b.tag_id = t.id 
-			 GROUP BY board_id, tag_id, name
+			(SELECT board_id, tag_id AS id, name, b.title, cc.content AS cc_content
+			 FROM boardtags bt, tags t, board b, commoncodes cc
+			 WHERE bt.tag_id = t.id 
+             AND   bt.board_id = b.id
+             AND   b.big_code = cc.big_code
+             AND   b.small_code = cc.small_code
+			 GROUP BY board_id, tag_id, name, b.title, cc.content
 			 ORDER BY board_id, tag_id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}

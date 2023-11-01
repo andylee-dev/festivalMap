@@ -33,7 +33,7 @@
 							<tr>
 								<th scope="col">순번</th>
 								<th scope="col">분류</th>
-								<th scope="col">컨텐츠번호</th>
+								<th scope="col">컨텐츠 번호</th>
 								<th scope="col">이름</th>
 								<th scope="col">태그명</th>
 								<th scope="col">삭제</th>

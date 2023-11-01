@@ -16,6 +16,6 @@ public class Tags {
 	private int    end;
 	
 	// join용
-	private String title; // 콘텐츠 제목
+	private String title; // 콘텐츠, 게시글 제목
 	private String cc_content; // 공통코드 내용
 }
