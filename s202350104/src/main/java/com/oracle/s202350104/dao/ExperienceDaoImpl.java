@@ -19,13 +19,13 @@ public class ExperienceDaoImpl implements ExperienceDao {
 	@Override
 	public List<Experience> listExperience() {
 		List<Experience> listExperience = null;
-		System.out.println("ExperienceDaoImpl listExperience start");
+		
 		
 		try {
 			listExperience = session.selectList("shExperienceListAll");
-			System.out.println("ExperienceDaoImpl listExperience.size()->"+listExperience.size());
+			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
 		}
 		return listExperience;
 	}
@@ -36,7 +36,7 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		try {
 			experience = session.selectOne("shExperienceDetail", content_id);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
 		}
 		return experience;
 	}
