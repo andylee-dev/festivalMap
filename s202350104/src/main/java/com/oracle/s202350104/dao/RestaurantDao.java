@@ -7,8 +7,9 @@ import com.oracle.s202350104.model.RestaurantsContent;
 
 public interface RestaurantDao {
 
-	List<Restaurants> 	listRestaurant();
-	RestaurantsContent 	detailRestaurant(int content_id);
+	List<RestaurantsContent> 	listRestaurant(RestaurantsContent restaurant);
+	RestaurantsContent 			detailRestaurant(int content_id);
+	int 						totalRestaurant();
 	
 	
 }

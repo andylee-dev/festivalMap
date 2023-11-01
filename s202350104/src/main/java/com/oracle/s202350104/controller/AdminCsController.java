@@ -19,7 +19,7 @@ public class AdminCsController {
 	
 	private final ReportService res;
 	
-	@RequestMapping(value = "/admin/cs/report")
+	@RequestMapping(value = "admin/cs/report")
 	public String report(Model model) {
 		List<Report> listReport = res.listReport();
 		model.addAttribute("listReport",listReport);
@@ -32,11 +32,20 @@ public class AdminCsController {
 		List<Report> reportDetail = res.reportDetail(board_id);
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("reportDetail", reportDetail);
-		
-		
 		return "admin/cs/reportDetail";
-		
 	}
-
+	
+	@RequestMapping(value = "admin/cs/reportBoardUpdate")
+	public String reportBoardUpdate(int id, Model model ) {
+		int boardUpdate = res.reportBoardUpdate(id);
+		
+		return "redirect:report";
+	}
+	
+	@RequestMapping(value = "admin/cs/reportUpdate")
+	public String reportUpdate(int id, Model model ) {
+		
+		return "redirect:report";
+	}
 }
 

@@ -25,8 +25,8 @@ public class SpotDaoImpl implements SpotDao {
 		
 		try {
 			totSpotCount = session.selectOne("spotTotal");
-			
 		} catch (Exception e) {
+			log.info("SpotDaoImpl totalSpot Exception => " + e.getMessage());
 		}
 		return totSpotCount;
 	}

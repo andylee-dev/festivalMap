@@ -7,8 +7,7 @@ import com.oracle.s202350104.model.ExperienceContent;
 
 public interface ExperienceService {
 
-	List<Experience> listExperience();
-
-	ExperienceContent detailExperience(int content_id);
-
+	List<Experience> 	listExperience();
+	ExperienceContent 	detailExperience(int content_id);
+	
 }

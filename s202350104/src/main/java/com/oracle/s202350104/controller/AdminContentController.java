@@ -12,10 +12,11 @@ import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.RestaurantService;
+import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.user.UserService;
-import com.oracle.s202350104.model.Restaurants;
-import com.oracle.s202350104.service.content.ContentService;
-
+import com.oracle.s202350104.model.RestaurantsContent;
+import com.oracle.s202350104.model.SpotContent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +28,8 @@ public class AdminContentController {
 	
 	private final ExperienceService es;
 	private final FestivalsService fs;
-	private final ContentService cs;
+	private final SpotService ss;
+	private final RestaurantService rs;
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -59,16 +61,53 @@ public class AdminContentController {
 		model.addAttribute("listExperience", listExperience);
 		return "admin/content/experience";
 	}
-
+	
 	@RequestMapping(value = "restaurant")
-	public String restaurant(Model model) {
-		List<Restaurants> listRestaurant = cs.listRestaurant();
-		model.addAttribute("listRestaurant", listRestaurant);
+	public String restaurant(RestaurantsContent restaurant, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
+			int totalRestaurant = rs.totalRestaurant();
+			
+			Paging page = new Paging(totalRestaurant, currentPage);
+			restaurant.setStart(page.getStart());
+			restaurant.setEnd(page.getEnd());
+			
+			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			
+			model.addAttribute("totalRestaurant", totalRestaurant);
+			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("page",page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin restaurant", e.getMessage());
+		} finally {
+			log.error("[{}]{}:{}", transactionId, "admin restaurant", "end");
+		}
+				
 		return "admin/content/restaurant";
 	}
 
 	@RequestMapping(value = "spot")
-	public String spot() {
+	public String spot(SpotContent spotContent, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin spot", "start");
+			int totalSpot = ss.totalSpot();
+		
+			Paging page = new Paging(totalSpot, currentPage);
+			spotContent.setStart(page.getStart());
+			spotContent.setEnd(page.getEnd());
+		
+			List<SpotContent> listSpot = ss.listSpot(spotContent);
+		
+			model.addAttribute("totalSpot",totalSpot);
+			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("page",page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "admin spot", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "admin spot", "end");
+		}
 		return "admin/content/spot";
 	}
 

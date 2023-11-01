@@ -12,4 +12,8 @@ public interface ReportDao {
 
 	List<Report> reportDetail(int board_id);
 
+	int updateBoard(int id);
+
+	int reportUpdate(int id);
+
 }

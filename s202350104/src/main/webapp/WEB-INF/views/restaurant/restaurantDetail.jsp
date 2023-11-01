@@ -12,15 +12,13 @@
 		 <!-- Top bar -->
 		<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 		
-		<h1>Restaurant Detail</h1>
+		<h1 style="text-align:center">Restaurant Detail</h1>
 		<div class="container border p-5">
 			<img alt="${restaurant.title}이미지1" src="${restaurant.img1}">
 		</div>
 		<div class="container border p-5">
-			<img alt="${restaurant.title}이미지2" src="${restaurant.img2}">
-		</div>
-		<div class="container border p-5">
-			<img alt="${restaurant.title}이미지3" src="${restaurant.img3}">
+			<img alt="${restaurant.title}이미지2" src="${restaurant.img2}" width = 150px height = 84px>
+			<img alt="${restaurant.title}이미지3" src="${restaurant.img3}" width = 150px height = 84px>
 		</div>
 		<div class="container border p-5">	
 			<ul>
