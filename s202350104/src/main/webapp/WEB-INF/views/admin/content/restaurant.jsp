@@ -48,10 +48,10 @@
 							<c:forEach var="restaurant" items="${listRestaurant}">
 								<tr>
 									<td>${num}</td>
-									<td></td>
+									<td>${restaurant.area_content} ${restaurant.sigungu_content}</td>
 									<td>${restaurant.title}</td>
 						 			<td>${restaurant.menu}</td>
-						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM"/></td>
+						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
 						 				<c:if test="${restaurant.status == 0 }">승인대기</c:if>
 										<c:if test="${restaurant.status == 1 }">승인완료</c:if>
@@ -68,14 +68,17 @@
 		</div>
 		</div>
 		
+		<div align="center">
 		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			<a href="restaurant?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="festival?currentPage=${i}" class="pageblock">[${i}]</a>
+			<a href="restaurant?currentPage=${i}" class="pageblock">[${i}]</a>
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			<a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 		</c:if>
+		</div>
+		
 	</body>
 </html>

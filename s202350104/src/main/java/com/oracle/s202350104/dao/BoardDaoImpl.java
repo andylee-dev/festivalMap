@@ -31,12 +31,12 @@ public class BoardDaoImpl implements BoardDao {
 
 	// Paging logic 일부분
 	@Override
-	public int boardCount() {
+	public int boardCount(int smallCode) {
 
 		int countBoard = 0;
 
 		try {
-			countBoard = session.selectOne("boardCount");
+			countBoard = session.selectOne("boardCount", smallCode);
 		} catch (Exception e) {
 			log.error("BoardDao boardCount Exception : {}", e.getMessage());
 		}
@@ -109,6 +109,22 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
+	public List<Board> getEventAllList(Board board) {
+
+		List<Board> eventAllList = null;
+
+		try {
+			eventAllList = session.selectList("eventAllList", board);
+		} catch (Exception e) {
+			log.error("BoardDao getPhotoAllList Exception : {}", e.getMessage());
+		} finally {
+			log.info("BoardDao getPhotoAllList End");
+		}
+
+		return eventAllList;
+	}
+
+	@Override
 	public Board boardDetail(int boardId) {
 
 		Board boards = null;
@@ -139,4 +155,34 @@ public class BoardDaoImpl implements BoardDao {
 
 		return updateBoard;
 	}
+
+	@Override
+	public int boardDelete(int boardId) {
+
+		int deleteBoard = 0;
+
+		try {
+			deleteBoard = session.delete("boardDelete", boardId);
+		} catch (Exception e) {
+			log.error("BoardDao boardDelete Exception : {}", e.getMessage());
+		}
+
+		return deleteBoard;
+	}
+	
+	@Override
+	public int boardInsert(Board board) {
+		
+		int insertBoard = 0;
+
+		try {
+			insertBoard = session.delete("boardInsert", board);
+		} catch (Exception e) {
+			log.error("BoardDao boardInsert Exception : {}", e.getMessage());
+		}
+
+		return insertBoard;
+
+	}
+
 }
