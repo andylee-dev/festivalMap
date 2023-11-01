@@ -51,20 +51,21 @@
 							</div>
 						</div>
 					</c:forEach>
-					
 				</div>
 			</div>
 		</div>
+		<div align="center">
+			<c:if test="${page.startPage > page.pageBlock}">
+				<a href="spot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+			</c:if>
+			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+				<a href="spot?currentPage=${i}">[${i}]</a>
+			</c:forEach>
+			<c:if test="${page.endPage < page.totalPage}">
+				<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+			</c:if>
+		</div>
 	</main>
-	<c:if test="${page.startPage > page.pageBlock}">
-			<a href="spot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="spot?currentPage=${i}">[${i}]</a>
-		</c:forEach>
-		<c:if test="${page.endPage < page.totalPage}">
-			<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-		</c:if>
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 </body>
 </html>
