@@ -87,4 +87,15 @@ public class TagsServiceImpl implements TagsService {
 		return listTags;
 	}
 
+	@Override
+	public List<Tags> listTagsAll() {
+		List<Tags> listTags = td.listTagsAll();
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
+
 }

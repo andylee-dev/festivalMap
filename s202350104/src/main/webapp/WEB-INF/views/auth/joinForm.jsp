@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>join Form</title>
+<title>회원가입</title>
 </head>
 <body>
 	<!-- Top bar -->
@@ -25,13 +25,13 @@
 				<input type="radio" name="gender" value="1">여자<p>
 			생년월일 <input type="date" name="birthday"><p>
 			전화번호 <input type="tel" name="phone_num" placeholder="010 - 0000 - 0000"
-					pattern="\d{3}-\d{4}-d{4}"><p>
+					pattern="\d{2,3}-\d{3,4}-d{4}"><p>
 			이메일 <input type="email" name="email"><p> <!-- 이메일 도메인 주소를 select할 수 있도록 바꾸기 -->
 			주소 <!-- 우편번호 검색 api 및 기본주소 자동입력 -->
 				<input type="text" name="address"><p>
-			관심사 <select name="tags_id"> <!-- 컬럼 이름 바꿔야 함! -->
-					<c:forEach var="tag" items="${listTags}"> <!-- UserService에서 TagsDaoImpl로 값 받아와야 함 -->
-						<option value="${tag.id}">${tag.content}</option>
+			관심사 <select name="tags_id"> <!-- insert 따로?? -->
+					<c:forEach var="tag" items="${listTags}">
+						<option value="${tag.id}">${tag.name}</option>
 					</c:forEach>
 				</select><p>
 				<!-- 선택한 관심사를 박스 안에서 보여주고 삭제할 수 있는 기능 -->

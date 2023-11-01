@@ -14,4 +14,5 @@ public interface TagsDao {
 	List<Tags> listBoardTags(Tags tags);
 	int totalContentTags();
 	List<Tags> listContentTags(Tags tags);
+	List<Tags> listTagsAll();
 }

@@ -8,9 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
+import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.QnaListService;
+import com.oracle.s202350104.service.TagsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	
 	private final QnaListService qs;
+	private final TagsService ts;
 
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -33,7 +37,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "user/joinForm")
-	public String userJoinForm() {
+	public String userJoinForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userJoinForm", "start");
+			List<Tags> listTags = ts.listTagsAll();
+			model.addAttribute("listTags", listTags);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "userJoinForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "userJoinForm", "end");
+		}
 		return "auth/joinForm";
 	}
 	

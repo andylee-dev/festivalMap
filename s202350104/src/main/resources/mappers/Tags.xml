@@ -7,7 +7,7 @@
 		SELECT count(*) FROM Tags
 	</select>
 
-	<select id="nhTagsListAll" resultType="Tags" parameterType="Tags">
+	<select id="nhTagsListPage" resultType="Tags" parameterType="Tags">
 		SELECT * 
 		FROM 
 		(
@@ -22,7 +22,7 @@
 		SELECT count(*) FROM UserTags
 	</select>
 	
-	<select id="nhUserTagsListAll" resultType="Tags" parameterType="Tags">
+	<select id="nhUserTagsListPage" resultType="Tags" parameterType="Tags">
 		SELECT *
 		FROM 
 		(
@@ -41,7 +41,7 @@
 		SELECT count(*) FROM BoardTags
 	</select>
 	
-	<select id="nhBoardTagsListAll" resultType="Tags" parameterType="Tags">
+	<select id="nhBoardTagsListPage" resultType="Tags" parameterType="Tags">
 		SELECT *
 		FROM 
 		(
@@ -63,7 +63,7 @@
 		SELECT count(*) FROM ContentTags
 	</select>
 	
-	<select id="nhContentTagsListAll" resultType="Tags" parameterType="Tags">
+	<select id="nhContentTagsListPage" resultType="Tags" parameterType="Tags">
 		SELECT *
 		FROM 
 		(
@@ -79,5 +79,9 @@
 			 ORDER BY content_id, tag_id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="nhTagsListAll" resultType="Tags">
+		SELECT * FROM Tags
 	</select>
 </mapper>
