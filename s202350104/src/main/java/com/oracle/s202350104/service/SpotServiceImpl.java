@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.oracle.s202350104.controller.SpotController;
+import com.oracle.s202350104.dao.AreasDao;
 import com.oracle.s202350104.dao.SpotDao;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;

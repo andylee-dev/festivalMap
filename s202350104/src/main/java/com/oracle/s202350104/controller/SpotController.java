@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.SpotService;
 
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SpotController {
 	private final SpotService ss;
+	private final AreaService as;
 
 	@RequestMapping(value = "spot")
 	public String spot(SpotContent spotContent,String currentPage, Model model) {
@@ -33,9 +36,11 @@ public class SpotController {
 			spotContent.setEnd(page.getEnd());
 		
 			List<SpotContent> listSpot = ss.listSpot(spotContent);
+			List<Areas> listAreas = as.listPoint();
 		
 			model.addAttribute("totalSpot",totalSpot);
 			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("listAreas",listAreas);
 			model.addAttribute("page",page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spot", e.getMessage());

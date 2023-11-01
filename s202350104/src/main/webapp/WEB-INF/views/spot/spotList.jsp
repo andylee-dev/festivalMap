@@ -38,15 +38,17 @@
 		</div>
 		<div>
 		<select name="area">
-		<c:forEach var="areas" items="${listAreas}">
-				<option value="${areas.area}">${areas.content}</option>
-		</c:forEach></select>
+			<c:forEach var="areas" items="${listAreas}">
+				<c:if test="${areas.sigungu == 999}"><option value="${areas.area}">${areas.content}</option></c:if>
+			</c:forEach>
+		</select>
 		</div>
 		<div>
 		<select name="sigungu">
-		<c:forEach var="areas" items="${listAreas}">
-				<option value="${areas.sigungu}">${areas.content}</option>
-		</c:forEach></select>
+			<c:forEach var="areas" items="${listAreas}">
+				<c:if test="${areas.sigungu != 999}"><option value="${areas.sigungu}">${areas.content}</option></c:if>
+			</c:forEach>
+		</select>
 		</div>
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
