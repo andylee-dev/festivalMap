@@ -1,10 +1,8 @@
 package com.oracle.s202350104.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class Paging {
 	private int currentPage = 1;
 	private int rowPage = 10;
@@ -17,27 +15,31 @@ public class Paging {
 	private int totalPage;
 
 	public Paging(String currentPage1, int total) {
-		this.total = total; // 140
-
-		if (currentPage1 != null) {
-			this.currentPage = Integer.parseInt(currentPage1); // 2
+		this.total = total;   // 140
+		
+		if(currentPage1 != null) {
+			this.currentPage = Integer.parseInt(currentPage1); //2
 		}
+		
+		//           1                 10 
+		start = (currentPage -1) * rowPage + 1;   // 시작 시 1,    11
+		end = start + rowPage;                    // 시작 시 10,   20
 
-		// 1 10
-		start = (currentPage - 1) * rowPage + 1; // 시작 시 1, 11
-		end = start + rowPage; // 시작 시 10, 20
+		
+		//                                  25  /  10
+		totalPage = (int)Math.ceil((double)total / rowPage);
 
-		// 25 / 10
-		totalPage = (int) Math.ceil((double) total / rowPage);
-
-		// 2 2
+		
+		//              2                2
 		startPage = currentPage - (currentPage - 1) % currentPage;
-		endPage = startPage + pageBlock - 1; // 10
+		endPage = startPage + pageBlock -1; // 10
 
-		// 10 / 14
-		if (endPage > totalPage) {
+		
+		//    10    /     14        
+		if(endPage > totalPage) {
 			endPage = totalPage;
 		}
+
 
 	}
 

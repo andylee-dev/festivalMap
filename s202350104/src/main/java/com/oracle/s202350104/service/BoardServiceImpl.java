@@ -20,8 +20,8 @@ public class BoardServiceImpl implements BoardService {
 	private final BoardDao boardDao;
 
 	@Override
-	public int boardCount() {
-		int countBoard = boardDao.boardCount();
+	public int boardCount(int smallCode) {
+		int countBoard = boardDao.boardCount(smallCode);
 		return countBoard;
 	}
 
@@ -64,7 +64,16 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> phothAllList = boardDao.getPhotoAllList(board);
 		
 		return phothAllList;
-	}	
+	}
+	
+	// 이벤트게시판
+	@Override
+	public List<Board> getEventAllList(Board board) {
+		
+		List<Board> eventAllList = boardDao.getEventAllList(board);
+		
+		return eventAllList;
+	}
 
 	@Override
 	public Board boardDetail(int boardId) {
@@ -82,6 +91,22 @@ public class BoardServiceImpl implements BoardService {
 		int updateBoard = boardDao.boardUpdate(board);
 
 		return updateBoard;
+	}
+	
+	@Override
+	public int boardDelete(int boardId) {
+		
+		int deleteBoard = boardDao.boardDelete(boardId);
+		
+		return deleteBoard;
+	}
+	
+	@Override
+	public int boardInsert(Board board) {
+
+		int insertBoard = boardDao.boardInsert(board);
+		
+		return insertBoard;
 	}
 
 }
