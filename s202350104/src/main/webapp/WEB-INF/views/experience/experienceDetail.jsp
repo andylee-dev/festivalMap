@@ -13,7 +13,7 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	
 	<h1>체험정보 상세</h1>
-	<a href="writeForm">writerFromEmp 입력</a><p>
+	<a href="writeForm">writerFromEmp 입력(작업중ㅇㅇㅇ)</a><p>
 	<div class="container border p-5">
 	<table>
 		<tr><th>체험이름</th><td>${experience.title}</td></tr>

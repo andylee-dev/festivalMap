@@ -8,7 +8,7 @@
 		from  board b  
 		inner join report r on
 		b.id = r.board_id 
-		where b.status=1 and r.status=1
+		where b.is_deleted=0 and r.status=1
 		group by b.content, r.board_id, b.user_id
 		order by count desc
 	</select>
@@ -21,7 +21,7 @@
 		select id, title, content,user_id from board where id= #{board_id}
 	</select>
 	<update id="shBoardUpdate" parameterType="int">
-		update board b set status = 0 
+		update board b set is_deleted = 1 
 		where b.id = #{id}
 	</update>
 	<update id="shReportUpdate" parameterType="int">

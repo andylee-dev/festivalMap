@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.oracle.s202350104.model.Report;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ReportDaoImpl implements ReportDao {
 
 	private final SqlSession session;
@@ -20,6 +22,7 @@ public class ReportDaoImpl implements ReportDao {
 		List<Report> listReport = null;
 		try {
 			listReport = session.selectList("shReportListAll");
+			log.info("listReport.size()->"+listReport.size());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
