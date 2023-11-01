@@ -35,8 +35,8 @@
 					</c:forEach>
 				</select><p>
 				<!-- 선택한 관심사를 박스 안에서 보여주고 삭제할 수 있는 기능 -->
-			<button type="submit">회원가입</button>
-			<button type="reset">초기화</button>
+			<button type="submit" class="btn btn-primary">회원가입</button>
+			<button type="reset" class="btn btn-light">초기화</button>
 		</form>
 	</div>
 

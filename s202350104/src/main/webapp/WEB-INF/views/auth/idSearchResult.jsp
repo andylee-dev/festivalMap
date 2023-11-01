@@ -11,7 +11,14 @@
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	
-	<h1>ID Search Result</h1>
+	<div align="center">
+		<h1>아 이 디  찾 기</h1>
+		<div class="container border p-5">
+			<p>입력하신 내용과 일치하는 회원의 아이디는 다음과 같습니다.</p>
+			<p><!-- 일치하는 아이디가 표시될 자리 --></p>
+			<button onclick="location.href='login'" class="btn btn-primary">로그인</button>
+		</div>
+	</div>
 	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
