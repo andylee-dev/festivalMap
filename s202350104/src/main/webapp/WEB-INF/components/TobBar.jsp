@@ -90,19 +90,20 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							마이페이지 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="itemList.do">내정보</a></li>
-							<li><a class="dropdown-item" href="itemList.do">내 찜목록</a></li>
-							<li><a class="dropdown-item" href="itemList.do">내 관심사</a></li>
-							<li><a class="dropdown-item" href="user/mypage/QnaList">1:1문의</a></li>
+							<li><a class="dropdown-item" href="/user/myPage">내정보</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/myLike">찜 목록</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/myTag">내 관심사</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/myPost">내 게시글</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/QnaList">1:1문의</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							비즈니스 페이지 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="itemList.do">내정보</a></li>
-							<li><a class="dropdown-item" href="itemList.do">내 컨텐츠 등록</a></li>
-							<li><a class="dropdown-item" href="itemList.do">1:1문의</a></li>
+							<li><a class="dropdown-item" href="/user/bizPage">내정보</a></li>
+							<li><a class="dropdown-item" href="/user/bizPage/content">내 컨텐츠 등록</a></li>
+							<li><a class="dropdown-item" href="/user/bizPage/qna">1:1문의</a></li>
 						</ul></li>
 
 					<li class="nav-item dropdown"><a
@@ -111,7 +112,6 @@
 							관리자 </a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="/admin">관리자홈</a></li>
-							<li><a class="dropdown-item" href="orderInsertForm.do">주문등록</a></li>
 						</ul></li>
 				</ul>
 			</div>
