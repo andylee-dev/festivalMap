@@ -9,9 +9,10 @@
       (   
              SELECT rownum rn, a.*
              FROM 
-               (select *
-                from qna
-                 order by id) a
+               (select q.*, u.name, u.password, u.nickname, u.birthday
+                from qna q, users u
+                where q.user_id = u.id
+                 order by q.id) a
       )
       WHERE rn BETWEEN #{start} and #{end}
       

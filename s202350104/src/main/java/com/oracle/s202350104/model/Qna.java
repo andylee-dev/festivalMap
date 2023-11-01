@@ -23,4 +23,18 @@ public class Qna {
 	private int	   start;
 	private int	   end;
 
+	// user
+	private int 	big_code;
+	private int 	small_code;
+	private String 	name;
+	private String 	password;
+	private String 	nickname;
+	private String 	birthday;
+	private String 	phone_num;
+	private String 	email;
+	private String 	address;
+	private int		point;
+	private String 	gender;
+	private String 	file_name;
+	private String 	is_deleted;
 }

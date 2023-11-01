@@ -27,28 +27,39 @@
 			
 			<!-- Section3: Table -->		
 			<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary ">등록</button>
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
 							<th scope="col">순번</th>
+							<th scope="col">이름</th>
+							<th scope="col">비밀번호</th>
+							<th scope="col">닉네임</th>
+							<th scope="col">생년월일</th>
 							<th scope="col">문의제목</th>
-							<th scope="col">문의내용</th>
-							<th scope="col">작성일</th>
-							<th scope="col">진행상태</th>
+							<th scope="col">등록일</th>
+							<th scope="col">답변여부</th>
+							<th scope="col">수정</th>
+							<th scope="col">삭제</th>  
 						</tr>
 					</thead>
 					<tbody>
+						<c:set var="num" value="${page.start}"/>
 						<c:forEach var="qna" items="${listQnaList}">
 							<tr>
-								<td>${qna.id}</td>
+								<td>${num}</td>
+								<td>${qna.name}</td>
+								<td>${qna.password}</td>
+								<td>${qna.nickname}</td>
+								<td>${qna.birthday}</td>
 								<td><a href="QnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
-								<td>${qna.question_content}</td>
 								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
 									<c:if test="${qna.status == 1}">답변완료</c:if>
 								</td>
+								<td><input type="button" value="수정"></td>
+								<td><input type="button" value="삭제"></td>
 							</tr>
+							<c:set var="num" value="${num + 1}"/>
 						</c:forEach>
 					</tbody>
 				</table>

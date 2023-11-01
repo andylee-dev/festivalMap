@@ -39,9 +39,10 @@
 						</tr>
 					</thead>
 					<tbody>
+						<c:set var="num" value="${page.start}"/>
 						<c:forEach var="qna" items="${listQnaList}">
 							<tr>
-								<td>${qna.id}</td>
+								<td>${num}</td>
 								<td><a href="QnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
 								<td>${qna.question_content}</td>
 								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
@@ -49,6 +50,7 @@
 									<c:if test="${qna.status == 1}">답변완료</c:if>
 								</td>
 							</tr>
+							<c:set var="num" value="${num + 1}"/>
 						</c:forEach>
 					</tbody>
 				</table>
