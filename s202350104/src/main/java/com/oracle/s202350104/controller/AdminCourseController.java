@@ -20,11 +20,13 @@ public class AdminCourseController {
 	
 	private final CourseService cs;
 	
-	@RequestMapping(value = "List")
+	@RequestMapping(value = "list")
 	public String courselist(Course course, Model model) {
+		log.info("AdminCourseController courselist start");
 		List<Course> courseList = cs.courseList(course);
-		model.addAttribute(courseList);
+		model.addAttribute("courseList", courseList);
+		log.info("AdminCourseController courselist courseList.size() ->" + courseList.size());
 		
-		return "admin/course/List";
+		return "admin/course/list";
 	}
 }

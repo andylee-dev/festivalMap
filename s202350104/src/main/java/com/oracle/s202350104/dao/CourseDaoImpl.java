@@ -20,12 +20,12 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public int courseCount(Course course) {
 		int courseCount = 0;
-		System.out.println("CourseDaoImpl courseCount start...");
+		log.info("CourseDaoImpl courseCount start...");
 		try {
 			courseCount = session.selectOne("courseCount");
-			System.out.println("CourseDaoImpl courseCount courseCount ->" + courseCount);
+			log.info("CourseDaoImpl courseCount courseCount ->" + courseCount);
 		} catch (Exception e) {
-			System.out.println("CourseDaoImpl courseCount e.getMessage() ->" + e.getMessage());
+			log.info("CourseDaoImpl courseCount e.getMessage() ->" + e.getMessage());
 		}
 		return courseCount;
 	}
@@ -33,13 +33,13 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public List<Course> courseList(Course course) {
 		List<Course> courseList = null;
-		System.out.println("CourseDaoImpl courseList start...");
+		log.info("CourseDaoImpl courseList start...");
 		try {
 			courseList = session.selectList("courseListAll", course);
-			System.out.println("CourseDaoImpl courseList courseList.size() ->" + courseList.size());
+			log.info("CourseDaoImpl courseList courseList.size() ->" + courseList.size());
 			
 		} catch (Exception e) {
-			System.out.println("CourseDaoImpl courseList e.getMessage() ->" + e.getMessage());
+			log.info("CourseDaoImpl courseList e.getMessage() ->" + e.getMessage());
 		}
 		
 		return courseList;

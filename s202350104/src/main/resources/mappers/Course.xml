@@ -9,14 +9,16 @@
 		</select>
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
-			select * from courses
+			<!-- select * from courses -->
 		
-			<!-- SELECT *
-			FROM   coursecontents a
+			SELECT *
+			FROM   courseContents a
 			JOIN   courses b
 			ON     a.course_id = b.id
 			JOIN   contents c
-			ON     a.content_id = c.id; -->
+			ON     a.content_id = c.id
+			WHERE  a.order_num = 1
+			ORDER  by b.id ASC
 		</select>
 		
 	</mapper>

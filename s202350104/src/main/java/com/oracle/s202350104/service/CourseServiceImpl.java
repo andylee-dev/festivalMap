@@ -2,15 +2,19 @@ package com.oracle.s202350104.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.CourseDao;
 import com.oracle.s202350104.model.Course;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CourseServiceImpl implements CourseService {
 
 	private final CourseDao cd;
@@ -18,9 +22,8 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public int courseCount(Course course) {
 		int courseCount = 0;
-		System.out.println("CourseServiceImpl courseCount start...");
 		courseCount = cd.courseCount(course);
-		System.out.println("CourseServiceImpl courseCount courseCount ->" + courseCount);
+		log.info("CourseServiceImpl courseCount courseCount ->" + courseCount);
 		
 		return courseCount;
 	}
@@ -28,9 +31,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<Course> courseList(Course course) {
 		List<Course> courseList = null;
-		System.out.println("CourseServiceImpl courseList start...");
 		courseList = cd.courseList(course);
-		System.out.println("CourseServiceImpl courseList courseList.size() ->" + courseList.size());
+		
+		if(courseList == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 리스트가 없습니다.");
+		}
 		
 		return courseList;
 	}
