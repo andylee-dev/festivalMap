@@ -43,4 +43,7 @@ public class CourseContent {
 	private String pageNum;
 	private int    start;
 	private int    end;
+	
+	// commonCode
+	private String cd_content;
 }

@@ -22,31 +22,25 @@
 		</select>
 		
 		<select id="noCourseDetailList" parameterType="int" resultType="Course">
-		
-			SELECT *
+			SELECT cd.content, a.*
+			FROM(
+			    SELECT cc.*, c.*, cs.course_info, cs.course_title, cs.distance, cs.time
+			    FROM coursecontents cc, contents c, courses cs
+			    WHERE cc.course_id= #{course_id}
+			    AND cc.content_id = c.id
+			    AND cc.course_id = cs.id
+			)a, commoncodes cd
+			WHERE a.big_code = cd.big_code
+			AND cd.small_code = 999
+			
+			<!-- SELECT *
 			FROM   courseContents a
 			JOIN   courses b
 			ON     a.course_id = b.id
 			JOIN   contents c
 			ON     a.content_id = c.id
 			WHERE  a.course_id = #{course_id}
-			ORDER  by b.id ASC
-			
-			<!-- select *
-			from     courseContents a
-			JOIN     courses b 
-			ON       a.course_id = b.id
-			WHERE    a.course_id = #{course_id}
-			ORDER    by b.id ASC -->
-			
-			<!-- SELECT   *
-			FROM     courseContents a
-			JOIN     courses b 
-			ON       a.course_id = b.id
-			JOIN     contents c
-			ON       a.content_id = c.id
-			WHERE    a.course_id = #{course_id}
-			ORDER    by b.id ASC -->
+			ORDER  by b.id ASC -->
 		</select>
 		
 	</mapper>

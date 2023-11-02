@@ -35,6 +35,8 @@
 	<div>
 		<c:forEach var="courseDetail" items="${courseDetail }">
 		<div class="container border p-5">
+			<c:if test=""></c:if>
+			
 			<a href='#'><img alt="${courseDetail.course_title }" src="${courseDetail.img1 }"></a>
 			
 			<ul>
