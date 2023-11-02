@@ -28,4 +28,29 @@ public class AreasDaoImpl implements AreasDao {
 		return listAreas;
 	}
 
+	@Override
+	public List<Areas> listAreas(Areas area) {
+		List<Areas> listAreas = null;
+		try {
+			listAreas = session.selectList("joAreasListAll", area);
+			log.info("AreasDaoImpl listAreas size()->" + listAreas.size());			
+		} catch (Exception e) {
+			log.info("{}", e.getMessage());
+		}
+		return listAreas;
+	}
+
+	@Override
+	public int totalAreaCode() {
+		int totalAreaCode = 0;
+		try {
+			totalAreaCode = session.selectOne("joTotalAreaCode");
+			log.info("AreasDaoImpl totalAreaCode ->" + totalAreaCode);
+		} catch (Exception e) {
+			log.info("{}", e.getMessage());
+		} 
+		return totalAreaCode;
+	}
+
+	
 }
