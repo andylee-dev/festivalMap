@@ -37,9 +37,16 @@
 	            } else if(smallCode === 3){
 	            	// 자유게시판으로 리디렉션
 	                location.href = '/freeBoardList';
+	            } else if(smallCode === 4){
+	            	// 자유게시판으로 리디렉션
+	                location.href = '/photoBoardList';
+	            } else if(smallCode === 5){
+	            	// 자유게시판으로 리디렉션
+	                location.href = '/eventBoardList';
 	            } else{
 	            	// 기본 & 오류 처리
-	            	location.href = '/home';
+	            	//location.href = '/';
+	            	window.history.back();
 	            }
 	        }
 	    });

@@ -25,61 +25,67 @@ public class BoardController {
 	// 공지사항 List Logic
 	@RequestMapping(value = "/noticBoardList")
 	public String noticBoardList(Board board, String currentPage, Model model) {
-		int bigCode = 0;
-		int smallCode = 0;
-		
-		int countBoard = boardService.boardCount(smallCode);
-		log.info("controller noticBoardList totalBoard : {} ", countBoard);
 
-		// Paging 작업
-		Paging page = new Paging(currentPage, countBoard);
+	    int bigCode = 0; 
+	    int smallCode = 0;
 
-		// Parameter board page 추가
-		board.setStart(page.getStart());
-		board.setEnd(page.getEnd());
+	    // Parameter board page 추가
+	    List<Board> noticAllList = boardService.getNoticAllList(board);
+	    log.info("controller noticAllList size : {}", noticAllList.size());
+	    
+	    bigCode = noticAllList.get(0).getBig_code();
+	    smallCode = noticAllList.get(0).getSmall_code();
 
-		List<Board> noticAllList = boardService.getNoticAllList(board);
-		log.info("controller noticAllList size : {}", noticAllList.size());
+	    // smallCode를 이용해 countBoard를 설정
+	    int countBoard = boardService.boardCount(smallCode);
+	    log.info("controller noticAllList totalBoard : {} ", countBoard);
+	    log.info("controller noticAllList smallCode : {} ", smallCode);
 
-		bigCode = noticAllList.get(0).getBig_code();
-		smallCode = noticAllList.get(0).getSmall_code();
+	    // Paging 작업
+	    Paging page = new Paging(currentPage, countBoard);
+	    board.setStart(page.getStart()); // Paging 객체 초기화 후에 설정
+	    board.setEnd(page.getEnd()); // Paging 객체 초기화 후에 설정
 
-		model.addAttribute("board", noticAllList);
-		model.addAttribute("page", page);
-		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+	    // 나머지 코드는 그대로 유지	    
+	    model.addAttribute("board", noticAllList);
+	    model.addAttribute("page", page);
+	    model.addAttribute("bigCode", bigCode);
+	    model.addAttribute("smallCode", smallCode);
 
-		return "board/integratedBoardList";
+	    return "board/integratedBoardList";
 	}
 
 	// 이달의 소식 List Logic
 	@RequestMapping(value = "/magazinBoardList")
 	public String magazinBoardList(Board board, String currentPage, Model model) {
-		int bigCode = 0;
-		int smallCode = 0;
-		
-		int countBoard = boardService.boardCount(smallCode);
-		log.info("controller magazinBoardList totalBoard : {} ", countBoard);
 
-		// Paging 작업
-		Paging page = new Paging(currentPage, countBoard);
+	    int bigCode = 0; 
+	    int smallCode = 0;
 
-		// Parameter board page 추가
-		board.setStart(page.getStart());
-		board.setEnd(page.getEnd());
+	    // Parameter board page 추가
+	    List<Board> magazinAllList = boardService.getMagazinAllList(board);
+	    log.info("controller magazinAllList size : {}", magazinAllList.size());
+	    
+	    bigCode = magazinAllList.get(0).getBig_code();
+	    smallCode = magazinAllList.get(0).getSmall_code();
 
-		List<Board> magazinAllList = boardService.getMagazinAllList(board);
-		log.info("controller magazinAllList size : {}", magazinAllList.size());
+	    // smallCode를 이용해 countBoard를 설정
+	    int countBoard = boardService.boardCount(smallCode);
+	    log.info("controller magazinAllList totalBoard : {} ", countBoard);
+	    log.info("controller magazinAllList smallCode : {} ", smallCode);
 
-		bigCode = magazinAllList.get(0).getBig_code();
-		smallCode = magazinAllList.get(0).getSmall_code();
+	    // Paging 작업
+	    Paging page = new Paging(currentPage, countBoard);
+	    board.setStart(page.getStart()); // Paging 객체 초기화 후에 설정
+	    board.setEnd(page.getEnd()); // Paging 객체 초기화 후에 설정
 
-		model.addAttribute("board", magazinAllList);
-		model.addAttribute("page", page);
-		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+	    // 나머지 코드는 그대로 유지	    
+	    model.addAttribute("board", magazinAllList);
+	    model.addAttribute("page", page);
+	    model.addAttribute("bigCode", bigCode);
+	    model.addAttribute("smallCode", smallCode);
 
-		return "board/integratedBoardList";
+	    return "board/integratedBoardList";
 	}
 
 	// 자유게시판 List Logic
@@ -106,8 +112,7 @@ public class BoardController {
 	    board.setStart(page.getStart()); // Paging 객체 초기화 후에 설정
 	    board.setEnd(page.getEnd()); // Paging 객체 초기화 후에 설정
 
-	    // 나머지 코드는 그대로 유지
-	    
+	    // 나머지 코드는 그대로 유지	    
 	    model.addAttribute("board", freeAllList);
 	    model.addAttribute("page", page);
 	    model.addAttribute("bigCode", bigCode);

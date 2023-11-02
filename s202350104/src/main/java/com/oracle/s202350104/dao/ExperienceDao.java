@@ -12,4 +12,6 @@ public interface ExperienceDao {
 
 	int totalExperience();
 
+	int experienceDelete(int content_id);
+
 }

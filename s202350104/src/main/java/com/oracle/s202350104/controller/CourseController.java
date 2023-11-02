@@ -49,16 +49,18 @@ public class CourseController {
 	}
 	
 	
-	@GetMapping(value = "course/detail")
-	public String courseDetail(int course_id, Model model) {
-		System.out.println("course_id ->" + course_id);
+	@RequestMapping(value = "course/detail")
+	public String courseDetail(Course course, Model model) {
 		try {
-			CourseContent detailList = cs.detailList(course_id);
+			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
+			List<CourseContent> courseDetailList = cs.courseDetail(course.getCourse_id());
+			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
 			
+			model.addAttribute("courseDetail", courseDetailList);
 		} catch (Exception e) {
 			log.error("CourseController courseDetail e.getMessage() ->" + e.getMessage());
 		} finally {
-			log.info("CourseController courseDetail end...");
+			log.info("CourseController courseDetai end");
 		}
 		
 		return "course/courseDetail";
