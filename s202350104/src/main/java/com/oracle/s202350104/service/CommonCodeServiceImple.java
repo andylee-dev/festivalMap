@@ -17,9 +17,15 @@ public class CommonCodeServiceImple implements CommonCodeService {
 	private final CommonCodesDao cd;
 
 	@Override
-	public List<CommonCodes> listCommonCode() {
-		List<CommonCodes> listCommonCodes = cd.listCommonCodes();
+	public List<CommonCodes> listCommonCode(CommonCodes commonCode) {
+		List<CommonCodes> listCommonCodes = cd.listCommonCodes(commonCode);
 		return listCommonCodes;
+	}
+
+	@Override
+	public int totalCommonCode() {
+		int totalCommonCode = cd.totalCommonCode();
+		return totalCommonCode;
 	}
 
 }

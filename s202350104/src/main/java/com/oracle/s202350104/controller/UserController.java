@@ -106,7 +106,7 @@ public class UserController {
 		return "user/mypage/QnaForm";
 	}
 	
-	@RequestMapping(value = "user/mypage/QnaList")
+	@RequestMapping(value = "user/myPage/QnaList")
 	public String QnaList(Qna qna , String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
@@ -129,7 +129,7 @@ public class UserController {
 		}finally { 
 			log.info("[{}]{}:{}",transactionId, "QnaList", "end");
 		}	
-		return "user/mypage/myQnaList";
+		return "user/myPage/myQnaList";
 	}
 	
 	@RequestMapping(value = "user/mypage/myTag")

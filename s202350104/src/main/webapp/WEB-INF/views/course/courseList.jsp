@@ -33,15 +33,17 @@
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 					<c:forEach var="course" items="${courseList }">
-						<div>
+						<div class="col">
 							<div class="card" style="width: 20em;">
 								<img src="${course.img1 }" class="card-img-top" alt="${course.course_title }" style="height: 190px;" /> 
-								<div class="card-text" style="height: 240px;">
-									<h5 class="card-title">${course.course_title }</h5>
-									<br class="card-text">${course.time }</br>
-									<p class="card-text">${course.distance }</p>
-									<p class="card-text">${course.course_info }</p>
-									<a href="course/detail?course_id=${course.course_id }" class="btn btn-primary">상세보기 : ${course.course_id }</a>
+								<div class="card-body">
+									<div class="card-text" style="height: 240px;">
+										<h5 class="card-title">${course.course_title }</h5>
+										<br class="card-text">${course.time }</br>
+										<p class="card-text">${course.distance }</p>
+										<p class="card-text">${course.course_info }</p>
+										<a href="course/detail?course_id=${course.course_id }" class="btn btn-primary">상세보기 : ${course.course_id }</a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -61,6 +63,7 @@
 			</c:if>
 		</div>
 	</main>	
+	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
 </html>

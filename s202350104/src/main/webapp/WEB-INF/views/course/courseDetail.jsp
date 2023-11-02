@@ -24,8 +24,8 @@
 						<li>코스 이름 : ${courseDetail.course_title }
 						<li>코스 내용 : ${courseDetail.course_info }
 						<li>코스 거리 : ${courseDetail.distance }
-						<li>주 소 :    ${courseDetail.address }
-						<li>전화번호 : ${courseDetail.phone }
+						<li>주 소 :	${courseDetail.address }
+						<li>전화번호 :	${courseDetail.phone }
 					</ul>
 				</div>
 			</c:if>
@@ -35,8 +35,9 @@
 	<div>
 		<c:forEach var="courseDetail" items="${courseDetail }">
 		<div class="container border p-5">
-			<a href='#'><img alt="${courseDetail.course_title }" src="${courseDetail.img1 }"></a>
-			
+			<a href='../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}'>
+				<img alt="${courseDetail.course_title }" src="${courseDetail.img1 }">
+			</a>
 			<ul>
 				<li>코스이름 : ${courseDetail.title }
 				<li>개요 : ${courseDetail.content }

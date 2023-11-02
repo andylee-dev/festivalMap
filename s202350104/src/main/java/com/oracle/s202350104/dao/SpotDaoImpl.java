@@ -43,5 +43,18 @@ public class SpotDaoImpl implements SpotDao {
 			}
 		return spotList;
 	}
+
+	@Override
+	public SpotContent detailSpot(int contentId) {
+		SpotContent spot = new SpotContent();
+		try {
+			spot = session.selectOne("dhSpotDetail", contentId);
+			log.info("SpotDaoImpl detailSpot() spot.getTitle => " + spot.getTitle());
+		}catch (Exception e) {
+			log.info("SpotDaoImpl detailSpot() => " + e.getMessage());
+		}
+		
+		return spot;
+	}
 }
 
