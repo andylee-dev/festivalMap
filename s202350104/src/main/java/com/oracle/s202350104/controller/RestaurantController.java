@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Restaurants;
 import com.oracle.s202350104.model.RestaurantsContent;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.RestaurantService;
 
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RestaurantController {
 	private final RestaurantService rs;
+	private final AreaService as;
 	
 	@GetMapping(value = "/restaurant")
 	public String restaurant(RestaurantsContent restaurant, String currentPage, Model model) {
@@ -34,9 +37,11 @@ public class RestaurantController {
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			List<Areas> listAreas = as.listPoint();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "restaurant", e.getMessage());
