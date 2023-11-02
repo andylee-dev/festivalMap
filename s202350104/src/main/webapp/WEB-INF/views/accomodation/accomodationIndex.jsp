@@ -23,17 +23,17 @@
 		</div>
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-					<c:forEach var="accomodations" items="${listAccomodations}">
+					<c:forEach var="accomodation" items="${listAccomodation}">
 						<div class="col">
 							<div class="card" style="width: 20rem;">
-  							<img src="${accomodations.img1}" class="card-img-top" alt="${accomodations.title}이미지" style="height: 190px;">
+  							<img src="${accomodation.img1}" class="card-img-top" alt="${accomodation.title}이미지" style="height: 190px;">
   							<div class="card-body">
     							<p class="card-text" style="height: 240px;">
-    								숙소명 : ${accomodations.title} <br>
-    								숙소위치 : ${accomodations.address}<br>
-    								숙소소개  : ${accomodations.content}
+    								숙소명 : ${accomodation.title} <br>
+    								숙소위치 : ${accomodation.address}<br>
+    								숙소소개  : ${accomodation.content}
     							</p>
-    				<a href="accomodations/detail?content_id=${accomodations.content_id}" class="btn btn-primary">더보기</a>
+    				<a href="accomodation/detail?contentId=${accomodation.content_id}" class="btn btn-primary">더보기</a>
  						 </div>	
 						</div>
 					</div>
@@ -42,13 +42,13 @@
 			</div>
 			<div align="center">
 			<c:if test="${page.startPage > page.pageBlock}">
-				<a href="accomodations?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+				<a href="accomodation?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
 			</c:if>
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-				<a href="accomodations?currentPage=${i}">[${i}]</a>
+				<a href="accomodation?currentPage=${i}">[${i}]</a>
 			</c:forEach>
 			<c:if test="${page.endPage < page.totalPage}">
-				<a href="accomodations?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+				<a href="accomodation?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 			</c:if>
 		</div>
 	</main>

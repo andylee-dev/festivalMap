@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oracle.s202350104.model.AccomodationsContent;
+import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
-import com.oracle.s202350104.service.AccomodationsService;
+import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
@@ -34,7 +34,7 @@ public class AdminContentController {
 	private final FestivalsService fs;
 	private final SpotService ss;
 	private final RestaurantService rs;
-	private final AccomodationsService as;
+	private final AccomodationService as;
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -135,17 +135,17 @@ public class AdminContentController {
 	}
 
 	@RequestMapping(value = "accomodation")
-		public String accomodation(AccomodationsContent accomodationContent, String currentPage, Model model) {
+		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
-				int totalaccomodation = as.totalAccomodations();
+				int totalaccomodation = as.totalAccomodation();
 			
 				Paging page = new Paging(totalaccomodation, currentPage);
 				accomodationContent.setStart(page.getStart());
 				accomodationContent.setEnd(page.getEnd());
 			
-				List<AccomodationsContent> listAccomodation = as.listAccomodations(accomodationContent);
+				List<AccomodationContent> listAccomodation = as.listAccomodation(accomodationContent);
 			
 				model.addAttribute("totalAccomodation",totalaccomodation);
 				model.addAttribute("listAccomodation", listAccomodation);

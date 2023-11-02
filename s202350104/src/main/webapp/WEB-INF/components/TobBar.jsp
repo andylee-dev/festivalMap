@@ -37,8 +37,8 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							숙박 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/accomodations">숙박리스트</a></li>
-							<li><a class="dropdown-item" href="/accomodations/detail">숙박상세</a></li>
+							<li><a class="dropdown-item" href="/accomodation">숙박리스트</a></li>
+							<li><a class="dropdown-item" href="/accomodation/detail">숙박상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"

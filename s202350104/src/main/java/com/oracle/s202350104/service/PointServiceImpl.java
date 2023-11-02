@@ -32,13 +32,14 @@ public class PointServiceImpl implements PointService {
 		
 
 	}
+    public Point getPointById(int id) {
+        return pd.getPointById(id); 
+    }
 
-	@Override
-	public int deletePoint(int id) {
-		int result = pd.deletePoint(id);
-		
-		return result;
-	}
+    public void updatePoint(Point point) {
+        pd.updatePoint(point); 
+    }
+	
 		
 	}
 

@@ -29,18 +29,19 @@ public class PointDaoImpl implements PointDao {
 		
 		return listPoint;
 	}
+	
+	 @Override
+	    public Point getPointById(int id) {
+		 		
+		 return session.selectOne("updatePoint", id);
+	    }
 
-	@Override
-	public int deletePoint(int id) {
-		int result = 0;
-		try {
-			result = session.delete("deletePoint",id);
-		} catch (Exception e) {
-			 log.error("Error deleting point history: {}", e.getMessage());
-        }
-		
-		return result;
-	}
+	    @Override
+	    public void updatePoint(Point point) {
+	    	 session.update("updatePoint", point);
+	    }
+
+
 }
 
 

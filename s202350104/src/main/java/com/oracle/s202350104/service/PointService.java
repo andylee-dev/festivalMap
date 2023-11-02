@@ -8,6 +8,10 @@ public interface PointService {
 	
 	List<Point>			listPoint();
 
-	int                deletePoint(int id);
+	Point               getPointById(int id);
+
+	void                updatePoint(Point point);
+
+
 
 }

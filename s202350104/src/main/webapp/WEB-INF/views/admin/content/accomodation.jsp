@@ -42,16 +42,16 @@
 					</thead>
 					<tbody>
 						<c:set var="num" value="${page.start}"/>
-						<c:forEach var="accomodations" items="${listAccomodation}">
+						<c:forEach var="accomodation" items="${listAccomodation}">
 							<tr>
 								<td>${num}</td>
-								<td>${accomodations.area} ${accomodations.sigungu}</td>
-								<td>${accomodations.title}</td>
-								<td>${accomodations.address}</td>
+								<td>${accomodation.area} ${accomodation.sigungu}</td>
+								<td>${accomodation.title}</td>
+								<td>${accomodation.address}</td>
 								<td><fmt:formatDate value="${accomodations.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td>
-						 				<c:if test="${accomodations.status == 0 }">승인대기</c:if>
-										<c:if test="${accomodations.status == 1 }">승인완료</c:if>
+						 				<c:if test="${accomodation.status == 0 }">승인대기</c:if>
+										<c:if test="${accomodation.status == 1 }">승인완료</c:if>
 									</td>
 									<td><input type="button" value="수정"></td>
 									<td><input type="button" value="삭제"></td>					
@@ -66,13 +66,13 @@
 	</div>
 	<div align="center">
 	<c:if test="${page.startPage > page.pageBlock}">
-			<a href="accomodations?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			<a href="accomodation?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="accomodations?currentPage=${i}" class="pageblock">[${i}]</a>
+			<a href="accomodation?currentPage=${i}" class="pageblock">[${i}]</a>
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="accomodations?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			<a href="accomodation?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 		</c:if>
 	</div>
 </body>

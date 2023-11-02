@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class AccomodationsContent {
+public class AccomodationContent {
 		// Contents 컬럼
 		private int    area;
 		private int    sigungu;
