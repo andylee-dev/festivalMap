@@ -51,11 +51,10 @@
 									alt="${spot.title}이미지" style="height: 190px;">
 								<div class="card-body">
 									<p class="card-text" style="height: 240px;">
-										축제명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
+										명소명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
 										${spot.content}
 									</p>
-									<a href="spot/detail?content_id=${spot.content_id}"
-										class="btn btn-primary">더보기</a>
+									<a href="spot/detail?content_id=${spot.content_id}"class="btn btn-primary">더보기</a>
 									<c:set var="card" value="${card - 1}"></c:set>
 								</div>
 							</div>

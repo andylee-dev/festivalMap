@@ -51,7 +51,19 @@ public class SpotController {
 	}
 	
 	@RequestMapping(value = "spot/detail")
-	public String spotDetail() {
+	public String spotDetail(int contentId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "spot/detail", "start");
+			SpotContent spot = ss.detailSpot(contentId);
+			
+			model.addAttribute("contentId",contentId);
+			model.addAttribute("spot",spot);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "spot/detail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "spot/detail", "end");
+		}	
 		return "spot/spotDetail";
 	}
 }
