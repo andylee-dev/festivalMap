@@ -8,4 +8,6 @@ public interface PointService {
 	
 	List<Point>			listPoint();
 
+	int                deletePoint(int id);
+
 }

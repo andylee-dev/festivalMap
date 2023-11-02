@@ -12,9 +12,11 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>포인트관리</h1>
 	<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary">등록</button>
-				<button type="button" class="btn btn-outline-secondary">수정</button>
-				<button type="button" class="btn btn-outline-secondary">삭제</button>
+				<button type="button" class="btn btn-outline-secondary" 
+				onclick="location.href='insertFormEmp?empno=${emp.empno}'">등록</button>
+				<button type="button" class="btn btn-outline-secondary" 
+				onclick="location.href='updateFormEmp?empno=${emp.empno}'">수정</button>
+				
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
@@ -23,6 +25,7 @@
 							<th scope="col">포인트이름</th>
 							<th scope="col">포인트내용</th>
 							<th scope="col">포인트점수</th>
+							
 						</tr>
 					</thead>
 		<c:forEach var="point" items="${listPoint}">

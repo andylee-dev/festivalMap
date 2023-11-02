@@ -21,5 +21,6 @@
    SELECT   count(*)
    FROM   qna
    </select>
+   
 </mapper>   
 
