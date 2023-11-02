@@ -14,4 +14,7 @@ public interface TagsService {
 	int totalContentTags();
 	List<Tags> listContentTags(Tags tags);
 	List<Tags> listTagsAll();
+	int insertTags(Tags tags);
+	Tags selectTags(int id);
+	int updateTags(Tags tags);
 }

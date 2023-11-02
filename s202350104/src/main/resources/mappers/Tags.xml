@@ -84,4 +84,16 @@
 	<select id="nhTagsListAll" resultType="Tags">
 		SELECT * FROM Tags
 	</select>
+	
+	<insert id="nhTagsInsert" parameterType="Tags">
+		INSERT INTO Tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+	</insert>
+	
+	<select id="nhTagsSelect" parameterType="int" resultType="Tags">
+		SELECT * FROM Tags WHERE id = #{id}
+	</select>
+	
+	<update id="nhTagsUpdate" parameterType="Tags">
+		UPDATE Tags SET name = #{name} WHERE id = #{id}
+	</update>
 </mapper>

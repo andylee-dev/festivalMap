@@ -27,7 +27,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertTagsForm'">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -43,7 +43,7 @@
 								<tr>
 									<td>${num}</td>
 									<td>${tag.name}</td>
-									<td><input type="button" value="수정"></td>
+									<td><input type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
 									<td><input type="button" value="삭제"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>

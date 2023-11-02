@@ -35,8 +35,9 @@
 	<div>
 		<c:forEach var="courseDetail" items="${courseDetail }">
 		<div class="container border p-5">
-			<a href=''><img alt="${courseDetail.course_title }" src="${courseDetail.img1 }"></a>
-			
+			<a href='../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}'>
+				<img alt="${courseDetail.course_title }" src="${courseDetail.img1 }">
+			</a>
 			<ul>
 				<li>코스이름 : ${courseDetail.title }
 				<li>개요 : ${courseDetail.content }

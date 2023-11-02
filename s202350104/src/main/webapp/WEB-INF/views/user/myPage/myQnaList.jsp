@@ -56,13 +56,13 @@
 				</table>
 			<div align="center">
 				<c:if test="${page.startPage > page.pageBlock}">
-					<a href="qna?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+					<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
 				</c:if>
 				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="qna?currentPage=${i}">[${i}]</a>
+					<a href="qnaList?currentPage=${i}">[${i}]</a>
 				</c:forEach>
 				<c:if test="${page.endPage < page.totalPage}">
-					<a href="qna?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+					<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 				</c:if>
 			</div>
 			</div>		

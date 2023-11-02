@@ -28,17 +28,15 @@
 							dataType:'json',
 							success:function(areas) {
 								$('#sigungu_list_select option').remove();
-								str = "<option value='999'>전체</option>";
+								str = "<option value=''>전체</option>";
 								$(areas).each(
 									function() {
 										if(pArea == this.area && this.sigungu != 999 && this.content != null) {
 											strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
-											// <option value="${areas.sigungu}">${areas.content}</option>
 											str += strOption;
 										}
 									}		
 								)
-								alert(str);
 								$('#sigungu_list_select').append(str);
 							}
 						}		

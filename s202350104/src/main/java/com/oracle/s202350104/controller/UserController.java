@@ -96,21 +96,21 @@ public class UserController {
 		return "user/mypage/myPoint";
 	}
 	
-	@RequestMapping(value = "user/mypage/QnaDetail")
-	public String QnaDetail() {
-		return "user/mypage/QnaDetail";
+	@RequestMapping(value = "user/mypage/qnaDetail")
+	public String qnaDetail() {
+		return "user/mypage/qnaDetail";
 	}
 
-	@RequestMapping(value = "user/mypage/QnaForm")
-	public String QnaForm() {
-		return "user/mypage/QnaForm";
+	@RequestMapping(value = "user/mypage/qnaForm")
+	public String qnaForm() {
+		return "user/mypage/qnaForm";
 	}
 	
-	@RequestMapping(value = "user/myPage/QnaList")
-	public String QnaList(Qna qna , String currentPage, Model model) {
+	@RequestMapping(value = "user/myPage/qnaList")
+	public String qnaList(Qna qna , String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}:{}",transactionId, "QnaList", "start");
+			log.info("[{}]{}:{}",transactionId, "qnaList", "start");
 			int totalQnaList = qs.totalQnaList();
 			log.info("totalQnaList=>"+totalQnaList);
 		
@@ -125,9 +125,9 @@ public class UserController {
 			model.addAttribute("listQnaList",listQnaList);
 			model.addAttribute("page",page);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "QnaList", e.getMessage());
+			log.error("[{}]{}:{}",transactionId,  "qnaList", e.getMessage());
 		}finally { 
-			log.info("[{}]{}:{}",transactionId, "QnaList", "end");
+			log.info("[{}]{}:{}",transactionId, "qnaList", "end");
 		}	
 		return "user/myPage/myQnaList";
 	}

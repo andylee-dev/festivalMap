@@ -2,7 +2,9 @@ package com.oracle.s202350104.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.controller.SpotController;
 import com.oracle.s202350104.dao.AreasDao;
@@ -30,8 +32,21 @@ public class SpotServiceImpl implements SpotService {
 	@Override
 	public List<SpotContent> listSpot(SpotContent spotContent) {
 		List<SpotContent> spotList = sd.listSpot(spotContent);
-		log.info("SpotServiceImpl listSpot spotList.size()->"+spotList.size());
+		
+		if(spotList == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "명소 리스트가 존재하지 않습니다.");
+		}
 		return spotList;
+	}
+
+	@Override
+	public SpotContent detailSpot(int contentId) {
+		SpotContent spot = sd.detailSpot(contentId);
+		
+		if(spot == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 명소 정보가 존재하지 않습니다.");
+		}
+		return spot;
 	}
 
 

@@ -7,7 +7,6 @@ import com.oracle.s202350104.model.Tags;
 public interface TagsDao {
 	int totalTags();
 	List<Tags> listTags(Tags tag);
-//	int        insertUserTags();
 	int totalUserTags();
 	List<Tags> listUserTags(Tags tags);
 	int totalBoardTags();
@@ -15,4 +14,7 @@ public interface TagsDao {
 	int totalContentTags();
 	List<Tags> listContentTags(Tags tags);
 	List<Tags> listTagsAll();
+	int insertTags(Tags tags);
+	Tags selectTags(int id);
+	int updateTags(Tags tags);
 }
