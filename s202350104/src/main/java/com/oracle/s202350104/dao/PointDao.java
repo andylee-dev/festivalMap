@@ -7,6 +7,8 @@ import com.oracle.s202350104.model.Point;
 public interface PointDao {
 	
 	List<Point>			listPoint();
+
+	int                 deletePoint(int id);
 	
 
 }

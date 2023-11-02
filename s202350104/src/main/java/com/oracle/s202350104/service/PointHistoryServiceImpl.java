@@ -31,4 +31,13 @@ public class PointHistoryServiceImpl implements PointHistoryService {
 		return listPointHistory;
 	}
 
+	@Override
+	public int deletePointHistory(int point_id) {
+		int result = phd.deletePointHistory(point_id);
+        if(result == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 포인트 내역이 없습니다");
+        }
+		return result;
+	}
+
 }

@@ -13,4 +13,8 @@
 		
 	</select>
 	
+	<delete id="deletePointHistory" parameterType="int">
+	    DELETE FROM pointhistory WHERE point_id = #{point_id}
+   </delete> 
+	
 </mapper>

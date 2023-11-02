@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.service.PointHistoryService;
@@ -28,6 +29,13 @@ public class AdminPointHistoryController {
 		
 		return "admin/point/pointhistory";
 		
+	}
+	
+	@RequestMapping(value = "/admin/point/deletePointHistory")
+	public String deletePointHistory(int point_id, Model model) {
+		phs.deletePointHistory(point_id);
+	   
+		return "redirect:/admin/point/pointhistory";
 	}
 	
 	

@@ -30,27 +30,33 @@
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
-							<th scope="col">등록ID</th>
+							<th scope="col">순번</th>
+							<th scope="col">지역</th>
 							<th scope="col">숙박업장이름</th>
 							<th scope="col">주소</th>
-							<th scope="col">우편번호</th>
-							<th scope="col">이메일</th>
-							<th scope="col">전화번호</th>
-							<th scope="col">홈페이지</th>
+							<th scope="col">신청일</th>
+							<th scope="col">승인여부</th>
+							<th scope="col">수정</th>
+							<th scope="col">삭제</th>
 						</tr>
 					</thead>
 					<tbody>
+						<c:set var="num" value="${page.start}"/>
 						<c:forEach var="accomodations" items="${listAccomodation}">
 							<tr>
-								<td>${accomodations.content_id}</td>
+								<td>${num}</td>
+								<td>${accomodations.area} ${accomodations.sigungu}</td>
 								<td>${accomodations.title}</td>
 								<td>${accomodations.address}</td>
-								<td>${accomodations.postcode}</td>
-								<td>${accomodations.email}</td>
-								<td>${accomodations.phone}</td>
-								<td>${accomodations.homepage}</td>
-								
-							</tr>
+								<td><fmt:formatDate value="${accomodations.created_at}" type="date" pattern="YY/MM/dd"/></td>
+								<td>
+						 				<c:if test="${accomodations.status == 0 }">승인대기</c:if>
+										<c:if test="${accomodations.status == 1 }">승인완료</c:if>
+									</td>
+									<td><input type="button" value="수정"></td>
+									<td><input type="button" value="삭제"></td>					
+								 </tr>
+								 <c:set var="num" value="${num + 1}"/>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -60,13 +66,13 @@
 	</div>
 	<div align="center">
 	<c:if test="${page.startPage > page.pageBlock}">
-			<a href="experience?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			<a href="accomodations?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="experience?currentPage=${i}" class="pageblock">[${i}]</a>
+			<a href="accomodations?currentPage=${i}" class="pageblock">[${i}]</a>
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="experience?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			<a href="accomodations?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 		</c:if>
 	</div>
 </body>

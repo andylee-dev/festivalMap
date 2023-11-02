@@ -33,4 +33,12 @@ public class PointServiceImpl implements PointService {
 
 	}
 
-}
+	@Override
+	public int deletePoint(int id) {
+		int result = pd.deletePoint(id);
+		
+		return result;
+	}
+		
+	}
+
