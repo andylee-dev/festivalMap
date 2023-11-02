@@ -15,10 +15,10 @@
 	<div class="container border p-5">
 		<table>
 			<tr>
-				<td><a href="joinForm"><img alt="일반회원이미지" 
+				<td><a href="/signUp/user"><img alt="일반회원이미지" 
 					src="http://tong.visitkorea.or.kr/cms/resource/62/2987562_image3_1.png"></a><p>
 					일반회원<p>만 14세 이상의 내국인<p></td>
-				<td><a href="bizJoinForm"><img alt="비즈니스회원이미지" 
+				<td><a href="/signUp/biz"><img alt="비즈니스회원이미지" 
 					src="http://tong.visitkorea.or.kr/cms/resource/65/2952965_image3_1.jpg"></a><p>
 					비즈니스회원<p>개인/단체 비즈니스 회원<p></td>
 			</tr>

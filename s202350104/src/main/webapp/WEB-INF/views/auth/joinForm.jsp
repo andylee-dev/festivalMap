@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -10,12 +9,15 @@
 </head>
 <body>
 	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	
 	<h1>일반회원 회원가입</h1>
 	<div class="container border p-5">
-		<form action="insertUser">
-			<input type="hidden" name="status" value="2">
+		<form action="/signUp" method="post">
+			<input type="hidden" name="status" value="1">
+			<input type="hidden" name="big_code" value="1">
+			<input type="hidden" name="small_code" value="2">
+			<input type="hidden" name="point" value="0">
+			<input type="hidden" name="file_name" value="">
 			아이디 <input type="text" name="id" placeholder="아이디를 입력하세요"><p>
 			비밀번호 <input type="password" name="password" placeholder="비밀번호를 입력하세요"><p>
 			비밀번호 확인 <input type="password" placeholder="비밀번호를 다시 한 번 입력하세요"><p>

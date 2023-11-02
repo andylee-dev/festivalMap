@@ -14,7 +14,7 @@
 		<div align="center">
 			<h1>로 그 인</h1>
 			<div class="container border p-5">
-				<form action="">
+				<form action="/login" method="post">
 					아이디 <input type="text" name="id"><p>
 					비밀번호 <input type="password" name="password"><p>
 					<a href="idSearch">아이디 찾기</a> / <a href="passwordSearch">비밀번호 찾기</a><p>
