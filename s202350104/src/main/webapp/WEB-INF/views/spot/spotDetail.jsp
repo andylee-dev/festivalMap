@@ -117,7 +117,10 @@
 				</ul>
 			</nav>	
 		</div>
-		
+		</div>
+		<div class="text-center">
+		<input type="button" value="목록" onclick="location.href='../spot'">
+		</div>
 		<!-- Footer -->
 		<%@ include file="/WEB-INF/components/Footer.jsp" %>
 	</body>

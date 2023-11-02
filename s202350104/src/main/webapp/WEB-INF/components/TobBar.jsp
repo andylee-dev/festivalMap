@@ -103,7 +103,7 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="/user/bizPage">내정보</a></li>
 							<li><a class="dropdown-item" href="/user/bizPage/content">내 컨텐츠 등록</a></li>
-							<li><a class="dropdown-item" href="/user/bizPage/qna">1:1문의</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/qnaList">1:1문의</a></li>
 						</ul></li>
 
 					<li class="nav-item dropdown"><a
