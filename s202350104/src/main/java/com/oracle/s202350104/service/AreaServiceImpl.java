@@ -21,6 +21,18 @@ public class AreaServiceImpl implements AreaService {
 		List<Areas> listAreas = ad.listAreas();
 		return listAreas;
 	}
+
+	@Override
+	public List<Areas> listPoint(Areas area) {
+		List<Areas> listAreas = ad.listAreas(area);
+		return listAreas;
+	}
+
+	@Override
+	public int totalAreaCode() {
+		int totalAreaCode = ad.totalAreaCode();
+		return totalAreaCode;
+	}
 	
 	
 	

@@ -6,4 +6,6 @@ import com.oracle.s202350104.model.Areas;
 
 public interface AreasDao {
 	List<Areas> listAreas();
+	List<Areas> listAreas(Areas area);
+	int         totalAreaCode();
 }
