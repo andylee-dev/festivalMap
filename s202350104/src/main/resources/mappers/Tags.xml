@@ -84,4 +84,8 @@
 	<select id="nhTagsListAll" resultType="Tags">
 		SELECT * FROM Tags
 	</select>
+	
+	<insert id="ngTagsInsert" parameterType="Tags">
+		INSERT INTO tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+	</insert>
 </mapper>

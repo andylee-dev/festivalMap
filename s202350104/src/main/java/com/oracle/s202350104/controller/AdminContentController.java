@@ -15,6 +15,7 @@ import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.RestaurantService;
 import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.user.UserService;
@@ -42,7 +43,7 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin festival", "start");
 			int totalFestivals = fs.totalFestivals();
 			
-			Paging page = new Paging(totalFestivals, currentPage);
+			PagingList page = new PagingList(totalFestivals, currentPage);
 			festival.setStart(page.getStart());
 			festival.setEnd(page.getEnd());
 			

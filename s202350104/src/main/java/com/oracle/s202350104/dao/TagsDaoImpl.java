@@ -121,10 +121,15 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 
-		/*
-		 * @Override public int insertUserTags() { // TODO Auto-generated method stub
-		 * return 0; }
-		 */
-		
+	@Override
+	public int insertTags(Tags tags) {
+		int result = 0;
+		try {
+			result = session.insert("ngTagsInsert", tags);
+		} catch(Exception e) {
+			log.info("TagsDaoImpl insertTags() => " + e.getMessage());
+		}
+		return result;
+	}
 		
 }

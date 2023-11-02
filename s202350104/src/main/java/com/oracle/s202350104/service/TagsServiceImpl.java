@@ -98,4 +98,11 @@ public class TagsServiceImpl implements TagsService {
 		return listTags;
 	}
 
+	@Override
+	public int insertTags(Tags tags) {
+		int result = td.insertTags(tags);
+		
+		return result;
+	}
+
 }
