@@ -1,8 +1,10 @@
 package com.oracle.s202350104.service.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserServiceImpl implements UserService {
 	private final UserDao ud;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
 	public List<Users> listUsers() {
@@ -32,6 +35,28 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Users findUser() {
 		return null;
+	}
+
+	@Override
+	public int signUp(Users user) {
+		int result = 0;
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "signUp", "start");
+			if (!user.getEmail().equals("")) {
+				/* 비밀번호 암호화*/
+// 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+				user.setBirthday(user.getBirthday().replace("-", ""));
+				result = ud.insertUser(user);
+			} else {
+				log.info("no email");
+			}
+		} catch (Exception e) {
+			log.error("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "userJoinForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "signUp", "end");
+		}
+		return result;
 	}
 
 }

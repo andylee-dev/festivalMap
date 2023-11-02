@@ -8,5 +8,6 @@ public interface UserService {
 
 	List<Users> listUsers();
 	Users findUser();
+	int signUp(Users user);
 }
 	
