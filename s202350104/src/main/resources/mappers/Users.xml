@@ -6,4 +6,22 @@
 	<select id="userListAll" resultType="Users">
 		SELECT * FROM users
 	</select>
+	
+	<insert id="insertUser"  parameterType="Users" >
+		INSERT INTO 
+		users(
+			id,big_code,small_code,
+			name,password,nickname,birthday,
+			phone_num,email,address,status,
+			point,gender,created_at,updated_at,
+			file_name,is_deleted
+		) 
+		VALUES (
+			#{id}, #{big_code}, #{small_code}, 
+			#{name}, #{password}, #{nickname}, #{birthday}, 
+			#{phone_num}, #{email}, #{address}, #{status}, 
+			#{point}, #{gender}, sysdate, sysdate, 
+			#{file_name}, 0
+		)
+   </insert>
 </mapper>
