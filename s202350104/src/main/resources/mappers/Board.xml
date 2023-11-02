@@ -108,11 +108,7 @@
 		                    contents c
 		               on 
 		                   	a.content_id = c.id
-		               join 
-		                    restaurants d
-		               on 
-		                    c.id= d.content_id
-		               where d.content_id = #{content_id} 
+		               where c.id = #{content_id} 
 		        ) e
 		)
 		where rn between #{start} and #{end}

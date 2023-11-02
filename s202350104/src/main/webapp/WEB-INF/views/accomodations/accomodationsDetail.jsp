@@ -46,6 +46,60 @@
 	 	 </ul>
 		</div>
 		
+		<!-- review test -->
+		<c:set var="num" value="${page.total-page.start+1 }"/>
+		<div class="container border p-5">
+		    <div class="text-right"> <!-- 버튼을 오른쪽 정렬하는 부분 -->
+		        <button class="btn btn-primary" onclick="location.href='../boardInsertForm?userId=1&bigCode=${bigCode}&smallCode=${smallCode}'">글쓰기</button>
+		    </div>
+			<table class="table">
+				<tr class="table-primary text-center">
+					<th scope="col">구분</th>
+					<th scope="col">한줄평</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">평점</th>
+				</tr>
+				<c:forEach var="review" items="${reviewBoard }">
+					<tr>
+						<td class="text-center">${num }</td>
+							<td class="text-center">
+								<a href="../boardDetail?id=${review.id }">${review.content }</a>
+							</td>
+						<td class="text-center">${review.name }</td>
+						<td class="text-center">
+							<fmt:formatDate value="${review.created_at }" type="date"
+											pattern="YYYY/MM/dd"/></td>
+						<td class="text-center">${review.score }</td>
+					</tr>
+					<c:set var="num" value="${num - 1 }"/>
+			</c:forEach>
+			</table>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
+					<c:choose>
+					    <c:when test="${smallCode eq 6}">
+							<li class="page-item">
+								<c:if test="${page.startPage > page.pageBlock }">
+									<a class="page-link" href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
+								</c:if>
+							</li>
+							<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+								<li class="page-item">
+									<a class="page-link" href="reviewBoardList?currentPage=${i}">${i}</a>
+								</li>						
+							</c:forEach>
+							<li class="page-item">
+								<c:if test="${page.endPage < page.totalPage }">
+									<a class="page-link" href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
+								</c:if>
+							</li>
+					    </c:when>
+					</c:choose>
+				</ul>
+			</nav>	
+		</div>
+		
 		<!-- Footer -->
 		<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
