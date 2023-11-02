@@ -31,6 +31,8 @@ public class AdminCourseController {
 			PagingList page = new PagingList(courseCount, currentPage);
 			course.setStart(page.getStart());
 			course.setEnd(page.getEnd());
+			System.out.println("page.getStart() ->"+ page.getStart());
+			System.out.println("page.getEnd() ->"+ page.getEnd());
 			
 			log.info("AdminCourseController courseList course ->" + course);
 			List<Course> courseList = cs.courseList(course);
