@@ -96,14 +96,26 @@ public class UserController {
 		return "user/mypage/myPoint";
 	}
 	
-	@RequestMapping(value = "user/mypage/qnaDetail")
-	public String qnaDetail() {
-		return "user/mypage/qnaDetail";
+	@RequestMapping(value = "user/myPage/qnaDetail")
+	public String qnaDetail(int user_id,int id, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "qnaDetail", "start");
+			
+			Qna qna = qs.detailQna(user_id, id);
+			model.addAttribute("qna", qna);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "qnaDetail", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "qnaDetail", "end");
+		}		
+		return "user/myPage/myQnaDetail";
 	}
 
-	@RequestMapping(value = "user/mypage/qnaForm")
+	@RequestMapping(value = "user/myPage/qnaForm")
 	public String qnaForm() {
-		return "user/mypage/qnaForm";
+		
+		return "user/myPage/myQnaForm";
 	}
 	
 	@RequestMapping(value = "user/myPage/qnaList")

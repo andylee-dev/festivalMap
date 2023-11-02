@@ -17,10 +17,18 @@
       WHERE rn BETWEEN #{start} and #{end}
       
    </select>
+   
    <select id="qnaTotal" resultType="int">
    SELECT   count(*)
    FROM   qna
    </select>
    
+   <select id="dhDetailQna" resultType="Qna" parameterType="Qna">
+   SELECT 	*
+   FROM		qna
+   WHERE	id = #{id}	
+   AND		user_id = #{user_id}
+   
+   </select>
 </mapper>   
 
