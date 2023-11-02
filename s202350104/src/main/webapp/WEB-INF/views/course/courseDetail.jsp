@@ -46,5 +46,9 @@
 		</div>
 		</c:forEach>
 	</div>
+	<!-- review test -->
+	<div>
+		<h3>review 구역</h3>
+	</div>
 </body>
 </html>
