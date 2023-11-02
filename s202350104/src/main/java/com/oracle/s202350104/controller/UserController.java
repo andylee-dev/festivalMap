@@ -25,63 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	
 	private final QnaListService qs;
-	private final TagsService ts;
 
 	@RequestMapping(value = "/")
 	public String userList() {
 		return "user";
 	}
-	
-	@RequestMapping(value = "/join")
-	public String userJoin() {
-		return "auth/join";
-	}
-	
-	@RequestMapping(value = "/joinForm")
-	public String userJoinForm(Model model) {
-		UUID transactionId = UUID.randomUUID();
-		try {
-			log.info("[{}]{}:{}",transactionId, "userJoinForm", "start");
-			List<Tags> listTags = ts.listTagsAll();
-			model.addAttribute("listTags", listTags);
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "userJoinForm", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "userJoinForm", "end");
-		}
-		return "auth/joinForm";
-	}
-	
-	@RequestMapping(value = "/bizJoinForm")
-	public String bizJoinForm() {
-		return "auth/bizJoinForm";
-	}
-	
-	@RequestMapping(value = "/login")
-	public String userLogin() {
-		return "auth/login";
-	}
-	
-	@RequestMapping(value = "/idSearch")
-	public String userIdSearch() {
-		return "auth/idSearch";
-	}
-	
-	@RequestMapping(value = "/idSearchResult")
-	public String idSearchResult() {
-		return "auth/idSearchResult";
-	}
-	
-	@RequestMapping(value = "/passwordSearch")
-	public String userPwSearch() {
-		return "auth/passwordSearch";
-	}
-	
-	@RequestMapping(value = "/passwordSearchResult")
-	public String pwSearchResult() {
-		return "auth/passwordSearchResult";
-	}
-	
+		
 	@RequestMapping(value = "/myPage")
 	public String myPage() {
 		return "user/myPage/index";
@@ -91,8 +40,6 @@ public class UserController {
 	public String myLike() {
 		return "user/myPage/myLike";
 	}
-	
-
 	
 	@RequestMapping(value = "/myPage/QnaDetail")
 	public String QnaDetail() {
