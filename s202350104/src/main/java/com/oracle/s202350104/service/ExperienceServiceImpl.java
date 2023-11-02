@@ -25,8 +25,8 @@ public class ExperienceServiceImpl implements ExperienceService {
 	}
 
 	@Override
-	public ExperienceContent detailExperience(int content_id) {
-		ExperienceContent experience = ed.detailExperience(content_id);
+	public ExperienceContent detailExperience(int contentId) {
+		ExperienceContent experience = ed.detailExperience(contentId);
 		return experience;
 	}
 
@@ -37,9 +37,9 @@ public class ExperienceServiceImpl implements ExperienceService {
 	}
 
 	@Override
-	public int experienceDelete(int content_id) {
+	public int experienceDelete(int contentId) {
 		int experienceDelete = 0;
-		experienceDelete = ed.experienceDelete(content_id);
+		experienceDelete = ed.experienceDelete(contentId);
 		
 		return experienceDelete;
 	}

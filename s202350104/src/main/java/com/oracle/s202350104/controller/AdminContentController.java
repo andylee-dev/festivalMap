@@ -159,8 +159,8 @@ public class AdminContentController {
 	}
 	
 	@RequestMapping(value = "experienceDelete")
-	public String experienceDelete(int content_id, Model model) {
-		int experienceDelete = es.experienceDelete(content_id);
+	public String experienceDelete(int contentId, Model model) {
+		int experienceDelete = es.experienceDelete(contentId);
 		
 		return "redirect:experience";
 		

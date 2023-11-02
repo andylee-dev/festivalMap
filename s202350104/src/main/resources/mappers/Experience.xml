@@ -52,7 +52,7 @@
 		SELECT *
 		FROM contents c, experience e
 		WHERE c.id = e.content_id
-		AND e.content_id = #{content_id}
+		AND e.content_id = #{contentId}
 	</select>
 	
 	<update id="shExperienceDelete" parameterType="int">

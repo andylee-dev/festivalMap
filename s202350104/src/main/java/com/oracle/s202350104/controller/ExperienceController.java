@@ -50,8 +50,8 @@ public class ExperienceController {
 	}
 	
 	@RequestMapping(value = "experience/detail")
-	public String experienceDetail(int content_id, Model model) {
-		ExperienceContent experience = es.detailExperience(content_id);
+	public String experienceDetail(int contentId, Model model) {
+		ExperienceContent experience = es.detailExperience(contentId);
 		model.addAttribute("experience", experience);
 		
 		return "experience/experienceDetail";

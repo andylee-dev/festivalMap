@@ -32,10 +32,10 @@ public class ExperienceDaoImpl implements ExperienceDao {
 	}
 
 	@Override
-	public ExperienceContent detailExperience(int content_id) {
+	public ExperienceContent detailExperience(int contentId) {
 		ExperienceContent experience = new ExperienceContent();
 		try {
-			experience = session.selectOne("shExperienceDetail", content_id);
+			experience = session.selectOne("shExperienceDetail", contentId);
 		} catch (Exception e) {
 			
 		}
@@ -54,10 +54,10 @@ public class ExperienceDaoImpl implements ExperienceDao {
 	}
 
 	@Override
-	public int experienceDelete(int content_id) {
+	public int experienceDelete(int contentId) {
 		int experienceDelete = 0;
 		try {
-			experienceDelete = session.update("shExperienceDelete",content_id);
+			experienceDelete = session.update("shExperienceDelete",contentId);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

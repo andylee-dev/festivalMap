@@ -76,10 +76,10 @@
 									</td>
 									<td>
 									<c:if test="${experience.is_deleted == 1}">
-									<button onclick="location.href='experienceDelete?content_id=${experience.content_id}'">복원</button>
+									<button onclick="location.href='experienceDelete?contentId=${experience.content_id}'">복원</button>
 									</c:if>
 									<c:if test="${experience.is_deleted == 0}">
-									<button onclick="location.href='experienceDelete?content_id=${experience.content_id}'">삭제</button>
+									<button onclick="location.href='experienceDelete?contentId=${experience.content_id}'">삭제</button>
 									</c:if>
 									</td>
 								</tr>
