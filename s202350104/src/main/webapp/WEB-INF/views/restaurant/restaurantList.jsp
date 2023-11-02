@@ -62,7 +62,7 @@
 				    						추천메뉴 : ${restaurant.first_menu}<br>
 				    						소개       : ${restaurant.content}
 				    					</p>
-				    					<a href="restaurant/detail?content_id=${restaurant.content_id}" class="btn btn-primary">더보기</a>
+				    					<a href="restaurant/detail?contentId=${restaurant.content_id}" class="btn btn-primary">더보기</a>
 				 				 	</div>	
 								</div>
 							</div>				

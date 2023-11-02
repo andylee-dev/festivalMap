@@ -23,4 +23,10 @@ public class Users {
 	private Date updated_at;
 	private String file_name;
 	private String is_deleted;
+	
+	// 페이징 처리
+	private String pageNum;
+	private int    start;
+	private int    end;
+	
 }
