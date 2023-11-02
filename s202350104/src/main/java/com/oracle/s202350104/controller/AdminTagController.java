@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -144,24 +145,69 @@ public class AdminTagController {
 		return "admin/tag/insertTagsForm";
 	}
 	
-	@PostMapping(value = "insertFormResult")
-	public String insertFormResult(Tags tags, Model model) {
+	@RequestMapping(value = "insertTagsResult")
+	public String insertTagsResult(Tags tags, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		int result = 0;
 		try {
-			log.info("[{}]{}:{}",transactionId, "insertTagsForm", "start");
+			log.info("[{}]{}:{}",transactionId, "insertTagsResult", "start");
 			result = ts.insertTags(tags);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "insertTagsForm", e.getMessage());
+			log.error("[{}]{}:{}",transactionId, "insertTagsResult", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "insertTagsForm", "end");
+			log.info("[{}]{}:{}",transactionId, "insertTagsResult", "end");
 		}	
 		
 		if(result > 0) {
 			return "redirect:list";
+		} else if(result == -1) {
+			model.addAttribute("msg", "이미 존재하는 태그입니다.");
+			return "forward:insertTagsForm";
 		} else {
 			model.addAttribute("msg", "등록에 실패하였습니다.");
 			return "forward:insertTagsForm";
 		}
 	}
+	
+	@RequestMapping(value = "updateTagsForm")
+	public String updateTagsForm(int id, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "updateTagsForm", "start");
+			Tags tags = ts.selectTags(id);
+			model.addAttribute("tags", tags);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "updateTagsForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "updateTagsForm", "end");
+		}		
+		
+		return "admin/tag/updateTagsForm";
+	}
+	
+	  @PostMapping(value = "updateTagsResult") 
+	  public String updateTagsResult(Tags tags, Model model) { 
+		  UUID transactionId = UUID.randomUUID(); 
+		  int result = 0;
+		  try { 
+			  log.info("[{}]{}:{}",transactionId, "updateTagsResult", "start");
+			  result = ts.updateTags(tags); 
+		  } catch (Exception e) {
+			  log.error("[{}]{}:{}",transactionId, "updateTagsResult", e.getMessage()); 
+		  } finally { 
+			  log.info("[{}]{}:{}",transactionId, "updateTagsResult", "end"); 
+		  }
+	  
+		  if(result > 0) { 
+			  return "redirect:list"; 
+		  } else if(result == -1) {
+			  model.addAttribute("msg", "이미 존재하는 태그입니다."); 
+			  return "forward:updateTagsForm"; 
+		  } else { 
+			  model.addAttribute("msg", "등록에 실패하였습니다."); 
+			  return "forward:updateTagsForm"; 
+		  } 
+	  }
+	 
 }

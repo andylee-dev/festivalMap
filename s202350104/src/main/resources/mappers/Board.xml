@@ -5,90 +5,133 @@
 <mapper namespace="com.oracle.s202350104.BoardMapper">
 
 	<select id="boardCount" resultType="int">
-
 		select count(*)
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = #{smallCode}
-
 	</select>
 
 	<select id="readCountUp" resultType="int">
 		update board 
 		set read_count = read_count + 1 
 		where id = #{boardId}
-
 	</select>
 	
 	<select id="noticAllList" resultType="Board">
-
 		select *
-		from board a, users b
-		where a.user_id = b.id
-		and a.small_code = 1
-
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 1
+		        order by a.id desc
+		    ) c
+		)
+		where rn between #{start} and #{end}
 	</select>
 
 	<select id="magazinAllList" resultType="Board">
-
 		select *
-		from board a, users b
-		where a.user_id = b.id
-		and a.small_code = 2
-
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 2
+		        order by a.id desc
+		    ) c
+		)
+		where rn between #{start} and #{end}
 	</select>
 
 	<select id="freeAllList" resultType="Board">
-
 		select *
-		from board a, users b
-		where a.user_id = b.id
-		and a.small_code = 3
-
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 3
+		        order by a.id desc
+		    ) c
+		)
+		where rn between #{start} and #{end}		
 	</select>
 	
 	<select id="photoAllList" resultType="Board">
-
 		select *
-		from board a, users b
-		where a.user_id = b.id
-		and a.small_code = 4
-
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 4
+		        order by a.id desc
+		    ) c
+		)
+		where rn between #{start} and #{end}
 	</select>
 	
 	<select id="eventAllList" resultType="Board">
-
 		select *
-		from board a, users b
-		where a.user_id = b.id
-		and a.small_code = 5
-
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 5
+		        order by a.id desc
+		    ) c
+		)
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="reviewAllList" resultType="Board">
+		select *
+		from (
+				select rownum rn, e.*
+				from (
+		               select a.id, c.title, a.content_id, a.content, b.name, a.created_at
+		               from 
+		                    board a
+		               join 
+		                    users b
+		               on 
+		                   	a.user_id = b.id
+		               join 
+		                    contents c
+		               on 
+		                   	a.content_id = c.id
+		               where c.id = #{content_id} 
+		        ) e
+		)
+		where rn between #{start} and #{end}
 	</select>
 
 	<select id="boardDetail" parameterType="int" resultType="Board">
-
 		select *
 		from board a, users b
 		where a.user_id = b.id
 		and a.id = #{boardId}
-
 	</select>
 	
 	<update id="boardUpdate" parameterType="Board">
-
 		update board
 		set
 			title = #{title},
 			content = #{content},
 			updated_at = sysdate
 		where id = #{id}
-
 	</update>
 		
 	<delete id="boardDelete" parameterType="int">
-
 		delete from board where id = #{boardId}
-
 	</delete>	
 	
 	<insert id="boardInsert" parameterType="Board">

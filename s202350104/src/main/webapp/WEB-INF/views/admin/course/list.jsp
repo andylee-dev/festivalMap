@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Course Content</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -59,6 +59,17 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<div align="center">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<a href="course?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<a href="course?currentPage=${i}" class="pageblock">[${i}]</a>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<a href="course?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+						</c:if>
+					</div>
 				</div>
 			</main>
 		</div>

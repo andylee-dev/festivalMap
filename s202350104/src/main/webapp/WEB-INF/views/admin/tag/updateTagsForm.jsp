@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>태그 등록</title>
+		<title>태그 수정</title>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -15,15 +15,17 @@
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">태그 등록</h1>
+					<h1 class="border">태그 수정</h1>
 				</div>
 				
 				<!-- Section2: Insert Form -->		
 				<div class="border p-3 m-3">
 					<c:if test="${msg != null}">${msg}</c:if>
-					<form action="insertTagsResult" method="post">
-						태그명 <input type="text" name="name">
-						<input type="submit" value="등록">
+					<form action="updateTagsResult" method="post">
+						<input type="hidden" name="id" value="${tags.id}">
+						태그번호 ${tags.id} <p>
+						태그명 <input type="text" name="name" value="${tags.name}"><p>
+						<input type="submit" value="수정">
 					</form>
 				</div>
 			</main>

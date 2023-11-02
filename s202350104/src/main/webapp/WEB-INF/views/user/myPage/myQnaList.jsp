@@ -27,7 +27,7 @@
 			
 			<!-- Section3: Table -->		
 			<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary ">등록</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="location.href='myQnaForm'">등록</button>
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
@@ -43,7 +43,7 @@
 						<c:forEach var="qna" items="${listQnaList}">
 							<tr>
 								<td>${num}</td>
-								<td><a href="QnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
+								<td><a href="qnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
 								<td>${qna.question_content}</td>
 								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
@@ -56,13 +56,13 @@
 				</table>
 			<div align="center">
 				<c:if test="${page.startPage > page.pageBlock}">
-					<a href="qna?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+					<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
 				</c:if>
 				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="qna?currentPage=${i}">[${i}]</a>
+					<a href="qnaList?currentPage=${i}">[${i}]</a>
 				</c:forEach>
 				<c:if test="${page.endPage < page.totalPage}">
-					<a href="qna?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+					<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 				</c:if>
 			</div>
 			</div>		

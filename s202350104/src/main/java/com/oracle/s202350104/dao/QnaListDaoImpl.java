@@ -41,5 +41,20 @@ public class QnaListDaoImpl implements QnaListDao {
 		}
 		return qnaList;
 	}
+
+	@Override
+	public Qna detailQna(int user_id, int id) {
+		Qna qnadetail = new Qna();
+		Qna qna = new Qna();
+		qna.setUser_id(user_id);
+		qna.setId(id);
+		try {
+			qnadetail = session.selectOne("dhDetailQna", qna);
+			log.info("QnaListDaoImpl detailQna() qna.getAnswer_title => " + qna.getAnswer_title());
+		} catch (Exception e) {
+			log.info("QnaListDaoImpl qna() => " + e.getMessage());
+		}
+		return qnadetail;
+	}
 	
 }

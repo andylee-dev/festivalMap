@@ -106,12 +106,41 @@ public class TagsServiceImpl implements TagsService {
 		// 이미 존재하는 tag인 경우 insert되지 않도록
 		for(Tags searchTag : listTags) {
 			if(tags.getName().equals(searchTag.getName())) {
-				searchResult = 0;
+				searchResult = 1;
 			}
 		}
 		
-		if(searchResult != 0) {
+		if(searchResult != 1) {
 			result = td.insertTags(tags);
+		} else {
+			result = -1;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public Tags selectTags(int id) {
+		Tags tags = td.selectTags(id);
+		return tags;
+	}
+
+	@Override
+	public int updateTags(Tags tags) {
+		List<Tags> listTags = td.listTagsAll();
+		int result = 0;
+		int searchResult = 0;
+		// 이미 존재하는 tag인 경우 update되지 않도록
+		for(Tags searchTag : listTags) {
+			if(tags.getName().equals(searchTag.getName())) {
+				searchResult = 1;
+			}
+		}
+		
+		if(searchResult != 1) {
+			result = td.updateTags(tags);
+		} else {
+			result = -1;
 		}
 		
 		return result;

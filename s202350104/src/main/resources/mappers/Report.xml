@@ -14,11 +14,11 @@
 	</select>
 	
 	<select id="shReportDetail" resultType="Report" parameterType="int">
-		select * from report where board_id= #{board_id} and status=1
+		select * from report where board_id= #{boardId} and status=1
 	</select>
 	
 	<select id="shBoardDetail" resultType="Report" parameterType="int">
-		select id, title, content,user_id from board where id= #{board_id}
+		select id, title, content,user_id from board where id= #{boardId}
 	</select>
 	<update id="shBoardUpdate" parameterType="int">
 		update board b set is_deleted = 1 

@@ -37,7 +37,7 @@
 			    					체험명 : ${experience.title} <br>
 			    					체험정보 :${experience.content}
     							</p>
-    							<a href="experience/detail?content_id=${experience.content_id}" class="btn btn-primary">더보기</a>
+    							<a href="experience/detail?contentId=${experience.content_id}" class="btn btn-primary">더보기</a>
 			 				 </div>	
 						</div>
 					 </div>	

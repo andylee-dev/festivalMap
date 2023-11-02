@@ -29,4 +29,11 @@ public class QnaListServiceImpl implements QnaListService {
 		return qnaList;
 	}
 
+	@Override
+	public Qna detailQna(int user_id, int id) {
+		Qna qnadetail = qd.detailQna(user_id, id);
+		
+		return qnadetail;
+	}
+
 }

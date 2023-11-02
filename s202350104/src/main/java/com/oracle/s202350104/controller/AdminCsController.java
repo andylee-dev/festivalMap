@@ -32,9 +32,9 @@ public class AdminCsController {
 	}
 	
 	@RequestMapping(value = "admin/cs/reportDetail")
-	public String reportDetail(int board_id, Model model) {
-		Report boardDetail = res.boardDetail(board_id);
-		List<Report> reportDetail = res.reportDetail(board_id);
+	public String reportDetail(int boardId, Model model) {
+		Report boardDetail = res.boardDetail(boardId);
+		List<Report> reportDetail = res.reportDetail(boardId);
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("reportDetail", reportDetail);
 		return "admin/cs/reportDetail";
