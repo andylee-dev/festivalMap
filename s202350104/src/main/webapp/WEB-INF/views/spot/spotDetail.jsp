@@ -24,7 +24,7 @@
 			<ul>
 				<li>명소명 : ${spot.title}
 				<li>개요 : ${spot.content}
-				<li>영업시간 : ${spot.hours}
+				<li>영업시간 : ${spot.opening_hours}
 				<li>입장료 : ${spot.entrance_fee}
 				<li>휴무일: ${spot.rest_date}
 				<li>우편번호 : ${spot.postcode}

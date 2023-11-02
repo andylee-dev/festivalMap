@@ -23,12 +23,13 @@
 	SELECT	count(*)
 	FROM	spot s , contents c
 	WHERE	s.content_id = c.id
+	
 	</select>
 	
 	<select id="dhSpotDetail" resultType="SpotContent" parameterType="int">
 	SELECT	 *
 	FROM   	spot s , contents c
 	WHERE	s.content_id = c.id
-	AND   	s.content_id = #{content_id}
+	AND  	s.content_id = #{content_id}
 	</select>
 </mapper>
