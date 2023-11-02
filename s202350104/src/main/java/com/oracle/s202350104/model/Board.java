@@ -33,6 +33,5 @@ public class Board {
 	private String pageNum;
 	private int start;
 	private int end;
-
 	
 }

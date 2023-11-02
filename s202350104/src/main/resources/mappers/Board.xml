@@ -95,14 +95,25 @@
 	<select id="reviewAllList" resultType="Board">
 		select *
 		from (
-		    select rownum rn, c.*
-		    from (
-		        select a.id, a.title, a.content,b.name, a.created_at, a.read_count, a.big_code, a.small_code
-		        from board a, users b
-		        where a.user_id = b.id
-		        and a.small_code = 6
-		        order by a.id desc
-		    ) c
+				select rownum rn, e.*
+				from (
+		               select a.id, c.title, a.content_id, a.content, b.name, a.created_at
+		               from 
+		                    board a
+		               join 
+		                    users b
+		               on 
+		                   	a.user_id = b.id
+		               join 
+		                    contents c
+		               on 
+		                   	a.content_id = c.id
+		               join 
+		                    restaurants d
+		               on 
+		                    c.id= d.content_id
+		               where d.content_id = #{content_id} 
+		        ) e
 		)
 		where rn between #{start} and #{end}
 	</select>

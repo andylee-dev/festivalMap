@@ -127,7 +127,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<Board> getReviewAllList(Board board) {
 		log.info("BoardDao getReviewAllList Start!!");
-		
+		log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
 		List<Board> reviewAllList = session.selectList("reviewAllList", board);
 		log.info("BoardDao reviewAllList size : {}", reviewAllList.size());
 		log.info("BoardDao reviewAllList content : {}", reviewAllList.get(0).getContent());

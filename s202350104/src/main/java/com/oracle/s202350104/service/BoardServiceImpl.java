@@ -94,7 +94,8 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> reviewAllList = null;
 
 		try {
-			reviewAllList = boardDao.getReviewAllList(board);
+			reviewAllList = boardDao.getReviewAllList(board);  
+			log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
 		} catch (Exception e) {
 			log.error("boardService getReviewAllList Exception : {}", e.getMessage());
 		} finally {
