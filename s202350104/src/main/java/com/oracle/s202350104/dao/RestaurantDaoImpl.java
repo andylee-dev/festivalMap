@@ -34,11 +34,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	@Override
-	public RestaurantsContent detailRestaurant(int content_id) {
+	public RestaurantsContent detailRestaurant(int contentId) {
 		RestaurantsContent restaurant = new RestaurantsContent();
 		
 		try {
-			restaurant = session.selectOne("joRestaurantDetail", content_id);
+			restaurant = session.selectOne("joRestaurantDetail", contentId);
 			log.info("RestaurantsContent detailRestaurant() restaurant.getTitle ->" + restaurant.getTitle());
 					
 		} catch (Exception e) {

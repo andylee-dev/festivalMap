@@ -56,12 +56,12 @@ public class RestaurantController {
 	}
 	
 	@GetMapping(value= "/restaurant/detail")
-	public String restuarntDetail(int content_id, String currentPage, Board board, Model model) {
+	public String restuarntDetail(int contentId, String currentPage, Board board, Model model) {
 		log.info("RestaurantController detailRestaurant Start...");
 		
-		RestaurantsContent restaurant = rs.detailRestaurant(content_id);
+		RestaurantsContent restaurant = rs.detailRestaurant(contentId);
 		
-		model.addAttribute("content_id", content_id);
+		model.addAttribute("contentId", contentId);
 		model.addAttribute("restaurant", restaurant);
 		
 		/*
@@ -81,7 +81,7 @@ public class RestaurantController {
 		Paging page = new Paging(countBoard, currentPage);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		board.setContent_id(content_id);
+		board.setContent_id(contentId);
 		log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
 		log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
 		log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());

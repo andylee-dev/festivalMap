@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.CommonCodes;
+import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.service.AdminListService;
 import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.Paging;
@@ -22,13 +24,34 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value = "/admin/admin/*")
 public class AdminAdminController {
 	
+	private final AdminListService  als;
 	private final CommonCodeService ccs;
-	private final AreaService as;
+	private final AreaService 		as;
 	
 	
 	@RequestMapping(value = "/adminList")
-	public String adminList() {
+	public String adminList(Users user, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "adminList", "start");
+			int totalAdminList = als.totalAdminList();
 			
+			Paging page = new Paging(totalAdminList, currentPage);
+			user.setStart(page.getStart());
+			user.setEnd(page.getEnd());
+			
+			List<Users> listUser = als.listUser(user);
+			
+			model.addAttribute("totalAdminList", totalAdminList);
+			model.addAttribute("page", page);
+			model.addAttribute("listUser", listUser);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "adminList", e.getMessage());
+		} finally {
+			log.error("[{}]{}:{}", transactionId, "adminList", "end");
+		}
+	
 		return "admin/admin/adminList";
 	}
 	
