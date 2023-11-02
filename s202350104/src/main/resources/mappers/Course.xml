@@ -10,15 +10,32 @@
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
 			<!-- select * from courses -->
-		
-			SELECT *
+			
+			SELECT * 
+			FROM
+			(
+			SELECT ROWNUM rn, aa.*
+			FROM
+			    (SELECT *
+			    FROM   courseContents a
+			    JOIN   courses b
+			    ON     a.course_id = b.id
+			    JOIN   contents c
+			    ON     a.content_id = c.id
+			    WHERE  a.order_num = 1
+			    ORDER  by b.id ASC) aa
+			)
+			WHERE rn BETWEEN #{start} and #{end}
+			
+			<!-- SELECT *
 			FROM   courseContents a
 			JOIN   courses b
 			ON     a.course_id = b.id
 			JOIN   contents c
 			ON     a.content_id = c.id
 			WHERE  a.order_num = 1
-			ORDER  by b.id ASC
+			ORDER  by b.id ASC -->
+			
 		</select>
 		
 		<select id="noCourseDetailList" parameterType="int" resultType="CourseContent">
