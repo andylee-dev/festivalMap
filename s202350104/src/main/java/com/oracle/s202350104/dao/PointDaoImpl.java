@@ -41,6 +41,12 @@ public class PointDaoImpl implements PointDao {
 	    	 session.update("updatePoint", point);
 	    }
 
+		@Override
+		public void writePoint(Point point) {
+			session.insert("writePoint", point);
+			
+		}
+
 
 }
 

@@ -7,6 +7,7 @@
 	<select id="pointAll" resultType="point">
 		
 		SELECT * FROM point
+    	ORDER BY id
 		
 	</select>
 
@@ -20,7 +21,14 @@
         WHERE id = #{id}
         
       </update>
-	
+      
+	 <insert id="writePoint" parameterType="Point">
+    <selectKey keyProperty="id" resultType="int" order="AFTER">
+        SELECT point_id_seq.NEXTVAL FROM dual
+    </selectKey>
+    INSERT INTO point (id, create_at, title, content, point)
+    VALUES (point_id_seq.NEXTVAL, SYSDATE, #{title}, #{content}, #{point})
+</insert>
 	
 	 
 	
