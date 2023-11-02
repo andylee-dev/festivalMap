@@ -43,7 +43,7 @@
 								<tr>
 									<td>${num}</td>
 									<td>${tag.name}</td>
-									<td><input type="button" value="수정"></td>
+									<td><input type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
 									<td><input type="button" value="삭제"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
