@@ -36,4 +36,12 @@ public class ExperienceServiceImpl implements ExperienceService {
 		return totalExperienceCnt;
 	}
 
+	@Override
+	public int experienceDelete(int content_id) {
+		int experienceDelete = 0;
+		experienceDelete = ed.experienceDelete(content_id);
+		
+		return experienceDelete;
+	}
+
 }

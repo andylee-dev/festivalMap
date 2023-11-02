@@ -66,7 +66,7 @@
 										<!-- 승인반려됐을 경우 status -->
 									</td>
 									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>
+									<td><button onclick="location.href='experienceDelete?content_id=${experience.content_id}'">삭제</button></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

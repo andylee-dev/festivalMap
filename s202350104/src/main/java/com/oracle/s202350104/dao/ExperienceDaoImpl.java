@@ -53,4 +53,15 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		return totalExperienceCnt;
 	}
 
+	@Override
+	public int experienceDelete(int content_id) {
+		int experienceDelete = 0;
+		try {
+			experienceDelete = session.update("shExperienceDelete",content_id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return experienceDelete;
+	}
+
 }

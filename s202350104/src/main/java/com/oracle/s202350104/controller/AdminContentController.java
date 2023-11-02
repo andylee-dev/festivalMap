@@ -134,5 +134,12 @@ public class AdminContentController {
 	public String accomodation() {
 		return "admin/content/accomodation";
 	}
-
+	
+	@RequestMapping(value = "experienceDelete")
+	public String experienceDelete(int content_id, Model model) {
+		int experienceDelete = es.experienceDelete(content_id);
+		
+		return "redirect:experience";
+		
+	}
 }
