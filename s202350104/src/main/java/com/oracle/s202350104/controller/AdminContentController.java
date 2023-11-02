@@ -131,7 +131,7 @@ public class AdminContentController {
 		}finally {
 			log.info("[{}]{}:{}",transactionId, "admin spot", "end");
 		}
-		return "admin/content/spot";
+		return "admin/content/spotList";
 	}
 
 	@RequestMapping(value = "accomodation")
