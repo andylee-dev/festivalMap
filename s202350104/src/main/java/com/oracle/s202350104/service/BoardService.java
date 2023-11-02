@@ -17,6 +17,8 @@ public interface BoardService {
 	List<Board> getPhotoAllList(Board board);
 	
 	List<Board> getEventAllList(Board board);
+	
+	List<Board> getReviewAllList(Board board);
 
 	Board boardDetail(int boardId);
 
@@ -25,6 +27,8 @@ public interface BoardService {
 	int boardDelete(int boardId);
 
 	int boardInsert(Board board);
+
+
 
 
 

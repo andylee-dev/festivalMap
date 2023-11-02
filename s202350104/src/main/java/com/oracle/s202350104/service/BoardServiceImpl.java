@@ -18,7 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 
 	private final BoardDao boardDao;
-
+	
+	// paging 처리용
 	@Override
 	public int boardCount(int smallCode) {
 		int countBoard = boardDao.boardCount(smallCode);
@@ -49,10 +50,19 @@ public class BoardServiceImpl implements BoardService {
 	// 자유게시판
 	@Override
 	public List<Board> getFreeAllList(Board board) {
+		log.info("boardService getFreeAllList start!!");
 
-		List<Board> freeAllList = boardDao.getFreeAllList(board);
+		List<Board> freeAllList = null;
 
-		log.info("service freeAllList size : {}", freeAllList.size());
+		try {
+			freeAllList = boardDao.getFreeAllList(board);
+			log.info("boardService freeAllList size : {}", freeAllList.size());
+
+		} catch (Exception e) {
+			log.error("boardService getFreeAllList Exception : {}", e.getMessage());
+		} finally {
+			log.info("boardService getFreeAllList End..");
+		}
 
 		return freeAllList;
 	}
@@ -74,7 +84,27 @@ public class BoardServiceImpl implements BoardService {
 		
 		return eventAllList;
 	}
+	
+	// review
+	@Override
+	public List<Board> getReviewAllList(Board board) {
 
+		log.info("boardService getReviewAllList start!!");
+
+		List<Board> reviewAllList = null;
+
+		try {
+			reviewAllList = boardDao.getReviewAllList(board);
+		} catch (Exception e) {
+			log.error("boardService getReviewAllList Exception : {}", e.getMessage());
+		} finally {
+			log.info("boardService getReviewAllList End..");
+		}
+
+		return reviewAllList;
+	}
+
+	// 통합게시판 상세정보
 	@Override
 	public Board boardDetail(int boardId) {
 
@@ -84,7 +114,8 @@ public class BoardServiceImpl implements BoardService {
 
 		return boards;
 	}
-
+	
+	// 통합게시판 수정
 	@Override
 	public int boardUpdate(Board board) {
 
@@ -93,6 +124,7 @@ public class BoardServiceImpl implements BoardService {
 		return updateBoard;
 	}
 	
+	// 통합게시판 삭제
 	@Override
 	public int boardDelete(int boardId) {
 		
@@ -101,6 +133,7 @@ public class BoardServiceImpl implements BoardService {
 		return deleteBoard;
 	}
 	
+	// 통합게시판 생성
 	@Override
 	public int boardInsert(Board board) {
 
