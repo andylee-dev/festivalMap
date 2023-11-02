@@ -64,18 +64,4 @@ public class CourseController {
 		
 		return "course/courseDetail";
 	}
-	
-	
-//	@RequestMapping(value = "courseUpdateForm")
-//	public String courseUpdateForm(int id, Model model) {
-//		try {
-//			log.info("CourseController courseUpdateForm id ->" + id);
-//			Course course = cs.courseDetail(id);
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
-//		return null;
-//	}
 }

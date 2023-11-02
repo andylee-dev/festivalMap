@@ -21,7 +21,7 @@ public class AdminCourseController {
 	
 	private final CourseService cs;
 	
-	@RequestMapping(value = "list")
+	@RequestMapping(value = "/list")
 	public String courseList(Course course, String currentPage,  Model model) {
 		try {
 			log.info("AdminCourseController courseList start");
@@ -48,5 +48,24 @@ public class AdminCourseController {
 		}
 		
 		return "admin/course/list";
+	}
+	
+	
+	@RequestMapping(value = "/courseUpdateForm")
+	public String courseUpdateForm(Course course, Model model) {
+	
+		try {
+			log.info("AdminCourseController courseUpdateForm course_id ->" + course.getCourse_id());
+			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
+			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
+			
+			model.addAttribute("courseContent", courseDetailContent);
+			
+		} catch (Exception e) {
+			log.error("AdminCourseController courseUpdateForm e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("AdminCourseController courseUpdateForm end...");
+		}
+		return "course/courseUpdateForm";
 	}
 }
