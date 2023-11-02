@@ -165,4 +165,30 @@ public class AdminContentController {
 		return "redirect:experience";
 		
 	}
+	
+	@RequestMapping(value = "deletedExperience")
+	public String deletedExperience(ExperienceContent experience,String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "experience", "start");
+			int totalExperience = es.totalExperience2();
+			
+			Paging page = new Paging(totalExperience, currentPage);
+			experience.setStart(page.getStart());
+			experience.setEnd(page.getEnd());
+			
+			List<ExperienceContent> listExperience = es.deletedExperience(experience);
+			
+			model.addAttribute("totalExperience", totalExperience);
+			model.addAttribute("listExperience", listExperience);
+			model.addAttribute("page", page);
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "experience", "end");
+		}
+		return "admin/content/experience";
+	}
+	
 }

@@ -18,11 +18,33 @@
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
+	<select id="shDeletedExpreienceAll" resultType="ExperienceContent">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT *
+			 FROM experience e, contents c
+			 WHERE e.content_id = c.id
+			 AND c.is_deleted = 1
+			 ORDER BY content_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
 	<select id="shExperienceTotal" resultType="int">
 		SELECT count(*)
 		FROM   experience e, contents c
 		WHERE  e.content_id = c.id
 		AND c.is_deleted = 0
+	</select>	
+	
+		<select id="shExperienceTotal2" resultType="int">
+		SELECT count(*)
+		FROM   experience e, contents c
+		WHERE  e.content_id = c.id
+		AND c.is_deleted = 1
 	</select>	
 	
 	

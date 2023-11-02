@@ -8,7 +8,9 @@ public interface ExperienceService {
 
 	List<ExperienceContent> 	listExperience(ExperienceContent experience);
 	ExperienceContent 			detailExperience(int content_id);
-	int  totalExperience();
-	int experienceDelete(int content_id);
+	int  						totalExperience();
+	int 						experienceDelete(int content_id);
+	List<ExperienceContent> 	deletedExperience(ExperienceContent experience);
+	int totalExperience2();
 	
 }

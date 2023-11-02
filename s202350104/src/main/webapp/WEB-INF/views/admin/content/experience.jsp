@@ -30,6 +30,8 @@
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
 					<button type="button" class="btn btn-outline-secondary">등록</button>
+					<button onclick="location.href='experience'">등록중인 List</button>
+					<button onclick="location.href='deletedExperience'">삭제 List</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -41,7 +43,7 @@
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
 								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
+								<th scope="col">삭제/복원</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -65,8 +67,21 @@
 										<c:if test="${experience.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><input type="button" value="수정"></td>
-									<td><button onclick="location.href='experienceDelete?content_id=${experience.content_id}'">삭제</button></td>
+									<td>
+									<c:if test="${experience.is_deleted == 1}">
+									</c:if>
+									<c:if test="${experience.is_deleted == 0}">
+									<button onclick="location.href=''">수정</button>
+									</c:if>
+									</td>
+									<td>
+									<c:if test="${experience.is_deleted == 1}">
+									<button onclick="location.href='experienceDelete?content_id=${experience.content_id}'">복원</button>
+									</c:if>
+									<c:if test="${experience.is_deleted == 0}">
+									<button onclick="location.href='experienceDelete?content_id=${experience.content_id}'">삭제</button>
+									</c:if>
+									</td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

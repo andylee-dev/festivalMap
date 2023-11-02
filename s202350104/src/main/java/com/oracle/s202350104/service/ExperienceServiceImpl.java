@@ -44,4 +44,16 @@ public class ExperienceServiceImpl implements ExperienceService {
 		return experienceDelete;
 	}
 
+	@Override
+	public List<ExperienceContent> deletedExperience(ExperienceContent experience) {
+		List<ExperienceContent> deletedExperience = ed.deletedExperience(experience);
+		return deletedExperience;
+	}
+
+	@Override
+	public int totalExperience2() {
+		int totalExperienceCnt = ed.totalExperience2();
+		return totalExperienceCnt;
+	}
+
 }

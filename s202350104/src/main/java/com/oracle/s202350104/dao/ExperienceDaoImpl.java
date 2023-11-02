@@ -64,4 +64,28 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		return experienceDelete;
 	}
 
+	@Override
+	public List<ExperienceContent> deletedExperience(ExperienceContent experience) {
+		List<ExperienceContent> deletedExperience = null;
+		
+		try {
+			deletedExperience = session.selectList("shDeletedExpreienceAll",experience);
+			log.info("ExperienceDaoImpl deletedExperience() => " + deletedExperience.size());
+		} catch (Exception e) {
+			log.info("ExperienceDaoImpl deletedExperience() => " + e.getMessage());
+		}
+		return deletedExperience;
+	}
+
+	@Override
+	public int totalExperience2() {
+		int totalExperienceCnt = 0;
+		try {
+			totalExperienceCnt = session.selectOne("shExperienceTotal2");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalExperienceCnt;
+	}
+
 }
