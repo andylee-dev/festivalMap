@@ -16,14 +16,27 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 	private final SqlSession session;
 
 	@Override
-	public List<CommonCodes> listCommonCodes() {
+	public List<CommonCodes> listCommonCodes(CommonCodes commonCode) {
 		List<CommonCodes> listCommonCodes = null;
 		try {
-			listCommonCodes = session.selectList("CommonCodesListAll");
+			listCommonCodes = session.selectList("CommonCodesListAll", commonCode);
+			log.info("listCommonCodes.size" + listCommonCodes.size());
 		} catch(Exception e) {
 			log.info("{}",e.getMessage());
 		}
 		return listCommonCodes;
+	}
+
+	@Override
+	public int totalCommonCode() {
+		int totalCommonCode = 0;
+		try {
+			totalCommonCode = session.selectOne("joCommonCodeTotal");
+		} catch (Exception e) {
+			log.info("CommonCodeDaoImpl totalCommonCode() Exception ->" + e.getMessage());
+		}
+		
+		return totalCommonCode;
 	}
 
 }
