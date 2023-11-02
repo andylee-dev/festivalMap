@@ -19,7 +19,7 @@ public class CourseDaoImpl implements CourseDao {
 	private final SqlSession session;
 
 	@Override
-	public int courseCount(Course course) {
+	public int courseCount() {
 		int courseCount = 0;
 		log.info("CourseDaoImpl courseCount start...");
 		try {

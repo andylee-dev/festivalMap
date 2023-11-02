@@ -25,7 +25,7 @@ public class CourseController {
 	public String courses(Course course, String currentPage, Model model) {
 		try {
 			log.info("CourseController courses start...");
-			int courseCount = cs.courseCount(course);
+			int courseCount = cs.courseCount();
 			log.info("CourseController courses courseCount ->" + courseCount);
 			
 			Paging page = new Paging(courseCount, currentPage);

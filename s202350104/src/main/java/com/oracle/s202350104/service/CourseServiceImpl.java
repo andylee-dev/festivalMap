@@ -22,9 +22,9 @@ public class CourseServiceImpl implements CourseService {
 	private final CourseDao cd;
 
 	@Override
-	public int courseCount(Course course) {
+	public int courseCount() {
 		int courseCount = 0;
-		courseCount = cd.courseCount(course);
+		courseCount = cd.courseCount();
 		log.info("CourseServiceImpl courseCount courseCount ->" + courseCount);
 		
 		return courseCount;

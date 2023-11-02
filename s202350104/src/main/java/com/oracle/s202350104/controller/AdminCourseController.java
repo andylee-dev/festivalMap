@@ -25,7 +25,7 @@ public class AdminCourseController {
 	public String courseList(Course course, String currentPage,  Model model) {
 		try {
 			log.info("AdminCourseController courseList start");
-			int courseCount = cs.courseCount(course);
+			int courseCount = cs.courseCount();
 			log.info("AdminCourseController courseList courseCount ->" + courseCount);
 			
 			PagingList page = new PagingList(courseCount, currentPage);
