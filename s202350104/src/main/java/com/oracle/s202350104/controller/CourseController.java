@@ -52,7 +52,7 @@ public class CourseController {
 	public String courseDetail(Course course, Model model) {
 		try {
 			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
-			List<CourseContent> courseDetailList = cs.courseDetail(course.getCourse_id());
+			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
 			
 			model.addAttribute("courseDetail", courseDetailList);
@@ -64,4 +64,18 @@ public class CourseController {
 		
 		return "course/courseDetail";
 	}
+	
+	
+//	@RequestMapping(value = "courseUpdateForm")
+//	public String courseUpdateForm(int id, Model model) {
+//		try {
+//			log.info("CourseController courseUpdateForm id ->" + id);
+//			Course course = cs.courseDetail(id);
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		
+//		return null;
+//	}
 }

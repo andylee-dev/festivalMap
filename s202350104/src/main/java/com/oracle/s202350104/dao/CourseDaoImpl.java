@@ -47,9 +47,9 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public List<CourseContent> courseDetail(int course_id) {
+	public List<Course> courseDetail(int course_id) {
 		log.info("course_id ->" + course_id);
-		List<CourseContent> courseDetailList = null;
+		List<Course> courseDetailList = null;
 		try {
 			courseDetailList = session.selectList("noCourseDetailList", course_id);
 			log.info("CourseDaoImpl courseDetail courseDetailList.size() ->" + courseDetailList.size());

@@ -38,7 +38,7 @@
 			
 		</select>
 		
-		<select id="noCourseDetailList" parameterType="int" resultType="CourseContent">
+		<select id="noCourseDetailList" parameterType="int" resultType="Course">
 			SELECT 	a.*,cd.content cd_content
 			FROM(
 			    		SELECT cc.*, c.*, cs.course_info, cs.course_title, cs.distance, cs.time

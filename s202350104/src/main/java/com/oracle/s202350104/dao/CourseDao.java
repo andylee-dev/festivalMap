@@ -9,6 +9,6 @@ public interface CourseDao {
 
 	int               		courseCount();
 	List<Course>      		courseList(Course course);
-	List<CourseContent> 	courseDetail(int course_id);
+	List<Course> 			courseDetail(int course_id);
 
 }
