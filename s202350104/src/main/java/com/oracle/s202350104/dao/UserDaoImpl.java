@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-
 public class UserDaoImpl implements UserDao {
 
 	private final SqlSession session;
@@ -29,5 +28,14 @@ public class UserDaoImpl implements UserDao {
 			log.info("UserDaoImple listUsers() => " + e.getMessage());
 		}
 		return listUsers;
-	}	
+	}
+
+	@Override
+	public int insertUser(Users user) {
+		int result = session.insert("insertUser",user);
+		log.info("pw"+user.getPassword());
+		log.info("result=>{}",result);
+		return result;
+	}
+
 }
