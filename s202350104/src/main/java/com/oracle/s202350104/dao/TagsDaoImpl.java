@@ -154,5 +154,16 @@ public class TagsDaoImpl implements TagsDao {
 		}
 		return result;
 	}
+
+	@Override
+	public int deleteTags(int id) {
+		int result = 0;
+		try {
+			result = session.delete("nhTagsDelete", id);
+		} catch(Exception e) {
+			log.info("TagsDaoImpl deleteTags() => " + e.getMessage());
+		}
+		return result;
+	}
 		
 }

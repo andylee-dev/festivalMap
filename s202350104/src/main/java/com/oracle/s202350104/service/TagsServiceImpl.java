@@ -144,5 +144,11 @@ public class TagsServiceImpl implements TagsService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int deleteTags(int id) {
+		int result = td.deleteTags(id);
+		return result;
 	}	
 }

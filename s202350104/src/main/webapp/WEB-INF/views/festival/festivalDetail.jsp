@@ -110,6 +110,9 @@
 				</ul>
 			</nav>	
 		</div>
+		<div align="center">
+			<button onclick="location.href='../festival'">목록</button>
+		</div>
 		
 		<!-- Footer -->
 		<%@ include file="/WEB-INF/components/Footer.jsp" %>
