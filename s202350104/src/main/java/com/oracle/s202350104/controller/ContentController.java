@@ -1,16 +1,36 @@
 package com.oracle.s202350104.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Banner;
+import com.oracle.s202350104.service.BannerService;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ContentController {
+	
+	private final BannerService bannerService;
 
 	@RequestMapping(value = "/")
-	public String home() {
+	public String home(Model model) {	
+		log.info("ContentController start!");
+		String bannerUrl = "";
+
+		List<Banner> bannerMain = bannerService.getMainBanner();
+
+		bannerUrl = bannerMain.get(0).getUrl();
+		log.info("ContentController mainBanner bannerUrl : {}", bannerUrl);
+		
+		model.addAttribute("bannerUrl", bannerUrl);
+		
 		return "home";
 	}
 }
