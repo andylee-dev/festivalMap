@@ -42,6 +42,11 @@ public class UserController {
 		return "user/myPage/myLike";
 	}
 	
+	@RequestMapping(value = "myPage/myTag")
+	public String myTag() {
+		return "user/myPage/myTag";
+	}
+
 
 	@RequestMapping(value = "myPage/qnaDetail")
 	public String qnaDetail(int user_id,int id, Model model) {
@@ -69,7 +74,7 @@ public class UserController {
 		}finally { 
 			log.info("[{}]{}:{}",transactionId, "qnaInsert", "end");
 		}
-		return "user/myPage/myQnaForm";
+		return "user/myPage/myQnaInsertForm";
 	}
 	
 	@RequestMapping(value = "myPage/insertQnaResult")
@@ -116,11 +121,6 @@ public class UserController {
 			log.info("[{}]{}:{}",transactionId, "qnaList", "end");
 		}	
 		return "user/myPage/myQnaList";
-	}
-	
-	@RequestMapping(value = "myPage/myTag")
-	public String myTag() {
-		return "user/myPage/myTag";
 	}
 
 }
