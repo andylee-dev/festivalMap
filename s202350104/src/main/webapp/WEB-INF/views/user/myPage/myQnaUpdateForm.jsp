@@ -18,14 +18,14 @@
 				</div>
 				<div class="container border p-4 mb-4">
 					<c:if test="${msg != null}">${msg}</c:if>
-				<form action="updateQnaForm" method="post">
+				<form action="updateQnaResult" method="post">
 					<table class="table table-bordered">
 						<tr class="table-primary">
 						<th scope="col">1:1문의</th>
 						<th scope="col">제목:</th>
-						<td><input type="text" name="question_title"></td>
+						<td><input type="text" name="question_title" value="${qna.question_title}"></td>
 						<th scope="col">내용:</th>
-						<td><input type="text" name="question_content"></td>
+						<td><input type="text" name="question_content" value="${qna.question_content}"></td>
 						</tr>
 						<tr class="table-primary">
 						<th scope="col">1:1문의 답변</th>
