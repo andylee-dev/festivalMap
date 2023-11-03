@@ -8,4 +8,10 @@ public interface PointService {
 	
 	List<Point>			listPoint();
 
+	Point               getPointById(int id);
+
+	void                updatePoint(Point point);
+
+
+
 }

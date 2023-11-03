@@ -18,10 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 
 	private final BoardDao boardDao;
-
+	
+	// paging 처리용
 	@Override
-	public int boardCount() {
-		int countBoard = boardDao.boardCount();
+	public int boardCount(int smallCode) {
+		int countBoard = boardDao.boardCount(smallCode);
 		return countBoard;
 	}
 
@@ -49,10 +50,19 @@ public class BoardServiceImpl implements BoardService {
 	// 자유게시판
 	@Override
 	public List<Board> getFreeAllList(Board board) {
+		log.info("boardService getFreeAllList start!!");
 
-		List<Board> freeAllList = boardDao.getFreeAllList(board);
+		List<Board> freeAllList = null;
 
-		log.info("service freeAllList size : {}", freeAllList.size());
+		try {
+			freeAllList = boardDao.getFreeAllList(board);
+			log.info("boardService freeAllList size : {}", freeAllList.size());
+
+		} catch (Exception e) {
+			log.error("boardService getFreeAllList Exception : {}", e.getMessage());
+		} finally {
+			log.info("boardService getFreeAllList End..");
+		}
 
 		return freeAllList;
 	}
@@ -64,8 +74,38 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> phothAllList = boardDao.getPhotoAllList(board);
 		
 		return phothAllList;
-	}	
+	}
+	
+	// 이벤트게시판
+	@Override
+	public List<Board> getEventAllList(Board board) {
+		
+		List<Board> eventAllList = boardDao.getEventAllList(board);
+		
+		return eventAllList;
+	}
+	
+	// review
+	@Override
+	public List<Board> getReviewAllList(Board board) {
 
+		log.info("boardService getReviewAllList start!!");
+
+		List<Board> reviewAllList = null;
+
+		try {
+			reviewAllList = boardDao.getReviewAllList(board);  
+			log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
+		} catch (Exception e) {
+			log.error("boardService getReviewAllList Exception : {}", e.getMessage());
+		} finally {
+			log.info("boardService getReviewAllList End..");
+		}
+
+		return reviewAllList;
+	}
+
+	// 통합게시판 상세정보
 	@Override
 	public Board boardDetail(int boardId) {
 
@@ -75,13 +115,32 @@ public class BoardServiceImpl implements BoardService {
 
 		return boards;
 	}
-
+	
+	// 통합게시판 수정
 	@Override
 	public int boardUpdate(Board board) {
 
 		int updateBoard = boardDao.boardUpdate(board);
 
 		return updateBoard;
+	}
+	
+	// 통합게시판 삭제
+	@Override
+	public int boardDelete(int boardId) {
+		
+		int deleteBoard = boardDao.boardDelete(boardId);
+		
+		return deleteBoard;
+	}
+	
+	// 통합게시판 생성
+	@Override
+	public int boardInsert(Board board) {
+
+		int insertBoard = boardDao.boardInsert(board);
+		
+		return insertBoard;
 	}
 
 }

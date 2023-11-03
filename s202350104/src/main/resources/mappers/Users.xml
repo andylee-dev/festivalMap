@@ -34,4 +34,20 @@
         FROM Users
         WHERE id = #{id}
     </select>
+	<select id="joAdminListTotal" resultType="int">
+		SELECT count(*)
+		FROM   users
+		WHERE  small_code = 1
+	</select>
+		
+	<select id="joAdminListList" resultType="Users" parameterType="Users">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, users.*
+     		 FROM 	users
+     		 WHERE  small_code = 1
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+	
 </mapper>

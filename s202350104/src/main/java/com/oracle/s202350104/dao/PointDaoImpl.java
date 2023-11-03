@@ -29,6 +29,19 @@ public class PointDaoImpl implements PointDao {
 		
 		return listPoint;
 	}
+	
+	 @Override
+	    public Point getPointById(int id) {
+		 		
+		 return session.selectOne("updatePoint", id);
+	    }
+
+	    @Override
+	    public void updatePoint(Point point) {
+	    	 session.update("updatePoint", point);
+	    }
+
+
 }
 
 

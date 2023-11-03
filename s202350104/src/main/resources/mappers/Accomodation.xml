@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.AccomodationMapper">
+	
+	<select id="accomodationAll" resultType="AccomodationContent" parameterType="AccomodationContent">
+    SELECT * 
+    FROM   
+   	 (
+        SELECT ROWNUM rn, b.*
+        FROM
+        (
+            SELECT *
+            FROM accomodation a, contents c
+            WHERE a.content_id = c.id
+            ORDER BY content_id
+       	 ) b
+ 	   )
+   	 WHERE rn BETWEEN #{start} and #{end}
+	</select>
+
+	
+	<select id="AccomodationDetail" resultType="AccomodationContent" parameterType="int">
+		SELECT 	*
+		FROM 	contents c, accomodation a
+		WHERE 	c.id = a.content_id
+		AND 	a.content_id = #{content_id}
+	
+	</select>
+	
+	<select id="AccomodationTotal" resultType="int">
+		SELECT count(*)
+		FROM   accomodation a, contents c
+		WHERE  a.content_id = c.id
+		
+	</select>
+
+
+
+</mapper>

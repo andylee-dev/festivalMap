@@ -121,10 +121,49 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 
-		/*
-		 * @Override public int insertUserTags() { // TODO Auto-generated method stub
-		 * return 0; }
-		 */
-		
+	@Override
+	public int insertTags(Tags tags) {
+		int result = 0;
+		try {
+			result = session.insert("nhTagsInsert", tags);
+		} catch(Exception e) {
+			log.info("TagsDaoImpl insertTags() => " + e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public Tags selectTags(int id) {
+		Tags tags = null;
+		try {
+			tags = session.selectOne("nhTagsSelect", id);
+			log.info("TagsDaoImpl selectTags() => " + tags.getName());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl selectTags() => " + e.getMessage());
+		}
+		return tags;
+	}
+
+	@Override
+	public int updateTags(Tags tags) {
+		int result = 0;
+		try {
+			result = session.update("nhTagsUpdate", tags);
+		} catch(Exception e) {
+			log.info("TagsDaoImpl insertTags() => " + e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteTags(int id) {
+		int result = 0;
+		try {
+			result = session.delete("nhTagsDelete", id);
+		} catch(Exception e) {
+			log.info("TagsDaoImpl deleteTags() => " + e.getMessage());
+		}
+		return result;
+	}
 		
 }

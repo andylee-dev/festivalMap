@@ -31,10 +31,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public RestaurantsContent detailRestaurant(int content_id) {
+	public RestaurantsContent detailRestaurant(int contentId) {
 		RestaurantsContent restaurant = null;
 		log.info("RestaurantImpl detailRestaurant Start...");
-		restaurant = rd.detailRestaurant(content_id);
+		restaurant = rd.detailRestaurant(contentId);
 		
 		return restaurant;
 	}

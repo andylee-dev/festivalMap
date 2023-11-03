@@ -9,5 +9,19 @@
 		SELECT * FROM point
 		
 	</select>
+
+	
+	 <update id="updatePoint" parameterType="point" >
+	 
+        UPDATE point
+        SET title = #{title},
+            content = #{content},
+            point = #{point}
+        WHERE id = #{id}
+        
+      </update>
+	
+	
+	 
 	
 </mapper>

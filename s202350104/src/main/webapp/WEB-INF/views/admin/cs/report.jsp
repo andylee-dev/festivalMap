@@ -38,7 +38,7 @@
 								<td>${report.content}</td>
 								<td>${report.user_id}</td>
 								<td>${report.count}</td>
-								<td><button onclick="location.href='reportDetail?board_id=${report.board_id}'">상세보기</button></td>
+								<td><button onclick="location.href='reportDetail?boardId=${report.board_id}'">상세보기</button></td>
 						</tr>
 						</c:forEach>
 					</tbody>

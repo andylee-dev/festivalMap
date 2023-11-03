@@ -37,8 +37,8 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							숙박 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/accomodations">숙박리스트</a></li>
-							<li><a class="dropdown-item" href="/accomodations/detail">숙박상세</a></li>
+							<li><a class="dropdown-item" href="/accomodation">숙박리스트</a></li>
+							<li><a class="dropdown-item" href="/accomodation/detail">숙박상세</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
@@ -69,10 +69,10 @@
 						data-bs-toggle="dropdown" aria-expanded="false">
 							커뮤니티 </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/freeBoardList">자유게시판</a></li>
 							<li><a class="dropdown-item" href="/noticBoardList">공지사항</a></li>
-							<li><a class="dropdown-item" href="/photoBoardList">여행꾹꾹</a></li>
 							<li><a class="dropdown-item" href="/magazinBoardList">이달의 소식</a></li>
+							<li><a class="dropdown-item" href="/freeBoardList">자유게시판</a></li>							
+							<li><a class="dropdown-item" href="/photoBoardList">여행꾹꾹</a></li>
 							<li><a class="dropdown-item" href="/eventBoardList">이벤트</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
@@ -94,7 +94,7 @@
 							<li><a class="dropdown-item" href="/user/myPage/myLike">찜 목록</a></li>
 							<li><a class="dropdown-item" href="/user/myPage/myTag">내 관심사</a></li>
 							<li><a class="dropdown-item" href="/user/myPage/myPost">내 게시글</a></li>
-							<li><a class="dropdown-item" href="/user/myPage/QnaList">1:1문의</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/qnaList">1:1문의</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
@@ -103,7 +103,7 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="/user/bizPage">내정보</a></li>
 							<li><a class="dropdown-item" href="/user/bizPage/content">내 컨텐츠 등록</a></li>
-							<li><a class="dropdown-item" href="/user/bizPage/qna">1:1문의</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/qnaList">1:1문의</a></li>
 						</ul></li>
 
 					<li class="nav-item dropdown"><a

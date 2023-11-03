@@ -7,13 +7,16 @@
 		SELECT * 
 		FROM   
 		(
-			SELECT ROWNUM rn, a.*
+			SELECT ROWNUM rn, t.*,
+				(SELECT content FROM areas a
+				 WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
+				(SELECT content FROM areas a
+				 WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content 
 			FROM
 			(SELECT *
 			 FROM restaurants r, contents c
 			 WHERE r.content_id = c.id
-			 ORDER BY content_id) a
-			)
+			 ORDER BY content_id) t
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
@@ -22,7 +25,7 @@
 		SELECT 	*
 		FROM 	contents c, restaurants r
 		WHERE 	c.id = r.content_id
-		AND 	r.content_id = #{content_id}
+		AND 	r.content_id = #{contentId}
 	</select>
 	
 	<select id="joRestaurantTotal" resultType="int">

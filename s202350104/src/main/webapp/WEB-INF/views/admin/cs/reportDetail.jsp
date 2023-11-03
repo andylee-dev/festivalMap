@@ -43,7 +43,11 @@
 								<td>${report.user_id}</td>
 								<td>${report.content}</td>
 								<td>${report.created_at}</td>
-								<td>${report.status}</td>
+								<td>
+								<c:choose>
+									<c:when test="${report.status == 1}">신고접수</c:when>
+								</c:choose>
+								</td>
 							</tr>
 							<tr>
 						</c:forEach>

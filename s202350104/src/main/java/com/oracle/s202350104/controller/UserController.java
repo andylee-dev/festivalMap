@@ -26,36 +26,50 @@ public class UserController {
 	
 	private final QnaListService qs;
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "user")
 	public String userList() {
 		return "user";
 	}
-		
-	@RequestMapping(value = "/myPage")
+
+	@RequestMapping(value = "myPage")
 	public String myPage() {
 		return "user/myPage/index";
+
 	}
 	
-	@RequestMapping(value = "/myPage/myLike")
+	@RequestMapping(value = "myPage/myLike")
 	public String myLike() {
 		return "user/myPage/myLike";
 	}
 	
-	@RequestMapping(value = "/myPage/QnaDetail")
-	public String QnaDetail() {
-		return "user/myPage/QnaDetail";
-	}
 
-	@RequestMapping(value = "/myPage/QnaForm")
-	public String QnaForm() {
-		return "user/myPage/QnaForm";
-	}
-	
-	@RequestMapping(value = "/myPage/QnaList")
-	public String QnaList(Qna qna , String currentPage, Model model) {
+	@RequestMapping(value = "myPage/qnaDetail")
+	public String qnaDetail(int user_id,int id, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}:{}",transactionId, "QnaList", "start");
+			log.info("[{}]{}:{}",transactionId, "qnaDetail", "start");
+			
+			Qna qna = qs.detailQna(user_id, id);
+			model.addAttribute("qna", qna);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "qnaDetail", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "qnaDetail", "end");
+		}		
+		return "user/myPage/myQnaDetail";
+	}
+
+	@RequestMapping(value = "myPage/qnaForm")
+	public String qnaForm() {
+		
+		return "user/myPage/myQnaForm";
+	}
+	
+	@RequestMapping(value = "myPage/qnaList")
+	public String qnaList(Qna qna , String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "qnaList", "start");
 			int totalQnaList = qs.totalQnaList();
 			log.info("totalQnaList=>"+totalQnaList);
 		
@@ -70,35 +84,16 @@ public class UserController {
 			model.addAttribute("listQnaList",listQnaList);
 			model.addAttribute("page",page);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "QnaList", e.getMessage());
+			log.error("[{}]{}:{}",transactionId,  "qnaList", e.getMessage());
 		}finally { 
-			log.info("[{}]{}:{}",transactionId, "QnaList", "end");
+			log.info("[{}]{}:{}",transactionId, "qnaList", "end");
 		}	
 		return "user/myPage/myQnaList";
 	}
 	
-	@RequestMapping(value = "/myPage/myTag")
+	@RequestMapping(value = "myPage/myTag")
 	public String myTag() {
 		return "user/myPage/myTag";
-	}
-
-	@RequestMapping(value = "/myPage/myPost")
-	public String myPost() {
-		return "user/myPage/myPost";
-	}
-
-	@RequestMapping(value = "/bizPage")
-	public String bizPage() {
-		return "user/bizPage/index";
-	}
-
-	@RequestMapping(value = "/bizPage/content")
-	public String bizContent() {
-		return "user/bizPage/bizContent";
-	}
-	@RequestMapping(value = "/bizPage/qna")
-	public String bizQna() {
-		return "user/bizPage/bizQna";
 	}
 
 }

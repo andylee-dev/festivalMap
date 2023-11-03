@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s202350104.model.Course;
+import com.oracle.s202350104.model.CourseContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ public class CourseDaoImpl implements CourseDao {
 	private final SqlSession session;
 
 	@Override
-	public int courseCount(Course course) {
+	public int courseCount() {
 		int courseCount = 0;
 		log.info("CourseDaoImpl courseCount start...");
 		try {
@@ -30,6 +31,7 @@ public class CourseDaoImpl implements CourseDao {
 		return courseCount;
 	}
 
+	
 	@Override
 	public List<Course> courseList(Course course) {
 		List<Course> courseList = null;
@@ -44,4 +46,34 @@ public class CourseDaoImpl implements CourseDao {
 		
 		return courseList;
 	}
+
+	
+	@Override
+	public List<Course> courseDetail(int course_id) {
+		log.info("course_id ->" + course_id);
+		List<Course> courseDetailList = null;
+		try {
+			courseDetailList = session.selectList("noCourseDetailList", course_id);
+			log.info("CourseDaoImpl courseDetail courseDetailList.size() ->" + courseDetailList.size());
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl courseDetail e.getMessage() ->" + e.getMessage());
+		}
+		return courseDetailList;
+	}
+
+	
+//	@Override
+//	public Course courseDetailContent(int id) {
+//		log.info("id ->" + id);
+//		Course courseDetailContent = null;
+//		try {
+//			courseDetailContent = session.selectOne("noCourseDetailContent",id);
+//			log.info("CourseDaoImpl courseDetailContent courseDetailContent ->" + courseDetailContent);
+//			
+//		} catch (Exception e) {
+//			log.info("CourseDaoImpl courseDetailContent e.getMessage() ->" + e.getMessage());
+//		}
+//		return courseDetailContent;
+//	}
 }

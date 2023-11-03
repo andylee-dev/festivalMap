@@ -2,12 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Course Content</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -50,14 +51,25 @@
 									<td>${course.course_title }</td>
 									<td>${course.distance }</td>
 									<td>${course.time }</td>
-									<td>${course.created_at }</td>
+									<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td>-</td>
-									<td><input type="button" value="수정"></td>
+									<td><input onclick="location.href='courseUpdateForm?course_id=${course.course_id}'" type="button" value="수정 "></td>
 									<td><input type="button" value="삭제"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					<div align="center">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<a href="list?currentPage=${i}" class="pageblock">[${i}]</a>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+						</c:if>
+					</div>
 				</div>
 			</main>
 		</div>

@@ -37,7 +37,7 @@
 			    					체험명 : ${experience.title} <br>
 			    					체험정보 :${experience.content}
     							</p>
-    							<a href="experience/detail?content_id=${experience.content_id}" class="btn btn-primary">더보기</a>
+    							<a href="experience/detail?contentId=${experience.content_id}" class="btn btn-primary">더보기</a>
 			 				 </div>	
 						</div>
 					 </div>	
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 		</div>				
-				
+		<div align="center">
 		<c:if test="${page.startPage > page.pageBlock}">
 			<a href="experience?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
 		</c:if>
@@ -55,6 +55,7 @@
 		<c:if test="${page.endPage < page.totalPage}">
 			<a href="experience?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 		</c:if>	
+		</div>		
 	</main>
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>

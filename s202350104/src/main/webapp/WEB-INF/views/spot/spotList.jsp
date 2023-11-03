@@ -7,21 +7,16 @@
 <meta charset="UTF-8">
 <title>Spot</title>
 <style type="text/css">
-	.card-text {
-		overflow: hidden;
-		/* text-overflow: ellipsis; */
-	}
-	
-	.parent {
-		width: 90%;
-		margin: 10px auto;
-	}
-	
-	.first {
-		float: left;
-		width: 30%;
-		box-sizing: border-box;
-	}
+	.pageblock {
+				text-align: center;
+			}
+			.card-text {
+				overflow: hidden;
+				text-overflow: ellipsis; /* 말줄임표 */
+				display: -webkit-box;
+				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
+				-webkit-box-orient: vertical;
+			}	
 </style>
 </head>
 <body>
@@ -32,21 +27,19 @@
 			<h1>주변명소</h1>
 		</div>
 		<div class="border p-3 m-3">
-				<h1 class="border">검색폼</h1>
+			<h1 class="border">검색폼</h1>
+			<select name="area">
+				<c:forEach var="areas" items="${listAreas}">
+					<c:if test="${areas.sigungu == 999}"><option value="${areas.area}">${areas.content}</option></c:if>
+				</c:forEach>
+			</select>
+			<select name="sigungu">
+				<c:forEach var="areas" items="${listAreas}">
+					<c:if test="${areas.sigungu != 999}"><option value="${areas.sigungu}">${areas.content}</option></c:if>
+				</c:forEach>
+			</select>
 				<button type="button" class="btn btn-outline-secondary">검색</button>
 				<button type="button" class="btn btn-outline-secondary">초기화</button>
-		</div>
-		<div>
-		<select name="area">
-		<c:forEach var="areas" items="${listAreas}">
-				<option value="${areas.area}">${areas.content}</option>
-		</c:forEach></select>
-		</div>
-		<div>
-		<select name="sigungu">
-		<c:forEach var="areas" items="${listAreas}">
-				<option value="${areas.sigungu}">${areas.content}</option>
-		</c:forEach></select>
 		</div>
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
@@ -58,11 +51,10 @@
 									alt="${spot.title}이미지" style="height: 190px;">
 								<div class="card-body">
 									<p class="card-text" style="height: 240px;">
-										축제명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
+										명소명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
 										${spot.content}
 									</p>
-									<a href="spot/detail?content_id=${spot.content_id}"
-										class="btn btn-primary">더보기</a>
+									<a href="spot/detail?contentId=${spot.content_id}"class="btn btn-primary">더보기</a>
 									<c:set var="card" value="${card - 1}"></c:set>
 								</div>
 							</div>

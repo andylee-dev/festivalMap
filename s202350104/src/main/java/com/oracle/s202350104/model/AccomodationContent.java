@@ -1,10 +1,12 @@
 package com.oracle.s202350104.model;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
-public class AccomodationsContent {
-	// Contents 컬럼
+public class AccomodationContent {
+		// Contents 컬럼
 		private int    area;
 		private int    sigungu;
 		private int    big_code;
@@ -24,7 +26,10 @@ public class AccomodationsContent {
 		private String homepage;
 		private int    readcount;
 		private String user_id;
-	// Accomodations 컬럼
+		private Date   created_at;
+		private Date   updated_at;
+		private String is_deleted;
+		// Accomodations 컬럼
 		private int    content_id;
 		private int	   room_count;
 		private String reservation_url;
@@ -34,6 +39,10 @@ public class AccomodationsContent {
 		private String is_pickup;
 		private String is_cook;
 		private String is_parking;
+		// 페이지 처리용
+		private String pageNum;
+		private int    start;
+		private int    end;
 		
 	
 }

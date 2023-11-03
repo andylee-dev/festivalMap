@@ -25,14 +25,34 @@ public class ExperienceServiceImpl implements ExperienceService {
 	}
 
 	@Override
-	public ExperienceContent detailExperience(int content_id) {
-		ExperienceContent experience = ed.detailExperience(content_id);
+	public ExperienceContent detailExperience(int contentId) {
+		ExperienceContent experience = ed.detailExperience(contentId);
 		return experience;
 	}
 
 	@Override
 	public int totalExperience() {
 		int totalExperienceCnt = ed.totalExperience();
+		return totalExperienceCnt;
+	}
+
+	@Override
+	public int experienceDelete(int contentId) {
+		int experienceDelete = 0;
+		experienceDelete = ed.experienceDelete(contentId);
+		
+		return experienceDelete;
+	}
+
+	@Override
+	public List<ExperienceContent> deletedExperience(ExperienceContent experience) {
+		List<ExperienceContent> deletedExperience = ed.deletedExperience(experience);
+		return deletedExperience;
+	}
+
+	@Override
+	public int totalExperience2() {
+		int totalExperienceCnt = ed.totalExperience2();
 		return totalExperienceCnt;
 	}
 

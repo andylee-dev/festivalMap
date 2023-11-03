@@ -24,7 +24,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		log.info("RestaurantImpl listRestaurant Start...");
 		
 		try {
-			restaurantList = session.selectList("joRestaurantListAll");
+			log.info("RestaurantDaoImpl listRestaurant ");
+			restaurantList = session.selectList("joRestaurantListAll",restaurant);
 			log.info("RestaurantDaoImpl listRestaurant restaurantList.size()->" + restaurantList.size());
 		} catch (Exception e) {
 			log.info("RestaurantDaoImpl listRestaurant e.getMessage()->" + e.getMessage());
@@ -33,11 +34,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	@Override
-	public RestaurantsContent detailRestaurant(int content_id) {
+	public RestaurantsContent detailRestaurant(int contentId) {
 		RestaurantsContent restaurant = new RestaurantsContent();
 		
 		try {
-			restaurant = session.selectOne("joRestaurantDetail", content_id);
+			restaurant = session.selectOne("joRestaurantDetail", contentId);
 			log.info("RestaurantsContent detailRestaurant() restaurant.getTitle ->" + restaurant.getTitle());
 					
 		} catch (Exception e) {
@@ -50,6 +51,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	public int totalRestaurant() {
 		int totalRestaurant = 0;
 		try {
+			log.info("RestaurantDaoImpl totalRestaurant ");
 			totalRestaurant = session.selectOne("joRestaurantTotal");
 		} catch (Exception e) {
 			log.info("RestaurantDaoImpl totalRestaurant() Exception ->" + e.getMessage());

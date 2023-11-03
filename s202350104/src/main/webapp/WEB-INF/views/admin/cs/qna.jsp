@@ -51,7 +51,7 @@
 								<td>${qna.password}</td>
 								<td>${qna.nickname}</td>
 								<td>${qna.birthday}</td>
-								<td><a href="QnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
+								<td><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
 								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
 									<c:if test="${qna.status == 1}">답변완료</c:if>

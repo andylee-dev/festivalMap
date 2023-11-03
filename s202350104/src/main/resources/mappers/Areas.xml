@@ -6,4 +6,19 @@
 	<select id="AreasListAll" resultType="Areas">
 		SELECT * FROM areas
 	</select>
+	
+	<select id="joAreasListAll" resultType="Areas" parameterType="Areas">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, areas.*
+     		FROM areas
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+	
+	<select id="joTotalAreaCode" resultType="int">
+		SELECT count(*)
+		FROM   areas
+	</select>	
+	
 </mapper>

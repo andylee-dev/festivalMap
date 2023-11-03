@@ -1,14 +1,16 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.oracle.s202350104.model.Accomodations;
-import com.oracle.s202350104.model.AccomodationsContent;
-import com.oracle.s202350104.service.AccomodationsService;
+
+import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.service.AccomodationService;
+import com.oracle.s202350104.service.Paging;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,29 +20,43 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccomodationController {
 	
-	private final AccomodationsService as;
+	private final AccomodationService as;
 	
-	@GetMapping(value = "/accomodations")
-	public String accomodations(Accomodations accomodations, Model model) {
-		
-		List<Accomodations> listAccomodations = as.listAccomodations();
-		
-		model.addAttribute("listAccomodations", listAccomodations);
-		
-		return "accomodations/accomodationsIndex";
-
+	@GetMapping(value = "/accomodation")
+	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "accomodation", "start");
+			int totalAccomodation = as.totalAccomodation();
+			
+			Paging page = new Paging(totalAccomodation, currentPage);
+			accomodation.setStart(page.getStart());
+			accomodation.setEnd(page.getEnd());
+			
+			List<AccomodationContent> listAccomodation = as.listAccomodation(accomodation);
+			
+			model.addAttribute("totalAccomodation", totalAccomodation);
+			model.addAttribute("listAccomodation", listAccomodation);
+			model.addAttribute("page", page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "accomodation", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "accomodation", "end");
+		}
+					
+		return "accomodation/accomodationIndex";
 	}
 	
-	@GetMapping(value = "/accomodations/detail")
-	public String accomodationsDetail(int content_id, Model model) {
-		log.info("AccomodationController detailAccomodations Start...");
+	@GetMapping(value = "/accomodation/detail")
+	public String accomodationDetail(int contentId, Model model) {
+		log.info("AccomodationController detailAccomodation Start...");
 		
-		AccomodationsContent accomodations = as.detailAccomodations(content_id);
+		AccomodationContent accomodation = as.detailAccomodation(contentId);
 		
-		model.addAttribute("content_id", content_id);
-		model.addAttribute("accomodations", accomodations);
+		model.addAttribute("contentId", contentId);
+		model.addAttribute("accomodation", accomodation);
 		
-		return "accomodations/accomodationsDetail";
+		return "accomodation/accomodationDetail";
 			
 		
 	}

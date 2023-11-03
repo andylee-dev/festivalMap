@@ -32,10 +32,10 @@ public class ExperienceDaoImpl implements ExperienceDao {
 	}
 
 	@Override
-	public ExperienceContent detailExperience(int content_id) {
+	public ExperienceContent detailExperience(int contentId) {
 		ExperienceContent experience = new ExperienceContent();
 		try {
-			experience = session.selectOne("shExperienceDetail", content_id);
+			experience = session.selectOne("shExperienceDetail", contentId);
 		} catch (Exception e) {
 			
 		}
@@ -47,6 +47,41 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		int totalExperienceCnt = 0;
 		try {
 			totalExperienceCnt = session.selectOne("shExperienceTotal");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalExperienceCnt;
+	}
+
+	@Override
+	public int experienceDelete(int contentId) {
+		int experienceDelete = 0;
+		try {
+			experienceDelete = session.update("shExperienceDelete",contentId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return experienceDelete;
+	}
+
+	@Override
+	public List<ExperienceContent> deletedExperience(ExperienceContent experience) {
+		List<ExperienceContent> deletedExperience = null;
+		
+		try {
+			deletedExperience = session.selectList("shDeletedExpreienceAll",experience);
+			log.info("ExperienceDaoImpl deletedExperience() => " + deletedExperience.size());
+		} catch (Exception e) {
+			log.info("ExperienceDaoImpl deletedExperience() => " + e.getMessage());
+		}
+		return deletedExperience;
+	}
+
+	@Override
+	public int totalExperience2() {
+		int totalExperienceCnt = 0;
+		try {
+			totalExperienceCnt = session.selectOne("shExperienceTotal2");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

@@ -19,8 +19,32 @@
 				-webkit-box-orient: vertical;
 			}	
 		</style>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+			function getSigungu(pArea){
+				$.ajax(
+						{
+							url:"/getSigungu",
+							dataType:'json',
+							success:function(areas) {
+								$('#sigungu_list_select option').remove();
+								str = "<option value=''>전체</option>";
+								$(areas).each(
+									function() {
+										if(pArea == this.area && this.sigungu != 999 && this.content != null) {
+											strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
+											str += strOption;
+										}
+									}		
+								)
+								$('#sigungu_list_select').append(str);
+							}
+						}		
+				)
+			}
+		</script>
 	</head>
-<body>
+	<body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main>
@@ -28,10 +52,27 @@
 			class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
 			<h1>어느 축제로 떠나볼까요?</h1>
 		</div>
-	<!-- select box 만들기 	
-	<div class="container border p-5">
-		<form action="festival"></form>
-	</div> -->
+		<div class="border p-3 m-3">
+			<h1 class="border">검색폼</h1>
+			<select name="area" onchange="getSigungu(this.value)">
+				<option value="">전체</option>
+				<c:forEach var="areas" items="${listAreas}">
+					<c:if test="${areas.sigungu == 999}">
+						<option value="${areas.area}">${areas.content}</option>
+					</c:if>
+				</c:forEach>
+			</select>
+			<select name="sigungu" id="sigungu_list_select">
+			<%-- 	<c:forEach var="areas" items="${listAreas}">
+					<c:if test="${areas.sigungu != 999}">
+						<option value="${areas.sigungu}">${areas.content}</option>
+					</c:if>
+				</c:forEach> --%>
+			</select>
+			<!-- 빈칸으로 나오는 부분 없애기 / 시도를 선택했을 때 그에 해당하는 시군구가 나올 수 있도록 하기 -->
+			<button type="button" class="btn btn-outline-secondary">검색</button>
+			<button type="button" class="btn btn-outline-secondary">초기화</button>
+		</div>
 	
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
@@ -46,7 +87,7 @@
 				    					축제기간 : ${festival.start_date} ~ ${festival.end_date} <br>
 				    					${festival.content}
 				    				</p>
-				    				<a href="festival/detail?contentId=${festival.content_id}" class="btn btn-primary">더보기</a>
+				    				<a href="festival/detail?contentId=${festival.content_id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
 				 				 </div>	
 				 			</div>
 						</div>

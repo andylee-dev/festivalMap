@@ -48,5 +48,7 @@ public class Course {
 	private int    start;
 	private int    end;
 	
+	// courseContent
+	private String cd_content;
 	
 }

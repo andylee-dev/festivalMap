@@ -29,4 +29,16 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		return listPointHistory;
 	}
 
+	@Override
+	public int deletePointHistory(int point_id) {
+		int result = 0;
+		try {
+			result = session.delete("deletePointHistory",point_id);
+		} catch (Exception e) {
+			 log.error("Error deleting point history: {}", e.getMessage());
+        }
+		
+		return result;
+	}
+
 }

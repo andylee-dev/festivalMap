@@ -8,5 +8,6 @@ public interface QnaListService {
 
 	int 	  totalQnaList();
 	List<Qna> listQnaList(Qna qna);
+	Qna       detailQna(int user_id, int id);
 
 }

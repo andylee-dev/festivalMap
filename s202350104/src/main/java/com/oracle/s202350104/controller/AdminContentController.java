@@ -7,12 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
+import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.RestaurantService;
 import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.user.UserService;
@@ -31,6 +34,7 @@ public class AdminContentController {
 	private final FestivalsService fs;
 	private final SpotService ss;
 	private final RestaurantService rs;
+	private final AccomodationService as;
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -39,7 +43,7 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin festival", "start");
 			int totalFestivals = fs.totalFestivals();
 			
-			Paging page = new Paging(totalFestivals, currentPage);
+			PagingList page = new PagingList(totalFestivals, currentPage);
 			festival.setStart(page.getStart());
 			festival.setEnd(page.getEnd());
 			
@@ -127,12 +131,64 @@ public class AdminContentController {
 		}finally {
 			log.info("[{}]{}:{}",transactionId, "admin spot", "end");
 		}
-		return "admin/content/spot";
+		return "admin/content/spotList";
 	}
 
 	@RequestMapping(value = "accomodation")
-	public String accomodation() {
-		return "admin/content/accomodation";
+		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
+				int totalaccomodation = as.totalAccomodation();
+			
+				Paging page = new Paging(totalaccomodation, currentPage);
+				accomodationContent.setStart(page.getStart());
+				accomodationContent.setEnd(page.getEnd());
+			
+				List<AccomodationContent> listAccomodation = as.listAccomodation(accomodationContent);
+			
+				model.addAttribute("totalAccomodation",totalaccomodation);
+				model.addAttribute("listAccomodation", listAccomodation);
+				model.addAttribute("page",page);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
+			}finally {
+				log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
+			}
+			return "admin/content/accomodation";
 	}
+	
+	@RequestMapping(value = "experienceDelete")
+	public String experienceDelete(int contentId, Model model) {
+		int experienceDelete = es.experienceDelete(contentId);
+		
+		return "redirect:experience";
+		
+	}
+	
+	@RequestMapping(value = "deletedExperience")
+	public String deletedExperience(ExperienceContent experience,String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "experience", "start");
+			int totalExperience = es.totalExperience2();
+			
+			Paging page = new Paging(totalExperience, currentPage);
+			experience.setStart(page.getStart());
+			experience.setEnd(page.getEnd());
+			
+			List<ExperienceContent> listExperience = es.deletedExperience(experience);
+			
+			model.addAttribute("totalExperience", totalExperience);
+			model.addAttribute("listExperience", listExperience);
+			model.addAttribute("page", page);
 
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "experience", "end");
+		}
+		return "admin/content/experience";
+	}
+	
 }
