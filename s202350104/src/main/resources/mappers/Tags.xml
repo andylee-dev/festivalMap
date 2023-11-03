@@ -97,6 +97,7 @@
 		UPDATE Tags SET name = #{name} WHERE id = #{id}
 	</update>
 	
+	<!-- 자식 테이블 데이터부터 삭제할 수 있도록 -->
 	<delete id="nhTagsDelete" parameterType="int">
 		DELETE Tags WHERE id = #{id}
 	</delete>

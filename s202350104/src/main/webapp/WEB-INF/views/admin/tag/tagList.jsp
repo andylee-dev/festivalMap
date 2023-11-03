@@ -6,28 +6,29 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
-		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			function tagDelete(pIndex) {
-				alert("실행"+pIndex);
 				var deleteId = $('#id'+pIndex).val();
-				alert("deleteId=>"+deleteId);
-				
-				$.ajax(
-						{
-							url:"/deleteTags",
-							data:{id : deleteId},
-							dataType:'text',
-							success:function(result) {
-								if(result == '1') {
-									$('#tag'+pIndex).remove();
-									alert("성공적으로 삭제되었습니다.");
-								} else {
-									alert("삭제에 실패하였습니다.");
-								}
-							}
-						}		
-				)
+				if(confirm("정말 삭제하시겠습니까?")) {
+					$.ajax(
+							{
+								method:"POST",
+								url:"<%=request.getContextPath()%>/admin/tag/deleteTags",
+								data:{id : deleteId},
+								dataType:'text',
+								success:
+									function(result) {
+											if(result == '1') {
+												$('#tag'+pIndex).remove();
+												alert("성공적으로 삭제되었습니다.");
+											} else {
+												alert("삭제에 실패하였습니다.");
+											}		
+									}
+							}		
+					)
+				}
 			}
 		</script>
 	</head>
