@@ -92,4 +92,18 @@ public class QnaListDaoImpl implements QnaListDao {
 		}
 		return result;
 		}
+
+	@Override
+	public int deleteQna(int id, int user_id) {
+		Qna qna = new Qna();
+		int result = 0;
+		qna.setUser_id(user_id);
+		qna.setId(id);
+		try {
+			result = session.delete("dhQnaDelete", qna);
+		}catch (Exception e) {
+			log.info("QnaListDaoImpl deleteQna() => " + e.getMessage());
+		}
+		return result;
 	}
+}

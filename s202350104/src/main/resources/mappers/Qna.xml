@@ -49,5 +49,10 @@
    WHERE	id = #{id}	
    AND		user_id = #{user_id}	 
    </update>
+   
+   <delete id="dhQnaDelete" parameterType="Qna" >
+   DELETE	qna WHERE id = #{id} AND user_id = #{user_id}
+   </delete>
+   
 </mapper>   
 

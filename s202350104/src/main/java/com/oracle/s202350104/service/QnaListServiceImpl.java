@@ -58,4 +58,10 @@ public class QnaListServiceImpl implements QnaListService {
 		return result;
 	}
 
+	@Override
+	public int deleteQna(int id, int user_id) {
+		int result = qd.deleteQna(id, user_id);
+		return result;
+	}
+
 }
