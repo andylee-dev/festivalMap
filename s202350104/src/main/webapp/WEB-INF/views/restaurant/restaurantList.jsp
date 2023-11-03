@@ -8,14 +8,43 @@
 		<meta charset="UTF-8">
 		<title>RestaurantList</title>
 		<style type="text/css">
-		.card-text {
-			overflow: 			hidden;
-			text-overflow: 		ellipsis; /* 말줄임표 */
-			diplay: 		    -webkit-box; /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-			-webkit-line-clamp: 10;
-			-webkit-box-orient: vertical;
-		}
+			.pageblock{
+				text-align: center;
+			}
+			.card-text {
+				overflow: 			hidden;
+				text-overflow: 		ellipsis; /* 말줄임표 */
+				diplay: 		    -webkit-box; /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
+				-webkit-line-clamp: 10;
+				-webkit-box-orient: vertical;
+			}
 		</style>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+		
+			function getSigungu(pArea){
+				$.ajax(
+						{
+							url:"restaurant/getSigungu",
+							dataType: 'json',
+							success:function(areas) {
+								$('#sigungu_list_select option').remove();
+								str = "<option value=''>전체</option>";
+								$(areas).each(
+									function() {
+										if(pArea == this.area && this.sigungu != 999 && this.content != null) {
+											strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
+											str += strOption;
+										}
+									}
+								)
+								$('#sigungu_list_select').append(str);
+							}
+						}
+				  )	
+				
+				}						
+		  </script>
 	</head>
 	<body>
 		<!-- Top bar -->
@@ -27,28 +56,26 @@
 			</div>
 			<div class="border p-3 m-3">
 				<h1 class="border">검색폼</h1>
-				<select name="area">
+				<select name="area" onchange="getSigungu(this.value)">
+					<option value="">전체</option>
 					<c:forEach var="areas" items="${listAreas}">
-						<c:if test="${areas.sigungu == 999}"><option value="${areas.area}">${areas.content}</option></c:if>
+						<c:if test="${areas.sigungu == 999}">
+							<option value="${areas.area}">${areas.content}</option>
+						</c:if>
 					</c:forEach>
 				</select>	
-				<select name="sigungu">
-					<c:forEach var="areas" items="${listAreas}">
-						<c:if test="${areas.sigungu != 999}"><option value="${areas.sigungu}">${areas.content}</option></c:if>
-					</c:forEach>
+				<select name="sigungu" id="sigungu_list_select">
+				<%-- 	<c:forEach var="areas" items="${listAreas}">
+						<c:if test="${areas.sigungu != 999}">
+							<option value="${areas.sigungu}">${areas.content}</option>
+						</c:if>
+					</c:forEach> --%>
 				</select>
 				<!-- 빈칸으로 나오는 부분 없애기 / 시도를 선택했을 때 그에 해당하는 시군구가 나올 수 있도록 하기 -->
 				<button type="button" class="btn btn-outline-secondary">검색</button>
 				<button type="button" class="btn btn-outline-secondary">초기화</button>		
 			</div>	
-		<!-- select box 만들기 	
-		<div class="container border p-5">
-		<form action="festival"></form>
-		</div> -->	 
-				 	
-			<div class="container border p-5">
-				<form action="festival"></form>
-			</div>
+						
 			<div class="album py-5 bg-body-tertiary">
 				<div class="container">
 					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
