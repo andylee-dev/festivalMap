@@ -46,4 +46,6 @@ public class ExperienceContent {
 	private int    start;
 	private int    end;
 	
+	private String keyword;
+	
 }

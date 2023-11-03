@@ -5,10 +5,10 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
-import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.ExperienceService;
@@ -72,7 +72,8 @@ public class AdminContentController {
 			experience.setEnd(page.getEnd());
 			
 			List<ExperienceContent> listExperience = es.listExperience(experience);
-			
+			List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
+			model.addAttribute("listSmallCode", listSmallCode);
 			model.addAttribute("totalExperience", totalExperience);
 			model.addAttribute("listExperience", listExperience);
 			model.addAttribute("page", page);
@@ -175,23 +176,26 @@ public class AdminContentController {
 		
 	}
 	
-	@RequestMapping(value = "deletedExperience")
-	public String deletedExperience(ExperienceContent experience,String currentPage, Model model) {
+	@GetMapping(value = "listSearch")
+	public String listSearch(ExperienceContent experience,String currentPage, Model model) {
+//	public String listSearch(String big_code,String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
-			int totalExperience = es.totalExperience2();
+			int totalSearchExperience = es.totalSearchExperience();
 			
-			Paging page = new Paging(totalExperience, currentPage);
+			Paging page = new Paging(totalSearchExperience, currentPage);
 			experience.setStart(page.getStart());
 			experience.setEnd(page.getEnd());
 			
-			List<ExperienceContent> listExperience = es.deletedExperience(experience);
+			List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
+			List<ExperienceContent> listSearchExperience = es.listSearchExperience(experience);
 			
-			model.addAttribute("totalExperience", totalExperience);
-			model.addAttribute("listExperience", listExperience);
+			model.addAttribute("totalExperience", totalSearchExperience);
+			model.addAttribute("listExperience", listSearchExperience);
+			model.addAttribute("listSmallCode", listSmallCode);
 			model.addAttribute("page", page);
-
+	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());
 		} finally {

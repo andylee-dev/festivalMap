@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.oracle.s202350104.dao.ExperienceDao;
-import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
 
 import lombok.RequiredArgsConstructor;
@@ -43,17 +42,23 @@ public class ExperienceServiceImpl implements ExperienceService {
 		
 		return experienceDelete;
 	}
-
+	
 	@Override
-	public List<ExperienceContent> deletedExperience(ExperienceContent experience) {
-		List<ExperienceContent> deletedExperience = ed.deletedExperience(experience);
-		return deletedExperience;
+	public int totalSearchExperience() {
+		int totalSearchExperience = ed.totalSearchExperience();
+		return totalSearchExperience;
 	}
 
 	@Override
-	public int totalExperience2() {
-		int totalExperienceCnt = ed.totalExperience2();
-		return totalExperienceCnt;
+	public List<ExperienceContent> listSearchExperience(ExperienceContent experience) {
+		List<ExperienceContent> listSearchExperience = ed.listSearchExperience(experience);
+		return listSearchExperience;
+	}
+
+	@Override
+	public List<ExperienceContent> listSmallCode(ExperienceContent experience) {
+		List<ExperienceContent> listSmallCode = ed.listSmallCode(experience);
+		return listSmallCode;
 	}
 
 }

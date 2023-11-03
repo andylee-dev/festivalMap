@@ -62,30 +62,44 @@ public class ExperienceDaoImpl implements ExperienceDao {
 			// TODO: handle exception
 		}
 		return experienceDelete;
-	}
+	}	
 
 	@Override
-	public List<ExperienceContent> deletedExperience(ExperienceContent experience) {
-		List<ExperienceContent> deletedExperience = null;
-		
+	public int totalSearchExperience() {
+		int totalSearchExperience = 0;
 		try {
-			deletedExperience = session.selectList("shDeletedExpreienceAll",experience);
-			log.info("ExperienceDaoImpl deletedExperience() => " + deletedExperience.size());
-		} catch (Exception e) {
-			log.info("ExperienceDaoImpl deletedExperience() => " + e.getMessage());
-		}
-		return deletedExperience;
-	}
-
-	@Override
-	public int totalExperience2() {
-		int totalExperienceCnt = 0;
-		try {
-			totalExperienceCnt = session.selectOne("shExperienceTotal2");
+			totalSearchExperience = session.selectOne("shExperienceSearchTotal");
+			log.info("ExperienceDaoImpl totalSearchExperience()->"+totalSearchExperience);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return totalExperienceCnt;
+		return totalSearchExperience;
+	}
+
+	@Override
+	public List<ExperienceContent> listSearchExperience(ExperienceContent experience) {
+		List<ExperienceContent> listSearchExperience = null;
+		
+		try {
+			listSearchExperience = session.selectList("shExperienceSearchListAll",experience);
+			log.info("ExperienceDaoImpl listSearchExperience() => " + listSearchExperience.size());
+		} catch (Exception e) {
+			log.info("ExperienceDaoImpl listSearchExperience() => " + e.getMessage());
+		}
+		return listSearchExperience;
+	}
+
+	@Override
+	public List<ExperienceContent> listSmallCode(ExperienceContent experience) {
+		List<ExperienceContent> listSmallCode = null;
+		
+		try {
+			listSmallCode = session.selectList("shListSmallCodeAll",experience);
+			log.info("ExperienceDaoImpl listSmallCode() => " + listSmallCode.size());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return listSmallCode;
 	}
 
 }

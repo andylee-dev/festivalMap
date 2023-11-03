@@ -10,7 +10,8 @@ public interface ExperienceDao {
 	ExperienceContent 			detailExperience(int contentId);
 	int 						totalExperience();
 	int 						experienceDelete(int contentId);
-	List<ExperienceContent> 	deletedExperience(ExperienceContent experience);
-	int 						totalExperience2();
+	int 						totalSearchExperience();
+	List<ExperienceContent> 	listSearchExperience(ExperienceContent experience);
+	List<ExperienceContent> 	listSmallCode(ExperienceContent experience);
 
 }

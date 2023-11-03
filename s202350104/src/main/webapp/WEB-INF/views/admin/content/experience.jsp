@@ -22,16 +22,29 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+						<form action="listSearch" method="get">
+							<input type="text" name="keyword" placeholder="keyword를 입력하세요">
+							<button type="submit">keyword검색</button>
+							<input type="hidden" name="big_code" value="${listExperience[0].big_code}">
+							<input type="hidden" name="currentPage" value="${page.currentPage}">
+							<button type="button" class="btn btn-outline-secondary">초기화</button><p>
+								<select name="is_deleted">
+									<option value="0">활성화</option>
+									<option value="1">비활성화</option>
+								</select>
+								<select name="small_code">
+									<c:forEach var="small" items="${listSmallCode}">
+									<option value="${small.small_code}">${small.content}</option>
+									</c:forEach>
+								</select>
+							</form>
+									
+									
 				</div>		
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
 					<button type="button" class="btn btn-outline-secondary">등록</button>
-					<button onclick="location.href='experience'">등록중인 List</button>
-					<button onclick="location.href='deletedExperience'">삭제 List</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
