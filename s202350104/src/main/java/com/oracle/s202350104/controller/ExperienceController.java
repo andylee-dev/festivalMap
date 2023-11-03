@@ -61,42 +61,49 @@ public class ExperienceController {
 		 * review Logic 구간 
 		 * by 엄민용
 		 * */
-		log.info("controller reviewBoardList Start!!");
-		int bigCode = 0;
+		log.info("ExperienceController review Start!!");
+		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
+		int userId = 1;
+		int countBoard = 0;
 		
-		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
-		
-		// Paging 작업
-		// Parameter board page 추가
-		Paging page = new Paging(countBoard, currentPage);
-		board.setStart(page.getStart());
-		board.setEnd(page.getEnd());
-		board.setContent_id(contentId);
-		log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
-		log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());
-		
-		List<Board> revicewAllList = boardService.getReviewAllList(board); 
-		log.info("controller revicewAllList size : {}", revicewAllList.size());
+		try {
+			// smallCode를 이용해 countBoard를 설정
+			countBoard = boardService.boardCount(smallCode);
+			
+			// Paging 작업
+			// Parameter board page 추가
+			Paging page = new Paging(countBoard, currentPage);
+			board.setStart(page.getStart());
+			board.setEnd(page.getEnd());
+			board.setContent_id(contentId);
+			log.info("ExperienceController reviewBoardList before board.getStart : {} ", board.getStart());
+			log.info("ExperienceController reviewBoardList before board.getEnd : {} ", board.getEnd());
+			log.info("ExperienceController reviewBoardList before board.getEnd : {} ", board.getContent_id());
+			
+			List<Board> revicewAllList = boardService.getReviewAllList(board); 
+			log.info("ExperienceController revicewAllList size : {}", revicewAllList.size());
 
-		log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
+			log.info("ExperienceController reviewBoardList after board.getStart : {} ", board.getStart());
+			log.info("ExperienceController reviewBoardList after board.getEnd : {} ", board.getEnd());
 
-		bigCode = revicewAllList.get(0).getBig_code();
+			bigCode = revicewAllList.get(0).getBig_code();
 
-		log.info("controller reviewBoardList totalBoard : {} ", countBoard);
-		log.info("controller reviewBoardList smallCode : {} ", smallCode);
-		log.info("controller reviewBoardList page : {} ", page);
+			log.info("ExperienceController reviewBoardList totalBoard : {} ", countBoard);
+			log.info("ExperienceController reviewBoardList smallCode : {} ", smallCode);
+			log.info("ExperienceController reviewBoardList page : {} ", page);
 
-		model.addAttribute("reviewBoard", revicewAllList);
-		model.addAttribute("page", page);
-		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
-		
-		log.info("controller reviewBoardList End..");	
+			model.addAttribute("reviewBoard", revicewAllList);
+			model.addAttribute("page", page);
+			model.addAttribute("bigCode", bigCode);
+			model.addAttribute("smallCode", smallCode);
+			model.addAttribute("userId", userId);
+		} catch (Exception e) {
+			log.error("ExperienceController review error : {}", e.getMessage());
+		} finally {
+			log.info("ExperienceController review end..");
+		}
 		
 		return "experience/experienceDetail";
 	}

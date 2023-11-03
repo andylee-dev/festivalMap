@@ -68,7 +68,7 @@
 		<c:set var="num" value="${page.total-page.start+1 }"/>
 		<div class="container border p-5">
 		    <div class="text-right"> <!-- 버튼을 오른쪽 정렬하는 부분 -->
-		        <button class="btn btn-primary" onclick="location.href='../boardInsertForm?userId=1&bigCode=${bigCode}&smallCode=${smallCode}'">글쓰기</button>
+		        <button class="btn btn-primary" onclick="location.href='../boardInsertForm?userId=1&bigCode=${bigCode}&smallCode=${smallCode}&contentId=${spot.content_id}'">글쓰기</button>
 		    </div>
 			<table class="table">
 				<tr class="table-primary text-center">
