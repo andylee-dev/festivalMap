@@ -14,8 +14,8 @@
 		<div align="center">
 			<h1>로 그 인</h1>
 			<div class="container border p-5">
-				<form action="/login" method="post">
-					아이디 <input type="text" name="id"><p>
+				<form action="/auth" method="post">
+					아이디 <input type="text" name="username"><p>
 					비밀번호 <input type="password" name="password"><p>
 					<a href="idSearch">아이디 찾기</a> / <a href="passwordSearch">비밀번호 찾기</a><p>
 					아직 회원이 아니세요? <a href="join">회원가입 하기</a><p>
