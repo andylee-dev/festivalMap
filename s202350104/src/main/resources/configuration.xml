@@ -30,6 +30,7 @@
 		<typeAlias alias="PointHistory"		 type="com.oracle.s202350104.model.PointHistory"/>
 		<typeAlias alias="Areas"			 type="com.oracle.s202350104.model.Areas"/>
 		<typeAlias alias="CommonCodes"		 type="com.oracle.s202350104.model.CommonCodes"/>
+		<typeAlias alias="Contents"		 	 type="com.oracle.s202350104.model.Contents"/>
 	</typeAliases>
 	
 	
