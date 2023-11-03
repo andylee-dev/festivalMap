@@ -22,7 +22,7 @@
         
       </update>
       
-	 <insert id="writePoint" parameterType="Point">
+	 <insert id="writePoint" parameterType="point">
     <selectKey keyProperty="id" resultType="int" order="AFTER">
         SELECT point_seq.NEXTVAL FROM dual
     </selectKey>
