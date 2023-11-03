@@ -22,7 +22,9 @@ public class BoardServiceImpl implements BoardService {
 	// paging 처리용
 	@Override
 	public int boardCount(int smallCode) {
+		
 		int countBoard = boardDao.boardCount(smallCode);
+		
 		return countBoard;
 	}
 
@@ -50,19 +52,10 @@ public class BoardServiceImpl implements BoardService {
 	// 자유게시판
 	@Override
 	public List<Board> getFreeAllList(Board board) {
-		log.info("boardService getFreeAllList start!!");
 
-		List<Board> freeAllList = null;
-
-		try {
-			freeAllList = boardDao.getFreeAllList(board);
-			log.info("boardService freeAllList size : {}", freeAllList.size());
-
-		} catch (Exception e) {
-			log.error("boardService getFreeAllList Exception : {}", e.getMessage());
-		} finally {
-			log.info("boardService getFreeAllList End..");
-		}
+		List<Board> freeAllList = boardDao.getFreeAllList(board);
+		
+		log.info("boardService freeAllList size : {}", freeAllList.size());
 
 		return freeAllList;
 	}
@@ -89,18 +82,9 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> getReviewAllList(Board board) {
 
-		log.info("boardService getReviewAllList start!!");
-
-		List<Board> reviewAllList = null;
-
-		try {
-			reviewAllList = boardDao.getReviewAllList(board);  
-			log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
-		} catch (Exception e) {
-			log.error("boardService getReviewAllList Exception : {}", e.getMessage());
-		} finally {
-			log.info("boardService getReviewAllList End..");
-		}
+		List<Board> reviewAllList = boardDao.getReviewAllList(board); 
+		
+		log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
 
 		return reviewAllList;
 	}

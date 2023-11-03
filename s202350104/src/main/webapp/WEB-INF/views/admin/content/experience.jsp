@@ -26,7 +26,6 @@
 							<input type="text" name="keyword" placeholder="keyword를 입력하세요">
 							<button type="submit">keyword검색</button>
 							<input type="hidden" name="big_code" value="15">
-							<input type="hidden" name="currentPage" value="${page.currentPage}">
 							<button type="button" class="btn btn-outline-secondary">초기화</button><p>
 								<select name="is_deleted">
 									<option value="2">전체</option>

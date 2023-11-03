@@ -79,7 +79,7 @@ public class QnaListDaoImpl implements QnaListDao {
 		}catch (Exception e) {
 			log.info("QnaListDaoImpl selectqna() => " + e.getMessage());
 		}
-		return qna;
+		return qnaselect;
 	}
 
 	@Override

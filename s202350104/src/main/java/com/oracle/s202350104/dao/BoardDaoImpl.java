@@ -134,24 +134,28 @@ public class BoardDaoImpl implements BoardDao {
 		int contentId = board.getContent_id();
 		List<Board> reviewAllList = null;
 		
-		// contentId or userId로 출력 할 review handling
-		if (contentId > 1 || userId > 1) {
-			reviewAllList = session.selectList("reviewAllList", board);
-			
-			log.info("BoardDao reviewAllList size : {}", reviewAllList.size());
-			log.info("BoardDao reviewAllList content : {}", reviewAllList.get(0).getContent());
+		try {
+			// contentId or userId로 출력 할 review handling
+			if (contentId > 1 || userId > 1) {
+				reviewAllList = session.selectList("reviewAllList", board);
+				
+				log.info("BoardDao reviewAllList size : {}", reviewAllList.size());
+				log.info("BoardDao reviewAllList content : {}", reviewAllList.get(0).getContent());
 
-		} else {
-			reviewAllList = session.selectList("reviewAllList2", board);
-			
-			log.info("BoardDao reviewAllList2 size : {}", reviewAllList.size());
-			log.info("BoardDao reviewAllList2 content : {}", reviewAllList.get(0).getContent());
+			} else {
+				reviewAllList = session.selectList("reviewAllList2", board);
+				
+				log.info("BoardDao reviewAllList2 size : {}", reviewAllList.size());
+				log.info("BoardDao reviewAllList2 content : {}", reviewAllList.get(0).getContent());
+			}
+
+		} catch (Exception e) {
+			log.error("BoardDao getReviewAllList Exception : {}", e.getMessage());
 		}
-
+		
 		log.info("BoardDao getReviewAllList End..");
 		
 		return reviewAllList;
-
 	}
 	
 	// 통합게시판 상세정보, DB연동

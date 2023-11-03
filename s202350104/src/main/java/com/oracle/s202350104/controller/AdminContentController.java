@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
@@ -200,7 +201,7 @@ public class AdminContentController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
-			int totalSearchExperience = es.totalSearchExperience();
+			int totalSearchExperience = es.totalSearchExperience(experience);
 			
 			Paging page = new Paging(totalSearchExperience, currentPage);
 			experience.setStart(page.getStart());

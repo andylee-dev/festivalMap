@@ -66,8 +66,8 @@
 
 	</div>
 
-
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/components/Footer.jsp" %>	
+	<%@ include file="/WEB-INF/components/Footer.jsp" %>
+		
 </body>
 </html>

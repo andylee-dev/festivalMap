@@ -32,6 +32,29 @@
 	// 취소 시 이전페이지 이동
 	window.history.back();
 </script>
+
+<script type="text/javascript">
+	function showPopUp() {
+	
+		//창 크기 지정
+		var width = 800;
+		var height = 600;
+		
+		//pc화면기준 가운데 정렬
+		var left = (window.screen.width / 2) - (width/2);
+		var top = (window.screen.height / 4);
+		
+		//윈도우 속성 지정
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+		
+		//연결하고싶은url
+		const url = "contentListAll"
+		
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		window.open(url, "contentList popup", windowStatus);
+	}
+	
+</script>
 	
 </head>
 <body>
@@ -43,7 +66,8 @@
 				<input type="text" class="form-control" id="course_title" name="course_title" required="required">
 			</div>
 			<div class="form-group">
-				<label for="img1">사진등록(업로드 기능 추가 필요~~~~)ㅠㅠ......</label><p><p><p><p>
+				<label for="img1">코스 등록</label>
+				<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 추가</button>
 			
 			</div>
 			<div class="form-group">
@@ -55,7 +79,7 @@
 				<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
 			</div>
 			<div class="form-group">	
-				<label for="tag">태그 등록~~~~(수정 필요)</label><p><p><p><p>
+				<label for="tag">태그 등록~~~~(기능 추가 필요)</label><p><p><p><p>
 			
 			</div>
 			<div class="text-center">
