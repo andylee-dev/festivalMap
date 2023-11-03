@@ -115,6 +115,8 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="/admin">관리자홈</a></li>
 						</ul></li>
+					<%@ include file="/WEB-INF/components/MemberCheck.jsp" %>
+					<%  String loggedId = username; %>						
 				</ul>
 			</div>
 		</div>
