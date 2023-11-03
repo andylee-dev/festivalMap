@@ -24,7 +24,7 @@
 				<input type="radio" name="gender" value="1">여자<p>
 			생년월일 <input type="date" name="birthday"><p>
 			전화번호 <input type="tel" name="phone_num" placeholder="010 - 0000 - 0000"
-					pattern="\d{2,3}-\d{3,4}-d{4}"><p>
+					pattern="\d{2,3}-\d{3,4}-\d{4}"><p>
 			이메일 <input type="email" name="email"><p> <!-- 이메일 도메인 주소를 select할 수 있도록 바꾸기 -->
 			주소 <!-- 우편번호 검색 api 및 기본주소 자동입력 -->
 				<input type="text" name="address"><p>

@@ -32,9 +32,7 @@ public class PointServiceImpl implements PointService {
 		
 
 	}
-    public Point getPointById(int id) {
-        return pd.getPointById(id); 
-    }
+ 
 
     public void updatePoint(Point point) {
         pd.updatePoint(point); 

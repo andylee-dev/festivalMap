@@ -59,10 +59,37 @@ public class UserController {
 		return "user/myPage/myQnaDetail";
 	}
 
-	@RequestMapping(value = "myPage/qnaForm")
-	public String qnaForm() {
-		
+	@RequestMapping(value = "myPage/insertQnaForm")
+	public String insertQnaForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "qnaInsert", "start");
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "qnaInsert", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "qnaInsert", "end");
+		}
 		return "user/myPage/myQnaForm";
+	}
+	
+	@RequestMapping(value = "myPage/insertQnaResult")
+	public String insertQnaResult(Qna qna, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int result = 0;
+		try {
+			log.info("[{}]{}:{}",transactionId, "qnaInsertResult", "start");
+			result = qs.insertQna(qna);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "qnaInsertResult", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "qnaInsertResult", "end");
+		}
+		if(result > 0) {
+			return "redirect:qnalist";	
+		}else {
+			model.addAttribute("msg","등록에 실패하였습니다.");
+			return "forward:insertQnaForm";
+		}
 	}
 	
 	@RequestMapping(value = "myPage/qnaList")

@@ -27,7 +27,7 @@
 			
 			<!-- Section3: Table -->		
 			<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary" onclick="location.href='myQnaForm'">등록</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertQnaForm'">등록</button>
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>

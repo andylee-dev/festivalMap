@@ -84,6 +84,8 @@
 							<li><a class="dropdown-item" href="/login">로그인</a></li>
 							<li><a class="dropdown-item" href="/user/idSearch">아이디찾기</a></li>
 							<li><a class="dropdown-item" href="/user/passwordSearch">비밀번호찾기</a></li>
+							<li><a class="dropdown-item" href="/idSearch">아이디찾기</a></li>
+							<li><a class="dropdown-item" href="/passwordSearch">비밀번호찾기</a></li>
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
