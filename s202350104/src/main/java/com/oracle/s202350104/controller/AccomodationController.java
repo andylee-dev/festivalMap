@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.service.AccomodationService;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.Paging;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AccomodationController {
 	
 	private final AccomodationService as;
+	private final AreaService ars;
 	
 	@GetMapping(value = "/accomodation")
 	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
@@ -34,9 +37,11 @@ public class AccomodationController {
 			accomodation.setEnd(page.getEnd());
 			
 			List<AccomodationContent> listAccomodation = as.listAccomodation(accomodation);
+			List<Areas> listAreas = ars.listPoint();
 			
 			model.addAttribute("totalAccomodation", totalAccomodation);
 			model.addAttribute("listAccomodation", listAccomodation);
+			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "accomodation", e.getMessage());
