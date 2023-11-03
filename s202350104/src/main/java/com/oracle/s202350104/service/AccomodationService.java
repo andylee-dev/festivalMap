@@ -10,7 +10,8 @@ public interface AccomodationService {
 
 	List<AccomodationContent>  listAccomodation(AccomodationContent accomodation);
 	AccomodationContent        detailAccomodation(int contentId);
-	int                         totalAccomodation();
+	int                        totalAccomodation();
+	int                        accomodationDelete(int contentId);
 
 	
 

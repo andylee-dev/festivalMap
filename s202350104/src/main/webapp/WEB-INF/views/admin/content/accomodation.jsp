@@ -53,8 +53,8 @@
 						 				<c:if test="${accomodation.status == 0 }">승인대기</c:if>
 										<c:if test="${accomodation.status == 1 }">승인완료</c:if>
 									</td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>					
+									<td><input type="button" value="수정"></td>		
+									<td><input type="button" value="삭제" onclick="location.href='accomodationDelete?contentId=${accomodation.content_id}'"></td>
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 						</c:forEach>

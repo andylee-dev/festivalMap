@@ -36,6 +36,8 @@
 		
 	</select>
 
-
+	<delete id="accomodationDelete" parameterType="int">
+		delete from accomodation where content_id=#{content_id}
+	</delete>
 
 </mapper>

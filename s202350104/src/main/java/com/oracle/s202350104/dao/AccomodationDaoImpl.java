@@ -59,4 +59,15 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		}
 		return totAccomodationCount;
 	}
+
+	@Override
+	public int accomodationDelete(int contentId) {
+		int accomodationDelete = 0;
+		try {
+			accomodationDelete = session.delete("accomodationDelete",contentId);
+		} catch (Exception e) {
+		}
+		
+		return accomodationDelete;
+	}
 }
