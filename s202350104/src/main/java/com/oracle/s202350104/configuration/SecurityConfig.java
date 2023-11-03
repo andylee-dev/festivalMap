@@ -1,5 +1,6 @@
 package com.oracle.s202350104.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,12 +19,12 @@ import lombok.extern.slf4j.Slf4j;
  * - 관리자는 Server기반 인증
  * - 일반 유저는 Token기반 인증
  */
-@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 @Slf4j
 public class SecurityConfig {
 
+	@Autowired
 	private  CustomAuthenticationProvider authProvider;
 
 	/**
