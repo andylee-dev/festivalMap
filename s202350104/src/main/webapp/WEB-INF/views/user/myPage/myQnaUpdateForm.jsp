@@ -18,7 +18,7 @@
 				</div>
 				<div class="container border p-4 mb-4">
 					<c:if test="${msg != null}">${msg}</c:if>
-				<form action="updateQnaResult" method="post">
+				<form action="updateQnaForm" method="post">
 					<table class="table table-bordered">
 						<tr class="table-primary">
 						<th scope="col">1:1문의</th>
