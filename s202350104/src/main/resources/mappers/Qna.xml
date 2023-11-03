@@ -32,8 +32,8 @@
    </select>
    
     <insert id="dhQnaInsert" parameterType="Qna">
-   INSERT INTO 	qna
-   VALUES(#{user_id},#{id},#{question_title},#{question_content},#{answer_title},#{answer_content},#{created_at},#{updated_at})
+   INSERT INTO 	qna(user_id, id, question_title, question_content, created_at)
+   VALUES(#{user_id},qna_id_seq.nextval,#{question_title},#{question_content},sysdate)
    </insert>
    
 </mapper>   
