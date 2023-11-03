@@ -22,7 +22,11 @@
 	</select>
 	
 	<select id="nhFestivalsDetail" resultType="FestivalsContent" parameterType="int">
-		SELECT *
+		SELECT f.*, c.*,
+			(SELECT content FROM CommonCodes cc
+			 WHERE c.big_code = cc.big_code AND cc.small_code = 999) AS bcode_content,
+			(SELECT content FROM CommonCodes cc
+			 WHERE c.big_code = cc.big_code AND c.small_code = cc.small_code) AS scode_content
 		FROM  festivals f, contents c
 		WHERE f.content_id = c.id
 		AND   f.content_id = #{content_id}

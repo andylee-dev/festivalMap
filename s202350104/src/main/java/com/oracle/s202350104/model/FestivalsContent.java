@@ -50,7 +50,8 @@ public class FestivalsContent {
 	private int    end;
 	
 	// join용
-	private String area_content;
-	private String sigungu_content;
-	
+	private String area_content;	// 시도
+	private String sigungu_content;	// 시군구
+	private String bcode_content;	// 대분류
+	private String scode_content;	// 소분류
 }
