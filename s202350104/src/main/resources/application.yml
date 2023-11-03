@@ -12,9 +12,9 @@ spring:
 # Oracle Connect
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@172.30.1.98:1521/xe
-    #url: jdbc:oracle:thin:@localhost:1521/xe
-    username: s202350104
+    #url: jdbc:oracle:thin:@172.30.1.98:1521/xe
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: scottjpa
     password: tiger
     
 # JPA Setting
