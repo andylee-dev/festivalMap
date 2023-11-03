@@ -127,7 +127,9 @@ public class UserController {
 		}	
 			if(result > 0) {
 				return "redirect:qnaList";	
-			}else {
+			} else {
+				model.addAttribute("user_id", qna.getUser_id());
+				model.addAttribute("id", qna.getId());
 				model.addAttribute("msg","등록에 실패하였습니다.");	
 			return "forward:updateQnaForm";
 			}
