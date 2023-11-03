@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Content;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.PagingList;
@@ -73,5 +74,13 @@ public class AdminCourseController {
 	public String courseWriteForm(Model model) {
 		
 		return "course/courseInsertForm";
+	}
+	
+	
+	@RequestMapping(value = "/contentListAll")
+	public String contentListAll(Content content, String currentPage, Model model) {
+		System.out.println("AdminCourseController contentListAll start...");
+		
+		return "content/contentListAll";
 	}
 }
