@@ -3,17 +3,13 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
-import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.QnaListService;
-import com.oracle.s202350104.service.TagsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +43,6 @@ public class UserController {
 		return "user/myPage/myTag";
 	}
 
-
 	@RequestMapping(value = "myPage/qnaDetail")
 	public String qnaDetail(int user_id,int id, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -63,7 +58,6 @@ public class UserController {
 		}		
 		return "user/myPage/myQnaDetail";
 	}
-
 	@RequestMapping(value = "myPage/insertQnaForm")
 	public String insertQnaForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -76,7 +70,7 @@ public class UserController {
 		}
 		return "user/myPage/myQnaInsertForm";
 	}
-	
+
 	@RequestMapping(value = "myPage/insertQnaResult")
 	public String insertQnaResult(Qna qna, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -95,6 +89,12 @@ public class UserController {
 			model.addAttribute("msg","등록에 실패하였습니다.");
 			return "forward:insertQnaForm";
 		}
+	}
+
+	@RequestMapping(value = "myPage/qnaForm")
+	public String qnaForm() {
+		
+		return "user/myPage/myQnaForm";
 	}
 	
 	@RequestMapping(value = "myPage/qnaList")
@@ -121,6 +121,13 @@ public class UserController {
 			log.info("[{}]{}:{}",transactionId, "qnaList", "end");
 		}	
 		return "user/myPage/myQnaList";
+	}
+	
+
+	
+	@RequestMapping(value="bizPage")
+	public String bizPage() {
+		return "user/bizPage/index";
 	}
 
 }

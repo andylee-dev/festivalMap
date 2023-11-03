@@ -11,9 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import org.springframework.security.web.SecurityFilterChain;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * TODO : 인증 방식 두 개 사용해보기.
  * - 관리자는 Server기반 인증
@@ -21,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @EnableWebSecurity
 @Configuration
-@Slf4j
 public class SecurityConfig {
 
 	@Autowired
