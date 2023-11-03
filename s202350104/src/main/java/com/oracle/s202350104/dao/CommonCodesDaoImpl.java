@@ -14,12 +14,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommonCodesDaoImpl implements CommonCodesDao {
 	private final SqlSession session;
+	
+	@Override
+	public List<CommonCodes> listCommonCodes() {
+		List<CommonCodes> listCommonCodes = null;
+		try {
+			listCommonCodes = session.selectList("CommonCodesListAll");
+			log.info("listCommonCodes.size" + listCommonCodes.size());
+		} catch(Exception e) {
+			log.info("{}",e.getMessage());
+		}
+		return listCommonCodes;
+	}
 
+	
+	
 	@Override
 	public List<CommonCodes> listCommonCodes(CommonCodes commonCode) {
 		List<CommonCodes> listCommonCodes = null;
 		try {
-			listCommonCodes = session.selectList("CommonCodesListAll", commonCode);
+			listCommonCodes = session.selectList("joCommonCodesListAll", commonCode);
 			log.info("listCommonCodes.size" + listCommonCodes.size());
 		} catch(Exception e) {
 			log.info("{}",e.getMessage());
@@ -39,4 +53,5 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 		return totalCommonCode;
 	}
 
+	
 }

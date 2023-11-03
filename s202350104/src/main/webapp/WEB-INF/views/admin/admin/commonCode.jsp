@@ -23,6 +23,15 @@
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
 					<h1 class="border">검색폼</h1>
+					<select name="commonCode">
+						<option value="">전체</option>
+						<%-- <c:forEach var="common" items="${listCommon}"> --%>
+						<c:forEach var="common" items="${listCommon}">
+							<c:if test="${common.small_code == 999}">
+							<option value="${common.big_code}">${common.content}</option>
+							</c:if>
+						</c:forEach>
+					</select>
 					<button type="button" class="btn btn-outline-secondary">검색</button>
 					<button type="button" class="btn btn-outline-secondary">초기화</button>
 				</div>		

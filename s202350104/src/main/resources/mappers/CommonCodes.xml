@@ -2,17 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.oracle.s202350104.AreasMapper">
+<mapper namespace="com.oracle.s202350104.CommonCodesMapper">
 	<select id="userListAll" resultType="CommonCodes">
 		SELECT * FROM commoncodes
 	</select>
-	
+
+	<select id="CommonCodesListAll" resultType="CommonCodes">
+		SELECT * FROM commoncodes
+	</select>
+		
 	<select id="joCommonCodeTotal" resultType="int">
 		SELECT count(*)
 		FROM   commoncodes
 	</select>
 	
-	<select id="CommonCodesListAll" resultType="CommonCodes" parameterType="CommonCodes">
+	<select id="joCommonCodesListAll" resultType="CommonCodes" parameterType="CommonCodes">
 		SELECT *
 		FROM
     		(SELECT ROWNUM rn, commoncodes.*

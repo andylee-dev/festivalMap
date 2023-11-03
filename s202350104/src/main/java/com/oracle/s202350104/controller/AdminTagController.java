@@ -212,7 +212,7 @@ public class AdminTagController {
 	  }
 	  
 	  @ResponseBody
-	  @RequestMapping(value = "/deleteTags")
+	  @RequestMapping(value = "deleteTags")
 	  public String deleteTags(Tags tags) {
 		  int result = ts.deleteTags(tags.getId());
 		  String resultStr = Integer.toString(result);

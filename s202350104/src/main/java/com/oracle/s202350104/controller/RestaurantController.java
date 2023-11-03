@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Board;
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class RestaurantController {
+	
 	private final RestaurantService rs;
 	private final AreaService as;
 	private final BoardService boardService;
@@ -55,14 +58,44 @@ public class RestaurantController {
 		return "restaurant/restaurantList";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "restaurant/getSigungu")
+	public List<Areas> getSigungu() {
+		UUID transactionId = UUID.randomUUID();
+		
+		List<Areas> listAreas = null;
+		try {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas", "Start");
+			listAreas = as.listPoint();
+					
+		} catch (Exception e) {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas Exception", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas", "End");
+		}
+		
+		return listAreas;
+	}
+	
+	
+	
 	@GetMapping(value= "/restaurant/detail")
 	public String restuarntDetail(int contentId, String currentPage, Board board, Model model) {
-		log.info("RestaurantController detailRestaurant Start...");
+		UUID transactionId = UUID.randomUUID();
 		
-		RestaurantsContent restaurant = rs.detailRestaurant(contentId);
+		try {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "Start");
+			RestaurantsContent restaurant = rs.detailRestaurant(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("restaurant", restaurant);
+		} catch (Exception e) {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail Exception", e.getMessage());
+		}
+		log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "End");
+				
 		
-		model.addAttribute("contentId", contentId);
-		model.addAttribute("restaurant", restaurant);
 		
 		/*
 		 * review Logic 구간 

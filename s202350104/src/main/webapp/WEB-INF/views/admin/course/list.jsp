@@ -30,7 +30,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
+					<button onclick="location.href='courseInsertForm?course_id=${course.course_id}'" type="button" class="btn btn-outline-secondary">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>

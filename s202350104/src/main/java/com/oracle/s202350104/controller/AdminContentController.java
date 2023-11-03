@@ -156,6 +156,15 @@ public class AdminContentController {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
 			}
 			return "admin/content/accomodation";
+			
+	}
+	
+	@RequestMapping(value = "accomodationDelete")
+	public String accomodationDelete(int contentId, Model model) {
+		int accomodationDelete = as.accomodationDelete(contentId);
+		
+		return "redirect:accomodation";
+		
 	}
 	
 	@RequestMapping(value = "experienceDelete")

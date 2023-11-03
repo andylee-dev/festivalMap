@@ -49,4 +49,12 @@ public class AccomodationServiceImpl implements AccomodationService {
 		return totalAccomodation;
 	}
 
+	@Override
+	public int accomodationDelete(int contentId) {
+		int accomodationDelete = 0;
+		accomodationDelete = ad.accomodationDelete(contentId);
+		
+		return accomodationDelete;
+	}
+
 }
