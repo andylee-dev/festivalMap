@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>컨텐츠 태그</title>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -27,7 +27,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertContentTagForm'">추가</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>

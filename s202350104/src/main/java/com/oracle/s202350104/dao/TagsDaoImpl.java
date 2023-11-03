@@ -165,5 +165,16 @@ public class TagsDaoImpl implements TagsDao {
 		}
 		return result;
 	}
+
+	@Override
+	public List<Tags> searchContentTags(int contentId) {
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhContentTagsSearch", contentId);
+		} catch (Exception e) {
+			log.info("TagsDaoImpl searchContentTags() => " + e.getMessage());
+		}
+		return listTags;
+	}
 		
 }

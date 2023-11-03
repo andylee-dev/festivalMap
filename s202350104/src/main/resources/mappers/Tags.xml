@@ -101,4 +101,8 @@
 	<delete id="nhTagsDelete" parameterType="int">
 		DELETE Tags WHERE id = #{id}
 	</delete>
+	
+	<select id="nhContentTagsSearch" parameterType="int" resultType="Tags">
+		SELECT * FROM ContentTags WHERE content_id = #{contentId}
+	</select>
 </mapper>

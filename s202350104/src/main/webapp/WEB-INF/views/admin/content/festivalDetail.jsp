@@ -127,14 +127,14 @@
 					</table>
 					<div align="center">
 						<c:if test="${festival.status == 0}">
-							<button type="button" class="btn btn-outline-secondary">목록</button>
 							<button type="button" class="btn btn-outline-secondary">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
+							<button type="button" class="btn btn-outline-secondary">목록</button>
 						</c:if>
 						<c:if test="${festival.status == 1}">
-							<button type="button" class="btn btn-outline-secondary">목록</button>
 							<button type="button" class="btn btn-outline-secondary">수정</button>
 							<button type="button" class="btn btn-outline-secondary">삭제</button>
+							<button type="button" class="btn btn-outline-secondary">목록</button>
 						</c:if>
 					</div>
 				</div>		

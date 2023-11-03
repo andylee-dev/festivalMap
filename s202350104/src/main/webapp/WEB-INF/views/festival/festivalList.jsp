@@ -62,13 +62,7 @@
 					</c:if>
 				</c:forEach>
 			</select>
-			<select name="sigungu" id="sigungu_list_select">
-			<%-- 	<c:forEach var="areas" items="${listAreas}">
-					<c:if test="${areas.sigungu != 999}">
-						<option value="${areas.sigungu}">${areas.content}</option>
-					</c:if>
-				</c:forEach> --%>
-			</select>
+			<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
 			<!-- 빈칸으로 나오는 부분 없애기 / 시도를 선택했을 때 그에 해당하는 시군구가 나올 수 있도록 하기 -->
 			<button type="button" class="btn btn-outline-secondary">검색</button>
 			<button type="button" class="btn btn-outline-secondary">초기화</button>
