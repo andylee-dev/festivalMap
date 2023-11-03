@@ -9,12 +9,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>숙박 상세</title>
-		<style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
+		
 </head>
 	</head>
 <body>
@@ -53,6 +48,7 @@
 						<c:when test="${accomodation.is_parking == 1}">N</c:when>
 					</c:choose>
 	 	 </ul>
+
 		</div>
 		
 		<!-- review test -->
@@ -110,38 +106,27 @@
 		</div>
 				
 		<h2> 지도 </h2>
-		 <div id="map"></div>
+		 <div id="map" style="width:500px;height:400px;"></div>
+		     
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
+			<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(${accomodation.mapx}, ${accomodation.mapy}), // 지도의 중심좌표
+		        level: 3, // 지도의 확대 레벨
+		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+		    }; 
 
-    <!-- JavaScript -->
-    <script>
-        function initMap() {
-            // Thymeleaf를 이용하여 서버에서 전달한 값을 JavaScript 변수에 할당
-            var mapx = '${accomodation.mapx}'
-            var mapy = '${accomodation.mapy}'
+		// 지도를 생성한다 
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-            // 위도와 경도 값 생성
-            var myLatLng = { lat: parseFloat(mapx), lng: parseFloat(mapy) };
+		// 지도에 마커를 생성하고 표시한다
+		var marker = new kakao.maps.Marker({
+		    position: new kakao.maps.LatLng(${accomodation.mapx}, ${accomodation.mapy}), // 마커의 좌표
+		    map: map // 마커를 표시할 지도 객체
+		});
 
-            // 지도 생성
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: myLatLng
-            });
-
-            // 마커 생성
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: '${accomodation.title}'
-            });
-        }
-    </script>
-
-    <!-- Google Maps JavaScript API 로드 -->
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsb_kBmsfPKKOkpIcZA6j9KiZMFnxKcnY&callback=initMap">
-    </script>
-    
+	</script>
     <div align="center">
 			<button onclick="location.href='../accomodation'">목록</button>
 		</div>
