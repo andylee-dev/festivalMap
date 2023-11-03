@@ -33,9 +33,32 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public int insertUser(Users user) {
 		int result = session.insert("insertUser",user);
-		log.info("pw"+user.getPassword());
-		log.info("result=>{}",result);
 		return result;
 	}
 
+	@Override
+	public Users getUserByEmail(String email) {
+		Users user = null;
+		user = session.selectOne("getUserByEmail",email);
+		return user;
+	}
+
+	@Override
+	public Users getUserById(int id) {
+		Users user = null;
+		user = session.selectOne("getUserById", id);
+		return user;
+	}
+
+	@Override
+	public int updateUser(Users user) {
+		int result = 0;
+		return result;
+	}
+
+	@Override
+	public int deleteUser(int id) {
+		int result = 0;
+		return result;
+	}	
 }

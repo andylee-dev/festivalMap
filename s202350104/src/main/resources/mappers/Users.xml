@@ -14,7 +14,7 @@
 			name,password,nickname,birthday,
 			phone_num,email,address,status,
 			point,gender,created_at,updated_at,
-			file_name,is_deleted
+			file_name,is_deleted	
 		) 
 		VALUES (
 			#{id}, #{big_code}, #{small_code}, 
@@ -23,5 +23,15 @@
 			#{point}, #{gender}, sysdate, sysdate, 
 			#{file_name}, 0
 		)
-   </insert>
+	</insert>
+    <select id="getUserByEmail" resultType="Users">
+        SELECT *
+        FROM Users
+        WHERE email = #{email}
+    </select>
+    <select id="getUserById" resultType="Users">
+        SELECT *
+        FROM Users
+        WHERE id = #{id}
+    </select>
 </mapper>

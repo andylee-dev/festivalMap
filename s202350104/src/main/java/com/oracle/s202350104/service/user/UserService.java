@@ -9,5 +9,7 @@ public interface UserService {
 	List<Users> listUsers();
 	Users findUser();
 	int signUp(Users user);
+	Users getUserByEmail(String email);
+	Users getUserById(int id);
 }
 	

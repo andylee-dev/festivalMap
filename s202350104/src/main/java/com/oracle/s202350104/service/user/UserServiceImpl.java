@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.oracle.s202350104.configuration.AppConfig;
 import com.oracle.s202350104.dao.UserDao;
 import com.oracle.s202350104.model.Users;
 
@@ -19,16 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserServiceImpl implements UserService {
 	private final UserDao ud;
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final AppConfig appConfig;
 	
 	@Override
 	public List<Users> listUsers() {
 		List<Users> listUsers = ud.listUsers();
-		
 		if(listUsers == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 리스트가 존재하지 않습니다.");
 		}
-		
 		return listUsers;
 	}
 
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
 			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "signUp", "start");
 			if (!user.getEmail().equals("")) {
 				/* 비밀번호 암호화*/
-// 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+// 				user.setPassword(appConfig.encodePwd().encode(user.getPassword()));
 				user.setBirthday(user.getBirthday().replace("-", ""));
 				result = ud.insertUser(user);
 			} else {
@@ -57,6 +56,20 @@ public class UserServiceImpl implements UserService {
 			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "signUp", "end");
 		}
 		return result;
+	}
+
+	@Override
+	public Users getUserByEmail(String email) {
+		Users user = null;
+		user = ud.getUserByEmail(email);
+		return user;
+	}
+
+	@Override
+	public Users getUserById(int id) {
+		Users user = null;
+		user = ud.getUserById(id);
+		return user;
 	}
 
 }
