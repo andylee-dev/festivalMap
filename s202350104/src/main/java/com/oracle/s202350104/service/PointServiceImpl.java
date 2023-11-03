@@ -39,6 +39,12 @@ public class PointServiceImpl implements PointService {
     public void updatePoint(Point point) {
         pd.updatePoint(point); 
     }
+    
+	@Override
+	public void writePoint(Point point) {
+		pd.writePoint(point);
+		
+	}
 	
 		
 	}

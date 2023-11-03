@@ -12,6 +12,8 @@ public interface PointDao {
 
 	void                updatePoint(Point point);
 
+	void                writePoint(Point point);
+
 
 	
 

@@ -48,7 +48,7 @@
 								<td>${accomodation.area} ${accomodation.sigungu}</td>
 								<td>${accomodation.title}</td>
 								<td>${accomodation.address}</td>
-								<td><fmt:formatDate value="${accomodations.created_at}" type="date" pattern="YY/MM/dd"/></td>
+								<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td>
 						 				<c:if test="${accomodation.status == 0 }">승인대기</c:if>
 										<c:if test="${accomodation.status == 1 }">승인완료</c:if>

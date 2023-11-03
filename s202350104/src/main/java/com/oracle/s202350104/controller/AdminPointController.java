@@ -45,5 +45,19 @@ public class AdminPointController {
         ps.updatePoint(point);
         return "redirect:/admin/point/point";
     }
+	
+	@GetMapping(value="/admin/point/writeFormPoint")
+	public String writeFormPoint(Point point, Model model) {
+		
+		model.addAttribute("Point", point);
+		
+		return "admin/point/writeFormPoint";
+	}
+	
+	@PostMapping("/admin/point/writePoint")
+	public String writePoint(Point point) {
+	    ps.writePoint(point);
+	    return "redirect:/admin/point/point";
+	}
 
 }

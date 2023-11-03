@@ -13,7 +13,7 @@
 	<h1>포인트관리</h1>
 	<div class="border p-3 m-3">
 				<button type="button" class="btn btn-outline-secondary" 
-				onclick="location.href='writeFormPoint?Id=${point.id}'">등록</button>
+				onclick="location.href='writeFormPoint'">등록</button>
 								
 				<table class="table table-striped table-sm">
 					<thead>
