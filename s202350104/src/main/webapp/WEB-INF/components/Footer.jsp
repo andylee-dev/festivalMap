@@ -6,9 +6,8 @@
 		<h1>Footer</h1>
 	</div>
 	<!-- Banner test -->
-
 	<div style="display: flex; justify-content: center; align-items: center;">
-		<a href="/mainBanner">
+		<a href="${bannerUrl }">
 			<img src="../image/sigkor.jpg" class="card-img-top" alt="한국관광공사CI" style="width: 120px; height: auto;">
 		</a>	
 	</div>

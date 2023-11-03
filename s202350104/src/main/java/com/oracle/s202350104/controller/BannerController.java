@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BannerController {
 
 	private final BannerService bannerService;
-
+	
 	@RequestMapping(value = "/banner")
 	public String bannerList(Model model) {
 
@@ -29,7 +29,7 @@ public class BannerController {
 		return "/banner/bannerList";
 	}
 
-	@RequestMapping(value = "/mainBanner")
+	@RequestMapping(value = "/home")
 	public String mainBanner(Model model) {
 
 		String bannerUrl = "";
@@ -42,6 +42,6 @@ public class BannerController {
 		model.addAttribute("bannerUrl", bannerUrl);
 		model.addAttribute("banner", bannerMain);
 
-		return "redirect:/";
+		return "home";
 	}
 }
