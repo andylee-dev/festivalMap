@@ -12,6 +12,8 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<h1>회원 포인트 내역</h1>
 		<div class="border p-3 m-3">
+				<button type="button" class="btn btn-outline-secondary" 
+				onclick="location.href='writeFormPointHistory'">등록</button>
 					<table class="table table-striped table-sm">
 					<thead>
 						<tr>

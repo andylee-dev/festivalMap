@@ -10,4 +10,6 @@ public interface PointHistoryDao {
 
 	int                 deletePointHistory(int point_id);
 
+	void                writePointHistory(PointHistory pointhistory);
+
 }

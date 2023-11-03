@@ -41,4 +41,10 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		return result;
 	}
 
+	@Override
+	public void writePointHistory(PointHistory pointhistory) {
+		session.insert("writePointHistory", pointhistory);
+		
+	}
+
 }

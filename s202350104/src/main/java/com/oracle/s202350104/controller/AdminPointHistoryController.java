@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Point;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.service.PointHistoryService;
 
@@ -38,6 +40,20 @@ public class AdminPointHistoryController {
 		return "redirect:/admin/point/pointhistory";
 	}
 	
+	@GetMapping(value="/admin/point/writeFormPointHistory")
+	public String writeFormPoint(PointHistory pointhistory, Model model) {
+		
+		model.addAttribute("Pointhitory", pointhistory);
+		
+		return "admin/point/writeFormPointHistory";
+	}
+	
+	@PostMapping("/admin/point/writePointHistory")
+	public String writePointHistory(PointHistory pointhistory) {
+	    phs.writePointHistory(pointhistory);
+	    return "redirect:/admin/point/pointhistory";
+	}
+
 	
 
 }

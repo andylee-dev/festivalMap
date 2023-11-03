@@ -10,4 +10,6 @@ public interface PointHistoryService {
 
 	int 					deletePointHistory(int point_id);
 
+	void                    writePointHistory(PointHistory pointhistory);
+
 }

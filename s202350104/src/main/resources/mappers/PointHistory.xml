@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.oracle.s202350104.PointHistoryMapper">
 	
-	<select id="pointhistoryAll" resultType="pointhistory">
+	<mapper namespace="com.oracle.s202350104.PointHistoryMapper">
 		
-		SELECT * 
-		FROM   pointhistory ph, users u, point p
-		WHERE  ph.user_id = u.id
-		AND    ph.point_id = p.id
+		<select id="pointhistoryAll" resultType="pointhistory">
+			
+			SELECT * 
+			FROM   pointhistory ph, users u, point p
+			WHERE  ph.user_id = u.id
+			AND    ph.point_id = p.id
+			
+		</select>
 		
-	</select>
-	
-	<delete id="deletePointHistory" parameterType="int">
-	    DELETE FROM pointhistory WHERE point_id = #{point_id}
-   </delete> 
-	
-</mapper>
+		<delete id="deletePointHistory" parameterType="int">
+		    DELETE FROM pointhistory WHERE point_id = #{point_id}
+	   </delete> 
+	   
+	   <insert id="writePointHistory" parameterType="pointhistory">
+  		  INSERT INTO pointhistory (user_id, point_id, created_at)
+    	  SELECT #{user_id}, #{point_id}, SYSDATE
+ 	      FROM dual
+          WHERE EXISTS (SELECT 1 FROM users WHERE id = #{user_id}) 
+          AND EXISTS (SELECT 1 FROM point WHERE id = #{point_id})
+		</insert>
+		
+	</mapper>
