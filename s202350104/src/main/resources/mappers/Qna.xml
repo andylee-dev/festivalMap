@@ -36,5 +36,18 @@
    VALUES(#{user_id},qna_id_seq.nextval,#{question_title},#{question_content},sysdate)
    </insert>
    
+   <select id="dhQnaSelect" resultType="Qna" parameterType="Qna">
+   SELECT 	*
+   FROM		qna
+   WHERE	id = #{id}	
+   AND		user_id = #{user_id}
+   </select>
+   
+   <update id="dhQnaUpdate" parameterType="Qna">
+   UPDATE 	qna	
+   SET		question_title = #{question_title}, question_content =#{question_content}
+   WHERE	id = #{id}	
+   AND		user_id = #{user_id}	 
+   </update>
 </mapper>   
 

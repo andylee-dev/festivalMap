@@ -45,4 +45,17 @@ public class QnaListServiceImpl implements QnaListService {
 		return result;
 	}
 
+	@Override
+	public Qna selectQna(int user_id, int id) {
+		Qna qna = qd.selectQna(user_id, id);
+		return qna;
+	}
+
+	@Override
+	public int updateQna(Qna qna) {
+		int result = 0;
+		result = qd.updateQna(qna);
+		return result;
+	}
+
 }

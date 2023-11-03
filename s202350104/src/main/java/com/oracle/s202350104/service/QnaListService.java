@@ -10,5 +10,7 @@ public interface QnaListService {
 	List<Qna> listQnaList(Qna qna);
 	Qna       detailQna(int user_id, int id);
 	int       insertQna(Qna qna);
+	Qna       selectQna(int user_id, int id);
+	int       updateQna(Qna qna);
 
 }

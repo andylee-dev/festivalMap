@@ -17,18 +17,32 @@
 					<h1 class="border">1:1문의 상세내역</h1>
 				</div>
 				<div class="container border p-4 mb-4">
-				<c:if test="${msg != null}">${msg}</c:if>
-				<form action="insertQnaResult" method="post">
-						제목 <input type="text" name="question_title"><br>
-						내용<input type="text" name="question_content"><br>
-						   <input type="submit" value="등록">
-					</form>
-		</div>
-		<div class="text-center">
-			<input type="button" value="목록" onclick="location.href='qnaList'">
-		</div>
-				</main>
+					<c:if test="${msg != null}">${msg}</c:if>
+				<form action="updateQnaResult" method="post">
+					<table class="table table-bordered">
+						<tr class="table-primary">
+						<th scope="col">1:1문의</th>
+						<th scope="col">제목:</th>
+						<td><input type="text" name="question_title"></td>
+						<th scope="col">내용:</th>
+						<td><input type="text" name="question_content"></td>
+						</tr>
+						<tr class="table-primary">
+						<th scope="col">1:1문의 답변</th>
+						<th scope="col">제목:</th>
+						<td>${qna.answer_title}</td>
+						<th scope="col">내용:</th>
+						<td>${qna.answer_content}</td>
+						</tr>
+						<tr><input type="submit" value="등록"></tr>
+					</table>
+			</form>
 			</div>
+			<div class="text-center">
+				<input type="button" value="목록" onclick="location.href='qnaList'">
 			</div>
+			</main>
+		</div>
+		</div>
 	</body>
 </html>

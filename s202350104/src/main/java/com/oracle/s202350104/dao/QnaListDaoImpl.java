@@ -52,7 +52,7 @@ public class QnaListDaoImpl implements QnaListDao {
 			qnadetail = session.selectOne("dhDetailQna", qna);
 			log.info("QnaListDaoImpl detailQna() qna.getAnswer_title => " + qna.getAnswer_title());
 		} catch (Exception e) {
-			log.info("QnaListDaoImpl qna() => " + e.getMessage());
+			log.info("QnaListDaoImpl detailQna() => " + e.getMessage());
 		}
 		return qnadetail;
 	}
@@ -63,7 +63,32 @@ public class QnaListDaoImpl implements QnaListDao {
 		try {
 			result = session.insert("dhQnaInsert", qna);
 		}catch (Exception e) {
-			log.info("QnaListDaoImpl qna() => " + e.getMessage());
+			log.info("QnaListDaoImpl insertqna() => " + e.getMessage());
+		}
+		return result;
+		}
+
+	@Override
+	public Qna selectQna(int user_id, int id) {
+		Qna qnaselect = new Qna();
+		Qna qna = new Qna();
+		qna.setUser_id(user_id);
+		qna.setId(id);
+		try {
+			qnaselect = session.selectOne("dhQnaSelect", qna);
+		}catch (Exception e) {
+			log.info("QnaListDaoImpl selectqna() => " + e.getMessage());
+		}
+		return qna;
+	}
+
+	@Override
+	public int updateQna(Qna qna) {
+		int result = 0;
+		try {
+			result = session.update("dhQnaUpdate",qna);
+		} catch (Exception e) {
+			log.info("QnaListDaoImpl updateqna() => " + e.getMessage());
 		}
 		return result;
 		}
