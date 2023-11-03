@@ -44,8 +44,8 @@ public class ExperienceServiceImpl implements ExperienceService {
 	}
 	
 	@Override
-	public int totalSearchExperience() {
-		int totalSearchExperience = ed.totalSearchExperience();
+	public int totalSearchExperience(ExperienceContent experience) {
+		int totalSearchExperience = ed.totalSearchExperience(experience);
 		return totalSearchExperience;
 	}
 

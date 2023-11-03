@@ -10,7 +10,7 @@ public interface ExperienceService {
 	ExperienceContent 			detailExperience(int contentId);
 	int  						totalExperience();
 	int 						experienceDelete(int contentId);	
-	int 						totalSearchExperience();
+	int 						totalSearchExperience(ExperienceContent experience);
 	List<ExperienceContent> 	listSearchExperience(ExperienceContent experience);
 	List<ExperienceContent> 	listSmallCode(ExperienceContent experience);
 	
