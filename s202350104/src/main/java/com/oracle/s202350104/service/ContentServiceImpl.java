@@ -8,18 +8,20 @@ import com.oracle.s202350104.dao.ContentsDao;
 import com.oracle.s202350104.model.Contents;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ContentServiceImpl implements ContentSerivce {
 	
-	private final ContentsDao cd;
+	private final ContentsDao contentsDao;
 	
 	@Override
 	public List<Contents> listContents() {
-		List<Contents> listContents = cd.listContent();
+		log.info("ContentServiceImpl listContents start...");
+		List<Contents> listContents = contentsDao.listContent();
 		return listContents;
 	}
-
 }
