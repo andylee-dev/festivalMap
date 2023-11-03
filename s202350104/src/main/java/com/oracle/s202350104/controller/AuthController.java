@@ -3,9 +3,15 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Tags;
@@ -24,16 +30,31 @@ public class AuthController {
 	private final TagsService ts;
 
 	@RequestMapping(value = "/login")
-	public String login() {
+	public String login(Model model, String error, String logout) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userJoinForm", "start");
+			if ( error != null ) {
+				log.info("errorMsg", error);
+			}
+			if ( logout != null ) {
+				log.info("msg", "You have been logged out successfully");
+			}
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "userJoinForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "userJoinForm", "end");
+		}
 		
 		return "auth/login";
 	}
 
-	@RequestMapping(value = "/auth")
-	public String auth() {
-		
-		return "auth/login";
-	}
+//	@RequestMapping(value = "/auth")
+//	public String auth() {
+//		log.info("auth");
+//		
+//		return "auth/login";
+//	}
 
 	
 	@RequestMapping(value = "/join")
@@ -97,12 +118,18 @@ public class AuthController {
         try {
         	us.signUp(user);
         } catch (DuplicateKeyException e) {
-            return "redirect:/signup?error_code=-1";
+            return "redirect:/signUp?error_code=-1";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/signup?error_code=-99";
+            return "redirect:/signUp?error_code=-99";
         }
         return "redirect:/login";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+		return "redirect:/login";
+	}
+
 }
