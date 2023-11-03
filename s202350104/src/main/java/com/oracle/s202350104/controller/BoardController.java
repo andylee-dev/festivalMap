@@ -303,7 +303,7 @@ public class BoardController {
 
 		model.addAttribute("board", boards);
 
-		return "board/photoEventBoardDetail";
+		return "board/photoEventBoardDetail"; 
 
 	}
 

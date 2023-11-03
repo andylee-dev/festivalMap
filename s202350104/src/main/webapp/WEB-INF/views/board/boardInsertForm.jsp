@@ -34,7 +34,7 @@
 </script>
 
 </head>
-<body>
+<body>  
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	

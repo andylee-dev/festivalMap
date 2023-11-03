@@ -207,7 +207,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int boardInsert(Board board) {
 		
-		int insertBoard = 0;
+		int insertBoard = 0; 
 
 		try {
 			insertBoard = session.delete("boardInsert2", board);
