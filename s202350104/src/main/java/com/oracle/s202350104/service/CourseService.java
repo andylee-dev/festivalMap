@@ -7,7 +7,8 @@ import com.oracle.s202350104.model.CourseContent;
 
 public interface CourseService {
 
-	int               		courseCount(Course course);
+	int               		courseCount();
 	List<Course>      		courseList(Course course);
-	List<CourseContent> 	courseDetail(int course_id);
+	List<Course> 			courseDetail(int course_id);
 }
+	

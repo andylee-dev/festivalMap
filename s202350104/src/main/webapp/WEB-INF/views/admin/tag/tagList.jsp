@@ -6,6 +6,30 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+			function tagDelete(pIndex) {
+				alert("실행"+pIndex);
+				var deleteId = $('#id'+pIndex).val();
+				alert("deleteId=>"+deleteId);
+				
+				$.ajax(
+						{
+							url:"/deleteTags",
+							data:{id : deleteId},
+							dataType:'text',
+							success:function(result) {
+								if(result == '1') {
+									$('#tag'+pIndex).remove();
+									alert("성공적으로 삭제되었습니다.");
+								} else {
+									alert("삭제에 실패하였습니다.");
+								}
+							}
+						}		
+				)
+			}
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -39,12 +63,12 @@
 						</thead>
 						<tbody>
 							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="tag" items="${listTags}">
-								<tr>
-									<td>${num}</td>
+							<c:forEach var="tag" items="${listTags}" varStatus="st">
+								<tr id="tag${st.index}">
+									<td><input type="hidden" value="${tag.id}" id="id${st.index}">${num}</td>
 									<td>${tag.name}</td>
 									<td><input type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
-									<td><input type="button" value="삭제"></td>
+									<td><input type="button" value="삭제" onclick="tagDelete(${st.index})"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

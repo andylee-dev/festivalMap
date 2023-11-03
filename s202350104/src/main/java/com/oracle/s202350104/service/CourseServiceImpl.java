@@ -22,9 +22,9 @@ public class CourseServiceImpl implements CourseService {
 	private final CourseDao cd;
 
 	@Override
-	public int courseCount(Course course) {
+	public int courseCount() {
 		int courseCount = 0;
-		courseCount = cd.courseCount(course);
+		courseCount = cd.courseCount();
 		log.info("CourseServiceImpl courseCount courseCount ->" + courseCount);
 		
 		return courseCount;
@@ -43,9 +43,9 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseContent> courseDetail(int course_id) {
+	public List<Course> courseDetail(int course_id) {
 		log.info("course_id ->" + course_id);
-		List<CourseContent> courseDetailList = cd.courseDetail(course_id);
+		List<Course> courseDetailList = cd.courseDetail(course_id);
 		
 		if(courseDetailList == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 상세 리스트가 없습니다.");

@@ -87,7 +87,7 @@
 				    					축제기간 : ${festival.start_date} ~ ${festival.end_date} <br>
 				    					${festival.content}
 				    				</p>
-				    				<a href="festival/detail?contentId=${festival.content_id}" class="btn btn-primary">더보기</a>
+				    				<a href="festival/detail?contentId=${festival.content_id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
 				 				 </div>	
 				 			</div>
 						</div>

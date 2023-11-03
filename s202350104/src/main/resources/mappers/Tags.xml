@@ -96,4 +96,8 @@
 	<update id="nhTagsUpdate" parameterType="Tags">
 		UPDATE Tags SET name = #{name} WHERE id = #{id}
 	</update>
+	
+	<delete id="nhTagsDelete" parameterType="int">
+		DELETE Tags WHERE id = #{id}
+	</delete>
 </mapper>

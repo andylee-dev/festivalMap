@@ -25,7 +25,7 @@ public class CourseController {
 	public String courses(Course course, String currentPage, Model model) {
 		try {
 			log.info("CourseController courses start...");
-			int courseCount = cs.courseCount(course);
+			int courseCount = cs.courseCount();
 			log.info("CourseController courses courseCount ->" + courseCount);
 			
 			Paging page = new Paging(courseCount, currentPage);
@@ -52,7 +52,7 @@ public class CourseController {
 	public String courseDetail(Course course, Model model) {
 		try {
 			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
-			List<CourseContent> courseDetailList = cs.courseDetail(course.getCourse_id());
+			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
 			
 			model.addAttribute("courseDetail", courseDetailList);

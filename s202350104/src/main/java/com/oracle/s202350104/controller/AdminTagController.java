@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Tags;
@@ -208,6 +209,14 @@ public class AdminTagController {
 			  model.addAttribute("msg", "등록에 실패하였습니다."); 
 			  return "forward:updateTagsForm"; 
 		  } 
+	  }
+	  
+	  @ResponseBody
+	  @RequestMapping(value = "/deleteTags")
+	  public String deleteTags(Tags tags) {
+		  int result = ts.deleteTags(tags.getId());
+		  String resultStr = Integer.toString(result);
+		  return resultStr;
 	  }
 	 
 }

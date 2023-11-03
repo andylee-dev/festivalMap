@@ -79,6 +79,7 @@ public class FestivalController {
 			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
 			FestivalsContent festival = fs.detailFestivals(contentId);
 			
+			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("festival", festival);
 		} catch (Exception e) {
