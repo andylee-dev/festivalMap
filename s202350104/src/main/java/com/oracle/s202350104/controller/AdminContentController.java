@@ -59,6 +59,24 @@ public class AdminContentController {
 		}		
 		return "admin/content/festival";
 	}
+	
+	@RequestMapping(value = "festivalDetail")
+	public String festivalDetail(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "admin/content/festivalDetail";
+	}
 
 	@RequestMapping(value = "experience")
 	public String experience(ExperienceContent experience,String currentPage, Model model) {

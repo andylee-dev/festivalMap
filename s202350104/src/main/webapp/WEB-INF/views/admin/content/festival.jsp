@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>festival content</title>
+		<title>축제 관리</title>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -17,7 +15,7 @@
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">지역정보 - 축제</h1>
+					<h1 class="border">축제 관리</h1>
 				</div>
 		
 				<!-- Section2: Search Form -->		
@@ -37,7 +35,7 @@
 								<th scope="col">지역</th>
 								<th scope="col">축제명</th>
 								<th scope="col">주최자</th>
-								<th scope="col">신청일</th>
+								<th scope="col">등록일</th>
 								<th scope="col">승인여부</th>
 								<th scope="col">수정</th>
 								<th scope="col">삭제</th>
@@ -49,7 +47,7 @@
 								<tr>
 									<td>${num}</td>
 									<td>${festival.area_content} ${festival.sigungu_content}</td>
-									<td>${festival.title}</td>
+									<td><a href="festivalDetail?contentId=${festival.content_id}&currentPage=${page.currentPage}">${festival.title}</a></td>
 									<td>${festival.sponsor}</td>
 									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
 									<td>
