@@ -71,10 +71,22 @@
 				WHERE big_code = #{big_code}
 				</if>
 				<if test="is_deleted != null">
-				AND is_deleted = #{is_deleted}
+					<choose>
+ 	 					<when test="is_deleted != 2">
+	    					AND is_deleted = #{is_deleted}  
+	   	 				</when>
+	 	 				<when test="is_deleted = 2">
+	    				</when>    
+  					</choose>
 				</if>
 				<if test="small_code != null">
-				AND small_code = #{small_code}
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
 				</if>) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
@@ -92,7 +104,7 @@
         select small_code, content 
 		from commoncodes 
 		where big_code = 15
-        and small_code < 999
-        ]]>	        
+		and small_code <999
+       ]]>	        
 	</select>
 </mapper>	

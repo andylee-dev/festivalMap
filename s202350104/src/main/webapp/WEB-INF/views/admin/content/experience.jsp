@@ -25,14 +25,16 @@
 						<form action="listSearch" method="get">
 							<input type="text" name="keyword" placeholder="keyword를 입력하세요">
 							<button type="submit">keyword검색</button>
-							<input type="hidden" name="big_code" value="${listExperience[0].big_code}">
+							<input type="hidden" name="big_code" value="15">
 							<input type="hidden" name="currentPage" value="${page.currentPage}">
 							<button type="button" class="btn btn-outline-secondary">초기화</button><p>
 								<select name="is_deleted">
+									<option value="2">전체</option>
 									<option value="0">활성화</option>
 									<option value="1">비활성화</option>
 								</select>
 								<select name="small_code">
+									<option value="999">전체</option>
 									<c:forEach var="small" items="${listSmallCode}">
 									<option value="${small.small_code}">${small.content}</option>
 									</c:forEach>
