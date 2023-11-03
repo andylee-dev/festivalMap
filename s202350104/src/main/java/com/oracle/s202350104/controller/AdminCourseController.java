@@ -68,4 +68,10 @@ public class AdminCourseController {
 		}
 		return "course/courseUpdateForm";
 	}
+	
+	@RequestMapping(value = "/courseInsertForm")
+	public String courseWriteForm(Model model) {
+		
+		return "course/courseInsertForm";
+	}
 }
