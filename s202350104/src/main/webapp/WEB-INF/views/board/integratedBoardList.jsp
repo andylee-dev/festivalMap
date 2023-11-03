@@ -41,7 +41,10 @@
 	    	</c:otherwise>
 		</c:choose>
 		<button class="btn btn-primary" onclick="location.href='boardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
-		<button class="btn btn-primary" onclick="location.href='/reviewBoardList'">리뷰보기</button>
+	</div>
+	<div class="text-center">
+		<button class="btn btn-primary" onclick="location.href='/reviewBoardList'">리뷰테스트</button>
+		<button class="btn btn-danger" onclick="location.href='/banner'">배너테스트</button>
 	</div>
 	
 	<c:set var="num" value="${page.total-page.start+1 }"/>
