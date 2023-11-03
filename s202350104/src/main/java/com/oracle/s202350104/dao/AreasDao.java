@@ -8,4 +8,6 @@ public interface AreasDao {
 	List<Areas> listAreas();
 	List<Areas> listAreas(Areas area);
 	int         totalAreaCode();
+	int         conTotalAreaCode(Areas area);
+	List<Areas> listSearchAreaCode(Areas area);
 }

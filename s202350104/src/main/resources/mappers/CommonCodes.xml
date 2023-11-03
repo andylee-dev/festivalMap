@@ -25,5 +25,30 @@
 		WHERE rn between #{start} and #{end}
 	</select>
 	
+	<select id="joConTotalCommonCode" resultType="int">
+		SELECT count(*) 
+		FROM   commoncodes 
+		WHERE  big_code = #{big_code}
+     	AND    not small_code in ('999')
+				
+		<!-- <choose>
+			<when test="big_code == '${common.big_code}'">
+				WHERE big_code = #{big_code}
+				AND not small_code in ('999')
+			</when>
+		</choose> -->
+		
+	</select>
+
+	<select id="joListSearchCommonCode" resultType="CommonCodes" parameterType="CommonCodes">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, commoncodes.*
+     		FROM commoncodes
+     		WHERE big_code = #{big_code}
+     		AND not small_code in ('999')
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
 	
 </mapper>

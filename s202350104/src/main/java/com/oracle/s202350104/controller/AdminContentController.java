@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.service.AccomodationService;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
@@ -36,6 +38,8 @@ public class AdminContentController {
 	private final SpotService ss;
 	private final RestaurantService rs;
 	private final AccomodationService as;
+	private final AreaService ars;
+
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -117,9 +121,11 @@ public class AdminContentController {
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			List<Areas> listAreas = ars.listPoint();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page",page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin restaurant", e.getMessage());

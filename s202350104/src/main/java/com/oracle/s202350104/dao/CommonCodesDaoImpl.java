@@ -53,5 +53,32 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 		return totalCommonCode;
 	}
 
-	
+
+
+	@Override
+	public int conTotalCommonCode(CommonCodes commonCode) {
+		int conTotalCommonCode = 0;
+		try {
+			conTotalCommonCode = session.selectOne("joConTotalCommonCode", commonCode);
+		} catch (Exception e) {
+			log.info("CommonCodeDaoImpl joConTotalCommonCode() Exception ->" + e.getMessage());
+		}
+		
+		return conTotalCommonCode;
+	}
+
+
+
+	@Override
+	public List<CommonCodes> listSearchCommonCode(CommonCodes commonCode) {
+		List<CommonCodes> listSearchCommonCode = null;
+		try {
+			listSearchCommonCode = session.selectList("joListSearchCommonCode", commonCode);
+		} catch (Exception e) {
+			log.info("CommonCodeDaoImpl joListSearchCommonCode() Exception ->" + e.getMessage());
+		}
+		
+		return listSearchCommonCode;
+	}
+
 }

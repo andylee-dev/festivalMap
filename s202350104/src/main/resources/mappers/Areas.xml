@@ -21,4 +21,23 @@
 		FROM   areas
 	</select>	
 	
+	<select id="joConTotalAreaCode" resultType="int">
+		SELECT count(*)
+		FROM   areas
+        WHERE  area = #{area}
+     	AND    not sigungu in ('999')	
+    </select>
+	
+	<select id="joListSearchAreaCode" resultType="Areas" parameterType="Areas">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, areas.*
+     		 FROM areas
+     		 WHERE area = #{area}
+     		 AND not sigungu in ('999')
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+		
+	
 </mapper>

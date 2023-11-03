@@ -8,5 +8,7 @@ public interface AreaService {
 	List<Areas> listPoint();
 	List<Areas> listPoint(Areas area);
 	int 		totalAreaCode();
+	int         conTotalAreaCode(Areas area);
+	List<Areas> listSearchAreaCode(Areas area);
 }
 	

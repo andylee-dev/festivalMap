@@ -8,4 +8,6 @@ public interface CommonCodeService {
 	List<CommonCodes> listCommonCode();
 	List<CommonCodes> listCommonCode(CommonCodes commonCode);
 	int 			  totalCommonCode();
+	int 			  conTotalCommonCode(CommonCodes commonCode);
+	List<CommonCodes> listSearchCommonCode(CommonCodes commonCode);
 }

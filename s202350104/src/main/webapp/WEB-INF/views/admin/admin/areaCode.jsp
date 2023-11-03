@@ -23,15 +23,17 @@
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
 					<h1 class="border">검색폼</h1>
-					<select name="areaCode">
-						<option value="">전체</option>
-						<c:forEach var="areas" items="${listAreas}">
-						<c:if test="${areas.sigungu == 999}">
-							<option value="${areas.area}">${areas.content}</option>
-						</c:if>
-						</c:forEach>
-					</select>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
+					<form action="areaCodeSearch">
+						<select name="area">
+							<option value="">전체</option>
+							<c:forEach var="areas" items="${listAreas}">
+								<c:if test="${areas.sigungu == 999}">
+								<option value="${areas.area}">${areas.content}</option>
+								</c:if>
+							</c:forEach>
+						</select>
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+					</form>
 					<button type="button" class="btn btn-outline-secondary">초기화</button>
 				</div>		
 				
