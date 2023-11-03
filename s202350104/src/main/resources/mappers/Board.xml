@@ -97,7 +97,7 @@
 		from (
 				select rownum rn, e.*
 				from (
-		               select a.id, c.title, a.content_id, a.content, b.name, a.created_at
+		               select a.id, c.title, a.content_id, a.content, b.name, a.created_at, a.big_code, a.small_code
 		               from 
 		                    board a
 		               join 
@@ -110,6 +110,21 @@
 		                   	a.content_id = c.id
 		               where c.id = #{content_id} 
 		        ) e
+		)
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="reviewAllList2" resultType="Board">
+		select *
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.content, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 6
+		        order by a.id desc
+		    ) c
 		)
 		where rn between #{start} and #{end}
 	</select>
@@ -141,6 +156,16 @@
 		insert into board (id, user_id, big_code, small_code, 
 						   title, content, read_count, created_at) 
 		values(#{id}, #{user_id}, #{big_code},
+			   #{small_code}, #{title}, #{content}, 0, sysdate)		
+	</insert>
+	
+	<insert id="boardInsert2" parameterType="Board">
+		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
+			select board_seq_generator.nextval from dual
+		</selectKey>
+		insert into board (id, content_id, user_id, big_code, small_code, 
+						   title, content, read_count, created_at) 
+		values(#{id}, #{content_id}, #{user_id}, #{big_code},
 			   #{small_code}, #{title}, #{content}, 0, sysdate)		
 	</insert>
 

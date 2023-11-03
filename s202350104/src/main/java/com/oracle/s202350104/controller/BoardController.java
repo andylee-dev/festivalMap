@@ -137,6 +137,7 @@ public class BoardController {
 
 		log.info("controller freeBoardList totalBoard : {} ", countBoard);
 		log.info("controller freeBoardList smallCode : {} ", smallCode);
+		log.info("controller freeBoardList bigCode : {} ", bigCode);
 		log.info("controller freeBoardList page : {} ", page);
 
 		model.addAttribute("board", freeAllList);
@@ -230,7 +231,10 @@ public class BoardController {
 
 		return "board/photoEventBoardList";
 	}
-
+	
+	/*
+	 * review 통합 테스트용	
+	 * */	
 	// review List Logic
 	@RequestMapping(value = "/reviewBoardList")
 	public String reviewBoardList(Board board, String currentPage, Model model) {
@@ -238,6 +242,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 6;
+		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -260,12 +265,14 @@ public class BoardController {
 
 		log.info("controller reviewBoardList totalBoard : {} ", countBoard);
 		log.info("controller reviewBoardList smallCode : {} ", smallCode);
+		log.info("controller reviewBoardList smallCode : {} ", bigCode);
 		log.info("controller reviewBoardList page : {} ", page);
 
 		model.addAttribute("board", revicewAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
 		
 		log.info("controller reviewBoardList End..");
 
@@ -296,7 +303,7 @@ public class BoardController {
 
 		model.addAttribute("board", boards);
 
-		return "board/photoEventBoardDetail";
+		return "board/photoEventBoardDetail"; 
 
 	}
 
@@ -358,11 +365,11 @@ public class BoardController {
 			break;
 		case 6:
 			// 삭제 후, 공지사항 redirect
-			redirectURL = null;
+			redirectURL = "redirect:/reviewBoardList";
 			break;
 		default:
 			// 기본 처리, 오류 처리용
-			redirectURL = "redirect:/home";
+			redirectURL = "redirect:/";
 			break;
 		}
 
@@ -371,16 +378,18 @@ public class BoardController {
 
 	// 통합게시판 생성 form Logic
 	@RequestMapping(value = "/boardInsertForm")
-	public String boardInsertForm(String userId, String bigCode, String smallCode, Model model) {
+	public String boardInsertForm(String userId, String bigCode, String smallCode, String contentId, Model model) {
 
 		log.info("controller boardInsertForm start!");
 		log.info("controller boardInsertForm userId : {}", userId);
 		log.info("controller boardInsertForm bigCode : {}", bigCode);
 		log.info("controller boardInsertForm smallCode : {}", smallCode);
+		log.info("controller boardInsertForm contentId : {}", contentId);
 
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("contentId", contentId);
 		log.info("controller boardInsertForm end!");
 
 		return "board/boardInsertForm";
@@ -393,6 +402,8 @@ public class BoardController {
 		log.info("controller boardInsert userId : {}", board.getUser_id());
 		log.info("controller boardInsert bigCode : {}", board.getBig_code());
 		log.info("controller boardInsert smallCode : {}", board.getSmall_code());
+		log.info("controller boardInsert contentId : {}", board.getContent_id());
+
 		int insertBoard = boardService.boardInsert(board);
 
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
@@ -406,7 +417,7 @@ public class BoardController {
 		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
 			return "forward:/eventBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
-			return "forward:/reviewBoardList";
+			return "redirect:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
 			return "forward:/boardInsertForm";

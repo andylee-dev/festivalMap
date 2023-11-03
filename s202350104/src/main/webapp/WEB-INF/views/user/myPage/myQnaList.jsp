@@ -15,7 +15,7 @@
 		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 			<!-- Section1: Title -->
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-				<h1 class="border">1:1 문의</h1>
+				<h1 class="border">my1:1 문의</h1>
 			</div>
 	
 			<!-- Section2: Search Form -->		
@@ -27,7 +27,7 @@
 			
 			<!-- Section3: Table -->		
 			<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary" onclick="location.href='myQnaForm'">등록</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertQnaForm'">등록</button>
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
@@ -48,8 +48,8 @@
 								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
 									<c:if test="${qna.status == 1}">답변완료</c:if>
-								<td><input type="button" value="수정"></td>
-								<td><input type="button" value="삭제"></td>
+								<td><input type="button" onclick="location.href='updateQnaForm'" value="수정"></td>
+								<td><input type="button" onclick="location.href='deleteQnaForm'"value="삭제"></td>
 								</td>
 							</tr>
 							<c:set var="num" value="${num + 1}"/>

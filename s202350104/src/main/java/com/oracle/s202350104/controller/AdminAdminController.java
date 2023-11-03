@@ -14,6 +14,7 @@ import com.oracle.s202350104.service.AdminListService;
 import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class AdminAdminController {
 	private final AdminListService  als;
 	private final CommonCodeService ccs;
 	private final AreaService 		as;
-	
+	private final UserService       us;
 	
 	@RequestMapping(value = "/adminList")
 	public String adminList(Users user, String currentPage, Model model) {
@@ -69,10 +70,13 @@ public class AdminAdminController {
 			commonCode.setEnd(page.getEnd());
 			
 			List<CommonCodes> listCommonCode = ccs.listCommonCode(commonCode);
-			
+			List<CommonCodes> listCommon = ccs.listCommonCode(); 
+						
 			model.addAttribute("totalCommonCode", totalCommonCode);
 			model.addAttribute("listCommonCode", listCommonCode);
+			model.addAttribute("listCommon", listCommon); 
 			model.addAttribute("page", page);
+			
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "commonCode", e.getMessage());
@@ -99,9 +103,11 @@ public class AdminAdminController {
 			 area.setEnd(page.getEnd());
 			 
 			 List<Areas> listAreaCode = as.listPoint(area);
-					 
+			 List<Areas> listAreas = as.listPoint();
+			 
 			 model.addAttribute("totalAreaCode", totalAreaCode);
 			 model.addAttribute("listAreaCode", listAreaCode);
+			 model.addAttribute("listAreas", listAreas);
 			 model.addAttribute("page", page);		 
 		
 		} catch (Exception e) { 

@@ -56,5 +56,15 @@ public class QnaListDaoImpl implements QnaListDao {
 		}
 		return qnadetail;
 	}
-	
-}
+
+	@Override
+	public int insertQna(Qna qna) {
+		int result = 0;
+		try {
+			result = session.insert("dhQnaInsert", qna);
+		}catch (Exception e) {
+			log.info("QnaListDaoImpl qna() => " + e.getMessage());
+		}
+		return result;
+		}
+	}

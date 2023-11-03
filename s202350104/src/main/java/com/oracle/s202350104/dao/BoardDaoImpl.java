@@ -128,14 +128,32 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Board> getReviewAllList(Board board) {
 		log.info("BoardDao getReviewAllList Start!!");
 		log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
-		List<Board> reviewAllList = session.selectList("reviewAllList", board);
-		log.info("BoardDao reviewAllList size : {}", reviewAllList.size());
-		log.info("BoardDao reviewAllList content : {}", reviewAllList.get(0).getContent());
-		
-		log.info("BoardDao getReviewAllList End..");
+		log.info("boardService reviewBoardList board.getUser_id : {} ", board.getUser_id());
 
+		int userId = board.getUser_id();
+		int contentId = board.getContent_id();
+		List<Board> reviewAllList = null;
+		
+		// contentId or userId로 출력 할 review handling
+		if (contentId > 1 || userId > 1) {
+			reviewAllList = session.selectList("reviewAllList", board);
+			
+			log.info("BoardDao reviewAllList size : {}", reviewAllList.size());
+			log.info("BoardDao reviewAllList content : {}", reviewAllList.get(0).getContent());
+
+		} else {
+			reviewAllList = session.selectList("reviewAllList2", board);
+			
+			log.info("BoardDao reviewAllList2 size : {}", reviewAllList.size());
+			log.info("BoardDao reviewAllList2 content : {}", reviewAllList.get(0).getContent());
+		}
+
+		log.info("BoardDao getReviewAllList End..");
+		
 		return reviewAllList;
+
 	}
+	
 	// 통합게시판 상세정보, DB연동
 	@Override
 	public Board boardDetail(int boardId) {
@@ -189,10 +207,10 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int boardInsert(Board board) {
 		
-		int insertBoard = 0;
+		int insertBoard = 0; 
 
 		try {
-			insertBoard = session.delete("boardInsert", board);
+			insertBoard = session.delete("boardInsert2", board);
 		} catch (Exception e) {
 			log.error("BoardDao boardInsert Exception : {}", e.getMessage());
 		}
