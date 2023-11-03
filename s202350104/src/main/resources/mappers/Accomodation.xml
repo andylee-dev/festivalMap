@@ -12,7 +12,7 @@
         FROM
         (
             SELECT *
-            FROM accomodation a, contents c
+            FROM accomodations a, contents c
             WHERE a.content_id = c.id
             ORDER BY content_id
        	 ) b
@@ -23,7 +23,7 @@
 	
 	<select id="AccomodationDetail" resultType="AccomodationContent" parameterType="int">
 		SELECT 	*
-		FROM 	contents c, accomodation a
+		FROM 	contents c, accomodations a
 		WHERE 	c.id = a.content_id
 		AND 	a.content_id = #{content_id}
 	
@@ -31,13 +31,13 @@
 	
 	<select id="AccomodationTotal" resultType="int">
 		SELECT count(*)
-		FROM   accomodation a, contents c
+		FROM   accomodations a, contents c
 		WHERE  a.content_id = c.id
 		
 	</select>
 
 	<delete id="accomodationDelete" parameterType="int">
-		delete from accomodation where content_id=#{content_id}
+		delete from accomodations where content_id=#{content_id}
 	</delete>
 
 </mapper>

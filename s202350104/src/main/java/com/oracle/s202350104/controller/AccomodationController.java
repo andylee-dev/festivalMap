@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.Paging;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class AccomodationController {
 	
 	private final AccomodationService as;
 	private final AreaService ars;
+	private final BoardService boardService;
 	
 	@GetMapping(value = "/accomodation")
 	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
@@ -53,13 +56,61 @@ public class AccomodationController {
 	}
 	
 	@GetMapping(value = "/accomodation/detail")
-	public String accomodationDetail(int contentId, Model model) {
+	public String accomodationDetail(int contentId,String currentPage, Board board,  Model model) {
 		log.info("AccomodationController detailAccomodation Start...");
 		
 		AccomodationContent accomodation = as.detailAccomodation(contentId);
 		
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("accomodation", accomodation);
+		
+		/*
+		 * review Logic 구간 
+		 * by 엄민용
+		 * */
+		log.info("FestivalController review Start!!");
+		int bigCode = 2;
+		// 분류 code 강제 지정
+		int smallCode = 6;
+		int userId = 1;
+		int countBoard = 0;
+		
+		try {
+			// smallCode를 이용해 countBoard를 설정
+			countBoard = boardService.boardCount(smallCode);
+			
+			// Paging 작업
+			// Parameter board page 추가
+			Paging page = new Paging(countBoard, currentPage);
+			board.setStart(page.getStart());
+			board.setEnd(page.getEnd());
+			board.setContent_id(contentId);
+			log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
+			log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
+			log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());
+			
+			List<Board> revicewAllList = boardService.getReviewAllList(board); 
+			log.info("controller revicewAllList size : {}", revicewAllList.size());
+
+			log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
+			log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
+
+			bigCode = revicewAllList.get(0).getBig_code();
+
+			log.info("controller reviewBoardList totalBoard : {} ", countBoard);
+			log.info("controller reviewBoardList smallCode : {} ", smallCode);
+			log.info("controller reviewBoardList page : {} ", page);
+
+			model.addAttribute("reviewBoard", revicewAllList);
+			model.addAttribute("page", page);
+			model.addAttribute("bigCode", bigCode);
+			model.addAttribute("smallCode", smallCode);
+			model.addAttribute("userId", userId);
+		} catch (Exception e) {
+			log.error("FestivalController review error : {}", e.getMessage());
+		} finally {
+			log.info("FestivalController review end..");
+		}
 		
 		return "accomodation/accomodationDetail";
 			

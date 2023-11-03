@@ -380,18 +380,20 @@ public class BoardController {
 
 	// 통합게시판 생성 form Logic
 	@RequestMapping(value = "/boardInsertForm")
-	public String boardInsertForm(String userId, String bigCode, String smallCode, String contentId, Model model) {
+	public String boardInsertForm(String userId, String bigCode, String smallCode, String contentId, String currentPage, Model model) {
 
 		log.info("controller boardInsertForm start!");
 		log.info("controller boardInsertForm userId : {}", userId);
 		log.info("controller boardInsertForm bigCode : {}", bigCode);
 		log.info("controller boardInsertForm smallCode : {}", smallCode);
 		log.info("controller boardInsertForm contentId : {}", contentId);
+		log.info("controller boardInsertForm currentPage : {}", currentPage);
 
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("contentId", contentId);
+		model.addAttribute("currentPage", currentPage);
 		log.info("controller boardInsertForm end!");
 
 		return "board/boardInsertForm";
@@ -406,6 +408,8 @@ public class BoardController {
 		log.info("controller boardInsert smallCode : {}", board.getSmall_code());
 		log.info("controller boardInsert contentId : {}", board.getContent_id());
 
+		int contentId = board.getContent_id();
+		
 		int insertBoard = boardService.boardInsert(board);
 
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
@@ -419,7 +423,7 @@ public class BoardController {
 		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
 			return "forward:/eventBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
-			return "redirect:/";
+			return "forward:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
 			return "forward:/boardInsertForm";

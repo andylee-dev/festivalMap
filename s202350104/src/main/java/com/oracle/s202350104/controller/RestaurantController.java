@@ -102,9 +102,10 @@ public class RestaurantController {
 		 * by 엄민용
 		 * */
 		log.info("controller reviewBoardList Start!!");
-		int bigCode = 0;
+		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
+		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -135,6 +136,7 @@ public class RestaurantController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
 		
 		log.info("controller reviewBoardList End..");
 		
