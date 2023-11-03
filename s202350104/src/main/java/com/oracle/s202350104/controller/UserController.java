@@ -98,7 +98,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "myPage/updateQnaForm")
-	public String updateQnaForm(int user_id,int id, Model model) {
+	public String updateQnaForm(int user_id, int id, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
