@@ -47,6 +47,7 @@
         	<input type="hidden" name="user_id" value="${userId }">
         	<input type="hidden" name="big_code" value="${bigCode }">
         	<input type="hidden" name="small_code" value="${smallCode }">
+        	<input type="hidden" name="content_id" value="${contentId }">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title" name="title" required>
