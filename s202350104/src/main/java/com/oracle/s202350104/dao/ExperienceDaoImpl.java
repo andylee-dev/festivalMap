@@ -65,13 +65,13 @@ public class ExperienceDaoImpl implements ExperienceDao {
 	}	
 
 	@Override
-	public int totalSearchExperience() {
+	public int totalSearchExperience(ExperienceContent experience) {
 		int totalSearchExperience = 0;
 		try {
-			totalSearchExperience = session.selectOne("shExperienceSearchTotal");
+			totalSearchExperience = session.selectOne("shExperienceSearchTotal",experience);
 			log.info("ExperienceDaoImpl totalSearchExperience()->"+totalSearchExperience);
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.info("ExperienceDaoImpl totalSearchExperience ->"+e.getMessage() );
 		}
 		return totalSearchExperience;
 	}
