@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.oracle.s202350104.dao.QnaListDao;
 import com.oracle.s202350104.model.Qna;
+import com.sun.net.httpserver.Authenticator.Result;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,14 @@ public class QnaListServiceImpl implements QnaListService {
 		Qna qnadetail = qd.detailQna(user_id, id);
 		
 		return qnadetail;
+	}
+
+	@Override
+	public int insertQna(Qna qna) {
+		int result = 0;
+		result = qd.insertQna(qna);
+		
+		return result;
 	}
 
 }

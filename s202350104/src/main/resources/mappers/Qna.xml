@@ -30,5 +30,11 @@
    AND		user_id = #{user_id}
    
    </select>
+   
+    <insert id="dhQnaInsert" parameterType="Qna">
+   INSERT INTO 	qna
+   VALUES(#{user_id},#{id},#{question_title},#{question_content},#{answer_title},#{answer_content},#{created_at},#{updated_at})
+   </insert>
+   
 </mapper>   
 
