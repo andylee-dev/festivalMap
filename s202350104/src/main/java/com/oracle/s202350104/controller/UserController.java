@@ -7,6 +7,7 @@ import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
@@ -45,6 +46,11 @@ public class UserController {
 	@RequestMapping(value = "myPage/myTag")
 	public String myTag() {
 		return "user/myPage/myTag";
+	}
+
+	@RequestMapping(value="bizPage")
+	public String bizPage() {
+		return "user/bizPage/index";
 	}
 
 
@@ -159,10 +165,13 @@ public class UserController {
 		}	
 		return "user/myPage/myQnaList";
 	}
-
-	@RequestMapping(value="bizPage")
-	public String bizPage() {
-		return "user/bizPage/index";
+	@ResponseBody
+	@RequestMapping(value="/deleteQnaPro")
+	public String deleteQna(Qna qna) {
+		log.info("delete 실행");
+		int result = qs.deleteQna(qna.getId(),qna.getUser_id());
+		String resultStr = Integer.toString(result);
+		return resultStr;
 	}
 
 }
