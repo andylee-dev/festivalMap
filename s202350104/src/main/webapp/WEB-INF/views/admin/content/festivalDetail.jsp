@@ -132,12 +132,12 @@
 						<c:if test="${festival.status == 0}">
 							<button type="button" class="btn btn-outline-secondary">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
-							<button type="button" class="btn btn-outline-secondary">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>
 						<c:if test="${festival.status == 1}">
-							<button type="button" class="btn btn-outline-secondary">수정</button>
-							<button type="button" class="btn btn-outline-secondary">삭제</button>
-							<button type="button" class="btn btn-outline-secondary">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalUpdate?contentId=${festival.content_id}'">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalDelete?contentId=${festival.content_id}'">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>
 					</div>
 				</div>		

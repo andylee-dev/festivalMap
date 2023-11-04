@@ -22,19 +22,10 @@
 		SELECT count(*) FROM UserTags
 	</select>
 	
-	<select id="nhUserTagsListPage" resultType="Tags" parameterType="Tags">
+	<select id="nhUserTagsAll" resultType="Tags" parameterType="Tags">
 		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT user_id, tag_id AS id, name
-			 FROM usertags u, tags t
-			 WHERE u.tag_id = t.id 
-			 GROUP BY user_id, tag_id, name
-			 ORDER BY user_id, tag_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		FROM usertags u, tags t
+		WHERE u.tag_id = t.id
 	</select>
 	
 	<select id="nhBoardTagsTotal" resultType="int">
@@ -100,6 +91,18 @@
 	<!-- 자식 테이블 데이터부터 삭제할 수 있도록 -->
 	<delete id="nhTagsDelete" parameterType="int">
 		DELETE Tags WHERE id = #{id}
+	</delete>
+	
+	<delete id="nhUserTagsDelete" parameterType="int">
+		DELETE UserTags WHERE tag_id = #{id}
+	</delete>
+	
+	<delete id="nhContentTagsDelete" parameterType="int">
+		DELETE ContentTags WHERE tag_id = #{id}
+	</delete>
+	
+	<delete id="nhBoardTagsDelete" parameterType="int">
+		DELETE BoardTags WHERE tag_id = #{id}
 	</delete>
 	
 	<select id="nhContentTagsSearch" parameterType="int" resultType="Tags">
