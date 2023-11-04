@@ -37,4 +37,20 @@
 		FROM   festivals f, contents c
 		WHERE  f.content_id = c.id
 	</select>
+	
+	<insert id="nhContentsInsert" parameterType="FestivalsContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
+				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
+				readcount, user_id, created_at, is_deleted)
+		VALUES(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0',
+				#{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 
+				0, #{user_id}, sysdate, '0')
+	</insert>
+	
+	<insert id="nhFestivalsInsert" parameterType="FestivalsContent">
+		INSERT INTO festivals(content_id, hours, start_date, end_date, sponsor, eventplace, 
+				cost, overview, is_parking, is_stroller, is_wheelchair, is_restroom) 
+		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
+				#{cost}, #{overview}, #{is_parking}, #{is_stroller}, #{is_wheelchair}, #{is_restroom})
+	</insert>
 </mapper>
