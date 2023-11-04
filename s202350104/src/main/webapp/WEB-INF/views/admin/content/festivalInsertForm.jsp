@@ -30,21 +30,6 @@
 				)
 			}
 			
-			function insertConfirm() {
-				if(confirm("등록하시겠습니까?")) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			
-			function resetConfirm() {
-				if(confirm("입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?")) {
-					return true;
-				} else {
-					return false;
-				}
-			}
 		</script>
 	</head>
 	<body>
@@ -167,8 +152,8 @@
 							</tr>
 						</table>
 						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="insertConfirm()">등록</button>
-							<button type="reset" class="btn btn-outline-secondary" onclick="resetConfirm()">초기화</button>
+							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
+							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>
 				</div>		

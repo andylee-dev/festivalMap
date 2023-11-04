@@ -89,15 +89,15 @@ public class AdminContentController {
 	public String festivalInsertForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
 			List<CommonCodes> listCodes = cs.listCommonCode();
 			List<Areas> listAreas = ars.listPoint();
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+			log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "end");
 		}		
 		return "admin/content/festivalInsertForm";
 	}
@@ -106,16 +106,16 @@ public class AdminContentController {
 	public String festivalInsert(FestivalsContent festival, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
 			festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
 			festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
 			fs.insertFestival(festival);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+			log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
 		}		
-		return "admin/content/festival";
+		return "forward:festival";
 	}
 	
 	@RequestMapping(value = "festivalUpdate")
