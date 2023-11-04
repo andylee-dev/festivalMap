@@ -10,5 +10,6 @@ public interface CourseService {
 	int               		courseCount();
 	List<Course>      		courseList(Course course);
 	List<Course> 			courseDetail(int course_id);
-}
+	int						courseInsert(Course course);
+}	
 	

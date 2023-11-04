@@ -62,6 +62,20 @@ public class CourseDaoImpl implements CourseDao {
 		return courseDetailList;
 	}
 
+
+	@Override
+	public int courseInsert(Course course) {
+		int courseInsert = 0;
+		try {
+			courseInsert = session.insert("noCourseInsert", course);
+			log.info("CourseDaoImpl courseInsert courseInsert ->" + courseInsert);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl courseInsert e.getMessage() ->" + e.getMessage());
+		}
+		return courseInsert;
+	}
+
 	
 //	@Override
 //	public Course courseDetailContent(int id) {
