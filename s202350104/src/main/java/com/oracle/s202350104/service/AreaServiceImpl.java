@@ -33,6 +33,18 @@ public class AreaServiceImpl implements AreaService {
 		int totalAreaCode = ad.totalAreaCode();
 		return totalAreaCode;
 	}
+
+	@Override
+	public int conTotalAreaCode(Areas area) {
+		int contTotalAreaCode = ad.conTotalAreaCode(area);
+		return contTotalAreaCode;
+	}
+
+	@Override
+	public List<Areas> listSearchAreaCode(Areas area) {
+		List<Areas> listSearchAreaCode = ad.listSearchAreaCode(area);
+		return listSearchAreaCode;
+	}
 	
 	
 	

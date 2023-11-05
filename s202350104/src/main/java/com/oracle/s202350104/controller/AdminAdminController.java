@@ -70,7 +70,7 @@ public class AdminAdminController {
 			commonCode.setEnd(page.getEnd());
 			
 			List<CommonCodes> listCommonCode = ccs.listCommonCode(commonCode);
-			List<CommonCodes> listCommon = ccs.listCommonCode(); 
+			List<CommonCodes> listCommon 	 = ccs.listCommonCode(); 
 						
 			model.addAttribute("totalCommonCode", totalCommonCode);
 			model.addAttribute("listCommonCode", listCommonCode);
@@ -87,7 +87,38 @@ public class AdminAdminController {
 		
 		return "admin/admin/commonCode";
 	}
+	
+	
+	@RequestMapping(value = "/commonCodeSearch")
+	public String commonCodeSeacrch(CommonCodes commonCode, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
 		
+		try {
+			log.info("[{}]{}:{}", transactionId, "AdminAdminController commonCodeSearch", "start");
+			int totalCommonCode = ccs.conTotalCommonCode(commonCode);
+			
+			
+			Paging page = new Paging(totalCommonCode, currentPage);
+			commonCode.setStart(page.getStart());
+			commonCode.setEnd(page.getEnd());
+			
+			List<CommonCodes> listSearchCommonCode = ccs.listSearchCommonCode(commonCode);
+								
+			
+			model.addAttribute("totalCommonCode", totalCommonCode);
+			model.addAttribute("listCommonCode", listSearchCommonCode);
+			model.addAttribute("page", page);
+					
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "AdminAdminController commonCodeSearch", e.getMessage());
+		} finally {
+			log.error("[{}]{}:{}", transactionId, "AdminAdminController commonCodeSearch", "end");
+		}
+		
+		
+		return "admin/admin/commonCode";
+	}
+	
 	
 	@RequestMapping(value = "/areaCode") 
 	public String areaCode(Areas area,	String currentPage, Model model) { 
@@ -119,5 +150,37 @@ public class AdminAdminController {
 		return "admin/admin/areaCode"; 
   
 	}
+	
+	
+	@RequestMapping(value = "/areaCodeSearch") 
+	public String areaCodeSearch(Areas area, String currentPage, Model model) { 
+		UUID transactionId = UUID.randomUUID();
+	
+  
+		try { 
+			log.info("[{}]{}:{}", transactionId, "areaCode", "start"); 
+			int totalAreaCode = as.conTotalAreaCode(area);
+			
+			 Paging page = new Paging(totalAreaCode, currentPage);
+			 area.setStart(page.getStart()); 
+			 area.setEnd(page.getEnd());
+			 
+			 List<Areas> listSearchAreaCode = as.listSearchAreaCode(area);
+			 List<Areas> listAreas = as.listPoint();
+			 
+			 model.addAttribute("totalAreaCode", totalAreaCode);
+			 model.addAttribute("listAreaCode", listSearchAreaCode);
+			  model.addAttribute("page", page);		 
+		
+		} catch (Exception e) { 
+			log.error("[{}]{}:{}", transactionId, "areaCode", e.getMessage());
+		} finally {
+			log.error("[{}]{}:{}", transactionId, "areaCode", "end");
+		}	
+		
+		return "admin/admin/areaCode"; 
+  
+	}
+	
 	
 }

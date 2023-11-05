@@ -36,5 +36,19 @@ public class CommonCodeServiceImple implements CommonCodeService {
 		return totalCommonCode;
 	}
 
+
+	@Override
+	public int conTotalCommonCode(CommonCodes commonCode) {
+		int conTotalCommonCode = cd.conTotalCommonCode(commonCode);
+		return conTotalCommonCode;
+	}
+
+
+	@Override
+	public List<CommonCodes> listSearchCommonCode(CommonCodes commonCode) {
+		List<CommonCodes> listSearchCommonCode = cd.listSearchCommonCode(commonCode);
+		return listSearchCommonCode;
+	}
+
 	
 }

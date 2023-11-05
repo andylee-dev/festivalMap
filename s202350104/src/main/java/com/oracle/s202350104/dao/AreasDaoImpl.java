@@ -52,5 +52,29 @@ public class AreasDaoImpl implements AreasDao {
 		return totalAreaCode;
 	}
 
+	@Override
+	public int conTotalAreaCode(Areas area) {
+		int conTotalAreaCode = 0;
+		try {
+			conTotalAreaCode = session.selectOne("joConTotalAreaCode", area);
+		} catch (Exception e) {
+			log.info("AreasDaoImpl joConTotalAreaCode() Exception ->" + e.getMessage());
+		}
+		
+		return conTotalAreaCode;
+	}
+
+	@Override
+	public List<Areas> listSearchAreaCode(Areas area) {
+		List<Areas> listSearchAreaCode = null;
+		try {
+			listSearchAreaCode = session.selectList("joListSearchAreaCode", area);
+		} catch (Exception e) {
+			log.info("AreasDaoImpl joListSearchAreaCode() Exception ->" + e.getMessage());
+		}
+		
+		return listSearchAreaCode;
+	}
+
 	
 }

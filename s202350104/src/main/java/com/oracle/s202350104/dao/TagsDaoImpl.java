@@ -55,7 +55,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listUserTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhUserTagsListPage", tags);
+			listTags = session.selectList("nhUserTagsAll", tags);
 			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
@@ -159,6 +159,9 @@ public class TagsDaoImpl implements TagsDao {
 	public int deleteTags(int id) {
 		int result = 0;
 		try {
+			session.delete("nhUserTagsDelete", id);
+			session.delete("nhContentTagsDelete", id);
+			session.delete("nhBoardTagsDelete", id);
 			result = session.delete("nhTagsDelete", id);
 		} catch(Exception e) {
 			log.info("TagsDaoImpl deleteTags() => " + e.getMessage());

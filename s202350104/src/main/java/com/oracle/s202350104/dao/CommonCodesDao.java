@@ -8,4 +8,6 @@ public interface CommonCodesDao {
 	List<CommonCodes> listCommonCodes();
 	List<CommonCodes> listCommonCodes(CommonCodes commonCode);
 	int 			  totalCommonCode();
+	int               conTotalCommonCode(CommonCodes commonCode);
+	List<CommonCodes> listSearchCommonCode(CommonCodes commonCode);
 }

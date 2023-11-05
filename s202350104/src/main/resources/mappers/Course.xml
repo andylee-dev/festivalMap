@@ -61,4 +61,8 @@
 			ORDER  by b.id ASC -->
 		</select>
 		
+		<insert id="noCourseInsert" parameterType="Course">
+			
+		</insert>
+		
 	</mapper>

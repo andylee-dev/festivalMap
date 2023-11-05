@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.service.AccomodationService;
+import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
@@ -36,6 +40,8 @@ public class AdminContentController {
 	private final SpotService ss;
 	private final RestaurantService rs;
 	private final AccomodationService as;
+	private final AreaService ars;
+	private final CommonCodeService cs;
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -63,6 +69,75 @@ public class AdminContentController {
 	
 	@RequestMapping(value = "festivalDetail")
 	public String festivalDetail(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "admin/content/festivalDetail";
+	}
+	
+	@RequestMapping(value = "festivalInsertForm")
+	public String festivalInsertForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listPoint();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "end");
+		}		
+		return "admin/content/festivalInsertForm";
+	}
+	
+	@RequestMapping(value = "festivalInsert")
+	public String festivalInsert(FestivalsContent festival, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
+			festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
+			festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
+			fs.insertFestival(festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
+		}		
+		return "forward:festival";
+	}
+	
+	@RequestMapping(value = "festivalUpdate")
+	public String festivalUpdate(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "admin/content/festivalDetail";
+	}
+	
+	@RequestMapping(value = "festivalDelete")
+	public String festivalDelete(int contentId, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
@@ -117,9 +192,11 @@ public class AdminContentController {
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			List<Areas> listAreas = ars.listPoint();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page",page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin restaurant", e.getMessage());

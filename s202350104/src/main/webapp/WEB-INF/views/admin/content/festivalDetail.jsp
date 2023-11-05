@@ -39,7 +39,7 @@
 						</tr>
 						<tr>
 							<th>종료일</th>
-							<td>${festival.end_date }</td>
+							<td>${festival.end_date}</td>
 						</tr>
 						<tr>
 							<th>진행시간</th>
@@ -71,7 +71,7 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td>${festival.content}</td>
+							<td>${festival.overview}</td>
 						</tr>
 						<tr>
 							<th>이용요금</th>
@@ -79,11 +79,14 @@
 						</tr>
 						<tr>
 							<th>홈페이지</th>
-							<td>${festival.homepage}</td>
+							<td><a href="${festival.homepage}">${festival.homepage}</a></td>
 						</tr>
 						<tr>
 							<th>이미지</th>
-							<td>${festival.img1}<br>${festival.img2}<br>${festival.img3}</td>
+							<td>
+								<img alt="${festival.title}이미지1" src="${festival.img1}"><br>
+								<img alt="${festival.title}이미지2" src="${festival.img2}"><br>
+								<img alt="${festival.title}이미지3" src="${festival.img3}"></td>
 						</tr>
 						<tr>
 							<th>태그</th>
@@ -129,12 +132,12 @@
 						<c:if test="${festival.status == 0}">
 							<button type="button" class="btn btn-outline-secondary">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
-							<button type="button" class="btn btn-outline-secondary">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>
 						<c:if test="${festival.status == 1}">
-							<button type="button" class="btn btn-outline-secondary">수정</button>
-							<button type="button" class="btn btn-outline-secondary">삭제</button>
-							<button type="button" class="btn btn-outline-secondary">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalUpdate?contentId=${festival.content_id}'">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalDelete?contentId=${festival.content_id}'">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>
 					</div>
 				</div>		
