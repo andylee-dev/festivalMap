@@ -3,7 +3,6 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +52,10 @@ public class UserController {
 		return "user/bizPage/index";
 	}
 
+	@RequestMapping(value = "myPage/myPost")
+	public String myPost() {
+		return "user/myPage/myPost";
+	}
 
 	@RequestMapping(value = "myPage/qnaDetail")
 	public String qnaDetail(int user_id,int id, Model model) {
