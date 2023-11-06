@@ -18,17 +18,9 @@ public class BannerServiceImpl implements BannerService{
 	private final BannerDao bannerdao;
 	
 	@Override
-	public List<Banner> getBannerAllList() {
+	public List<Banner> getFooterBanner() {
 		
-		List<Banner> bannerAllList = bannerdao.getBannerAllList();
-		
-		return bannerAllList;
-	}
-	
-	@Override
-	public List<Banner> getMainBanner() {
-		
-		List<Banner> bannerMain = bannerdao.getMainBanner();
+		List<Banner> bannerMain = bannerdao.getFooterBanner();
 		
 		return bannerMain;
 	}

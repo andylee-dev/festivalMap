@@ -23,13 +23,16 @@ public class ContentController {
 	public String home(Model model) {	
 		log.info("ContentController start!");
 		String bannerUrl = "";
+		String title = "";
 
-		List<Banner> bannerMain = bannerService.getMainBanner();
+		List<Banner> bannerMain = bannerService.getFooterBanner();
 
 		bannerUrl = bannerMain.get(0).getUrl();
+		title = bannerMain.get(0).getTitle();
 		log.info("ContentController mainBanner bannerUrl : {}", bannerUrl);
+		log.info("ContentController mainBanner bannerUrl : {}", title);
 		
-		model.addAttribute("bannerUrl", bannerUrl);
+		model.addAttribute("banner", bannerMain); 
 		
 		return "home";
 	}

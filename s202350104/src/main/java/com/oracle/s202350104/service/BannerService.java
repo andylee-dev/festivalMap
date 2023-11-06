@@ -6,8 +6,6 @@ import com.oracle.s202350104.model.Banner;
 
 public interface BannerService {
 
-	List<Banner> getBannerAllList();
-
-	List<Banner> getMainBanner();
+	List<Banner> getFooterBanner();
 
 }

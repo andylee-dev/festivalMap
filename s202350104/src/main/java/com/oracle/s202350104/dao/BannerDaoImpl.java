@@ -18,24 +18,9 @@ public class BannerDaoImpl implements BannerDao {
 	private final SqlSession session;
 
 	@Override
-	public List<Banner> getBannerAllList() {
-
-		List<Banner> bannerAllList = null;
-
-		try {
-			bannerAllList = session.selectList("bannerAllList");
-			log.info("BannerDao bannerAllList size : {}", bannerAllList.size());
-
-		} catch (Exception e) {
-			log.error("BannerDao getBannerAllList : {}", e.getMessage());
-		}
-		return bannerAllList;
-	}
-
-	@Override
-	public List<Banner> getMainBanner() {
-		List<Banner> bannerMain = session.selectList("mainBanner");
-		log.info("BannerDao getMainBanner : {}", bannerMain.get(0).getUrl());
-		return bannerMain;
+	public List<Banner> getFooterBanner() {
+		List<Banner> bannerFooter = session.selectList("footerBanner");
+		log.info("BannerDao bannerFooter URL : {}", bannerFooter.get(0).getUrl());
+		return bannerFooter;
 	}
 }

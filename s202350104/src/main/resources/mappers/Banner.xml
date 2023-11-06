@@ -4,15 +4,13 @@
 
 <mapper namespace="com.oracle.s202350104.BannerMapper">
 	
-	<select id="bannerAllList" resultType="Banner">
+	<select id="footerBanner" resultType="Banner">
 		select *
-		from banner
-	</select>
-	
-	<select id="mainBanner" resultType="Banner">
-		select *
-		from banner
-		where id = 9
+		from banner a
+		join commoncodes b
+		on a.small_code = b.small_code
+		where b.content = 'Footer'
+		order by id
 	</select>
 	
 </mapper>
