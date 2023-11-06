@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Report;
@@ -116,6 +117,14 @@ public class AdminCsController {
 				model.addAttribute("msg","등록에 실패하였습니다.");
 			return "forward:qnaUpdate";
 			}
+	}
+	@ResponseBody
+	@RequestMapping(value = "admin/cs/qnaDelete")
+	public String deleteQna(Qna qna) {
+		log.info("delete 실행");
+		int result = qs.deleteQna(qna.getId(), qna.getUser_id());
+		String rsultStr = Integer.toString(result);
+		return rsultStr;
 	}
 	
 }
