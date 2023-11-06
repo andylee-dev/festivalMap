@@ -278,6 +278,39 @@ public class AdminContentController {
 		}
 		return "admin/content/spotList";
 	}
+	
+	@RequestMapping(value = "spotInsertForm")
+	public String spotInsertForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "spotInsert", "start");
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "spotInsert", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "spotInsert", "end");
+		}
+		return "admin/content/spotInsertForm";
+	}
+	
+	@RequestMapping(value = "spotInsertResult")
+	public String spotInsertResult(SpotContent spotContent, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int result = 0;
+		try {
+			log.info("[{}]{}:{}",transactionId, "spotInsert", "start");
+			result = ss.insertSpot(spotContent);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "spotInsert", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "spotInsert", "end");
+		}
+		if(result > 0) {
+			return "redirect:spot";
+		}else {
+			model.addAttribute("msg","등록에 실패하였습니다.");
+		}
+		return "forward:spotInsertForm";
+	}
 
 	@RequestMapping(value = "accomodation")
 		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {

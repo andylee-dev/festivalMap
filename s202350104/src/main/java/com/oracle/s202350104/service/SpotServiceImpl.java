@@ -49,6 +49,11 @@ public class SpotServiceImpl implements SpotService {
 		return spot;
 	}
 
+	@Override
+	public int insertSpot(SpotContent spotContent) {
+		return 0;
+	}
+
 
 
 }
