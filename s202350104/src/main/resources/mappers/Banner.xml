@@ -3,6 +3,26 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.BannerMapper">
+
+	<select id="bannerCount" resultType="int">
+		select count(*)
+		from banner
+	</select>
+
+	<select id="bannerAllList" resultType="Banner">
+		select *
+		from (
+		    select rownum rn, c.*
+		    from (
+                select DISTINCT a.id, a.title, a.url, a.created_at, a.updated_at, a.big_code, a.small_code
+                from banner a
+                join commoncodes b
+                on a.big_code = b.big_code
+                order by id
+		    ) c
+		)
+		where rn between #{start} and #{end}
+	</select>
 	
 	<select id="footerBanner" resultType="Banner">
 		select *

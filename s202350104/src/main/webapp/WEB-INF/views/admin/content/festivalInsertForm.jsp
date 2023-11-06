@@ -16,7 +16,7 @@
 							dataType:'json',
 							success:function(areas) {
 								$('#sigungu_list_select option').remove();
-								str = "<option value=''>전체</option>";
+								str = "<option value='999'>전체</option>";
 								$(areas).each(
 									function() {
 										if(this.sigungu != 999 && this.content != null) {

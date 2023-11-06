@@ -16,5 +16,11 @@ public class Banner {
 	private String image;
 	private Date created_at;
 	private Date updated_at;
-
+	
+	
+	// 조회용
+	private int start;
+	private int end;
+	private String pageNum;
+	
 }

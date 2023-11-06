@@ -125,21 +125,21 @@ public class FestivalController {
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
-			log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
-			log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
-			log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());
+			log.info("FestivalController reviewBoardList before board.getStart : {} ", board.getStart());
+			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getEnd());
+			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getContent_id());
 			
 			List<Board> revicewAllList = boardService.getReviewAllList(board); 
-			log.info("controller revicewAllList size : {}", revicewAllList.size());
+			log.info("FestivalController revicewAllList size : {}", revicewAllList.size());
 
-			log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
-			log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
+			log.info("FestivalController reviewBoardList after board.getStart : {} ", board.getStart());
+			log.info("FestivalController reviewBoardList after board.getEnd : {} ", board.getEnd());
 
 			bigCode = revicewAllList.get(0).getBig_code();
 
-			log.info("controller reviewBoardList totalBoard : {} ", countBoard);
-			log.info("controller reviewBoardList smallCode : {} ", smallCode);
-			log.info("controller reviewBoardList page : {} ", page);
+			log.info("FestivalController reviewBoardList totalBoard : {} ", countBoard);
+			log.info("FestivalController reviewBoardList smallCode : {} ", smallCode);
+			log.info("FestivalController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", revicewAllList);
 			model.addAttribute("page", page);

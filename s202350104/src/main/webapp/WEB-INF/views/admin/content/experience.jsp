@@ -33,13 +33,13 @@
 	    }
 		
 		function confirmRestore(contentId) {
-	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
+	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
 	            $.ajax({
 	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
 	                url: 'experienceRestoreAjax',
 	                data: { contentId: contentId },
 	                success: function(result) {
-	                    // 성공적으로 삭제된 경우의 처리
+	                    // 성공적으로 복원된 경우의 처리
 	                    alert('복원되었습니다.');
 	                    location.reload();
 	                },
@@ -132,7 +132,7 @@
 									<c:if test="${experience.is_deleted == 1}">
 									</c:if>
 									<c:if test="${experience.is_deleted == 0}">
-									<button onclick="location.href=''">수정</button>
+									<button onclick="location.href='experienceUpdateForm?contentId=${experience.id}'">수정</button>
 									</c:if>
 									</td>
 									<td>

@@ -9,7 +9,7 @@ public interface FestivalsService {
 	List<FestivalsContent> listFestivals(FestivalsContent festival);
 	FestivalsContent       detailFestivals(int contentId);
 	int                    totalFestivals();
-	void                   insertFestival(FestivalsContent festival);
+	int                    insertFestival(FestivalsContent festival);
 	int                    deleteFestivals(int contentId);
 	int                    approveFestival(int contentId);
 	int                    updateFestival(FestivalsContent festival);

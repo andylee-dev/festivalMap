@@ -57,15 +57,14 @@ public class FestivalsServiceImpl implements FestivalsService {
 	}
 
 	@Override
-	public void insertFestival(FestivalsContent festival) {
-		int contentResult = 0;
-		contentResult = fd.insertContent(festival);
-		int festivalResult = 0;
-		festivalResult = fd.insertFestival(festival);
+	public int insertFestival(FestivalsContent festival) {
+		int result = fd.insertFestival(festival);
 		
-		if(contentResult <= 0 || festivalResult <= 0) {
+		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 등록에 실패하였습니다.");
 		}
+		
+		return result;
 
 	}
 
@@ -94,17 +93,10 @@ public class FestivalsServiceImpl implements FestivalsService {
 
 	@Override
 	public int updateFestival(FestivalsContent festival) {
-		int result = 0;
+		int result = fd.updateFestival(festival);
 		
-		int contentResult = 0;
-		contentResult = fd.updateContent(festival);
-		int festivalResult = 0;
-		festivalResult = fd.updateFestival(festival);
-		
-		if(contentResult <= 0 || festivalResult <= 0) {
+		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 수정에 실패하였습니다.");
-		} else {
-			result = 1;
 		}
 		
 		return result;

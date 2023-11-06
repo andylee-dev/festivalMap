@@ -9,10 +9,8 @@ public interface FestivalsDao {
 	List<FestivalsContent> listFestivals(FestivalsContent festival);
 	FestivalsContent detailFestivals(int contentId);
 	int              totalFestivals();
-	int              insertContent(FestivalsContent festival);
 	int              insertFestival(FestivalsContent festival);
 	int              deleteFestivals(int contentId);
 	int              approveFestival(int contentId);
 	int              updateFestival(FestivalsContent festival);
-	int              updateContent(FestivalsContent festival);
 }

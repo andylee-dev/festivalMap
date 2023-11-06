@@ -43,12 +43,10 @@
 	    <c:if test="${msg!=null }">${msg }</c:if>
 	</div>
     <div class="container mt-5">
-        <form action="boardInsert" method="post" enctype="multipart/form-data">
+        <form action="integratedboardInsert" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="user_id" value="${userId }">
 			<input type="hidden" name="big_code" value="${bigCode }">
 			<input type="hidden" name="small_code" value="${smallCode }">
-			<input type="hidden" name="content_id" value="${contentId }">
-			<input type="hidden" name="currentPage" value="${currentPage }">
 				<div class="form-group">
 	               	<label for="title">제목</label>
 	                <input type="text" class="form-control" id="title" name="title" required>

@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
@@ -15,8 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class FestivalsDaoImpl implements FestivalsDao {
-
+	
 	private final SqlSession session;
+	private final PlatformTransactionManager transactionManager;
 
 	@Override
 	public List<FestivalsContent> listFestivals(FestivalsContent festival) {
@@ -53,26 +57,22 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		
 		return totalFestCnt;
 	}
-
-	@Override
-	public int insertContent(FestivalsContent festival) {
-		int result = 0;
-		try {
-			result = session.insert("nhContentsInsert", festival);
-		} catch(Exception e) {
-			log.info("FestivalsDaoImpl insertContent Exception => " + e.getMessage());
-		}
-		
-		return result;
-	}
 	
 	@Override
 	public int insertFestival(FestivalsContent festival) {
 		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
-			result = session.insert("nhFestivalInsert", festival);
+			result = session.insert("nhContentsInsert", festival);
+			log.info("insertFestival nhContentsInsert result => " + result);
+			result = session.insert("nhFestivalsInsert", festival);
+			log.info("insertFestival nhFestivalsInsert result => " + result);
+			transactionManager.commit(txStatus);
 		} catch(Exception e) {
+			transactionManager.rollback(txStatus);
 			log.info("FestivalsDaoImpl insertFestival Exception => " + e.getMessage());
+			result = -1;
 		}
 		
 		return result;
@@ -105,22 +105,17 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	@Override
 	public int updateFestival(FestivalsContent festival) {
 		int result = 0;
-		try {
-			result = session.update("nhFestivalsUpdate", festival);
-		} catch(Exception e) {
-			log.info("FestivalsDaoImpl updateFestival Exception => " + e.getMessage());
-		}
-		
-		return result;
-	}
-
-	@Override
-	public int updateContent(FestivalsContent festival) {
-		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
 			result = session.update("nhContentsUpdate", festival);
+			log.info("updateFestival nhContentsUpdate result => " + result);
+			result = session.update("nhFestivalsUpdate", festival);
+			log.info("updateFestival nhFestivalsUpdate result => " + result);
 		} catch(Exception e) {
-			log.info("FestivalsDaoImpl updateContent Exception => " + e.getMessage());
+			transactionManager.rollback(txStatus);
+			log.info("FestivalsDaoImpl updateFestival Exception => " + e.getMessage());
+			result = -1;
 		}
 		
 		return result;

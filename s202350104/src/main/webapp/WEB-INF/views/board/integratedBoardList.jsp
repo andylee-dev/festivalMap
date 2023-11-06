@@ -40,7 +40,7 @@
 	        	<h1>공지사항</h1>
 	    	</c:otherwise>
 		</c:choose>
-		<button class="btn btn-primary" onclick="location.href='boardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+		<button class="btn btn-primary" onclick="location.href='integratedboardInsert?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
 	</div>
 	<div class="text-center">
 		<button class="btn btn-primary" onclick="location.href='/reviewBoardList'">리뷰테스트</button>

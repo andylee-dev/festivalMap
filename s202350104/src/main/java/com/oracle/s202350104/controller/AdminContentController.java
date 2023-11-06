@@ -112,7 +112,7 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
 			festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
 			festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
-			fs.insertFestival(festival);
+			int result = fs.insertFestival(festival);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
 		} finally {
@@ -284,6 +284,12 @@ public class AdminContentController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "spotInsert", "start");
+			
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listAreas();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spotInsert", e.getMessage());
 		}finally {
@@ -375,12 +381,23 @@ public class AdminContentController {
 		
 	}
 	
-	@RequestMapping(value = "experienceDelete")
-	public String experienceDelete(int contentId, Model model) {
-		int experienceDelete = es.experienceDelete(contentId);
-		
-		return "redirect:experience";
-		
+	@RequestMapping(value = "experienceUpdateForm")
+	public String experienceUpdateForm(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			//FestivalsContent festival = fs.detailFestivals(contentId);
+			ExperienceContent experience = es.detailExperience(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("experience", experience);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin detailExperience", "end");
+		}		
+		return "admin/content/experienceUpdateForm";
 	}
 	
 	@ResponseBody
