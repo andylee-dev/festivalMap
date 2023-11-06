@@ -3,6 +3,8 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -311,7 +313,7 @@ public class AdminContentController {
 	}
 	
 	@GetMapping(value = "experience1")
-	public String listSearch(ExperienceContent experience,String currentPage, Model model) {
+	public String listSearch(ExperienceContent experience,String currentPage, Model model, HttpServletRequest request) {
 //	public String listSearch(String big_code,String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
@@ -319,6 +321,10 @@ public class AdminContentController {
 			int totalSearchExperience = es.totalSearchExperience(experience);
 			
 			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String is_deleted = request.getParameter("is_deleted");
+			String keyword = request.getParameter("keyword");
 			
 			Paging page = new Paging(totalSearchExperience, currentPage);
 			experience.setStart(page.getStart());
@@ -332,6 +338,10 @@ public class AdminContentController {
 			model.addAttribute("listSmallCode", listSmallCode);
 			model.addAttribute("page", page);
 			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("is_deleted" ,is_deleted);
+			model.addAttribute("keyword", keyword);
 	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

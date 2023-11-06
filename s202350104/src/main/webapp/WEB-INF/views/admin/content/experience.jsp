@@ -122,7 +122,7 @@
 									<a href="experience?currentPage=${i}" class="pageblock">[${i}]</a>
 								</c:when>
 								<c:when test="${path == 1}">
-									<a href="experience1?currentPage=${i}&big_code=${listExperience[0].big_code}&is_deleted=${listExperience[0].is_deleted}&small_code=${listExperience[0].small_code}" class="pageblock">[${i}]</a>
+									<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&is_deleted=${is_deleted}&small_code=${small_code}" class="pageblock">[${i}]</a>
 								</c:when>
 							</c:choose>
 						</c:forEach>
