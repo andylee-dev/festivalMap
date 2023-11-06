@@ -53,7 +53,7 @@
 				<h1>포토 게시판</h1>
 			</c:otherwise>
 		</c:choose>
-		<button class="btn btn-primary" onclick="location.href='boardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+		<button class="btn btn-primary" onclick="location.href='integratedBoardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
 	</div>
 
 	<c:set var="num" value="${page.total - page.start + 1}" />

@@ -192,8 +192,8 @@
             <div class="collapse" id="community-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="/admin/community/review" class="link-body-emphasis d-inline-flex text-decoration-none rounded">리뷰</a></li>
-                <li><a href="/admin/community/board" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판</a></li>
-                <li><a href="/admin/community/magazin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">메거진</a></li>
+                <li><a href="/admin/community/board" class="link-body-emphasis d-inline-flex text-decoration-none rounded">자유게시판</a></li>
+                <li><a href="/admin/community/magazin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">이달의소식</a></li>
               </ul>
             </div>
           </li>

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s202350104.model.Banner;
+import com.oracle.s202350104.model.Board;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,21 @@ import lombok.extern.slf4j.Slf4j;
 public class BannerDaoImpl implements BannerDao {
 
 	private final SqlSession session;
+	
+	// Paging 처리용
+	@Override
+	public int bannerCount() {
+
+		int countBanner = 0;
+
+		try {
+			countBanner = session.selectOne("bannerCount");
+		} catch (Exception e) {
+			log.error("BoardDao boardCount Exception : {}", e.getMessage());
+		}
+
+		return countBanner;
+	}
 	
 	// Footer Logic
 	@Override
@@ -53,6 +69,24 @@ public class BannerDaoImpl implements BannerDao {
 		}
 		
 		return bannerHeader;
+	}
+	
+	@Override
+	public List<Banner> getBannerAllList(Board board) {
+		log.info("BannerDao getBannerAllList Start!!");
+		
+		List<Banner> bannerAllList = null;
+		
+		try {
+			bannerAllList = session.selectList("bannerAllList", board);
+			log.info("BannerDao bannerAllList size : {}", bannerAllList.size());
+		} catch (Exception e) {
+			log.error("BannerDao getBannerAllList Exception : {}", e.getMessage());
+		} finally {
+			log.info("BannerDao getBannerAllList End..");
+		}
+		
+		return bannerAllList;
 	}
 
 }

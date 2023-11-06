@@ -115,7 +115,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
-		int userId = 1;
+		//int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -145,7 +145,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
-		model.addAttribute("userId", userId);
+		//model.addAttribute("userId", userId);
 		
 		log.info("controller freeBoardList End..");
 
@@ -378,7 +378,7 @@ public class BoardController {
 		return redirectURL;
 	}
 
-	// 통합게시판 생성 form Logic
+	// review 게시물 생성 form Logic
 	@RequestMapping(value = "/boardInsertForm")
 	public String boardInsertForm(String userId, String bigCode, String smallCode, String contentId, String currentPage, Model model) {
 
@@ -399,7 +399,7 @@ public class BoardController {
 		return "board/boardInsertForm";
 	}
 
-	// 통합게시판 생성 Logic
+	// review 게시물 생성  Logic
 	@RequestMapping(value = "/boardInsert")
 	public String boardInsert(Board board, Model model) {
 
@@ -408,8 +408,6 @@ public class BoardController {
 		log.info("controller boardInsert smallCode : {}", board.getSmall_code());
 		log.info("controller boardInsert contentId : {}", board.getContent_id());
 
-		int contentId = board.getContent_id();
-		
 		int insertBoard = boardService.boardInsert(board);
 
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
@@ -427,6 +425,52 @@ public class BoardController {
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
 			return "forward:/boardInsertForm";
+		}
+	}
+	
+	// 통합게시물 생성 form Logic	
+	@RequestMapping(value = "/integratedBoardInsertForm")
+	public String boardInsertForm2(String userId, String bigCode, String smallCode, Model model) {
+		
+		log.info("controller boardInsertForm2 start!");
+		log.info("controller boardInsertForm2 userId : {}", userId);
+		log.info("controller boardInsertForm2 bigCode : {}", bigCode);
+		log.info("controller boardInsertForm2 smallCode : {}", smallCode);
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		
+		log.info("controller boardInsertForm2 end!");
+		
+		return "board/integratedBoardInsertForm";
+	}
+	
+	// 통합게시판 생성 Logic
+	@RequestMapping(value = "/integratedboardInsert")
+	public String integratedboardInsert(Board board, Model model) {
+
+		log.info("controller integratedboardInsert userId : {}", board.getUser_id());
+		log.info("controller integratedboardInsert bigCode : {}", board.getBig_code());
+		log.info("controller integratedboardInsert smallCode : {}", board.getSmall_code());
+
+		int insertBoard = boardService.boardInsert(board);
+
+		if (insertBoard > 0 && board.getSmall_code() == 1) {
+			return "forward:/noticBoardList";
+		} else if (insertBoard > 0 && board.getSmall_code() == 2) {
+			return "forward:/magazinBoardList";
+		} else if (insertBoard > 0 && board.getSmall_code() == 3) {
+			return "forward:/freeBoardList";
+		} else if (insertBoard > 0 && board.getSmall_code() == 4) {
+			return "forward:/photoBoardList";
+		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
+			return "forward:/eventBoardList";
+		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
+			return "forward:/";
+		} else {
+			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
+			return "forward:/integratedBoardInsertForm";
 		}
 	}
 } 
