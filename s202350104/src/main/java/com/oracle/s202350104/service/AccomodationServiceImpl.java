@@ -57,4 +57,16 @@ public class AccomodationServiceImpl implements AccomodationService {
 		return accomodationDelete;
 	}
 
+	@Override
+	public void insertAccomodation(AccomodationContent accomodation) {
+		int contentResult = 0;
+		contentResult = ad.insertContent(accomodation);
+		int festivalResult = 0;
+		festivalResult = ad.insertAccomodation(accomodation);
+		
+		if(contentResult <= 0 || festivalResult <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 등록에 실패하였습니다.");
+		}
+	}
+
 }

@@ -39,5 +39,23 @@
 	<delete id="accomodationDelete" parameterType="int">
 		delete from accomodations where content_id=#{content_id}
 	</delete>
+	
+	<insert id="ContentsInsert" parameterType="AccomodationContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
+				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
+				readcount, user_id, created_at, is_deleted)
+		VALUES(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0',
+				#{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 
+				0, #{user_id}, sysdate, '0')
+	</insert>
+	
+	<insert id="AccomodationInsert" parameterType="AccomodationContent">
+		INSERT INTO accomodations(content_id, room_count, reservation_url, refund, check_in, check_out, 
+				is_pickup, is_cook, is_parking) 
+		VALUES(contents_id_seq.currval, #{room_count}, #{reservation_url}, #{refund}, #{check_in}, #{check_out}, 
+				#{is_pickup}, #{is_cook}, #{is_parking})
+	</insert>
+	
+	
 
 </mapper>

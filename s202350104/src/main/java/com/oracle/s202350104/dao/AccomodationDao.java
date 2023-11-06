@@ -10,6 +10,8 @@ public interface AccomodationDao {
 	AccomodationContent       		detailAccomodation(int contentId);
 	int								totalAccomodation();
 	int                             accomodationDelete(int contentId);
+	int                             insertContent(AccomodationContent accomodation);
+	int                             insertAccomodation(AccomodationContent accomodation);
 
 	
 
