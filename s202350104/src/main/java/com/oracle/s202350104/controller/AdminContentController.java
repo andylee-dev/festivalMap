@@ -334,7 +334,37 @@ public class AdminContentController {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
 			}
 			return "admin/content/accomodation";
-			
+						
+	}
+	@RequestMapping(value = "accomodationInsertForm")
+	public String accomodationInsertForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "start");
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listPoint();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationInsertForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "end");
+		}		
+		return "admin/content/accomodationInsertForm";
+	}
+	
+	@RequestMapping(value = "accomodation/insert")
+	public String accomodationInsert(AccomodationContent accomodation, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
+			as.insertAccomodation(accomodation);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationInsert", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
+		}		
+		return "redirect:../accomodation";
 	}
 	
 	@RequestMapping(value = "accomodationDelete")

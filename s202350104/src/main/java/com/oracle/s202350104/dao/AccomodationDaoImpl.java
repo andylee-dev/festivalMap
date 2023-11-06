@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s202350104.model.AccomodationContent;
-
+import com.oracle.s202350104.model.FestivalsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,5 +69,29 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		}
 		
 		return accomodationDelete;
+	}
+	
+	@Override
+	public int insertContent(AccomodationContent accomodation) {
+		int result = 0;
+		try {
+			result = session.insert("ContentsInsert", accomodation);
+		} catch(Exception e) {
+			log.info("AccomodationDaoImpl insertContent Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int insertAccomodation(AccomodationContent accomodation) {
+		int result = 0;
+		try {
+			result = session.insert("FestivalsInsert", accomodation);
+		} catch(Exception e) {
+			log.info("AccomodationDaoImpl insertAccomodation Exception => " + e.getMessage());
+		}
+		
+		return result;
 	}
 }
