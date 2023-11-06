@@ -106,4 +106,15 @@ public class QnaListDaoImpl implements QnaListDao {
 		}
 		return result;
 	}
+
+	@Override
+	public int adminUpdateQna(Qna qna) {
+		int result = 0;
+		try {
+			result = session.update("dhAdminUpdate",qna);
+		} catch (Exception e) {
+			log.info("QnaListDaoImpl updateqna() => " + e.getMessage());
+		}
+		return result;
+	}
 }

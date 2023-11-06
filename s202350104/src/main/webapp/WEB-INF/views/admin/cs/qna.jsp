@@ -56,8 +56,8 @@
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
 									<c:if test="${qna.status == 1}">답변완료</c:if>
 								</td>
-								<td><input type="button" value="수정"></td>
-								<td><input type="button" value="삭제"></td>
+								<td><input type="button"onclick="location.href='qnaUpdate?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
+								<td><input type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
 							</tr>
 							<c:set var="num" value="${num + 1}"/>
 						</c:forEach>

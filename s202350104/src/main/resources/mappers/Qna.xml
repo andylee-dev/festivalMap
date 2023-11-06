@@ -45,7 +45,7 @@
    
    <update id="dhQnaUpdate" parameterType="Qna">
    UPDATE 	qna	
-   SET		question_title = #{question_title}, question_content =#{question_content}
+   SET		question_title = #{question_title}, question_content = #{question_content}
    WHERE	id = #{id}	
    AND		user_id = #{user_id}	 
    </update>
@@ -54,5 +54,11 @@
    DELETE	qna WHERE id = #{id} AND user_id = #{user_id}
    </delete>
    
+   <update id="dhAdminUpdate" parameterType="Qna">
+   UPDATE	qna
+   SET		answer_title =#{answer_title}, answer_content = #{answer_content}, status = 1
+   WHERE	id = #{id}
+   AND		user_id = #{user_id}
+   </update>
 </mapper>   
 

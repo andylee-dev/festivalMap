@@ -64,4 +64,11 @@ public class QnaListServiceImpl implements QnaListService {
 		return result;
 	}
 
+	@Override
+	public int adminUpdateQna(Qna qna) {
+		int result = 0;
+		result = qd.adminUpdateQna(qna);
+		return result;
+	}
+
 }

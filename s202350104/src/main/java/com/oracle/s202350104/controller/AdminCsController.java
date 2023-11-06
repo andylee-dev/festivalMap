@@ -80,5 +80,42 @@ public class AdminCsController {
 			
 		return "admin/cs/qna";
 	}
+	@RequestMapping(value = "admin/cs/qnaUpdate")
+	public String qnaUpdate(int user_id, int id, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "qnaUpdate", "start");
+			Qna qna = qs.selectQna(user_id, id);
+			model.addAttribute("qna", qna);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "qnaUpdate", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "qnaUpdate", "end");
+		}	
+			return "admin/cs/qnaUpdate";
+	}
+	
+	@RequestMapping(value = "admin/cs/qnaUpdateResult")
+	public String qnaUpdateResult(Qna qna, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int result = 0;
+		try {
+			log.info("[{}]{}:{}",transactionId, "qnaUpdateResult", "start");
+			result = qs.adminUpdateQna(qna);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "qnaUpdateResult", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "qnaUpdateResult", "end");
+		}	
+			if(result > 0) {
+				return "redirect:qna";
+			} else {
+				model.addAttribute("user_id", qna.getUser_id());
+				model.addAttribute("id", qna.getId());
+				model.addAttribute("msg","등록에 실패하였습니다.");
+			return "forward:qnaUpdate";
+			}
+	}
+	
 }
-
