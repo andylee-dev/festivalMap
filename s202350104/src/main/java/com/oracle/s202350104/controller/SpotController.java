@@ -43,8 +43,8 @@ public class SpotController {
 			spotContent.setEnd(page.getEnd());
 		
 			List<SpotContent> listSpot = ss.listSpot(spotContent);
-			List<Areas> listAreas = as.listPoint();
-			
+			List<Areas> listAreas = as.listAreas();
+		
 			model.addAttribute("totalSpot",totalSpot);
 			model.addAttribute("listSpot", listSpot);
 			model.addAttribute("listAreas",listAreas);

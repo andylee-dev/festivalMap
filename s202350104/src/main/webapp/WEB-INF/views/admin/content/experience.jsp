@@ -125,7 +125,7 @@
 									<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&is_deleted=${is_deleted}&small_code=${small_code}" class="pageblock">[${i}]</a>
 								</c:when>
 							</c:choose>
-						</c:forEach>
+				</c:forEach>
 						
 						
 						
