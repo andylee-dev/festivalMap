@@ -116,7 +116,7 @@ public class AdminContentController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
 		}		
-		return "forward:admin/content/festival";
+		return "redirect:../festival";
 	}
 	
 	@RequestMapping(value = "festivalUpdateForm")
