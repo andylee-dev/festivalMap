@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Restaurants;
 import com.oracle.s202350104.model.RestaurantsContent;
 
@@ -59,5 +60,39 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		
 		return totalRestaurant;
 	}
-	
+
+	@Override
+	public int conTotalRestaurant(RestaurantsContent restaurant) {
+		int conTotalRestaurant = 0;
+		try {
+			conTotalRestaurant = session.selectOne("joConTotalRestaurant", restaurant);
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl joConTotalRestaurant() Exception ->" + e.getMessage());
+		}
+				
+		return conTotalRestaurant;
+	}
+
+	@Override
+	public List<RestaurantsContent> listSearchRestaurant(RestaurantsContent restaurant) {
+		List<RestaurantsContent> listSearchRestaurant = null;
+		try {
+			listSearchRestaurant = session.selectList("joListSearchRestaurant", restaurant);
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl joListSearchRestaurant() Exception ->" + e.getMessage());
+		}
+		return listSearchRestaurant;
+	}
+
+	@Override
+	public List<RestaurantsContent> listRestaurant() {
+		List<RestaurantsContent> listRestaurant = null;
+		try {
+			listRestaurant = session.selectList("RestaurantListAll");
+			log.info("listRestaurant.size" + listRestaurant.size());
+		} catch(Exception e) {
+			log.info("{}",e.getMessage());
+		}
+		return listRestaurant;
+	}
 }
