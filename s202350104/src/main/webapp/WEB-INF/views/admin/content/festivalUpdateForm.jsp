@@ -9,6 +9,7 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			function getSigungu(pArea){
+				var pSigungu = ${festival.sigungu}
 				$.ajax(
 						{
 							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
@@ -19,7 +20,7 @@
 								$(areas).each(
 									function() {
 										if(this.sigungu != 999 && this.content != null) {
-											strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
+											strOption = "<option value='"+this.sigungu+"' ${"+this.sigungu+" == "+pSigungu+"? 'selected':''}>"+this.content+"</option>";
 											str += strOption;
 										}
 									}		
@@ -47,6 +48,7 @@
 				<div class="border p-3 m-3">
 					<form action="festival/update?currentPage=${currentPage}" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
+						<input type="hidden" name="status" value="${festival.status}">
 						<table class="table table-striped table-sm">
 							<tr>
 								<th>컨텐츠 ID</th>
@@ -56,13 +58,13 @@
 								<th>분류</th>
 								<td>
 									<input type="hidden" name="big_code" value="11">[Festival] ${festival.scode_content}<br>
-									<select name="small_code" >
+									<select id="small_code" name="small_code">
 										<c:forEach var="code" items="${listCodes}">
 											<c:if test="${code.big_code == 11 && code.small_code != 999}">
-												<option value="${code.small_code}">${code.content}</option>
+												<option value="${code.small_code}" ${code.small_code == festival.small_code? 'selected' : '' }>${code.content}</option>
 											</c:if>
 										</c:forEach>
-									</select></td> <!-- select box -->
+									</select></td>
 							</tr>
 							<tr>
 								<th>축제명</th>
@@ -74,7 +76,7 @@
 							</tr>
 							<tr>
 								<th>종료일</th>
-								<td><input type="date" name="end_date" value="${festival.end_date }"></td>
+								<td><input type="date" name="end_date" value="${festival.end_date}"></td>
 							</tr>
 							<tr>
 								<th>진행시간</th>
@@ -100,15 +102,22 @@
 							<tr>
 								<th>지역</th>
 								<td>${festival.area_content} ${festival.sigungu_content} <br>
-									<select name="area" onchange="getSigungu(this.value)">
+									<select id="area" name="area" onchange="getSigungu(this.value)">
 										<option value="">전체</option>
 										<c:forEach var="areas" items="${listAreas}">
 											<c:if test="${areas.sigungu == 999}">
-												<option value="${areas.area}">${areas.content}</option>
+												<option value="${areas.area}" ${areas.area == festival.area? 'selected':''}>${areas.content}</option>
 											</c:if>
 										</c:forEach>
 									</select>
-									<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
+									<select name="sigungu" id="sigungu_list_select">
+										<option value="999">전체</option>
+										<c:forEach var="areas" items="${listSigungu}">
+											<c:if test="${areas.sigungu != 999 && areas.sigungu != null}">
+												<option value="${areas.sigungu}" ${areas.sigungu == festival.sigungu? 'selected':''}>${areas.content}</option>
+											</c:if>
+										</c:forEach>
+									</select>
 								</td>
 							</tr>
 							<tr>
@@ -144,10 +153,10 @@
 							<tr>
 								<th>가능 여부</th>
 								<td>
-									<input type="checkbox" name="is_parking" value="1">주차시설<br>
-									<input type="checkbox" name="is_stroller" value="1">유모차대여<br>
-									<input type="checkbox" name="is_wheelchair" value="1">휠체어대여<br>
-									<input type="checkbox" name="is_restroom" value="1">장애인화장실
+									<input type="checkbox" name="is_parking" value="1" ${festival.is_parking == 1? 'checked':''}>주차시설<br>
+									<input type="checkbox" name="is_stroller" value="1" ${festival.is_stroller == 1? 'checked':''}>유모차대여<br>
+									<input type="checkbox" name="is_wheelchair" value="1" ${festival.is_wheelchair == 1? 'checked':''}>휠체어대여<br>
+									<input type="checkbox" name="is_restroom" value="1" ${festival.is_restroom == 1? 'checked':''}>장애인화장실
 								</td>
 							</tr>
 							<tr>
