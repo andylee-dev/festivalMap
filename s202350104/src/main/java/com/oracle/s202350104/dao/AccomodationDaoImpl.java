@@ -87,7 +87,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 	public int insertAccomodation(AccomodationContent accomodation) {
 		int result = 0;
 		try {
-			result = session.insert("FestivalsInsert", accomodation);
+			result = session.insert("AccomodationInsert", accomodation);
 		} catch(Exception e) {
 			log.info("AccomodationDaoImpl insertAccomodation Exception => " + e.getMessage());
 		}

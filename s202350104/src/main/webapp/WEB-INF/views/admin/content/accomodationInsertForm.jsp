@@ -9,23 +9,24 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			function getSigungu(pArea){
-				$.ajax(
-						{
-							url:"<%=request.getContextPath()%>/getSigungu",
-							dataType:'json',
-							success:function(areas) {
-								$('#sigungu_list_select option').remove();
-								str = "<option value=''>전체</option>";
-								$(areas).each(
-									function() {
-										if(pArea == this.area && this.sigungu != 999 && this.content != null) {
-											strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
-											str += strOption;
-										}
-									}		
-								)
-								$('#sigungu_list_select').append(str);
-							}
+			$.ajax(
+					{
+						url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
+						data:pArea,
+						dataType:'json',
+						success:function(areas) {
+							$('#sigungu_list_select option').remove();
+							str = "<option value=''>전체</option>";
+							$(areas).each(
+								function() {
+									if(this.sigungu != 999 && this.content != null) {
+										strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
+										str += strOption;
+									}
+								}		
+							)
+							$('#sigungu_list_select').append(str);
+						}
 						}		
 				)
 			}
