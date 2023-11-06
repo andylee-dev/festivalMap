@@ -22,6 +22,7 @@
 											if(result == '1') {
 												$('#tag'+pIndex).remove();
 												alert("성공적으로 삭제되었습니다.");
+												location.reload();
 											} else {
 												alert("삭제에 실패하였습니다.");
 											}		

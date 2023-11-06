@@ -112,7 +112,7 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
 			festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
 			festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
-			fs.insertFestival(festival);
+			int result = fs.insertFestival(festival);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
 		} finally {
