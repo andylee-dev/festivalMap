@@ -127,9 +127,22 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
 			FestivalsContent festival = fs.detailFestivals(contentId);
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listAreas();
+			List<Areas> listSigungu = ars.listSigungu(festival.getArea());
 			
+			/*
+			 * String startdate = festival.getStart_date();
+			 * festival.setStart_date(startdate.substring(0,1)+"-"+startdate.substring(2,3)+
+			 * "-"+startdate.substring(4,5)); String enddate = festival.getEnd_date();
+			 * festival.setEnd_date(enddate.substring(0,1)+"-"+enddate.substring(2,3)+"-"+
+			 * enddate.substring(4,5));
+			 */
+			
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("listSigungu", listSigungu);
 			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("contentId", contentId);
 			model.addAttribute("festival", festival);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
