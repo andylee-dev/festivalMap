@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/components/header.jsp"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Spot</title>
-<style type="text/css">
-	.pageblock {
+	<head>
+	<meta charset="UTF-8">
+		<title>Spot</title>
+		<style type="text/css">
+			.pageblock {
 				text-align: center;
 			}
 			.card-text {
@@ -17,9 +18,34 @@
 				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
 				-webkit-box-orient: vertical;
 			}	
-</style>
-</head>
-<body>
+		</style>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+			function getSigungu(pArea){
+				$.ajax(
+					{
+						url:"/getSigungu",
+						dataType:'json',
+						success:function(areas){
+							$('#sigungu_list_select option').remove();
+							str = "<option value=''>전체</option>";
+							$(areas).each(
+								function() {
+									if(pArea == this.area && this.sigungu != 999 && this.content != null) {
+										strOption = "<option value='"+this.sigungu+"'>"+this.content+"</option>";
+										str += strOption;
+									}
+								}		
+							)
+							$('#sigungu_list_select').append(str);
+						}
+					}		
+				
+				)
+			}
+		</script>
+	</head>
+	<body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<main>
 		<div
@@ -28,19 +54,19 @@
 		</div>
 		<div class="border p-3 m-3">
 			<h1 class="border">검색폼</h1>
-			<select name="area">
+			<select name="area" onchange="getSigungu(this.value)">
+			<option value="">전체</option>
 				<c:forEach var="areas" items="${listAreas}">
-					<c:if test="${areas.sigungu == 999}"><option value="${areas.area}">${areas.content}</option></c:if>
+					<c:if test="${areas.sigungu == 999}">
+						<option value="${areas.area}">${areas.content}</option>
+					</c:if>
 				</c:forEach>
 			</select>
-			<select name="sigungu">
-				<c:forEach var="areas" items="${listAreas}">
-					<c:if test="${areas.sigungu != 999}"><option value="${areas.sigungu}">${areas.content}</option></c:if>
-				</c:forEach>
-			</select>
-				<button type="button" class="btn btn-outline-secondary">검색</button>
-				<button type="button" class="btn btn-outline-secondary">초기화</button>
+			<select name="sigungu" id="sigungu_list_select"></select>
+			<button type="button" class="btn btn-outline-secondary">검색</button>
+			<button type="button" class="btn btn-outline-secondary">초기화</button>
 		</div>
+		
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

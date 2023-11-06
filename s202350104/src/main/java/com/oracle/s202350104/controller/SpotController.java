@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Board;
@@ -52,6 +53,18 @@ public class SpotController {
 		}
 		return "spot/spotList";
 	}
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "getSigungu") public List<Areas> getSigungu() { UUID
+	 * transactionId = UUID.randomUUID(); List<Areas> listAreas = null; try {
+	 * log.info("[{}]{}:{}",transactionId, "getSigungu", "start"); listAreas =
+	 * as.listPoint(); } catch (Exception e) { log.error("[{}]{}:{}",transactionId,
+	 * "getSigungu", e.getMessage()); } finally {
+	 * log.info("[{}]{}:{}",transactionId, "getSigungu", "end"); } return listAreas;
+	 * }
+	 */
 	
 	@RequestMapping(value = "spot/detail")
 	public String spotDetail(int contentId, String currentPage, Board board, Model model) {
