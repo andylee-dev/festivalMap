@@ -37,6 +37,7 @@
 							<th scope="col">생년월일</th>
 							<th scope="col">문의제목</th>
 							<th scope="col">등록일</th>
+							<th scope="col">수정일</th>
 							<th scope="col">답변여부</th>
 							<th scope="col">수정</th>
 							<th scope="col">삭제</th>  
@@ -53,6 +54,7 @@
 								<td>${qna.birthday}</td>
 								<td><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
 								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
+								<td><fmt:formatDate value="${qna.updated_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
 									<c:if test="${qna.status == 1}">답변완료</c:if>
 								</td>

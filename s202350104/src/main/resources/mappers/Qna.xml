@@ -56,7 +56,7 @@
    
    <update id="dhAdminUpdate" parameterType="Qna">
    UPDATE	qna
-   SET		answer_title =#{answer_title}, answer_content = #{answer_content}, status = 1
+   SET		answer_title =#{answer_title}, answer_content = #{answer_content}, status = 1, updated_at =sysdate
    WHERE	id = #{id}
    AND		user_id = #{user_id}
    </update>
