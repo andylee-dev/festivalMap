@@ -8,4 +8,6 @@ public interface BannerService {
 
 	List<Banner> getFooterBanner();
 
+	List<Banner> getHeaderBanner();
+
 }

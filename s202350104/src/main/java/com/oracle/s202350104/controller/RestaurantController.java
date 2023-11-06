@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Restaurants;
 import com.oracle.s202350104.model.RestaurantsContent;
 import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.RestaurantService;
@@ -30,6 +32,7 @@ public class RestaurantController {
 	private final RestaurantService rs;
 	private final AreaService as;
 	private final BoardService boardService;
+	private final BannerService bannerService;
 	
 	@GetMapping(value = "/restaurant")
 	public String restaurant(RestaurantsContent restaurant, String currentPage, Model model) {
@@ -45,10 +48,18 @@ public class RestaurantController {
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
 			List<Areas> listAreas = as.listPoint();
 			
+			/*
+			 * HeaderBanner Logic 구간 
+			 * by 엄민용
+			 * */
+			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
+			model.addAttribute("bannerHeader", bannerHeader);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "restaurant", e.getMessage());
 		} finally {

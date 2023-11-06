@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.Paging;
 
@@ -27,6 +29,7 @@ public class AccomodationController {
 	private final AccomodationService as;
 	private final AreaService ars;
 	private final BoardService boardService;
+	private final BannerService bannerService;
 	
 	@GetMapping(value = "/accomodation")
 	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
@@ -41,11 +44,14 @@ public class AccomodationController {
 			
 			List<AccomodationContent> listAccomodation = as.listAccomodation(accomodation);
 			List<Areas> listAreas = ars.listPoint();
+			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 			
 			model.addAttribute("totalAccomodation", totalAccomodation);
 			model.addAttribute("listAccomodation", listAccomodation);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
+			model.addAttribute("bannerHeader", bannerHeader);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "accomodation", e.getMessage());
 		} finally {

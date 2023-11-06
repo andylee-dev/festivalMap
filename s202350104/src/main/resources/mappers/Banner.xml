@@ -13,4 +13,13 @@
 		order by id
 	</select>
 	
+	<select id="headerBanner" resultType="Banner">
+		select a.title, a.url
+		from banner a
+		join commoncodes b
+		on a.small_code = b.small_code
+		where b.content = 'Content'
+		order by id
+	</select>
+	
 </mapper>

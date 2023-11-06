@@ -24,4 +24,12 @@ public class BannerServiceImpl implements BannerService{
 		
 		return bannerMain;
 	}
+	
+	@Override
+	public List<Banner> getHeaderBanner() {
+		
+		List<Banner> bannerHeader = bannerdao.getHeaderBanner();
+		
+		return bannerHeader;
+	}
 }

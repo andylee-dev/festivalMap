@@ -23,4 +23,10 @@ public class BannerDaoImpl implements BannerDao {
 		log.info("BannerDao bannerFooter URL : {}", bannerFooter.get(0).getUrl());
 		return bannerFooter;
 	}
+	
+	@Override
+	public List<Banner> getHeaderBanner() {
+		List<Banner> bannerHeader = session.selectList("headerBanner");
+		return bannerHeader;
+	}
 }

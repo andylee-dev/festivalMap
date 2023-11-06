@@ -22,7 +22,15 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main>
 	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-		<img alt="숙박_mainBanner" src="../image/accomBanner.jpg">
+		<!-- HeaderBanner by.엄민용 -->
+		<c:forEach var="headers" items="${bannerHeader }">
+			<c:choose>
+				<c:when test="${headers.title == '숙박' }">
+					<img alt="숙박_headerBanner" src="${headers.url }">
+				</c:when>
+			</c:choose> 
+		</c:forEach>
+		<!-- HeaderBanner end -->
 	</div>
 	<div class="border p-3 m-3">
 				<h1 class="border">검색폼</h1>

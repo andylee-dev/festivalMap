@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Report;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.service.Paging;
@@ -26,6 +28,7 @@ public class ExperienceController {
 
 	private final ExperienceService es;
 	private final BoardService boardService;
+	private final BannerService bannerService;
 	
 	@RequestMapping(value = "experience")
 	public String experience(ExperienceContent experience,String currentPage, Model model) {
@@ -40,9 +43,16 @@ public class ExperienceController {
 			
 			List<ExperienceContent> listExperience = es.listExperience(experience);
 			
+			/*
+			 * HeaderBanner Logic 구간 
+			 * by 엄민용
+			 * */
+			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			
 			model.addAttribute("totalExperience", totalExperience);
 			model.addAttribute("listExperience", listExperience);
 			model.addAttribute("page", page);
+			model.addAttribute("bannerHeader", bannerHeader);			
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

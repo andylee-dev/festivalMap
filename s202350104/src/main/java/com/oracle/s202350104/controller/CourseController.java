@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.Paging;
 
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CourseController {
 	
 	private final CourseService cs;
+	private final BannerService bannerService;
 	
 	@RequestMapping(value = "course")
 	public String courses(Course course, String currentPage, Model model) {
@@ -35,9 +38,17 @@ public class CourseController {
 			List<Course> courseList = cs.courseList(course);
 			log.info("CourseController courses courseList.size() ->" + courseList.size());
 			
+			/*
+			 * HeaderBanner Logic 구간 
+			 * by 엄민용
+			 * */
+			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("page", page);
+			model.addAttribute("bannerHeader", bannerHeader);
+			
 		} catch (Exception e) {
 			log.error("CourseController courses e.getMessage() ->" + e.getMessage());
 		} finally {

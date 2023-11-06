@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
 import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.SpotService;
@@ -27,6 +29,7 @@ public class SpotController {
 	private final SpotService ss;
 	private final AreaService as;
 	private final BoardService boardService;
+	private final BannerService bannerService;
 
 	@RequestMapping(value = "spot")
 	public String spot(SpotContent spotContent,String currentPage, Model model) {
@@ -41,11 +44,19 @@ public class SpotController {
 		
 			List<SpotContent> listSpot = ss.listSpot(spotContent);
 			List<Areas> listAreas = as.listPoint();
+			
+			/*
+			 * HeaderBanner Logic 구간 
+			 * by 엄민용
+			 * */
+			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 		
 			model.addAttribute("totalSpot",totalSpot);
 			model.addAttribute("listSpot", listSpot);
 			model.addAttribute("listAreas",listAreas);
 			model.addAttribute("page",page);
+			model.addAttribute("bannerHeader",bannerHeader);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spot", e.getMessage());
 		}finally {

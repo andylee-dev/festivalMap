@@ -25,7 +25,15 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main>
 		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-			<img alt="코스_mainBanner" src="../image/courseBanner.jpg">
+			<!-- HeaderBanner by.엄민용 -->				
+			<c:forEach var="headers" items="${bannerHeader }">
+				<c:choose>
+					<c:when test="${headers.title == '코스' }">
+						<img alt="코스_headerBanner" src="${headers.url }">
+					</c:when>
+				</c:choose> 
+			</c:forEach>
+			<!-- HeaderBanner end -->
 		</div>
 		
 		<div class="album py-5 bg-body-tertiary">

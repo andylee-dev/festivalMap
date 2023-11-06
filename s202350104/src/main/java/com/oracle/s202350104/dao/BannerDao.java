@@ -8,4 +8,6 @@ public interface BannerDao {
 
 	List<Banner> getFooterBanner();
 
+	List<Banner> getHeaderBanner();
+
 }
