@@ -21,24 +21,37 @@ public class AreasDaoImpl implements AreasDao {
 	public List<Areas> listAreas() {
 		List<Areas> listAreas = null;
 		try {
-			listAreas = session.selectList("AreasListAll");
+			listAreas = session.selectList("getAreaList");
 		} catch(Exception e) {
 			log.info("{}",e.getMessage());
 		}
 		return listAreas;
 	}
 
+
 	@Override
-	public List<Areas> listAreas(Areas area) {
+	public List<Areas> listSigungu(int area) {
 		List<Areas> listAreas = null;
 		try {
-			listAreas = session.selectList("joAreasListAll", area);
-			log.info("AreasDaoImpl listAreas size()->" + listAreas.size());			
+			listAreas = session.selectList("getSigunguList", area);
+			log.info("AreasDaoImpl listSigungu size()->" + listAreas.size());			
 		} catch (Exception e) {
 			log.info("{}", e.getMessage());
 		}
 		return listAreas;
 	}
+	
+//	@Override
+//	public List<Areas> listAreas(Areas area) {
+//		List<Areas> listAreas = null;
+//		try {
+//			listAreas = session.selectList("joAreasListAll", area);
+//			log.info("AreasDaoImpl listAreas size()->" + listAreas.size());			
+//		} catch (Exception e) {
+//			log.info("{}", e.getMessage());
+//		}
+//		return listAreas;
+//	}
 
 	@Override
 	public int totalAreaCode() {
@@ -75,6 +88,7 @@ public class AreasDaoImpl implements AreasDao {
 		
 		return listSearchAreaCode;
 	}
+
 
 	
 }
