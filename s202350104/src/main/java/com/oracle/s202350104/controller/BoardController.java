@@ -34,6 +34,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 1;
+		int userId = 1001;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -62,6 +63,8 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
 		log.info("controller noticBoardList End..");
 
 		return "board/integratedBoardList";
@@ -74,6 +77,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 2;
+		int userId = 1001;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -102,6 +106,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
 		
 		log.info("controller magazinBoardList End..");
 
@@ -115,7 +120,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
-		//int userId = 1;
+		int userId = 1001;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -145,7 +150,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
-		//model.addAttribute("userId", userId);
+		model.addAttribute("userId", userId);
 		
 		log.info("controller freeBoardList End..");
 
@@ -159,6 +164,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 4;
+		int userId = 1001;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -187,6 +193,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
 		
 		log.info("controller photoBoardList End..");
 
@@ -200,6 +207,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 5;
+		int userId = 1001;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -228,6 +236,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
 		
 		log.info("controller eventBoardList End..");
 
@@ -244,7 +253,6 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 6;
-		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -274,7 +282,6 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
-		model.addAttribute("userId", userId);
 		
 		log.info("controller reviewBoardList End..");
 
@@ -283,13 +290,15 @@ public class BoardController {
 
 	// 통합게시판 상세정보 Logic
 	@RequestMapping(value = "/boardDetail")
-	public String boardContent(int id, Model model) {
+	public String boardContent(int id, int userId,Model model) {
 
 		log.info("controller boardContent boardId : {} ", id);
+		log.info("controller boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
 
 		model.addAttribute("board", boards);
+		model.addAttribute("userId", userId);
 
 		return "board/boardDetail";
 
@@ -335,46 +344,55 @@ public class BoardController {
 
 	// 통합게시판 삭제 Logic
 	@RequestMapping(value = "/boardDelete")
-	public String boardDelete(int id, int smallCode) {
+	public String boardDelete(int id, int userId, int smallCode) {
 
 		log.info("controller boardDelete small_code : {}", smallCode);
 		log.info("controller boardDelete id : {}", id);
+		log.info("controller boardDelete userId : {}", userId);
 
 		boardService.boardDelete(id);
 
-		String redirectURL = "";
-
-		switch (smallCode) {
-		case 1:
-			// 삭제 후, 공지사항 redirect
-			redirectURL = "redirect:/noticBoardList";
-			break;
-		case 2:
-			// 삭제 후, 이달의 소식 redirect
-			redirectURL = "redirect:/magazinBoardList";
-			break;
-		case 3:
-			// 삭제 후, 자유게시판 redirect
-			redirectURL = "redirect:/freeBoardList";
-			break;
-		case 4:
-			// 삭제 후, 포토게시판 redirect
-			redirectURL = "redirect:/photoBoardList";
-			break;
-		case 5:
-			// 삭제 후, 이벤트게시판 redirect
-			redirectURL = "redirect:/eventBoardList";
-			break;
-		case 6:
-			// 삭제 후, 공지사항 redirect
-			redirectURL = "redirect:/reviewBoardList";
-			break;
-		default:
-			// 기본 처리, 오류 처리용
+		String redirectURL = "";		
+		
+		if(smallCode == 1) {
+			if(userId > 1) {
+				redirectURL = "redirect:/noticBoardList";	
+			} else {
+				redirectURL = "redirect:/admin/notice/notice";
+			}
+		} else if(smallCode == 2) {
+			if(userId > 1) {
+				redirectURL = "redirect:/magazinBoardList";	
+			} else {
+				redirectURL = "redirect:/admin/community/magazin";
+			}
+		} else if(smallCode == 3) {
+			if(userId > 1) {
+				redirectURL = "redirect:/freeBoardList";	
+			} else {
+				redirectURL = "redirect:/admin/community/board";
+			}
+		} else if(smallCode == 4) {
+			if(userId > 1) {
+				redirectURL = "redirect:/photoBoardList";	
+			} else {
+				redirectURL = "redirect:/admin/community/photo";
+			}
+		} else if(smallCode == 5) {
+			if(userId > 1) {
+				redirectURL = "redirect:/eventBoardList";	
+			} else {
+				redirectURL = "redirect:/admin/notice/event";
+			}
+		} else if(smallCode == 6) {
+			if(userId > 1) {
+				redirectURL = "redirect:/reviewBoardList";	
+			} else {
+				redirectURL = "redirect:/admin/community/review";
+			}
+		} else {
 			redirectURL = "redirect:/";
-			break;
 		}
-
 		return redirectURL;
 	}
 
@@ -457,16 +475,36 @@ public class BoardController {
 		int insertBoard = boardService.boardInsert(board);
 
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
+			if(board.getUser_id() == 1){
+				return "forward:/admin/notice/notice";
+			}
 			return "forward:/noticBoardList";
+			
 		} else if (insertBoard > 0 && board.getSmall_code() == 2) {
+			if(board.getUser_id() == 1){
+				return "forward:/admin/community/magazin";
+			}
 			return "forward:/magazinBoardList";
+			
 		} else if (insertBoard > 0 && board.getSmall_code() == 3) {
+			if(board.getUser_id() == 1){
+				return "forward:/admin/community/board";
+			}
 			return "forward:/freeBoardList";
+			
 		} else if (insertBoard > 0 && board.getSmall_code() == 4) {
 			return "forward:/photoBoardList";
+			
 		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
+			if(board.getUser_id() == 1){
+				return "forward:/admin/notice/event";
+			}
 			return "forward:/eventBoardList";
+			
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
+			if(board.getUser_id() == 1){
+				return "forward:/admin/community/review";
+			}
 			return "forward:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");

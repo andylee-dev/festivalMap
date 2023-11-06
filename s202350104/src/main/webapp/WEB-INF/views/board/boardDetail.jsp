@@ -86,7 +86,7 @@
 	</div>
 	<div class="text-center">
 		<button class="btn btn-primary" onclick="location.href='boardUpdateForm?id=${board.id}'">수정</button>
-		<button class="btn btn-danger" onclick="location.href='boardDelete?id=${board.id}&smallCode=${board.small_code }'">삭제</button>
+		<button class="btn btn-danger" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭제</button>
 		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
 	</div>
 </body>

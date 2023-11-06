@@ -48,6 +48,7 @@
 							<tr>
 								<th scope="col">순번</th>
 								<th scope="col">제목</th>
+								<th scope="col">작성자</th>
 								<th scope="col">등록일</th>
 								<th scope="col">수정일</th>
 								<th scope="col">수정</th>
@@ -66,10 +67,11 @@
 											<td>${boards.title }</td>
 										</c:otherwise>
 									</c:choose>
+									<td>${boards.name }</td>
 									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><input onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
-									<td><input onclick="location.href='../../boardDelete?id=${boards.id}'" type="button" value="삭제"></td>
+									<td><input onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
 								</tr>
 								<c:set var="num" value="${num - 1 }"/>
 							</c:forEach>
@@ -79,7 +81,8 @@
 						<c:when test="${smallCode eq 2}">
 							<div align="center">
 								<c:if test="${page.startPage > page.pageBlock}">
-									<a href="magazin?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+									<a href="magazin?currentPage=${page.startPage-page.pageBlock}"
+									   class="pageblock">[이전]</a>
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 									<a href="magazin?currentPage=${i}" class="pageblock">[${i}]</a>

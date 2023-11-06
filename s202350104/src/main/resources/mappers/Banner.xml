@@ -14,11 +14,12 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-                select DISTINCT a.id, a.title, a.url, a.created_at, a.updated_at, a.big_code, a.small_code
-                from banner a
-                join commoncodes b
-                on a.big_code = b.big_code
-                order by id
+                    select distinct a.id, a.title, b.content, a.created_at, a.updated_at, a.big_code
+                    from banner a
+                    join commoncodes b
+                    on a.small_code = b.small_code 
+                    where b.big_code = 3
+                    order by id
 		    ) c
 		)
 		where rn between #{start} and #{end}

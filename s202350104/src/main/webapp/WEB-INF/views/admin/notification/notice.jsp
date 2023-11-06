@@ -48,6 +48,14 @@
 							<tr>
 								<th scope="col">순번</th>
 								<th scope="col">제목</th>
+								<c:choose>
+									<c:when test="${bigCode eq 2 }">
+										<th scope="col">작성자</th>
+									</c:when>
+									<c:otherwise>
+										<th scope="col">타입</th>
+									</c:otherwise>
+								</c:choose>
 								<th scope="col">등록일</th>
 								<th scope="col">수정일</th>
 								<th scope="col">수정</th>
@@ -59,10 +67,18 @@
 								<tr>
 									<td>${num }</td>
 									<td>${boards.title }</td>
+									<c:choose>
+										<c:when test="${bigCode eq 2 }">
+											<td>${boards.name }</td>
+										</c:when>
+										<c:otherwise>
+											<td>${boards.content }</td>
+										</c:otherwise>
+									</c:choose>
 									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><input onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
-									<td><input onclick="location.href='../../boardDelete?id=${boards.id}'" type="button" value="삭제"></td>
+									<td><input onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
 								</tr>
 								<c:set var="num" value="${num - 1 }"/>
 							</c:forEach>
