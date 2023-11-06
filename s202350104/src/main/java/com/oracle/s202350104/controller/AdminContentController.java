@@ -196,6 +196,8 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
 			int totalExperience = es.totalExperience();
 			
+			int path = 0;
+			
 			Paging page = new Paging(totalExperience, currentPage);
 			experience.setStart(page.getStart());
 			experience.setEnd(page.getEnd());
@@ -206,6 +208,7 @@ public class AdminContentController {
 			model.addAttribute("totalExperience", totalExperience);
 			model.addAttribute("listExperience", listExperience);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());
@@ -307,13 +310,15 @@ public class AdminContentController {
 		
 	}
 	
-	@GetMapping(value = "listSearch")
+	@GetMapping(value = "experience1")
 	public String listSearch(ExperienceContent experience,String currentPage, Model model) {
 //	public String listSearch(String big_code,String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
 			int totalSearchExperience = es.totalSearchExperience(experience);
+			
+			int path = 1;
 			
 			Paging page = new Paging(totalSearchExperience, currentPage);
 			experience.setStart(page.getStart());
@@ -326,6 +331,7 @@ public class AdminContentController {
 			model.addAttribute("listExperience", listSearchExperience);
 			model.addAttribute("listSmallCode", listSmallCode);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
 	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

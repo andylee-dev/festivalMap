@@ -22,17 +22,17 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-						<form action="listSearch" method="get">
+						<form action="experience1" method="get">
 							<input type="text" name="keyword" placeholder="keyword를 입력하세요">
 							<button type="submit">keyword검색</button>
 							<input type="hidden" name="big_code" value="15">
-							<button type="button" class="btn btn-outline-secondary">초기화</button><p>
+							<button type="button" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
 								<select name="is_deleted">
 									<option value="2">전체</option>
 									<option value="0">활성화</option>
 									<option value="1">비활성화</option>
 								</select>
-								<select name="small_code">
+								<select name="small_code" >
 									<option value="999">전체</option>
 									<c:forEach var="small" items="${listSmallCode}">
 									<option value="${small.small_code}">${small.content}</option>
@@ -103,14 +103,42 @@
 					</table>					
 					
 					<div align="center">
+					
 						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="experience?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+							<c:choose>
+								<c:when test="${path ==0}">
+									<a href="experience?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+								</c:when>
+								<c:when test="${path ==1}">
+									<a href="experience1?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+								</c:when>
+							</c:choose>
+							
+							
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="experience?currentPage=${i}" class="pageblock">[${i}]</a>
+							<c:choose>
+								<c:when test="${path ==0}">
+									<a href="experience?currentPage=${i}" class="pageblock">[${i}]</a>
+								</c:when>
+								<c:when test="${path == 1}">
+									<a href="experience1?currentPage=${i}&big_code=${listExperience[0].big_code}&is_deleted=${listExperience[0].is_deleted}&small_code=${listExperience[0].small_code}" class="pageblock">[${i}]</a>
+								</c:when>
+							</c:choose>
 						</c:forEach>
+						
+						
+						
+						
 						<c:if test="${page.endPage < page.totalPage}">
-							<a href="experience?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+							<c:choose>
+								<c:when test="${path ==0}">
+									<a href="experience?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+								</c:when>
+								<c:when test="${path ==1}">
+									<a href="experience1?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+								</c:when>
+							</c:choose>
 						</c:if>
 					</div>
 				</div>		

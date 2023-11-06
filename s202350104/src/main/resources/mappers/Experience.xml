@@ -12,7 +12,6 @@
 			(SELECT *
 			 FROM experience e, contents c
 			 WHERE e.content_id = c.id
-			 AND c.is_deleted = 0
 			 ORDER BY content_id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
@@ -23,7 +22,6 @@
 		SELECT count(*)
 		FROM   experience e, contents c
 		WHERE  e.content_id = c.id
-		AND c.is_deleted = 0
 	</select>
 	
 	<select id="shExperienceDetail" resultType="ExperienceContent" parameterType="int">
@@ -71,6 +69,9 @@
 				<if test="big_code != null">
 				WHERE big_code = #{big_code}
 				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
 				<if test="is_deleted != null">
 					<choose>
  	 					<when test="is_deleted != 2">
@@ -97,6 +98,9 @@
 		SELECT count(*)
 		FROM   experience e, contents c
 		WHERE  e.content_id = c.id
+		<if test="keyword != null">
+			AND title like '%' || #{keyword} || '%'
+		</if>
 		<if test="big_code != null">
 			And c.big_code = #{big_code}
 		</if>
