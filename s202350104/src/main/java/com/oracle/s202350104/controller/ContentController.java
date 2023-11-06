@@ -23,9 +23,9 @@ public class ContentController {
 	public String home(Model model) {	
 		log.info("ContentController start!");
 
-		List<Banner> bannerMain = bannerService.getFooterBanner();
+		List<Banner> bannerFooter = bannerService.getFooterBanner();	
 		
-		model.addAttribute("banner", bannerMain); 
+		model.addAttribute("bannerFooter", bannerFooter); 
 		
 		return "home";
 	}

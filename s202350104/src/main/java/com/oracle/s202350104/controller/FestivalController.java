@@ -48,10 +48,12 @@ public class FestivalController {
 			List<Areas> listAreas = as.listPoint();
 			
 			/*
-			 * HeaderBanner Logic 구간 
+			 * Banner Logic 구간 
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			List<Banner> bannerFooter = bannerService.getFooterBanner();		
+
 			
 			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
 			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
@@ -60,6 +62,7 @@ public class FestivalController {
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
 			model.addAttribute("bannerHeader", bannerHeader);
+			model.addAttribute("bannerFooter", bannerFooter); 
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "festival", e.getMessage());

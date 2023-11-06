@@ -39,15 +39,17 @@ public class CourseController {
 			log.info("CourseController courses courseList.size() ->" + courseList.size());
 			
 			/*
-			 * HeaderBanner Logic 구간 
+			 * Banner Logic 구간 
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			List<Banner> bannerFooter = bannerService.getFooterBanner();
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("page", page);
 			model.addAttribute("bannerHeader", bannerHeader);
+			model.addAttribute("bannerFooter", bannerFooter);
 			
 		} catch (Exception e) {
 			log.error("CourseController courses e.getMessage() ->" + e.getMessage());

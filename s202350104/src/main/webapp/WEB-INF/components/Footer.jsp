@@ -8,7 +8,7 @@
 		
 		<!-- Banner test -->
 		<div style="display: flex; justify-content: center; align-items: center;">
-		<c:forEach var="footer" items="${banner }">
+		<c:forEach var="footer" items="${bannerFooter }">
 			<c:choose>
 				<c:when test="${footer.title == '한국관광공사' }">
 					<a href="${footer.url}">

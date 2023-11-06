@@ -44,15 +44,17 @@ public class ExperienceController {
 			List<ExperienceContent> listExperience = es.listExperience(experience);
 			
 			/*
-			 * HeaderBanner Logic 구간 
+			 * Banner Logic 구간 
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			List<Banner> bannerFooter = bannerService.getFooterBanner();
 			
 			model.addAttribute("totalExperience", totalExperience);
 			model.addAttribute("listExperience", listExperience);
 			model.addAttribute("page", page);
 			model.addAttribute("bannerHeader", bannerHeader);			
+			model.addAttribute("bannerFooter", bannerFooter);			
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

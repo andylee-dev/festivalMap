@@ -46,16 +46,18 @@ public class SpotController {
 			List<Areas> listAreas = as.listPoint();
 			
 			/*
-			 * HeaderBanner Logic 구간 
+			 * Banner Logic 구간 
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			List<Banner> bannerFooter = bannerService.getFooterBanner();
 		
 			model.addAttribute("totalSpot",totalSpot);
 			model.addAttribute("listSpot", listSpot);
 			model.addAttribute("listAreas",listAreas);
 			model.addAttribute("page",page);
 			model.addAttribute("bannerHeader",bannerHeader);
+			model.addAttribute("bannerFooter",bannerFooter);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spot", e.getMessage());
