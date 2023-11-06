@@ -116,7 +116,7 @@ public class AuthController {
 	@RequestMapping(value = "/signUp")
 	public String SignUp(Users user, Model model) {
         try {
-        	us.signUp(user);
+        	us.insertUser(user);
         } catch (DuplicateKeyException e) {
             return "redirect:/signUp?error_code=-1";
         } catch (Exception e) {
