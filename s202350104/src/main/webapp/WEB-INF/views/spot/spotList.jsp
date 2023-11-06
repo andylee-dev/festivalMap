@@ -24,7 +24,8 @@
 			function getSigungu(pArea){
 				$.ajax(
 					{
-						url:"/getSigungu",
+						url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
+						data:pArea,
 						dataType:'json',
 						success:function(areas){
 							$('#sigungu_list_select option').remove();
