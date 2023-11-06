@@ -12,6 +12,7 @@ import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.QnaListService;
 import com.oracle.s202350104.service.TagsService;
 
@@ -151,7 +152,7 @@ public class UserController {
 			int totalQnaList = qs.totalQnaList();
 			log.info("totalQnaList=>"+totalQnaList);
 		
-			Paging page = new Paging(totalQnaList, currentPage);
+			PagingList page = new PagingList(totalQnaList, currentPage);
 		
 			qna.setStart(page.getStart());
 			qna.setEnd(page.getEnd());

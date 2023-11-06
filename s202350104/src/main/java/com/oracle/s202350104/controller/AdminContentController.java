@@ -214,7 +214,7 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin spot", "start");
 			int totalSpot = ss.totalSpot();
 		
-			Paging page = new Paging(totalSpot, currentPage);
+			PagingList page = new PagingList(totalSpot, currentPage);
 			spotContent.setStart(page.getStart());
 			spotContent.setEnd(page.getEnd());
 		
