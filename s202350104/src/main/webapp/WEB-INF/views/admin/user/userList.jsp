@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<%@ include file="/WEB-INF/components/UpdateAreas.jsp"%>
+	<%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%>
 </head>
 <body>
 	<div class="container-fluid">
