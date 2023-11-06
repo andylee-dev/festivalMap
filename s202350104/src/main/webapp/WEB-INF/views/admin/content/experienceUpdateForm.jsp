@@ -30,15 +30,15 @@
 				
 				<!-- Section3: Table -->		
 				<form action="experienceUpdate" method="post">
-							<input type="hidden" name="id" value="${experience.id }">
-							<input type="hidden" name="status" value="${experience.status }">
-							<input type="hidden" name="is_deleted"value="${experience.is_deleted }">
-							<table class="table table-responsive" >
-							<tr><th>등록ID</th><td>${experience.id }</td></tr>
+							<table class="table table-striped table-sm">
+							<tr><th>등록ID</th><td>
+								<input type="hidden" name="id" value="${experience.id }">${experience.id }</td></tr>
 							<tr><th>체험이름</th><td>
 								<input type="text" name="title" value="${experience.title }"></td></tr>
 							<tr><th>개요</th><td><textarea rows="10" cols="60" name="content" maxlength="4000" placeholder="체험에 대한 설명을 4000자 이내로 입력해 주세요">
-							${experience.content }</textarea></td>
+							${experience.content }</textarea></td></tr>
+							<tr><th>등록상태</th><td>
+								<input type="hidden" name="status" value="${experience.status }">${experience.status }</td></tr>
 							<tr><th>주소</th><td>
 								<input type="text" name="address" value="${experience.address }"></td></tr>							
 							<tr><th>이메일</th><td>
@@ -52,6 +52,8 @@
 							<tr><th>작성자</th><td>${experience.user_id }</td></tr>
 							<tr><th>작성일</th><td>${experience.created_at }</td></tr>			
 							<tr><th>수정일</th><td>${experience.updated_at }</td></tr>
+							<tr><th>삭제여부</th><td>
+								<input type="hidden" name="is_deleted" value="${experience.is_deleted }">${experience.is_deleted }</td></tr>
 							<tr><th>수용인원</th><td>
 								<input type="text" name="capacity" value="${experience.capacity }"></td></tr>
 							<tr><th>연령</th><td>
@@ -74,10 +76,8 @@
 									<input type="checkbox" name="is_restroom" value="1">장애인화장실
 								</td>
 							</tr>
-							<tr><td colspan="2"	>
+							<tr><td>
 								<input type="submit" value="확인">
-								</td>
-								<td colspan="2"	>
 								<input type="reset" value="취소">
 								</td>		
 							</tr>	
