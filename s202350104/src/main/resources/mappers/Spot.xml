@@ -32,4 +32,15 @@
 	WHERE	s.content_id = c.id
 	AND  	s.content_id = #{content_id}
 	</select>
+	
+	<insert id="dhContentInsert" parameterType="SpotContent">
+	INSERT INTO contents(id,area,sigungu,big_code,small_code,title,content,status,img1,img2,img3,address,postcode,mapx,mapy,email,phone,homepage,readcount,user_id,created_at)
+	VALUES(contents_id_seq.nextval,#{area},#{sigungu},#{big_code},#{small_code},#{title},#{content},#{status},#{img1},#{img2},#{img3},#{address},#{postcode},#{mapx},#{mapy},#{email},#{phone},#{homepage},#{readcount},#{user_id},sysdate)
+	</insert>
+	
+		<insert id="dhSpotInsert" parameterType="SpotContent">
+	INSERT INTO spot(content_id,opening_hours,rest_date,entrance_fee,is_restroom,is_elevator,is_wheelchair,is_stroller,is_pet,is_parking)
+	VALUES(contents_id_seq.currval,#{opening_hours},#{rest_date},#{entrance_fee},#{is_restroom},#{is_elevator},#{is_wheelchair},#{is_stroller},#{is_pet},#{is_parking})
+	</insert>
+	<!-- seq.currval-> 현재 번호 확인  -->	
 </mapper>
