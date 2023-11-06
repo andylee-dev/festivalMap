@@ -27,7 +27,7 @@ public class ExperienceContent {
 	private int readcount;
 	private String user_id;
 	private Date created_at;
-	private Date deleted_at;
+	private Date updated_at;
 	private String is_deleted;
 	
 	
