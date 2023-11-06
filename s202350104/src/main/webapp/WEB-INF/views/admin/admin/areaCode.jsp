@@ -73,15 +73,37 @@
 		
 		<div align="center">
 		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="areaCode?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			<c:choose>
+				<c:when test="${path==0}">
+					<a href="areaCode?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+				</c:when>
+				<c:when test="${path==1}">
+					<a href="areaCodeSearch?area=${area}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+				</c:when>	
+			</c:choose>	
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="areaCode?currentPage=${i}" class="pageblock">[${i}]</a>
+			<c:choose>
+				<c:when test="${path==0}">
+					<a href="areaCode?currentPage=${i}" class="pageblock">[${i}]</a>
+				</c:when>
+				<c:when test="${path==1}">
+					<a href="areaCodeSearch?area=${area}&currentPage=${i}" class="pageblock">[${i}]</a>
+				</c:when>
+			</c:choose>	
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="areaCode?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			<c:choose>
+				<c:when test="${path==0}">
+					 <a href="araeCode?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+				</c:when>	 
+				<c:when test="${path==1}">
+					<a href="areaCodeSearch?area=${area}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+				</c:when>
+			</c:choose>				
 		</c:if>
 		</div>
+		
 		
 	</body>
 </html>

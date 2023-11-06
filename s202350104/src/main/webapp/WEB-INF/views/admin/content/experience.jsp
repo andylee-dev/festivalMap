@@ -8,6 +8,53 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>experience content</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+		function confirmDelete(contentId) {
+	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
+	            $.ajax({
+	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+	                url: 'experienceDeleteAjax',
+	                data: { contentId: contentId },
+	                success: function(result) {
+	                    // 성공적으로 삭제된 경우의 처리
+	                    alert('삭제되었습니다.');
+	                    location.reload();
+	                },
+	                error: function(xhr, status, error) {
+	                    // 오류 발생 시의 처리
+	                    alert('삭제에 실패했습니다.');
+	                }
+	            });
+	        } else {
+	            // 취소 버튼을 눌렀을 때의 처리
+	            // 필요한 로직을 추가하세요.
+	        }
+	    }
+		
+		function confirmRestore(contentId) {
+	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
+	            $.ajax({
+	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+	                url: 'experienceRestoreAjax',
+	                data: { contentId: contentId },
+	                success: function(result) {
+	                    // 성공적으로 삭제된 경우의 처리
+	                    alert('복원되었습니다.');
+	                    location.reload();
+	                },
+	                error: function(xhr, status, error) {
+	                    // 오류 발생 시의 처리
+	                    alert('복원에 실패했습니다.');
+	                }
+	            });
+	        } else {
+	            // 취소 버튼을 눌렀을 때의 처리
+	            // 필요한 로직을 추가하세요.
+	        }
+	    }
+		
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -28,9 +75,9 @@
 							<input type="hidden" name="big_code" value="15">
 							<button type="button" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
 								<select name="is_deleted">
-									<option value="2">전체</option>
-									<option value="0">활성화</option>
-									<option value="1">비활성화</option>
+									<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
+									<option value="0" ${is_deleted == 0 ? 'selected' : ''}>활성화</option>
+									<option value="1" ${is_deleted == 1 ? 'selected' : ''}>비활성화</option>
 								</select>
 								<select name="small_code" >
 									<option value="999">전체</option>
@@ -90,10 +137,10 @@
 									</td>
 									<td>
 									<c:if test="${experience.is_deleted == 1}">
-									<button onclick="location.href='experienceDelete?contentId=${experience.content_id}'">복원</button>
+									<button onclick="confirmRestore(${experience.id})">복원</button>
 									</c:if>
-									<c:if test="${experience.is_deleted == 0}">
-									<button onclick="location.href='experienceDelete?contentId=${experience.content_id}'">삭제</button>
+									<c:if test="${experience.is_deleted == 0}">									
+									<button onclick="confirmDelete(${experience.id})">삭제</button>
 									</c:if>
 									</td>
 								</tr>
@@ -125,7 +172,7 @@
 									<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&is_deleted=${is_deleted}&small_code=${small_code}" class="pageblock">[${i}]</a>
 								</c:when>
 							</c:choose>
-						</c:forEach>
+				</c:forEach>
 						
 						
 						

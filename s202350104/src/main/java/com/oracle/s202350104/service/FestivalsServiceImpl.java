@@ -92,4 +92,22 @@ public class FestivalsServiceImpl implements FestivalsService {
 		return result;
 	}
 
+	@Override
+	public int updateFestival(FestivalsContent festival) {
+		int result = 0;
+		
+		int contentResult = 0;
+		contentResult = fd.updateContent(festival);
+		int festivalResult = 0;
+		festivalResult = fd.updateFestival(festival);
+		
+		if(contentResult <= 0 || festivalResult <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 수정에 실패하였습니다.");
+		} else {
+			result = 1;
+		}
+		
+		return result;
+	}
+
 }

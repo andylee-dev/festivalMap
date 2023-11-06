@@ -35,7 +35,8 @@
 				</div>
 				
 				<!-- Section2: Table -->		
-				<div class="border p-3 m-3">
+				<div class="border p-3 m-3" data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+					<c:if test="${msg != null}">${msg}</c:if>
 					<table class="table table-striped table-sm">
 						<tr>
 							<th>컨텐츠 ID</th>
@@ -151,7 +152,7 @@
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>
 						<c:if test="${festival.status == 1}">
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalUpdate?contentId=${festival.content_id}'">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>

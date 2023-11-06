@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ExperienceContent {
+	private int id;
 	private int area;
 	private int sigungu;
 	private int big_code;

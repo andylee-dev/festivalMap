@@ -23,6 +23,7 @@
 											if(result == '1') {
 												$('#festival'+pIndex).remove();
 												alert("성공적으로 삭제되었습니다.");
+												location.reload();
 											} else {
 												alert("삭제에 실패하였습니다.");
 											}		
@@ -81,7 +82,7 @@
 										<c:if test="${festival.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><c:if test="${festival.status == 1}"><input type="button" value="수정"></c:if></td>
+									<td><c:if test="${festival.status == 1}"><input type="button" value="수정" onclick="location.href='festivalUpdateForm'"></c:if></td>
 									<td><c:if test="${festival.status == 1}"><input type="button" value="삭제" onclick="festivalDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>

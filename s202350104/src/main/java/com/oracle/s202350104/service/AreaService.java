@@ -5,8 +5,9 @@ import java.util.List;
 import com.oracle.s202350104.model.Areas;
 
 public interface AreaService {
-	List<Areas> listPoint();
-	List<Areas> listPoint(Areas area);
+	List<Areas> listAreas();
+	List<Areas> listSigungu(int areaCode);
+//	List<Areas> listAreas(Areas area);
 	int 		totalAreaCode();
 	int         conTotalAreaCode(Areas area);
 	List<Areas> listSearchAreaCode(Areas area);

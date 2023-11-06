@@ -45,8 +45,8 @@ public class FestivalController {
 			festival.setEnd(page.getEnd());
 			
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
-			List<Areas> listAreas = as.listPoint();			
-
+			List<Areas> listAreas = as.listAreas();
+			
 			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
 			model.addAttribute("listAreas", listAreas);
@@ -72,21 +72,21 @@ public class FestivalController {
 		return "festival/festivalList";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/getSigungu")
-	public List<Areas> getSigungu() {
-		UUID transactionId = UUID.randomUUID();
-		List<Areas> listAreas = null;
-		try {
-			log.info("[{}]{}:{}",transactionId, "getSigungu", "start");
-			listAreas = as.listPoint();
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getSigungu", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "getSigungu", "end");
-		}
-		return listAreas;
-	}
+//	@ResponseBody
+//	@RequestMapping(value = "/getSigungu")
+//	public List<Areas> getSigungu() {
+//		UUID transactionId = UUID.randomUUID();
+//		List<Areas> listAreas = null;
+//		try {
+//			log.info("[{}]{}:{}",transactionId, "getSigungu", "start");
+//			listAreas = as.listAreas();
+//		} catch (Exception e) {
+//			log.error("[{}]{}:{}",transactionId, "getSigungu", e.getMessage());
+//		} finally {
+//			log.info("[{}]{}:{}",transactionId, "getSigungu", "end");
+//		}
+//		return listAreas;
+//	}
 	
 	@GetMapping(value = "festival/detail")
 	public String festivalDetail(int contentId, String currentPage, Board board, Model model) {

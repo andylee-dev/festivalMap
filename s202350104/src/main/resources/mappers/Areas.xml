@@ -15,6 +15,18 @@
      		) 
 		WHERE rn between #{start} and #{end}
 	</select>
+
+	<select id="getAreaList" resultType="Areas" >
+		SELECT *
+		FROM areas
+		WHERE sigungu = '999'	
+	</select>
+
+	<select id="getSigunguList" resultType="Areas" parameterType="int">
+		SELECT *
+		FROM areas
+		WHERE area = #{area}
+	</select>	
 	
 	<select id="joTotalAreaCode" resultType="int">
 		SELECT count(*)

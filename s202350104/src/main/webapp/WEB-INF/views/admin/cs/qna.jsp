@@ -7,6 +7,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script type="text/javascript">
+	function getQnaDelete(pIndex){
+		alert("실행")
+		var seluser_id = $('#user_id'+pIndex).val();
+		var selid	   = $('#id'+pIndex).val();
+		alert(seluser_id);
+		alert(selid);
+		$.ajax(
+				{
+					url:"<%=request.getContextPath()%>/admin/cs/qnaDelete",
+					data:{	user_id : seluser_id
+						,	id		: selid
+						 },
+					dataType:'text',
+					success:function(data){
+						alert(".ajax getdeletQna data->"+data);
+						if(data == '1'){
+							$('#qna'+pIndex).remove();
+							
+							alert("성공적으로 삭제 되었습니다.")
+						}else{
+							alert("삭제되지않았습니다.다시 시도하세요")
+						}
+					}
+				}		
+		);
+	}	
+</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -45,8 +75,10 @@
 					</thead>
 					<tbody>
 						<c:set var="num" value="${page.start}"/>
-						<c:forEach var="qna" items="${listQnaList}">
-							<tr>
+						<c:forEach var="qna" items="${listQnaList}"  varStatus="status">
+							<input type="hidden" name="user_id" value="${qna.user_id}" id="user_id${status.index}">
+							<input type="hidden" name="id" value="${qna.id}" id="id${status.index}">
+							<tr id="qna${status.index}">
 								<td>${num}</td>
 								<td>${qna.name}</td>
 								<td>${qna.password}</td>

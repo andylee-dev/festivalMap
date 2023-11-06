@@ -94,7 +94,7 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
 			List<CommonCodes> listCodes = cs.listCommonCode();
-			List<Areas> listAreas = ars.listPoint();
+			List<Areas> listAreas = ars.listAreas();
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 		} catch (Exception e) {
@@ -139,18 +139,21 @@ public class AdminContentController {
 		return "admin/content/festivalUpdateForm";
 	}
 	
-	@RequestMapping(value = "festivalUpdate")
+	@RequestMapping(value = "festival/update")
 	public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-			// int result = fs.updateFestival(festival);
+			int result = fs.updateFestival(festival);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", festival.getContent_id());
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
 		}		
-		return "redirect:festivalDetail";
+		return "forward:../festivalDetail";
 	}
 	
 	@RequestMapping(value = "festivalDelete")
@@ -181,6 +184,11 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
 			int result = fs.approveFestival(contentId);
+			if(result > 0) {
+				model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+			} else {
+				model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+			}
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("currentPage", currentPage);
 		} catch (Exception e) {
@@ -232,7 +240,7 @@ public class AdminContentController {
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
-			List<Areas> listAreas = ars.listPoint();
+			List<Areas> listAreas = ars.listAreas();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
@@ -340,6 +348,22 @@ public class AdminContentController {
 		
 		return "redirect:experience";
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "experienceDeleteAjax")
+	public String experienceDeleteAjax(int contentId, Model model) {
+		int result = es.experienceDelete(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "experienceRestoreAjax")
+	public String experienceRestoreAjax(int contentId, Model model) {
+		int result = es.experienceRestore(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;	
 	}
 	
 	@GetMapping(value = "experience1")

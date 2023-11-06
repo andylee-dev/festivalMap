@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.configuration.AppConfig;
+import com.oracle.s202350104.configuration.Role;
 import com.oracle.s202350104.dao.UserDao;
 import com.oracle.s202350104.model.Users;
 
@@ -23,21 +24,13 @@ public class UserServiceImpl implements UserService {
 	private final AppConfig appConfig;
 	
 	@Override
-	public List<Users> listUsers() {
-		List<Users> listUsers = ud.listUsers();
-		if(listUsers == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 리스트가 존재하지 않습니다.");
-		}
+	public List<Users> getUserList(int small_code) {
+		List<Users> listUsers = ud.listSearchUsers(small_code);
 		return listUsers;
 	}
 
 	@Override
-	public Users findUser() {
-		return null;
-	}
-
-	@Override
-	public int signUp(Users user) {
+	public int insertUser(Users user) {
 		int result = 0;
 		UUID transactionId = UUID.randomUUID();
 		try {
@@ -70,6 +63,19 @@ public class UserServiceImpl implements UserService {
 		Users user = null;
 		user = ud.getUserById(id);
 		return user;
+	}
+
+
+	@Override
+	public int updateUser(Users user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deletUser(int id) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
