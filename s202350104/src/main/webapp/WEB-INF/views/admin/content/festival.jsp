@@ -6,6 +6,32 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 관리</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			function festivalDeleteAjax(pIndex) {
+				var deleteId = Number($('#id'+pIndex).val());
+				var currentPage = ${page.currentPage};
+				if(confirm("정말 삭제하시겠습니까?")) {
+					$.ajax(
+							{
+								method:"POST",
+								url:"<%=request.getContextPath()%>/admin/content/festivalDeleteAjax",
+								data:{contentId : deleteId},
+								dataType:'text',
+								success:
+									function(result) {
+											if(result == '1') {
+												$('#festival'+pIndex).remove();
+												alert("성공적으로 삭제되었습니다.");
+											} else {
+												alert("삭제에 실패하였습니다.");
+											}		
+									}
+							}		
+					)
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -27,7 +53,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalInsertForm'">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -43,9 +69,9 @@
 						</thead>
 						<tbody>
 							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="festival" items="${listFestivals}">
-								<tr>
-									<td>${num}</td>
+							<c:forEach var="festival" items="${listFestivals}" varStatus="st">
+								<tr id="festival${st.index}">
+									<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
 									<td>${festival.area_content} ${festival.sigungu_content}</td>
 									<td><a href="festivalDetail?contentId=${festival.content_id}&currentPage=${page.currentPage}">${festival.title}</a></td>
 									<td>${festival.sponsor}</td>
@@ -55,8 +81,8 @@
 										<c:if test="${festival.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>
+									<td><c:if test="${festival.status == 1}"><input type="button" value="수정"></c:if></td>
+									<td><c:if test="${festival.status == 1}"><input type="button" value="삭제" onclick="festivalDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

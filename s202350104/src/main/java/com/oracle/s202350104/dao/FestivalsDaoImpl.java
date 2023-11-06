@@ -53,5 +53,41 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		
 		return totalFestCnt;
 	}
+
+	@Override
+	public int insertContent(FestivalsContent festival) {
+		int result = 0;
+		try {
+			result = session.insert("nhContentsInsert", festival);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl insertContent Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int insertFestival(FestivalsContent festival) {
+		int result = 0;
+		try {
+			result = session.insert("nhFestivalsInsert", festival);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl insertFestival Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteFestivals(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("nhFestivalsDelete", contentId);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl deleteFestivals Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
 	
 }

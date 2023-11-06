@@ -36,7 +36,7 @@
 								<th scope="col">컨텐츠 번호</th>
 								<th scope="col">이름</th>
 								<th scope="col">태그명</th>
-								<th scope="col">삭제</th>
+								<th scope="col">수정</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,7 +48,7 @@
 									<td>${tag.content_id}</td>
 									<td>${tag.title}</td>
 									<td>${tag.name}</td>
-									<td><input type="button" value="삭제"></td>
+									<td><input type="button" value="수정"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

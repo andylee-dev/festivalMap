@@ -8,12 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.FestivalsService;
@@ -39,7 +42,7 @@ public class AdminContentController {
 	private final RestaurantService rs;
 	private final AccomodationService as;
 	private final AreaService ars;
-
+	private final CommonCodeService cs;
 	
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -81,6 +84,93 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
 		}		
 		return "admin/content/festivalDetail";
+	}
+	
+	@RequestMapping(value = "festivalInsertForm")
+	public String festivalInsertForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listPoint();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "end");
+		}		
+		return "admin/content/festivalInsertForm";
+	}
+	
+	@RequestMapping(value = "festivalInsert")
+	public String festivalInsert(FestivalsContent festival, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
+			festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
+			festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
+			fs.insertFestival(festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
+		}		
+		return "forward:festival";
+	}
+	
+	@RequestMapping(value = "festivalUpdateForm")
+	public String festivalUpdateForm(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "admin/content/festivalUpdateForm";
+	}
+	
+	@RequestMapping(value = "festivalUpdate")
+	public String festivalUpdate(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "redirect:festivalDetail";
+	}
+	
+	@RequestMapping(value = "festivalDelete")
+	public String festivalDelete(int contentId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "festivalDeleteAjax")
+	public String festivalDeleteAjax(int contentId, Model model) {
+		int result = fs.deleteFestivals(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;
 	}
 
 	@RequestMapping(value = "experience")
@@ -143,7 +233,7 @@ public class AdminContentController {
 			log.info("[{}]{}:{}",transactionId, "admin spot", "start");
 			int totalSpot = ss.totalSpot();
 		
-			Paging page = new Paging(totalSpot, currentPage);
+			PagingList page = new PagingList(totalSpot, currentPage);
 			spotContent.setStart(page.getStart());
 			spotContent.setEnd(page.getEnd());
 		

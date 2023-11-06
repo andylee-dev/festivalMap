@@ -3,7 +3,6 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +12,7 @@ import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.QnaListService;
 import com.oracle.s202350104.service.TagsService;
 
@@ -53,6 +53,10 @@ public class UserController {
 		return "user/bizPage/index";
 	}
 
+	@RequestMapping(value = "myPage/myPost")
+	public String myPost() {
+		return "user/myPage/myPost";
+	}
 
 	@RequestMapping(value = "myPage/qnaDetail")
 	public String qnaDetail(int user_id,int id, Model model) {
@@ -148,7 +152,7 @@ public class UserController {
 			int totalQnaList = qs.totalQnaList();
 			log.info("totalQnaList=>"+totalQnaList);
 		
-			Paging page = new Paging(totalQnaList, currentPage);
+			PagingList page = new PagingList(totalQnaList, currentPage);
 		
 			qna.setStart(page.getStart());
 			qna.setEnd(page.getEnd());

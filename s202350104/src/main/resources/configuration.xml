@@ -4,10 +4,11 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-<!-- 	<typeAliases>
-		<typeAlias alias="Emp" 
-				   type="com.oracle.oBootMyBatis01.model.Emp" />		
-	</typeAliases> -->
+	<!-- 파라미터가 null이어도 DB에 insert / update할 수 있도록 -->
+<!-- 	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings> -->
+
 	<typeAliases>
 		<typeAlias alias="Festivals"         type="com.oracle.s202350104.model.Festivals"/>
 		<typeAlias alias="FestivalsContent"  type="com.oracle.s202350104.model.FestivalsContent"/>
