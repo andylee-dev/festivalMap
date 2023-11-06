@@ -133,8 +133,8 @@ public class AdminAdminController {
 			 area.setStart(page.getStart()); 
 			 area.setEnd(page.getEnd());
 			 
-			 List<Areas> listAreaCode = as.listPoint(area);
-			 List<Areas> listAreas = as.listPoint();
+			 List<Areas> listAreaCode = null;//as.listAreas(area);
+			 List<Areas> listAreas = as.listAreas();
 			 
 			 model.addAttribute("totalAreaCode", totalAreaCode);
 			 model.addAttribute("listAreaCode", listAreaCode);
@@ -166,7 +166,7 @@ public class AdminAdminController {
 			 area.setEnd(page.getEnd());
 			 
 			 List<Areas> listSearchAreaCode = as.listSearchAreaCode(area);
-			 List<Areas> listAreas = as.listPoint();
+			 List<Areas> listAreas = as.listAreas();
 			 
 			 model.addAttribute("totalAreaCode", totalAreaCode);
 			 model.addAttribute("listAreaCode", listSearchAreaCode);

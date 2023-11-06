@@ -46,7 +46,7 @@ public class RestaurantController {
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
-			List<Areas> listAreas = as.listPoint();
+			List<Areas> listAreas = as.listAreas();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);
@@ -80,7 +80,7 @@ public class RestaurantController {
 		List<Areas> listAreas = null;
 		try {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas", "Start");
-			listAreas = as.listPoint();
+			listAreas = as.listAreas();
 					
 		} catch (Exception e) {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas Exception", e.getMessage());

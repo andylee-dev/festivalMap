@@ -94,7 +94,7 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
 			List<CommonCodes> listCodes = cs.listCommonCode();
-			List<Areas> listAreas = ars.listPoint();
+			List<Areas> listAreas = ars.listAreas();
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 		} catch (Exception e) {
@@ -232,7 +232,7 @@ public class AdminContentController {
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
-			List<Areas> listAreas = ars.listPoint();
+			List<Areas> listAreas = ars.listAreas();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("listRestaurant", listRestaurant);

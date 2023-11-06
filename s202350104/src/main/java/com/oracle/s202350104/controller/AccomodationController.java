@@ -43,7 +43,7 @@ public class AccomodationController {
 			accomodation.setEnd(page.getEnd());
 			
 			List<AccomodationContent> listAccomodation = as.listAccomodation(accomodation);
-			List<Areas> listAreas = ars.listPoint();
+			List<Areas> listAreas = ars.listAreas();
 			
 			model.addAttribute("totalAccomodation", totalAccomodation);
 			model.addAttribute("listAccomodation", listAccomodation);
