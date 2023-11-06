@@ -58,7 +58,7 @@
 									<input type="hidden" name="big_code" value="13">[Accomodation]<br>
 									<select name="small_code">
 										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 11 && code.small_code != 999}">
+											<c:if test="${code.big_code == 13 && code.small_code != 999}">
 												<option value="${code.small_code}">${code.content}</option>
 											</c:if>
 										</c:forEach>

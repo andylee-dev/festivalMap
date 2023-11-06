@@ -309,7 +309,7 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "start");
 			List<CommonCodes> listCodes = cs.listCommonCode();
-			List<Areas> listAreas = ars.listPoint();
+			List<Areas> listAreas = ars.listAreas();
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 		} catch (Exception e) {
