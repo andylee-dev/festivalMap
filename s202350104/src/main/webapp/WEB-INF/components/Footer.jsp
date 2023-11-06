@@ -27,7 +27,7 @@
 				</c:when>
 				<c:when test="${footer.title == '충청남도' }">
 					<a href="${footer.url}">
-						<img src="../image/chungcheongnamdo.jpg" class="card-img-top" alt="인천광역시CI" style="width: 120px; height: auto;">
+						<img src="../image/chungcheongnamdo.jpg" class="card-img-top" alt="충청남도CI" style="width: 120px; height: auto;">
 					</a>
 				</c:when>
 				<c:when test="${footer.title == '부산광역시' }">

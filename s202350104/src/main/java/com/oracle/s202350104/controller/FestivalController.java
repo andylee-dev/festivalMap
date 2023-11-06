@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
@@ -29,6 +31,7 @@ public class FestivalController {
 	private final FestivalsService fs;
 	private final AreaService as;
 	private final BoardService boardService;
+	private final BannerService bannerService;
 
 	@GetMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -43,11 +46,14 @@ public class FestivalController {
 			
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 			List<Areas> listAreas = as.listPoint();
+			List<Banner> bannerMain = bannerService.getFooterBanner();
 			
 			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
+			model.addAttribute("banner", bannerMain);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "festival", e.getMessage());
 		} finally {

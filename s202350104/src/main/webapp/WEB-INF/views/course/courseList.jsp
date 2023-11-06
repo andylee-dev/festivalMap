@@ -24,9 +24,8 @@
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main>
-		<div
-			class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-			<h1>여행을 떠나볼까요?</h1>
+		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+			<img alt="코스_mainBanner" src="../image/courseBanner.jpg">
 		</div>
 		
 		<div class="album py-5 bg-body-tertiary">

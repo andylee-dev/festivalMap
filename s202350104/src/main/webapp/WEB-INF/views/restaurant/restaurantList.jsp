@@ -50,9 +50,8 @@
 		<!-- Top bar -->
 		<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 		<main>
-			<div
-				class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-				<h1>어느 식당으로 찾아갈까요?</h1>
+			<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+				<img alt="맛집_mainBanner" src="../image/foodBanner.jpg">
 			</div>
 			<div class="border p-3 m-3">
 				<h1 class="border">검색폼</h1>

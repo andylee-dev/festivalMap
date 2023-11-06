@@ -48,9 +48,8 @@
 	<body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<main>
-		<div
-			class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-			<h1>주변명소</h1>
+		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+			<img alt="명소_mainBanner" src="../image/spotBanner.jpg">
 		</div>
 		<div class="border p-3 m-3">
 			<h1 class="border">검색폼</h1>

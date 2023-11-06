@@ -50,7 +50,7 @@
 	<main>
 		<div
 			class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-			<h1>어느 축제로 떠나볼까요?</h1>
+			<img alt="축제_mainBanner" src="../image/festivalBanner.jpg">
 		</div>
 		<div class="border p-3 m-3">
 			<h1 class="border">검색폼</h1>
