@@ -53,4 +53,8 @@
 		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
 				#{cost}, #{overview}, #{is_parking}, #{is_stroller}, #{is_wheelchair}, #{is_restroom})
 	</insert>
+	
+	<update id="nhFestivalsDelete" parameterType="int">
+		UPDATE contents SET status = 0, is_deleted = 1 WHERE id = #{contentId}
+	</update>
 </mapper>

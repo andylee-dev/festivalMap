@@ -11,4 +11,5 @@ public interface FestivalsDao {
 	int              totalFestivals();
 	int              insertContent(FestivalsContent festival);
 	int              insertFestival(FestivalsContent festival);
+	int              deleteFestivals(int contentId);
 }

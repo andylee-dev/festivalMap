@@ -77,5 +77,17 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		
 		return result;
 	}
+
+	@Override
+	public int deleteFestivals(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("nhFestivalsDelete", contentId);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl deleteFestivals Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
@@ -118,40 +119,58 @@ public class AdminContentController {
 		return "forward:festival";
 	}
 	
+	@RequestMapping(value = "festivalUpdateForm")
+	public String festivalUpdateForm(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("festival", festival);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "admin/content/festivalUpdateForm";
+	}
+	
 	@RequestMapping(value = "festivalUpdate")
 	public String festivalUpdate(int contentId, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-			FestivalsContent festival = fs.detailFestivals(contentId);
-			
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("contentId", contentId);
-			model.addAttribute("festival", festival);
+
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
 		}		
-		return "admin/content/festivalDetail";
+		return "redirect:festivalDetail";
 	}
 	
 	@RequestMapping(value = "festivalDelete")
-	public String festivalDelete(int contentId, String currentPage, Model model) {
+	public String festivalDelete(int contentId, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-			FestivalsContent festival = fs.detailFestivals(contentId);
 			
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("contentId", contentId);
-			model.addAttribute("festival", festival);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
 		}		
-		return "admin/content/festivalDetail";
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "festivalDeleteAjax")
+	public String festivalDeleteAjax(int contentId, Model model) {
+		int result = fs.deleteFestivals(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;
 	}
 
 	@RequestMapping(value = "experience")

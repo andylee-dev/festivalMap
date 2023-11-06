@@ -10,4 +10,5 @@ public interface FestivalsService {
 	FestivalsContent       detailFestivals(int contentId);
 	int                    totalFestivals();
 	void                   insertFestival(FestivalsContent festival);
+	int                    deleteFestivals(int contentId);
 }
