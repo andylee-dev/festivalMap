@@ -81,4 +81,15 @@ public class FestivalsServiceImpl implements FestivalsService {
 		return result;
 	}
 
+	@Override
+	public int approveFestival(int contentId) {
+		int result = fd.approveFestival(contentId);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 승인에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
 }

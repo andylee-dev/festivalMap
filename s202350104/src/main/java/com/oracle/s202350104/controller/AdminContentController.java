@@ -103,7 +103,7 @@ public class AdminContentController {
 		return "admin/content/festivalInsertForm";
 	}
 	
-	@RequestMapping(value = "festivalInsert")
+	@RequestMapping(value = "festival/insert")
 	public String festivalInsert(FestivalsContent festival, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
@@ -116,7 +116,7 @@ public class AdminContentController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
 		}		
-		return "forward:festival";
+		return "forward:admin/content/festival";
 	}
 	
 	@RequestMapping(value = "festivalUpdateForm")
@@ -138,11 +138,11 @@ public class AdminContentController {
 	}
 	
 	@RequestMapping(value = "festivalUpdate")
-	public String festivalUpdate(int contentId, String currentPage, Model model) {
+	public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-
+			// int result = fs.updateFestival(festival);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 		} finally {
@@ -171,6 +171,22 @@ public class AdminContentController {
 		int result = fs.deleteFestivals(contentId);
 		String resultStr = Integer.toString(result);
 		return resultStr;
+	}
+	
+	@RequestMapping(value = "festivalApprove")
+	public String festivalApprove(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			int result = fs.approveFestival(contentId);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("currentPage", currentPage);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+		}		
+		return "forward:festivalDetail";
 	}
 
 	@RequestMapping(value = "experience")

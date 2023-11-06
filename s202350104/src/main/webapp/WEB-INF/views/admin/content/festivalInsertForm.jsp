@@ -45,7 +45,7 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="festivalInsert" method="post">
+					<form action="festival/insert" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<table class="table table-striped table-sm">
 	<%-- 						<tr>

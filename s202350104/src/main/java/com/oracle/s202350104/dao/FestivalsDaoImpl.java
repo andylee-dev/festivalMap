@@ -89,5 +89,17 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		
 		return result;
 	}
+
+	@Override
+	public int approveFestival(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("nhFestivalsApprove", contentId);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl approveFestival Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
 	
 }

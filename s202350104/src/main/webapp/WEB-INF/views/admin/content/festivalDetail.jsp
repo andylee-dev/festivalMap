@@ -13,6 +13,14 @@
 					location.href="festivalDelete?contentId=${festival.content_id}";
 				}
 			}
+			
+			function approveConfirm() {
+				var contentId = Number(${festival.content_id});
+				if(confirm("승인하시겠습니까?")) {
+					location.href="festivalApprove?contentId="+contentId+"&currentPage=${currentPage}";
+				}
+			}
+			// 승인하고나서 승인이 완료되었습니다 메세지도 띄울 수 있었으면 좋겠다
 		</script>
 	</head>
 	<body>
@@ -138,7 +146,7 @@
 					</table>
 					<div align="center">
 						<c:if test="${festival.status == 0}">
-							<button type="button" class="btn btn-outline-secondary">승인</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>

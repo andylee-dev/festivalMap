@@ -59,4 +59,8 @@
 	<update id="nhFestivalsDelete" parameterType="int">
 		UPDATE contents SET status = 0, is_deleted = 1 WHERE id = #{contentId}
 	</update>
+	
+	<update id="nhFestivalsApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
 </mapper>
