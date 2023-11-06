@@ -284,6 +284,12 @@ public class AdminContentController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "spotInsert", "start");
+			
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listAreas();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spotInsert", e.getMessage());
 		}finally {
