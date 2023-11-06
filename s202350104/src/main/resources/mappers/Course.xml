@@ -59,10 +59,25 @@
 			ON     a.content_id = c.id
 			WHERE  a.course_id = #{course_id}
 			ORDER  by b.id ASC -->
+			
 		</select>
 		
 		<insert id="noCourseInsert" parameterType="Course">
+			<selectKey keyProperty="id" resultType="int">
+				Select COURSES_ID_SEQ.nextval FROM Dual
+			</selectKey>
+			
+			INSERT into Courses 
+			values (#{id}, 16, 999, #{distance}, 
+			#{course_info}, #{time}, #{schedule}, #{course_title})
 			
 		</insert>
+		
+	 	<insert id="noCourseContentInsert" parameterType="Course">
+			INSERT into CourseContents values (#{content_id}, #{course_id}, #{order_num})
+			
+		</insert>
+		
+		<insert id=""></insert>
 		
 	</mapper>

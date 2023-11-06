@@ -11,5 +11,6 @@ public interface CourseDao {
 	List<Course>      		courseList(Course course);
 	List<Course> 			courseDetail(int course_id);
 	int 					courseInsert(Course course);
+	int 					courseContentInsert(Course course);
 	
 }

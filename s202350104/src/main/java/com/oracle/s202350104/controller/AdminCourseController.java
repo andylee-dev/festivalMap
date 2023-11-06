@@ -100,7 +100,7 @@ public class AdminCourseController {
 	
 	@RequestMapping(value = "/contentListAll")
 	public String contentListAll(Contents content, String currentPage, Model model) {
-		log.info("ContentController contentListAll start...");
+		log.info("AdminCourseController contentListAll start...");
 		try {
 			List<Contents> listContents = contentService.listContents();
 			log.info("ContentController contentListAll listContents.size() ->" + listContents.size());

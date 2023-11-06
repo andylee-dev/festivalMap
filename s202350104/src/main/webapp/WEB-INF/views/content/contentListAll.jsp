@@ -9,8 +9,12 @@
 <meta charset="UTF-8">
 <title>Insert Course_contents</title>
 	<script type="text/javascript">
-		function AddCourseContent(content.id) {
-			
+		function AddCourseContent(pIndex) {
+			alert("AddCourseContent Run...");  
+			alert("AddCourseContent pIndex->" + pIndex); 
+			var selTitle =   $("#title"+pIndex).val();
+			var selAddress =   $("#address"+pIndex).val();
+
 		}
 	</script>
 </head>
@@ -32,8 +36,10 @@
 		
 		<!-- Section3: Table -->		
 		<div class="border p-3 m-3">
-			<c:forEach var="content" items="${listContents }">
+			<c:forEach var="content" items="${listContents }" varStatus="status">
 				<input type="hidden" name="id" value="${content.id }">
+				<input type="hidden" id="title${status.index}" value="${content.title }">
+				<input type="hidden" id="address${status.index}" value="${content.address }">
 				<%-- <input type="checkbox" name="content" value="${content.id }" style="height: 20px;, widows: 20px;"> --%>
 				<table class="table table-striped table-sm">
 					<tr>
@@ -47,7 +53,7 @@
 						<td>${content.phone }</td>
 					</tr>
 				</table>
-				<button onclick="AddCourseContent(${content.id})" type="submit" class="btn btn-outline-secondary">등록</button>
+				<button onclick="AddCourseContent(${status.index})" type="submit" class="btn btn-outline-secondary">등록</button>
 			</c:forEach>
 		</div>
 	</main>

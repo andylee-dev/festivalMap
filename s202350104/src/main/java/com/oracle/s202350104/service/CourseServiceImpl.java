@@ -58,6 +58,8 @@ public class CourseServiceImpl implements CourseService {
 	public int courseInsert(Course course) {
 		int courseInsert = cd.courseInsert(course);
 		log.info("CourseServiceImpl courseCount courseInsert ->" + courseInsert);
+		int courseContentInsert = cd.courseContentInsert(course);
+		log.info("CourseServiceImpl courseCount courseContentInsert ->" + courseContentInsert);
 		
 		return courseInsert;
 	}

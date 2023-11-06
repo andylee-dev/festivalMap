@@ -68,11 +68,14 @@
 			<div class="form-group">
 				<label for="img1">코스 등록</label>
 				<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 추가</button>
-			
 			</div>
 			<div class="form-group">
 				<label for="distance">거리(km)</label>
 				<input type="text" class="form-control" id="distance" name="distance" required="required">
+			</div>
+			<div class="form-group">
+				<label for="distance">소요시간</label>
+				<input type="text" class="form-control" id="time" name="time" required="required">
 			</div>
 			<div class="form-group">	
 				<label for="course_info">코스 설명</label>
