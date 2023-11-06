@@ -37,6 +37,12 @@
 		where c.id = #{content_id}	
 	</update>
 	
+	<update id="shExperienceRestore" parameterType="int">
+		update contents c 
+		set is_deleted = 0 
+		where c.id = #{content_id}
+	</update>
+	
 	
 	<select id="shExperienceAdminListAll" resultType="ExperienceContent">
 		SELECT *

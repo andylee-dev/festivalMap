@@ -312,6 +312,22 @@ public class AdminContentController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "experienceDeleteAjax")
+	public String experienceDeleteAjax(int contentId, Model model) {
+		int result = es.experienceDelete(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "experienceRestoreAjax")
+	public String experienceRestoreAjax(int contentId, Model model) {
+		int result = es.experienceRestore(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;	
+	}
+	
 	@GetMapping(value = "experience1")
 	public String listSearch(ExperienceContent experience,String currentPage, Model model, HttpServletRequest request) {
 //	public String listSearch(String big_code,String currentPage, Model model) {

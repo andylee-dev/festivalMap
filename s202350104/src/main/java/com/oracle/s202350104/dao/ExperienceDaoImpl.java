@@ -102,4 +102,15 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		return listSmallCode;
 	}
 
+	@Override
+	public int experienceRestore(int contentId) {
+		int experienceRestore = 0;
+		try {
+			experienceRestore = session.update("shExperienceRestore",contentId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return experienceRestore;
+	}
+
 }

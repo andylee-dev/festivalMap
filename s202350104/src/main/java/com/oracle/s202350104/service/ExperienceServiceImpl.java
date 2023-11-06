@@ -61,4 +61,11 @@ public class ExperienceServiceImpl implements ExperienceService {
 		return listSmallCode;
 	}
 
+	@Override
+	public int experienceRestore(int contentId) {
+		int experienceRestore = 0;
+		experienceRestore = ed.experienceRestore(contentId);
+		return experienceRestore;
+	}
+
 }
