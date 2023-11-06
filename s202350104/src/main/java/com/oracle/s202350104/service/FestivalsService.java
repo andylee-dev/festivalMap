@@ -12,4 +12,5 @@ public interface FestivalsService {
 	void                   insertFestival(FestivalsContent festival);
 	int                    deleteFestivals(int contentId);
 	int                    approveFestival(int contentId);
+	int                    updateFestival(FestivalsContent festival);
 }

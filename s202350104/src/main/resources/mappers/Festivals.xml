@@ -40,6 +40,22 @@
 		AND    is_deleted = 0
 	</select>
 	
+	<insert id="nhFestivalsInsert" parameterType="FestivalsContent">
+		INSERT INTO festivals(content_id, hours, start_date, end_date, sponsor, eventplace, 
+				cost, overview, is_parking, is_stroller, is_wheelchair, is_restroom) 
+		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
+				#{cost}, #{overview}, #{is_parking}, #{is_stroller}, #{is_wheelchair}, #{is_restroom})
+	</insert>
+	
+	<update id="nhFestivalsUpdate" parameterType="FestivalsContent">
+		UPDATE festivals 
+		SET hours=#{hours}, start_date=#{start_date}, end_date=#{end_date}, sponsor=#{sponsor},
+		eventplace=#{eventplace}, cost=#{cost}, overview=#{overview}, is_parking=#{is_parking}, 
+		is_stroller=#{is_stroller}, is_wheelchair=#{is_wheelchair}, is_restroom=#{is_restroom} 
+		WHERE content_id = #{content_id}
+	</update>
+	
+	<!-- contents 테이블 -->
 	<insert id="nhContentsInsert" parameterType="FestivalsContent">
 		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
 				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
@@ -49,18 +65,20 @@
 				0, #{user_id}, sysdate, '0')
 	</insert>
 	
-	<insert id="nhFestivalsInsert" parameterType="FestivalsContent">
-		INSERT INTO festivals(content_id, hours, start_date, end_date, sponsor, eventplace, 
-				cost, overview, is_parking, is_stroller, is_wheelchair, is_restroom) 
-		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
-				#{cost}, #{overview}, #{is_parking}, #{is_stroller}, #{is_wheelchair}, #{is_restroom})
-	</insert>
-	
-	<update id="nhFestivalsDelete" parameterType="int">
+	<update id="nhContentsDelete" parameterType="int">
 		UPDATE contents SET status = 0, is_deleted = 1 WHERE id = #{contentId}
 	</update>
 	
 	<update id="nhFestivalsApprove" parameterType="int">
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
+	
+	<update id="nhContentsUpdate" parameterType="FestivalsContent">
+		UPDATE contents 
+		SET area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img}, img2=#{img2}, img3=#{img},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{id}
 	</update>
 </mapper>

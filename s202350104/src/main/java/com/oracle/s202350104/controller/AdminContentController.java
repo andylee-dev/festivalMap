@@ -139,18 +139,21 @@ public class AdminContentController {
 		return "admin/content/festivalUpdateForm";
 	}
 	
-	@RequestMapping(value = "festivalUpdate")
+	@RequestMapping(value = "festival/update")
 	public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-			// int result = fs.updateFestival(festival);
+			int result = fs.updateFestival(festival);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", festival.getContent_id());
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
 		}		
-		return "redirect:festivalDetail";
+		return "forward:../festivalDetail";
 	}
 	
 	@RequestMapping(value = "festivalDelete")
@@ -181,6 +184,11 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
 			int result = fs.approveFestival(contentId);
+			if(result > 0) {
+				model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+			} else {
+				model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+			}
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("currentPage", currentPage);
 		} catch (Exception e) {

@@ -70,7 +70,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	public int insertFestival(FestivalsContent festival) {
 		int result = 0;
 		try {
-			result = session.insert("nhFestivalsInsert", festival);
+			result = session.insert("nhFestivalInsert", festival);
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl insertFestival Exception => " + e.getMessage());
 		}
@@ -82,7 +82,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	public int deleteFestivals(int contentId) {
 		int result = 0;
 		try {
-			result = session.update("nhFestivalsDelete", contentId);
+			result = session.update("nhContentsDelete", contentId);
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl deleteFestivals Exception => " + e.getMessage());
 		}
@@ -97,6 +97,30 @@ public class FestivalsDaoImpl implements FestivalsDao {
 			result = session.update("nhFestivalsApprove", contentId);
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl approveFestival Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateFestival(FestivalsContent festival) {
+		int result = 0;
+		try {
+			result = session.update("nhFestivalsUpdate", festival);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl updateFestival Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateContent(FestivalsContent festival) {
+		int result = 0;
+		try {
+			result = session.update("nhContentsUpdate", festival);
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl updateContent Exception => " + e.getMessage());
 		}
 		
 		return result;
