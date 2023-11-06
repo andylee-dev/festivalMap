@@ -45,17 +45,18 @@ public class AccomodationController {
 			List<AccomodationContent> listAccomodation = as.listAccomodation(accomodation);
 			List<Areas> listAreas = ars.listPoint();
 			
+			model.addAttribute("totalAccomodation", totalAccomodation);
+			model.addAttribute("listAccomodation", listAccomodation);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("page", page);
+			
 			/*
 			 * Banner Logic 구간 
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
-			List<Banner> bannerFooter = bannerService.getFooterBanner();
-			
-			model.addAttribute("totalAccomodation", totalAccomodation);
-			model.addAttribute("listAccomodation", listAccomodation);
-			model.addAttribute("listAreas", listAreas);
-			model.addAttribute("page", page);
+			List<Banner> bannerFooter = bannerService.getFooterBanner();			
+
 			model.addAttribute("bannerHeader", bannerHeader);
 			model.addAttribute("bannerFooter", bannerFooter);
 			

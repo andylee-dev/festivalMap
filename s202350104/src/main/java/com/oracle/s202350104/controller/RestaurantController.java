@@ -48,6 +48,11 @@ public class RestaurantController {
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
 			List<Areas> listAreas = as.listPoint();
 			
+			model.addAttribute("totalRestaurant", totalRestaurant);
+			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("page", page);
+			
 			/*
 			 * Banner Logic 구간 
 			 * by 엄민용
@@ -55,10 +60,6 @@ public class RestaurantController {
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 			List<Banner> bannerFooter = bannerService.getFooterBanner();
 			
-			model.addAttribute("totalRestaurant", totalRestaurant);
-			model.addAttribute("listRestaurant", listRestaurant);
-			model.addAttribute("listAreas", listAreas);
-			model.addAttribute("page", page);
 			model.addAttribute("bannerHeader", bannerHeader);
 			model.addAttribute("bannerFooter", bannerFooter);
 			

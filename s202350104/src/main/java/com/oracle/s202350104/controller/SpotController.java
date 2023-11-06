@@ -45,6 +45,11 @@ public class SpotController {
 			List<SpotContent> listSpot = ss.listSpot(spotContent);
 			List<Areas> listAreas = as.listPoint();
 			
+			model.addAttribute("totalSpot",totalSpot);
+			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("listAreas",listAreas);
+			model.addAttribute("page",page);
+			
 			/*
 			 * Banner Logic 구간 
 			 * by 엄민용
@@ -52,10 +57,6 @@ public class SpotController {
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 			List<Banner> bannerFooter = bannerService.getFooterBanner();
 		
-			model.addAttribute("totalSpot",totalSpot);
-			model.addAttribute("listSpot", listSpot);
-			model.addAttribute("listAreas",listAreas);
-			model.addAttribute("page",page);
 			model.addAttribute("bannerHeader",bannerHeader);
 			model.addAttribute("bannerFooter",bannerFooter);
 			

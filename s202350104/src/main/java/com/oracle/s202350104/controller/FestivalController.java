@@ -45,7 +45,12 @@ public class FestivalController {
 			festival.setEnd(page.getEnd());
 			
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
-			List<Areas> listAreas = as.listPoint();
+			List<Areas> listAreas = as.listPoint();			
+
+			model.addAttribute("totalFestivals", totalFestivals);
+			model.addAttribute("listFestivals", listFestivals);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("page", page);
 			
 			/*
 			 * Banner Logic 구간 
@@ -53,14 +58,9 @@ public class FestivalController {
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 			List<Banner> bannerFooter = bannerService.getFooterBanner();		
-
-			
 			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
-			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
-			model.addAttribute("totalFestivals", totalFestivals);
-			model.addAttribute("listFestivals", listFestivals);
-			model.addAttribute("listAreas", listAreas);
-			model.addAttribute("page", page);
+			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());			
+			
 			model.addAttribute("bannerHeader", bannerHeader);
 			model.addAttribute("bannerFooter", bannerFooter); 
 			

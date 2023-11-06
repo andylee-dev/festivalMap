@@ -38,6 +38,10 @@ public class CourseController {
 			List<Course> courseList = cs.courseList(course);
 			log.info("CourseController courses courseList.size() ->" + courseList.size());
 			
+			model.addAttribute("courseCount", courseCount);
+			model.addAttribute("courseList", courseList);
+			model.addAttribute("page", page);
+			
 			/*
 			 * Banner Logic 구간 
 			 * by 엄민용
@@ -45,9 +49,6 @@ public class CourseController {
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 			List<Banner> bannerFooter = bannerService.getFooterBanner();
 			
-			model.addAttribute("courseCount", courseCount);
-			model.addAttribute("courseList", courseList);
-			model.addAttribute("page", page);
 			model.addAttribute("bannerHeader", bannerHeader);
 			model.addAttribute("bannerFooter", bannerFooter);
 			
