@@ -13,6 +13,7 @@
 </head>
 	</head>
 <body>
+	
 	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	 
 	 <h1>숙박 상세</h1>
@@ -108,11 +109,13 @@
 		<h2> 지도 </h2>
 		 <div id="map" style="width:500px;height:400px;"></div>
 		     
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
+		<script  type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
 			<script>
+			var accomodation_mapx=[[${accomodation.mapx}]];
+			var accomodation_mapy=[[${accomodation.mapy}]];
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
-		        center: new kakao.maps.LatLng(${accomodation.mapx}, ${accomodation.mapy}), // 지도의 중심좌표
+		        center: new kakao.maps.LatLng([[${accomodation.mapy}]], [[${accomodation.mapx}]]), // 지도의 중심좌표
 		        level: 3, // 지도의 확대 레벨
 		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 		    }; 
@@ -122,7 +125,7 @@
 
 		// 지도에 마커를 생성하고 표시한다
 		var marker = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(${accomodation.mapx}, ${accomodation.mapy}), // 마커의 좌표
+		    position: new kakao.maps.LatLng([[${accomodation.mapy}]], [[${accomodation.mapx}]]), // 마커의 좌표
 		    map: map // 마커를 표시할 지도 객체
 		});
 
