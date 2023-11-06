@@ -74,13 +74,34 @@
 		
 		<div align="center">
 		<c:if test="${page.startPage > page.pageBlock}">
-			<a href="commonCode?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+			<c:choose>
+				<c:when test="${path==0}">
+					<a href="commonCode?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+				</c:when>
+				<c:when test="${path==1}">
+					<a href="commonCodeSearch?big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+				</c:when>	
+			</c:choose>	
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="commonCode?currentPage=${i}" class="pageblock">[${i}]</a>
+			<c:choose>
+				<c:when test="${path==0}">
+					<a href="commonCode?currentPage=${i}" class="pageblock">[${i}]</a>
+				</c:when>
+				<c:when test="${path==1}">
+					<a href="commonCodeSearch?big_code=${big_code}&currentPage=${i}" class="pageblock">[${i}]</a>
+				</c:when>
+			</c:choose>	
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
-			<a href="commonCode?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+			<c:choose>
+				<c:when test="${path==0}">
+					 <a href="commonCode?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+				</c:when>	 
+				<c:when test="${path==1}">
+					<a href="commonCodeSearch?big_code=${big_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+				</c:when>
+			</c:choose>				
 		</c:if>
 		</div>
 		
