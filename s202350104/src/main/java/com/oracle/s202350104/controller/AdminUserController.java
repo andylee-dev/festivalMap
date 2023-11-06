@@ -49,4 +49,13 @@ public class AdminUserController {
 		model.addAttribute("listUsers", listUsers);
 		return "admin/user/bizUserList";
 	}
+	
+	
+	@RequestMapping(value = "favoriteList")
+	public String favoriteList(Model model) {
+		
+		
+		return "admin/user/favoriteList";
+	} 
+	
 }
