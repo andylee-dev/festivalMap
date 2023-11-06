@@ -6,6 +6,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 상세 정보</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			function deleteConfirm() {
+				if(confirm("정말 삭제하시겠습니까?")) {
+					location.href="festivalDelete?contentId=${festival.content_id}";
+				}
+			}
+		</script>
 	</head>
 	<body>
 	<div class="container-fluid">
@@ -136,7 +144,7 @@
 						</c:if>
 						<c:if test="${festival.status == 1}">
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalUpdate?contentId=${festival.content_id}'">수정</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalDelete?contentId=${festival.content_id}'">삭제</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
 						</c:if>
 					</div>

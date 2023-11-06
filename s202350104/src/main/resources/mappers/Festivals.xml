@@ -16,6 +16,7 @@
 			(SELECT *
 			 FROM festivals f, contents c
 			 WHERE f.content_id = c.id
+			 AND   is_deleted = 0
 			 ORDER BY content_id) t
 		)
 		WHERE rn BETWEEN #{start} and #{end}
@@ -36,6 +37,7 @@
 		SELECT count(*)
 		FROM   festivals f, contents c
 		WHERE  f.content_id = c.id
+		AND    is_deleted = 0
 	</select>
 	
 	<insert id="nhContentsInsert" parameterType="FestivalsContent">

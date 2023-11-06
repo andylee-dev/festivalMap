@@ -156,13 +156,13 @@ public class AdminContentController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-			
+			fs.deleteFestivals(contentId);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
 		}		
-		return "";
+		return "forward:festival";
 	}
 	
 	@ResponseBody
