@@ -75,6 +75,8 @@ public class AdminCourseController {
 	@RequestMapping(value = "/courseInsertForm")
 	public String courseInsertForm(Course Course , Contents contents, Model model) {
 		log.info("AdminCourseController courseInsertForm start...");
+		log.info("AdminCourseController courseInsertForm contents.getId() ->{}", contents.getId());
+		
 		
 		return "course/courseInsertForm";
 	}
@@ -86,8 +88,6 @@ public class AdminCourseController {
 			log.info("AdminCourseController courseInsert course ->" + course);
 			int courseInsert = cs.courseInsert(course);
 			log.info("AdminCourseController courseInsert courseInsert ->" + courseInsert);
-			
-			model.addAttribute("courseInsert", courseInsert);
 			
 		} catch (Exception e) {
 			log.error("AdminCourseController courseInsert e.getMessage() ->" + e.getMessage());

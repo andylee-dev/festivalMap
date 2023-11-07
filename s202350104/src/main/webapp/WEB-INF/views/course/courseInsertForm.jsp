@@ -67,6 +67,18 @@
 			<div class="form-group">
 				<label for="img1">코스 등록</label>
 				<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 추가</button>
+				<div>
+					<table>
+						<tr>
+							<th>사진</th><th>이름</th><th>주소</th><th>연락처</th>
+						</tr>
+						<tr>
+							<c:forEach>
+								
+							</c:forEach>
+						</tr>
+					</table>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="distance">거리(km)</label>
