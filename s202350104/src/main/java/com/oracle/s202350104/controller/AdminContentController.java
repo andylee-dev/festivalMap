@@ -306,6 +306,24 @@
 			return "admin/content/spotList";
 		}
 		
+		@RequestMapping(value = "spotDetail")
+		public String spotDetail(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "start");
+				SpotContent spot = ss.detailSpot(contentId);
+				
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("spot", spot);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin spotDetail", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "end");
+			}		
+			return "admin/content/spotDetail";
+		}
+		
 		@RequestMapping(value = "spotInsertForm")
 		public String spotInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();

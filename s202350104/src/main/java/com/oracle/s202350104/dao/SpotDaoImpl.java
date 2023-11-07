@@ -117,7 +117,7 @@ public class SpotDaoImpl implements SpotDao {
 	public int approveSpot(int contentId) {
 		int result = 0;
 		try {
-			result = session.update("nhSpotApprove", contentId);
+			result = session.update("dhSpotApprove", contentId);
 		} catch(Exception e) {
 			log.info("QnaListDaoImpl approveFestival Exception => " + e.getMessage());
 		}

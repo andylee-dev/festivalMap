@@ -84,7 +84,7 @@
 										<c:if test="${spot.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}'"></c:if>></td>
+									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}'"></c:if></td>
 									<td><c:if test="${spot.status == 1}"><input type="button" value="삭제" onclick="spotDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
