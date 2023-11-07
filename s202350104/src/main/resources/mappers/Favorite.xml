@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.FavoriteMapper">
+	
 	<select id="joFavoriteListAll" resultType="Favorite" parameterType="Favorite">
 		SELECT *
 		FROM   
@@ -14,9 +15,53 @@
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 		
+		
 	<select id="joFavoriteTotal" resultType="int">
 		SELECT count(*)
 		FROM   favorite
+	</select>
+	
+	
+	<select id="joCondTotalFavorite" resultType="int" parameterType="Favorite">
+		SELECT count(*) FROM favorite
+		
+		<choose>
+			<when test="search == 's_id'">
+				WHERE user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				WHERE name like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				WHERE user_id like '%'
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="joListSearchFavorite" parameterType="Favorite" resultType="Favorite">
+		
+		SELECT *
+		FROM
+		(
+			SELECT rownum rn, f.*, u.name
+			FROM   favorite f, users u
+			WHERE  f.user_id = u.id		
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+		
+		<choose>
+			<when test="search == 's_id'">
+				AND user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				AND name like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				AND user_id like '%'
+			</otherwise>
+		</choose>
+			
 	</select>
 	
 	

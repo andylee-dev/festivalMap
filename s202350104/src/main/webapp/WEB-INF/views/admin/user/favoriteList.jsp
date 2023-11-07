@@ -24,15 +24,14 @@
 				<!-- Section2: Search Form -->
 				<div class="border p-3 m-3">
 					<h1 class="border">검색폼</h1>
-					<select name="user_id" id="user_id">
-						<option value="">전체</option>
-					</select> 
-					<select name="sigungu" id="sigungu">
-						<option value="">---</option>
-					</select>
-
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="favoriteSearch">
+						<select name="search">
+							<option value="s_id">ID조회</option>
+							<option value="s_name">이름조회</option>
+						</select> 
+						<input type="text" name="keyword" placeholder="keyword를 입력하세요">
+						<button type="submit">keyword검색</button>
+					</form>
 				</div>
 
 				<!-- Section3: Table -->

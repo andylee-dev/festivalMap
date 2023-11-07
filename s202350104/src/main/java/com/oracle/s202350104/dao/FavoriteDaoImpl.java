@@ -47,4 +47,31 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		return totalFavorite;
 	}
 
+	@Override
+	public int condTotalFavorite(Favorite favorite) {
+		int condTotalFavorite = 0;
+		
+		try {
+			log.info("FavoriteDaoImpl condTotalFavorite Start");
+			condTotalFavorite = session.selectOne("joCondTotalFavorite", favorite);
+			log.info("FavoriteDaoImpl condTotalFavorite -> " + condTotalFavorite);
+		} catch (Exception e) {
+			log.info("FavoriteDaoImpl condTotalFavorite Exception-> " + e.getMessage());
+		}
+		return condTotalFavorite;
+	}
+
+	@Override
+	public List<Favorite> listSearchFavorite(Favorite favorite) {
+		List<Favorite> listSearchFavorite = null;
+		try {
+			log.info("FavoriteDaoImpl listSearchFavorite Start");
+			listSearchFavorite = session.selectList("joListSearchFavorite", favorite);
+			log.info("FavoriteDaoImpl listSearchFavorite.size() -> " + listSearchFavorite.size());
+		} catch (Exception e) {
+			log.info("FavoriteDaoImpl listSearchFavorite Exception-> " + e.getMessage());
+		}
+		return listSearchFavorite;
+	}
+
 }

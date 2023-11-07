@@ -8,5 +8,7 @@ public interface FavoriteDao {
 
 	List<Favorite>         listFavorite(Favorite favorite);
 	int 				   totalFavorite();
+	int                    condTotalFavorite(Favorite favorite);
+	List<Favorite>         listSearchFavorite(Favorite favorite);
 
 }
