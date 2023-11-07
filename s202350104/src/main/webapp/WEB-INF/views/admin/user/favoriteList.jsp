@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp"%>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -41,6 +42,7 @@
 						<thead>
 							<tr>
 								<th scope="col">회원ID</th>
+								<th scope="col">이름</th>
 								<th scope="col">컨텐츠ID</th>
 								<th scope="col">찜한 날짜</th>
 								<th scope="col">수정</th>
@@ -51,8 +53,9 @@
 							<c:forEach var="favorite" items="${listFavorite}">
 								<tr>
 									<td>${favorite.user_id}</td>
+									<td>${favorite.name}</td>
 									<td>${favorite.id}</td>
-									<td>${favorite.create_at}</td>
+									<td><fmt:formatDate value="${favorite.create_at}" type="date" pattern="YY/MM/dd"/></td>
 									<td><input type="button" value="수정"></td>
 									<td><input type="button" value="삭제"></td>
 								</tr>
