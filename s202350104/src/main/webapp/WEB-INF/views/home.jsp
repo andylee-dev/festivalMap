@@ -15,7 +15,7 @@
 
 	<div id="content_title" class="container border p-5">
 		<h1>제목입니다.</h1>
-		<p>현재 로그인한 사용자: <%= loggedId %></p>
+
 	</div>
 	
 
