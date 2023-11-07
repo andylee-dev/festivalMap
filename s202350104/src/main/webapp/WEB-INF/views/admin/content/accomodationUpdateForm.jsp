@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>숙박 정보 등록</title>
+		<title>숙박 정보 수정</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			function getSigungu(pArea){
@@ -41,18 +41,18 @@
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">숙박 정보 등록</h1>
+					<h1 class="border">숙박 정보 수정</h1>
 				</div>
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="accomodation/insert" method="post">
+					<form action="accomodation/update?currentPage=${currentPage}" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<table class="table table-striped table-sm">
-	<%-- 						<tr>
+	 						<tr>
 								<th>컨텐츠 ID</th>
-								<td>${festival.content_id}</td>
-							</tr> 등록할 때 컨텐츠 번호를 확인할 수 있으면 좋을 것 같다(nextval, 입력할 때는 currval) --%>
+								<td><input type="hidden" name="content_id" value="${accomodation.content_id}">${accomodation.content_id}</td>
+							</tr>
 							<tr>
 								<th>분류</th>
 								<td>
@@ -67,7 +67,7 @@
 							</tr>
 							<tr>
 								<th>숙소명</th>
-								<td><input type="text" name="title" required="required"></td>
+								<td><input type="text" name="title" required="required" value="${accomodation.title}"></td>
 							</tr>
 							<tr>
 								<th>지역</th>
@@ -76,55 +76,58 @@
 										<option value="">전체</option>
 										<c:forEach var="areas" items="${listAreas}">
 											<c:if test="${areas.sigungu == 999}">
-												<option value="${areas.area}">${areas.content}</option>
+												<option value="${areas.area}" ${areas.area eq accomodation.area ? 'selected' : ''}>${areas.content}</option>
 											</c:if>
 										</c:forEach>
 									</select>
-									<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
+									<select name="sigungu" id="sigungu_list_select">
+									<option value="${accomodation.sigungu}" selected>${accomodation.sigungu}</option>
+									</select>
+									
 								</td>
 							</tr>
 							<tr>
 								<th>주소</th>
-								<td><input type="text" name="address"></td>
+								<td><input type="text" name="address" value="${accomodation.address}"></td>
 							</tr>
 							<tr>
 								<th>우편번호</th>
-								<td><input type="text" name="postcode"></td>
+								<td><input type="text" name="postcode" value="${accomodation.postcode}"></td>
 							</tr>
 							<tr>
 								<th>전화번호</th>
 								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000"
-									pattern="\d{2,3}-\d{3,4}-\d{4}"></td>
+									pattern="\d{2,3}-\d{3,4}-\d{4}" value="${accomodation.phone}"></td>
 							</tr>
 							<tr>
 								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
+								<td><input type="text" name="homepage" value="${accomodation.homepage}"></td>
 							</tr>
 							<tr>
 								<th>객실수</th>
-								<td><input type="text" name="room_count"></td>
+								<td><input type="text" name="room_count" value="${accomodation.room_count}"></td>
 							</tr>
 							<tr>
 								<th>예약처</th>
-								<td><input type="text" name="reservation_url"></td>
+								<td><input type="text" name="reservation_url" value="${accomodation.reservation_url}"></td>
 							</tr>
 							<tr>
 								<th>환불규정</th>
 								<td><textarea rows="10" cols="60" name="refund" maxlength="2000" 
-									placeholder="환불규정에 대한 설명을 2000자 이내로 입력해주세요"></textarea></td>
+									placeholder="환불규정에 대한 설명을 2000자 이내로 입력해주세요">${accomodation.refund}</textarea></td>
 							</tr>
 							<tr>
 								<th>내용</th>
 								<td><textarea rows="10" cols="60" name="content" maxlength="2000" 
-									placeholder="축제 내용에 대한 설명을 2000자 이내로 입력해주세요  "></textarea></td>
+									placeholder="축제 내용에 대한 설명을 2000자 이내로 입력해주세요  ">${accomodation.content}</textarea></td>
 							</tr>
 							<tr>
 								<th>입실시간</th>
-								<td><input type="time" name="chcek_in"></td>
+								<td><input type="time" name="chcek_in" value="${accomodation.check_in}"></td>
 							</tr>
 							<tr>
 								<th>퇴실시간</th>
-								<td><input type="time" name="chcek_out"></td>
+								<td><input type="time" name="chcek_out" value="${accomodation.check_out}"></td>
 							</tr>
 							<tr>
 								<th>이미지</th>

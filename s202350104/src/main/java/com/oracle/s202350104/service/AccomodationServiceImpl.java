@@ -69,4 +69,17 @@ public class AccomodationServiceImpl implements AccomodationService {
 		}
 	}
 
+	@Override
+	public int updateAccomodation(AccomodationContent accomodation) {
+		
+		int result = ad.updateAccomodation(accomodation);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "숙박 정보 수정에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+		
+
 }

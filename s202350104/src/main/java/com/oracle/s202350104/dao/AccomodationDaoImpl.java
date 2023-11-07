@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.FestivalsContent;
@@ -17,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AccomodationDaoImpl implements AccomodationDao {
 
 	private final SqlSession session;
+	private final PlatformTransactionManager transactionManager;
 
 	@Override
 	public List<AccomodationContent> listAccomodation(AccomodationContent accomodation) {
@@ -90,6 +95,26 @@ public class AccomodationDaoImpl implements AccomodationDao {
 			result = session.insert("AccomodationInsert", accomodation);
 		} catch(Exception e) {
 			log.info("AccomodationDaoImpl insertAccomodation Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateAccomodation(AccomodationContent accomodation) {
+		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			result = session.update("ContentsUpdate", accomodation);
+			log.info("updateAccomodation nhContentsUpdate result => " + result);
+			result = session.update("AccomodationUpdate", accomodation);
+			log.info("updateAccomodation AccomodationUpdate result => " + result);
+			transactionManager.commit(txStatus);
+		} catch(Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("FestivalsDaoImpl updateFestival Exception => " + e.getMessage());
+			result = -1;
 		}
 		
 		return result;

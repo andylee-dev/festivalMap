@@ -56,6 +56,22 @@
 				#{is_pickup}, #{is_cook}, #{is_parking})
 	</insert>
 	
+	<update id="AccomodationUpdate" parameterType="AccomodationContent" >
+	 
+        UPDATE accomodations
+        SET room_count = #{room_count},	reservation_url = #{reservation_url}, refund = #{refund}, check_in = #{check_in}, check_out = #{check_out},
+        	is_pickup = #{is_pickup}, is_cook = #{is_cook}, is_parking = #{is_parking}
+        WHERE content_id = #{content_id}
+	</update>
+	
+	<update id="ContentsUpdate" parameterType="AccomodationContent">
+		UPDATE contents 
+		SET area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{content_id}
+	</update>
 	
 
 </mapper>
