@@ -247,6 +247,7 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
 			int totalRestaurant = rs.totalRestaurant();
+			int path = 0;
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
@@ -276,9 +277,9 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
 			int totalRestaurant = rs.conTotalRestaurant(restaurant);
-			
-			// int path = 1;
-			// String
+			int path 			= 1;
+			String area		    = request.getParameter("area");
+			String sigungu 		= request.getParameter("sigungu");
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
@@ -288,8 +289,9 @@ public class AdminContentController {
 			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
-			// model.addAttribute("path", path);
-			// 
+			model.addAttribute("path", path);
+			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
 			model.addAttribute("page", page);
 			model.addAttribute("listRestaurant", listSearchRestaurant);
 			// model.addAttribute("listRestaurant", listRestaurant);
