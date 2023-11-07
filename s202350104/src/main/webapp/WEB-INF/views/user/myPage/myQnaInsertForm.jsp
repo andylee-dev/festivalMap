@@ -10,6 +10,9 @@
 	<body>
 		<div class="container-fluid">
 		<div class="row">
+			<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+		<div class="d-flex">
+			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 			
 				<!-- Section1: Title -->
@@ -23,12 +26,13 @@
 						내용<input type="text" name="question_content"><br>
 						   <input type="submit" value="등록">
 					</form>
+				</div>
+				<div class="text-center">
+					<input type="button" value="목록" onclick="location.href='qnaList'">
+				</div>
+			</main>
 		</div>
-		<div class="text-center">
-			<input type="button" value="목록" onclick="location.href='qnaList'">
 		</div>
-				</main>
-			</div>
-			</div>
+		</div>
 	</body>
 </html>

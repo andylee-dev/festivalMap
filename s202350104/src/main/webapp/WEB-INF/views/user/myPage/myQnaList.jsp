@@ -40,7 +40,9 @@
 </head>
 
 <body>
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<div class="d-flex">
+	<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
 	<div class="container-fluid">
 	<div class="row">
 		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -101,6 +103,7 @@
 			</div>
 			</div>		
 		</main>
+	</div>
 	</div>
 	</div>
 </body>

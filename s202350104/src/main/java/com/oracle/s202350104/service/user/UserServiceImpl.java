@@ -1,5 +1,6 @@
 package com.oracle.s202350104.service.user;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,11 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 	private final UserDao ud;
 	private final AppConfig appConfig;
-	
+
+	@Override
+	public int totalUsers(Users user) {
+		log.info(user.getSearchType());
+		int totalCount = ud.totalUsers(user);
+		return totalCount;
+	}
 	@Override
 	public List<Users> getUserList(int small_code) {
-		List<Users> listUsers = ud.listSearchUsers(small_code);
-		return listUsers;
+		List<Users> usersList = ud.getUserList(small_code);
+		return usersList;
+	}
+	
+	@Override
+	public List<Users> getSearchUserList(Users user) {
+		List<Users> usersList = ud.getSearchUserList(user);
+		return usersList;
 	}
 
 	@Override
@@ -77,5 +90,9 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
+
+
 
 }

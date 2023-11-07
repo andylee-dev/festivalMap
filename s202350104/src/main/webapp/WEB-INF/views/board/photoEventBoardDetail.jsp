@@ -22,9 +22,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-	function deleteAndRedirect(id, smallCode) {
+	function deleteAndRedirect(id, smallCode, userId) {
 	    $.ajax({
-	        url: 'boardDelete?id=' + id + '&smallCode=' + smallCode,
+	        url: 'boardDelete?id=' + id + '&smallCode=' + smallCode + '&userId=' + userId,
 	        method: 'GET',
 	        success: function () {
 	            // 삭제 요청이 성공 후 부모 창 redirect
@@ -116,7 +116,7 @@
 	</div>
 	<div class="text-center">
 		<button class="btn btn-primary" onclick="updateBoard(${board.id})">수정</button>
-		<button class="btn btn-danger" onclick="deleteAndRedirect(${board.id}, ${board.small_code})">삭제</button>
+		<button class="btn btn-danger" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>
 		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
 	</div>
 </body>

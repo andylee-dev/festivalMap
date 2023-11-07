@@ -49,4 +49,20 @@ public class BannerServiceImpl implements BannerService{
 		
 		return bannerAllList;
 	}
+
+	@Override
+	public int bannerInsert(Banner banner) {
+		
+		int insertbanner = bannerdao.bannerInsert(banner);
+		
+		return insertbanner;
+	}
+	
+	@Override
+	public int bannerDelete(int id) {
+		
+		int deletebanner = bannerdao.bannerDelete(id);
+		
+		return deletebanner;
+	}	
 }

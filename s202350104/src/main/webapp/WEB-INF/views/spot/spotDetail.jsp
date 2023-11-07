@@ -91,37 +91,37 @@
 						<td class="text-center">${review.score }</td>
 					</tr>
 					<c:set var="num" value="${num - 1 }"/>
-			</c:forEach>
+				</c:forEach>
 			</table>
-			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
-					<c:choose>
-					    <c:when test="${smallCode eq 6}">
-							<li class="page-item">
-								<c:if test="${page.startPage > page.pageBlock }">
-									<a class="page-link" href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-								</c:if>
-							</li>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
+						<c:choose>
+					  	  <c:when test="${smallCode eq 6}">
+								<li class="page-item">
+									<c:if test="${page.startPage > page.pageBlock }">
+										<a class="page-link" href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
+									</c:if>
+								</li>
 							<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 								<li class="page-item">
 									<a class="page-link" href="reviewBoardList?currentPage=${i}">${i}</a>
 								</li>						
 							</c:forEach>
-							<li class="page-item">
-								<c:if test="${page.endPage < page.totalPage }">
-									<a class="page-link" href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-								</c:if>
-							</li>
-					    </c:when>
-					</c:choose>
-				</ul>
-			</nav>	
-		</div>
-		</div>
-		<div class="text-center">
-		<input type="button" value="목록" onclick="location.href='../spot'">
-		</div>
-		<!-- Footer -->
-		<%@ include file="/WEB-INF/components/Footer.jsp" %>
+								<li class="page-item">
+									<c:if test="${page.endPage < page.totalPage }">
+										<a class="page-link" href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
+									</c:if>
+								</li>
+					  	  </c:when>
+						</c:choose>
+					</ul>
+				</nav>	
+			</div>
+			</div>
+			<div class="text-center">
+			<input type="button" value="목록" onclick="location.href='../spot'">
+			</div>
+			<!-- Footer -->
+			<%@ include file="/WEB-INF/components/Footer.jsp" %>
 	</body>
 </html>

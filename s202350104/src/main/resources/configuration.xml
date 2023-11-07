@@ -33,6 +33,7 @@
 		<typeAlias alias="Areas"			 type="com.oracle.s202350104.model.Areas"/>
 		<typeAlias alias="CommonCodes"		 type="com.oracle.s202350104.model.CommonCodes"/>
 		<typeAlias alias="Contents"		 	 type="com.oracle.s202350104.model.Contents"/>
+		<typeAlias alias="Favorite"          type="com.oracle.s202350104.model.Favorite"/>
 	</typeAliases>
 	
 	

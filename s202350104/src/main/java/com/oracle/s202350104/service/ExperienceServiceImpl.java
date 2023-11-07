@@ -68,4 +68,11 @@ public class ExperienceServiceImpl implements ExperienceService {
 		return experienceRestore;
 	}
 
+	@Override
+	public int experienceUpdate(ExperienceContent experienceContent) {
+		int experienceUpdate = 0;
+		experienceUpdate = ed.experienceUpdate(experienceContent);
+		return experienceUpdate;
+	}
+
 }

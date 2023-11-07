@@ -75,7 +75,8 @@ public class AdminCourseController {
 	@RequestMapping(value = "/courseInsertForm")
 	public String courseInsertForm(Course Course , Contents contents, Model model) {
 		log.info("AdminCourseController courseInsertForm start...");
-		
+		log.info("AdminCourseController courseInsertForm contents.getId() -> {}", contents.getId());
+
 		return "course/courseInsertForm";
 	}
 	
@@ -94,7 +95,7 @@ public class AdminCourseController {
 		} finally {
 			log.info("AdminCourseController courseInsert end...");
 		}
-		return "redirect:list";
+		return "redirect:/list";
 	}
 	
 	

@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
@@ -17,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ExperienceDaoImpl implements ExperienceDao {
 	
 	private final SqlSession session;
+	private final PlatformTransactionManager transactionManager;
 
 	@Override
 	public List<ExperienceContent> listExperience(ExperienceContent experience) {
@@ -111,6 +115,26 @@ public class ExperienceDaoImpl implements ExperienceDao {
 			// TODO: handle exception
 		}
 		return experienceRestore;
+	}
+
+	@Override
+	public int experienceUpdate(ExperienceContent experienceContent) {
+		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			result = session.update("shContentsUpdate", experienceContent);
+			log.info("updateExperience shContentsUpdate result => " + result);
+			result = session.update("shExperienceUpdate", experienceContent);
+			log.info("updateExperience shExperienceUpdate result => " + result);
+			transactionManager.commit(txStatus);
+		} catch(Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("ExperienceDaoImpl updateExperience Exception => " + e.getMessage());
+			result = -1;
+		}
+		
+		return result;
 	}
 
 }

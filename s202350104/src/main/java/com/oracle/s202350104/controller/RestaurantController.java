@@ -43,6 +43,7 @@ public class RestaurantController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "restaurant", "start");
 			int totalRestaurant = rs.totalRestaurant();
+			int path = 0;
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
@@ -52,6 +53,7 @@ public class RestaurantController {
 			List<Areas> listAreas = as.listAreas();
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
+			model.addAttribute("path", path);
 			model.addAttribute("listRestaurant", listRestaurant);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
@@ -142,9 +144,11 @@ public class RestaurantController {
 
 		log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
 		log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
-
-		bigCode = revicewAllList.get(0).getBig_code();
-
+		
+		if(revicewAllList.size() != 0) {
+			bigCode = revicewAllList.get(0).getBig_code();
+		}
+		
 		log.info("controller reviewBoardList totalBoard : {} ", countBoard);
 		log.info("controller reviewBoardList smallCode : {} ", smallCode);
 		log.info("controller reviewBoardList page : {} ", page);
@@ -160,6 +164,42 @@ public class RestaurantController {
 		return "restaurant/restaurantDetail";
 	}
 	
+	
+	@RequestMapping(value = "restaurantSearch")
+	public String restaurantSearch(RestaurantsContent restaurant, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
+			int totalRestaurant = rs.conTotalRestaurant(restaurant);
+			int path 			= 1;
+			String area 		= request.getParameter("area");
+			String sigungu 		= request.getParameter("sigungu");
+			
+			Paging page = new Paging(totalRestaurant, currentPage);
+			restaurant.setStart(page.getStart());
+			restaurant.setEnd(page.getEnd());
+			
+			List<RestaurantsContent> listSearchRestaurant = rs.listSearchRestaurant(restaurant);
+			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
+			
+			model.addAttribute("totalRestaurant", totalRestaurant);
+			model.addAttribute("path", path);
+			model.addAttribute("area", area);
+			model.addAttribute("sigungu", path);
+			model.addAttribute("page", page);
+			model.addAttribute("listRestaurant", listSearchRestaurant);
+			// model.addAttribute("listRestaurant", listRestaurant);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
+		} finally {
+			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
+		}	
+				
+		return "restaurant/restaurantList";
+	
+	}	
 	
 	
 }	

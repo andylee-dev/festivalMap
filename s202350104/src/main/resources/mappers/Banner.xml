@@ -19,7 +19,6 @@
                     join commoncodes b
                     on a.small_code = b.small_code 
                     where b.big_code = 3
-                    order by id
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -41,6 +40,20 @@
 		on a.small_code = b.small_code
 		where b.content = 'Content'
 		order by id
-	</select>
+	</select>	
 	
+	<insert id="bannerInsert" parameterType="Banner">
+		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
+			select banner_seq_generator.nextval from dual
+		</selectKey>
+		insert into banner (id, big_code, small_code, title, status, 
+							content, url, created_at) 
+		values(#{id}, #{big_code}, #{small_code}, #{title}, 
+			   0, #{content}, #{url}, sysdate)		
+	</insert>
+	
+	<delete id="bannerDelete" parameterType="int">
+		delete from banner
+		where id = #{id}	
+	</delete>
 </mapper>

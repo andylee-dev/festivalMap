@@ -52,7 +52,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	public int totalRestaurant() {
 		int totalRestaurant = 0;
 		try {
-			log.info("RestaurantDaoImpl totalRestaurant ");
+			log.info("RestaurantDaoImpl totalRestaurant");
 			totalRestaurant = session.selectOne("joRestaurantTotal");
 		} catch (Exception e) {
 			log.info("RestaurantDaoImpl totalRestaurant() Exception ->" + e.getMessage());

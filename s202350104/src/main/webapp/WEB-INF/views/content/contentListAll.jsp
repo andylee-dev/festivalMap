@@ -11,30 +11,33 @@
 <meta charset="UTF-8">
 <title>Insert Course_contents</title>
 	<script type="text/javascript">
-		function AddCourseContent(pIndex) {
-			alert("AddCourseContent Run...");  
-			alert("AddCourseContent pIndex->" + pIndex); 
-			var selTitle =   $("#title"+pIndex).val();
-			var selAddress =   $("#address"+pIndex).val();
-			console.log(selTitle);
-			console.log(selAddress);
-
-		}
 		function getcheckboxValue(){
-			var checkbox = document.getElementsByName("content").length;
-			
-			for(var i = 0; i < checkbox; i++) {
-				if(document.getElementsByName("content")[i].checked === true) {
-					alert(document.getElementsByName("content")[i].value);
-					window.opener.location.href = '/courseInsert';
-				}
-				window.close();
-			};
-						
-			console.log("1. 체크박스 갯수만큼 포문돌린다.\n 각 체크박스에 해당하는 콘텐츠아이디를 콜솔에 찍거나 얼럿트 한다.");
-			console.log("2. 체크된 녀석들의 콘텐츠를 어딘가담는다 . 특정규칙을 추가해서");
-			console.log("3. 자식창을 닫고 부모창에 2번에 해당하는 값을 던진다.");
+		    const checkboxes = document.getElementsByName("content");
+		    const contentList = [];
 
+		    for (let i = 0; i < checkboxes.length; i++) {
+		        if (checkboxes[i].checked) {
+		        	const row = checkboxes[i].closest("tr");
+		            const columns = row.querySelectorAll("td"); // 로우의 모든 컬럼
+
+		            const contentData = {
+		                id: checkboxes[i].value, // 체크박스의 값
+		                img: columns[2].querySelector("img").getAttribute("src"),
+		                title: columns[3].textContent,
+		                address: columns[4].textContent,
+		                homepage: columns[5].textContent,
+		                phone: columns[6].textContent
+		            };
+
+		            contentList.push(contentData);
+		            console.log(contentData);
+		        }
+		    }			
+		    // 데이터를 원래 페이지로 전송
+		    window.opener.receiveContentList(contentList);
+
+		    // 팝업 창 닫기
+		    window.close();
 		}
 	</script>
 </head>
@@ -59,23 +62,32 @@
 		
 		<!-- Section3: Table -->		
 		<div class="border p-3 m-3">
-			<c:forEach var="content" items="${listContents }" varStatus="status">
-				<input type="hidden" name="id" value="${content.id }">
-				<input type="checkbox" name="content" value="${content.id }"  style="height: 20px;, widows: 20px;">
-				<table class="table table-striped table-sm">
+			<table class="table table-striped table-sm">
+				<tr>
+			        <th class="img1">선택</th>
+			        <th class="id">번호</th>
+			        <th class="img1">사진</th>
+			        <th class="title">이름</th>
+			        <th class="address">주소</th>
+			        <th class="homepage">홈페이지</th>
+			        <th class="phone">연락처</th>
+				</tr>
+				<c:forEach var="content" items="${listContents }" varStatus="status">
 					<tr>
-						<th>사진</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
-					</tr>
-					<tr>
+						<td><input type="hidden" name="id" value="${content.id }"></td>
+						<td><input type="checkbox" name="content" value="${content.id }"  style="height: 20px;, widows: 20px;"></td>
 						<td><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 150px;"></td>
 						<td>${content.title }</td>
 						<td>${content.address }</td>
 						<td>${content.homepage }</td>
 						<td>${content.phone }</td>
 					</tr>
-				</table>
-			</c:forEach>
+				</c:forEach>
+			</table>
 		</div>
+		
+		
+		
 		
 	</main>
 </div>

@@ -8,6 +8,32 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>experience updateForm</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			function getSigungu(pArea){
+				var pSigungu = ${experience.sigungu}
+				$.ajax(
+						{
+							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
+							dataType:'json',
+							success:function(areas) {
+								$('#sigungu_select option').remove();
+								str = "<option value='999'>전체</option>";
+								$(areas).each(
+									function() {
+										if(this.sigungu != 999 && this.content != null) {
+											strOption = "<option value='"+this.sigungu+"' ${"+this.sigungu+" == "+pSigungu+"? 'selected':''}>"+this.content+"</option>";
+											str += strOption;
+										}
+									}		
+								)
+								$('#sigungu_select').append(str);
+							}
+						}		
+				)
+			}
+			
+		</script>
 		
 	</head>
 	<body>
@@ -20,23 +46,41 @@
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="border">지역정보 - 체험수정</h1>
 				</div>
-		
-				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
-						
-									
-									
-				</div>		
-				
+			
 				<!-- Section3: Table -->		
 				<form action="experienceUpdate" method="post">
 							<table class="table table-striped table-sm">
 							<tr><th>등록ID</th><td>
 								<input type="hidden" name="id" value="${experience.id }">${experience.id }</td></tr>
+							<tr><th>체험종류</th><td>
+							<select id="small_code" name="small_code">
+										<c:forEach var="smallCode" items="${listSmallCode}">
+											<c:if test="${smallCode.small_code != 999}">
+												<option value="${smallCode.small_code}" ${smallCode.small_code == experience.small_code? 'selected' : '' }>${smallCode.content}</option>
+											</c:if>
+										</c:forEach>
+									</select></td>	
 							<tr><th>체험이름</th><td>
 								<input type="text" name="title" value="${experience.title }"></td></tr>
 							<tr><th>개요</th><td><textarea rows="10" cols="60" name="content" maxlength="4000" placeholder="체험에 대한 설명을 4000자 이내로 입력해 주세요">
-							${experience.content }</textarea></td></tr>
+												${experience.content }</textarea></td></tr>
+							<tr><th>체험지역</th><td>
+								<select id="area" name="area" onchange="getSigungu(this.value)">
+										<option value="">전체</option>
+										<c:forEach var="areas" items="${listAreas}">
+											<c:if test="${areas.sigungu == 999}">
+												<option value="${areas.area}" ${areas.area == experience.area? 'selected':''}>${areas.content}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+									<select id="sigungu_select" name="sigungu" >
+										<option value="999">전체</option>
+										<c:forEach var="areas" items="${listSigungu}">
+											<c:if test="${areas.sigungu != 999 && areas.sigungu != null}">
+												<option value="${areas.sigungu}" ${areas.sigungu == experience.sigungu? 'selected':''}>${areas.content}</option>
+											</c:if>
+										</c:forEach>
+									</select>					
 							<tr><th>등록상태</th><td>
 								<input type="hidden" name="status" value="${experience.status }">${experience.status }</td></tr>
 							<tr><th>주소</th><td>
@@ -70,15 +114,15 @@
 							<tr>
 								<th>가능 여부</th>
 								<td>
-									<input type="checkbox" name="is_parking" value="1">주차시설<br>
-									<input type="checkbox" name="is_stroller" value="1">유모차대여<br>
-									<input type="checkbox" name="is_wheelchair" value="1">휠체어대여<br>
-									<input type="checkbox" name="is_restroom" value="1">장애인화장실
+									<input type="checkbox" name="is_credit" value="1" ${experience.is_credit == 1? 'checked':''}>카드결제여부<br>
+									<input type="checkbox" name="is_pet" value="1" ${experience.is_pet == 1? 'checked':''}>반려동물출입여부<br>
+									<input type="checkbox" name="is_parking" value="1" ${experience.is_parking == 1? 'checked':''}>주차여부<br>
+									<input type="checkbox" name="is_stroller" value="1" ${experience.is_stroller == 1? 'checked':''}>유모차여부
 								</td>
 							</tr>
 							<tr><td>
-								<input type="submit" value="확인">
-								<input type="reset" value="취소">
+								<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('수정하시겠습니까?')">수정</button>
+								<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 								</td>		
 							</tr>	
 							</table>

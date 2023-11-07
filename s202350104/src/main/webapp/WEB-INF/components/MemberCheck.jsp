@@ -15,29 +15,6 @@ String username ="";
 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 if (authentication != null){
 	username = authentication.getName();
-	// 사용자의 roles 가져오기
-	Collection<SimpleGrantedAuthority> authorities =(Collection<SimpleGrantedAuthority>) authentication.getAuthorities();
-	if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))){
-%>	
-	<a href="/admin">관리자 페이지</a>&nbsp;
-	<a href="/logout">로그아웃 </a>
-	
-<%
-	} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("BIZ"))){
-%>		
-    <a href="/user/biz">비즈니스 페이지</a>&nbsp;
-	<a href="/logout">로그아웃  </a>
-<%
-	} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("USER"))){
-%>
-	<a href="/user/myPage">마이페이지</a>&nbsp;
-	<a href="/logout">로그아웃  </a>
-<%
-	}else{
-%>
-		<a href="/login">로그인   </a>&nbsp;
-		<a href="/join">회원가입</a>	
-<% 
-	}
 }
-%>
+	%>
+

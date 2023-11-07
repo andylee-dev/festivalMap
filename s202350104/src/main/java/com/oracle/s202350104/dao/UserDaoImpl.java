@@ -1,5 +1,6 @@
 package com.oracle.s202350104.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,10 +21,22 @@ public class UserDaoImpl implements UserDao {
 	private final SqlSession session;
 	
 	@Override
-	public List<Users> listSearchUsers(int small_code ) {
-		List<Users> listUsers = session.selectList("userSearchList",small_code);
+	public int totalUsers(Users user) {
+		int totalCount = session.selectOne("totalUsers", user);
+		return totalCount;
+	}
+	
+	@Override
+	public List<Users> getUserList(int small_code ) {
+		List<Users> listUsers = session.selectList("userSearchList", small_code);
 		return listUsers;
 	}
+	
+	@Override
+	public List<Users> getSearchUserList(Users user) {
+		List<Users> listUsers = session.selectList("getSearchUserList", user);
+		return listUsers;
+	}	
 
 	@Override
 	public int insertUser(Users user) {
@@ -55,5 +68,9 @@ public class UserDaoImpl implements UserDao {
 	public int deleteUser(int id) {
 		int result = 0;
 		return result;
-	}	
+	}
+
+
+
+
 }

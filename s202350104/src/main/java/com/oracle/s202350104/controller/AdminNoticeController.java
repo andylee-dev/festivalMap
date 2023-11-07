@@ -118,7 +118,7 @@ public class AdminNoticeController {
 		log.info("AdminNoticeController bannerBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
-		//int smallCode = 4;
+		int smallCode = 0;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBanner = bannerService.bannerCount();
@@ -138,6 +138,7 @@ public class AdminNoticeController {
 		log.info("AdminNoticeController bannerBoardList after board.getEnd : {} ", board.getEnd());
 
 		bigCode = bannerAllList.get(0).getBig_code();
+		smallCode = bannerAllList.get(0).getSmall_code();
 
 		log.info("AdminNoticeController bannerBoardList totalBoard : {} ", countBanner);
 		//log.info("AdminNoticeController bannerBoardList smallCode : {} ", smallCode);
@@ -147,10 +148,12 @@ public class AdminNoticeController {
 		model.addAttribute("admin", bannerAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
-		//model.addAttribute("smallCode", smallCode);
+		model.addAttribute("smallCode", smallCode);
+		
 		log.info("AdminNoticeController bannerBoardList End..");
 
 		return "admin/notification/notice";
 	}
 	
+	// Banner Insert Form Logic
 }

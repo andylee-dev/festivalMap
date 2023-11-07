@@ -138,4 +138,24 @@
 		and small_code <999
        ]]>	        
 	</select>
+	
+	<update id="shContentsUpdate" parameterType="experienceContent">
+		UPDATE contents 
+		SET  area=#{area}, sigungu=#{sigungu},small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{id}
+	</update>
+	
+	<update id="shExperienceUpdate" parameterType="experienceContent">
+		UPDATE experience 
+		SET capacity=#{capacity}, age=#{age}, inform=#{inform}, open_time=#{open_time}, rest_time=#{rest_time},
+		cost=#{cost}, is_credit=#{is_credit}, is_pet=#{is_pet}, is_parking=#{is_parking}, is_stroller=#{is_stroller}
+		WHERE content_id = #{id}
+	</update>
+	
+	
+	
+	
 </mapper>	

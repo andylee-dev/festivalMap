@@ -15,4 +15,8 @@ public interface BannerService {
 
 	int bannerCount();
 
+	int bannerInsert(Banner banner);
+
+	int bannerDelete(int id);
+
 }

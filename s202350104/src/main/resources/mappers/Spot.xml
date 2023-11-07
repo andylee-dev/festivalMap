@@ -27,8 +27,16 @@
 	</select>
 	
 	<select id="dhSpotDetail" resultType="SpotContent" parameterType="int">
-	SELECT	 *
-	FROM   	spot s , contents c
+	SELECT	 s.*, c.*,
+		(SELECT content FROM CommonCodes cc
+			 WHERE c.big_code = cc.big_code AND cc.small_code = 999) AS bcode_content,
+			(SELECT content FROM CommonCodes cc
+			 WHERE c.big_code = cc.big_code AND c.small_code = cc.small_code) AS scode_content,
+			(SELECT content FROM Areas a 
+			 WHERE c.area = a.area AND a.sigungu = 999) AS area_content,
+			(SELECT content FROM Areas a 
+			 WHERE c.area = a.area AND c.sigungu = a.sigungu) AS sigungu_content 
+	FROM   	spot s , contents c 
 	WHERE	s.content_id = c.id
 	AND  	s.content_id = #{content_id}
 	</select>

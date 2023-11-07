@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.FavoriteMapper">
+	<select id="joFavoriteListAll" resultType="Favorite" parameterType="Favorite">
+		SELECT *
+		FROM   
+			   (
+			   	SELECT ROWNUM rn, f.*, u.name
+			 	FROM   favorite f, users u
+			 	WHERE  f.user_id = u.id
+				) 
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+		
+	<select id="joFavoriteTotal" resultType="int">
+		SELECT count(*)
+		FROM   favorite
+	</select>
+	
+	
+</mapper>
