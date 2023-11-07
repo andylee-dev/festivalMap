@@ -46,7 +46,7 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="spotUpdate?currentPage=${currentPage}" method="post">
+					<form action="spotUpdate" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<input type="hidden" name="status" value="${spot.status}">
 						<input type="hidden" name="currentPage" value="${currentPage}">

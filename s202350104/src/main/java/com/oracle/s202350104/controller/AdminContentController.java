@@ -343,15 +343,12 @@
 			try {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "start");
 				int result = ss.updateSpot(spot);
-				
-				model.addAttribute("currentPage",currentPage);
-				model.addAttribute("contentId", spot.getContent_id());
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "spotUpdate", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "end");
 			}
-				return "forward:spotDetail?currentPage="+currentPage+"&contentIdStr="+spot.getContent_id();
+				return "forward:spotDetail?contentIdStr="+spot.getContent_id();
 		}
 		
 		@RequestMapping(value = "spotUpdateForm")
@@ -458,7 +455,7 @@
 			}		
 			return "forward:spotDetail";
 		}
-
+		
 		@RequestMapping(value = "accomodation")
 			public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
 				UUID transactionId = UUID.randomUUID();
