@@ -319,7 +319,50 @@
 			}
 			return "forward:spotInsertForm";
 		}
-	
+		
+		@RequestMapping(value = "spotDelete")
+		public String spotDelete(int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "start");
+				fs.deleteFestivals(contentId);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin spotDelete", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "end");
+			}		
+			return "forward:spot";
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "spotDeleteAjax")
+		public String spotDeleteAjax(int contentId, Model model) {
+			int result = fs.deletespot(contentId);
+			String resultStr = Integer.toString(result);
+			return resultStr;
+		}
+		
+		@RequestMapping(value = "spotApprove")
+		public String spotApprove(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "start");
+				int result = fs.approveSpot(contentId);
+				if(result > 0) {
+					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+				} else {
+					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+				}
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("currentPage", currentPage);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin spotApprove", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "end");
+			}		
+			return "forward:spotDetail";
+		}
+
 		@RequestMapping(value = "accomodation")
 			public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
 				UUID transactionId = UUID.randomUUID();
