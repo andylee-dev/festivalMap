@@ -8,9 +8,9 @@
 <meta charset="UTF-8">
 <title>course Insert</title>
 <!-- 부트스트랩 4.5.2 -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- -->
+
 <!-- 부트스트랩 5.3.1-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -56,6 +56,7 @@
 	}
 	
 	function receiveContentList(contentList) {
+		
 	    // contentList 데이터를 HTML 테이블로 변환
 	    var table = "<table>";
 	    table += "<thead><tr><th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th></tr></thead>";
@@ -73,15 +74,22 @@
 	    }
 
 	    table += "</tbody></table>";
+	    
 
 	    // 테이블을 HTML 요소에 삽입
 	    document.getElementById("contentTable").innerHTML = table;
+
+	    for (var i = 0; i < contentList.length; i++) {
+	    	const form =document.getElementById("myForm");
+	    	const hiddenInput = document.createElement("input");
+	    	hiddenInput.type = "hidden";
+	    	hiddenInput.name = "contents";
+	    	hiddenInput.value = contentList[i].id;
+	    	form.appendChild(hiddenInput);
+	    }
+
+	
 	}
-
-
-
-
-
 
 	
 </script>
@@ -90,7 +98,7 @@
 <body>
 	<h1>여기는 코스 등록 화면입니다.</h1>
 	<div class="container mt-5">
-		<form action="courseInsert" method="post" enctype="multipart/form-data">
+		<form id="myForm"action="courseInsert" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="course_title">코스명</label>
 				<input type="text" class="form-control" id="course_title" name="course_title" required="required">
@@ -115,7 +123,7 @@
 				<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
 			</div>
 			<div class="form-group">	
-				<label for="tag">태그 등록~~~~(기능 추가 필요)</label><p><p><p><p>
+				<label for="tag">태그 등록~~~~(기능 추가 필요) 그리고 공통코드 입력부분 추가 필요</label><p><p><p><p>
 			</div>
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">등록</button>

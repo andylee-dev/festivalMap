@@ -1,11 +1,15 @@
 package com.oracle.s202350104.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.oracle.s202350104.dao.ContentDaoImpl;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.service.ContentSerivce;
@@ -81,21 +85,29 @@ public class AdminCourseController {
 	}
 	
 	@RequestMapping(value = "/courseInsert")
-	public String courseInsert(Course course, Contents contents , Model model) {
+	public String courseInsert(Course course, @RequestParam List<String> contents , Model model) {
 		try {
 			log.info("AdminCourseController courseInsert start...");
 			log.info("AdminCourseController courseInsert course ->" + course);
+			
+			/*TODO: Course정보를 INSERT.*/
 			int courseInsert = cs.courseInsert(course);
 			log.info("AdminCourseController courseInsert courseInsert ->" + courseInsert);
 			
-			model.addAttribute("courseInsert", courseInsert);
+
+			/*TODO: Content Course정보를 INSERT*/			//	dto
+			log.info(contents.toString());				//	Map<int,List()>
+			int courseContentInsert = cs. courseContentInsert(contents);		//list 3
+																				//	int  1
+			log.info("AdminCourseController courseInsert courseInsert ->" + courseContentInsert);
+			
 			
 		} catch (Exception e) {
 			log.error("AdminCourseController courseInsert e.getMessage() ->" + e.getMessage());
 		} finally {
 			log.info("AdminCourseController courseInsert end...");
 		}
-		return "redirect:/list";
+		return "redirect:/admin/course/list";
 	}
 	
 	
@@ -115,4 +127,5 @@ public class AdminCourseController {
 		}
 		return "content/contentListAll";
 	}
+	
 }

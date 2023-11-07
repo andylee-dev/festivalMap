@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.CourseDao;
+import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 
@@ -58,9 +59,18 @@ public class CourseServiceImpl implements CourseService {
 	public int courseInsert(Course course) {
 		int courseInsert = cd.courseInsert(course);
 		log.info("CourseServiceImpl courseCount courseInsert ->" + courseInsert);
-		int courseContentInsert = cd.courseContentInsert(course);
-		log.info("CourseServiceImpl courseCount courseContentInsert ->" + courseContentInsert);
+		
 		
 		return courseInsert;
 	}
+
+	@Override
+	public int courseContentInsert(List<String> contents) {
+		int courseContentInsert = cd.courseContentInsert(contents);
+		log.info("CourseServiceImpl courseCount courseInsert ->" + courseContentInsert);
+		
+		
+		return courseContentInsert;
+	}
+
 }

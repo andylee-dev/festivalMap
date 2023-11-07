@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 
@@ -78,16 +79,15 @@ public class CourseDaoImpl implements CourseDao {
 
 
 	@Override
-	public int courseContentInsert(Course course) {
+	public int courseContentInsert(List<String> contents) {
 		int courseContentInsert = 0;
 		try {
-			courseContentInsert = session.insert("noCourseContentInsert", course);
+			courseContentInsert = session.insert("noCourseContentInsert", contents);
 			log.info("CourseDaoImpl courseInsert courseContentInsert ->" + courseContentInsert);
 			
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseContentInsert e.getMessage() ->" + e.getMessage());
 		}
-		
 		return courseContentInsert;
 	}
 
