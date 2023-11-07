@@ -311,13 +311,14 @@ public class AdminContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin spot", "start");
 			int totalSpot = ss.totalSpot();
+			log.info("totalSpot => " + totalSpot);
 		
 			PagingList page = new PagingList(totalSpot, currentPage);
 			spotContent.setStart(page.getStart());
 			spotContent.setEnd(page.getEnd());
-		
+			log.info("                                                                                                                                                                   spot page => " + spotContent.getStart());
 			List<SpotContent> listSpot = ss.listSpot(spotContent);
-		
+			log.info("spot listSpot.size => " + listSpot.size());
 			model.addAttribute("totalSpot",totalSpot);
 			model.addAttribute("listSpot", listSpot);
 			model.addAttribute("page",page);
