@@ -11,12 +11,15 @@
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<div class="row">
+	<div class="d-flex">
 		<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
-	
+		
 		<div id="content_title" class="container border p-5">
 			<h1>제목입니다.</h1>
+			<div class="container border p-5">
+				<h2>부제목입니다.</h2>
 			
+			</div>
 		</div>
 	</div>>
 </body>

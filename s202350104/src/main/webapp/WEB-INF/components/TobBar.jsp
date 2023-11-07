@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/components/MemberCheck.jsp" %>
 	
 	
-<header id="topbar">
+<header id="topbar" class="d-flex">
 	<nav class="navbar navbar-expand-md bg-body-tertiary navbar-light fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Festimap</a>
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container mb-5 border">
+	<div class="container mb-4 border">
 		--	
 	</div>
 </header>
