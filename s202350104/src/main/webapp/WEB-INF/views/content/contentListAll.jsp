@@ -20,12 +20,11 @@
 			console.log(selAddress);
 
 		}
-		
 		function getcheckboxValue(){
 			var checkbox = document.getElementsByName("content").length;
 			
 			for(var i = 0; i < checkbox; i++) {
-				if(document.getElementsByName("content")[i].checked == true) {
+				if(document.getElementsByName("content")[i].checked === true) {
 					alert(document.getElementsByName("content")[i].value);
 					
 					window.opener.location.href = '/admin/course/courseInsertForm';
@@ -54,12 +53,12 @@
 			<h1 class="border">검색폼</h1>
 			<button type="button" class="btn btn-outline-secondary">검색</button>
 			<button type="button" class="btn btn-outline-secondary">초기화</button>
-			<button type="submit" class="btn btn-outline-secondary" onclick="getcheckboxValue()">확인</button>
+			<button type="button" class="btn btn-outline-secondary" onclick="getcheckboxValue()">확인</button>
 			
 		</div>
 		
 		
-		<!-- Section3: Table -->
+		<!-- Section3: Table -->		
 		<div class="border p-3 m-3">
 			<c:forEach var="content" items="${listContents }" varStatus="status">
 				<input type="hidden" name="id" value="${content.id }">
