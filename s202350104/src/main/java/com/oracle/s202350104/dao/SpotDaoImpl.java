@@ -94,8 +94,32 @@ public class SpotDaoImpl implements SpotDao {
 			transactionManager.commit(txStatus);
 		} catch(Exception e) {
 			transactionManager.rollback(txStatus);
-			log.info("FestivalsDaoImpl updateSpot Exception => " + e.getMessage());
+			log.info("QnaListDaoImpl updateSpot Exception => " + e.getMessage());
 			result = -1;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteSpot(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("dhContentsDelete", contentId);
+		} catch(Exception e) {
+			log.info("QnaListDaoImpl deleteFestivals Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int approveSpot(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("nhSpotApprove", contentId);
+		} catch(Exception e) {
+			log.info("QnaListDaoImpl approveFestival Exception => " + e.getMessage());
 		}
 		
 		return result;
