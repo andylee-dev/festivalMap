@@ -3,6 +3,8 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,16 @@ public class UserController {
 	
 	private final QnaListService qs;
 
+	private int getLoginId() {
+		int userId = 0;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && !authentication.getName().equals("anonymousUser") ){
+			userId = Integer.parseInt(authentication.getName());
+			log.info("로그인아이디:{}",userId);
+		}
+		return userId;
+	}
+	
 	@RequestMapping(value = "user")
 	public String userList() {
 		return "user";
@@ -34,6 +46,8 @@ public class UserController {
 
 	@RequestMapping(value = "myPage")
 	public String myPage() {
+		int userId = getLoginId();
+		
 		return "user/myPage/index";
 
 	}
