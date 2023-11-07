@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.oracle.s202350104.configuration.Role;
 import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,16 +25,28 @@ public class AdminUserController {
 	private final UserService us;
 
 	@RequestMapping(value = "userList")
-	public String userList(Model model) {
+	public String userList(Model model, Users user, String currentPage ) {
 		UUID transactionId = UUID.randomUUID();
 		String errMsg ="Success";
+		List<Users> listUsers = null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "userList", "start");		
-			List<Users> listUsers = us.getUserList(2);
+			user.setSmall_code(2);
+			int totalUsersCount =us.totalUsers(user);
+			log.info("totalUsersCount:{}",totalUsersCount);
+			log.info("user.getIs_deleted:{}",user.getIs_deleted());
+
+			Paging page = new Paging(totalUsersCount, currentPage);
+			user.setStart(page.getStart());
+			user.setEnd(page.getEnd());
+
+			listUsers = us.getSearchUserList(user);	
 			if(listUsers == null) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 리스트가 존재하지 않습니다.");
 			}
 			model.addAttribute("listUsers", listUsers);
+			model.addAttribute("page", page);
+//			model.addAttribute("searchOption",user);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "userList", e.getMessage());
 		}finally {

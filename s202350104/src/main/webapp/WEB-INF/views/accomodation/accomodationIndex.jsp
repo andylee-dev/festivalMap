@@ -4,18 +4,47 @@
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>숙박 리스트</title>
-<style type="text/css">
-	.card-text {
-		overflow : hidden;
-		text-overflow: 		ellipsis; /* 말줄임표 */
-			diplay: 		    -webkit-box; /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-			-webkit-line-clamp: 10;
-			-webkit-box-orient: vertical;
-	}
-</style>
+	<head>
+		<meta charset="UTF-8">
+		<title>숙박 리스트</title>
+		<style type="text/css">
+			.pageblock {
+				text-align: center;
+						}
+			.card-text {
+				overflow: hidden;
+				text-overflow: ellipsis; /* 말줄임표 */
+				display: -webkit-box;
+				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
+				-webkit-box-orient: vertical;
+						}
+		</style>
+	<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+		function getSigungu(pArea){
+			$.ajax(
+					{
+						url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
+						data:pArea,
+						dataType:'json',
+						success:function(areas) {
+							$('#sigungu_list_select option').remove();
+							str = "<option value=''>전체</option>";
+							$(areas).each(
+								function() {
+									if(this.sigungu != 999 && this.content != null) {
+										strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
+										str += strOption;
+									}
+								}		
+							)
+							$('#sigungu_list_select').append(str);
+						}
+						}		
+				)
+			}
+			
+		</script>
 </head>
 <body>
 	<!-- Top bar -->
@@ -34,28 +63,21 @@
 	</div>
 	<div class="border p-3 m-3">
 				<h1 class="border">검색폼</h1>
-				<select name="area">
-					<c:forEach var="areas" items="${listAreas}">
-						<c:if test="${areas.sigungu == 999}"><option value="${areas.area}">${areas.content}</option></c:if>
-					</c:forEach>
-				</select>	
-				<select name="sigungu">
-					<c:forEach var="areas" items="${listAreas}">
-						<c:if test="${areas.sigungu != 999}"><option value="${areas.sigungu}">${areas.content}</option></c:if>
-					</c:forEach>
-				</select>
-				<!-- 빈칸으로 나오는 부분 없애기 / 시도를 선택했을 때 그에 해당하는 시군구가 나올 수 있도록 하기 -->
-				<button type="button" class="btn btn-outline-secondary">검색</button>
-				<button type="button" class="btn btn-outline-secondary">초기화</button>		
-			</div>	
-		<!-- select box 만들기 	
-		<div class="container border p-5">
-		<form action="festival"></form>
-		</div> -->	 
+			<select name="area" onchange="getSigungu(this.value)">
+				<option value="">전체</option>
+				<c:forEach var="areas" items="${listAreas}">
+					<c:if test="${areas.sigungu == 999}">
+						<option value="${areas.area}">${areas.content}</option>
+					</c:if>
+				</c:forEach>
+			</select>
+			<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
+			<button type="button" class="btn btn-outline-secondary">검색</button>
+			<button type="button" class="btn btn-outline-secondary">초기화</button>
+		</div>
+
 				 	
-			<div class="container border p-5">
-				<form action="accomodation"></form>
-			</div>
+
 	<div class="album py-5 bg-body-tertiary">
 		</div>
 			<div class="container">
@@ -70,7 +92,7 @@
     								숙소위치 : ${accomodation.address}<br>
     								숙소소개  : ${accomodation.content}
     							</p>
-    				<a href="accomodation/detail?contentId=${accomodation.content_id}" class="btn btn-primary">더보기</a>
+    							<a href="accomodation/detail?contentId=${accomodation.content_id}" class="btn btn-primary">더보기</a>
  						 </div>	
 						</div>
 					</div>
