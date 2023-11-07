@@ -13,6 +13,7 @@ public interface ExperienceDao {
 	int 						totalSearchExperience(ExperienceContent experience);
 	List<ExperienceContent> 	listSearchExperience(ExperienceContent experience);
 	List<ExperienceContent> 	listSmallCode(ExperienceContent experience);
-	int experienceRestore(int contentId);
+	int 						experienceRestore(int contentId);
+	int 						experienceUpdate(ExperienceContent experienceContent);
 
 }

@@ -457,18 +457,42 @@ public class AdminContentController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-			//FestivalsContent festival = fs.detailFestivals(contentId);
 			ExperienceContent experience = es.detailExperience(contentId);
+			List<ExperienceContent> listSmallCode = es.listSmallCode(experience);
+			List<Areas> listAreas = ars.listAreas();
+			List<Areas> listSigungu = ars.listSigungu(experience.getArea());
+			
 			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("experience", experience);
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("listSigungu", listSigungu);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin detailExperience", "end");
 		}		
 		return "admin/content/experienceUpdateForm";
+	}
+	
+	@RequestMapping(value = "experienceUpdate")
+	public String experienceUpdate(ExperienceContent experienceContent, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			int result = es.experienceUpdate(experienceContent);
+
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", experienceContent.getContent_id());
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin detailExperience", "end");
+		}		
+		return "redirect:experience";
 	}
 	
 	@ResponseBody

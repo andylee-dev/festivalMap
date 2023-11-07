@@ -14,5 +14,6 @@ public interface ExperienceService {
 	List<ExperienceContent> 	listSearchExperience(ExperienceContent experience);
 	List<ExperienceContent> 	listSmallCode(ExperienceContent experience);
 	int 						experienceRestore(int contentId);
+	int 						experienceUpdate(ExperienceContent experienceContent);
 	
 }
