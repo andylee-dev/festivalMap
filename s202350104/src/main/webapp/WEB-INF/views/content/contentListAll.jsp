@@ -17,6 +17,7 @@
 			var selTitle =   $("#title"+pIndex).val();
 			var selAddress =   $("#address"+pIndex).val();
 			console.log(selTitle);
+			console.log(selAddress);
 
 		}
 		function getcheckboxValue(){
@@ -24,11 +25,13 @@
 			
 			for(var i = 0; i < checkbox; i++) {
 				if(document.getElementsByName("content")[i].checked === true) {
-					//alert(document.getElementsByName("content")[i].value);
+					alert(document.getElementsByName("content")[i].value);
+					window.opener.location.href = '/courseInsert';
 				}
+				window.close();
 			};
 						
-			console.log("1. 체크박스 갯수만큼 포문돌린다.\n 각 체크박스에 해당하는 콘텐츠아이디를 콜솔에 찍거나 럴럿트 한다.");
+			console.log("1. 체크박스 갯수만큼 포문돌린다.\n 각 체크박스에 해당하는 콘텐츠아이디를 콜솔에 찍거나 얼럿트 한다.");
 			console.log("2. 체크된 녀석들의 콘텐츠를 어딘가담는다 . 특정규칙을 추가해서");
 			console.log("3. 자식창을 닫고 부모창에 2번에 해당하는 값을 던진다.");
 
