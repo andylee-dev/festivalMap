@@ -2,6 +2,8 @@ package com.oracle.s202350104.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -28,5 +30,13 @@ public class Users {
 	private String pageNum;
 	private int    start;
 	private int    end;
+
+	// 검색용
+	private String searchType;
+	private String keyword;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDate;
 	
 }
