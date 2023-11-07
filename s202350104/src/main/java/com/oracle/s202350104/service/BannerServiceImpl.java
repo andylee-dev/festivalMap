@@ -1,8 +1,12 @@
 package com.oracle.s202350104.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.dao.BannerDao;
 import com.oracle.s202350104.model.Banner;
@@ -51,9 +55,21 @@ public class BannerServiceImpl implements BannerService{
 	}
 
 	@Override
-	public int bannerInsert(Banner banner) {
+	public int bannerInsert(Banner banner, MultipartFile file) throws Exception {
+		
 		
 		int insertbanner = bannerdao.bannerInsert(banner);
+		
+		UUID uuid = UUID.randomUUID();
+		
+		String fileName = uuid + "_" + file.getOriginalFilename();
+		
+		String testPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\image";
+		
+		File savaFile = new File(testPath, fileName);
+		
+		file.transferTo(savaFile);
+		
 		
 		return insertbanner;
 	}
@@ -64,5 +80,6 @@ public class BannerServiceImpl implements BannerService{
 		int deletebanner = bannerdao.bannerDelete(id);
 		
 		return deletebanner;
-	}	
+	}
+	
 }

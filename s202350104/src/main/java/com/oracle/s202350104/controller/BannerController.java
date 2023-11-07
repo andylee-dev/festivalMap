@@ -55,7 +55,7 @@ public class BannerController {
 		
 		String resultUrl = "";
 		
-		int insertBoard = bannerService.bannerInsert(Banner);
+		int insertBoard = bannerService.bannerInsert(Banner, file);
 		
 		if (insertBoard > 0) {
 			resultUrl = "redirect:/admin/notice/banner";
