@@ -42,7 +42,14 @@
 				<c:set var="num" value="${page.total-page.start+1 }"/>
 				
 				<div class="border p-3 m-3">
-					<button onclick="location.href='../../bannerInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>
+					<c:choose>
+						<c:when test="${bigCode eq 3 }">
+							<button onclick="location.href='../../bannerInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>						
+						</c:when>
+						<c:otherwise>
+					<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>						
+						</c:otherwise>
+					</c:choose>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -83,7 +90,7 @@
 											<td><input onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										
 										</c:when>
 										<c:otherwise>
-											<td><input onclick="location.href='../../boardDelete?id=${boards.id}'" type="button" value="삭제"></td>
+											<td><input onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
 										</c:otherwise>
 									</c:choose>
 								</tr>

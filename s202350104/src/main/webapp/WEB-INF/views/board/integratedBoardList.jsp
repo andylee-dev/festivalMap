@@ -35,16 +35,12 @@
 			</c:when>
 			<c:when test="${smallCode == 3}">
 				<h1>자유게시판</h1>
+				<button class="btn btn-primary" onclick="location.href='integratedboardInsert?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
 			</c:when>
 	    	<c:otherwise>
 	        	<h1>공지사항</h1>
 	    	</c:otherwise>
 		</c:choose>
-		<button class="btn btn-primary" onclick="location.href='integratedboardInsert?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
-	</div>
-	<div class="text-center">
-		<button class="btn btn-primary" onclick="location.href='/reviewBoardList'">리뷰테스트</button>
-		<button class="btn btn-danger" onclick="location.href='/banner'">배너테스트</button>
 	</div>
 	
 	<c:set var="num" value="${page.total-page.start+1 }"/>

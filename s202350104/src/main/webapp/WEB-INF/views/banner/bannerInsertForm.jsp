@@ -68,10 +68,16 @@
 						  name="content" rows="4" required></textarea>
 			</div>
 			<div class="form-group">
-				<label for="content">URL</label> 
+				<label for="url">URL</label> 
 				<input type="text" class="form-control" 
 					   name="url" required>
 			</div>
+			<div class="form-group">
+				<label for="image">이미지 첨부</label>
+				UpLoad Image : <img alt="UpLoadImage" src="${pageContext.request.contextPath}/image/${savedName}"> 
+				<input type="file" class="form-control" 
+					   name="image">
+			</div>			
 			<div class="form-group">
 				<label for="smallCode">소분류 코드</label><p>
 					<input type="radio" name="smallCode" value="1"

@@ -249,7 +249,7 @@ public class BoardController {
 	// review List Logic
 	@RequestMapping(value = "/reviewBoardList")
 	public String reviewBoardList(Board board, String currentPage, Model model) {
-		log.info("controller reviewBoardList Start!!");
+		log.info("BoardController reviewBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 6;
@@ -262,28 +262,28 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
+		log.info("BoardController reviewBoardList before board.getStart : {} ", board.getStart());
+		log.info("BoardController reviewBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> revicewAllList = boardService.getReviewAllList(board);
-		log.info("controller revicewAllList size : {}", revicewAllList.size());
+		log.info("BoardController revicewAllList size : {}", revicewAllList.size());
 
-		log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("BoardController reviewBoardList after board.getStart : {} ", board.getStart());
+		log.info("BoardController reviewBoardList after board.getEnd : {} ", board.getEnd());
 
 		bigCode = revicewAllList.get(0).getBig_code();
 
-		log.info("controller reviewBoardList totalBoard : {} ", countBoard);
-		log.info("controller reviewBoardList smallCode : {} ", smallCode);
-		log.info("controller reviewBoardList smallCode : {} ", bigCode);
-		log.info("controller reviewBoardList page : {} ", page);
+		log.info("BoardController reviewBoardList totalBoard : {} ", countBoard);
+		log.info("BoardController reviewBoardList smallCode : {} ", smallCode);
+		log.info("BoardController reviewBoardList smallCode : {} ", bigCode);
+		log.info("BoardController reviewBoardList page : {} ", page);
 
 		model.addAttribute("board", revicewAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		
-		log.info("controller reviewBoardList End..");
+		log.info("BoardController reviewBoardList End..");
 
 		return "board/integratedBoardList";
 	}
@@ -292,8 +292,8 @@ public class BoardController {
 	@RequestMapping(value = "/boardDetail")
 	public String boardContent(int id, int userId, Model model) {
 
-		log.info("controller boardContent boardId : {} ", id);
-		log.info("controller boardContent userId : {} ", userId);
+		log.info("BoardController boardContent boardId : {} ", id);
+		log.info("BoardController boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
 
@@ -308,8 +308,8 @@ public class BoardController {
 	@RequestMapping(value = "/photoEventBoardDetail")
 	public String photoBoardDetail(int id, int userId, Model model) {
 
-		log.info("controller boardContent boardId : {} ", id);
-		log.info("controller boardContent userId : {} ", userId);
+		log.info("BoardController boardContent boardId : {} ", id);
+		log.info("BoardController boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
 
@@ -324,7 +324,7 @@ public class BoardController {
 	@RequestMapping(value = "/boardUpdateForm")
 	public String boardUpdateForm(int id, Model model) {
 
-		log.info("controller boardUpdateForm boardId : {} ", id);
+		log.info("BoardController boardUpdateForm boardId : {} ", id);
 
 		Board boards = boardService.boardDetail(id);
 
@@ -348,9 +348,9 @@ public class BoardController {
 	@RequestMapping(value = "/boardDelete")
 	public String boardDelete(int id, int userId, int smallCode) {
 
-		log.info("controller boardDelete small_code : {}", smallCode);
-		log.info("controller boardDelete id : {}", id);
-		log.info("controller boardDelete userId : {}", userId);
+		log.info("BoardController boardDelete small_code : {}", smallCode);
+		log.info("BoardController boardDelete id : {}", id);
+		log.info("BoardController boardDelete userId : {}", userId);
 
 		boardService.boardDelete(id);
 
@@ -402,19 +402,19 @@ public class BoardController {
 	@RequestMapping(value = "/boardInsertForm")
 	public String boardInsertForm(String userId, String bigCode, String smallCode, String contentId, String currentPage, Model model) {
 
-		log.info("controller boardInsertForm start!");
-		log.info("controller boardInsertForm userId : {}", userId);
-		log.info("controller boardInsertForm bigCode : {}", bigCode);
-		log.info("controller boardInsertForm smallCode : {}", smallCode);
-		log.info("controller boardInsertForm contentId : {}", contentId);
-		log.info("controller boardInsertForm currentPage : {}", currentPage);
+		log.info("BoardController boardInsertForm start!");
+		log.info("BoardController boardInsertForm userId : {}", userId);
+		log.info("BoardController boardInsertForm bigCode : {}", bigCode);
+		log.info("BoardController boardInsertForm smallCode : {}", smallCode);
+		log.info("BoardController boardInsertForm contentId : {}", contentId);
+		log.info("BoardController boardInsertForm currentPage : {}", currentPage);
 
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("currentPage", currentPage);
-		log.info("controller boardInsertForm end!");
+		log.info("BoardController boardInsertForm end!");
 
 		return "board/boardInsertForm";
 	}
@@ -423,25 +423,25 @@ public class BoardController {
 	@RequestMapping(value = "/boardInsert")
 	public String boardInsert(Board board, Model model) {
 
-		log.info("controller boardInsert userId : {}", board.getUser_id());
-		log.info("controller boardInsert bigCode : {}", board.getBig_code());
-		log.info("controller boardInsert smallCode : {}", board.getSmall_code());
-		log.info("controller boardInsert contentId : {}", board.getContent_id());
+		log.info("BoardController boardInsert userId : {}", board.getUser_id());
+		log.info("BoardController boardInsert bigCode : {}", board.getBig_code());
+		log.info("BoardController boardInsert smallCode : {}", board.getSmall_code());
+		log.info("BoardController boardInsert contentId : {}", board.getContent_id());
 
 		int insertBoard = boardService.boardInsert(board);
 
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
-			return "forward:/noticBoardList";
+			return "redirect:/noticBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 2) {
-			return "forward:/magazinBoardList";
+			return "redirect:/magazinBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 3) {
-			return "forward:/freeBoardList";
+			return "redirect:/freeBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 4) {
-			return "forward:/photoBoardList";
+			return "redirect:/photoBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
-			return "forward:/eventBoardList";
+			return "redirect:/eventBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
-			return "forward:/";
+			return "redirect:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
 			return "forward:/boardInsertForm";
@@ -452,16 +452,16 @@ public class BoardController {
 	@RequestMapping(value = "/integratedBoardInsertForm")
 	public String integratedBoardInsertForm(String userId, String bigCode, String smallCode, Model model) {
 		
-		log.info("controller integratedBoardInsertForm start!");
-		log.info("controller integratedBoardInsertForm userId : {}", userId);
-		log.info("controller integratedBoardInsertForm bigCode : {}", bigCode);
-		log.info("controller integratedBoardInsertForm smallCode : {}", smallCode);
+		log.info("BoardController integratedBoardInsertForm start!");
+		log.info("BoardController integratedBoardInsertForm userId : {}", userId);
+		log.info("BoardController integratedBoardInsertForm bigCode : {}", bigCode);
+		log.info("BoardController integratedBoardInsertForm smallCode : {}", smallCode);
 		
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		
-		log.info("controller integratedBoardInsertForm end!");
+		log.info("BoardController integratedBoardInsertForm end!");
 		
 		return "board/integratedBoardInsertForm";
 	}
@@ -470,9 +470,9 @@ public class BoardController {
 	@RequestMapping(value = "/integratedboardInsert")
 	public String integratedboardInsert(Board board, Model model) {
 
-		log.info("controller integratedboardInsert userId : {}", board.getUser_id());
-		log.info("controller integratedboardInsert bigCode : {}", board.getBig_code());
-		log.info("controller integratedboardInsert smallCode : {}", board.getSmall_code());
+		log.info("BoardController integratedboardInsert userId : {}", board.getUser_id());
+		log.info("BoardController integratedboardInsert bigCode : {}", board.getBig_code());
+		log.info("BoardController integratedboardInsert smallCode : {}", board.getSmall_code());
 
 		int insertBoard = boardService.boardInsert(board);
 

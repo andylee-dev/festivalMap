@@ -69,6 +69,6 @@ public class SpotServiceImpl implements SpotService {
 		return result;
 	}
 
-
+ 
 
 }

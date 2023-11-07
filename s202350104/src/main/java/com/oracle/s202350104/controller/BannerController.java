@@ -1,8 +1,18 @@
 package com.oracle.s202350104.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
@@ -38,22 +48,26 @@ public class BannerController {
 
 	// Banner 생성 Logic
 	@RequestMapping(value = "/bannerInsert")
-	public String bannerInsert(Banner Banner, Model model) {
+	public String bannerInsert(Banner Banner, MultipartFile file, Model model) throws IOException, Exception {
 
 		log.info("BannerController bannerInsert bigCode : {}", Banner.getBig_code());
-		log.info("BannerController bannerInsert smallCode : {}", Banner.getSmall_code());
-
+		log.info("BannerController bannerInsert smallCode : {}", Banner.getSmall_code());	
+		
+		String resultUrl = "";
+		
 		int insertBoard = bannerService.bannerInsert(Banner);
-
+		
 		if (insertBoard > 0) {
-			return "redirect:/admin/notice/banner";
+			resultUrl = "redirect:/admin/notice/banner";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
-			return "forward:/bannerInsertForm";
+			resultUrl = "forward:/bannerInsertForm";
 		}
+		
+		return resultUrl;		
 	}
 
-	// 통합게시판 삭제 Logic
+	// Banner 삭제 Logic
 	@RequestMapping(value = "/bannerDelete")
 	public String bannerDelete(int id, Model model) {
 

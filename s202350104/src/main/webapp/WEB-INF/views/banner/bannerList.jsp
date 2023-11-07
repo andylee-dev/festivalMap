@@ -29,6 +29,7 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	
 	<h1>배너조회</h1>
+	${originalFileName} 파일을 업로드 하였습니다.<br>
 	<div class="container border p-5">
 		<table class="table">
 			<tr class="table-primary text-center">

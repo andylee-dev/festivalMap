@@ -119,6 +119,7 @@ public class AdminNoticeController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 0;
+		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBanner = bannerService.bannerCount();
@@ -149,6 +150,7 @@ public class AdminNoticeController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
 		
 		log.info("AdminNoticeController bannerBoardList End..");
 
