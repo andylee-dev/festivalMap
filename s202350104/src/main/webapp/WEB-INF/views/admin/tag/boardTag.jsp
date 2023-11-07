@@ -27,7 +27,6 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -36,7 +35,7 @@
 								<th scope="col">게시글 번호</th>
 								<th scope="col">제목</th>
 								<th scope="col">태그명</th>
-								<th scope="col">삭제</th>
+								<th scope="col">수정</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,7 +47,7 @@
 									<td>${tag.board_id}</td>
 									<td>${tag.title}</td>
 									<td>${tag.name}</td>
-									<td><input type="button" value="삭제"></td>
+									<td><input type="button" value="수정"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

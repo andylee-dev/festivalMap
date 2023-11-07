@@ -74,7 +74,7 @@
 								<tr id="festival${st.index}">
 									<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
 									<td>${festival.area_content} ${festival.sigungu_content}</td>
-									<td><a href="festivalDetail?contentId=${festival.content_id}&currentPage=${page.currentPage}">${festival.title}</a></td>
+									<td><a href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}">${festival.title}</a></td>
 									<td>${festival.sponsor}</td>
 									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
 									<td>
@@ -82,7 +82,7 @@
 										<c:if test="${festival.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><c:if test="${festival.status == 1}"><input type="button" value="수정" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}'"></c:if></td>
+									<td><c:if test="${festival.status == 1}"><input type="button" value="수정" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${page.currentPage}'"></c:if></td>
 									<td><c:if test="${festival.status == 1}"><input type="button" value="삭제" onclick="festivalDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
