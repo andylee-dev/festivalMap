@@ -12,5 +12,7 @@ public interface SpotService {
 	SpotContent       detailSpot(int contentId);
 	int               insertSpot(SpotContent spotContent);
 	int               updateSpot(SpotContent spot);
+	int               deletespot(int contentId);
+	int               approveSpot(int contentId);
 
 }

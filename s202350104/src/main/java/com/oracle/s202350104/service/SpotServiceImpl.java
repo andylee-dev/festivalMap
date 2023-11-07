@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.controller.SpotController;
 import com.oracle.s202350104.dao.AreasDao;
+import com.oracle.s202350104.dao.ContentsDao;
 import com.oracle.s202350104.dao.SpotDao;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SpotServiceImpl implements SpotService {
 	
 	private final SpotDao sd;
+	private final ContentsDao cd;
 
 	@Override
 	public int totalSpot() {
@@ -54,6 +56,16 @@ public class SpotServiceImpl implements SpotService {
 		int result = 0;
 		result = sd.insertSpot(spotContent);
 		
+		return result;
+	}
+
+	@Override
+	public int updateSpot(SpotContent spot) {
+		int result = sd.updateSpot(spot);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"명소 정보 수정에 실패하였습니다. ");
+		}
 		return result;
 	}
 

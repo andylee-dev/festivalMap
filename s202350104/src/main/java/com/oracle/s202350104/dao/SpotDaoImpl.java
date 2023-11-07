@@ -80,5 +80,25 @@ public class SpotDaoImpl implements SpotDao {
 		}
 		return result;
 	}
+
+	@Override
+	public int updateSpot(SpotContent spot) {
+		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			result = session.update("dhContentsUpdate",spot);
+			log.info("updateSpot dhContentsUpdate result => " + result);
+			result = session.update("dhContentsUpdate", spot);
+			log.info("updateSpot dhContentsUpdate result => " + result);
+			transactionManager.commit(txStatus);
+		} catch(Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("FestivalsDaoImpl updateSpot Exception => " + e.getMessage());
+			result = -1;
+		}
+		
+		return result;
+	}
 }
 

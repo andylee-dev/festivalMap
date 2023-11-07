@@ -51,4 +51,14 @@
 	VALUES(contents_id_seq.currval,#{opening_hours},#{rest_date},#{entrance_fee},#{is_restroom},#{is_elevator},#{is_wheelchair},#{is_stroller},#{is_pet},#{is_parking})
 	</insert>
 	<!-- seq.currval-> 현재 번호 확인  -->	
+	
+	<update id="dhContentsUpdate" parameterType="SpotContent">
+	UPDATE contentss
+	SET	area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{content_id}
+	
+	</update>
 </mapper>

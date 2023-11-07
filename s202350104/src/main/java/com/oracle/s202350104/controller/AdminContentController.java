@@ -337,7 +337,7 @@
 		@ResponseBody
 		@RequestMapping(value = "spotDeleteAjax")
 		public String spotDeleteAjax(int contentId, Model model) {
-			int result = fs.deletespot(contentId);
+			int result = ss.deletespot(contentId);
 			String resultStr = Integer.toString(result);
 			return resultStr;
 		}
@@ -347,7 +347,7 @@
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "start");
-				int result = fs.approveSpot(contentId);
+				int result = ss.approveSpot(contentId);
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 				} else {
