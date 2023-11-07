@@ -37,4 +37,22 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return totalFavorite;
 	}
 
+	@Override
+	public int condTotalFavorite(Favorite favorite) {
+		int condTotalFavorite = 0;
+		condTotalFavorite = fad.condTotalFavorite(favorite);
+		log.info("FavoriteServiceImpl condTotalFavorite ->" + condTotalFavorite);
+		return condTotalFavorite;
+	}
+
+	@Override
+	public List<Favorite> listSearchFavorite(Favorite favorite) {
+		List<Favorite> listSearchFavorite = fad.listSearchFavorite(favorite);
+		
+		if(listSearchFavorite == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜 목록 리스트가 존재하지 않습니다.");
+		}
+		return listSearchFavorite;
+	}
+
 }

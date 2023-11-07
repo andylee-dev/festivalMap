@@ -306,6 +306,64 @@
 			return "admin/content/spotList";
 		}
 		
+		@RequestMapping(value = "spotDetail")
+		public String spotDetail(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "start");
+				SpotContent spot = ss.detailSpot(contentId);
+				
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("spot", spot);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin spotDetail", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "end");
+			}		
+			return "admin/content/spotDetail";
+		}
+		
+		@RequestMapping(value = "spotUpdate")
+		public String spotUpdate(SpotContent spot,String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "spotUpdate", "start");
+				int result = ss.updateSpot(spot);
+				
+				model.addAttribute("currentPage",currentPage);
+				model.addAttribute("contentId", spot.getContent_id());
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "spotUpdate", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "spotUpdate", "end");
+			}
+				return "forward:../spotDetail";
+		}
+		
+		@RequestMapping(value = "spotUpdateForm")
+		public String spotUpdateForm(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "spotUpdateForm", "start");
+				SpotContent spot = ss.detailSpot(contentId);
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(spot.getArea());
+				
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSigungu",listSigungu);
+				model.addAttribute("currentPage",currentPage);
+				model.addAttribute("spot",spot);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "spotUpdateForm", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "spotUpdateForm", "end");	
+			}
+			return"admin/content/spotUpdateForm";
+			}
+		
 		@RequestMapping(value = "spotInsertForm")
 		public String spotInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();

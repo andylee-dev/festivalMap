@@ -93,7 +93,7 @@ public class AdminUserController {
 	
 	
 	@RequestMapping(value = "favoriteList")
-	public String favoriteList(Favorite favorite, String currentPage, Model model) {
+	public String favoritSearch(Favorite favorite, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
@@ -118,6 +118,35 @@ public class AdminUserController {
 				
 		return "admin/user/favoriteList";
 	}
+	
+	
+	@RequestMapping(value = "favoriteSearch")
+	public String favoriteList(Favorite favorite, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
 		
-
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin favoriteSearch", "start");
+			int totalFavorite = fas.condTotalFavorite(favorite);
+			
+			Paging page = new Paging(totalFavorite, currentPage);
+			favorite.setStart(page.getStart());
+			favorite.setEnd(page.getEnd());
+			
+			List<Favorite> listSearchFavorite = fas.listSearchFavorite(favorite);
+						
+			model.addAttribute("totalFavorite", totalFavorite);
+			model.addAttribute("page",page);
+			model.addAttribute("listFavorite", listSearchFavorite);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin favoriteSearch", e.getMessage());
+		} finally {
+			log.error("[{}]{}:{}", transactionId, "admin favoriteSearch", "end");
+		}
+				
+		return "admin/user/favoriteList";
+	}
+	
+	
+	
 }
