@@ -307,8 +307,13 @@
 		}
 		
 		@RequestMapping(value = "spotDetail")
-		public String spotDetail(int contentId, String currentPage, Model model) {
+		public String spotDetail(String contentIdStr, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			int contentId = 0;
+			if(contentIdStr == null) contentId = 0;
+			else {
+				contentId = Integer.parseInt(contentIdStr);
+			}
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "start");
 				SpotContent spot = ss.detailSpot(contentId);
@@ -338,7 +343,7 @@
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "end");
 			}
-				return "forward:../spotDetail";
+				return "forward:spotDetail?currentPage="+currentPage+"&contentIdStr="+spot.getContent_id();
 		}
 		
 		@RequestMapping(value = "spotUpdateForm")

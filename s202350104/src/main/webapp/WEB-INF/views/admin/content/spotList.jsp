@@ -75,7 +75,7 @@
 								<tr id="spot${st.index}">
 									<td><input type="hidden" value="${spot.content_id}" id="id${st.index}">${num}</td>
 									<td>${spot.cc_content}</td>
-									<td><a href="spotDetail?contentId=${spot.content_id}&currentPage=${page.currentPage}">${spot.title}</a></td>
+									<td><a href="spotDetail?contentIdStr=${spot.content_id}&currentPage=${page.currentPage}">${spot.title}</a></td>
 									<td>${spot.address}</td>
 									<td>${spot.user_id}</td>
 									<td><fmt:formatDate value="${spot.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
@@ -84,7 +84,7 @@
 										<c:if test="${spot.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}'"></c:if></td>
+									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}&currentPage=${page.currentPage}'"></c:if></td>
 									<td><c:if test="${spot.status == 1}"><input type="button" value="삭제" onclick="spotDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>

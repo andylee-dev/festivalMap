@@ -46,9 +46,10 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="spot/update?currentPage=${currentPage}" method="post">
+					<form action="spotUpdate?currentPage=${currentPage}" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<input type="hidden" name="status" value="${spot.status}">
+						<input type="hidden" name="currentPage" value="${currentPage}">
 						<table class="table table-striped table-sm">
 							<tr>
 								<th>컨텐츠 ID</th>
