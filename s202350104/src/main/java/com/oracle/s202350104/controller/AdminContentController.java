@@ -329,6 +329,25 @@ public class AdminContentController {
 		return "admin/content/spotList";
 	}
 	
+	@RequestMapping(value = "spotDetail")
+	public String spotDetail(int contentId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "spotDetail", "start");
+			
+			SpotContent spotContent = ss.detailSpot(contentId);
+			
+			model.addAttribute("spotContent",spotContent);
+			model.addAttribute("contentId",contentId);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "spotDetail", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "spotDetail", "end");
+		}	
+		return "admin/content/spotDetail";
+	}
+	
 	@RequestMapping(value = "spotInsertForm")
 	public String spotInsertForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
