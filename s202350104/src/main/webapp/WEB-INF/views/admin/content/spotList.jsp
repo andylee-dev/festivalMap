@@ -29,7 +29,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='spotInsertForm'">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -37,6 +37,7 @@
 								<th scope="col">테마</th>
 								<th scope="col">명소명</th>
 								<th scope="col">주소</th>
+								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
 								<th scope="col">수정</th>
@@ -51,6 +52,7 @@
 									<td>${spot.cc_content}</td>
 									<td><a href="spotDetail?content_id=${spot.content_id}">${spot.title}</a></td>
 									<td>${spot.address}</td>
+									<td>${spot.user_id}</td>
 									<td><fmt:formatDate value="${spot.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
 									<td>
 										<c:if test="${spot.status == 0}">승인대기</c:if>

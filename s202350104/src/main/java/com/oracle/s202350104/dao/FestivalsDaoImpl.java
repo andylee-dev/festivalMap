@@ -112,6 +112,7 @@ public class FestivalsDaoImpl implements FestivalsDao {
 			log.info("updateFestival nhContentsUpdate result => " + result);
 			result = session.update("nhFestivalsUpdate", festival);
 			log.info("updateFestival nhFestivalsUpdate result => " + result);
+			transactionManager.commit(txStatus);
 		} catch(Exception e) {
 			transactionManager.rollback(txStatus);
 			log.info("FestivalsDaoImpl updateFestival Exception => " + e.getMessage());

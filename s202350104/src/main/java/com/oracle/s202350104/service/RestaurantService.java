@@ -8,8 +8,11 @@ import com.oracle.s202350104.model.RestaurantsContent;
 public interface RestaurantService {
 
 	List<RestaurantsContent> 	listRestaurant(RestaurantsContent restaurant);
-	RestaurantsContent  detailRestaurant(int contentId);
-	int 				totalRestaurant();
+	RestaurantsContent  		detailRestaurant(int contentId);
+	int 						totalRestaurant();
+	int                 		conTotalRestaurant(RestaurantsContent restaurant);
+	List<RestaurantsContent> 	listSearchRestaurant(RestaurantsContent restaurant);
+	List<RestaurantsContent>    listRestaurant();
 	
 
 }

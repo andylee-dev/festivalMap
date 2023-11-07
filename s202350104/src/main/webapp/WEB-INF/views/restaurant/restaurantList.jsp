@@ -72,7 +72,7 @@
 					</c:forEach>
 				</select>	
 				<select name="sigungu" id="sigungu_list_select">
-				<%-- 	<c:forEach var="areas" items="${listAreas}">
+					<%-- <c:forEach var="areas" items="${listAreas}">
 						<c:if test="${areas.sigungu != 999}">
 							<option value="${areas.sigungu}">${areas.content}</option>
 						</c:if>

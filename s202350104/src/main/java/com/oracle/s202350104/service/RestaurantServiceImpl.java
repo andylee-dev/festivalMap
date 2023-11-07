@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.RestaurantDao;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Restaurants;
 import com.oracle.s202350104.model.RestaurantsContent;
 
@@ -44,6 +45,24 @@ public class RestaurantServiceImpl implements RestaurantService {
 		int totalRestaurant = 0;
 		totalRestaurant = rd.totalRestaurant();
 		return totalRestaurant;
+	}
+
+	@Override
+	public int conTotalRestaurant(RestaurantsContent restaurant) {
+		int conTotalRestaurant = rd.conTotalRestaurant(restaurant);
+		return conTotalRestaurant;
+	}
+
+	@Override
+	public List<RestaurantsContent> listSearchRestaurant(RestaurantsContent restaurant) {
+		List<RestaurantsContent> listSearchRestaurant = rd.listSearchRestaurant(restaurant);
+		return listSearchRestaurant;
+	}
+
+	@Override
+	public List<RestaurantsContent> listRestaurant() {
+		List<RestaurantsContent> listRestaurant = rd.listRestaurant();
+		return listRestaurant;
 	}
 
 }

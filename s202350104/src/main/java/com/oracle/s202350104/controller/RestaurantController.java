@@ -3,6 +3,8 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Restaurants;
 import com.oracle.s202350104.model.RestaurantsContent;
 import com.oracle.s202350104.service.AreaService;
@@ -158,4 +161,6 @@ public class RestaurantController {
 	}
 	
 	
-}
+	
+}	
+	

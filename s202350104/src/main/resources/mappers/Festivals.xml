@@ -27,7 +27,11 @@
 			(SELECT content FROM CommonCodes cc
 			 WHERE c.big_code = cc.big_code AND cc.small_code = 999) AS bcode_content,
 			(SELECT content FROM CommonCodes cc
-			 WHERE c.big_code = cc.big_code AND c.small_code = cc.small_code) AS scode_content
+			 WHERE c.big_code = cc.big_code AND c.small_code = cc.small_code) AS scode_content,
+			(SELECT content FROM Areas a 
+			 WHERE c.area = a.area AND a.sigungu = 999) AS area_content,
+			(SELECT content FROM Areas a 
+			 WHERE c.area = a.area AND c.sigungu = a.sigungu) AS sigungu_content 
 		FROM  festivals f, contents c
 		WHERE f.content_id = c.id
 		AND   f.content_id = #{content_id}
@@ -76,9 +80,9 @@
 	<update id="nhContentsUpdate" parameterType="FestivalsContent">
 		UPDATE contents 
 		SET area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
-		title=#{title}, content=#{content}, status=#{status}, img1=#{img}, img2=#{img2}, img3=#{img},
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
 		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
 		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
-		WHERE id = #{id}
+		WHERE id = #{content_id}
 	</update>
 </mapper>

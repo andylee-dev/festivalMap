@@ -10,5 +10,6 @@ public interface SpotDao {
 	List<SpotContent> listSpot(SpotContent spotContent);
 	int               totalSpot();
 	SpotContent       detailSpot(int contentId);
+	int               insertSpot(SpotContent spotContent);
 
 }

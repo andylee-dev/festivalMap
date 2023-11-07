@@ -28,6 +28,7 @@ public class AdminCommunityController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 2;
+		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -57,6 +58,8 @@ public class AdminCommunityController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
 		log.info("AdminCommunityController magazinBoardList End..");
 
 		return "admin/community/freeBoard";
@@ -69,6 +72,7 @@ public class AdminCommunityController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
+		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -86,6 +90,7 @@ public class AdminCommunityController {
 
 		log.info("AdminCommunityController freddBoardList after board.getStart : {} ", board.getStart());
 		log.info("AdminCommunityController freddBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController freddBoardList after board.getEnd : {} ", board.getEnd());
 
 		bigCode = freeAllList.get(0).getBig_code();
 
@@ -98,6 +103,8 @@ public class AdminCommunityController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
 		log.info("AdminCommunityController freddBoardList End..");
 
 		return "admin/community/freeBoard";
@@ -110,6 +117,7 @@ public class AdminCommunityController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 6;
+		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -139,6 +147,8 @@ public class AdminCommunityController {
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
 		log.info("AdminCommunityController reviewBoardList End..");
 
 		return "admin/community/freeBoard";

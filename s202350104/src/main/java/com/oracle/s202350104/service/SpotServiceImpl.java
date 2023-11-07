@@ -51,7 +51,10 @@ public class SpotServiceImpl implements SpotService {
 
 	@Override
 	public int insertSpot(SpotContent spotContent) {
-		return 0;
+		int result = 0;
+		result = sd.insertSpot(spotContent);
+		
+		return result;
 	}
 
 

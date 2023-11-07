@@ -34,5 +34,38 @@
 		WHERE  r.content_id = c.id
 	</select>
 	
+	<select id="joConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
+		SELECT count(*)
+		FROM   restaurants r, (SELECT id
+							   FROM   contents
+							   WHERE  area = #{area} AND sigungu = #{sigungu}) c	
+		WHERE   r.content_id = c.id  
+	</select>
+	
+	<select id="RestaurantListAll" resultType="Restaurants">
+		SELECT * FROM restaurants
+	</select>
+	
+	<select id="joListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
+		SELECT *
+		FROM   
+		(		
+				SELECT ROWNUM rn, t.*,
+									  (SELECT content FROM areas a
+				 					   WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
+									  (SELECT content FROM areas a
+				 					   WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
+				
+				 FROM
+			    		(SELECT  *
+						 FROM    restaurants r, (SELECT *
+							   		   			 FROM   contents
+							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu}) c	
+				 		 WHERE    r.content_id = c.id
+				 		 ORDER BY content_id) t
+		  )		 		 
+		WHERE   rn between #{start} and #{end}  		  
+	</select>
+	
 	
 </mapper>
