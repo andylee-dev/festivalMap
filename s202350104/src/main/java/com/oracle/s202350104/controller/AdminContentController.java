@@ -127,16 +127,29 @@
 		public String festivalUpdateForm(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				log.info("[{}]{}:{}",transactionId, "admin festivalUpdateForm", "start");
 				FestivalsContent festival = fs.detailFestivals(contentId);
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(festival.getArea());
 				
+				/*
+				 * String startdate = festival.getStart_date();
+				 * festival.setStart_date(startdate.substring(0,1)+"-"+startdate.substring(2,3)+
+				 * "-"+startdate.substring(4,5)); String enddate = festival.getEnd_date();
+				 * festival.setEnd_date(enddate.substring(0,1)+"-"+enddate.substring(2,3)+"-"+
+				 * enddate.substring(4,5));
+				 */
+				
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSigungu", listSigungu);
 				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("contentId", contentId);
 				model.addAttribute("festival", festival);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+				log.error("[{}]{}:{}",transactionId, "admin festivalUpdateForm", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+				log.info("[{}]{}:{}",transactionId, "admin festivalUpdateForm", "end");
 			}		
 			return "admin/content/festivalUpdateForm";
 		}
@@ -145,16 +158,19 @@
 		public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "start");
 				int result = fs.updateFestival(festival);
-				
+				int id = festival.getContent_id();
+				log.info("currentPage=>"+currentPage);
+				log.info("id=>"+id);
 				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("contentId", festival.getContent_id());
+				model.addAttribute("contentId", id);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+				log.error("[{}]{}:{}",transactionId, "admin festivalUpdate", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "end");
 			}		
+			//return "redirect:../festivalDetail?contentId="+festival.getContent_id()+"&currentPage="+currentPage;
 			return "forward:../festivalDetail";
 		}
 		
@@ -162,12 +178,12 @@
 		public String festivalDelete(int contentId, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				log.info("[{}]{}:{}",transactionId, "admin festivalDelete", "start");
 				fs.deleteFestivals(contentId);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+				log.error("[{}]{}:{}",transactionId, "admin festivalDelete", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+				log.info("[{}]{}:{}",transactionId, "admin festivalDelete", "end");
 			}		
 			return "forward:festival";
 		}
@@ -175,8 +191,17 @@
 		@ResponseBody
 		@RequestMapping(value = "festivalDeleteAjax")
 		public String festivalDeleteAjax(int contentId, Model model) {
-			int result = fs.deleteFestivals(contentId);
-			String resultStr = Integer.toString(result);
+			UUID transactionId = UUID.randomUUID();
+			String resultStr = null;
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", "start");
+				int result = fs.deleteFestivals(contentId);
+				resultStr = Integer.toString(result);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", "end");
+			}		
 			return resultStr;
 		}
 		
@@ -184,7 +209,7 @@
 		public String festivalApprove(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "start");
 				int result = fs.approveFestival(contentId);
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
@@ -194,9 +219,9 @@
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("currentPage", currentPage);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+				log.error("[{}]{}:{}",transactionId, "admin festivalApprove", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
+				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "end");
 			}		
 			return "forward:festivalDetail";
 		}
