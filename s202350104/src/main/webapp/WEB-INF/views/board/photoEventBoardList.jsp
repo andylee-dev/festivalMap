@@ -19,7 +19,7 @@
 	}
 </style>
 <script type="text/javascript">
-	function showPopUp(id) {
+	function showPopUp(id, userId) {
 		
 		//창 크기 지정
 		var width = 550;
@@ -33,7 +33,7 @@
 		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
 		
 	    //연결하고싶은url
-	    const url = "photoEventBoardDetail?id=" + id;
+	    const url = "photoEventBoardDetail?id=" + id + "&userId=" + userId;
 	
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "hello popup", windowStatus);
@@ -53,7 +53,7 @@
 				<h1>포토 게시판</h1>
 			</c:otherwise>
 		</c:choose>
-		<button class="btn btn-primary" onclick="location.href='integratedBoardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+		<button class="btn btn-primary" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
 	</div>
 
 	<c:set var="num" value="${page.total - page.start + 1}" />
@@ -63,7 +63,7 @@
 			<c:forEach var="boards" items="${board}">
 				<div class="col-md-4 mb-4">
 					<div class="card">
-						<a href="javascript:showPopUp(${boards.id})"> 
+						<a href="javascript:showPopUp(${boards.id},${userId })"> 
 							<img src="../image/sea.jpg" class="card-img-top" alt="...">
 						</a>
 						<div class="card-body">

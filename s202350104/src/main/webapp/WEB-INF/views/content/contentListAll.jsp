@@ -26,7 +26,6 @@
 			for(var i = 0; i < checkbox; i++) {
 				if(document.getElementsByName("content")[i].checked === true) {
 					alert(document.getElementsByName("content")[i].value);
-					
 					window.opener.location.href = '/admin/course/courseInsertForm';
 				}
 				window.close();

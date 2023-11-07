@@ -26,7 +26,7 @@
 							<h1>이벤트 관리</h1>
 						</c:when>
 				    	<c:otherwise>
-				        	<h1>배너 관리</h1>
+				        	<h1>배너 관리</h1> ${msg }
 				    	</c:otherwise>
 					</c:choose>
 				</div>
@@ -42,7 +42,7 @@
 				<c:set var="num" value="${page.total-page.start+1 }"/>
 				
 				<div class="border p-3 m-3">
-					<button onclick="location.href='../../integratedBoardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>
+					<button onclick="location.href='../../bannerInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -78,7 +78,14 @@
 									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><input onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
-									<td><input onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
+									<c:choose>
+										<c:when test="${bigCode eq 3 }">
+											<td><input onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										
+										</c:when>
+										<c:otherwise>
+											<td><input onclick="location.href='../../boardDelete?id=${boards.id}'" type="button" value="삭제"></td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 								<c:set var="num" value="${num - 1 }"/>
 							</c:forEach>

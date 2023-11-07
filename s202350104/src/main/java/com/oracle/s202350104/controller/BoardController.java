@@ -290,7 +290,7 @@ public class BoardController {
 
 	// 통합게시판 상세정보 Logic
 	@RequestMapping(value = "/boardDetail")
-	public String boardContent(int id, int userId,Model model) {
+	public String boardContent(int id, int userId, Model model) {
 
 		log.info("controller boardContent boardId : {} ", id);
 		log.info("controller boardContent userId : {} ", userId);
@@ -306,13 +306,15 @@ public class BoardController {
 
 	// 이벤트,포토게시판 상세정보 Logic
 	@RequestMapping(value = "/photoEventBoardDetail")
-	public String photoBoardDetail(int id, Model model) {
+	public String photoBoardDetail(int id, int userId, Model model) {
 
 		log.info("controller boardContent boardId : {} ", id);
+		log.info("controller boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
 
 		model.addAttribute("board", boards);
+		model.addAttribute("userId", userId);
 
 		return "board/photoEventBoardDetail"; 
 
@@ -448,18 +450,18 @@ public class BoardController {
 	
 	// 통합게시물 생성 form Logic	
 	@RequestMapping(value = "/integratedBoardInsertForm")
-	public String boardInsertForm2(String userId, String bigCode, String smallCode, Model model) {
+	public String integratedBoardInsertForm(String userId, String bigCode, String smallCode, Model model) {
 		
-		log.info("controller boardInsertForm2 start!");
-		log.info("controller boardInsertForm2 userId : {}", userId);
-		log.info("controller boardInsertForm2 bigCode : {}", bigCode);
-		log.info("controller boardInsertForm2 smallCode : {}", smallCode);
+		log.info("controller integratedBoardInsertForm start!");
+		log.info("controller integratedBoardInsertForm userId : {}", userId);
+		log.info("controller integratedBoardInsertForm bigCode : {}", bigCode);
+		log.info("controller integratedBoardInsertForm smallCode : {}", smallCode);
 		
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		
-		log.info("controller boardInsertForm2 end!");
+		log.info("controller integratedBoardInsertForm end!");
 		
 		return "board/integratedBoardInsertForm";
 	}
@@ -476,19 +478,19 @@ public class BoardController {
 
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
 			if(board.getUser_id() == 1){
-				return "forward:/admin/notice/notice";
+				return "redirect:/admin/notice/notice";
 			}
 			return "forward:/noticBoardList";
 			
 		} else if (insertBoard > 0 && board.getSmall_code() == 2) {
 			if(board.getUser_id() == 1){
-				return "forward:/admin/community/magazin";
+				return "redirect:/admin/community/magazin";
 			}
 			return "forward:/magazinBoardList";
 			
 		} else if (insertBoard > 0 && board.getSmall_code() == 3) {
 			if(board.getUser_id() == 1){
-				return "forward:/admin/community/board";
+				return "redirect:/admin/community/board";
 			}
 			return "forward:/freeBoardList";
 			
@@ -497,13 +499,13 @@ public class BoardController {
 			
 		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
 			if(board.getUser_id() == 1){
-				return "forward:/admin/notice/event";
+				return "redirect:/admin/notice/event";
 			}
 			return "forward:/eventBoardList";
 			
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
 			if(board.getUser_id() == 1){
-				return "forward:/admin/community/review";
+				return "redirect:/admin/community/review";
 			}
 			return "forward:/";
 		} else {

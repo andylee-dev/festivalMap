@@ -88,5 +88,37 @@ public class BannerDaoImpl implements BannerDao {
 		
 		return bannerAllList;
 	}
+	
+	@Override
+	public int bannerInsert(Banner banner) {
+		log.info("BannerDao bannerInsert Start!!");
+		
+		int insertBanner = 0;
+		
+		try {
+			insertBanner = session.insert("bannerInsert", banner);
+		} catch (Exception e) {
+			log.error("BannerDao bannerInsert Exception : {}", e.getMessage());
+		} finally {
+			log.info("BannerDao bannerInsert End..");
+		}
+		return insertBanner;
+	}
+	
+	@Override
+	public int bannerDelete(int id) {
+		log.info("BannerDao bannerDelete Start!!");
+		
+		int deleteBanner = 0;
+		
+		try {
+			deleteBanner = session.delete("bannerDelete", id);
+		} catch (Exception e) {
+			log.error("BannerDao bannerDelete Exception : {}", e.getMessage());
+		} finally {
+			log.info("BannerDao bannerDelete End..");
+		}
+		return deleteBanner;
+	}
 
 }
