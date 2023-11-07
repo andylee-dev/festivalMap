@@ -12,5 +12,7 @@ public interface SpotDao {
 	SpotContent       detailSpot(int contentId);
 	int               insertSpot(SpotContent spotContent);
 	int               updateSpot(SpotContent spot);
+	int               deleteSpot(int contentId);
+	int               approveSpot(int contentId);
 
 }

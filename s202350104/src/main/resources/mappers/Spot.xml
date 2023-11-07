@@ -51,6 +51,12 @@
 	VALUES(contents_id_seq.currval,#{opening_hours},#{rest_date},#{entrance_fee},#{is_restroom},#{is_elevator},#{is_wheelchair},#{is_stroller},#{is_pet},#{is_parking})
 	</insert>
 	<!-- seq.currval-> 현재 번호 확인  -->	
+	<update id="dhContentsDelete" parameterType="int">
+		UPDATE contents SET status = 0, is_deleted = 1 WHERE id = #{contentId}
+	</update>
+	<update id="dhSpotApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
 	
 	<update id="dhContentsUpdate" parameterType="SpotContent">
 	UPDATE contentss

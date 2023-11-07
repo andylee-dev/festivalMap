@@ -1,13 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>spot content</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			function spotDeleteAjax(pIndex) {
+				var deleteId = Number($('#id'+pIndex).val());
+				var currentPage = ${page.currentPage};
+				if(confirm("정말 삭제하시겠습니까?")) {
+					$.ajax(
+							{
+								method:"POST",
+								url:"<%=request.getContextPath()%>/admin/content/spotDeleteAjax",
+								data:{contentId : deleteId},
+								dataType:'text',
+								success:
+									function(result) {
+											if(result == '1') {
+												$('#spot'+pIndex).remove();
+												alert("성공적으로 삭제되었습니다.");
+												location.reload();
+											} else {
+												alert("삭제에 실패하였습니다.");
+											}		
+									}
+							}		
+					)
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -47,8 +72,8 @@
 						<tbody>
 							<c:set var="num" value="${page.start}"/>
 							<c:forEach var="spot" items="${listSpot}">
-								<tr>
-									<td>${num}</td>
+								<tr id="spot${st.index}">
+									<td><input type="hidden" value="${spot.content_id}" id="id${st.index}">${num}</td>
 									<td>${spot.cc_content}</td>
 									<td><a href="spotDetail?contentId=${spot.content_id}&currentPage=${page.currentPage}">${spot.title}</a></td>
 									<td>${spot.address}</td>
@@ -59,8 +84,8 @@
 										<c:if test="${spot.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>
+									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}'"></c:if>></td>
+									<td><c:if test="${spot.status == 1}"><input type="button" value="삭제" onclick="spotDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
