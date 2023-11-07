@@ -50,7 +50,7 @@
 								<tr>
 									<td>${num}</td>
 									<td>${spot.cc_content}</td>
-									<td><a href="spotDetail?content_id=${spot.content_id}">${spot.title}</a></td>
+									<td><a href="spotDetail?contentId=${spot.content_id}">${spot.title}</a></td>
 									<td>${spot.address}</td>
 									<td>${spot.user_id}</td>
 									<td><fmt:formatDate value="${spot.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->

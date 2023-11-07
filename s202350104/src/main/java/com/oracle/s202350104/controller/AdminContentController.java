@@ -330,15 +330,16 @@ public class AdminContentController {
 	}
 	
 	@RequestMapping(value = "spotDetail")
-	public String spotDetail(int contentId, Model model) {
+	public String spotDetail(int contentId, String currentPage , Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "spotDetail", "start");
 			
-			SpotContent spotContent = ss.detailSpot(contentId);
-			
-			model.addAttribute("spotContent",spotContent);
+			SpotContent spot = ss.detailSpot(contentId);
+			log.info("spotdetail => " + spot.getTitle());
+			model.addAttribute("spot",spot);
 			model.addAttribute("contentId",contentId);
+			model.addAttribute("currentPage",currentPage);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spotDetail", e.getMessage());
