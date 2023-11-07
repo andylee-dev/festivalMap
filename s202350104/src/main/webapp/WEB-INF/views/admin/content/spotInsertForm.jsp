@@ -105,7 +105,7 @@
 							</tr>
 							<tr>
 								<th>주소</th>
-								<td><%-- postcode & address --%></td>
+								<td><input type="text" name="postcode" placeholder="우편번호"><input type="text" name="address"></textarea></td>
 							</tr>
 							<tr>
 								<th>개요</th>
