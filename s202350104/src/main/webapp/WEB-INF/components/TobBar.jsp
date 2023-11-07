@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/components/MemberCheck.jsp" %>
+	
+	
 <header id="topbar">
-
 	<nav class="navbar navbar-expand-md bg-body-tertiary navbar-light fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Festimap</a>
@@ -115,8 +117,32 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="/admin">관리자홈</a></li>
 						</ul></li>
-					<%@ include file="/WEB-INF/components/MemberCheck.jsp" %>
-					<%  String loggedId = username; %>						
+					<%
+						Collection<SimpleGrantedAuthority> authorities =(Collection<SimpleGrantedAuthority>) authentication.getAuthorities();
+						if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))){
+					%>	
+						<a href="/admin">관리자 페이지</a>&nbsp;
+						<a href="/logout">로그아웃 </a>
+						
+					<%
+						} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("BIZ"))){
+					%>		
+					    <a href="/user/biz">비즈니스 페이지</a>&nbsp;
+						<a href="/logout">로그아웃  </a>
+					<%
+						} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("USER"))){
+					%>
+						<a href="/user/myPage">마이페이지</a>&nbsp;
+						<a href="/logout">로그아웃  </a>
+					<%
+						}else{
+					%>
+							<a href="/login">로그인   </a>&nbsp;
+							<a href="/join">회원가입</a>	
+					<% 
+						}
+					%>	
+											
 				</ul>
 			</div>
 		</div>
