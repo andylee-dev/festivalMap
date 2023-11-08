@@ -119,7 +119,7 @@ public class AdminCourseController {
 		} finally {
 			log.info("AdminCourseController courseInsert end...");
 		}
-		return "/admin/course/list";
+		return "redirect:/admin/course/list";
 	}
 	
 	
