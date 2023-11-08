@@ -569,7 +569,7 @@
 				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 			}		
 			return "redirect:../accomodation";
-		}
+		}	
 		
 		@GetMapping(value="accomodationUpdateForm")
 		public String accomodationUpdateForm(int contentId, String currentPage, Model model) {
@@ -598,10 +598,11 @@
 		@RequestMapping(value = "accomodation/update")
 		public String accomodationUpdate(AccomodationContent accomodation, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			int id = 0;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
 				int result = as.updateAccomodation(accomodation);
-				
+				id = accomodation.getContent_id();
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("contentId", accomodation.getContent_id());
 			} catch (Exception e) {
@@ -609,7 +610,7 @@
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
 			}		
-			return "forward:../accomodationDetail";
+			return "forward:/admin/content/accomodationDetail?contentIdStr="+id;
 		}
 		
 		
@@ -618,8 +619,46 @@
 		public String accomodationDelete(int contentId, Model model) {
 			int accomodationDelete = as.accomodationDelete(contentId);
 			
-			return "redirect:accomodation";
+			return "forward:accomodation";
 			
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "accomodationDeleteAjax")
+		public String accomodationDeleteAjax(int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			String resultStr = null;
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", "start");
+				int result = as.accomodationDelete(contentId);
+				resultStr = Integer.toString(result);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", "end");
+			}		
+			return resultStr;
+		}
+		
+		@RequestMapping(value = "accomodationApprove")
+		public String accomodationApprove(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "start");
+				int result = as.approveAccomodation(contentId);
+				if(result > 0) {
+					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+				} else {
+					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+				}
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("currentPage", currentPage);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin festivalApprove", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "end");
+			}		
+			return "forward:accomodationDetail";
 		}
 		
 		@RequestMapping(value = "experienceUpdateForm")

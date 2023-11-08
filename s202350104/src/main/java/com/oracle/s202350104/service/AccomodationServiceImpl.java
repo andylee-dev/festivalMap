@@ -52,6 +52,7 @@ public class AccomodationServiceImpl implements AccomodationService {
 	@Override
 	public int accomodationDelete(int contentId) {
 		int accomodationDelete = 0;
+		
 		accomodationDelete = ad.accomodationDelete(contentId);
 		
 		return accomodationDelete;
@@ -76,6 +77,17 @@ public class AccomodationServiceImpl implements AccomodationService {
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "숙박 정보 수정에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int approveAccomodation(int contentId) {
+		int result = ad.approveAccomodation(contentId);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "숙박 정보 승인에 실패하였습니다.");
 		}
 		
 		return result;

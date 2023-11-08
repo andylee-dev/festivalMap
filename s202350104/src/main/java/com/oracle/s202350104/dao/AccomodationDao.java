@@ -13,6 +13,7 @@ public interface AccomodationDao {
 	int                             insertContent(AccomodationContent accomodation);
 	int                             insertAccomodation(AccomodationContent accomodation);
 	int                             updateAccomodation(AccomodationContent accomodation);
+	int                             approveAccomodation(int contentId);
 
 	
 

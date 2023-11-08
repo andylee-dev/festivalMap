@@ -73,5 +73,9 @@
 		WHERE id = #{content_id}
 	</update>
 	
+	<update id="AccomodatioApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
+	
 
 </mapper>
