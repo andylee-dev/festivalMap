@@ -581,12 +581,40 @@
 			return "admin/content/experienceUpdateForm";
 		}
 		
+		@RequestMapping(value = "experienceUpdate")
+		public String experienceUpdate(ExperienceContent experienceContent, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			int contentId = experienceContent.getId();
+			log.info("contentId->"+contentId);
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				int result = es.experienceUpdate(experienceContent);
+				model.addAttribute("contentId", experienceContent.getContent_id());
+				model.addAttribute("currentPage" , currentPage);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin detailExperience", "end");
+			}		
+			return "forward:/admin/content/experienceDetail?contentId="+contentId;
+		}
+		
 		@ResponseBody
 		@RequestMapping(value = "experienceDeleteAjax")
 		public String experienceDeleteAjax(int contentId, Model model) {
-			int result = es.experienceDelete(contentId);
-			String resultStr = Integer.toString(result);
+			UUID transactionId = UUID.randomUUID();
+			String resultStr = null;
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin experienceDeleteAjax", "start");
+				int result = es.experienceDelete(contentId);
+				resultStr = Integer.toString(result);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin experienceDeleteAjax", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin experienceDeleteAjax", "end");
+			}		
 			return resultStr;
+			
 		}
 		
 		@ResponseBody
@@ -595,6 +623,37 @@
 			int result = es.experienceRestore(contentId);
 			String resultStr = Integer.toString(result);
 			return resultStr;	
+		}
+		
+		@RequestMapping(value = "experienceDelete")
+		public String experienceDelete(int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin experienceDelete", "start");
+				es.experienceDelete(contentId);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin experienceDelete", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin experienceDelete", "end");
+			}		
+			return "redirect:experience";
+		}
+		
+		@RequestMapping(value = "experienceDetail")
+		public String experienceDetail(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin experienceDetail", "start");
+				ExperienceContent detailExperience = es.detailExperience(contentId);
+				
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("experience", detailExperience);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin experienceDetail", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin experienceDetail", "end");
+			}		
+			return "admin/content/experienceDetail";
 		}
 		
 		@GetMapping(value = "experience1")
