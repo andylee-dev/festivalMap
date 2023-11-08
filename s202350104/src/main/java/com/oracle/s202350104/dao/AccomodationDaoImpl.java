@@ -119,4 +119,16 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		
 		return result;
 	}
+
+	@Override
+	public int approveAccomodation(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("AccomodationApprove", contentId);
+		} catch(Exception e) {
+			log.info("AccomodationDaoImpl approveFestival Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
 }

@@ -6,6 +6,33 @@
 <head>
 <meta charset="UTF-8">
 <title>지역정보 숙박</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			function accomodationDeleteAjax(pIndex) {
+				var deleteId = Number($('#id'+pIndex).val());
+				var currentPage = ${page.currentPage};
+				if(confirm("정말 삭제하시겠습니까?")) {
+					$.ajax(
+							{
+								method:"POST",
+								url:"<%=request.getContextPath()%>/admin/content/accomodationDeleteAjax",
+								data:{contentId : deleteId},
+								dataType:'text',
+								success:
+									function(result) {
+											if(result == '1') {
+												$('#accomodation'+pIndex).remove();
+												alert("성공적으로 삭제되었습니다.");
+												location.reload();
+											} else {
+												alert("삭제에 실패하였습니다.");
+											}		
+									}
+							}		
+					)
+				}
+			}
+		</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -42,20 +69,23 @@
 					</thead>
 					<tbody>
 						<c:set var="num" value="${page.start}"/>
-						<c:forEach var="accomodation" items="${listAccomodation}">
-							<tr>
-								<td>${num}</td>
-								<td>${accomodation.area} ${accomodation.sigungu}</td>
-								<td><a href="accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}">${accomodation.title}</a></td>
-								<td>${accomodation.address}</td>
-								<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
-								<td>
+						<c:forEach var="accomodation" items="${listAccomodation}" varStatus="st">
+							<tr id="festival${st.index}">
+									<td><input type="hidden" value="${accomodation.content_id}" id="id${st.index}">${num}</td>
+									<td>${accomodation.area} ${accomodation.sigungu}</td>
+									<td><a href="accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}">${accomodation.title}</a></td>
+									<td>${accomodation.address}</td>
+									<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
+									<td>
 						 				<c:if test="${accomodation.status == 0 }">승인대기</c:if>
 										<c:if test="${accomodation.status == 1 }">승인완료</c:if>
 									</td>
-									<td><input type="button" value="수정" onclick="location.href='accomodationUpdateForm?contentId=${accomodation.content_id}'"></td>		
-									<td><input type="button" value="삭제" onclick="location.href='accomodationDelete?contentId=${accomodation.content_id}'"></td>
+									<td><c:if test="${accomodation.status == 1}"><input type="button" value="수정" onclick="location.href='accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${page.currentPage}'"></c:if></td>
+									<td><c:if test="${accomodation.status == 1}"><input type="button" value="삭제" onclick="accomodationDeleteAjax(${st.index})"></c:if></td>
 								 </tr>
+								 <td>
+										<c:if test="${accomodation.is_deleted == 1}">삭제완료</c:if>
+									</td>
 								 <c:set var="num" value="${num + 1}"/>
 						</c:forEach>
 					</tbody>
