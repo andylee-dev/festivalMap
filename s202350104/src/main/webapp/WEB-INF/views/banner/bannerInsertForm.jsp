@@ -73,10 +73,8 @@
 					   name="url" required>
 			</div>
 			<div class="form-group">
-				<label for="image">이미지 첨부</label>
-				UpLoad Image : <img alt="UpLoadImage" src="${pageContext.request.contextPath}/image/${savedName}"> 
-				<input type="file" class="form-control" 
-					   name="file">
+				<label for="image">이미지 첨부</label> 
+				<input type="file" class="form-control" name="file">
 			</div>			
 			<div class="form-group">
 				<label for="smallCode">소분류 코드</label><p>

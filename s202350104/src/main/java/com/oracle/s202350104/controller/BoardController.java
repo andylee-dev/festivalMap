@@ -128,7 +128,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
-		int userId = 1001;
+		int userId = 0;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -148,10 +148,12 @@ public class BoardController {
 		log.info("controller freeBoardList after board.getEnd : {} ", board.getEnd());
 
 		bigCode = freeAllList.get(0).getBig_code();
+		userId = freeAllList.get(0).getUser_id();
 
 		log.info("controller freeBoardList totalBoard : {} ", countBoard);
 		log.info("controller freeBoardList smallCode : {} ", smallCode);
 		log.info("controller freeBoardList bigCode : {} ", bigCode);
+		log.info("controller freeBoardList userId : {} ", userId);		
 		log.info("controller freeBoardList page : {} ", page);
 
 		model.addAttribute("board", freeAllList);
@@ -537,6 +539,7 @@ public class BoardController {
 		
         return "board/boardReportForm";
     }
+	
 	// 게시판 신고기능 -송환
 	@RequestMapping(value = "boardReportUpdate")
 	public String boardReportUpdate(Report report, Model model) {
