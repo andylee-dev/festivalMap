@@ -70,6 +70,11 @@ public class UserDaoImpl implements UserDao {
 		return result;
 	}
 
+	@Override
+	public int updateUserPoint(Users user) {
+		return session.update("updateUserPoint",user);
+	}
+
 
 
 

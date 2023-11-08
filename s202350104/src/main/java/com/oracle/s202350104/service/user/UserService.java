@@ -14,6 +14,6 @@ public interface UserService {
 	Users getUserById(int id);
 	int updateUser(Users user);
 	int deletUser(int id);
-	int updatePoint(int id, int point_id);
+	int updateUserPoint(int user_id, int point_id);
 }
 	

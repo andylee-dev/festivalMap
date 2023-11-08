@@ -110,15 +110,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional 
-	public int updatePoint(int id, int point_id) {
-		// Update Point
-		ud.updatePoint(id, point_id);
+	public int updateUserPoint(int user_id, int point_id) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "updatePoint", "start");
 
-		// Write Point History
-		PointHistory pointHistory = new PointHistory();
-		pointHistory.setUser_id(id);
-		pointHistory.setPoint_id(point_id);
-		phs.writePointHistory(pointHistory);
+			// Update Point
+			int score = ps.getPointScoreById(point_id);
+	
+			Users user = new Users();
+			user.setId(user_id);
+			user.setPoint(score);
+	
+			ud.updateUserPoint(user);
+	
+			log.info("updatePoint user:{} / score:{}",user_id,score);
+
+			// Write Point History
+			PointHistory pointHistory = new PointHistory();
+			pointHistory.setUser_id(user_id);
+			pointHistory.setPoint_id(point_id);
+			phs.writePointHistory(pointHistory);
+		} catch (Exception e) {
+			log.error("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "updatePoint", e.getMessage());
+		} finally {
+			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "updatePoint", "end");
+		}		
 		return 0;
 	}
 }

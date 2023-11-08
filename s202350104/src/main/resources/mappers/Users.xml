@@ -117,5 +117,9 @@
      		) 
 		WHERE rn between #{start} and #{end}
 	</select>
+
+	<update id="updateUserPoint" parameterType="Users">
+		UPDATE users SET point = point + #{point} WHERE id = #{id}
+	</update>
 	
 </mapper>
