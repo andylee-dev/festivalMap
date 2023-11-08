@@ -143,17 +143,21 @@
 							<th>등록일</th>
 							<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						</tr>
+						<tr>
+							<th>삭제여부</th>
+							<td><c:if test="${festival.is_deleted == 1}">삭제완료</c:if></td>
+						</tr>
 					</table>
 					<div align="center">
 						<c:if test="${festival.status == 0}">
 							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival'">목록</button>
 						</c:if>
 						<c:if test="${festival.status == 1}">
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${currentPage}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival'">목록</button>
 						</c:if>
 					</div>
 				</div>		
