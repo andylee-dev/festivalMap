@@ -64,11 +64,12 @@ public class CourseServiceImpl implements CourseService {
 		return courseInsert;
 	}
 
+
 	@Override
-	public int courseContentInsert(List<String> contents) {
-		int courseContentInsert = cd.courseContentInsert(contents);
-		log.info("CourseServiceImpl courseCount courseInsert ->" + courseContentInsert);
-		
+	public int courseContentInsert(List<CourseContent> courseContentList) {
+		log.info("courseContentInsert ->" + courseContentList);
+		int courseContentInsert = cd.courseContentInsert(courseContentList);
+		log.info("CourseServiceImpl courseCount courseInsert ->" + courseContentInsert);	
 		
 		return courseContentInsert;
 	}

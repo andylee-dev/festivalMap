@@ -12,6 +12,6 @@ public interface CourseService {
 	List<Course>      		courseList(Course course);
 	List<Course> 			courseDetail(int course_id);
 	int						courseInsert(Course course);
-	int 					courseContentInsert(List<String> contents);
+	int						courseContentInsert(List<CourseContent> courseContentList);
 }	 
 	

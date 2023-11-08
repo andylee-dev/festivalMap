@@ -66,14 +66,17 @@
 		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
 			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
-			<selectKey keyProperty="course_id" resultType="Integer" order="AFTER">
+			<selectKey keyProperty="id" resultType="Integer" order="AFTER">
 				SELECT COURSES_ID_SEQ.currval FROM dual
 			</selectKey>
 		</insert>
 		
-	 	<insert id="noCourseContentInsert" parameterType="CourseContent">
-			INSERT into CourseContents values (#{content_id}, #{course_id}, #{order_num})
-			
+		<insert id="noCourseContentInsert" parameterType="java.util.List">
+			INSERT into CourseContents (content_id, course_id, order_num) 
+			values 
+				<foreach collection="list" item="CourseContent" separator=" , ">
+					(#{CourseContent.content_id}, #{CourseContent.course_id}, #{CourseContent.order_num})
+				</foreach>
 		</insert>
 		
 		
