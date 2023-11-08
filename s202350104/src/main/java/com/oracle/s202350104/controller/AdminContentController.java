@@ -563,12 +563,13 @@
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "start");
 				as.insertAccomodation(accomodation);
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin accomodationInsert", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 			}		
-			return "forward:accomodation";
+			return "redirect:../accomodation";
 		}	
 		
 		@GetMapping(value="accomodationUpdateForm")
