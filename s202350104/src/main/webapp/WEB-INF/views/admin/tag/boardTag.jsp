@@ -11,7 +11,7 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -27,6 +27,11 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
+					<button type="button" class="btn btn-outline-secondary">매거진</button>
+					<button type="button" class="btn btn-outline-secondary">자유게시판</button>
+					<button type="button" class="btn btn-outline-secondary">포토게시판</button>
+					<button type="button" class="btn btn-outline-secondary">이벤트게시판</button>
+					<button type="button" class="btn btn-outline-secondary">리뷰</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>

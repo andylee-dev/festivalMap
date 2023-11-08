@@ -38,7 +38,7 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -66,6 +66,7 @@
 								<th scope="col">승인여부</th>
 								<th scope="col">수정</th>
 								<th scope="col">삭제</th>
+								<th scope="col">삭제여부</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -84,6 +85,9 @@
 									</td>
 									<td><c:if test="${festival.status == 1}"><input type="button" value="수정" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${page.currentPage}'"></c:if></td>
 									<td><c:if test="${festival.status == 1}"><input type="button" value="삭제" onclick="festivalDeleteAjax(${st.index})"></c:if></td>
+									<td>
+										<c:if test="${festival.is_deleted == 1}">삭제완료</c:if>
+									</td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
