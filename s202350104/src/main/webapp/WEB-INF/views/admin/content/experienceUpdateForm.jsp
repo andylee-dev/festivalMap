@@ -63,7 +63,7 @@
 							<tr><th>체험이름</th><td>
 								<input type="text" name="title" value="${experience.title }"></td></tr>
 							<tr><th>개요</th><td><textarea rows="10" cols="60" name="content" maxlength="4000" placeholder="체험에 대한 설명을 4000자 이내로 입력해 주세요">
-												${experience.content }</textarea></td></tr>
+												${experience.content}</textarea></td></tr>
 							<tr><th>체험지역</th><td>
 								<select id="area" name="area" onchange="getSigungu(this.value)">
 										<option value="">전체</option>
@@ -102,7 +102,7 @@
 								<input type="text" name="capacity" value="${experience.capacity }"></td></tr>
 							<tr><th>연령</th><td>
 								<input type="text" name="age" value="${experience.age }"></td></tr>
-							<tr><th>체험내용</th><td><textarea rows="10" cols="60" name="content" maxlength="2000" 
+							<tr><th>체험내용</th><td><textarea rows="10" cols="60" name="inform" maxlength="2000" 
 													placeholder="체험에 대한 내용을 2000자 이내로 입력해 주세요">
 													${experience.inform }</textarea></td>
 							<tr><th>이용시간</th><td>

@@ -11,5 +11,6 @@ public interface ReportService {
 	List<Report>	reportDetail(int boardId);
 	int 			reportBoardUpdate(int id);
 	int 			reportUpdate(int id);
+	int 			boardReportUpdate(Report report);
 
 }

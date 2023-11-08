@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Paging;
+import com.oracle.s202350104.model.Report;
 import com.oracle.s202350104.service.BoardService;
+import com.oracle.s202350104.service.ReportService;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final BoardService boardService;
+	//게시판 신고기능 위해 service 추가
+	private final ReportService res;
+	private final UserService us;
+	
 	
 	/*
 	 *  smallCode 초기값 강제 고정, 향후 리팩토링 예정
@@ -512,5 +520,42 @@ public class BoardController {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
 			return "forward:/integratedBoardInsertForm";
 		}
+	}
+	
+	// 게시판 신고기능 -송환
+	@GetMapping("/reportBoardFoam")
+    public String reportBoard(int boardId, Model model) {
+		log.info("boardId->"+ boardId);
+		try {
+			Board reportBoard = boardService.boardDetail(boardId);
+		int userid = us.getLoggedInId();
+		model.addAttribute("board",reportBoard );
+		model.addAttribute("userId",userid);
+		} catch (Exception e) {
+			
+		}
+		
+        return "board/boardReportForm";
+    }
+	// 게시판 신고기능 -송환
+	@RequestMapping(value = "boardReportUpdate")
+	public String boardReportUpdate(Report report, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		String message = "";
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			int result = res.boardReportUpdate(report);
+			 if (result == 0) {
+				 message = "이미 신고한 게시글입니다.";
+		     }else if (result ==1 ) {
+		    	 message = "신고완료";
+			}
+			 model.addAttribute("message", message);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin detailExperience", "end");
+		}		
+		return "board/boardReportClose";
 	}
 } 

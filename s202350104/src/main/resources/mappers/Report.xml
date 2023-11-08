@@ -29,6 +29,9 @@
 		where r.board_id = #{id}
 	</update>
 	
-	
+	<insert id="shBoardReportUpdate" parameterType="report">
+		insert into report 
+		VALUES (#{board_id},#{id},#{content},1,sysdate)
+	</insert>
 	
 </mapper>	

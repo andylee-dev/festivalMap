@@ -46,4 +46,11 @@ public class ReportServiceImpl implements ReportService {
 		return reportUpdate;
 	}
 
+	@Override
+	public int boardReportUpdate(Report report) {
+		int boardReportUpdate = 0;
+		boardReportUpdate = rd.boardReportUpdate(report);
+		return boardReportUpdate;
+	}
+
 }

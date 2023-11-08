@@ -20,15 +20,7 @@
 					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}";
 				}
 			}
-			function openRejectionPopup() {
-		        let reason = prompt("반려 사유를 입력하세요:", "");
-		        // 여기서 reason을 처리하는 로직을 추가하면 됩니다.
-		        if (reason != null) {
-		            // 반려 사유를 처리하는 로직을 추가하세요.
-		            // 예를 들어, AJAX를 사용하여 서버에 이유를 전달하거나 다른 작업을 수행할 수 있습니다.
-		            console.log("반려 사유: ", reason);
-		        }
-		    }
+			
 		</script>				
 	</head>
 	<body>

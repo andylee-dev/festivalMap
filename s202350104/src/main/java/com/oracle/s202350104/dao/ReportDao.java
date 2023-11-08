@@ -16,4 +16,6 @@ public interface ReportDao {
 
 	int reportUpdate(int id);
 
+	int boardReportUpdate(Report report);
+
 }

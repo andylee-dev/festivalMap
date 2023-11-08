@@ -73,4 +73,14 @@ public class ReportDaoImpl implements ReportDao {
 		return reportUpdate;
 	}
 
+	@Override
+	public int boardReportUpdate(Report report) {
+		int boardReportUpdate = 0;
+		try {
+			boardReportUpdate = session.update("shBoardReportUpdate",report);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return boardReportUpdate;
+	}
 }
