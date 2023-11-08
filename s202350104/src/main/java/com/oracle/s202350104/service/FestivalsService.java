@@ -13,4 +13,6 @@ public interface FestivalsService {
 	int                    deleteFestivals(int contentId);
 	int                    approveFestival(int contentId);
 	int                    updateFestival(FestivalsContent festival);
+	List<FestivalsContent> listFestivalsAdmin(FestivalsContent festival);
+	int totalFestivalsAdmin();
 }

@@ -53,18 +53,17 @@
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festival", "start");
-				int totalFestivals = fs.totalFestivals();
-				log.info("festival currentPage1"+currentPage);
+				int totalFestivals = fs.totalFestivalsAdmin();
+				
 				PagingList page = new PagingList(totalFestivals, currentPage);
 				festival.setStart(page.getStart());
 				festival.setEnd(page.getEnd());
 				
-				List<FestivalsContent> listFestivals = fs.listFestivals(festival);
+				List<FestivalsContent> listFestivals = fs.listFestivalsAdmin(festival);
 				
 				model.addAttribute("totalFestivals", totalFestivals);
 				model.addAttribute("listFestivals", listFestivals);
 				model.addAttribute("page", page);
-				log.info("festival currentPage2"+currentPage);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festival", e.getMessage());
 			} finally {
@@ -84,13 +83,10 @@
 			}
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-				log.info("festivalDetail currentPage0=>"+currentPage);
 				FestivalsContent festival = fs.detailFestivals(contentId);
-				log.info("festivalDetail currentPage1=>"+currentPage);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("festival", festival);
-				log.info("festivalDetail currentPage2=>"+currentPage);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
 			} finally {
@@ -149,7 +145,7 @@
 				 * festival.setEnd_date(enddate.substring(0,1)+"-"+enddate.substring(2,3)+"-"+
 				 * enddate.substring(4,5));
 				 */
-				log.info("festivalUpdateForm currentPage"+currentPage);
+				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("listSigungu", listSigungu);
@@ -163,7 +159,7 @@
 			return "admin/content/festivalUpdateForm";
 		}
 		
-		@RequestMapping(value = "festival/update")
+		@RequestMapping(value = "festivalUpdate")
 		public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			int id = 0;
@@ -171,15 +167,13 @@
 				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "start");
 				int result = fs.updateFestival(festival);
 				id = festival.getContent_id();
-				log.info("festivalUpdate currentPage"+currentPage);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalUpdate", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "end");
-				System.out.println("festival/update finally ....");
 			}		
 			return "forward:/admin/content/festivalDetail?contentIdStr="+id;
-			// model은 view로 데이터를 가져가는 것이기 때문에 forward로 넘길 때는 return값에 파라미터를 붙여서 넘겨줘야 한다
+			// model은 view로 데이터를 가져가는 것이기 때문에 forward로 넘길 때는 return url에 파라미터를 붙여서 넘겨줘야 한다
 		}
 		
 		@RequestMapping(value = "festivalDelete")
@@ -231,7 +225,7 @@
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "end");
 			}		
-			return "forward:festivalDetail";
+			return "forward:festivalDetail?contentIdStr="+contentId;
 		}
 	
 		@RequestMapping(value = "experience")
