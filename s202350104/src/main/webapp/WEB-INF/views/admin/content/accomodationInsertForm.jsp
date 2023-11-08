@@ -132,6 +132,13 @@
 								<td><!-- 이미지 업로드 폼 만들기 img1 img2 img3 --></td>
 							</tr>
 							<tr>
+							<th>지도</th>
+							<td><div id="map" style="width:500px;height:400px; margin: 0 auto;"></div>
+							<input type="hidden" name="mapx" id="mapx_input">
+  							<input type="hidden" name="mapy" id="mapy_input">
+							</td>
+							</tr>
+							<tr>
 								<th>가능 여부</th>
 								<td>
 									<input type="checkbox" name="is_pickup" value="1">픽업<br>
@@ -140,6 +147,64 @@
 								</td>
 							</tr>
 						</table>
+						<div id="clickLatlng"></div>
+						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
+						<script>
+  						
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+  						mapOption = { 
+       					center: new kakao.maps.LatLng(37.56682, 126.97865), // 지도의 중심좌표
+        				level: 3 // 지도의 확대 레벨
+  						 };
+
+					    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+						// 지도를 클릭한 위치에 표출할 마커입니다
+						var marker = new kakao.maps.Marker({ 
+   						 // 지도 중심좌표에 마커를 생성합니다 
+   						position: map.getCenter() 
+						}); 
+						// 지도에 마커를 표시합니다
+						marker.setMap(map);
+
+						// 지도에 클릭 이벤트를 등록합니다
+						// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+						kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+						    
+						    // 클릭한 위도, 경도 정보를 가져옵니다 
+						     var latlng = mouseEvent.latLng; 
+      						 var clickedLat = latlng.getLat();
+        					 var clickedLng = latlng.getLng();
+						    
+						    // 마커 위치를 클릭한 위치로 옮깁니다
+						    marker.setPosition(latlng);
+						    
+						    console.log('클릭한 위치의 위도: ' + clickedLat);
+					        console.log('클릭한 위치의 경도: ' + clickedLng);
+
+					     // 클릭한 위치의 위도와 경도를 각 input 태그에 설정합니다
+					        document.getElementById("mapx_input").value = clickedLng;
+					        document.getElementById("mapy_input").value = clickedLat;
+					    });
+
+					    // 폼을 서버에 제출하는 코드
+					    document.getElementById("accomodationForm").addEventListener("submit", function(e) {
+					        e.preventDefault(); // 폼 제출 기본 동작을 막습니다.
+
+					        var form = e.target;
+					        var formData = new FormData(form);
+					        var xhr = new XMLHttpRequest();
+					        xhr.open("POST", form.action, true);
+					        xhr.onreadystatechange = function() {
+					            if (xhr.readyState === 4 && xhr.status === 200) {
+					                console.log("데이터가 성공적으로 업데이트되었습니다.");
+					            }
+					        };
+					        xhr.send(formData);
+					    });
+					        
+					</script>
 						<div align="center">
 							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
