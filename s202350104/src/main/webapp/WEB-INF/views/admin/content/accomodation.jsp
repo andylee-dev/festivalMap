@@ -46,7 +46,7 @@
 							<tr>
 								<td>${num}</td>
 								<td>${accomodation.area} ${accomodation.sigungu}</td>
-								<td>${accomodation.title}</td>
+								<td><a href="accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}">${accomodation.title}</a></td>
 								<td>${accomodation.address}</td>
 								<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td>

@@ -513,6 +513,33 @@
 				return "admin/content/accomodation";
 							
 		}
+		
+		@RequestMapping(value = "accomodationDetail")
+		public String accomodationDetail(String contentIdStr, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			int contentId = 0;
+			if(contentIdStr == null) {
+				contentId = 0;
+			} else {
+				contentId = Integer.parseInt(contentIdStr);
+			}
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
+				log.info("accomodationDetail currentPage0=>"+currentPage);
+				AccomodationContent accomodation = as.detailAccomodation(contentId);
+				log.info("accomodationDetail currentPage1=>"+currentPage);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("accomodation", accomodation);
+				log.info("accomodationDetail currentPage2=>"+currentPage);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
+			}		
+			return "admin/content/accomodationDetail";
+		}
+		
 		@RequestMapping(value = "accomodationInsertForm")
 		public String accomodationInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();

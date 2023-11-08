@@ -13,7 +13,7 @@ public interface AccomodationService {
 	int                        totalAccomodation();
 	int                        accomodationDelete(int contentId);
 	void                       insertAccomodation(AccomodationContent accomodation);
-	int                       updateAccomodation(AccomodationContent accomodation);
+	int                        updateAccomodation(AccomodationContent accomodation);
 
 
 	

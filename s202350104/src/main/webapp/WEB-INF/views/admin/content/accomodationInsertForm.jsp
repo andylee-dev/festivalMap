@@ -38,6 +38,7 @@
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<div style="overflow-y: auto; max-height: 80vh;">
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -144,6 +145,7 @@
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>
+				</div>
 				</div>		
 			</main>
 		</div>
