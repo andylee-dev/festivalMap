@@ -51,7 +51,7 @@
 					<form action="accomodation/update" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<input type="hidden" name="currentPage" value="${currentPage}">
-						<input type="hidden" name="status" value="${festival.status}">
+						<input type="hidden" name="status" value="${accomodation.status}">
 						<table class="table table-striped table-sm">
 	 						<tr>
 								<th>컨텐츠 ID</th>
