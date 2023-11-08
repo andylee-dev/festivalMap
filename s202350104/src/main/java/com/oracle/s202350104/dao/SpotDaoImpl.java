@@ -35,12 +35,13 @@ public class SpotDaoImpl implements SpotDao {
 		}
 		return totSpotCount;
 	}
-	
+	//전체 조회
 	@Override
 	public List<SpotContent> listSpot(SpotContent spotContent) {
 		List<SpotContent> spotList = null;
 			
 			try {
+				//전체 조회
 				spotList = session.selectList("dhSpotListAll", spotContent);
 				log.info("SpotDaoImpl listSpot spotList.size()->"+spotList.size());
 			} catch (Exception e) {
@@ -107,7 +108,7 @@ public class SpotDaoImpl implements SpotDao {
 		try {
 			result = session.update("dhContentsDelete", contentId);
 		} catch(Exception e) {
-			log.info("QnaListDaoImpl deleteFestivals Exception => " + e.getMessage());
+			log.info("QnaListDaoImpl deleteSpot Exception => " + e.getMessage());
 		}
 		
 		return result;
@@ -119,10 +120,36 @@ public class SpotDaoImpl implements SpotDao {
 		try {
 			result = session.update("dhSpotApprove", contentId);
 		} catch(Exception e) {
-			log.info("QnaListDaoImpl approveFestival Exception => " + e.getMessage());
+			log.info("QnaListDaoImpl approveSpot Exception => " + e.getMessage());
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int totalSearchSpot(SpotContent spot) {
+		int totalSearchSpot = 0;
+		try {
+			totalSearchSpot = session.selectOne("dhSpotSearchTotal",spot);
+			log.info("QnaListDaoImpl totalSearchSpot()->"+totalSearchSpot);
+		} catch (Exception e) {
+			log.info("QnaListDaoImpl totalSearchSpot ->"+e.getMessage() );
+		}
+		return totalSearchSpot;
+	}
+    //테마별 조회
+	@Override
+	public List<SpotContent> listSpot3(SpotContent spotContent) {
+		List<SpotContent> spotList = null;
+		
+		try {
+			//테마별 조회
+			spotList = session.selectList("dhSpotListAll3", spotContent);
+			log.info("SpotDaoImpl listSpot spotList.size()->"+spotList.size());
+		} catch (Exception e) {
+			log.info("SpotDaoImpl listSpot e.getMessage()->"+e.getMessage());
+		}
+	return spotList;
 	}
 }
 

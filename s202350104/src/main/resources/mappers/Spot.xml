@@ -18,6 +18,24 @@
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
+
+	<select id="dhSpotListAll3" resultType="SpotContent" parameterType="SpotContent">
+		SELECT *
+		FROM 
+		(   
+    			SELECT rownum rn, a.*
+    			FROM 
+            	(select s.*, c.*, cc.content cc_content 
+            	 from spot s, contents c, commoncodes cc
+             	 where s.content_id = c.id
+             	 and c.big_code = #{big_code}
+             	 and c.small_code = #{small_code}
+             	 and c.big_code = cc.big_code
+             	 and c.small_code = cc.small_code
+             	 order by content_id) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
 	
 	<select id="spotTotal" resultType="int">
 	SELECT	count(*)
@@ -67,4 +85,6 @@
 		WHERE id = #{content_id}
 	
 	</update>
+	
+	
 </mapper>

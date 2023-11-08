@@ -3,14 +3,18 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
 import com.oracle.s202350104.service.AreaService;
@@ -145,4 +149,37 @@ public class SpotController {
 		
 		return "spot/spotDetail";
 	}
+	@RequestMapping(value = "spot1")
+	public String listSearch(SpotContent spotContent,String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "spot", "start");
+			int totalSearchSpot = ss.totalSearchSpot(spotContent);
+			
+			int path = 1;
+				int small_code = spotContent.getSmall_code();
+				String keyword = spotContent.getKeyWord();
+			
+			Paging page = new Paging(totalSearchSpot, currentPage);
+			spotContent.setStart(page.getStart());
+			spotContent.setEnd(page.getEnd());
+			
+			//  테마별 조회
+			List<SpotContent> listSpot = ss.listSpot3(spotContent);
+
+			model.addAttribute("totalSpot", totalSearchSpot);
+			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("keyword", keyword);
+	
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "spot", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "spot", "end");
+		}
+		return "spot/spotList";
+	}
+	
 }

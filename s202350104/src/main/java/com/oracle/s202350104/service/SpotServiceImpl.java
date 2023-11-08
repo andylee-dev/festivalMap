@@ -90,6 +90,21 @@ public class SpotServiceImpl implements SpotService {
 		return result;
 	}
 
+	@Override
+	public int totalSearchSpot(SpotContent spot) {
+		int totalSearchSpot = sd.totalSearchSpot(spot);
+		return totalSearchSpot;
+	}
 
+	//테마별 조회
+	@Override
+	public List<SpotContent> listSpot3(SpotContent spotContent) {
+		List<SpotContent> spotList = sd.listSpot3(spotContent);
+		
+		if(spotList == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "명소 리스트가 존재하지 않습니다.");
+		}
+		return spotList;
+	}
 
 }
