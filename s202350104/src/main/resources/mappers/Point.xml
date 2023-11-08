@@ -3,33 +3,35 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.PointMapper">
-	
+
 	<select id="pointAll" resultType="point">
-		
+
 		SELECT * FROM point
-    	ORDER BY id
-		
+		ORDER BY id
+
 	</select>
 
-	
-	 <update id="updatePoint" parameterType="point" >
-	 
-        UPDATE point
-        SET title = #{title},
-            content = #{content},
-            point = #{point}
-        WHERE id = #{id}
-        
-      </update>
-      
-	 <insert id="writePoint" parameterType="point">
-    <selectKey keyProperty="id" resultType="int" order="AFTER">
-        SELECT point_seq.NEXTVAL FROM dual
-    </selectKey>
-    INSERT INTO point (id, create_at, title, content, point)
-    VALUES (point_seq.NEXTVAL, SYSDATE, #{title}, #{content}, #{point})
-</insert>
-	
-	 
-	
+
+	<update id="updatePoint" parameterType="point">
+
+		UPDATE point
+		SET title = #{title},
+		content = #{content},
+		point = #{point}
+		WHERE id = #{id}
+
+	</update>
+
+	<insert id="writePoint" parameterType="point">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT point_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO point (id, create_at, title, content, point)
+		VALUES (point_seq.NEXTVAL, SYSDATE, #{title}, #{content}, #{point})
+	</insert>
+
+	<select id="getPointScore" resultType="int" parameterType="int">
+		SELECT	point FROM point WHERE id = #{id}
+	</select>
+
 </mapper>

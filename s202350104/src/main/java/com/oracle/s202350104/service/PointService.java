@@ -12,7 +12,7 @@ public interface PointService {
 
 	void                writePoint(Point point);
 	
-
+	int 				getPointScoreById(int id);
 
 
 }

@@ -8,13 +8,10 @@ public interface PointDao {
 	
 	List<Point>			listPoint();
 
-	Point 				getPointById(int id);
-
 	void                updatePoint(Point point);
 
 	void                writePoint(Point point);
 
-
-	
+	int 				getPointScoreById(int id);
 
 }

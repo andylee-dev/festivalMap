@@ -16,35 +16,35 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class PointServiceImpl implements PointService {
-	
+
 	private final PointDao pd;
 
 	@Override
 	public List<Point> listPoint() {
-		
+
 		List<Point> listPoint = pd.listPoint();
-		
-		if(listPoint==null) {
+
+		if (listPoint == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "포인트 리스트가 존재하지 않습니다");
 		}
-		
+
 		return listPoint;
 	}
- 
 
-    public void updatePoint(Point point) {
-        pd.updatePoint(point); 
-    }
-    
+	public void updatePoint(Point point) {
+		pd.updatePoint(point);
+	}
+
 	@Override
 	public void writePoint(Point point) {
 		pd.writePoint(point);
-		
+
 	}
 
-
-	
-	
-		
+	@Override
+	public int getPointScoreById(int id) {
+		int score = pd.getPointScoreById(id);
+		return score;
 	}
 
+}
