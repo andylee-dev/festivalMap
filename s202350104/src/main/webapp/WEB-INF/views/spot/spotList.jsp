@@ -17,6 +17,11 @@
 				display: -webkit-box;
 				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
 				-webkit-box-orient: vertical;
+			}
+			.theme_type {
+ 				height: 150px;
+ 				width: 150px;
+				 border-radius: 100px;
 			}	
 		</style>
 		<script type="text/javascript" src="js/jquery.js"></script>
@@ -59,6 +64,16 @@
 				</c:choose> 
 			</c:forEach>
 			<!-- HeaderBanner end -->
+		</div>
+		<div class="theme_type">
+		<button class="theme_type">자연</button>
+		<button class="theme_type">역사</button>
+		<button class="theme_type">건축</button>
+		<button class="theme_type">휴양</button>
+		<button class="theme_type">산업</button>
+		<button class="theme_type">문화</button>
+		<button class="theme_type">N개의 경</button>
+		<button class="theme_type">기타</button>
 		</div>
 		<div class="border p-3 m-3">
 			<h1 class="border">검색폼</h1>

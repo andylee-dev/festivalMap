@@ -52,7 +52,7 @@
 	</insert>
 	<!-- seq.currval-> 현재 번호 확인  -->	
 	<update id="dhContentsDelete" parameterType="int">
-		UPDATE contents SET status = 0, is_deleted = 1 WHERE id = #{contentId}
+		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
 	</update>
 	<update id="dhSpotApprove" parameterType="int">
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
