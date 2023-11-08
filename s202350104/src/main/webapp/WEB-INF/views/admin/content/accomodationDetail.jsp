@@ -10,14 +10,14 @@
 		<script type="text/javascript">
 			function deleteConfirm() {
 				if(confirm("정말 삭제하시겠습니까?")) {
-					location.href="../accomodationDelete?contentId=${accomodation.content_id}";
+					location.href="../content/accomodationDelete?contentId=${accomodation.content_id}";
 				}
 			}
 			
 			function approveConfirm() {
 				var contentId = Number(${accomodation.content_id});
 				if(confirm("승인하시겠습니까?")) {
-					location.href="../accomodationApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="../content/accomodationApprove?contentId="+contentId+"&currentPage=${currentPage}";
 				}
 			}
 		</script>
@@ -165,12 +165,12 @@
 						<c:if test="${accomodation.status == 0}">
 							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../accomodation?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
 						</c:if>
 						<c:if test="${accomodation.status == 1}">
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${currentPage}'">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${currentPage}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../accomodation?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
 						</c:if>
 					</div>
 				</div>

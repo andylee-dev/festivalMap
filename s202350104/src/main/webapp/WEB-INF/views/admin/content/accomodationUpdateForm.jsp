@@ -48,8 +48,10 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="accomodation/update?currentPage=${currentPage}" method="post">
+					<form action="accomodation/update" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
+						<input type="hidden" name="currentPage" value="${currentPage}">
+						<input type="hidden" name="status" value="${festival.status}">
 						<table class="table table-striped table-sm">
 	 						<tr>
 								<th>컨텐츠 ID</th>
