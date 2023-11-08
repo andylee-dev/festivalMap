@@ -142,7 +142,7 @@
 							<td><div id="map" style="width:500px;height:400px; margin: 0 auto;"></div></td>
 						</tr>
 					</table>
-					<script  type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=API키 입력"></script>
+					<script  type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
 					<script>
  					   var accomodation_mapx = ${accomodation.mapx};
   				       var accomodation_mapy = ${accomodation.mapy};

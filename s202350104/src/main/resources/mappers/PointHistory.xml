@@ -28,8 +28,8 @@
 		<select id="getPointHistoryByUserId" parameterType="pointhistory">
 		
 		SELECT *
-		FROM pointhistory ph, users u
-		WHERE ph.user_id = u.id
+		FROM pointhistory
+		WHERE user_id = #{user_id}
 		
 		</select>
 		
