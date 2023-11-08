@@ -47,4 +47,10 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		
 	}
 
+	@Override
+	public int getPointHistoryByUserId(int point_id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
