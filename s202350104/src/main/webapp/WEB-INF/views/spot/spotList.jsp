@@ -18,11 +18,19 @@
 				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
 				-webkit-box-orient: vertical;
 			}
+			.type {
+  		    	display: flex;
+            	justify-content: center;
+           	 	align-items: center;
+			}
 			.theme_type {
- 				height: 150px;
- 				width: 150px;
-				 border-radius: 100px;
-			}	
+ 				height: 100px;
+ 				width: 100px;
+				border-radius: 100px;
+				margin: 20px;
+			}
+
+			
 		</style>
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript">
@@ -65,15 +73,15 @@
 			</c:forEach>
 			<!-- HeaderBanner end -->
 		</div>
-		<div class="theme_type">
-		<button class="theme_type">자연</button>
-		<button class="theme_type">역사</button>
-		<button class="theme_type">건축</button>
-		<button class="theme_type">휴양</button>
-		<button class="theme_type">산업</button>
-		<button class="theme_type">문화</button>
-		<button class="theme_type">N개의 경</button>
-		<button class="theme_type">기타</button>
+		<div class="type">
+		<button type= "button" class="theme_type" onclick= >자연</button>
+		<button type= "button" class="theme_type" onclick= >역사</button>
+		<button type= "button" class="theme_type" onclick= >건축</button>
+		<button type= "button" class="theme_type" onclick= >휴양</button>
+		<button type= "button" class="theme_type" onclick= >산업</button>
+		<button type= "button" class="theme_type" onclick= >문화</button>
+		<button type= "button" class="theme_type" onclick= >N개의 경</button>
+		<button type= "button" class="theme_type" onclick= >기타</button>
 		</div>
 		<div class="border p-3 m-3">
 			<h1 class="border">검색폼</h1>
