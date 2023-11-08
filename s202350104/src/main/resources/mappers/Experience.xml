@@ -10,9 +10,9 @@
 			SELECT ROWNUM rn, a.*
 			FROM
 			(SELECT *
-			 FROM experience e, contents c
-			 WHERE e.content_id = c.id
-			 ORDER BY content_id) a
+			 FROM contents c, experience e
+			 WHERE c.id = e.content_id
+			 ORDER BY id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 		

@@ -16,7 +16,7 @@
 							dataType:'json',
 							success:function(areas) {
 								$('#sigungu_list_select option').remove();
-								str = "<option value='999'>전체</option>";
+								str = "<option value=''>전체</option>";
 								$(areas).each(
 									function() {
 										if(this.sigungu != 999 && this.content != null) {
@@ -37,7 +37,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -46,7 +46,7 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="festival/update" method="post">
+					<form action="festivalUpdate" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<input type="hidden" name="currentPage" value="${currentPage}">
 						<input type="hidden" name="status" value="${festival.status}">

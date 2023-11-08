@@ -117,7 +117,7 @@
 										<c:if test="${experience.small_code == 4}">이색</c:if>
 										<c:if test="${experience.small_code == 5}">레포츠</c:if>										
 									</td>
-									<td>${experience.title}</td>
+									<td><a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}">${experience.title}</a></td>
 									<td>${experience.address}</td>
 									<td>${experience.user_id}</td>
 									<td><fmt:formatDate value="${experience.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->

@@ -16,7 +16,26 @@
 			(SELECT *
 			 FROM festivals f, contents c
 			 WHERE f.content_id = c.id
-			 AND   is_deleted = 0
+			 AND is_deleted = 0 
+			 AND status = 1 
+			 ORDER BY content_id) t
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="nhFestivalsListAdmin" resultType="FestivalsContent" parameterType="FestivalsContent">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM rn, t.*, 
+				(SELECT content FROM areas a
+				 WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
+				(SELECT content FROM areas a
+				 WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
+			FROM
+			(SELECT *
+			 FROM festivals f, contents c
+			 WHERE f.content_id = c.id 
 			 ORDER BY content_id) t
 		)
 		WHERE rn BETWEEN #{start} and #{end}
@@ -37,11 +56,19 @@
 		AND   f.content_id = #{content_id}
 	</select>
 	
+	<!-- 통합 예정 -->
+	<select id="nhFestivalsTotalAdmin" resultType="int">
+		SELECT count(*)
+		FROM   festivals f, contents c
+		WHERE  f.content_id = c.id
+	</select>
+	
 	<select id="nhFestivalsTotal" resultType="int">
 		SELECT count(*)
 		FROM   festivals f, contents c
 		WHERE  f.content_id = c.id
 		AND    is_deleted = 0
+		AND    status = 1
 	</select>
 	
 	<insert id="nhFestivalsInsert" parameterType="FestivalsContent">
@@ -70,7 +97,7 @@
 	</insert>
 	
 	<update id="nhContentsDelete" parameterType="int">
-		UPDATE contents SET status = 0, is_deleted = 1 WHERE id = #{contentId}
+		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
 	</update>
 	
 	<update id="nhFestivalsApprove" parameterType="int">
