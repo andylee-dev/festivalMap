@@ -13,6 +13,8 @@ public interface RestaurantService {
 	int                 		conTotalRestaurant(RestaurantsContent restaurant);
 	List<RestaurantsContent> 	listSearchRestaurant(RestaurantsContent restaurant);
 	List<RestaurantsContent>    listRestaurant();
+	int                         adminConTotalRestaurant(RestaurantsContent restaurant);
+	List<RestaurantsContent>    adminListSearchRestaurant(RestaurantsContent restaurant);
 	
 
 }

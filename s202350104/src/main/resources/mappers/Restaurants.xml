@@ -4,7 +4,7 @@
 
 <mapper namespace="com.oracle.s202350104.RestaurantMapper">
 	<select id="joRestaurantListAll" resultType="RestaurantsContent" parameterType="RestaurantsContent">
-		SELECT * 
+		SELECT x.*, y.content AS theme
 		FROM   
 		(
 			SELECT ROWNUM rn, t.*,
@@ -17,8 +17,9 @@
 			 FROM restaurants r, contents c
 			 WHERE r.content_id = c.id
 			 ORDER BY content_id) t
-		)
+		) x, commoncodes y
 		WHERE rn BETWEEN #{start} and #{end}
+		AND   x.big_code = y.big_code AND x.small_code = y.small_code
 	</select>
 	
 	<select id="joRestaurantDetail" resultType="RestaurantsContent" parameterType="int">
@@ -67,5 +68,29 @@
 		WHERE   rn between #{start} and #{end}  		  
 	</select>
 	
+	<select id="joAdminConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
+		SELECT COUNT(*)
+		FROM	
+				(
+					SELECT c.*
+	 				FROM   restaurants r, contents c
+	 				WHERE  r.content_id = c.id
+	 				AND    c.status = #{status} AND c.small_code = #{small_code}
+	 			 )
+		
+	</select>	
+		
+	<select id="joAdminListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
+		SELECT  x.*, y.content AS theme
+		FROM	
+				(
+					SELECT ROWNUM rn, c.*
+	 				FROM   restaurants r, contents c
+	 				WHERE  r.content_id = c.id
+	 				AND    c.status = #{status} AND c.small_code = #{small_code} 
+	 			 ) x, commoncodes y
+		WHERE rn BETWEEN #{start} and #{end}
+		AND   x.big_code = y.big_code AND x.small_code = y.small_code
+	</select>	
 	
 </mapper>

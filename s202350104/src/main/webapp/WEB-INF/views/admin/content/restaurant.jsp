@@ -8,7 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Restaurant content</title>
-		<%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%>
+		<%-- <%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%> --%>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -23,12 +23,23 @@
 	
 					<!-- Section2: Search Form -->
 					<div class="border p-3 m-3">
-						<form action="restaurantSearch">
+						<form action="adminRestaurantSearch">
 							<h1 class="border">검색폼</h1>
-							<select name="area" id="area">
+							<select name="status" id="status">
 								<option value="">전체</option>
-							</select> <select name="sigungu" id="sigungu">
-								<option value="">---</option>
+								<option value="1">활성화</option>
+								<option value="0">비활성화</option>
+							</select> 
+							
+							<select name="small_code" id="small_code">
+								<option value="">전체</option>
+								<option value="1">한식</option>
+								<option value="2">양식</option>
+								<option value="3">일식</option>
+								<option value="4">중식</option>
+								<option value="5">이색음식점</option>
+								<option value="6">카페</option>
+								<option value="7">클럽</option>
 							</select>
 							<button type="submit" class="btn btn-outline-secondary">검색</button>
 							<button type="button" class="btn btn-outline-secondary">초기화</button>
@@ -43,8 +54,9 @@
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
-								<th scope="col">지역</th>
+								<th scope="col">테마</th>
 								<th scope="col">음식점명</th>
+								<th scope="col">주소</th>
 								<th scope="col">메뉴</th>
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
@@ -57,9 +69,10 @@
 							<c:forEach var="restaurant" items="${listRestaurant}">
 								<tr>
 									<td>${num}</td>
-									<td>${restaurant.area_content} ${restaurant.sigungu_content}</td>
+									<td>${restaurant.theme}</td>
 									<td>${restaurant.title}</td>
-						 			<td>${restaurant.menu}</td>
+									<td>${restaurant.address}</td>
+									<td>${restaurant.menu}</td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
 						 				<c:if test="${restaurant.status == 0 }">승인대기</c:if>
@@ -86,6 +99,9 @@
 				<c:when test="${path==1}">
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
 				</c:when>
+				<c:when test="${path==2}">
+					<a href="restaurantSearch?status=${status}?small_code=${small_code}?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
+				</c:when>
 			</c:choose>	
 		</c:if>
 		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
@@ -96,6 +112,9 @@
 				<c:when test="${path==1}">
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${i}" class="pageblock">[${i}]</a>
 				</c:when>
+				<c:when test="${path==2}">
+					<a href="restaurantSearch?status=${status}?small_code=${small_code}?currentPage=${i}" class="pageblock">[${i}]</a>
+				</c:when>
 			</c:choose>	
 		</c:forEach>
 		<c:if test="${page.endPage < page.totalPage}">
@@ -105,6 +124,9 @@
 				</c:when>
 				<c:when test="${path==1}">
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+				</c:when>
+				<c:when test="${path==2}">
+					<a href="restaurantSearch?status=${status}?small_code=${small_code}?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 				</c:when>
 			</c:choose>	
 		</c:if>

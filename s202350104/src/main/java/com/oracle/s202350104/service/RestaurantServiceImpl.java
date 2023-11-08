@@ -65,4 +65,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return listRestaurant;
 	}
 
+	@Override
+	public int adminConTotalRestaurant(RestaurantsContent restaurant) {
+		int adminConTotalRestaurant = rd.adminConTotalRestaurant(restaurant);
+		return adminConTotalRestaurant;
+	}
+
+	@Override
+	public List<RestaurantsContent> adminListSearchRestaurant(RestaurantsContent restaurant) {
+		List<RestaurantsContent> adminListSearchRestaurant = rd.adminListSearchRestaurant(restaurant);
+		return adminListSearchRestaurant;
+	}
+
 }

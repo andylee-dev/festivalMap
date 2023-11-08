@@ -79,7 +79,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		try {
 			listSearchRestaurant = session.selectList("joListSearchRestaurant", restaurant);
 		} catch (Exception e) {
-			log.info("RestaurantDaoImpl joListSearchRestaurant() Exception ->" + e.getMessage());
+			 log.info("RestaurantDaoImpl joListSearchRestaurant() Exception ->" + e.getMessage());
 		}
 		return listSearchRestaurant;
 	}
@@ -94,5 +94,33 @@ public class RestaurantDaoImpl implements RestaurantDao {
 			log.info("{}",e.getMessage());
 		}
 		return listRestaurant;
+	}
+
+	@Override
+	public int adminConTotalRestaurant(RestaurantsContent restaurant) {
+		int adminConTotalRestaurant = 0 ;
+		try {
+			adminConTotalRestaurant = session.selectOne("joAdminConTotalRestaurant", restaurant);
+			log.info("RestaurantDaoImpl joAdminConTotalRestaurant -> " + adminConTotalRestaurant);
+				
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl joAdminConTotalRestaurant() Exception ->" + e.getMessage());
+		}
+		
+		return adminConTotalRestaurant;
+	}
+
+	@Override
+	public List<RestaurantsContent> adminListSearchRestaurant(RestaurantsContent restaurant) {
+		List<RestaurantsContent> adminListSearchRestaurant = null;
+		
+		try {
+			adminListSearchRestaurant = session.selectList("joAdminListSearchRestaurant", restaurant);
+			log.info("RestaurantDaoImpl joAdminListSearchRestaurant.size() -> " + adminListSearchRestaurant.size()); 
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl joAdminListSearchRestaurant() Exception ->" + e.getMessage());
+		}
+		
+		return adminListSearchRestaurant;
 	}
 }

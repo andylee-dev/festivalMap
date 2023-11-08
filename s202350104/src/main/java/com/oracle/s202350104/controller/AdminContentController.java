@@ -263,6 +263,7 @@
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
 				int totalRestaurant = rs.totalRestaurant();
+				int path = 0;
 				
 				Paging page = new Paging(totalRestaurant, currentPage);
 				restaurant.setStart(page.getStart());
@@ -284,6 +285,44 @@
 			return "admin/content/restaurant";
 		}
 	
+		
+		@RequestMapping(value = "adminRestaurantSearch")
+		public String adminRestaurantSearch(RestaurantsContent restaurant, String currentPage, Model model, HttpServletRequest request) {
+			UUID transactionId = UUID.randomUUID();
+			
+			try {
+				log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
+				int totalRestaurant = rs.adminConTotalRestaurant(restaurant);
+				int path 			= 2;
+				String status 		= request.getParameter("status");
+				String theme 		= request.getParameter("theme");
+				
+				Paging page = new Paging(totalRestaurant, currentPage);
+				restaurant.setStart(page.getStart());
+				restaurant.setEnd(page.getEnd());
+				
+				List<RestaurantsContent> listSearchRestaurant = rs.adminListSearchRestaurant(restaurant);
+				// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
+				
+				model.addAttribute("totalRestaurant", totalRestaurant);
+				model.addAttribute("path", path);
+				model.addAttribute("status", status);
+				model.addAttribute("theme", theme);
+				model.addAttribute("page", page);
+				model.addAttribute("listRestaurant", listSearchRestaurant);
+				// model.addAttribute("listRestaurant", listRestaurant);
+				
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
+			} finally {
+				log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
+			}	
+					
+			return "admin/content/restaurant";
+		
+		}
+		
+		
 		@RequestMapping(value = "spot")
 		public String spot(SpotContent spotContent, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
