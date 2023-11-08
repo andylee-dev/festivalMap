@@ -73,7 +73,7 @@
 		WHERE id = #{content_id}
 	</update>
 	
-	<update id="AccomodatioApprove" parameterType="int">
+	<update id="AccomodationApprove" parameterType="int">
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
 	</update>
 	

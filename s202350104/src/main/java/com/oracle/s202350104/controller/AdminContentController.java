@@ -561,14 +561,14 @@
 		public String accomodationInsert(AccomodationContent accomodation, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
+				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "start");
 				as.insertAccomodation(accomodation);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin accomodationInsert", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 			}		
-			return "redirect:../accomodation";
+			return "forward:accomodation";
 		}	
 		
 		@GetMapping(value="accomodationUpdateForm")
@@ -600,7 +600,7 @@
 			UUID transactionId = UUID.randomUUID();
 			int id = 0;
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
 				int result = as.updateAccomodation(accomodation);
 				id = accomodation.getContent_id();
 				model.addAttribute("currentPage", currentPage);
@@ -617,11 +617,18 @@
 		
 		@RequestMapping(value = "accomodationDelete")
 		public String accomodationDelete(int contentId, Model model) {
-			int accomodationDelete = as.accomodationDelete(contentId);
-			
-			return "forward:accomodation";
-			
-		}
+			 UUID transactionId = UUID.randomUUID();
+			    try {
+			        log.info("[{}]{}:{}", transactionId, "admin accomodationDelete", "start");
+			        int result = as.accomodationDelete(contentId);
+			        log.info("Delete result: " + result);
+			    } catch (Exception e) {
+			        log.error("[{}]{}:{}", transactionId, "admin accomodationDelete", e.getMessage());
+			    } finally {
+			        log.info("[{}]{}:{}", transactionId, "admin accomodationDelete", "end");
+			    }
+			    return "forward:accomodation";
+			}
 		
 		@ResponseBody
 		@RequestMapping(value = "accomodationDeleteAjax")
@@ -633,9 +640,9 @@
 				int result = as.accomodationDelete(contentId);
 				resultStr = Integer.toString(result);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", e.getMessage());
+				log.error("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", "end");
+				log.info("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", "end");
 			}		
 			return resultStr;
 		}
@@ -654,11 +661,11 @@
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("currentPage", currentPage);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalApprove", e.getMessage());
+				log.error("[{}]{}:{}",transactionId, "admin accomodationApprove", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "end");
+				log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "end");
 			}		
-			return "forward:accomodationDetail";
+			return "forward:/admin/content/accomodationDetail";
 		}
 		
 		@RequestMapping(value = "experienceUpdateForm")
