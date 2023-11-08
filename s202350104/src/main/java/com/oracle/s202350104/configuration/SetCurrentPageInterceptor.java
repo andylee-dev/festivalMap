@@ -18,7 +18,7 @@ public class SetCurrentPageInterceptor implements HandlerInterceptor {
         // 핸들러 메소드 호출 후 view로 이동하기 전에 실행됩니다.
         if (modelAndView != null) {
             // 현재 페이지의 model 객체를 가져와서 currentPage를 추가합니다.
-            modelAndView.addObject("currentPage", request.getRequestURI());
+            modelAndView.addObject("currentPageUrl", request.getRequestURI());
         }
     }
 
