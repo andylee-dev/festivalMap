@@ -47,7 +47,7 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="accomodation/insert" method="post">
+					<form action="accomodationInsert" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<table class="table table-striped table-sm">
 	<%-- 						<tr>

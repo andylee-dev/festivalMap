@@ -557,7 +557,7 @@
 			return "admin/content/accomodationInsertForm";
 		}
 		
-		@RequestMapping(value = "accomodation/insert")
+		@RequestMapping(value = "accomodationInsert")
 		public String accomodationInsert(AccomodationContent accomodation, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
@@ -569,7 +569,7 @@
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 			}		
-			return "redirect:../accomodation";
+			return "forward:/admin/content/accomodation";
 		}	
 		
 		@GetMapping(value="accomodationUpdateForm")

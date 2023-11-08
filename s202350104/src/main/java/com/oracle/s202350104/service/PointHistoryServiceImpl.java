@@ -49,5 +49,15 @@ import com.oracle.s202350104.model.PointHistory;
 			phd.writePointHistory(pointhistory);
 			
 		}
+
+		@Override
+		public List<PointHistory> getPointHistoryByUserId(int user_id) {
+			
+			List<PointHistory> listPointHistory = phd.listPointHistory();
+			
+			return listPointHistory;
+		}
+
+		
 	
 	}

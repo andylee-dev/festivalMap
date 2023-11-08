@@ -48,9 +48,20 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 	}
 
 	@Override
-	public int getPointHistoryByUserId(int point_id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<PointHistory> getPointHistoryByUserId(int user_id) {
+		
+		List<PointHistory> listPointHistory = null;
+		try {
+			listPointHistory = session.selectList("getPointHistoryByUserId",user_id);
+			
+		} catch(Exception e) {
+			
+		}
+		
+		return listPointHistory;
 	}
+
+
+	
 
 }

@@ -12,6 +12,6 @@ public interface PointHistoryDao {
 
 	void                writePointHistory(PointHistory pointhistory);
 	
-	int					getPointHistoryByUserId(int point_id);
+	List<PointHistory>  getPointHistoryByUserId(int user_id);
 
 }

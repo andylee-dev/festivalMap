@@ -25,4 +25,12 @@
           AND EXISTS (SELECT 1 FROM point WHERE id = #{point_id})
 		</insert>
 		
+		<select id="getPointHistoryByUserId" parameterType="pointhistory">
+		
+		SELECT *
+		FROM pointhistory ph, users u
+		WHERE ph.user_id = u.id
+		
+		</select>
+		
 	</mapper>
