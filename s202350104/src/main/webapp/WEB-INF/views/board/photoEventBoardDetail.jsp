@@ -65,6 +65,10 @@
 	        }
 	    });
 	}
+	<!-- 게시판 신고기능 -송환 -->
+	function report(boardId) {
+	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
+	}
 </script>
 </head>
 <body>
@@ -118,6 +122,8 @@
 		<button class="btn btn-primary" onclick="updateBoard(${board.id})">수정</button>
 		<button class="btn btn-danger" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>
 		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
+		<!-- 게시판 신고기능 -송환 -->
+		<button class="btn btn-secondary" onclick="report(${board.id})">신고</button>
 	</div>
 </body>
 </html>
