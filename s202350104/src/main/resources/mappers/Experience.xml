@@ -107,7 +107,7 @@
 		<if test="keyword != null">
 			AND title like '%' || #{keyword} || '%'
 		</if>
-		<if test="big_code != null">
+		<if test="big_code != null and big_code != 0">
 			And c.big_code = #{big_code}
 		</if>
 		<if test="is_deleted != null">
@@ -119,14 +119,9 @@
 	    		</when>    
   			</choose>
 		</if>
-		<if test="small_code != null">
-			<choose>
- 	 			<when test="small_code != 999">
-	    			AND c.small_code = #{small_code}  
-	   	 		</when>
-	 	 		<when test="small_code = 999">
-	    		</when>    
-  			</choose>
+		<if test="small_code != null and small_code != 0 and small_code != 999">
+				AND c.small_code = #{small_code}  
+	   	
 		</if>
 	</select>	
 	

@@ -70,24 +70,22 @@
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
 						<form action="experience1" method="get">
-							<input type="text" name="keyword" placeholder="keyword를 입력하세요">
-							<button type="submit">keyword검색</button>
+							<input type="text" name="keyword" placeholder="체험이름을 입력하세요">
+							<button type="submit" class="btn btn-outline-secondary">체험이름검색</button>
+							<button type="reset" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
 							<input type="hidden" name="big_code" value="15">
-							<button type="button" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
-								<select name="is_deleted">
-									<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
-									<option value="0" ${is_deleted == 0 ? 'selected' : ''}>활성화</option>
-									<option value="1" ${is_deleted == 1 ? 'selected' : ''}>비활성화</option>
-								</select>
-								<select name="small_code" >
-									<option value="999">전체</option>
-									<c:forEach var="small" items="${listSmallCode}">
-									<option value="${small.small_code}">${small.content}</option>
-									</c:forEach>
-								</select>
-							</form>
-									
-									
+							<select name="is_deleted">
+								<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
+								<option value="0" ${is_deleted == 0 ? 'selected' : ''}>활성화</option>
+								<option value="1" ${is_deleted == 1 ? 'selected' : ''}>비활성화</option>
+							</select>
+							<select name="small_code" >
+								<option value="999">전체</option>
+								<c:forEach var="small" items="${listSmallCode}">
+								<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+								</c:forEach>
+							</select>
+						</form>
 				</div>		
 				
 				<!-- Section3: Table -->		
@@ -132,15 +130,15 @@
 									<c:if test="${experience.is_deleted == 1}">
 									</c:if>
 									<c:if test="${experience.is_deleted == 0}">
-									<button onclick="location.href='experienceUpdateForm?contentId=${experience.id}'">수정</button>
+									<button onclick="location.href='experienceUpdateForm?contentId=${experience.id}'" class="btn btn-outline-secondary">수정</button>
 									</c:if>
 									</td>
 									<td>
 									<c:if test="${experience.is_deleted == 1}">
-									<button onclick="confirmRestore(${experience.id})">복원</button>
+									<button onclick="confirmRestore(${experience.id})" class="btn btn-outline-secondary">복원</button>
 									</c:if>
 									<c:if test="${experience.is_deleted == 0}">									
-									<button onclick="confirmDelete(${experience.id})">삭제</button>
+									<button onclick="confirmDelete(${experience.id})" class="btn btn-outline-secondary">삭제</button>
 									</c:if>
 									</td>
 								</tr>

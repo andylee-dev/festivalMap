@@ -239,7 +239,7 @@
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "experience", "start");
-				int totalExperience = es.totalExperience();
+				int totalExperience = es.totalSearchExperience(experience);
 				
 				int path = 0;
 				
@@ -567,12 +567,18 @@
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
-				//FestivalsContent festival = fs.detailFestivals(contentId);
 				ExperienceContent experience = es.detailExperience(contentId);
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(experience.getArea());
+				List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
 				
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("experience", experience);
+				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSigungu", listSigungu);
+				model.addAttribute("listSmallCode", listSmallCode);
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
 			} finally {
