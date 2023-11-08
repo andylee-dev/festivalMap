@@ -57,7 +57,7 @@
 				
 				)
 			}
-			function get
+			
 		</script>
 	</head>
 	<body>
@@ -74,7 +74,18 @@
 			</c:forEach>
 			<!-- HeaderBanner end -->
 		</div>
-		
+		<div class="type">
+			<form action="spot1" method="get">
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=1'">자연</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=2'" >역사</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=5'" >건축</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=3'">휴양</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=4'" >산업</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=6'" >문화</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=7'" >N개의 경</button>
+					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=8'" >기타</button>
+			</form>
+		</div>
 		<div class="border p-3 m-3">
 			<h1 class="border">검색폼</h1>
 			<select name="area" onchange="getSigungu(this.value)">
@@ -88,18 +99,6 @@
 			<select name="sigungu" id="sigungu_list_select"></select>
 			<button type="button" class="btn btn-outline-secondary">검색</button>
 			<button type="button" class="btn btn-outline-secondary">초기화</button>
-		</div>
-		<div class="type">
-			<form action="spot1" method="get">
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=1'">자연</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=2'" >역사</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=5'" >건축</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=3'">휴양</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=4'" >산업</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=6'" >문화</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=7'" >N개의 경</button>
-					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=8'" >기타</button>
-			</form>
 		</div>
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">

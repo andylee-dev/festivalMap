@@ -58,10 +58,10 @@
 							<tr>
 								<th>분류</th>
 								<td>
-									<input type="hidden" name="big_code" value="11">[Spot] ${spot.scode_content}<br>
+									<input type="hidden" name="big_code" value="14">[Spot] ${spot.scode_content}<br>
 									<select id="small_code" name="small_code">
 										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 11 && code.small_code != 999}">
+											<c:if test="${code.big_code == 14 && code.small_code != 999}">
 												<option value="${code.small_code}" ${code.small_code == spot.small_code? 'selected' : '' }>${code.content}</option>
 											</c:if>
 										</c:forEach>
@@ -73,15 +73,15 @@
 							</tr>
 							<tr>
 								<th>영업시간</th>
-								<td><input type="date" name="start_date" value="${spot.opening_hours}"></td>
+								<td><input type="text" name="opening_hours" value="${spot.opening_hours}"></td>
 							</tr>
 							<tr>
 								<th>휴무일</th>
-								<td><input type="date" name="end_date" value="${spot.rest_date}"></td>
+								<td><input type="text" name="rest_date" value="${spot.rest_date}"></td>
 							</tr>
 							<tr>
 								<th>입장료</th>
-								<td><input type="text" name="hours" value="${spot.entrance_fee}"></td>
+								<td><input type="text" name="entrance_fee" value="${spot.entrance_fee}"></td>
 							</tr>
 							<tr>
 								<th>전화번호</th>
@@ -120,7 +120,7 @@
 							<tr>
 								<th>개요</th>
 								<td><textarea rows="10" cols="60" name="content" maxlength="4000" 
-									placeholder="축제에 대한 설명을 4000자 이내로 입력해주세요">${spot.content}</textarea></td>
+									placeholder="명소에 대한 설명을 4000자 이내로 입력해주세요">${spot.content}</textarea></td>
 							</tr>
 							<tr>
 								<th>홈페이지</th>

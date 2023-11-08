@@ -88,9 +88,10 @@ public class SpotDaoImpl implements SpotDao {
 		TransactionStatus txStatus = 
 				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
+			log.info("updateSpot dhContentsUpdate parmas => " + spot.toString());
 			result = session.update("dhContentsUpdate",spot);
 			log.info("updateSpot dhContentsUpdate result => " + result);
-			result = session.update("dhContentsUpdate", spot);
+			result = session.update("dhSpotUpdate", spot);
 			log.info("updateSpot dhContentsUpdate result => " + result);
 			transactionManager.commit(txStatus);
 		} catch(Exception e) {

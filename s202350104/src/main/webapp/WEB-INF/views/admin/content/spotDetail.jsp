@@ -143,7 +143,7 @@
 						<c:if test="${spot.status == 1}">
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}&currentPage=${currentPage}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='spot?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='spot'">목록</button> <%-- ?currentPage=${currentPage} --%>
 						</c:if>
 					</div>
 				</div>		

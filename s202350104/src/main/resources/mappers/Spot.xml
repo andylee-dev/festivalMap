@@ -77,12 +77,20 @@
 	</update>
 	
 	<update id="dhContentsUpdate" parameterType="SpotContent">
-	UPDATE contentss
+	UPDATE contents
 	SET	area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
 		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
 		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
 		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
 		WHERE id = #{content_id}
+	
+	</update>
+	
+		<update id="dhSpotUpdate" parameterType="SpotContent">
+	UPDATE spot
+	SET	opening_hours=#{opening_hours}, rest_date=#{rest_date}, entrance_fee=#{entrance_fee}, is_restroom=#{is_restroom}, 
+		is_elevator=#{is_elevator}, is_wheelchair=#{is_wheelchair}, is_stroller=#{is_stroller}, is_pet=#{is_pet}, is_parking=#{is_parking}
+		WHERE content_id = #{content_id}
 	
 	</update>
 	

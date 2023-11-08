@@ -366,17 +366,17 @@
 		
 				
 		@RequestMapping(value = "spot")
-		public String spot(SpotContent spotContent, String currentPage, Model model) {
+		public String spot(SpotContent spot, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spot", "start");
 				int totalSpot = ss.totalSpot();
 			
 				PagingList page = new PagingList(totalSpot, currentPage);
-				spotContent.setStart(page.getStart());
-				spotContent.setEnd(page.getEnd());
+				spot.setStart(page.getStart());
+				spot.setEnd(page.getEnd());
 			
-				List<SpotContent> listSpot = ss.listSpot(spotContent);
+				List<SpotContent> listSpot = ss.listSpot(spot);
 			
 				model.addAttribute("totalSpot",totalSpot);
 				model.addAttribute("listSpot", listSpot);
@@ -413,17 +413,17 @@
 		}
 		
 		@RequestMapping(value = "spotUpdate")
-		public String spotUpdate(SpotContent spot,String currentPage, Model model) {
+		public String spotUpdate(SpotContent spotContent,String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "start");
-				int result = ss.updateSpot(spot);
+				int result = ss.updateSpot(spotContent);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "spotUpdate", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "end");
 			}
-				return "forward:spotDetail?contentIdStr="+spot.getContent_id();
+				return "forward:spotDetail?contentIdStr="+spotContent.getContent_id();
 		}
 		
 		@RequestMapping(value = "spotUpdateForm")

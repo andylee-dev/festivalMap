@@ -156,9 +156,8 @@ public class SpotController {
 			log.info("[{}]{}:{}",transactionId, "spot", "start");
 			int totalSearchSpot = ss.totalSearchSpot(spotContent);
 			
-			int path = 1;
-				int small_code = spotContent.getSmall_code();
-				String keyword = spotContent.getKeyWord();
+			int small_code = spotContent.getSmall_code();
+			String keyword = spotContent.getKeyWord();
 			
 			Paging page = new Paging(totalSearchSpot, currentPage);
 			spotContent.setStart(page.getStart());
@@ -166,14 +165,25 @@ public class SpotController {
 			
 			//  테마별 조회
 			List<SpotContent> listSpot = ss.listSpot3(spotContent);
-
+			List<Areas> listAreas = as.listAreas();
+			
 			model.addAttribute("totalSpot", totalSearchSpot);
 			model.addAttribute("listSpot", listSpot);
+			model.addAttribute("listAreas",listAreas);
 			model.addAttribute("page", page);
-			model.addAttribute("path", path);
 			model.addAttribute("small_code", small_code);
 			model.addAttribute("keyword", keyword);
 	
+			/*
+			 * Banner Logic 구간 
+			 * by 엄민용
+			 * */
+			List<Banner> bannerHeader = bannerService.getHeaderBanner();
+			List<Banner> bannerFooter = bannerService.getFooterBanner();
+		
+			model.addAttribute("bannerHeader",bannerHeader);
+			model.addAttribute("bannerFooter",bannerFooter);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "spot", e.getMessage());
 		} finally {
