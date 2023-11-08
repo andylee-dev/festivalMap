@@ -46,8 +46,16 @@ public class UserController {
 
 	@RequestMapping(value = "myPage")
 	public String myPage() {
-		int userId = getLoginId();
-		
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "myPage", "start");
+			int userId = getLoginId();
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "myPage", e.getMessage());
+		}finally { 
+			log.info("[{}]{}:{}",transactionId, "myPage", "end");
+		}				
 		return "user/myPage/index";
 
 	}
@@ -66,6 +74,22 @@ public class UserController {
 	public String bizPage() {
 		return "user/bizPage/index";
 	}
+
+	@RequestMapping(value="bizPage/content")
+	public String bizContent() {
+		return "user/bizPage/bizContentList";
+	}
+
+	@RequestMapping(value="bizPage/addContent")
+	public String bizAddContent() {
+		return "user/bizPage/bizContentInsert";
+	}
+
+	@RequestMapping(value="bizPage/qna")
+	public String bizQna() {
+		return "user/bizPage/bizQnaList";
+	}
+
 
 	@RequestMapping(value = "myPage/myPost")
 	public String myPost() {
