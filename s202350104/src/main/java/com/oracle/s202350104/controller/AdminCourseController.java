@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.oracle.s202350104.dao.ContentDaoImpl;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
+import com.oracle.s202350104.model.CourseContent;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.PagingList;
@@ -91,13 +92,22 @@ public class AdminCourseController {
 			log.info("AdminCourseController courseInsert course ->" + course);
 			
 			/*TODO: Course정보를 INSERT.*/
-			int courseInsert = cs.courseInsert(course);
-			log.info("AdminCourseController courseInsert courseInsert ->" + courseInsert);
+			int newCourseId = cs.courseInsert(course);
+			log.info("AdminCourseController courseInsert courseInsert ->" + newCourseId);
 			
-
+			
+			List<CourseContent> courseContentList = new ArrayList<CourseContent>();
 			/*TODO: Content Course정보를 INSERT*/			//	dto
+			for (int i = 0; i < contents.size(); i++) {
+				CourseContent cc = new CourseContent();
+				cc.setContent_id(Integer.parseInt(contents.get(i)));
+				log.info("setContent_id newCourseId ->" + (contents.get(i)));
+				cc.setCourse_id(newCourseId);
+				log.info("setCourse_id newCourseId ->" + newCourseId);
+				courseContentList.add(cc);
+			}
 			log.info(contents.toString());				//	Map<int,List()>
-			int courseContentInsert = cs. courseContentInsert(contents);		//list 3
+			int courseContentInsert = cs. courseContentInsert(courseContentList);		//list 3
 																				//	int  1
 			log.info("AdminCourseController courseInsert courseInsert ->" + courseContentInsert);
 			
