@@ -29,8 +29,6 @@ public class PointServiceImpl implements PointService {
 		}
 		
 		return listPoint;
-		
-
 	}
  
 
@@ -43,6 +41,9 @@ public class PointServiceImpl implements PointService {
 		pd.writePoint(point);
 		
 	}
+
+
+	
 	
 		
 	}
