@@ -62,9 +62,13 @@
 			
 		</select>
 		
-		<insert id="noCourseInsert" parameterType="Course" useGeneratedKeys="true" keyProperty="course_id">
+<!-- 		<insert id="noCourseInsert" parameterType="Course" useGeneratedKeys="true" keyProperty="course_id"> -->
+		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
 			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
+			<selectKey keyProperty="course_id" resultType="Integer" order="AFTER">
+				SELECT COURSES_ID_SEQ.currval FROM dual
+			</selectKey>
 		</insert>
 		
 	 	<insert id="noCourseContentInsert" parameterType="CourseContent">
