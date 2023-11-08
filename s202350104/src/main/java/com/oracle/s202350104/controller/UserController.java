@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.QnaListService;
 import com.oracle.s202350104.service.TagsService;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,16 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	
 	private final QnaListService qs;
-
-	private int getLoginId() {
-		int userId = 0;
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && !authentication.getName().equals("anonymousUser") ){
-			userId = Integer.parseInt(authentication.getName());
-			log.info("로그인아이디:{}",userId);
-		}
-		return userId;
-	}
+	private final UserService us;
 	
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -45,12 +38,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "myPage")
-	public String myPage() {
+	public String myPage(Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "myPage", "start");
-			int userId = getLoginId();
 			
+			int userId = us.getLoggedInId();
+			Users user = us.getUserById(userId);
+			model.addAttribute("user",user);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "myPage", e.getMessage());
 		}finally { 

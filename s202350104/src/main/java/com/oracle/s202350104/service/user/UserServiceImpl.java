@@ -5,14 +5,20 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.configuration.AppConfig;
 import com.oracle.s202350104.configuration.Role;
 import com.oracle.s202350104.dao.UserDao;
+import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.service.PointHistoryService;
+import com.oracle.s202350104.service.PointService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +29,21 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 	private final UserDao ud;
 	private final AppConfig appConfig;
+	private final PointHistoryService phs;
+	private final PointService ps;
 
 	@Override
+	public int getLoggedInId() {
+		int userId = 0;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && !authentication.getName().equals("anonymousUser") ){
+			userId = Integer.parseInt(authentication.getName());
+			log.info("로그인아이디:{}",userId);
+		}
+		return userId;
+	}
+	@Override
 	public int totalUsers(Users user) {
-		log.info(user.getSearchType());
 		int totalCount = ud.totalUsers(user);
 		return totalCount;
 	}
@@ -91,8 +108,17 @@ public class UserServiceImpl implements UserService {
 		return 0;
 	}
 
+	@Override
+	@Transactional 
+	public int updatePoint(int id, int point_id) {
+		// Update Point
+		ud.updatePoint(id, point_id);
 
-
-
-
+		// Write Point History
+		PointHistory pointHistory = new PointHistory();
+		pointHistory.setUser_id(id);
+		pointHistory.setPoint_id(point_id);
+		phs.writePointHistory(pointHistory);
+		return 0;
+	}
 }
