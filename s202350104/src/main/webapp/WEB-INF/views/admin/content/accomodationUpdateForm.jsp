@@ -137,8 +137,10 @@
 							</tr>
 							<tr>
 							<th>지도</th>
-							<td><div id="map" style="width:500px;height:400px; margin: 0 auto;"></div></td>
-								<p>지도를 클릭해주세요!</p>
+							<td><div id="map" style="width:500px;height:400px; margin: 0 auto;"></div>
+							<input type="hidden" name="mapx" id="mapx_input">
+  							<input type="hidden" name="mapy" id="mapy_input">
+							</td>
 							</tr>
 							<tr>
 								<th>가능 여부</th>
@@ -176,7 +178,9 @@
 						kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
 						    
 						    // 클릭한 위도, 경도 정보를 가져옵니다 
-						    var latlng = mouseEvent.latLng; 
+						     var latlng = mouseEvent.latLng; 
+      						 var clickedLat = latlng.getLat();
+        					 var clickedLng = latlng.getLng();
 						    
 						    // 마커 위치를 클릭한 위치로 옮깁니다
 						    marker.setPosition(latlng);
@@ -184,23 +188,27 @@
 						    console.log('클릭한 위치의 위도: ' + clickedLat);
 					        console.log('클릭한 위치의 경도: ' + clickedLng);
 
-					        // 클릭한 위치의 위도와 경도를 서버로 전송합니다
-					        $.ajax({
-					            type: "POST",
-					            url: "updateAccomodation", // 적절한 서블릿 URL로 변경해야 합니다
-					            data: { 
-					                mapx: clickedLng,
-					                mapy: clickedLat,
-					                content_id: "${accomodation.content_id}"
-					            },
-					            success: function(response) {
-					                console.log("데이터가 성공적으로 업데이트되었습니다.");
-					            },
-					            error: function(xhr, status, error) {
-					                console.error(error);
-					            }
-					        });
+					     // 클릭한 위치의 위도와 경도를 각 input 태그에 설정합니다
+					        document.getElementById("mapx_input").value = clickedLng;
+					        document.getElementById("mapy_input").value = clickedLat;
 					    });
+
+					    // 폼을 서버에 제출하는 코드
+					    document.getElementById("accomodationForm").addEventListener("submit", function(e) {
+					        e.preventDefault(); // 폼 제출 기본 동작을 막습니다.
+
+					        var form = e.target;
+					        var formData = new FormData(form);
+					        var xhr = new XMLHttpRequest();
+					        xhr.open("POST", form.action, true);
+					        xhr.onreadystatechange = function() {
+					            if (xhr.readyState === 4 && xhr.status === 200) {
+					                console.log("데이터가 성공적으로 업데이트되었습니다.");
+					            }
+					        };
+					        xhr.send(formData);
+					    });
+					        
 					</script>
 					
 						<div align="center">
