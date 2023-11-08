@@ -7,9 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>course Insert</title>
-<!-- 부트스트랩 4.5.2 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 <!-- 부트스트랩 5.3.1-->
 <link
@@ -87,8 +85,6 @@
 	    	hiddenInput.value = contentList[i].id;
 	    	form.appendChild(hiddenInput);
 	    }
-
-	
 	}
 
 	
@@ -123,7 +119,7 @@
 				<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
 			</div>
 			<div class="form-group">	
-				<label for="tag">태그 등록~~~~(기능 추가 필요) 그리고 공통코드 입력부분 추가 필요</label><p><p><p><p>
+				<label for="tag">태그 등록~~~~(기능 추가 필요) 그리고 공통코드 입력부분 추가 필요</label>
 			</div>
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">등록</button>

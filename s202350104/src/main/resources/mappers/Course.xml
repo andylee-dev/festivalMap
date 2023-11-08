@@ -80,5 +80,12 @@
 		    SELECT * FROM dual
 		</insert>
 		
+		<delete id="noCourseContentDelete" parameterType="CourseContent">
+			Delete From CourseContents where course_id = ${id}
+		</delete>
+		
+		<delete id="noCourseDelete" parameterType="Course">
+			Delete From Courses where id = ${id}
+		</delete>
 		
 	</mapper>

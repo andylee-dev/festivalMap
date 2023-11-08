@@ -104,6 +104,8 @@ public class AdminCourseController {
 				log.info("setContent_id newCourseId ->" + (contents.get(i)));
 				cc.setCourse_id(newCourseId);
 				log.info("setCourse_id newCourseId ->" + newCourseId);
+				cc.setOrder_num(i+1);
+				log.info("setCourse_id newCourseId ->" + i+1);
 				courseContentList.add(cc);
 			}
 			log.info(contents.toString());				//	Map<int,List()>
@@ -117,7 +119,7 @@ public class AdminCourseController {
 		} finally {
 			log.info("AdminCourseController courseInsert end...");
 		}
-		return "redirect:/admin/course/list";
+		return "/admin/course/list";
 	}
 	
 	
@@ -136,6 +138,27 @@ public class AdminCourseController {
 			log.info("ContentController contentListAll end...");
 		}
 		return "content/contentListAll";
+	}
+	
+	@RequestMapping(value = "/courseDelete")
+	public String courseDelete(int id) {
+		log.info("AdminCourseController courseDelete start...");
+		try {
+			/* TODO: CourseContents 삭제*/
+			log.info("AdminCourseController id ->" +id);
+			int courseContentDelete = cs.courseContentDelete(id);
+			log.info("AdminCourseController courseContentDelete courseDelete ->" + courseContentDelete);
+			
+			/* TODO: Courses 삭제*/
+			int courseDelete = cs.courseDelete(id);
+			log.info("AdminCourseController courseDelete courseDelete ->" + courseDelete);
+			
+		} catch (Exception e) {
+			log.error("AdminCourseController courseDelete e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("AdminCourseController courseDelete end...");
+		}
+		return "redirect:/admin/course/list";
 	}
 	
 }

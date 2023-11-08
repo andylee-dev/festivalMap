@@ -73,5 +73,25 @@ public class CourseServiceImpl implements CourseService {
 		
 		return courseContentInsert;
 	}
+	
+	@Override
+	public int courseContentDelete(int id) {
+		log.info("CourseServiceImpl courseContentDelete start...");
+		int courseContentDelete = cd.courseContentDelete(id);
+		log.info("CourseServiceImpl courseContentDelete courseDelete ->" + courseContentDelete);
+		
+		return courseContentDelete;
+	}
+
+	@Override
+	public int courseDelete(int id) {
+		log.info("CourseServiceImpl courseDelete start...");
+		int courseDelete = cd.courseDelete(id);
+		log.info("CourseServiceImpl courseDelete courseDelete ->" + courseDelete);
+		
+		return courseDelete;
+	}
+
+	
 
 }
