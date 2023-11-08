@@ -11,7 +11,8 @@ public interface PointService {
 	void                updatePoint(Point point);
 
 	void                writePoint(Point point);
-
+	
+	int 				getPointScoreById(int id);
 
 
 }
