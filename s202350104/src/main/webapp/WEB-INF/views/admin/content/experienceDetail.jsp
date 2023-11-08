@@ -15,11 +15,20 @@
 			}
 			
 			function approveConfirm() {
-				var contentId = Number(${festival.content_id});
+				var contentId = Number(${experience.content_id});
 				if(confirm("승인하시겠습니까?")) {
-					location.href="../festivalApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}";
 				}
 			}
+			function openRejectionPopup() {
+		        let reason = prompt("반려 사유를 입력하세요:", "");
+		        // 여기서 reason을 처리하는 로직을 추가하면 됩니다.
+		        if (reason != null) {
+		            // 반려 사유를 처리하는 로직을 추가하세요.
+		            // 예를 들어, AJAX를 사용하여 서버에 이유를 전달하거나 다른 작업을 수행할 수 있습니다.
+		            console.log("반려 사유: ", reason);
+		        }
+		    }
 		</script>				
 	</head>
 	<body>
@@ -126,13 +135,13 @@
 					 <div align="center">
 						<c:if test="${experience.status == 0}">
 							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
-							<button type="button" class="btn btn-outline-secondary">반려</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experience?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="openRejectionPopup()">반려</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experience?currentPage=1'">목록</button>
 						</c:if>
 						<c:if test="${experience.status == 1}">
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experienceUpdateForm?contentId=${experience.content_id}&currentPage=${currentPage}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experience?currentPage=${currentPage}'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experience?currentPage=1'">목록</button>
 						</c:if>
 					</div> 
 				</div>		

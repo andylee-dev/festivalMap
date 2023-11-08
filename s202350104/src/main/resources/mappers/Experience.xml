@@ -150,7 +150,9 @@
 		WHERE content_id = #{id}
 	</update>
 	
-	
+	<update id="shExperienceApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
 	
 	
 </mapper>	

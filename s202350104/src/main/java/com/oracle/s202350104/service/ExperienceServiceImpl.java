@@ -2,7 +2,9 @@ package com.oracle.s202350104.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.ExperienceDao;
 import com.oracle.s202350104.model.ExperienceContent;
@@ -75,4 +77,14 @@ public class ExperienceServiceImpl implements ExperienceService {
 		return experienceUpdate;
 	}
 
-}
+	@Override
+	public int experienceApprove(int contentId) {
+		int result = ed.experienceApprove(contentId);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 승인에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+}	

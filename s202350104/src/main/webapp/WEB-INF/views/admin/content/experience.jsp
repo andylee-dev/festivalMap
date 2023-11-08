@@ -127,9 +127,9 @@
 										<!-- 승인반려됐을 경우 status -->
 									</td>
 									<td>
-									<c:if test="${experience.is_deleted == 1}">
+									<c:if test="${experience.status == 0}">
 									</c:if>
-									<c:if test="${experience.is_deleted == 0}">
+									<c:if test="${experience.status == 1}">
 									<button onclick="location.href='experienceUpdateForm?contentId=${experience.id}'" class="btn btn-outline-secondary">수정</button>
 									</c:if>
 									</td>

@@ -137,4 +137,17 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		return result;
 	}
 
+	@Override
+	public int experienceApprove(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("shExperienceApprove", contentId);
+		} catch(Exception e) {
+			log.info("ExperienceDaoImpl experienceApprove Exception => " + e.getMessage());
+		}
+		
+		return result;
+	
+	}
+
 }

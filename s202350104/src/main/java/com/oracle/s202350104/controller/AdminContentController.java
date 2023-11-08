@@ -695,6 +695,27 @@
 			return "admin/content/experienceDetail";
 		}
 		
+		@RequestMapping(value = "experienceApprove")
+		public String experienceApprove(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin experienceApprove", "start");
+				int result = es.experienceApprove(contentId);
+				if(result > 0) {
+					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+				} else {
+					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+				}
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("currentPage", currentPage);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin experienceApprove", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin experienceApprove", "end");
+			}		
+			return "forward:experienceDetail";
+		}
+		
 		@GetMapping(value = "experience1")
 		public String listSearch(ExperienceContent experience,String currentPage, Model model, HttpServletRequest request) {
 	//	public String listSearch(String big_code,String currentPage, Model model) {

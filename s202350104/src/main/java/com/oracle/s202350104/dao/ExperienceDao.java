@@ -15,5 +15,6 @@ public interface ExperienceDao {
 	List<ExperienceContent> 	listSmallCode(ExperienceContent experience);
 	int 						experienceRestore(int contentId);
 	int 						experienceUpdate(ExperienceContent experienceContent);
+	int 						experienceApprove(int contentId);
 
 }
