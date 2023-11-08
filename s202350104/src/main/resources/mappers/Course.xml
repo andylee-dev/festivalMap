@@ -72,11 +72,12 @@
 		</insert>
 		
 		<insert id="noCourseContentInsert" parameterType="java.util.List">
-			INSERT into CourseContents (content_id, course_id, order_num) 
-			values 
-				<foreach collection="list" item="CourseContent" separator=" , ">
-					(#{CourseContent.content_id}, #{CourseContent.course_id}, #{CourseContent.order_num})
-				</foreach>
+		    INSERT ALL
+		    <foreach collection="list" item="CourseContent">
+		        INTO CourseContents (content_id, course_id, order_num)
+		        VALUES (#{CourseContent.content_id}, #{CourseContent.course_id}, #{CourseContent.order_num})
+		    </foreach>
+		    SELECT * FROM dual
 		</insert>
 		
 		
