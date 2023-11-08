@@ -149,7 +149,7 @@
 						</table>
 						<div id="clickLatlng"></div>
 						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=API키 입력"></script>
 						<script>
   						
 						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
