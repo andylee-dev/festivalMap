@@ -323,6 +323,48 @@
 		}
 		
 		
+		@RequestMapping(value = "restaurantDetail")
+		public String restaurantDetail(Integer contentId, Model model) {
+			UUID transaction = UUID.randomUUID();
+			
+			try {
+				log.info("[{}]{}:{}", transaction, "admin restaurantDetail", "Start");
+				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
+								
+				model.addAttribute("restaurant", restaurant);
+				
+				
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transaction, "admin restaurantDetail Exception", e.getMessage());
+			} finally {
+				log.error("[{}]{}:{}", transaction, "admin restaurantDetail", "End");
+			}
+						
+			return "admin/content/restaurantDetail";
+		}
+		
+
+		@RequestMapping(value = "restaurantInsertForm")
+		public String restaurantInsertForm(Model model) {
+			UUID transactionId = UUID.randomUUID();
+			
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantInsertForm", "start");
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
+								
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm Exception", e.getMessage());
+			} finally {
+				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm", "end");
+			}
+			return "admin/content/restaurantInsertForm";		
+		}		
+		
+				
 		@RequestMapping(value = "spot")
 		public String spot(SpotContent spotContent, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();

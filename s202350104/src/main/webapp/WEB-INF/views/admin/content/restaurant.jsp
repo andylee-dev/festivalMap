@@ -18,7 +18,7 @@
 					<!-- Section1: Title -->
 					<div
 						class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-						<h1 class="border">일반 회원 리스트</h1>
+						<h1 class="border">지역정보 - 맛집</h1>
 					</div>
 	
 					<!-- Section2: Search Form -->
@@ -49,7 +49,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary ">등록</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurantInsertForm'">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -70,7 +70,7 @@
 								<tr>
 									<td>${num}</td>
 									<td>${restaurant.theme}</td>
-									<td>${restaurant.title}</td>
+									<td><a href="restaurantDetail?contentId=${restaurant.content_id}">${restaurant.title}</a></td>
 									<td>${restaurant.address}</td>
 									<td>${restaurant.menu}</td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>

@@ -23,8 +23,9 @@
 		<div class="container border p-5">	
 			<ul>
 				<li>음식점명: ${restaurant.title}
-				<li>내용: ${restaurant.content}
 				<li>주소: ${restaurant.address}
+				<li>전화번호: ${restaurant.phone}
+				<li>내용: ${restaurant.content}
 				<li>메뉴: ${restaurant.menu}
 				<li>운영시간: ${restaurant.open_time}
 				<li>휴무일: ${restaurant.rest_date}

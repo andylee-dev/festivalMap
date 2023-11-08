@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 정보 등록</title>
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
 		<script type="text/javascript">
 			function getSigungu(pArea){
 				$.ajax(
