@@ -49,25 +49,26 @@
 	        $('#startDatePicker').daterangepicker(dateFormat);
 	        $('#endDatePicker').daterangepicker(dateFormat);
 	        $('input[name="date-options"]').change(onChangeDate);
-	        onChangeDate();
-	    });
+	        onChangeDate();        
+	    }); 
 	</script>
 </head>
 <body >
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp"%>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
 				<!-- Section1: Title -->
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">일반 회원 리스트</h1>
+					<h1 class="border">일반 회원 리스트 </h1>
 				</div>
 
 				<!-- Section2: Search Form -->
-				<div class="border p-3 m-3">
+				<div class="border p-3 m-3 ">
 					<h1 class="border">검색폼</h1>
 					<form action="/admin/user/userList" method="POST">
+						<input type="hidden" name="small_code" value="2">						
 						<div class="input-group mb-3">
 							<span class="input-group-text col-auto" >검색어</span>
 							<select name="searchType" class="form-select col-auto">
@@ -165,15 +166,16 @@
 							</c:forEach>
 						</tbody>
 					</table>
+
 					<div align="center">
 						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="userList?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+							<a href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="userList?currentPage=${i}" class="pageblock">[${i}]</a>
+							<a href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${i}" class="pageblock">${i}</a>
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
-							<a href="userList?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+							<a href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage+page.pageBlock}"  class="pageblock" >[다음]</a>
 						</c:if>
 					</div>
 				</div>

@@ -19,7 +19,7 @@
 	    		SELECT ROWNUM rn, users.*
 				FROM users
 				WHERE small_code = #{small_code}
-				<if test="keyword != null">
+				<if test="keyword != null and keyword != ''">
 			        <choose>
 			            <!-- "searchType"이 "name"일 때 -->
 			            <when test="searchType == 'name'">
@@ -49,7 +49,7 @@
    		SELECT count(*)
 		FROM users
 		WHERE small_code = #{small_code}
-		<if test="keyword != null">
+		<if test="keyword != null and keyword != ''">
 	        <choose>
 	            <!-- "searchType"이 "name"일 때 -->
 	            <when test="searchType == 'name'">

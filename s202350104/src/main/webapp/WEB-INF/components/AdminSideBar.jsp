@@ -17,7 +17,7 @@
             </button>
             <div class="collapse" id="user-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="/admin/user/userList" class="link-body-emphasis d-inline-flex text-decoration-none rounded">일반회원</a></li>
+                <li><a href="/admin/user/userList?small_code=2" class="link-body-emphasis d-inline-flex text-decoration-none rounded">일반회원</a></li>
                 <li><a href="/admin/user/bizUserList" class="link-body-emphasis d-inline-flex text-decoration-none rounded">비즈니스회원</a></li>
               	<li><a href="/admin/user/favoriteList" class="link-body-emphasis d-inline-flex text-decoration-none rounded">찜 목록</a></li>
               </ul>
