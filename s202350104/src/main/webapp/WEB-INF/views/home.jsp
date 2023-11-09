@@ -16,12 +16,31 @@
 	MapService map = context.getBean("kakaoMapSerivce", MapService.class);
 	String apiKey = map.getApiKey();
 %>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>&libraries=clusterer"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 
 	let markers = [];
-	let map = null;   
+	var map = null;   
+	var clusterer = null;
+	function initKakaoMap(){
+	  if ("geolocation" in navigator) {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		      const latitude = position.coords.latitude;
+		      const longitude = position.coords.longitude;
+		      map = getKakaoMap(latitude, longitude);
+		      clusterer = new kakao.maps.MarkerClusterer({
+		          map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+		          averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+		          minLevel: 10 // 클러스터 할 최소 지도 레벨 
+		      });
+		      setCenter(latitude,longitude);
+		    });
+		  } else {
+		    console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+		  }
+	}
+	
 	
 	function setCenter(lat, lng) {            
 	    // 이동할 위도 경도 위치를 생성합니다 
@@ -57,6 +76,7 @@
  	        success: function (data) {
  	            console.log(data);
  	            displayPlaces(data);
+				clusterer.addMarkers(markers);
  	        },
  	        error: function () {
  	            alert("contents 정보를 가져오지 못했습니다.");
@@ -100,9 +120,14 @@
 	    
 	    // 검색 결과 목록에 추가된 항목들을 제거합니다
 	    removeAllChildNods(listEl);
+	    
+	    // 지도에 표시되고 있는 마커를 제거합니다
+ 	    clusterer.removeMarkers(markers);
 
 	    // 지도에 표시되고 있는 마커를 제거합니다
 	    removeMarker();
+
+
 
 	    for ( var i=0; i<places.length; i++ ) {
 
@@ -143,8 +168,8 @@
 
 	        fragment.appendChild(itemEl);
 	    }
-/* 	    clusterer.addMarkers(markers);
- */
+ 	    clusterer.addMarkers(markers);
+
 	    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
 	    listEl.appendChild(fragment);
 	    menuEl.scrollTop = 0;
@@ -263,7 +288,6 @@
 	    navigator.geolocation.getCurrentPosition(function(position) {
 	      const latitude = position.coords.latitude;
 	      const longitude = position.coords.longitude;
-	      map = getKakaoMap(latitude, longitude);
 	      setCenter(latitude,longitude);
 	    });
 	  } else {
@@ -273,7 +297,7 @@
 		
 
 	window.onload = function() {
-	  getLocation();
+		initKakaoMap();
 	  
 	};
 
