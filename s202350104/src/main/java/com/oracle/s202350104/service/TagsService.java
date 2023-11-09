@@ -1,6 +1,7 @@
 package com.oracle.s202350104.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.oracle.s202350104.model.Tags;
 
@@ -15,6 +16,10 @@ public interface TagsService {
 	List<Tags> searchContentTags(int contentId);
 	List<Tags> listBoardTags(int smallCode);
 	List<Tags> listUserTags();
+
 	List<Tags> listContentTags(int bigCode);
 	List<Tags> searchBoardTagsOne(int boardId);
+
+	void boardTagsInsert(Map<String, Object> params);
+
 }

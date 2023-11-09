@@ -31,10 +31,4 @@ public interface BoardDao {
 	Board boardRead(int id);
 
 
-
-
-
-
-
-
 }

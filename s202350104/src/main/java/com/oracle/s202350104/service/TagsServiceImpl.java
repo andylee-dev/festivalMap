@@ -1,6 +1,7 @@
 package com.oracle.s202350104.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -129,6 +130,7 @@ public class TagsServiceImpl implements TagsService {
 		return listTags;
 	}
 
+
 	@Override
 	public List<Tags> listContentTags(int bigCode) {
 		List<Tags> listTags = td.listContentTags(bigCode);
@@ -150,6 +152,13 @@ public class TagsServiceImpl implements TagsService {
 		
 		return listTags;
 		
+	}
+
+
+	
+	@Override
+	public void boardTagsInsert(Map<String, Object> params) {
+		td.insertBoardTags(params);
 	}
 
 }

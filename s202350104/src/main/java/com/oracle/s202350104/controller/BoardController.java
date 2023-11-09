@@ -1,9 +1,14 @@
 package com.oracle.s202350104.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -536,13 +541,14 @@ public class BoardController {
 	
 	// 통합게시판 생성 Logic
 	@RequestMapping(value = "/integratedboardInsert")
-	public String integratedboardInsert(Board board, MultipartFile file, Model model) {
+	public String integratedboardInsert(Board board, Tags tags, MultipartFile file, int[] tagsList, Model model) {
 		// value 확인용
 		log.info("BoardController integratedboardInsert Start!!");
 		log.info("BoardController integratedboardInsert userId : {}", board.getUser_id());
 		log.info("BoardController integratedboardInsert bigCode : {}", board.getBig_code());
 		log.info("BoardController integratedboardInsert smallCode : {}", board.getSmall_code());
-
+		log.info("BoardController integratedboardInsert tagsList : {}", tagsList.length);
+		
 		// File upload Logic
 		String pathDB = null;
 		String fileName = null;
@@ -569,6 +575,7 @@ public class BoardController {
 		} finally {
 			log.info("BoardController integratedboardInsert File End..");
 		}
+		
 
 		// 게시물 생성 Logic
 		String redirectURL = "";
@@ -581,6 +588,28 @@ public class BoardController {
 			board.setFile_path(pathDB);
 
 			int insertBoard = boardService.boardInsert(board);
+			
+			int boardId = board.getId();
+			
+			for (int tagId : tagsList) {
+				log.info("BoardController integratedboardInsert tagId : {}", tagId);
+
+			}	
+			List<Integer> tagIdList = Arrays.stream(tagsList).boxed().collect(Collectors.toList());
+			
+			List<Integer> boardIdList = new ArrayList<>();
+			for (int i = 0; i < tagIdList.size(); i++) {
+			    boardIdList.add(boardId);
+			}
+
+			Map<String, Object> params = new HashMap<>();
+			params.put("tagId", tagIdList);
+			params.put("boardId", boardIdList);
+			
+			log.info("BoardController integratedboardInsert params : {}", params.toString());
+			
+			tagsService.boardTagsInsert(params);
+
 			
 			// 게시물 생성 후 Page Handling
 			if (insertBoard > 0 && board.getSmall_code() == 1) {

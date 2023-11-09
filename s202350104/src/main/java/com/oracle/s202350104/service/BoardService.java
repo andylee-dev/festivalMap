@@ -30,9 +30,4 @@ public interface BoardService {
 
 	Board boardRead(int id);
 
-
-
-
-
-
 }

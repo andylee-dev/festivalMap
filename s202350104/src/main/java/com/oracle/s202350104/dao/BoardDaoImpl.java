@@ -229,8 +229,7 @@ public class BoardDaoImpl implements BoardDao {
 
 		return insertBoard;
 
-	}
-	
+	}	
 	
 	@Override
 	public Board boardRead(int id) {
@@ -240,4 +239,5 @@ public class BoardDaoImpl implements BoardDao {
 		
 		return board;
 	}
+	
 }

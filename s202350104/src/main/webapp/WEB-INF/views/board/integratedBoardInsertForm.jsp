@@ -75,7 +75,7 @@
 				<div class="form-group">
 				    <label for="tags">#태그 (최대 3개 선택)</label><br>
 				    <c:forEach var="tag" items="${tagList}">
-				        <input type="checkbox" class="btn-check" name="tags" id="btn-check-outlined-${tag.id}" value="${tag.id}" onchange="limitCheckboxes(this, 3)">
+				        <input type="checkbox" class="btn-check" name="tagsList" id="btn-check-outlined-${tag.id}" value="${tag.id}" onchange="limitCheckboxes(this, 3)">
 				        <label class="btn btn-outline-secondary" for="btn-check-outlined-${tag.id}">#${tag.name}</label>
 				    </c:forEach>
 				</div>		

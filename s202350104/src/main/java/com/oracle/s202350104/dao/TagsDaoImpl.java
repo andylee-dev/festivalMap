@@ -1,6 +1,7 @@
 package com.oracle.s202350104.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -194,5 +195,10 @@ public class TagsDaoImpl implements TagsDao {
 	}
 	
 	
+
+	public void insertBoardTags(Map<String, Object> params) {
+		session.insert("insertBoardTags", params);
+	}
+
 
 }
