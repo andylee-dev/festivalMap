@@ -108,4 +108,18 @@ public class CourseServiceImpl implements CourseService {
 		return courseUpdate;
 	}
 
+	@Override
+	public List<CourseContent> courseContentList(int id) {
+		List<CourseContent> courseContentList = cd.courseContentList(id);
+		
+		return courseContentList;
+	}
+
+	@Override
+	public int deleteCourseContent(int content_id) {
+		int deleteCourseContent = cd.deleteCourseContent(content_id);
+		
+		return deleteCourseContent;
+	}
+
 }

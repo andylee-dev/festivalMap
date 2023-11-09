@@ -154,6 +154,38 @@ public class CourseDaoImpl implements CourseDao {
 		return courseUpdate;
 	}
 
+
+	@Override
+	public List<CourseContent> courseContentList(int id) {
+		log.info("CourseDaoImpl courseContentList start...");
+		List<CourseContent> courseContentList = null;
+		try {
+			courseContentList = session.selectList("noCourseContentList", id);
+			log.info("CourseDaoImpl courseContentList ->" + courseContentList);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl courseContentList e.getMessage() ->" + e.getMessage());
+		}
+		
+		return courseContentList;
+	}
+
+
+	@Override
+	public int deleteCourseContent(int content_id) {
+		log.info("CourseDaoImpl deleteCourseContent content_id ->" + content_id);
+		int deleteCourseContent = 0;
+		try {
+			deleteCourseContent = session.delete("noDeleteCourseContent", content_id);
+			log.info("CourseDaoImpl deleteCourseContent ->" + deleteCourseContent);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl deleteCourseContent e.getMessage() ->" + e.getMessage());
+		}
+		
+		return deleteCourseContent;
+	}
+
 	
 //	@Override
 //	public Course courseDetailContent(int id) {

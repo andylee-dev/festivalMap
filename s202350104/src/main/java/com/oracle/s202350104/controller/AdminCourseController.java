@@ -67,10 +67,14 @@ public class AdminCourseController {
 			Course course = cs.courseUpdateDetail(id);
 			log.info("AdminCourseController courseUpdateForm courseContent ->" + course);
 			
+			List<CourseContent> courseContentList = cs.courseContentList(id);
+			log.info("AdminCourseController courseUpdateForm courseContentList.size() ->" + courseContentList.size());
+			
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
 			
 			model.addAttribute("courseContent", course);
+			model.addAttribute("courseContentList", courseContentList);
 //			model.addAttribute("courseContent", courseContent);
 			
 		} catch (Exception e) {
@@ -175,6 +179,22 @@ public class AdminCourseController {
 			log.info("AdminCourseController courseDelete end...");
 		}
 		return "redirect:/admin/course/list";
+	}
+	
+	@RequestMapping(value = "/deleteCourseContent")
+	public String deleteCourseContent(int content_id) {
+		log.info("AdminCourseController deleteCourseContent id ->" + content_id);
+		try {
+			int deleteCourseContent = cs.deleteCourseContent(content_id);
+			log.info("AdminCourseController deleteCourseContent deleteCourseContent ->" + deleteCourseContent);
+			
+		} catch (Exception e) {
+			log.error("AdminCourseController deleteCourseContent e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("AdminCourseController deleteCourseContent end...");
+		}
+		
+		return "course/courseUpdateForm";
 	}
 	
 }

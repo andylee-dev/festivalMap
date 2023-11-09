@@ -17,4 +17,6 @@ public interface CourseDao {
 	int 					courseContentDelete(int id);
 	int 					courseUpdate(Course course);
 	Course 					courseUpdateDetail(int id);
-}  
+	List<CourseContent> 	courseContentList(int id);
+	int 					deleteCourseContent(int content_id);
+}

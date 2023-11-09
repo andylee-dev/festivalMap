@@ -66,6 +66,16 @@
 			
 		</select>
 		
+		<select id="noCourseContentList" parameterType="CourseContent" resultType="CourseContent">
+			SELECT *
+			FROM   coursecontents a, contents b
+			WHERE  a.content_id = b.id
+			AND    a.course_id = #{id}
+			
+			<!-- SELECT * FROM courseContents WHERE course_id = #{id} -->
+			
+		</select>
+		
 		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
 			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
@@ -90,6 +100,10 @@
 		
 		<delete id="noCourseDelete" parameterType="Course">
 			Delete From Courses where id = ${id}
+		</delete>
+		
+		<delete id="noDeleteCourseContent" parameterType="CourseContent">
+			Delete From CourseContents where content_id = ${content_id}
 		</delete>
 		
 	</mapper>

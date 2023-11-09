@@ -106,6 +106,24 @@
 					<div id="contentTable">
 			
 					</div>
+					<div>
+						<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
+							<table border="1">
+								<tr>
+									<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
+								</tr>
+								<tr>
+									<td>${courseContentList.content_id }</td>
+									<td><img alt="${courseContentList.title }" src="${courseContentList.img1 }" style="height: 150px;"></td>
+									<td>${courseContentList.title }</td>
+									<td>${courseContentList.address }</td>
+									<td>${courseContentList.homepage }</td>
+									<td>${courseContentList.phone }</td>
+								</tr>
+								<button onclick="location.href='deleteCourseContent?content_id=${courseContentList.content_id}'" class="btn btn-primary">삭제${courseContentList.content_id}</button>
+							</table>
+						</c:forEach>
+					</div>
 				</div>
 			
 			<div class="form-group">
