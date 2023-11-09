@@ -154,9 +154,10 @@
 			select board_seq_generator.nextval from dual
 		</selectKey>
 		insert into board (id, user_id, big_code, small_code, 
-						   title, content, read_count, created_at) 
-		values(#{id}, #{user_id}, #{big_code},
-			   #{small_code}, #{title}, #{content}, 0, sysdate)		
+						   title, content, read_count, file_name, 
+						   file_path, created_at) 
+		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
+			   #{title}, #{content}, 0, #{file_name}, #{file_path}, sysdate)		
 	</insert>
 	
 	<insert id="boardInsert2" parameterType="Board">
@@ -168,5 +169,11 @@
 		values(#{id}, #{content_id}, #{user_id}, #{big_code},
 			   #{small_code}, #{title}, #{content}, 0, sysdate)		
 	</insert>
+	
+	<select id="testRead" parameterType="int" resultType="Board">
+		select *
+		from board
+		where id = #{id}
+	</select>
 
 </mapper>

@@ -31,14 +31,6 @@
 		// 취소 시 이전페이지 이동
 		window.history.back();
 	}
-	
-	function updateSmallCode(value) {
-	    // ID를 사용하여 숨겨진 입력 필드를 가져옵니다.
-	    var smallCodeInput = document.getElementById("small_code");
-
-	    // 숨겨진 입력 필드의 값을 업데이트합니다.
-	    smallCodeInput.value = value;
-	}
 </script>
 
 </head>
@@ -55,25 +47,22 @@
 			<input type="hidden" name="user_id" value="${userId }">
 			<input type="hidden" name="big_code" value="${bigCode }">
 			<input type="hidden" name="small_code" id="small_code" value="${smallCode }">
+				
 				<div class="form-group">
 	               	<label for="title">제목</label>
 	                <input type="text" class="form-control" id="title" name="title" required>
 	            </div>
+	            
 	            <div class="form-group">
 	                <label for="content">내용</label>
 	                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
 	            </div>
-	            <c:choose>
-	            	<c:when test="${bigCode eq 3 }">
-		 				<div class="form-group">
-		 					<label for="smallCode">소분류 코드</label><p>
-			 					<input type="radio" name="smallCode" value="1" onchange="updateSmallCode(1)"> Home
-			 					<input type="radio" name="smallCode" value="2" onchange="updateSmallCode(2)"> Footer
-			 					<input type="radio" name="smallCode" value="3" onchange="updateSmallCode(3)"> Sidebar
-			 					<input type="radio" name="smallCode" value="4" onchange="updateSmallCode(4)" > Content
-		 				</div>       	           	
-	            	</c:when>	            
-	            </c:choose>  
+	            
+	            <div class="form-group">
+					<label for="image">이미지 첨부</label> 
+					<input type="file" class="form-control" name="file">
+				</div>	
+
             <button type="submit" class="btn btn-primary">등록</button>
             <button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
         </form>

@@ -230,5 +230,14 @@ public class BoardDaoImpl implements BoardDao {
 		return insertBoard;
 
 	}
-
+	
+	
+	@Override
+	public Board boardRead(int id) {
+		Board board = session.selectOne("testRead", id);
+		
+		log.info("BoardDao boardRead getTitle : {}", board.getTitle());
+		
+		return board;
+	}
 }

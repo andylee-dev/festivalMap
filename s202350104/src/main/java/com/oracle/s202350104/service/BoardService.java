@@ -28,6 +28,8 @@ public interface BoardService {
 
 	int boardInsert(Board board);
 
+	Board boardRead(int id);
+
 
 
 

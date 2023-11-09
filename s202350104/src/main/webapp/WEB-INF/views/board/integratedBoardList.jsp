@@ -35,7 +35,7 @@
 			</c:when>
 			<c:when test="${smallCode == 3}">
 				<h1>자유게시판</h1>
-				<button class="btn btn-primary" onclick="location.href='integratedboardInsert?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+				<button class="btn btn-primary" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
 			</c:when>
 	    	<c:otherwise>
 	        	<h1>공지사항</h1>
@@ -61,7 +61,7 @@
 					<c:choose>
 						<c:when test="${smallCode eq 6}">
 							<td class="text-center">
-								<a href="boardDetail?id=${boards.id }">${boards.content }</a>
+								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.content }</a>
 							</td>
 						</c:when>
 						<c:otherwise>

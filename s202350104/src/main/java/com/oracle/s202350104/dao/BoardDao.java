@@ -28,6 +28,8 @@ public interface BoardDao {
 
 	int boardInsert(Board board);
 
+	Board boardRead(int id);
+
 
 
 

@@ -126,5 +126,13 @@ public class BoardServiceImpl implements BoardService {
 		
 		return insertBoard;
 	}
+	
+	@Override
+	public Board boardRead(int id) {
+		
+		Board board = boardDao.boardRead(id);
+		
+		return board;
+	}
 
 }

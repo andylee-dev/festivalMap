@@ -1,5 +1,7 @@
 package com.oracle.s202350104.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Paging;
@@ -65,6 +68,7 @@ public class BoardController {
 
 		log.info("controller noticBoardList totalBoard : {} ", countBoard);
 		log.info("controller noticBoardList smallCode : {} ", smallCode);
+		log.info("controller freeBoardList userId : {} ", userId);	
 		log.info("controller noticBoardList page : {} ", page);
 
 		model.addAttribute("board", noticAllList);
@@ -108,6 +112,7 @@ public class BoardController {
 
 		log.info("controller magazinBoardList totalBoard : {} ", countBoard);
 		log.info("controller magazinBoardList smallCode : {} ", smallCode);
+		log.info("controller freeBoardList userId : {} ", userId);	
 		log.info("controller magazinBoardList page : {} ", page);
 
 		model.addAttribute("board", magazinAllList);
@@ -128,7 +133,7 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
-		int userId = 0;
+		int userId = 1001;
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -148,7 +153,7 @@ public class BoardController {
 		log.info("controller freeBoardList after board.getEnd : {} ", board.getEnd());
 
 		bigCode = freeAllList.get(0).getBig_code();
-		userId = freeAllList.get(0).getUser_id();
+		//userId = freeAllList.get(0).getUser_id();
 
 		log.info("controller freeBoardList totalBoard : {} ", countBoard);
 		log.info("controller freeBoardList smallCode : {} ", smallCode);
@@ -332,79 +337,125 @@ public class BoardController {
 
 	// 통합게시판 수정 form Logic
 	@RequestMapping(value = "/boardUpdateForm")
-	public String boardUpdateForm(int id, Model model) {
+	public String boardUpdateForm(int id, int userId, Model model) {
 
 		log.info("BoardController boardUpdateForm boardId : {} ", id);
+		log.info("BoardController boardUpdateForm userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
 
 		model.addAttribute("board", boards);
+		model.addAttribute("userId", userId);
 
 		return "board/boardUpdateForm";
 	}
 
 	// 통합게시판 수정 Logic
 	@PostMapping(value = "/boardUpdate")
-	public String boardUpdate(Board board, Model model) {
+	public String boardUpdate(Board board, int userId, Model model) {
 
 		int updateBoard = boardService.boardUpdate(board);
-
+		
+		log.info("BoardController boardUpdate userId : {}", userId);
+		
 		model.addAttribute("board", updateBoard);
+		model.addAttribute("userId", userId);
 
-		return "forward:boardDetail";
+		return "forward:/boardDetail"; 
 	}
 
 	// 통합게시판 삭제 Logic
 	@RequestMapping(value = "/boardDelete")
 	public String boardDelete(int id, int userId, int smallCode) {
-
+		// value 확인용
 		log.info("BoardController boardDelete small_code : {}", smallCode);
 		log.info("BoardController boardDelete id : {}", id);
 		log.info("BoardController boardDelete userId : {}", userId);
-
-		boardService.boardDelete(id);
-
-		String redirectURL = "";		
 		
-		if(smallCode == 1) {
-			if(userId > 1) {
-				redirectURL = "redirect:/noticBoardList";	
-			} else {
-				redirectURL = "redirect:/admin/notice/notice";
-			}
-		} else if(smallCode == 2) {
-			if(userId > 1) {
-				redirectURL = "redirect:/magazinBoardList";	
-			} else {
-				redirectURL = "redirect:/admin/community/magazin";
-			}
-		} else if(smallCode == 3) {
-			if(userId > 1) {
-				redirectURL = "redirect:/freeBoardList";	
-			} else {
-				redirectURL = "redirect:/admin/community/board";
-			}
-		} else if(smallCode == 4) {
-			if(userId > 1) {
-				redirectURL = "redirect:/photoBoardList";	
-			} else {
-				redirectURL = "redirect:/admin/community/photo";
-			}
-		} else if(smallCode == 5) {
-			if(userId > 1) {
-				redirectURL = "redirect:/eventBoardList";	
-			} else {
-				redirectURL = "redirect:/admin/notice/event";
-			}
-		} else if(smallCode == 6) {
-			if(userId > 1) {
-				redirectURL = "redirect:/reviewBoardList";	
-			} else {
-				redirectURL = "redirect:/admin/community/review";
-			}
-		} else {
-			redirectURL = "redirect:/";
+		// 원본 File 삭제 Logic
+		Board board = null;
+		String path = null;
+		String fileName = null;
+		File deleteFile = null;
+		
+		try {
+			log.info("BoardController boardDelete File start!");
+			// DB에 저장 된 파일명 조회
+			board = boardService.boardRead(id);
+			
+			// 실제 경로 
+			path = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
+			
+			// DB에 저장 된 파일명 가져오기
+			fileName = board.getFile_name();
+			
+			// 구현체 생성(실  경로 + 파일명)
+			deleteFile = new File(path, fileName);
+			
+			// 원본 File 삭제
+			deleteFile.delete();
+		} catch (Exception e) {
+			log.error("BoardController boardDelete File : {}", e.getMessage());
+		} finally {
+			log.info("BoardController boardDelete File End..");
 		}
+
+		// DB 삭제 Logic
+		String redirectURL = "";	
+		
+		try {
+		 	log.info("BoardController boardDelete Start!!");
+			
+		 	boardService.boardDelete(id);
+		 	
+		 	// 게시판 분류와 userId 로 redirect 경로 지정
+			if(smallCode == 1) {
+				if(userId > 1) {
+					redirectURL = "redirect:/noticBoardList";	
+				} else {
+					redirectURL = "redirect:/admin/notice/notice";
+				}
+			} else if(smallCode == 2) {
+				if(userId > 1) {
+					redirectURL = "redirect:/magazinBoardList";	
+				} else {
+					redirectURL = "redirect:/admin/community/magazin";
+				}
+			} else if(smallCode == 3) {
+				if(userId > 1) {
+					redirectURL = "redirect:/freeBoardList";	
+				} else {
+					redirectURL = "redirect:/admin/community/board";
+				}
+			} else if(smallCode == 4) {
+				if(userId > 1) {
+					redirectURL = "redirect:/photoBoardList";	
+				} else {
+					redirectURL = "redirect:/admin/community/photo";
+				}
+			} else if(smallCode == 5) {
+				if(userId > 1) {
+					redirectURL = "redirect:/eventBoardList";	
+				} else {
+					redirectURL = "redirect:/admin/notice/event";
+				}
+			} else if(smallCode == 6) {
+				if(userId > 1) {
+					redirectURL = "redirect:/reviewBoardList";	
+				} else {
+					redirectURL = "redirect:/admin/community/review";
+				}
+			} else {
+				redirectURL = "redirect:/";
+			}
+		 	
+		} catch (Exception e) {
+			log.error("BoardController boardDelete error : {}", e.getMessage());
+		} finally {
+			
+		 	log.info("BoardController boardDelete End..");
+		}
+		// 결과값에 따른 경로 이동
 		return redirectURL;
 	}
 
@@ -478,50 +529,98 @@ public class BoardController {
 	
 	// 통합게시판 생성 Logic
 	@RequestMapping(value = "/integratedboardInsert")
-	public String integratedboardInsert(Board board, Model model) {
-
+	public String integratedboardInsert(Board board, MultipartFile file, Model model) {
+		// value 확인용
+		log.info("BoardController integratedboardInsert Start!!");
 		log.info("BoardController integratedboardInsert userId : {}", board.getUser_id());
 		log.info("BoardController integratedboardInsert bigCode : {}", board.getBig_code());
 		log.info("BoardController integratedboardInsert smallCode : {}", board.getSmall_code());
 
-		int insertBoard = boardService.boardInsert(board);
+		// File upload Logic
+		String pathDB = null;
+		String fileName = null;
+		String realPath = null;
 
-		if (insertBoard > 0 && board.getSmall_code() == 1) {
-			if(board.getUser_id() == 1){
-				return "redirect:/admin/notice/notice";
-			}
-			return "forward:/noticBoardList";
-			
-		} else if (insertBoard > 0 && board.getSmall_code() == 2) {
-			if(board.getUser_id() == 1){
-				return "redirect:/admin/community/magazin";
-			}
-			return "forward:/magazinBoardList";
-			
-		} else if (insertBoard > 0 && board.getSmall_code() == 3) {
-			if(board.getUser_id() == 1){
-				return "redirect:/admin/community/board";
-			}
-			return "forward:/freeBoardList";
-			
-		} else if (insertBoard > 0 && board.getSmall_code() == 4) {
-			return "forward:/photoBoardList";
-			
-		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
-			if(board.getUser_id() == 1){
-				return "redirect:/admin/notice/event";
-			}
-			return "forward:/eventBoardList";
-			
-		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
-			if(board.getUser_id() == 1){
-				return "redirect:/admin/community/review";
-			}
-			return "forward:/";
-		} else {
-			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
-			return "forward:/integratedBoardInsertForm";
+		try {
+			log.info("BoardController integratedboardInsert File Start!!");
+			fileName = file.getOriginalFilename();
+
+			pathDB = "..\\photos\\" + fileName;
+
+			realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
+
+			File savaFile = new File(realPath, fileName);
+
+			log.info("BannerController fileName : {}", fileName);
+			log.info("BannerController pathDB : {}", pathDB);
+			log.info("BannerController realPath : {}", realPath);
+			log.info("BannerController savaFile : {}", savaFile);
+
+			file.transferTo(savaFile);
+		} catch (Exception e) {
+			log.error("BoardController File upload error : {}", e.getMessage());
+		} finally {
+			log.info("BoardController integratedboardInsert File End..");
 		}
+
+		// 게시물 생성 Logic
+		String redirectURL = "";
+
+		// User ID 값이 있어야만 실행
+		if (board.getUser_id() > 0) {
+
+			// File명, 경로 setting
+			board.setFile_name(fileName);
+			board.setFile_path(pathDB);
+
+			int insertBoard = boardService.boardInsert(board);
+			
+			// 게시물 생성 후 Page Handling
+			if (insertBoard > 0 && board.getSmall_code() == 1) {
+				if (board.getUser_id() == 1) {
+					redirectURL = "redirect:/admin/notice/notice";
+				}
+				redirectURL = "forward:/noticBoardList";
+
+			} else if (insertBoard > 0 && board.getSmall_code() == 2) {
+				if (board.getUser_id() == 1) {
+					redirectURL = "redirect:/admin/community/magazin";
+				}
+				redirectURL = "forward:/magazinBoardList";
+
+			} else if (insertBoard > 0 && board.getSmall_code() == 3) {
+				if (board.getUser_id() == 1) {
+					redirectURL = "redirect:/admin/community/board";
+				}
+				redirectURL = "forward:/freeBoardList";
+
+			} else if (insertBoard > 0 && board.getSmall_code() == 4) {
+				redirectURL = "forward:/photoBoardList";
+
+			} else if (insertBoard > 0 && board.getSmall_code() == 5) {
+				if (board.getUser_id() == 1) {
+					redirectURL = "redirect:/admin/notice/event";
+				}
+				redirectURL = "forward:/eventBoardList";
+
+			} else if (insertBoard > 0 && board.getSmall_code() == 6) {
+				if (board.getUser_id() == 1) {
+					redirectURL = "redirect:/admin/community/review";
+				}
+				redirectURL = "forward:/";
+			} else {
+				model.addAttribute("msg", "글쓰기 실패!!, 다시 입력해주세요.");
+				redirectURL = "forward:/integratedBoardInsertForm";
+			}
+
+		} else {
+			model.addAttribute("msg", "글쓰기 실패!!, 회원ID가 일치하지 않습니다. 관리자에게 문의해주세요.");
+			redirectURL = "forward:/integratedBoardInsertForm";
+		}
+
+		log.info("BoardController integratedboardInsert End..");
+
+		return redirectURL;
 	}
 	
 	// 게시판 신고기능 -송환

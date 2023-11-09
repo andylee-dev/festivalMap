@@ -86,10 +86,18 @@
 				<th scope="col">내용</th>
 				<td>${board.content }</td>
 			</tr>
+			<tr class="table-primary">
+				<th scope="col">첨부파일명</th>
+				<td>${board.file_name }</td>
+			</tr>
+			<tr class="table-primary">
+				<th scope="col">이미지경로</th>
+				<td>${board.file_path }</td>
+			</tr>
 		</table>
 	</div>
 	<div class="text-center">
-		<button class="btn btn-primary" onclick="location.href='boardUpdateForm?id=${board.id}'">수정</button>
+		<button class="btn btn-primary" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수정</button>
 		<button class="btn btn-danger" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭제</button>
 		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
 		<!-- 게시판 신고기능 -송환 -->

@@ -43,6 +43,7 @@
                 <form action="boardUpdate" method="post">
                     <input type="hidden" name="id" value="${board.id }">
                     <input type="hidden" name="name" value="${board.name }">
+                    <input type="hidden" name="userId" value="${userId}">
                     <div class="mb-3">
                         <label for="title" class="form-label">제목</label>
                         <input type="text" id="title" name="title" class="form-control" required="required" value="${board.title }">

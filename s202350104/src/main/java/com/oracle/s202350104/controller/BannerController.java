@@ -53,9 +53,6 @@ public class BannerController {
 		log.info("BannerController bannerInsert bigCode : {}", banner.getBig_code());
 		log.info("BannerController bannerInsert smallCode : {}", banner.getSmall_code());	
 		
-		
-		//UUID uuid = UUID.randomUUID();
-		
 		String fileNameDB = "..\\image\\" + file.getOriginalFilename();
 		
 		String fileName = file.getOriginalFilename();
@@ -66,7 +63,6 @@ public class BannerController {
 		
 		file.transferTo(savaFile);		
 		
-		//log.info("BannerController uuid : {}", uuid);
 		log.info("BannerController fileNameDB : {}", fileNameDB);
 		log.info("BannerController getOriginalFilename : {}", file.getOriginalFilename());
 		log.info("BannerController fileName : {}", fileName);
