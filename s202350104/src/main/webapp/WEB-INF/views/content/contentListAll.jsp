@@ -86,9 +86,6 @@
 			</table>
 		</div>
 		
-		
-		
-		
 	</main>
 </div>
 </body>

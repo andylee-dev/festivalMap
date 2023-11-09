@@ -22,10 +22,66 @@
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<script type="text/javascript">
 	function closeAndRedirect() {
 		// 취소 시 이전페이지 이동
 		window.history.back();
+	}
+</script>
+
+<script type="text/javascript">
+	function showPopUp() {
+		
+		//창 크기 지정
+		var width = 800;
+		var height = 600;
+		
+		//pc화면기준 가운데 정렬
+		var left = (window.screen.width / 2) - (width/2);
+		var top = (window.screen.height / 4);
+		
+		//윈도우 속성 지정
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+		
+		//연결하고싶은url
+		const url = "contentListAll"
+		
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		window.open(url, "contentList popup", windowStatus);
+	}
+	
+	function receiveContentList(contentList) {
+		
+	    // contentList 데이터를 HTML 테이블로 변환
+	    var table = "<table>";
+	    table += "<thead><tr><th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th></tr></thead>";
+	    table += "<tbody>";
+
+	    for (var i = 0; i < contentList.length; i++) {
+	        table += "<tr>";
+	        table += "<td>" + contentList[i].id + "</td>";
+	        table += "<td><img src='" + contentList[i].img + "' alt='이미지'></td>";
+	        table += "<td>" + contentList[i].title + "</td>";
+	        table += "<td>" + contentList[i].address + "</td>";
+	        table += "<td>" + contentList[i].homepage + "</td>";
+	        table += "<td>" + contentList[i].phone + "</td>";
+	        table += "</tr>";
+	    }
+
+	    table += "</tbody></table>";
+	    
+
+	    // 테이블을 HTML 요소에 삽입
+	    document.getElementById("contentTable").innerHTML = table;
+
+	    for (var i = 0; i < contentList.length; i++) {
+	    	const form =document.getElementById("myForm");
+	    	const hiddenInput = document.createElement("input");
+	    	hiddenInput.type = "hidden";
+	    	hiddenInput.name = "contents";
+	    	hiddenInput.value = contentList[i].id;
+	    	form.appendChild(hiddenInput);
+	    }
 	}
 </script>
 
@@ -48,9 +104,13 @@
 						<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${courseContent.course_title }">
 					</div>
 					<div class="mb-3">
-						<label for="courseContent" class="form-label">코스항목</label>
-						
+						<label for="">코스항목</label>
+						<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 수정</button>
+						<div id="contentTable">
+				
+						</div>
 					</div>
+					
 					<div class="mb-3">
 						<label for="distance" class="form-label">거리(km)</label>
 						<input type="text" id="distance" name="distance" class="form-control" required="required" value="${courseContent.distance }">

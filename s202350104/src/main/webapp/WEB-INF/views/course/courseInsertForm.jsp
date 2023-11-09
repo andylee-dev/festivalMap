@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>course Insert</title>
 
-
 <!-- 부트스트랩 5.3.1-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -86,8 +85,6 @@
 	    	form.appendChild(hiddenInput);
 	    }
 	}
-
-	
 </script>
 	
 </head>
@@ -100,7 +97,7 @@
 				<input type="text" class="form-control" id="course_title" name="course_title" required="required">
 			</div>
 			<div class="form-group">
-				<label for="img1">코스 등록</label>
+				<label>코스 등록</label>
 				<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 추가</button>
 				<div id="contentTable">
 				
