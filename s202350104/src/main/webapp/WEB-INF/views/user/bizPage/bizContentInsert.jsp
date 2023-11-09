@@ -43,7 +43,7 @@
 			  	맛집 등록 폼				  
 			  </div>
 			  <div class="tab-pane fade" id="nav-accomodation" role="tabpanel" aria-labelledby="nav-accomodation-tab" tabindex="0">
-			  	숙박 등록 폼	
+			  	<%@ include file="/WEB-INF/views/admin/content/accomodationInsertForm.jsp" %>
 			  
 			  </div>
 			  <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab" tabindex="0">
