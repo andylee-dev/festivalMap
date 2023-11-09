@@ -6,6 +6,35 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+		   $(document).ready(function() {
+			   const urlParams = new URL(location.href).searchParams;
+			   const smallCodeStr = urlParams.get('smallCodeStr');
+			   
+			   $.ajax(
+					   {
+						   method:"POST",
+						   url:"<%=request.getContextPath()%>/admin/tag/getTags",
+						   data:{smallCodeStr : smallCodeStr},
+						   dataType:'json',
+						   success:function(listTags) {
+							   
+							   for(let i = 0; i < ${page.end - page.start + 1}; i++) {
+								   var str = "";
+								   for(let j = 0; j < listTags.length; j++) {
+									   if(listTags[j].board_id == $("#board_id"+i).val()) {
+										   str += listTags[j].name;
+										   str += " ";
+									   }
+								   }	   
+								   $("#tag_name"+i).append(str);   
+							   }
+						   }
+					   }
+				)
+		   })
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -27,11 +56,11 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">매거진</button>
-					<button type="button" class="btn btn-outline-secondary">자유게시판</button>
-					<button type="button" class="btn btn-outline-secondary">포토게시판</button>
-					<button type="button" class="btn btn-outline-secondary">이벤트게시판</button>
-					<button type="button" class="btn btn-outline-secondary">리뷰</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -45,21 +74,21 @@
 						</thead>
 						<tbody>
 							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="tag" items="${listTags}">
+							<c:forEach var="board" items="${listBoard}" varStatus="st">
 								<tr>
 									<td>${num}</td>
-									<td>${tag.cc_content}</td>
-									<td>${tag.board_id}</td>
-									<td>${tag.title}</td>
-									<td>${tag.name}</td>
-									<td><input type="button" value="수정"></td>
+									<td><%-- ${board.content} --%></td>
+									<td><input type="hidden" id="board_id${st.index}" value="${board.id}">${board.id}</td>
+									<td>${board.title}</td>
+									<td><div id="tag_name${st.index}"></div></td>
+									<td><input type="button" value="수정" onclick="location.href='boardTagsUpdate?boardId=${board.id}'"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 							<!-- 하나의 게시글에 대해 태그를 하나의 행에서 다 볼 수 있는 방법 생각해보기 -->
 						</tbody>
 					</table>
-					<p>총 건수 : ${totalTags}</p>
+					<p>총 건수 : ${totalBoard}</p>
 					<div align="center">
 						<c:if test="${page.startPage > page.pageBlock}">
 							<a href="boardTag?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>

@@ -75,18 +75,6 @@ public class TagsDaoImpl implements TagsDao {
 	}
 
 	@Override
-	public List<Tags> listBoardTags(Tags tags) {
-		List<Tags> listTags = null;
-		try {
-			listTags = session.selectList("nhBoardTagsListPage", tags);
-			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
-		} catch(Exception e) {
-			log.info("TagsDaoImpl listBoardTags() => " + e.getMessage());
-		}
-		return listTags;
-	}
-
-	@Override
 	public int totalContentTags() {
 		int totalTagsCnt = 0;
 		try {
@@ -101,7 +89,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listContentTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhContentTagsListPage", tags);
+			listTags = session.selectList("nhContentTagsList", tags);
 			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
@@ -179,5 +167,17 @@ public class TagsDaoImpl implements TagsDao {
 		}
 		return listTags;
 	}
-		
+
+	@Override
+	public List<Tags> listBoardTags(int smallCode) {
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhBoardTagsList", smallCode);
+			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listBoardTags() => " + e.getMessage());
+		}
+		return listTags;
+	}
+
 }

@@ -50,26 +50,23 @@
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
+	<select id="nhBoardTagsList" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM  BoardTags bt, Tags t, Board b
+		WHERE bt.tag_id = t.id
+		AND   bt.board_id = b.id
+		AND   b.small_code = #{smallCode}
+		ORDER BY t.name
+	</select>
+	
 	<select id="nhContentTagsTotal" resultType="int">
 		SELECT count(*) FROM ContentTags
 	</select>
 	
-	<select id="nhContentTagsListPage" resultType="Tags" parameterType="Tags">
+	<select id="nhContentTagsList" resultType="Tags" parameterType="int">	
 		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT content_id, tag_id AS id, name, c.title, cc.content AS cc_content
-			 FROM contenttags ct, tags t, contents c, commoncodes cc 
-			 WHERE ct.tag_id = t.id 
-			 AND   ct.content_id = c.id
-             AND   c.big_code = cc.big_code
-             AND   cc.small_code = 999
-			 GROUP BY content_id, tag_id, name, c.title, cc.content
-			 ORDER BY content_id, tag_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		FROM ContentTags ct, Tags t 
+		WHERE ct.tag_id = t.id
 	</select>
 	
 	<select id="nhTagsListAll" resultType="Tags">

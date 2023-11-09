@@ -60,17 +60,6 @@ public class TagsServiceImpl implements TagsService {
 	}
 
 	@Override
-	public List<Tags> listBoardTags(Tags tags) {
-		List<Tags> listTags = td.listBoardTags(tags);
-		
-		if(listTags == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시판 태그 리스트가 존재하지 않습니다.");
-		}
-		
-		return listTags;
-	}
-
-	@Override
 	public int totalContentTags() {
 		int totalTagsCnt = td.totalContentTags();
 		return totalTagsCnt;
@@ -156,5 +145,17 @@ public class TagsServiceImpl implements TagsService {
 	public List<Tags> searchContentTags(int contentId) {
 		List<Tags> listTags = td.searchContentTags(contentId);
 		return listTags;
-	}	
+	}
+
+	@Override
+	public List<Tags> listBoardTags(int smallCode) {
+		List<Tags> listTags = td.listBoardTags(smallCode);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시판 태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
+
 }

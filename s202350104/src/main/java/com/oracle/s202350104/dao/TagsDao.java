@@ -10,7 +10,6 @@ public interface TagsDao {
 	int totalUserTags();
 	List<Tags> listUserTags(Tags tags);
 	int totalBoardTags();
-	List<Tags> listBoardTags(Tags tags);
 	int totalContentTags();
 	List<Tags> listContentTags(Tags tags);
 	List<Tags> listTagsAll();
@@ -19,4 +18,5 @@ public interface TagsDao {
 	int updateTags(Tags tags);
 	int deleteTags(int id);
 	List<Tags> searchContentTags(int contentId);
+	List<Tags> listBoardTags(int smallCode);
 }
