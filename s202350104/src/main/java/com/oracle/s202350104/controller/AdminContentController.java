@@ -583,7 +583,9 @@
 				accomodationContent.setEnd(page.getEnd());
 			
 				List<AccomodationContent> listAccomodation = as.listAccomodation(accomodationContent);
-			
+				List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
+				
+		        model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("totalAccomodation",totalaccomodation);
 				model.addAttribute("listAccomodation", listAccomodation);
 				model.addAttribute("page",page);
@@ -640,12 +642,13 @@
 	public String accomodationDetail(String contentIdStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		int contentId = 0;
+		
 		if(contentIdStr == null) {
 			contentId = 0;
 		} else {
 			contentId = Integer.parseInt(contentIdStr);
 		}
-		try {
+		try {	
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
 			log.info("accomodationDetail currentPage0=>"+currentPage);
 			AccomodationContent accomodation = as.detailAccomodation(contentId);
@@ -654,6 +657,7 @@
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("accomodation", accomodation);
 			log.info("accomodationDetail currentPage2=>"+currentPage);
+		        
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
 		} finally {
