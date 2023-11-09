@@ -5,8 +5,10 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Banner;
@@ -59,14 +61,20 @@ public class ContentController {
         return contentList;
     }
 
+	/*TODO : big_code/small_code/area*/	
 	@ResponseBody
-    @RequestMapping(value = "/api/searchContents", method = RequestMethod.POST)
-    public List<Contents> searchContentsList() {
+	@RequestMapping(value = "/api/searchContents", method = RequestMethod.POST)
+    public List<Contents> searchContentsList(@RequestBody Contents contents) {
 		UUID transactionId = UUID.randomUUID();
 		List<Contents> contentList =null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "searchContentsList", "start");
 			/* TODO :  contents filter list*/
+			log.info("{}",contents.toString());
+			
+			contentList = contentService.getSearchContentsList(contents);
+			log.info("contentList:{}",contentList.toString());
+
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "searchContentsList", e.getMessage());
 		} finally {
@@ -74,6 +82,7 @@ public class ContentController {
 		}		
         return contentList;
     }
+	
 	
 	
 }

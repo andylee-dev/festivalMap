@@ -24,4 +24,11 @@ public class ContentServiceImpl implements ContentSerivce {
 		List<Contents> listContents = contentsDao.listContent();
 		return listContents;
 	}
+
+	@Override
+	public List<Contents> getSearchContentsList(Contents contents ) {
+		List<Contents> listContents = contentsDao.getSearchContentsList(contents);
+		return listContents;
+	}
+
 }

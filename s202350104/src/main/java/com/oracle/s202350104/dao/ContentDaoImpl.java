@@ -25,4 +25,10 @@ public class ContentDaoImpl implements ContentsDao {
 		
 		return listContent;
 	}
+
+	@Override
+	public List<Contents> getSearchContentsList(Contents contents) {
+		List<Contents> listContent = session.selectList("getSearchContentsList", contents);
+		return listContent;
+	}
 }
