@@ -102,7 +102,7 @@
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurant?currentPage=1'">목록</button>
 						</c:if>
 						<c:if test="${restaurant.status == 1}">
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurantUpdateForm?contentID=${restaurant.content_id}&currentPage=${currentPage}'">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${currentPage}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurant?currentPage=1'">목록</button>
 						</c:if>

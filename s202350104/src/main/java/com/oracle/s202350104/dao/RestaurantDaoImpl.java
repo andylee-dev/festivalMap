@@ -150,4 +150,24 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	
 	}
 
+	@Override
+	public int updateRestaurant(RestaurantsContent restaurant) {
+		int result = 0;
+		TransactionStatus txStatus =
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			log.info("RestaurantDaoImpl updateRestaurant start");
+			result = session.update("joUpdateContent", restaurant);
+			log.info("RestaurantDaoImpl updateContent result ->" + result);
+			result = session.update("joUpdateRestaurant", restaurant);
+			log.info("RestaurantDaoImpl updateRestaurant result ->" + result);
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("RestaurantDaoImpl updateRestaurant Exception ->" + e.getMessage());
+			result = -1;
+		}
+		return result;
+	}
+
 }

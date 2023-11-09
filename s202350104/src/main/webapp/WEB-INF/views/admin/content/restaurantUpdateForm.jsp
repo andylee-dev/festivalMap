@@ -46,18 +46,21 @@
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
 					<form action="restaurantUpdate" method="post">
+						<input type="hidden" name="currentPage" value="${currentPage}">
+						<input type="hidden" name="status" value="${currentPage}">
 						<table class="table table-striped table-sm">
 							<!-- <tr><th>콘텐츠ID</th><td><input 	type="number" 	name="contentId" 	required="required" maxlength="10" value="">
 													<input 	type="button" 	value="중복확인" 	 	onclick="chk()"> -->
-							<tr><th>컨텐츠ID</th><td>${restaurant.content_id}</td></tr>
+							<tr><th>컨텐츠ID</th><td><input type="hidden" name="content_id" value="${restaurant.content_id}">${restaurant.content_id}</td></tr>
+							
 							<tr><th>분류</th>
 								<td>
-									<input type="hidden" name="small_code" value="12">[Restaurant]${restaurant.theme}<br>
-									<select name="small_code">
+									<input type="hidden" name="big_code" value="12">[Restaurant]${restaurant.theme}<br>
+									<select id="small code" name="small_code">
 										<option value="">전체</option>
 										<c:forEach var="listCodes" items="${listCodes}">
 											<c:if test="${listCodes.big_code == 12 && listCodes.small_code != 999 }">
-												<option value="${listCodes.small_code}">${listCodes.content}</option>
+												<option value="${listCodes.small_code}" ${listCodes.small_code == restaurant.small_code? 'selected' : '' }>${listCodes.content}</option>
 											</c:if>
 										</c:forEach>
 									</select>
@@ -67,20 +70,27 @@
 								<th>지역</th>
 								<td>
 									${restaurant.area_content} ${restaurant.sigungu_content}<br>
-									<select name="area" onchange="getSigungu(this.value)">
+									<select id= "area" name="area" onchange="getSigungu(this.value)">
 										<option value="">전체</option>
 										<c:forEach var="areas" items="${listAreas}">
 											<c:if test="${areas.sigungu == 999}">
-												<option value="${areas.area}">${areas.content}</option>
+												<option value="${areas.area}" ${areas.area == restaurant.area? 'selected':''}>${areas.content}</option>
 											</c:if>
 										</c:forEach>
 									</select>
-									<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
+									<select name="sigungu" id="sigungu_list_select">
+										<option value="999"> 전체</option>
+										<c:forEach var="areas" items="${listSigungu}">
+											<c:if test="${areas.sigungu != 999 && areas.sigungu != null}">	
+												<option value="${areas.sigungu}" ${areas.sigungu == restaurant.sigungu? 'selected':''}>${areas.content}</option>
+											</c:if>
+										</c:forEach>
+									</select>
 								</td>
 							</tr>
 							<tr><th>주소</th><td><input 		type="text"    	name="address" value="${restaurant.address}"		></td></tr>
 							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" value="${restaurant.postcode}" 	></td></tr>
-							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}\d{4}" value="${restaurant.phone}"></td>       
+							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}-\d{4}" value="${restaurant.phone}"></td>       
 							<tr><th>대표메뉴</th><td><input 	type="text" 	name="first_menu" value="${restaurant.first_menu}"	></td></tr>
 							<tr><th>추천메뉴</th><td><input 	type="text" 	name="menu" 	value="${restaurant.menu}"	></td></tr>
 							<tr><th>영업시간</th><td><input 	type="text" 	name="open_time" value="${restaurant.open_time}"	></td></tr>

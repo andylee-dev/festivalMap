@@ -276,6 +276,7 @@
 				model.addAttribute("listRestaurant", listRestaurant);
 				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("page",page);
+				model.addAttribute("path", path);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurant", e.getMessage());
 			} finally {
@@ -402,6 +403,26 @@
 				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdateForm", "end");
 			}
 			return "admin/content/restaurantUpdateForm";
+		}
+		
+		
+		@RequestMapping(value = "restaurantUpdate")
+		public String restaurantUpdate(RestaurantsContent restaurant, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			int id = 0;
+			
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate", "start" );
+				int result = rs.updateRestaurant(restaurant);
+				log.info("admin restaurantUpdate updateCount ->" + result);
+				id = restaurant.getContent_id();
+			} catch (Exception e) {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );
+			} finally {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate", "end" );
+			} 
+			return "forward:/admin/content/restaurantDetail?contentId=3";
+			// return "redirect:restaurant";
 		}
 		
 		

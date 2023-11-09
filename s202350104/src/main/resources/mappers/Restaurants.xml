@@ -101,9 +101,24 @@
 		VALUES				   (contents_id_seq.currval, #{first_menu}, #{menu}, #{open_time}, #{rest_date}, #{is_smoking}, #{is_packing}, #{is_parking})
 	</select>
 	
+	<update id="joUpdateRestaurant" parameterType="RestaurantsContent">
+		UPDATE	restaurants 
+		SET    	first_menu=#{first_menu}, menu=#{menu}, open_time=#{open_time}, rest_date=#{rest_date}, is_smoking=#{is_smoking}, is_packing=#{is_packing}, is_parking=#{is_parking} 
+		WHERE  	content_id=#{content_id}
+	</update>
+	
+	
+	<!-- contents 테이블 -->
 	<select id="joInsertContent" resultType="int" parameterType="RestaurantsContent">
 		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcound, user_id, created_at, is_deleted)
 		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, #{updated_at}, '0')
 	</select>
+	
+	<update id="joUpdateContent" parameterType="RestaurantsContent">
+		UPDATE	contents
+		SET		small_code=#{small_code}, area=#{area}, sigungu=#{sigungu}, title=#{title}, address=#{address}, postcode=#{postcode}, phone=#{phone}, content=#{content}, img1=#{img1}, img2=#{img2}, img3=#{img3}  
+		WHERE  	id=#{content_id}
+	</update>
+	
 	
 </mapper>

@@ -37,6 +37,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 		log.info("RestaurantImpl detailRestaurant Start...");
 		restaurant = rd.detailRestaurant(contentId);
 		
+		if(restaurant == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 식당 정보가 존재하지 않습니다");
+		}
+		
 		return restaurant;
 	}
 
@@ -83,9 +87,20 @@ public class RestaurantServiceImpl implements RestaurantService {
 		result = rd.insertRestaurant(restaurant);
 		
 		if(result <= 0) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 등록에 실패하였습니다");
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "맛집 정보 등록에 실패하였습니다");
 		}
 		
+		return result;
+	}
+
+	@Override
+	public int updateRestaurant(RestaurantsContent restaurant) {
+		int result = 0;
+		result = rd.updateRestaurant(restaurant);
+		
+		if(result == 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "맛집 정보 수정에 실패하였습니다.");
+		}
 		return result;
 	}
 

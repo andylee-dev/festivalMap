@@ -79,7 +79,7 @@
 						 				<c:if test="${restaurant.status == 0 }">승인대기</c:if>
 										<c:if test="${restaurant.status == 1 }">승인완료</c:if>
 									</td>
-									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="수정" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}'"></c:if></td>
+									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="수정" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}?currentPage=${page.currentPage}'"></c:if></td>
 									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="삭제"></c:if></td>		
 									<td></td>			
 								 </tr>
