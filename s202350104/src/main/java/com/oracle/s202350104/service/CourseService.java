@@ -15,6 +15,7 @@ public interface CourseService {
 	int						courseContentInsert(List<CourseContent> courseContentList);
 	int 					courseDelete(int id);
 	int 					courseContentDelete(int id);
-	Course 					courseContent(int id);
-}
+	int 					courseUpdate(Course course);
+	Course 					courseUpdateDetail(int id);
+} 
 	 

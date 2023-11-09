@@ -91,14 +91,14 @@
 <body>
 	<h1>여기는 코스 등록 화면입니다.</h1>
 	<div class="container mt-5">
-		<form id="myForm"action="courseInsert" method="post" enctype="multipart/form-data">
+		<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="course_title">코스명</label>
 				<input type="text" class="form-control" id="course_title" name="course_title" required="required">
 			</div>
 			<div class="form-group">
 				<label>코스 등록</label>
-				<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 추가</button>
+				<button class="btn btn-primary" onclick="showPopUp()">코스 추가</button>
 				<div id="contentTable">
 				
 				</div>
@@ -108,7 +108,7 @@
 				<input type="text" class="form-control" id="distance" name="distance" required="required">
 			</div>
 			<div class="form-group">
-				<label for="distance">소요시간</label>
+				<label for="time">소요시간</label>
 				<input type="text" class="form-control" id="time" name="time" required="required">
 			</div>
 			<div class="form-group">	

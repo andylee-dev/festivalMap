@@ -31,6 +31,7 @@
 
 <script type="text/javascript">
 	function showPopUp() {
+		 console.log("showPopUp 함수 호출됨");
 		
 		//창 크기 지정
 		var width = 800;
@@ -90,84 +91,46 @@
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	
+	<h1>코스 수정</h1>
 	<div class="container mt-5">
-		<div class="card">
-			<div class="card_header">
-				<h2>코스 수정</h2>
+		<form id="myForm" action="courseUpdate" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="${courseContent.id }">
+			<input type="hidden" name="course_title" value="${courseContent.course_title }">
+			<div class="form-group">
+				<label for="course_title">코스 명</label>
+				<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${courseContent.course_title }">
 			</div>
-			<div class="card-body">
-				<form action="courseUpdate" method="post">
-					<input type="hidden" name="id" value="${courseContent.id }">
-					<input type="hidden" name="course_title" value="${courseContent.course_title }">
-					<div class="mb-3">
-						<label for="course_title" class="form-label">코스 명</label>
-						<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${courseContent.course_title }">
+				<div class="form-group">
+					<label>코스항목</label>
+					<button class="btn btn-primary" onclick="showPopUp(); event.preventDefault();">코스 수정</button>
+					<div id="contentTable">
+			
 					</div>
-					<div class="mb-3">
-						<label for="">코스항목</label>
-						<button class="btn btn-primary" onclick="location.href='javascript:showPopUp()'">코스 수정</button>
-						<div id="contentTable">
-				
-						</div>
-					</div>
-					
-					<div class="mb-3">
-						<label for="distance" class="form-label">거리(km)</label>
-						<input type="text" id="distance" name="distance" class="form-control" required="required" value="${courseContent.distance }">
-					</div>
-					<div class="mb-3">
-						<label for="time" class="form-label">소요시간</label>
-						<input type="text" id="time" name="time" class="form-control" required="required" value="${courseContent.time }">
-					</div>
-					<div class="mb-3">
-						<label for="course_info" class="form-label">코스 내용</label>
-						<textarea class="form-control" id="course_info" name="course_info" rows="5">${courseContent.course_info }</textarea>
-					</div>
-					<div class="text-center">
-						<button type="submit" class="btn btn-primary">확인</button>
-						<a href="#" class="btn btn-secondary" onclick="closeAndRedirect()">취소</a>
-					</div>
-				</form>
+				</div>
+			
+			<div class="form-group">
+				<label for="distance">거리(km)</label>
+				<input type="text" id="distance" name="distance" class="form-control" required="required" value="${courseContent.distance }">
 			</div>
-		</div>
-	
-	
-		<%-- <c:forEach var="courseContent" items="${courseContent }">
-			<c:if test="${courseContent.order_num == 1}">
-				<h1>${courseContent.course_title }</h1>
-				<div class="container border p-5">
-					<img alt="${courseContent.course_title }" src="${courseContent.img1 }">
-				</div>
-				<div class="container border p-5">
-					<ul>
-						<li>코스 이름 : ${courseContent.course_title }
-						<li>코스 내용 : ${courseContent.course_info }
-						<li>코스 거리 : ${courseContent.distance }
-						<li>주 소 :	${courseContent.address }
-						<li>전화번호 :	${courseContent.phone }
-					</ul>
-				</div>
-			</c:if>
-		</c:forEach>
+			<div class="form-group">
+				<label for="time">소요시간</label>
+				<input type="text" id="time" name="time" class="form-control" required="required" value="${courseContent.time }">
+			</div>
+			<div class="form-group">
+				<label for="course_info">코스 내용</label>
+				<textarea class="form-control" id="course_info" name="course_info" rows="5">${courseContent.course_info }</textarea>
+			</div>
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary">확인</button>
+				<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
+			</div>
+		</form>
 	</div>
 	
-	<div>
-		<c:forEach var="courseContent" items="${courseContent }">
-		<div class="container border p-5">
-			<a href='../${courseContent.cd_content.toLowerCase() }/detail?contentId=${courseContent.content_id}'>
-				<img alt="${courseContent.course_title }" src="${courseContent.img1 }">
-			</a>
-			<ul>
-				<li>코스이름 : <input type="text" id="title" name="title" value="${courseContent.title }"> 
-				<li>개요 : <input type="text" id="content" name="content" value="${courseContent.content }">
-				<li>홈페이지 : <input type="text" id="homepage" name="homepage" value="${courseContent.homepage }">
-			</ul>
-		</div>
-		</c:forEach>
-	</div> --%>
 	<!-- review test -->
 	<div>
 		<h3>review 구역</h3>
 	</div>
+	
 </body>
 </html>

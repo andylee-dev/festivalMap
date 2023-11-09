@@ -125,17 +125,33 @@ public class CourseDaoImpl implements CourseDao {
 
 
 	@Override
-	public Course courseContent(int id) {
+	public Course courseUpdateDetail(int id) {
 		log.info("CourseDaoImpl courseContent start...");
-		Course courseContent = null;
+		Course courseUpdateDetail = null;
 		try {
-			courseContent = session.selectOne("noCourseContent", id);
-			log.info("CourseDaoImpl courseContent CourseDaoImpl ->" + courseContent);
+			courseUpdateDetail = session.selectOne("noCourseContent", id);
+			log.info("CourseDaoImpl courseContent courseUpdateDetail ->" + courseUpdateDetail);
 			
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseContent e.getMessage() ->" + e.getMessage());
 		}
-		return courseContent;
+		return courseUpdateDetail;
+	}
+
+
+	@Override
+	public int courseUpdate(Course course) {
+		log.info("CourseDaoImpl courseUpdate start...");
+		int courseUpdate = 0;
+		try {
+			courseUpdate = session.update("noCourseUpdate", course);
+			log.info("CourseDaoImpl courseUpdate courseUpdate ->" + courseUpdate);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl courseUpdate e.getMessage() ->" + e.getMessage());
+		}
+		
+		return courseUpdate;
 	}
 
 	

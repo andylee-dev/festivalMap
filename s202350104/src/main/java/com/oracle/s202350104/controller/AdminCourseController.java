@@ -64,13 +64,13 @@ public class AdminCourseController {
 	
 		try {
 			log.info("AdminCourseController courseUpdateForm id ->" + id);
-			Course courseContent = cs.courseContent(id);
-			log.info("AdminCourseController courseUpdateForm courseContent ->" + courseContent);
+			Course course = cs.courseUpdateDetail(id);
+			log.info("AdminCourseController courseUpdateForm courseContent ->" + course);
 			
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
 			
-			model.addAttribute("courseContent", courseContent);
+			model.addAttribute("courseContent", course);
 //			model.addAttribute("courseContent", courseContent);
 			
 		} catch (Exception e) {
@@ -80,6 +80,18 @@ public class AdminCourseController {
 		}
 		return "course/courseUpdateForm";
 	}
+	
+	@RequestMapping(value = "courseUpdate")
+	public String courseUpdate(Course course, @RequestParam List<String> contents, Model model) {
+		log.info("AdminCourseController courseUpdate course ->" + course);
+		int courseId = cs.courseUpdate(course);
+		log.info("AdminCourseController courseUpdate courseUpdate ->" + courseId);
+		
+		
+		
+		return "redirect:/admin/course/list";
+	}
+	
 	
 	@RequestMapping(value = "/courseInsertForm")
 	public String courseInsertForm(Course Course , Contents contents, Model model) {

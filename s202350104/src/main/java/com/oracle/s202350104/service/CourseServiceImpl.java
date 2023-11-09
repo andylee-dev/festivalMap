@@ -93,13 +93,19 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Course courseContent(int id) {
+	public Course courseUpdateDetail(int id) {
 		log.info("CourseServiceImpl courseContent start...");
-		Course courseContent = cd.courseContent(id);
+		Course courseUpdateDetail = cd.courseUpdateDetail(id);
 		
-		return courseContent;
+		return courseUpdateDetail;
 	}
 
-	
+	@Override
+	public int courseUpdate(Course course) {
+		log.info("CourseServiceImpl courseUpdate start...");
+		int courseUpdate = cd.courseUpdate(course);
+		
+		return courseUpdate;
+	}
 
 }
