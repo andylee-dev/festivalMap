@@ -1,3 +1,7 @@
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="com.oracle.s202350104.service.map.MapService"%>
+<%@page import="com.oracle.s202350104.service.map.KakaoMapSerivce"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/header.jsp" %>
@@ -7,7 +11,44 @@
 <meta charset="UTF-8">
 
 <title>Home</title>
+<%
+    ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+	MapService map = context.getBean("kakaoMapSerivce", MapService.class);
+	String apiKey = map.getApiKey();
+%>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>"></script>
+
+<script type="text/javascript">
+	function getKakaoMap(latitude, longitude){
+		const container = document.getElementById('map');
+		const options = {
+			center: new kakao.maps.LatLng(latitude, longitude),
+			level: 3
+		};
+
+		const map = new kakao.maps.Map(container, options);
+	}
+
+	function getLocation() {
+	  if ("geolocation" in navigator) {
+	    navigator.geolocation.getCurrentPosition(function(position) {
+	      const latitude = position.coords.latitude;
+	      const longitude = position.coords.longitude;
+	      getKakaoMap(latitude, longitude);
+	    });
+	  } else {
+	    console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+	  }
+	}
+
+	window.onload = function() {
+	  getLocation();
+	};
+
+</script>
 </head>
+
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -50,17 +91,75 @@
 
 	<!-- Section1 -->
 	<div class="container border p-5">			
-		컨텐츠 페이지입니다1
+		랜덤축제
+		취향테스트
+		캘린더
 	</div>
 
 	<!-- Section2 -->
 	<div class="container border p-5">			
-		컨텐츠 페이지입니다2
+		md's pick
+	</div>
+	
+	<!-- Section3 -->
+	<div class="container p-0 border">
+		<div>
+			<h1>지도지도</h1>		
+		</div>
+		<div class="border d-flex "style="height:600px;">			
+			<div class="container col-3 overflow-auto">
+				<div class="container">
+					<div class="m-3">
+						<label for="area" class="form-label">지역</label>
+						<select name="area" id="area" class="form-select col-auto"></select> 
+					</div>
+					<div class="m-3">
+						<label for="sigungu" class="form-label">지역상세</label>
+						<select name="sigungu" id="sigungu" class="form-select col-auto"></select>
+					</div>
+					<div class="m-3">
+						<label for="tag" class="form-label">테마별</label>
+						<select name="tag" id="tag" class="form-select col-auto"></select>						
+						<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기">
+					</div>				
+					<hr>
+				</div>
+				<div class="container-fluid">
+					<div class="m-3">
+						<label for="area" class="form-label">목록 보기</label>
+						<div class="">
+							<div class="card" >
+							  <img src="..." class="card-img-top" alt="...">
+							  <div class="card-body">
+							    <h5 class="card-title">Card title</h5>
+							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    <a href="#" class="btn btn-primary">Go somewhere</a>
+							  </div>
+							</div>
+							<div class="card" >
+							  <img src="..." class="card-img-top" alt="...">
+							  <div class="card-body">
+							    <h5 class="card-title">Card title</h5>
+							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    <a href="#" class="btn btn-primary">Go somewhere</a>
+							  </div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+
+			</div>
+			<div id="map" class="col-9"></div>
+		
+		
+
+		</div>	
 	</div>
 
-	<!-- Section3 -->
+	<!-- Section4 -->
 	<div class="container border p-5">			
-		<h2>컨텐츠 페이지입니다3</h2>
+		컨텐츠 배너.
 	</div>
 
 	<!-- Footer -->
