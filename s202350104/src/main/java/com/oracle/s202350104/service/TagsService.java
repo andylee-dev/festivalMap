@@ -8,7 +8,6 @@ public interface TagsService {
 	int totalTags();
 	List<Tags> listTags(Tags tags);
 	int totalUserTags();
-	List<Tags> listUserTags(Tags tags);
 	int totalBoardTags();
 	int totalContentTags();
 	List<Tags> listContentTags(Tags tags);
@@ -19,4 +18,5 @@ public interface TagsService {
 	int deleteTags(int id);
 	List<Tags> searchContentTags(int contentId);
 	List<Tags> listBoardTags(int smallCode);
+	List<Tags> listUserTags();
 }

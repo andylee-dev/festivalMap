@@ -52,18 +52,6 @@ public class TagsDaoImpl implements TagsDao {
 	}
 
 	@Override
-	public List<Tags> listUserTags(Tags tags) {
-		List<Tags> listTags = null;
-		try {
-			listTags = session.selectList("nhUserTagsAll", tags);
-			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
-		} catch(Exception e) {
-			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
-		}
-		return listTags;
-	}
-
-	@Override
 	public int totalBoardTags() {
 		int totalTagsCnt = 0;
 		try {
@@ -158,26 +146,35 @@ public class TagsDaoImpl implements TagsDao {
 	}
 
 	@Override
-	public List<Tags> searchContentTags(int contentId) {
-		List<Tags> listTags = null;
-		try {
-			listTags = session.selectList("nhContentTagsSearch", contentId);
-		} catch (Exception e) {
-			log.info("TagsDaoImpl searchContentTags() => " + e.getMessage());
-		}
-		return listTags;
-	}
-
-	@Override
 	public List<Tags> listBoardTags(int smallCode) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhBoardTagsList", smallCode);
+			listTags = session.selectList("nhBoardTagsAll", smallCode);
 			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listBoardTags() => " + e.getMessage());
 		}
 		return listTags;
 	}
+
+	@Override
+	public List<Tags> searchContentTags(int contentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Tags> listUserTags() {
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhUserTagsAll");
+			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
+		} catch (Exception e) {
+			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
+		}
+		return listTags;
+	}
+	
+	
 
 }

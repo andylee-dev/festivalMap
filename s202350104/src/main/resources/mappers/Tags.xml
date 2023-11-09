@@ -18,39 +18,21 @@
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
-	<select id="nhUserTagsTotal" resultType="int">
-		SELECT count(*) FROM UserTags
-	</select>
-	
-	<select id="nhUserTagsAll" resultType="Tags" parameterType="Tags">
+	<select id="nhUserTagsAll" resultType="Tags">
 		SELECT *
 		FROM usertags u, tags t
 		WHERE u.tag_id = t.id
 	</select>
 	
-	<select id="nhBoardTagsTotal" resultType="int">
-		SELECT count(*) FROM BoardTags
-	</select>
-	
-	<select id="nhBoardTagsListPage" resultType="Tags" parameterType="Tags">
+	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT board_id, tag_id AS id, name, b.title, cc.content AS cc_content
-			 FROM boardtags bt, tags t, board b, commoncodes cc
-			 WHERE bt.tag_id = t.id 
-             AND   bt.board_id = b.id
-             AND   b.big_code = cc.big_code
-             AND   b.small_code = cc.small_code
-			 GROUP BY board_id, tag_id, name, b.title, cc.content
-			 ORDER BY board_id, tag_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		FROM usertags u, tags t
+		WHERE u.tag_id = t.id
+		WHERE u.user_id = #{id}
+		ORDER BY t.name
 	</select>
 	
-	<select id="nhBoardTagsList" resultType="Tags" parameterType="int">
+	<select id="nhBoardTagsAll" resultType="Tags" parameterType="int">
 		SELECT *
 		FROM  BoardTags bt, Tags t, Board b
 		WHERE bt.tag_id = t.id
@@ -59,14 +41,29 @@
 		ORDER BY t.name
 	</select>
 	
-	<select id="nhContentTagsTotal" resultType="int">
-		SELECT count(*) FROM ContentTags
+	<select id="nhBoardTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM BoardTags bt, Tags t
+		WHERE bt.tag_id = t.id
+		AND   bt.board_id = #{id}
+		ORDER BY t.name
 	</select>
 	
 	<select id="nhContentTagsList" resultType="Tags" parameterType="int">	
 		SELECT *
-		FROM ContentTags ct, Tags t 
+		FROM　ContentTags ct, Tags t, Contents c
 		WHERE ct.tag_id = t.id
+		AND   ct.content_id = c.id
+		AND   c.big_code = #{bigCode}
+		ORDER BY t.name
+	</select>
+	
+	<select id="nhContentTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM ContentTags ct, Tags t
+		WHERE ct.tag_id = t.id
+		AND   ct.content_id = #{id}
+		ORDER BY t.name
 	</select>
 	
 	<select id="nhTagsListAll" resultType="Tags">
@@ -101,8 +98,4 @@
 	<delete id="nhBoardTagsDelete" parameterType="int">
 		DELETE BoardTags WHERE tag_id = #{id}
 	</delete>
-	
-	<select id="nhContentTagsSearch" parameterType="int" resultType="Tags">
-		SELECT * FROM ContentTags WHERE content_id = #{contentId}
-	</select>
 </mapper>

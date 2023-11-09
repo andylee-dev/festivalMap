@@ -6,6 +6,31 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원 태그</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+		   $(document).ready(function() {			   
+			   $.ajax(
+					   {
+						   method:"POST",
+						   url:"<%=request.getContextPath()%>/admin/tag/getUserTags",
+						   dataType:'json',
+						   success:function(listTags) {
+							   
+							   for(let i = 0; i < ${page.end - page.start + 1}; i++) {
+								   var str = "";
+								   for(let j = 0; j < listTags.length; j++) {
+									   if(listTags[j].user_id == $("#user_id"+i).val()) {
+										   str += "<span class='badge text-bg-primary'>"+listTags[j].name+"</span>";
+										   str += " ";
+									   }
+								   }	   
+								   $("#tag_name"+i).append(str);   
+							   }
+						   }
+					   }
+				)
+		   })
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -37,18 +62,17 @@
 						</thead>
 						<tbody>
 							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="tag" items="${listTags}">
+							<c:forEach var="user" items="${listUsers}" varStatus="st">
 								<tr>
 									<td>${num}</td>
-									<td>${tag.user_id}</td>
-									<td>${tag.name}</td>
+									<td><input type="hidden" id="user_id${st.index}" value="${user.id}">${user.id}</td>
+									<td id="tag_name${st.index}"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
-							<!-- 하나의 회원이 저장한 태그를 한 행에 모두 볼 수 있는 방법 생각해보기 -->
 						</tbody>
 					</table>
-					<p>총 건수 : ${totalTags}</p>
+					<p>총 건수 : ${totalUsers}</p>
 					
 					<div align="center">
 						<c:if test="${page.startPage > page.pageBlock}">

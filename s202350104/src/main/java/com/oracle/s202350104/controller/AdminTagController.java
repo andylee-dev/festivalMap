@@ -20,12 +20,14 @@ import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.TagsService;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,7 @@ public class AdminTagController {
 	private final CommonCodeService ccs;
 	private final ContentSerivce cs;
 	private final BoardService bs;
+	private final UserService us;
 	
 	@RequestMapping(value = "list")
 	public String tagList(Tags tags, String currentPage, Model model) {
@@ -157,21 +160,26 @@ public class AdminTagController {
 	 
 	
 	@RequestMapping(value = "userTag")
-	public String userTagList(Tags tags, String currentPage, Model model) {
+	public String userTagList(Users user, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "userTagList", "start");
-			int totalTags = ts.totalUserTags();
+			user.setSmall_code(2);  
+			int totalUsers = us.totalUsers(user); // 일반회원만
 			
-			PagingList page = new PagingList(totalTags, currentPage);
-			tags.setStart(page.getStart());
-			tags.setEnd(page.getEnd());
+			log.info("totalUsers => " + totalUsers);
 			
-			List<Tags> listTags = ts.listUserTags(tags);
+			PagingList page = new PagingList(totalUsers, currentPage);
+			user.setStart(page.getStart());
+			user.setEnd(page.getEnd());
 			
-			model.addAttribute("totalTags", totalTags);
-			model.addAttribute("listTags", listTags);
+			List<Users> listUsers = us.getSearchUserList(user); // 일반회원만
+			
+			log.info("listUsers => " + listUsers.size());
+			
+			model.addAttribute("totalUsers", totalUsers);
+			model.addAttribute("listUsers", listUsers);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "userTagList", e.getMessage());
@@ -180,6 +188,22 @@ public class AdminTagController {
 		}	
 		
 		return "admin/tag/userTag";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getUserTags")
+	public List<Tags> getUserTags(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> listTags = null;
+		try {
+			log.info("[{}]{}:{}",transactionId, "getUserTags", "start");
+			listTags = ts.listUserTags();
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "getUserTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "getUserTags", "end");
+		}	
+		return listTags;
 	}
 	
 	@RequestMapping(value = "boardTag")
@@ -197,7 +221,6 @@ public class AdminTagController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "boardTagList", "start");
 			
-			List<Tags> listTags = null;
 			List<Board> listBoard = null;
 			
 			int totalBoard = bs.boardCount(smallCode);
@@ -229,41 +252,35 @@ public class AdminTagController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "getTags")
-	public List<Tags> getTags(String smallCodeStr, Model model) {
+	@RequestMapping(value = "getBoardTags")
+	public List<Tags> getBoardTags(String smallCodeStr, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> listTags = null;
 		try {
-			log.info("[{}]{}:{}",transactionId, "getTags", "start");
+			log.info("[{}]{}:{}",transactionId, "getBoardTags", "start");
 			int smallCode = Integer.parseInt(smallCodeStr);
 			log.info("smallCode=>" + smallCode);
 			listTags = ts.listBoardTags(smallCode);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getTags", e.getMessage());
+			log.error("[{}]{}:{}",transactionId, "getBoardTags", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "getTags", "end");
+			log.info("[{}]{}:{}",transactionId, "getBoardTags", "end");
 		}	
 		return listTags;
 	}
 	
 	@RequestMapping(value = "contentTag")
-	public String contentTagList(Tags tags, String currentPage, Model model) {
+	public String contentTagList(Contents content, String bigCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		int bigCode = 0;
+		if(bigCodeStr == null) {
+			bigCode = 2;
+		} else {
+			bigCode = Integer.parseInt(bigCodeStr);
+		}
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "contentTagList", "start");
-			
-			int totalTags = ts.totalContentTags();
-			  
-			PagingList page = new PagingList(totalTags, currentPage);
-			tags.setStart(page.getStart()); 
-			tags.setEnd(page.getEnd());
-			  
-			List<Tags> listTags = ts.listContentTags(tags);
-			  
-			model.addAttribute("totalTags", totalTags); 
-			model.addAttribute("listTags",listTags); 
-			model.addAttribute("page", page);
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "contentTagList", e.getMessage());

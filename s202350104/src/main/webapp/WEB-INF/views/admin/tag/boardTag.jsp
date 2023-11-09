@@ -15,7 +15,7 @@
 			   $.ajax(
 					   {
 						   method:"POST",
-						   url:"<%=request.getContextPath()%>/admin/tag/getTags",
+						   url:"<%=request.getContextPath()%>/admin/tag/getBoardTags",
 						   data:{smallCodeStr : smallCodeStr},
 						   dataType:'json',
 						   success:function(listTags) {
@@ -24,7 +24,7 @@
 								   var str = "";
 								   for(let j = 0; j < listTags.length; j++) {
 									   if(listTags[j].board_id == $("#board_id"+i).val()) {
-										   str += listTags[j].name;
+										   str += "<span class='badge text-bg-primary'>"+listTags[j].name+"</span>";
 										   str += " ";
 									   }
 								   }	   
@@ -65,7 +65,6 @@
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
-								<th scope="col">게시판 분류</th>
 								<th scope="col">게시글 번호</th>
 								<th scope="col">제목</th>
 								<th scope="col">태그명</th>
@@ -77,15 +76,14 @@
 							<c:forEach var="board" items="${listBoard}" varStatus="st">
 								<tr>
 									<td>${num}</td>
-									<td><%-- ${board.content} --%></td>
-									<td><input type="hidden" id="board_id${st.index}" value="${board.id}">${board.id}</td>
+									<td><input type="hidden" id="board_id${st.index}" value="${board.id}">
+										${board.id}</td><!-- 나중에 상세정보 페이지로 연결할 수 있도록 -->
 									<td>${board.title}</td>
-									<td><div id="tag_name${st.index}"></div></td>
+									<td id="tag_name${st.index}"></td>
 									<td><input type="button" value="수정" onclick="location.href='boardTagsUpdate?boardId=${board.id}'"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
-							<!-- 하나의 게시글에 대해 태그를 하나의 행에서 다 볼 수 있는 방법 생각해보기 -->
 						</tbody>
 					</table>
 					<p>총 건수 : ${totalBoard}</p>
