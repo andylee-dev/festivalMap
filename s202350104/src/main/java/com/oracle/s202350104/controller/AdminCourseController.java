@@ -60,14 +60,18 @@ public class AdminCourseController {
 	
 	
 	@RequestMapping(value = "/courseUpdateForm")
-	public String courseUpdateForm(Course course, Model model) {
+	public String courseUpdateForm(int id, String currentPage, Model model) {
 	
 		try {
-			log.info("AdminCourseController courseUpdateForm course_id ->" + course.getCourse_id());
-			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
-			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
+			log.info("AdminCourseController courseUpdateForm id ->" + id);
+			Course courseContent = cs.courseContent(id);
+			log.info("AdminCourseController courseUpdateForm courseContent ->" + courseContent);
 			
-			model.addAttribute("courseContent", courseDetailContent);
+//			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
+//			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
+			
+			model.addAttribute("courseContent", courseContent);
+//			model.addAttribute("courseContent", courseContent);
 			
 		} catch (Exception e) {
 			log.error("AdminCourseController courseUpdateForm e.getMessage() ->" + e.getMessage());

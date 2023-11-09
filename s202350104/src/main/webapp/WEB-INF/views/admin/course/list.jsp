@@ -53,8 +53,8 @@
 									<td>${course.time }</td>
 									<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td>-</td>
-									<td><input onclick="location.href='courseUpdateForm?course_id=${course.course_id}'" type="button" value="수정"></td>
-									<td><input onclick="location.href='courseDelete?id=${course.course_id}'" type="button" value="삭제"></td>
+									<td><input onclick="location.href='courseUpdateForm?id=${course.course_id}'" type="button" value="수정${course.course_id}"></td>
+									<td><input onclick="location.href='courseDelete?id=${course.course_id}'" type="button" value="삭제${course.course_id}"></td>
 								</tr>
 							</c:forEach>
 						</tbody>

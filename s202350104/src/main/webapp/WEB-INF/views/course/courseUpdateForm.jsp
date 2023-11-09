@@ -41,19 +41,27 @@
 			</div>
 			<div class="card-body">
 				<form action="courseUpdate" method="post">
-					<input type="hidden" name="id" value="${course.id }">
-					<input type="hidden" name="course_title" value="${course.course_title }">
+					<input type="hidden" name="id" value="${courseContent.id }">
+					<input type="hidden" name="course_title" value="${courseContent.course_title }">
 					<div class="mb-3">
 						<label for="course_title" class="form-label">코스 명</label>
-						<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${course.course_title }">
+						<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${courseContent.course_title }">
+					</div>
+					<div class="mb-3">
+						<label for="courseContent" class="form-label">코스항목</label>
+						
 					</div>
 					<div class="mb-3">
 						<label for="distance" class="form-label">거리(km)</label>
-						<input type="text" id="distance" name="distance" class="form-control" required="required" value="${course.distance }">
+						<input type="text" id="distance" name="distance" class="form-control" required="required" value="${courseContent.distance }">
+					</div>
+					<div class="mb-3">
+						<label for="time" class="form-label">소요시간</label>
+						<input type="text" id="time" name="time" class="form-control" required="required" value="${courseContent.time }">
 					</div>
 					<div class="mb-3">
 						<label for="course_info" class="form-label">코스 내용</label>
-						<textarea class="form-control" id="course_info" name="course_info" rows="5">${course.course_info }</textarea>
+						<textarea class="form-control" id="course_info" name="course_info" rows="5">${courseContent.course_info }</textarea>
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary">확인</button>
@@ -64,7 +72,7 @@
 		</div>
 	
 	
-		<c:forEach var="courseContent" items="${courseContent }">
+		<%-- <c:forEach var="courseContent" items="${courseContent }">
 			<c:if test="${courseContent.order_num == 1}">
 				<h1>${courseContent.course_title }</h1>
 				<div class="container border p-5">
@@ -96,7 +104,7 @@
 			</ul>
 		</div>
 		</c:forEach>
-	</div>
+	</div> --%>
 	<!-- review test -->
 	<div>
 		<h3>review 구역</h3>

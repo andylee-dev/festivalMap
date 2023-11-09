@@ -38,6 +38,10 @@
 			
 		</select>
 		
+		<select id="noCourseContent" parameterType="int" resultType="Course">
+			SELECT * FROM courses WHERE id = #{id}
+		</select>
+		
 		<select id="noCourseDetailList" parameterType="int" resultType="Course">
 			SELECT 	a.*,cd.content cd_content
 			FROM(
@@ -62,7 +66,6 @@
 			
 		</select>
 		
-<!-- 		<insert id="noCourseInsert" parameterType="Course" useGeneratedKeys="true" keyProperty="course_id"> -->
 		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
 			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
@@ -79,6 +82,7 @@
 		    </foreach>
 		    SELECT * FROM dual
 		</insert>
+		
 		
 		<delete id="noCourseContentDelete" parameterType="CourseContent">
 			Delete From CourseContents where course_id = ${id}
