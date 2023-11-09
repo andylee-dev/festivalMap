@@ -61,20 +61,7 @@ public class AuthController {
 	public String userJoin() {
 		return "auth/join";
 	}
-	@RequestMapping(value = "/joinForm")
-	public String userJoinForm(Model model) {
-		UUID transactionId = UUID.randomUUID();
-		try {
-			log.info("[{}]{}:{}",transactionId, "userJoinForm", "start");
-			List<Tags> listTags = ts.listTagsAll();
-			model.addAttribute("listTags", listTags);
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "userJoinForm", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "userJoinForm", "end");
-		}
-		return "auth/joinForm";
-	}
+	
 	@RequestMapping(value = "/passwordSearch")
 	public String userPwSearch() {
 		return "auth/passwordSearch";
@@ -98,8 +85,19 @@ public class AuthController {
 		return "auth/bizJoinForm";
 	}
 	@RequestMapping(value = "/signUp/user")
-	public String userSignUp() {
-
+	public String userSignUp(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userSignUp", "start");
+			Tags tag = new Tags();
+			List<Tags> listTags = ts.listTags(tag);
+			log.info("listTags"+listTags.size());
+			model.addAttribute("listTags", listTags);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "userSignUp", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "userSignUp", "end");
+		}
 		return "auth/joinForm";
 	}
 
