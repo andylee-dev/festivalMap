@@ -84,6 +84,8 @@
 			</div>
 		<form action="spot1" method="get">
 		<div class="border p-3 m-3">
+			<input type="hidden" name="big_code" value="${big_code}">
+			<input type="hidden" name="small_code" value="${small_code}">
 			<input type="text" name="keyword" placeholder="명소이름을 입력하세요">
 			<button type="submit" class="btn btn-outline-secondary">명소이름검색</button>
 			<button type="reset" name="deleted" class="btn btn-outline-secondary">초기화</button><p>

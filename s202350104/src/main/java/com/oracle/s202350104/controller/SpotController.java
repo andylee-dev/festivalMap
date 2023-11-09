@@ -157,6 +157,7 @@ public class SpotController {
 			int totalSearchSpot = ss.totalSearchSpot(spotContent);
 			
 			int small_code = spotContent.getSmall_code();
+			int big_code = spotContent.getBig_code();
 			String keyword = spotContent.getKeyword();
 			
 			Paging page = new Paging(totalSearchSpot, currentPage);
@@ -172,6 +173,7 @@ public class SpotController {
 			model.addAttribute("listAreas",listAreas);
 			model.addAttribute("page", page);
 			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
 			model.addAttribute("keyword", keyword);
 	
 			/*
