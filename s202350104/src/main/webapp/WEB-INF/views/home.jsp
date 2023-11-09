@@ -21,9 +21,7 @@
 <script type="text/javascript">
 
 	let markers = [];
-	
 	let map = null;   
-
 	
 	function setCenter(lat, lng) {            
 	    // 이동할 위도 경도 위치를 생성합니다 
@@ -43,8 +41,30 @@
 		return new kakao.maps.Map(container, options);
 	} 
 
+ 	function search() {
+ 	    // Contents 객체를 생성하고 필드에 값을 할당
+ 	    var contents = {
+ 	    	status: null,
+ 	    	area: $("#area").val(),
+ 	        sigungu: $("#sigungu").val()
+ 	    };
 
-	function search(){
+ 	    $.ajax({
+ 	        url: "/api/searchContents",
+ 	        method: "POST",
+			contentType: "application/json", 
+ 	        data: JSON.stringify(contents), // Contents 객체를 data에 할당
+ 	        success: function (data) {
+ 	            console.log(data);
+ 	            displayPlaces(data);
+ 	        },
+ 	        error: function () {
+ 	            alert("contents 정보를 가져오지 못했습니다.");
+ 	        }
+ 	    });
+ 	}
+
+/* 	function search(){
 		$.ajax({
 			url: "/api/content",
 			method: "GET",
@@ -57,10 +77,15 @@
 				alert("contents 정보를 가져오지 못했습니다.");
 			}
 		});		
-	}
+	} */
 
-	
-	
+/*     const clusterer = new kakao.maps.MarkerClusterer({
+        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+        minLevel: 10 // 클러스터 할 최소 지도 레벨 
+    });
+ 
+ */	
 	// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 	const infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -118,7 +143,8 @@
 
 	        fragment.appendChild(itemEl);
 	    }
-
+/* 	    clusterer.addMarkers(markers);
+ */
 	    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
 	    listEl.appendChild(fragment);
 	    menuEl.scrollTop = 0;
@@ -248,6 +274,7 @@
 
 	window.onload = function() {
 	  getLocation();
+	  
 	};
 
 </script>
@@ -271,7 +298,7 @@
 			}
 		});
 	}
-	
+
 	function updateSigunguOptions(selectedArea) {
 		$
 			.ajax({
@@ -380,7 +407,9 @@
 						<select name="tag" id="tag" class="form-select col-auto"></select>						
 						<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기">
 					</div>
-					<button onclick="search()">검색</button>
+					<div class="text-center">
+					  <button type="button" class="btn btn-primary"onclick="search()">검색</button>
+					</div>
 					<hr>
 				</div>
 				<div class="container-fluid">
