@@ -123,6 +123,21 @@ public class CourseDaoImpl implements CourseDao {
 		return courseDelete;
 	}
 
+
+	@Override
+	public Course courseContent(int id) {
+		log.info("CourseDaoImpl courseContent start...");
+		Course courseContent = null;
+		try {
+			courseContent = session.selectOne("noCourseContent", id);
+			log.info("CourseDaoImpl courseContent CourseDaoImpl ->" + courseContent);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl courseContent e.getMessage() ->" + e.getMessage());
+		}
+		return courseContent;
+	}
+
 	
 //	@Override
 //	public Course courseDetailContent(int id) {
