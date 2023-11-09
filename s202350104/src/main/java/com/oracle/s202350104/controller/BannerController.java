@@ -48,14 +48,34 @@ public class BannerController {
 
 	// Banner 생성 Logic
 	@RequestMapping(value = "/bannerInsert")
-	public String bannerInsert(Banner Banner, MultipartFile file, Model model) throws IOException, Exception {
+	public String bannerInsert(Banner banner, MultipartFile file, Model model) throws IOException, Exception {
 
-		log.info("BannerController bannerInsert bigCode : {}", Banner.getBig_code());
-		log.info("BannerController bannerInsert smallCode : {}", Banner.getSmall_code());	
+		log.info("BannerController bannerInsert bigCode : {}", banner.getBig_code());
+		log.info("BannerController bannerInsert smallCode : {}", banner.getSmall_code());	
+		
+		
+		//UUID uuid = UUID.randomUUID();
+		
+		String fileNameDB = "..\\image\\" + file.getOriginalFilename();
+		
+		String fileName = file.getOriginalFilename();
+		
+		String testPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\image";
+		
+		File savaFile = new File(testPath, fileName);
+		
+		file.transferTo(savaFile);		
+		
+		//log.info("BannerController uuid : {}", uuid);
+		log.info("BannerController fileNameDB : {}", fileNameDB);
+		log.info("BannerController getOriginalFilename : {}", file.getOriginalFilename());
+		log.info("BannerController fileName : {}", fileName);
+		log.info("BannerController testPath : {}", testPath);
+		log.info("BannerController savaFile : {}", savaFile);
 		
 		String resultUrl = "";
-		
-		int insertBoard = bannerService.bannerInsert(Banner, file);
+		banner.setImage(fileNameDB);
+		int insertBoard = bannerService.bannerInsert(banner, file);
 		
 		if (insertBoard > 0) {
 			resultUrl = "redirect:/admin/notice/banner";

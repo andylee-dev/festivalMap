@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="headerBanner" resultType="Banner">
-		select a.title, a.url
+		select a.title, a.url, a.image
 		from banner a
 		join commoncodes b
 		on a.small_code = b.small_code

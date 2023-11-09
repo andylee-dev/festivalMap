@@ -57,25 +57,28 @@
 			<input type="hidden" name="user_id" value="${userId }"> 
 			<input type="hidden" name="big_code" value="${bigCode }"> 
 			<input type="hidden" name="small_code" id="small_code" value="${smallCode }">
+			
 			<div class="form-group">
 				<label for="title">제목</label> 
-				<input type="text" class="form-control" 
-					   id="title" name="title" required>
+				<input type="text" class="form-control" id="title" name="title" required>
 			</div>
+			
 			<div class="form-group">
 				<label for="content">내용</label>
 				<textarea class="form-control" id="content" 
 						  name="content" rows="4" required></textarea>
 			</div>
+
 			<div class="form-group">
 				<label for="url">URL</label> 
-				<input type="text" class="form-control" 
-					   name="url" required>
+				<input type="text" class="form-control" name="url" placeholder="URL주소가 필요한 경우만 입력하세요. ">
 			</div>
+			
 			<div class="form-group">
 				<label for="image">이미지 첨부</label> 
 				<input type="file" class="form-control" name="file">
-			</div>			
+			</div>		
+				
 			<div class="form-group">
 				<label for="smallCode">소분류 코드</label><p>
 					<input type="radio" name="smallCode" value="1"
