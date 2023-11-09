@@ -23,7 +23,7 @@
 		          },
 		        }
 	        const onChangeDate = () => {
-	            const date = $('input[name="date-options"]:checked').val();
+	            const date = $('input[name="dateOptions"]:checked').val();
 	            let value = [];
 	            if (date === "TO") {
 	                value = [moment(), moment()]; // 오늘 선택
@@ -48,7 +48,7 @@
             }
 	        $('#startDatePicker').daterangepicker(dateFormat);
 	        $('#endDatePicker').daterangepicker(dateFormat);
-	        $('input[name="date-options"]').change(onChangeDate);
+	        $('input[name="dateOptions"]').change(onChangeDate);        
 	        onChangeDate();        
 	    }); 
 	</script>
@@ -71,29 +71,29 @@
 						<input type="hidden" name="small_code" value="2">						
 						<div class="input-group mb-3">
 							<span class="input-group-text col-auto" >검색어</span>
-							<select name="searchType" class="form-select col-auto">
+							<select name="searchType" class="form-select col-auto" >
 								<option selected value="name">사용자 이름</option>
 								<option value="email">이메일</option>
 								<option value="nickname">닉네임</option>
 							</select>
-							<input type="text" name="keyword" class="form-control col-auto">
+							<input type="text" name="keyword" class="form-control col-auto" value="${keyword}">
 						</div>
 						<div class="input-group col-auto mb-3" >
 						   <span class="input-group-text col-auto">가입기간</span>
-						    <input type="radio" class="btn-check" name="date-options" id="TO" value="TO" autocomplete="off" >
+						    <input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off" >
 						    <label class="btn" for="TO">오늘</label>
-						    <input type="radio" class="btn-check" name="date-options" id="1W" value="1W" autocomplete="off">
+						    <input type="radio" class="btn-check" name="dateOptions" id="1W" value="1W" autocomplete="off">
 						    <label class="btn" for="1W">1주일</label>
-						    <input type="radio" class="btn-check" name="date-options" id="1M" value="1M" autocomplete="off">
+						    <input type="radio" class="btn-check" name="dateOptions" id="1M" value="1M" autocomplete="off">
 						    <label class="btn" for="1M">1개월</label>
-						    <input type="radio" class="btn-check" name="date-options" id="3M" value="3M" autocomplete="off">
+						    <input type="radio" class="btn-check" name="dateOptions" id="3M" value="3M" autocomplete="off">
 						    <label class="btn" for="3M">3개월</label>
-						    <input type="radio" class="btn-check" name="date-options" id="6M" value="6M" autocomplete="off">
+						    <input type="radio" class="btn-check" name="dateOptions" id="6M" value="6M" autocomplete="off">
 						    <label class="btn" for="6M">6개월</label>
-						    <input type="radio" class="btn-check" name="date-options" id="ALL" value="ALL" autocomplete="off" checked>
+						    <input type="radio" class="btn-check" name="dateOptions" id="ALL" value="ALL" autocomplete="off" checked>
 						    <label class="btn" for="ALL">전체</label>
-							<input type="date" id="startDatePicker" name="startDate" value="">
-							<input type="date" id="endDatePicker" name="endDate" value="">
+							<input type="date" id="startDatePicker" name="startDate" value="${startDate}">
+							<input type="date" id="endDatePicker" name="endDate" value="${endDate}">
 						</div>
 						
 						<div class="input-group mb-3">
