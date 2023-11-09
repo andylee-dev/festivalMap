@@ -611,7 +611,7 @@
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 			}		
-			return "forward:/admin/content/accomodation";
+			return "redirect:/admin/content/accomodation";
 		}	
 		
 		@GetMapping(value="accomodationUpdateForm")
@@ -708,7 +708,7 @@
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "end");
 			}		
-			return "forward:/admin/content/accomodationDetail";
+			return "forward:accomodationDetail?contentIdStr="+contentId;
 		}
 		
 		@RequestMapping(value = "experienceUpdateForm")
