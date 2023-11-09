@@ -22,13 +22,14 @@
 		SELECT *
 		FROM usertags u, tags t
 		WHERE u.tag_id = t.id
+		ORDER BY t.name
 	</select>
 	
 	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
 		SELECT *
 		FROM usertags u, tags t
 		WHERE u.tag_id = t.id
-		WHERE u.user_id = #{id}
+		AND   u.user_id = #{id}
 		ORDER BY t.name
 	</select>
 	
@@ -49,7 +50,7 @@
 		ORDER BY t.name
 	</select>
 	
-	<select id="nhContentTagsList" resultType="Tags" parameterType="int">	
+	<select id="nhContentTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
 		FROM　ContentTags ct, Tags t, Contents c
 		WHERE ct.tag_id = t.id
