@@ -150,4 +150,24 @@ public class ExperienceDaoImpl implements ExperienceDao {
 	
 	}
 
+	@Override
+	public int insertExperience(ExperienceContent experience) {
+		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			result = session.insert("shContentsInsert", experience);
+			log.info("insertExperience shContentsInsert result => " + result);
+			result = session.insert("shExperienceInsert", experience);
+			log.info("insertExperience shExperienceInsert result => " + result);
+			transactionManager.commit(txStatus);
+		} catch(Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("ExperienceDaoImpl shContentsInsert Exception => " + e.getMessage());
+			result = -1;
+		}
+		
+		return result;
+	}
+
 }

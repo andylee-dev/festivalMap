@@ -151,7 +151,7 @@
        ]]>	        
 	</select>
 	
-	<update id="shContentsUpdate" parameterType="experienceContent">
+	<update id="shContentsUpdate" parameterType="ExperienceContent">
 		UPDATE contents 
 		SET  area=#{area}, sigungu=#{sigungu},small_code=#{small_code}, 
 		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
@@ -160,7 +160,7 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="shExperienceUpdate" parameterType="experienceContent">
+	<update id="shExperienceUpdate" parameterType="ExperienceContent">
 		UPDATE experience 
 		SET capacity=#{capacity}, age=#{age}, inform=#{inform}, open_time=#{open_time}, rest_time=#{rest_time},
 		cost=#{cost}, is_credit=#{is_credit}, is_pet=#{is_pet}, is_parking=#{is_parking}, is_stroller=#{is_stroller}
@@ -170,6 +170,22 @@
 	<update id="shExperienceApprove" parameterType="int">
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
 	</update>
+	
+	<insert id="shContentsInsert" parameterType="ExperienceContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
+				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
+				readcount, user_id, created_at, is_deleted)
+		VALUES(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0',
+				#{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 
+				0, #{user_id}, sysdate, '0')
+	</insert>
+	
+	<insert id="shExperienceInsert" parameterType="ExperienceContent">
+		INSERT INTO experience(content_id, capacity, age, inform, open_time, rest_time,
+				cost, is_credit, is_pet, is_parking, is_stroller) 
+		VALUES(contents_id_seq.currval, #{capacity}, #{age}, #{inform}, #{open_time}, 
+				#{rest_time}, #{cost}, #{is_credit}, #{is_pet}, #{is_parking}, #{is_stroller})
+	</insert>
 	
 	
 </mapper>	

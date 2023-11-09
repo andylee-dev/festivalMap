@@ -872,6 +872,38 @@
 			return "forward:experienceDetail";
 		}
 		
+		@RequestMapping(value = "experienceInsertForm")
+		public String experienceInsertForm(Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin experienceInsertForm", "start");
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin experienceInsertForm", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin experienceInsertForm", "end");
+			}		
+			return "admin/content/experienceInsertForm";
+		}
+		
+		@RequestMapping(value = "experienceInsert")
+		public String experienceInsert(ExperienceContent experience, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "start");
+				int result = es.insertExperience(experience);
+				log.info("result"+result);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin experienceInsert", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "end");
+			}		
+			return "redirect:experience";
+		}
+		
 		@GetMapping(value = "experience1")
 		public String listSearch(ExperienceContent experience,String currentPage, Model model, HttpServletRequest request) {
 	//	public String listSearch(String big_code,String currentPage, Model model) {

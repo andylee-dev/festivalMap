@@ -87,4 +87,10 @@ public class ExperienceServiceImpl implements ExperienceService {
 		
 		return result;
 	}
+
+	@Override
+	public int insertExperience(ExperienceContent experience) {
+		int insertExperience = ed.insertExperience(experience);
+		return insertExperience;
+	}
 }	

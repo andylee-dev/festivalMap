@@ -16,5 +16,6 @@ public interface ExperienceDao {
 	int 						experienceRestore(int contentId);
 	int 						experienceUpdate(ExperienceContent experienceContent);
 	int 						experienceApprove(int contentId);
+	int 						insertExperience(ExperienceContent experience);
 
 }
