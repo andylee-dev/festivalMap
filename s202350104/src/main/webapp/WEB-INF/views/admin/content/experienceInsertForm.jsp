@@ -11,7 +11,7 @@
 			function getSigungu(pArea){
 				$.ajax(
 						{
-							url:"/getSigungu/"+pArea,
+							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
 							data:pArea,
 							dataType:'json',
 							success:function(areas) {

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	    
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,16 +14,7 @@ function closeWindow() {
 </script>
 </head>
 <body><h1>대충 만든 리포트 폼</h1>	
-		<c:if test="${userId == 0}">
-			<tr>
-				<td>로그인 후 신고 가능합니다 </td>
-			</tr>
-			<tr>
-				<td><button class="btn btn-secondary" onclick="closeWindow()">취소</button></td>
-			</tr>
-		</c:if>
-		<c:if test="${userId != 0 }">
-		<form action="boardReportUpdate">
+<form action="boardReportUpdate">
 			<table class="table">
 			<tr>
 				<th scope="col">제목</th>
@@ -44,7 +33,10 @@ function closeWindow() {
 			<button class="btn btn-secondary" onclick="closeWindow()">취소</button>
 			</td><tr>
 		</table>
-		</form>
-		</c:if>
+
+
+</form>
+
+
 </body>
 </html>
