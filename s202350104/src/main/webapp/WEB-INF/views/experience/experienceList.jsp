@@ -26,7 +26,7 @@
 			<c:forEach var="headers" items="${bannerHeader }">
 				<c:choose>
 					<c:when test="${headers.title == '체험' }">
-						<img alt="체험_headerBanner" src="${headers.url }">
+						<img alt="체험_headerBanner" src="${headers.image }">
 					</c:when>
 				</c:choose> 
 			</c:forEach>

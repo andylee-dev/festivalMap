@@ -57,19 +57,7 @@ public class BannerServiceImpl implements BannerService{
 	@Override
 	public int bannerInsert(Banner banner, MultipartFile file) throws Exception {
 		
-		
 		int insertbanner = bannerdao.bannerInsert(banner);
-		
-		UUID uuid = UUID.randomUUID();
-		
-		String fileName = uuid + "_" + file.getOriginalFilename();
-		
-		String testPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\image";
-		
-		File savaFile = new File(testPath, fileName);
-		
-		file.transferTo(savaFile);
-		
 		
 		return insertbanner;
 	}
