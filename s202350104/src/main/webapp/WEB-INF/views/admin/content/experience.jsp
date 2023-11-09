@@ -76,8 +76,13 @@
 							<input type="hidden" name="big_code" value="15">
 							<select name="is_deleted">
 								<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
-								<option value="0" ${is_deleted == 0 ? 'selected' : ''}>활성화</option>
-								<option value="1" ${is_deleted == 1 ? 'selected' : ''}>비활성화</option>
+								<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록체험</option>
+								<option value="1" ${is_deleted == 1 ? 'selected' : ''}>삭제체험</option>
+							</select>
+							<select name="status">
+								<option value="2" ${status == 2 ? 'selected' : ''}>전체</option>
+								<option value="1" ${status == 1 ? 'selected' : ''}>활성화</option>
+								<option value="0" ${status == 0 ? 'selected' : ''}>비활성화</option>
 							</select>
 							<select name="small_code" >
 								<option value="999">전체</option>
@@ -167,7 +172,7 @@
 									<a href="experience?currentPage=${i}" class="pageblock">[${i}]</a>
 								</c:when>
 								<c:when test="${path == 1}">
-									<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&is_deleted=${is_deleted}&small_code=${small_code}" class="pageblock">[${i}]</a>
+									<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&is_deleted=${is_deleted}&status=${status}" class="pageblock">[${i}]</a>
 								</c:when>
 							</c:choose>
 				</c:forEach>

@@ -845,6 +845,7 @@
 				String big_code = request.getParameter("big_code");
 				String is_deleted = request.getParameter("is_deleted");
 				String keyword = request.getParameter("keyword");
+				String status = request.getParameter("status");
 				
 				Paging page = new Paging(totalSearchExperience, currentPage);
 				experience.setStart(page.getStart());
@@ -862,6 +863,7 @@
 				model.addAttribute("big_code", big_code);
 				model.addAttribute("is_deleted" ,is_deleted);
 				model.addAttribute("keyword", keyword);
+				model.addAttribute("status", status);
 		
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

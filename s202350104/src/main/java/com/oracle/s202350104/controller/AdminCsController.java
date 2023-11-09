@@ -27,9 +27,17 @@ public class AdminCsController {
 	private final QnaListService qs;
 	
 	@RequestMapping(value = "admin/cs/report")
-	public String report(Model model) {
-		List<Report> listReport = res.listReport();
+	public String report(Report report,String currentPage, Model model) {
+		int totalReport = res.totalReport();
+		
+		PagingList page = new PagingList(totalReport, currentPage);
+		report.setStart(page.getStart());
+		report.setEnd(page.getEnd());
+		
+		List<Report> listReport = res.listReport(report);
+		model.addAttribute("totalReport",totalReport);
 		model.addAttribute("listReport",listReport);
+		model.addAttribute("page",page);
 		return "admin/cs/report";
 	}
 	

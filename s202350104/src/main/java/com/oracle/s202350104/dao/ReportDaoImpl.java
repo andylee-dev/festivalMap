@@ -18,13 +18,13 @@ public class ReportDaoImpl implements ReportDao {
 	private final SqlSession session;
 	
 	@Override
-	public List<Report> listReport() {
+	public List<Report> listReport(Report report) {
 		List<Report> listReport = null;
 		try {
-			listReport = session.selectList("shReportListAll");
+			listReport = session.selectList("shReportListAll",report);
 			log.info("listReport.size()->"+listReport.size());
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.info("ReportDaoImpl exception->"+e.getMessage());
 		}
 		return listReport;
 	}
@@ -82,5 +82,17 @@ public class ReportDaoImpl implements ReportDao {
 			// TODO: handle exception
 		}
 		return boardReportUpdate;
+	}
+
+	@Override
+	public int totalReport() {
+		int totalReport = 0;
+		try {
+			totalReport = session.selectOne("shTotalReport");
+			log.info("totalReport->"+totalReport);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalReport;
 	}
 }

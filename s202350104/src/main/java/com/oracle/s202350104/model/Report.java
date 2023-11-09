@@ -19,4 +19,9 @@ public class Report {
 	private int count;
 	private int id;
 	
+	//paging
+	private String pageNum;
+	private int    start;
+	private int    end;
+	
 }

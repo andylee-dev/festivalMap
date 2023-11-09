@@ -78,6 +78,15 @@
 				<if test="keyword != null">
 					AND title like '%' || #{keyword} || '%'
 				</if>
+				<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
 				<if test="is_deleted != null">
 					<choose>
  	 					<when test="is_deleted != 2">
@@ -110,6 +119,15 @@
 		<if test="big_code != null and big_code != 0">
 			And c.big_code = #{big_code}
 		</if>
+		<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
 		<if test="is_deleted != null">
 			<choose>
  	 			<when test="is_deleted != 2">
@@ -121,8 +139,7 @@
 		</if>
 		<if test="small_code != null and small_code != 0 and small_code != 999">
 				AND c.small_code = #{small_code}  
-	   	
-		</if>
+	   	</if>
 	</select>	
 	
 	<select id="shListSmallCodeAll" resultType="ExperienceContent">

@@ -6,16 +6,12 @@ import com.oracle.s202350104.model.Report;
 
 public interface ReportDao {
 
-	List<Report> listReport();
-
-	Report detailBoard(int boardId);
-
-	List<Report> reportDetail(int boardId);
-
-	int updateBoard(int id);
-
-	int reportUpdate(int id);
-
-	int boardReportUpdate(Report report);
-
+	List<Report> 	listReport(Report report);
+	Report 			detailBoard(int boardId);
+	List<Report> 	reportDetail(int boardId);
+	int 			updateBoard(int id);
+	int 			reportUpdate(int id);
+	int 			boardReportUpdate(Report report);
+	int 			totalReport();
+	
 }
