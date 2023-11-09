@@ -69,7 +69,7 @@
 		SELECT *
 		FROM ContentTags ct, Tags t
 		WHERE ct.tag_id = t.id
-		AND   ct.content_id = #{id}
+		AND   ct.content_id = #{contentId}
 		ORDER BY t.name
 	</select>
 	

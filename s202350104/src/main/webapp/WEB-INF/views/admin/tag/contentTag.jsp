@@ -6,6 +6,35 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>컨텐츠 태그</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+		   $(document).ready(function() {
+			   const urlParams = new URL(location.href).searchParams;
+			   const bigCodeStr = urlParams.get('bigCodeStr');
+			   
+			   $.ajax(
+					   {
+						   method:"POST",
+						   url:"<%=request.getContextPath()%>/admin/tag/getContentTags",
+						   data:{bigCodeStr : bigCodeStr},
+						   dataType:'json',
+						   success:function(listTags) {
+							   
+							   for(let i = 0; i < ${page.end - page.start + 1}; i++) {
+								   var str = "";
+								   for(let j = 0; j < listTags.length; j++) {
+									   if(listTags[j].content_id == $("#content_id"+i).val()) {
+										   str += "<span class='badge text-bg-primary'>"+listTags[j].name+"</span>";
+										   str += " ";
+									   }
+								   }	   
+								   $("#tag_name"+i).append(str);   
+							   }
+						   }
+					   }
+				)
+		   })
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -47,31 +76,30 @@
 						</thead>
 						<tbody>
 							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="tag" items="${listTags}">
+							<c:forEach var="content" items="${listContent}" varStatus="st">
 								<tr>
 									<td>${num}</td>
-									<td>${tag.cc_content}</td>
-									<td>${tag.content_id}</td>
-									<td>${tag.title}</td>
-									<td>${tag.name}
-									</td>
+									<td>${content.big_code}</td>
+									<td><input type="hidden" id="content_id${st.index}" value="${content.id}">${content.id}</td>
+									<td>${content.title}</td>
+									<td id="tag_name${st.index}"></td>
 									<td><input type="button" value="수정"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>
 					</table>
-					<p>총 건수 : ${totalTags}</p>
+					<p>총 건수 : ${totalContents}</p>
 					
 					<div align="center">
 						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="contentTag?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+							<a href="contentTag?currentPage=${page.startPage-page.pageBlock}&bigCodeStr=${bigCode}" class="pageblock">[이전]</a>
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="contentTag?currentPage=${i}" class="pageblock">[${i}]</a>
+							<a href="contentTag?currentPage=${i}&bigCodeStr=${bigCode}" class="pageblock">[${i}]</a>
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
-							<a href="contentTag?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+							<a href="contentTag?currentPage=${page.startPage+page.pageBlock}&bigCodeStr=${bigCode}" class="pageblock">[다음]</a>
 						</c:if>
 					</div>
 				</div>		

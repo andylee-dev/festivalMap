@@ -37,35 +37,6 @@ public class TagsServiceImpl implements TagsService {
 	}
 
 	@Override
-	public int totalUserTags() {
-		int totalTagsCnt = td.totalUserTags();
-		return totalTagsCnt;
-	}
-
-	@Override
-	public int totalBoardTags() {
-		int totalTagsCnt = td.totalBoardTags();
-		return totalTagsCnt;
-	}
-
-	@Override
-	public int totalContentTags() {
-		int totalTagsCnt = td.totalContentTags();
-		return totalTagsCnt;
-	}
-
-	@Override
-	public List<Tags> listContentTags(Tags tags) {
-		List<Tags> listTags = td.listContentTags(tags);
-		
-		if(listTags == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "콘텐츠 태그 리스트가 존재하지 않습니다.");
-		}
-		
-		return listTags;
-	}
-
-	@Override
 	public List<Tags> listTagsAll() {
 		List<Tags> listTags = td.listTagsAll();
 		
@@ -156,6 +127,29 @@ public class TagsServiceImpl implements TagsService {
 		}
 		
 		return listTags;
+	}
+
+	@Override
+	public List<Tags> listContentTags(int bigCode) {
+		List<Tags> listTags = td.listContentTags(bigCode);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "콘텐츠 태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
+
+	@Override
+	public List<Tags> searchBoardTagsOne(int boardId) {
+		List<Tags> listTags = td.searchBoardTagsOne(boardId);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시판 태그가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+		
 	}
 
 }

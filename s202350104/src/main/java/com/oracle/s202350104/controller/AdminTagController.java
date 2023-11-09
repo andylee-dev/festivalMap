@@ -21,11 +21,17 @@ import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ContentSerivce;
+import com.oracle.s202350104.service.CourseService;
+import com.oracle.s202350104.service.ExperienceService;
+import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
+import com.oracle.s202350104.service.RestaurantService;
+import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
 
@@ -269,6 +275,30 @@ public class AdminTagController {
 		return listTags;
 	}
 	
+	@RequestMapping(value = "boardTagsUpdateForm")
+	public String boardTagsUpdate(String boardIdStr, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int boardId = 0;
+		if(boardIdStr == null) {
+			boardId = 0;
+		} else {
+			boardId = Integer.parseInt(boardIdStr);
+		}
+		try {
+			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "start");
+			Board board = bs.boardDetail(boardId);
+			List<Tags> listTags = ts.searchBoardTagsOne(boardId);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("board", board);
+			model.addAttribute("listTags", listTags);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "boardTagsUpdateForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "end");
+		}	
+		return "admin/tag/boardTagsUpdateForm";
+	}
+	
 	@RequestMapping(value = "contentTag")
 	public String contentTagList(Contents content, String bigCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -279,8 +309,36 @@ public class AdminTagController {
 			bigCode = Integer.parseInt(bigCodeStr);
 		}
 		
+		log.info("controller bigCode => " +bigCode);
+		content.setBig_code(bigCode);
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "contentTagList", "start");
+			
+			int totalContents = cs.getTotalSearchCount(content); // bigCode에 따라 totalContents 조회
+			
+//			switch(bigCode) {
+//				case 11: festival
+//				case 12: restaurant
+//				case 13: accomodation
+//				case 14: spot
+//				case 15: experience
+//				case 16: course
+//			}
+//			
+			PagingList page = new PagingList(totalContents, currentPage);
+			content.setStart(page.getStart());
+			content.setEnd(page.getEnd());
+			
+			List<Contents> listContent = cs.getSearchContentsList(content); // bigCode에 따라 listContent 조회
+
+			log.info("controller listContent => " +listContent.size());
+			log.info("totalContents=>" +totalContents);
+			
+			model.addAttribute("bigCode", bigCode);
+			model.addAttribute("totalContents", totalContents);
+			model.addAttribute("listContent", listContent);
+			model.addAttribute("page", page);
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "contentTagList", e.getMessage());
@@ -289,6 +347,24 @@ public class AdminTagController {
 		}	
 		
 		return "admin/tag/contentTag";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getContentTags")
+	public List<Tags> getContentTags(String bigCodeStr, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> listTags = null;
+		try {
+			log.info("[{}]{}:{}",transactionId, "getContentTags", "start");
+			int bigCode = Integer.parseInt(bigCodeStr);
+			log.info("bigCode=>" + bigCode);
+			listTags = ts.listContentTags(bigCode);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "getContentTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "getContentTags", "end");
+		}	
+		return listTags;
 	}
 	
 	@RequestMapping(value = "insertContentTagForm")
@@ -304,38 +380,6 @@ public class AdminTagController {
 			log.info("[{}]{}:{}",transactionId, "insertContentTagForm", "end");
 		}	
 		return "admin/tag/insertContentTagForm";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/getSmallCode")
-	public List<CommonCodes> getSmallCode() {
-		UUID transactionId = UUID.randomUUID();
-		List<CommonCodes> listCodes = null;
-		try {
-			log.info("[{}]{}:{}",transactionId, "getSmallCode", "start");
-			listCodes = ccs.listCommonCode();
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getSmallCode", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "getSmallCode", "end");
-		}
-		return listCodes;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/getContent")
-	public List<Contents> getContent(CommonCodes code) {
-		UUID transactionId = UUID.randomUUID();
-		List<Contents> listContents = null;
-		try {
-			log.info("[{}]{}:{}",transactionId, "getContent", "start");
-			// listContents = cs.listCommonCode();
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getContent", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "getContent", "end");
-		}
-		return listContents;
 	}
 	
 }

@@ -72,19 +72,7 @@ public class TagsDaoImpl implements TagsDao {
 		}
 		return totalTagsCnt;
 	}
-
-	@Override
-	public List<Tags> listContentTags(Tags tags) {
-		List<Tags> listTags = null;
-		try {
-			listTags = session.selectList("nhContentTagsList", tags);
-			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
-		} catch(Exception e) {
-			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
-		}
-		return listTags;
-	}
-
+	
 	@Override
 	public List<Tags> listTagsAll() {
 		List<Tags> listTags = null;
@@ -159,8 +147,14 @@ public class TagsDaoImpl implements TagsDao {
 
 	@Override
 	public List<Tags> searchContentTags(int contentId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhContentTagOne", contentId);
+			log.info("TagsDaoImpl searchContentTags() => " + listTags.size());
+		} catch (Exception e) {
+			log.info("TagsDaoImpl searchContentTags() => " + e.getMessage());
+		}
+		return listTags;
 	}
 
 	@Override
@@ -171,6 +165,30 @@ public class TagsDaoImpl implements TagsDao {
 			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
 		} catch (Exception e) {
 			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
+		}
+		return listTags;
+	}
+
+	@Override
+	public List<Tags> listContentTags(int bigCode) {
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhContentTagsAll", bigCode);
+			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
+		}
+		return listTags;
+	}
+
+	@Override
+	public List<Tags> searchBoardTagsOne(int boardId) {
+		List<Tags> listTags = null;
+		try {
+			listTags = session.selectList("nhBoardTagOne", boardId);
+			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
 		}
 		return listTags;
 	}

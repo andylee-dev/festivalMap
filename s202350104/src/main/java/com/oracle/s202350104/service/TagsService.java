@@ -7,10 +7,6 @@ import com.oracle.s202350104.model.Tags;
 public interface TagsService {
 	int totalTags();
 	List<Tags> listTags(Tags tags);
-	int totalUserTags();
-	int totalBoardTags();
-	int totalContentTags();
-	List<Tags> listContentTags(Tags tags);
 	List<Tags> listTagsAll();
 	int insertTags(Tags tags);
 	Tags selectTags(int id);
@@ -19,4 +15,6 @@ public interface TagsService {
 	List<Tags> searchContentTags(int contentId);
 	List<Tags> listBoardTags(int smallCode);
 	List<Tags> listUserTags();
+	List<Tags> listContentTags(int bigCode);
+	List<Tags> searchBoardTagsOne(int boardId);
 }

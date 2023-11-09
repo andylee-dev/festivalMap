@@ -103,7 +103,7 @@
                 <li><a href="/admin/tag/list" class="link-body-emphasis d-inline-flex text-decoration-none rounded">태그리스트</a></li>
                 <li><a href="/admin/tag/userTag" class="link-body-emphasis d-inline-flex text-decoration-none rounded">회원태그</a></li>
                 <li><a href="/admin/tag/boardTag?smallCodeStr=2" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판태그</a></li>
-                <li><a href="/admin/tag/contentTag" class="link-body-emphasis d-inline-flex text-decoration-none rounded">컨텐츠태그</a></li>
+                <li><a href="/admin/tag/contentTag?bigCodeStr=11" class="link-body-emphasis d-inline-flex text-decoration-none rounded">컨텐츠태그</a></li>
               </ul>
             </div>
           </li>
