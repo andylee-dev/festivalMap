@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.controller.SpotController;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
 
@@ -127,17 +128,6 @@ public class SpotDaoImpl implements SpotDao {
 		return result;
 	}
 
-	@Override
-	public int totalSearchSpot(SpotContent spot) {
-		int totalSearchSpot = 0;
-		try {
-			totalSearchSpot = session.selectOne("dhSpotSearchTotal",spot);
-			log.info("QnaListDaoImpl totalSearchSpot()->"+totalSearchSpot);
-		} catch (Exception e) {
-			log.info("QnaListDaoImpl totalSearchSpot ->"+e.getMessage() );
-		}
-		return totalSearchSpot;
-	}
     //테마별 조회
 	@Override
 	public List<SpotContent> listSpot3(SpotContent spotContent) {
@@ -152,5 +142,15 @@ public class SpotDaoImpl implements SpotDao {
 		}
 	return spotList;
 	}
+	@Override
+	public int totalSearchSpot(SpotContent spotContent) {
+		int totalSearchSpot = 0;
+		try {
+			totalSearchSpot = session.selectOne("dhSpotSearchTotal",spotContent);
+			log.info("SpotDaoImpl totalSearchSpot()->"+totalSearchSpot);
+		} catch (Exception e) {
+			log.info("SpotDaoImpl totalSearchSpot ->"+e.getMessage() );
+		}
+		return totalSearchSpot;
+	}
 }
-

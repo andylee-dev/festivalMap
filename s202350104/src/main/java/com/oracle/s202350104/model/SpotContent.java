@@ -46,7 +46,7 @@ public class SpotContent {
 	
 	// 조회용
 	private String search;
-	private String keyWord;
+	private String keyword;
 	private String pageNum;
 	private int	   start;
 	private int	   end;

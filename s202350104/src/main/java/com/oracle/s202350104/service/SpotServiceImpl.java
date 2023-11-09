@@ -10,6 +10,7 @@ import com.oracle.s202350104.controller.SpotController;
 import com.oracle.s202350104.dao.AreasDao;
 import com.oracle.s202350104.dao.ContentsDao;
 import com.oracle.s202350104.dao.SpotDao;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.Spot;
 import com.oracle.s202350104.model.SpotContent;
 
@@ -90,12 +91,6 @@ public class SpotServiceImpl implements SpotService {
 		return result;
 	}
 
-	@Override
-	public int totalSearchSpot(SpotContent spot) {
-		int totalSearchSpot = sd.totalSearchSpot(spot);
-		return totalSearchSpot;
-	}
-
 	//테마별 조회
 	@Override
 	public List<SpotContent> listSpot3(SpotContent spotContent) {
@@ -105,6 +100,12 @@ public class SpotServiceImpl implements SpotService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "명소 리스트가 존재하지 않습니다.");
 		}
 		return spotList;
+	}
+
+	@Override
+	public int totalSearchSpot(SpotContent spotContent) {
+		int totalSearchSpot = sd.totalSearchSpot(spotContent);
+		return totalSearchSpot;
 	}
 
 }

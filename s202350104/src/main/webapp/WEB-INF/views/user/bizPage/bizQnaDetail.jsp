@@ -12,7 +12,7 @@
 		<div class="row">
 			<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 		<div class="d-flex">
-			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
+			<%@ include file="/WEB-INF/components/BizPageSideBar.jsp" %>
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 			
 				<!-- Section1: Title -->

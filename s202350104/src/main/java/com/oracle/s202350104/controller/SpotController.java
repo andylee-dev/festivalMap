@@ -157,7 +157,7 @@ public class SpotController {
 			int totalSearchSpot = ss.totalSearchSpot(spotContent);
 			
 			int small_code = spotContent.getSmall_code();
-			String keyword = spotContent.getKeyWord();
+			String keyword = spotContent.getKeyword();
 			
 			Paging page = new Paging(totalSearchSpot, currentPage);
 			spotContent.setStart(page.getStart());

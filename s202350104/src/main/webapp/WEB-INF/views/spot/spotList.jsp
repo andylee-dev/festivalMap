@@ -42,13 +42,11 @@
 						dataType:'json',
 						success:function(areas){
 							$('#sigungu_list_select option').remove();
-							str = "<option value=''>전체</option>";
+							str = "<option value='0'>전체</option>";
 							$(areas).each(
 								function() {
-									if(pArea == this.area && this.sigungu != 999 && this.content != null) {
 										strOption = "<option value='"+this.sigungu+"'>"+this.content+"</option>";
 										str += strOption;
-									}
 								}		
 							)
 							$('#sigungu_list_select').append(str);
@@ -74,8 +72,7 @@
 			</c:forEach>
 			<!-- HeaderBanner end -->
 		</div>
-		<div class="type">
-			<form action="spot1" method="get">
+			<div class="type">
 					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=1'">자연</button>
 					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=2'" >역사</button>
 					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=5'" >건축</button>
@@ -84,12 +81,14 @@
 					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=6'" >문화</button>
 					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=7'" >N개의 경</button>
 					<button type= "button" class="theme_type" onclick="location.href='spot1?big_code=14&small_code=8'" >기타</button>
-			</form>
-		</div>
+			</div>
+		<form action="spot1" method="get">
 		<div class="border p-3 m-3">
-			<h1 class="border">검색폼</h1>
+			<input type="text" name="keyword" placeholder="명소이름을 입력하세요">
+			<button type="submit" class="btn btn-outline-secondary">명소이름검색</button>
+			<button type="reset" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
 			<select name="area" onchange="getSigungu(this.value)">
-			<option value="">전체</option>
+				<option value="0">전체</option>
 				<c:forEach var="areas" items="${listAreas}">
 					<c:if test="${areas.sigungu == 999}">
 						<option value="${areas.area}">${areas.content}</option>
@@ -97,9 +96,8 @@
 				</c:forEach>
 			</select>
 			<select name="sigungu" id="sigungu_list_select"></select>
-			<button type="button" class="btn btn-outline-secondary">검색</button>
-			<button type="button" class="btn btn-outline-secondary">초기화</button>
 		</div>
+		</form>
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -123,14 +121,15 @@
 			</div>
 		</div>
 		<div align="center">
+		<input type="hidden" name="currentPage" value="${page.currentPage}">
 			<c:if test="${page.startPage > page.pageBlock}">
-				<a href="spot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+				<a href="spot1?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
 			</c:if>
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-				<a href="spot?currentPage=${i}">[${i}]</a>
+				<a href="spot1?currentPage=${i}">[${i}]</a>
 			</c:forEach>
 			<c:if test="${page.endPage < page.totalPage}">
-				<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+				<a href="spot1?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 			</c:if>
 		</div>
 	</main>

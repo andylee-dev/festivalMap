@@ -14,7 +14,7 @@ public interface SpotDao {
 	int               updateSpot(SpotContent spot);
 	int               deleteSpot(int contentId);
 	int               approveSpot(int contentId);
-	int               totalSearchSpot(SpotContent spot);
-	List<SpotContent> listSpot3(SpotContent spotContent); //테마별조회
+	List<SpotContent> listSpot3(SpotContent spotContent);
+	int               totalSearchSpot(SpotContent spotContent); //테마별조회
 
 }

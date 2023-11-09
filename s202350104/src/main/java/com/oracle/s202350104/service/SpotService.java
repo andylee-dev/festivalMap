@@ -15,8 +15,8 @@ public interface SpotService {
 	int               updateSpot(SpotContent spot);
 	int               deletespot(int contentId);
 	int               approveSpot(int contentId);
-	int               totalSearchSpot(SpotContent spot);
 	List<SpotContent> listSpot3(SpotContent spotContent);// 테마별 조회
+	int               totalSearchSpot(SpotContent spotContent);
 	
 
 }

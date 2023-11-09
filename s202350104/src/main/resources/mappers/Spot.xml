@@ -28,14 +28,43 @@
             	(select s.*, c.*, cc.content cc_content 
             	 from spot s, contents c, commoncodes cc
              	 where s.content_id = c.id
-             	 and c.big_code = #{big_code}
-             	 and c.small_code = #{small_code}
+             	 <if test="big_code != 0 and small_code != 0">
+             	  and c.big_code = #{big_code}
+             	  and c.small_code = #{small_code}
+             	 </if>
              	 and c.big_code = cc.big_code
              	 and c.small_code = cc.small_code
+             	 <if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="area != 0 and sigungu != 0">
+					and c.area = #{area}
+					and c.sigungu = #{sigungu}
+				</if>
              	 order by content_id) a
+             	 
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
+	
+		<select id="dhSpotSearchTotal" parameterType="SpotContent" resultType="int">
+		SELECT count(*)
+		FROM   spot s, contents c , commoncodes cc
+		WHERE  s.content_id = c.id
+				<if test="big_code != 0 and small_code != 0">
+             	  and c.big_code = #{big_code}
+             	  and c.small_code = #{small_code}
+             	 </if>
+             	 and c.big_code = cc.big_code
+             	 and c.small_code = cc.small_code
+             	 <if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="area != 0 and sigungu != 0">
+					and c.area = #{area}
+					and c.sigungu = #{sigungu}
+				</if>
+		</select>
 	
 	<select id="spotTotal" resultType="int">
 	SELECT	count(*)
