@@ -20,6 +20,7 @@
 		SELECT *
 		FROM areas
 		WHERE sigungu = '999'	
+		AND content IS NOT NULL
 	</select>
 
 	<select id="getSigunguList" resultType="Areas" parameterType="int">
@@ -27,6 +28,7 @@
 		FROM areas
 		WHERE area = #{area}
 		AND not sigungu in ('999')	
+		AND content IS NOT NULL
 	</select>	
 	
 	<select id="joTotalAreaCode" resultType="int">
