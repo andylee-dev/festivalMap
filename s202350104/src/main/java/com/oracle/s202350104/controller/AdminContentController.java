@@ -556,6 +556,46 @@
 							
 		}
 		
+		@RequestMapping(value = "accomodationSearch")
+		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model, HttpServletRequest request) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
+				int totalSearchaccomodation = as.totalSearchAccomodation(accomodationContent);
+							
+				int path = 1;
+				String small_code = request.getParameter("small_code");
+				String big_code = request.getParameter("big_code");
+				String is_deleted = request.getParameter("is_deleted");
+				String keyword = request.getParameter("keyword");
+				String status = request.getParameter("status");
+				
+				Paging page = new Paging(totalSearchaccomodation, currentPage);
+				accomodationContent.setStart(page.getStart());
+				accomodationContent.setEnd(page.getEnd());
+				
+				List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
+				List<AccomodationContent> listSearchAccomodation = as.listSearchAccomodation(accomodationContent);
+				
+				model.addAttribute("totalAccomodation", totalSearchaccomodation);
+				model.addAttribute("listAccomodation", listSearchAccomodation);
+				model.addAttribute("listSmallCode", listSmallCode);
+				model.addAttribute("page", page);
+				model.addAttribute("path", path);
+				model.addAttribute("small_code", small_code);
+				model.addAttribute("big_code", big_code);
+				model.addAttribute("is_deleted" ,is_deleted);
+				model.addAttribute("keyword", keyword);
+				model.addAttribute("status", status);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
+			}finally {
+				log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
+			}
+			return "admin/content/accomodation";
+						
+	}
+		
 		@RequestMapping(value = "accomodationDetail")
 		public String accomodationDetail(String contentIdStr, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -845,7 +885,6 @@
 				String big_code = request.getParameter("big_code");
 				String is_deleted = request.getParameter("is_deleted");
 				String keyword = request.getParameter("keyword");
-				String status = request.getParameter("status");
 				
 				Paging page = new Paging(totalSearchExperience, currentPage);
 				experience.setStart(page.getStart());
@@ -863,7 +902,6 @@
 				model.addAttribute("big_code", big_code);
 				model.addAttribute("is_deleted" ,is_deleted);
 				model.addAttribute("keyword", keyword);
-				model.addAttribute("status", status);
 		
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/components/AdminHeader.jsp" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,9 +48,28 @@
 	
 			<!-- Section2: Search Form -->		
 			<div class="border p-3 m-3">
-				<h1 class="border">검색폼</h1>
-				<button type="button" class="btn btn-outline-secondary">검색</button>
-				<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="accomodationSearch" method="get">
+							<input type="text" name="keyword" placeholder="숙소이름을 입력하세요">
+							<button type="submit" class="btn btn-outline-secondary">체험이름검색</button>
+							<button type="reset" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
+							<input type="hidden" name="big_code" value="13">
+							<select name="is_deleted">
+								<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
+								<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록숙소</option>
+								<option value="1" ${is_deleted == 1 ? 'selected' : ''}>삭제숙소</option>
+							</select>
+							<select name="status">
+								<option value="2" ${status == 2 ? 'selected' : ''}>전체</option>
+								<option value="1" ${status == 1 ? 'selected' : ''}>활성화</option>
+								<option value="0" ${status == 0 ? 'selected' : ''}>비활성화</option>
+							</select>
+							<select name="small_code" >
+								<option value="999">전체</option>
+								<c:forEach var="small" items="${listSmallCode}">
+								<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+								</c:forEach>
+							</select>
+						</form>
 			</div>		
 			
 			<!-- Section3: Table -->		
@@ -70,7 +91,7 @@
 					<tbody>
 						<c:set var="num" value="${page.start}"/>
 						<c:forEach var="accomodation" items="${listAccomodation}" varStatus="st">
-							<tr id="festival${st.index}">
+							<tr id="accomodation${st.index}">
 									<td><input type="hidden" value="${accomodation.content_id}" id="id${st.index}">${num}</td>
 									<td>${accomodation.area} ${accomodation.sigungu}</td>
 									<td><a href="accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}">${accomodation.title}</a></td>

@@ -77,5 +77,90 @@
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
 	</update>
 	
+	<select id="syAccomodationSearchListAll" resultType="AccomodationContent">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM rn, b.*
+			FROM
+			(SELECT * FROM contents 
+				<if test="big_code != null">
+				WHERE big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="is_deleted != null">
+					<choose>
+ 	 					<when test="is_deleted != 2">
+	    					AND is_deleted = #{is_deleted}  
+	   	 				</when>
+	 	 				<when test="is_deleted = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>) b
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="syAccomodationSearchTotal" parameterType="AccomodationContent" resultType="int">
+		SELECT count(*)
+		FROM   accomodations a, contents c
+		WHERE  a.content_id = c.id
+		<if test="keyword != null">
+			AND title like '%' || #{keyword} || '%'
+		</if>
+		<if test="big_code != null and big_code != 0">
+			And c.big_code = #{big_code}
+		</if>
+		<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+		<if test="is_deleted != null">
+			<choose>
+ 	 			<when test="is_deleted != 2">
+	    			AND c.is_deleted = #{is_deleted}  
+	   	 		</when>
+	 	 		<when test="is_deleted = 2">
+	    		</when>    
+  			</choose>
+		</if>
+		<if test="small_code != null and small_code != 0 and small_code != 999">
+				AND c.small_code = #{small_code}  
+	   	</if>
+	</select>	
+	
+	<select id="syListSmallCodeAll" resultType="AccomodationContent">
+        <![CDATA[
+        select small_code, content 
+		from commoncodes 
+		where big_code = 13
+		and small_code <999
+       ]]>	        
+	</select>
 
 </mapper>

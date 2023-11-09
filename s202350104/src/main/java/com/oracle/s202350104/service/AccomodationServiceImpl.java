@@ -92,6 +92,28 @@ public class AccomodationServiceImpl implements AccomodationService {
 		
 		return result;
 	}
+
+	@Override
+	public List<AccomodationContent> listSmallCode(AccomodationContent accomodationContent) {
+		
+		List<AccomodationContent> listSmallCode = ad.listSmallCode(accomodationContent);		
+		
+		return listSmallCode;
+	}
+
+	@Override
+	public List<AccomodationContent> listSearchAccomodation(AccomodationContent accomodationContent) {
+		
+		List<AccomodationContent> listSearchAccomodation = ad.listSearchAccomodation(accomodationContent);
+				
+		return listSearchAccomodation;
+	}
+
+	@Override
+	public int totalSearchAccomodation(AccomodationContent accomodationContent) {
+		int totalSearchAccomodation = ad.totalSearchAccomodation(accomodationContent);
+		return totalSearchAccomodation;
+	}
 		
 
 }

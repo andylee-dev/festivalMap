@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.FestivalsContent;
 
 import lombok.RequiredArgsConstructor;
@@ -130,5 +131,45 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<AccomodationContent> listSmallCode(AccomodationContent accomodationContent) {
+		
+		List<AccomodationContent> listSmallCode = null;
+		
+		try {
+			listSmallCode = session.selectList("syListSmallCodeAll",accomodationContent);
+			log.info("ExperienceDaoImpl listSmallCode() => " + listSmallCode.size());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return listSmallCode;
+	}
+
+	@Override
+	public List<AccomodationContent> listSearchAccomodation(AccomodationContent accomodationContent) {
+		
+		List<AccomodationContent> listSearchAccomodation = null;
+		
+		try {
+			listSearchAccomodation = session.selectList("syAccomodationSearchListAll",accomodationContent);
+			log.info("AccomodationDaoImpl listSearchExperience() => " + listSearchAccomodation.size());
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl listSearchExperience() => " + e.getMessage());
+		}
+		return listSearchAccomodation;
+	}
+
+	@Override
+	public int totalSearchAccomodation(AccomodationContent accomodationContent) {
+		int totalSearchAccomodation = 0;
+		try {
+			totalSearchAccomodation = session.selectOne("syAccomodationSearchTotal",accomodationContent);
+			log.info("AccomodationDaoImpl totalSearchAccomodation()->"+totalSearchAccomodation);
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl totalSearchAccomodation ->"+e.getMessage() );
+		}
+		return totalSearchAccomodation;
 	}
 }
