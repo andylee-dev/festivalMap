@@ -61,6 +61,7 @@
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
+					
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>

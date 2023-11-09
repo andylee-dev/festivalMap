@@ -11,7 +11,7 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -27,7 +27,13 @@
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertContentTagForm'">추가</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=11'">축제</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=12'">맛집</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=13'">숙박</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=14'">명소</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=15'">체험</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=16'">코스</button>
+					
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
@@ -47,12 +53,12 @@
 									<td>${tag.cc_content}</td>
 									<td>${tag.content_id}</td>
 									<td>${tag.title}</td>
-									<td>${tag.name}</td>
+									<td>${tag.name}
+									</td>
 									<td><input type="button" value="수정"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
-							<!-- 하나의 콘텐츠에 대해 태그를 하나의 행에서 다 볼 수 있는 방법 생각해보기 -->
 						</tbody>
 					</table>
 					<p>총 건수 : ${totalTags}</p>
