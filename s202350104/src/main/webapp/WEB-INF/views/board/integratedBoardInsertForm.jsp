@@ -31,6 +31,15 @@
 		// 취소 시 이전페이지 이동
 		window.history.back();
 	}
+	
+	function limitCheckboxes(checkbox, maxCount) {
+	    var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+	    var checkedCount = checkboxes.length;
+
+	    if (checkedCount > maxCount) {
+	        checkbox.checked = false; // 현재 체크박스를 선택 취소
+	    }
+	}
 </script>
 
 </head>
@@ -61,10 +70,20 @@
 	            <div class="form-group">
 					<label for="image">이미지 첨부</label> 
 					<input type="file" class="form-control" name="file">
-				</div>	
-
-            <button type="submit" class="btn btn-primary">등록</button>
-            <button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
+				</div>
+				
+				<div class="form-group">
+				    <label for="tags">#태그 (최대 3개 선택)</label><br>
+				    <c:forEach var="tag" items="${tagList}">
+				        <input type="checkbox" class="btn-check" name="tags" id="btn-check-outlined-${tag.id}" value="${tag.id}" onchange="limitCheckboxes(this, 3)">
+				        <label class="btn btn-outline-secondary" for="btn-check-outlined-${tag.id}">#${tag.name}</label>
+				    </c:forEach>
+				</div>		
+	            
+	            <div class="form-group">
+		            <button type="submit" class="btn btn-primary">등록</button>
+		            <button class="btn btn-danger" onclick="closeAndRedirect()">취소</button>
+	       		</div>	
         </form>
     </div>
 
