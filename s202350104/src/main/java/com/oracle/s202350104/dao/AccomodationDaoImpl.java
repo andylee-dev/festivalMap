@@ -108,13 +108,13 @@ public class AccomodationDaoImpl implements AccomodationDao {
 				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
 			result = session.update("ContentsUpdate", accomodation);
-			log.info("updateAccomodation nhContentsUpdate result => " + result);
+			log.info("updateAccomodation ContentsUpdate result => " + result);
 			result = session.update("AccomodationUpdate", accomodation);
 			log.info("updateAccomodation AccomodationUpdate result => " + result);
 			transactionManager.commit(txStatus);
 		} catch(Exception e) {
 			transactionManager.rollback(txStatus);
-			log.info("FestivalsDaoImpl updateFestival Exception => " + e.getMessage());
+			log.info("AccomodationDaoImpl updateAccomodation Exception => " + e.getMessage());
 			result = -1;
 		}
 		

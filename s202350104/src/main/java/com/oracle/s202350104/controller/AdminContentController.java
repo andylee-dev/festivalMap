@@ -657,6 +657,7 @@
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("accomodation", accomodation);
 			log.info("accomodationDetail currentPage2=>"+currentPage);
+			log.info("contentIdStr: " + contentIdStr);
 		        
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());

@@ -26,7 +26,6 @@
 		FROM 	contents c, accomodations a
 		WHERE 	c.id = a.content_id
 		AND 	a.content_id = #{content_id}
-	
 	</select>
 	
 	<select id="AccomodationTotal" resultType="int">
