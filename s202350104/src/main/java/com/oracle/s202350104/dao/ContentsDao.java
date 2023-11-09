@@ -9,4 +9,6 @@ public interface ContentsDao {
 
 	List<Contents> getSearchContentsList(Contents contents);
 
+	int	getTotalSearchCount(Contents contents);
+	
 }

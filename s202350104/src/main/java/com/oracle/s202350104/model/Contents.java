@@ -2,6 +2,8 @@ package com.oracle.s202350104.model;
 
 import java.util.Date;
 
+import com.oracle.s202350104.service.PagingList;
+
 import lombok.Data;
 
 @Data
@@ -29,4 +31,11 @@ public class Contents {
 	private Date created_at;
 	private Date deleted_at;
 	private String is_deleted;
+	
+	// 페이징 처리용
+	private String pageNum;
+	private int    start;
+	private int    end;
+	
+	private PagingList pageList;
 }

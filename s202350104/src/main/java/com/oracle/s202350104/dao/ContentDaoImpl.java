@@ -31,4 +31,10 @@ public class ContentDaoImpl implements ContentsDao {
 		List<Contents> listContent = session.selectList("getSearchContentsList", contents);
 		return listContent;
 	}
+
+	@Override
+	public int getTotalSearchCount(Contents contents) {
+		int totalCount = session.selectOne("getTotalSearchCount", contents);
+		return totalCount;
+	}
 }
