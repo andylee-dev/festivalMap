@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Restaurants;
@@ -18,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RestaurantDaoImpl implements RestaurantDao {
 	
 	private final SqlSession session;
+	private final PlatformTransactionManager transactionManager;
 
 	@Override
 	public List<RestaurantsContent> listRestaurant(RestaurantsContent restaurant) {
@@ -123,4 +127,27 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		
 		return adminListSearchRestaurant;
 	}
+
+	@Override
+	public int insertRestaurant(RestaurantsContent restaurant) {
+		int result = 0;
+		TransactionStatus txStatus = 
+						transactionManager.getTransaction(new DefaultTransactionDefinition());
+		
+		try {
+			log.info("RestaurantDaoImpl insertRestaurant start");
+			result = session.insert("joInsertRestaurant", restaurant);
+			log.info("RestaurantDaoImpl joInsertRestaurant ->" + result);
+			result = session.insert("joInsertContent", result);
+			log.info("RestaurantDaoImpl joInsertContent ->" + result);
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("RestaurantDaoImpl insertRestaurant Exception" + e.getMessage()); 
+			result = -1;
+		}
+		return result;
+	
+	}
+
 }

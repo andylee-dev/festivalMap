@@ -23,7 +23,10 @@
 	</select>
 	
 	<select id="joRestaurantDetail" resultType="RestaurantsContent" parameterType="int">
-		SELECT 	*
+		SELECT 	c.*, r.*, 
+						(SELECT content FROM commoncodes co WHERE  c.big_code = co.big_code AND c.small_code = co.small_code) AS theme,
+						(SELECT content FROM areas a WHERE c.area = a.area AND a.sigungu = 999) AS area_content,	
+						(SELECT content FROM areas a WHERE c.area = a.area AND c.sigungu = a.sigungu) AS sigungu_content
 		FROM 	contents c, restaurants r
 		WHERE 	c.id = r.content_id
 		AND 	r.content_id = #{contentId}
@@ -92,5 +95,15 @@
 		WHERE rn BETWEEN #{start} and #{end}
 		AND   x.big_code = y.big_code AND x.small_code = y.small_code
 	</select>	
+	
+	<select id="joInsertRestaurant" resultType="int" parameterType="RestaurantsContent">
+		INSERT INTO restaurants(content_id, first_menu, menu, open_time, rest_date, is_smoking, is_packing, is_parking)
+		VALUES				   (contents_id_seq.currval, #{first_menu}, #{menu}, #{open_time}, #{rest_date}, #{is_smoking}, #{is_packing}, #{is_parking})
+	</select>
+	
+	<select id="joInsertContent" resultType="int" parameterType="RestaurantsContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcound, user_id, created_at, is_deleted)
+		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, #{updated_at}, '0')
+	</select>
 	
 </mapper>

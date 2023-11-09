@@ -5,7 +5,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>맛집 정보 등록</title>
+	<title>맛집 정보 수정</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
 		function getSigungu(pArea){
@@ -40,19 +40,21 @@
 			
 				<!-- Section1: Title -->
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h2>맛집정보 입력</h2>
+					<h2>맛집 정보 수정</h2>
 				</div>	
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="restaurant/insert" method="post">
+					<form action="restaurantUpdate" method="post">
 						<table class="table table-striped table-sm">
 							<!-- <tr><th>콘텐츠ID</th><td><input 	type="number" 	name="contentId" 	required="required" maxlength="10" value="">
 													<input 	type="button" 	value="중복확인" 	 	onclick="chk()"> -->
+							<tr><th>컨텐츠ID</th><td>${restaurant.content_id}</td></tr>
 							<tr><th>분류</th>
 								<td>
-									<input type="hidden" name="small_code" value="12">[Restaurant]<br>
+									<input type="hidden" name="small_code" value="12">[Restaurant]${restaurant.theme}<br>
 									<select name="small_code">
+										<option value="">전체</option>
 										<c:forEach var="listCodes" items="${listCodes}">
 											<c:if test="${listCodes.big_code == 12 && listCodes.small_code != 999 }">
 												<option value="${listCodes.small_code}">${listCodes.content}</option>
@@ -60,10 +62,11 @@
 										</c:forEach>
 									</select>
 								</td>
-							<tr><th>음식점명</th><td><input 	type="text" 	name="title" 		required="required"></td></tr>
+							<tr><th>음식점명</th><td><input 	type="text" 	name="title" 		required="required" value="${restaurant.title}"></td></tr>
 							<tr>
 								<th>지역</th>
 								<td>
+									${restaurant.area_content} ${restaurant.sigungu_content}<br>
 									<select name="area" onchange="getSigungu(this.value)">
 										<option value="">전체</option>
 										<c:forEach var="areas" items="${listAreas}">
@@ -75,28 +78,28 @@
 									<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
 								</td>
 							</tr>
-							<tr><th>주소</th><td><input 		type="text"    	name="address" 		></td></tr>
-							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" 	></td></tr>
-							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}\d{4}"></td>       
-							<tr><th>대표메뉴</th><td><input 	type="text" 	name="first_menu" 	></td></tr>
-							<tr><th>추천메뉴</th><td><input 	type="text" 	name="menu" 		></td></tr>
-							<tr><th>영업시간</th><td><input 	type="text" 	name="open_time" 	></td></tr>
-							<tr><th>휴무일</th><td><input 	type="text" 	name="rest_date" 	></td></tr>
-							<tr><th>내용</th><td><textarea   rows="10" cols="60" name="content" maxlength="6000" placeholder="맛집에 대한 설명을 1000자 이내로 입력해주세요"></textarea></tr>
+							<tr><th>주소</th><td><input 		type="text"    	name="address" value="${restaurant.address}"		></td></tr>
+							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" value="${restaurant.postcode}" 	></td></tr>
+							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}\d{4}" value="${restaurant.phone}"></td>       
+							<tr><th>대표메뉴</th><td><input 	type="text" 	name="first_menu" value="${restaurant.first_menu}"	></td></tr>
+							<tr><th>추천메뉴</th><td><input 	type="text" 	name="menu" 	value="${restaurant.menu}"	></td></tr>
+							<tr><th>영업시간</th><td><input 	type="text" 	name="open_time" value="${restaurant.open_time}"	></td></tr>
+							<tr><th>휴무일</th><td><input 	type="text" 	name="rest_date" value="${restaurant.rest_date}"	></td></tr>
+							<tr><th>내용</th><td><textarea   rows="10" cols="60" name="content" maxlength="6000" placeholder="맛집에 대한 설명을 1000자 이내로 입력해주세요" >${restaurant.content}</textarea></tr>
 							<tr><th>이미지</th><td></td></tr>
 							<tr><th>태그</th><td></td></tr>
 							<tr><th>가능여부</th>
 								<td>
-									<input type="checkbox" name="is_smoking" value="1">흡연<br>
-									<input type="checkbox" name="is_packing" value="1">포장<br>
-									<input type="checkbox" name="is_parking" value="1">주차<br>
+									<input type="checkbox" name="is_smoking" value="1" ${restaurant.is_smoking == 1? 'checked':''}>흡연<br>
+									<input type="checkbox" name="is_packing" value="1" ${restaurant.is_packing == 1? 'checked':''}>포장<br>
+									<input type="checkbox" name="is_parking" value="1" ${restaurant.is_parking == 1? 'checked':''}>주차<br>
 								</td>
 							</tr>
 							<tr><th>등록자ID</th><td></td></tr>
 							<tr><th>등록일</th><td></td></tr>
 						</table>
 						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
+							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('수정하시겠습니까?')">수정</button>
 							<button type="reset" class="btn btn-outline-secondary"  onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까')">초기화</button>
 						</div>	
 					</form>	

@@ -62,6 +62,7 @@
 								<th scope="col">승인여부</th>
 								<th scope="col">수정</th>
 								<th scope="col">삭제</th>
+								<th scope="col">삭제여부</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -78,8 +79,9 @@
 						 				<c:if test="${restaurant.status == 0 }">승인대기</c:if>
 										<c:if test="${restaurant.status == 1 }">승인완료</c:if>
 									</td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>					
+									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="수정" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}'"></c:if></td>
+									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="삭제"></c:if></td>		
+									<td></td>			
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

@@ -77,4 +77,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return adminListSearchRestaurant;
 	}
 
+	@Override
+	public int insertRestaurant(RestaurantsContent restaurant) {
+		int result = 0;
+		result = rd.insertRestaurant(restaurant);
+		
+		if(result <= 0) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 등록에 실패하였습니다");
+		}
+		
+		return result;
+	}
+
 }

@@ -364,7 +364,47 @@
 			return "admin/content/restaurantInsertForm";		
 		}		
 		
+			
+		@RequestMapping(value = "restaurant/insert")
+		public String restaurantInsert(Model model, RestaurantsContent restaurant) {
+			UUID transactionId = UUID.randomUUID();
 				
+			log.info("[{}]{}:{}", transactionId, "admin restaurant/insert", "start");
+			int result = rs.insertRestaurant(restaurant);
+			if(result > 0) return "redirect:restaurant";
+			else {
+				model.addAttribute("msg", "입력실패 확인해보세요");
+				return "forward:restaurantInsertForm";
+			}
+		}		
+		
+				
+		@RequestMapping(value = "restaurantUpdateForm")
+		public String restaurantUpdateForm(int contentId, String currentPage, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdateForm", "start" );
+				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(restaurant.getArea());
+				
+				model.addAttribute("restaurant", restaurant);
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSigungu", listSigungu);
+				model.addAttribute("currentPage", currentPage);
+				
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdateForm Exception", e.getMessage());
+			} finally {
+				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdateForm", "end");
+			}
+			return "admin/content/restaurantUpdateForm";
+		}
+		
+		
 		@RequestMapping(value = "spot")
 		public String spot(SpotContent spot, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();

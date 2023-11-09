@@ -15,6 +15,7 @@ public interface RestaurantService {
 	List<RestaurantsContent>    listRestaurant();
 	int                         adminConTotalRestaurant(RestaurantsContent restaurant);
 	List<RestaurantsContent>    adminListSearchRestaurant(RestaurantsContent restaurant);
+	int                         insertRestaurant(RestaurantsContent restaurant);
 	
 	
 
