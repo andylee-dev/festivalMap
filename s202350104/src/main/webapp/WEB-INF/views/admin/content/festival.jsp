@@ -79,14 +79,24 @@
 									<td>${festival.sponsor}</td>
 									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
 									<td>
-										<c:if test="${festival.status == 0}">승인대기</c:if>
-										<c:if test="${festival.status == 1}">승인완료</c:if>
+										<c:if test="${festival.status == 0}">대기</c:if>
+										<c:if test="${festival.status == 1}">완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><c:if test="${festival.status == 1}"><input type="button" value="수정" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${page.currentPage}'"></c:if></td>
-									<td><c:if test="${festival.status == 1}"><input type="button" value="삭제" onclick="festivalDeleteAjax(${st.index})"></c:if></td>
 									<td>
-										<c:if test="${festival.is_deleted == 1}">삭제완료</c:if>
+										<c:if test="${festival.status == 1}">
+											<input type="button" value="수정"
+											 onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${page.currentPage}'">
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${festival.status == 1}">
+											<input type="button" value="삭제"
+											 onclick="festivalDeleteAjax(${st.index})">
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${festival.is_deleted == 1}">Y</c:if>
 									</td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>

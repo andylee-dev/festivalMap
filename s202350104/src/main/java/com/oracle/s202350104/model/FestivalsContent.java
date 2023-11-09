@@ -54,4 +54,8 @@ public class FestivalsContent {
 	private String sigungu_content;	// 시군구
 	private String bcode_content;	// 대분류
 	private String scode_content;	// 소분류
+	
+	// 검색용
+	private String search;
+	private String keyword;
 }

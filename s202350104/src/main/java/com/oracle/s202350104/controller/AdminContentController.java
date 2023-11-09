@@ -28,10 +28,13 @@
 	import com.oracle.s202350104.service.PagingList;
 	import com.oracle.s202350104.service.RestaurantService;
 	import com.oracle.s202350104.service.SpotService;
-	import com.oracle.s202350104.service.user.UserService;
+import com.oracle.s202350104.service.TagsService;
+import com.oracle.s202350104.service.user.UserService;
 	import com.oracle.s202350104.model.RestaurantsContent;
 	import com.oracle.s202350104.model.SpotContent;
-	import lombok.RequiredArgsConstructor;
+import com.oracle.s202350104.model.Tags;
+
+import lombok.RequiredArgsConstructor;
 	import lombok.extern.slf4j.Slf4j;
 	
 	@Controller
@@ -47,6 +50,7 @@
 		private final AccomodationService as;
 		private final AreaService ars;
 		private final CommonCodeService cs;
+		private final TagsService ts;
 		
 		@RequestMapping(value = "festival")
 		public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -102,8 +106,11 @@
 				log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				List<Areas> listAreas = ars.listAreas();
+				Tags tag = new Tags();
+				List<Tags> listTags = ts.listTags(tag);
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listTags", listTags);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
 			} finally {
@@ -138,6 +145,10 @@
 				List<Areas> listAreas = ars.listAreas();
 				List<Areas> listSigungu = ars.listSigungu(festival.getArea());
 				
+				Tags tag = new Tags();
+				List<Tags> listTags = ts.listTags(tag);
+				List<Tags> listMyTags = ts.searchContentTags(contentId);
+				
 				/*
 				 * String startdate = festival.getStart_date();
 				 * festival.setStart_date(startdate.substring(0,1)+"-"+startdate.substring(2,3)+
@@ -149,6 +160,8 @@
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("listSigungu", listSigungu);
+				model.addAttribute("listTags", listTags);
+				model.addAttribute("listMyTags", listMyTags);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("festival", festival);
 			} catch (Exception e) {
