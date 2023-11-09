@@ -532,61 +532,21 @@
 		}
 		
 		@RequestMapping(value = "accomodation")
-			public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
-				UUID transactionId = UUID.randomUUID();
-				try {
-					log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
-					int totalaccomodation = as.totalAccomodation();
-				
-					Paging page = new Paging(totalaccomodation, currentPage);
-					accomodationContent.setStart(page.getStart());
-					accomodationContent.setEnd(page.getEnd());
-				
-					List<AccomodationContent> listAccomodation = as.listAccomodation(accomodationContent);
-				
-					model.addAttribute("totalAccomodation",totalaccomodation);
-					model.addAttribute("listAccomodation", listAccomodation);
-					model.addAttribute("page",page);
-				} catch (Exception e) {
-					log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
-				}finally {
-					log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
-				}
-				return "admin/content/accomodation";
-							
-		}
-		
-		@RequestMapping(value = "accomodationSearch")
-		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model, HttpServletRequest request) {
+		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
-				int totalSearchaccomodation = as.totalSearchAccomodation(accomodationContent);
-							
-				int path = 1;
-				String small_code = request.getParameter("small_code");
-				String big_code = request.getParameter("big_code");
-				String is_deleted = request.getParameter("is_deleted");
-				String keyword = request.getParameter("keyword");
-				String status = request.getParameter("status");
-				
-				Paging page = new Paging(totalSearchaccomodation, currentPage);
+				int totalaccomodation = as.totalAccomodation();
+			
+				Paging page = new Paging(totalaccomodation, currentPage);
 				accomodationContent.setStart(page.getStart());
 				accomodationContent.setEnd(page.getEnd());
-				
-				List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
-				List<AccomodationContent> listSearchAccomodation = as.listSearchAccomodation(accomodationContent);
-				
-				model.addAttribute("totalAccomodation", totalSearchaccomodation);
-				model.addAttribute("listAccomodation", listSearchAccomodation);
-				model.addAttribute("listSmallCode", listSmallCode);
-				model.addAttribute("page", page);
-				model.addAttribute("path", path);
-				model.addAttribute("small_code", small_code);
-				model.addAttribute("big_code", big_code);
-				model.addAttribute("is_deleted" ,is_deleted);
-				model.addAttribute("keyword", keyword);
-				model.addAttribute("status", status);
+			
+				List<AccomodationContent> listAccomodation = as.listAccomodation(accomodationContent);
+			
+				model.addAttribute("totalAccomodation",totalaccomodation);
+				model.addAttribute("listAccomodation", listAccomodation);
+				model.addAttribute("page",page);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
 			}finally {
@@ -595,161 +555,201 @@
 			return "admin/content/accomodation";
 						
 	}
-		
-		@RequestMapping(value = "accomodationDetail")
-		public String accomodationDetail(String contentIdStr, String currentPage, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			int contentId = 0;
-			if(contentIdStr == null) {
-				contentId = 0;
+	
+	@RequestMapping(value = "accomodationSearch")
+	public String accomodationSearch(AccomodationContent accomodationContent, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationSearch", "start");
+			int totalSearchaccomodation = as.totalSearchAccomodation(accomodationContent);
+						
+			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String is_deleted = request.getParameter("is_deleted");
+			String keyword = request.getParameter("keyword");
+			String status = request.getParameter("status");
+			
+			Paging page = new Paging(totalSearchaccomodation, currentPage);
+			accomodationContent.setStart(page.getStart());
+			accomodationContent.setEnd(page.getEnd());
+			
+			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
+			List<AccomodationContent> listSearchAccomodation = as.listSearchAccomodation(accomodationContent);
+			
+			model.addAttribute("totalAccomodation", totalSearchaccomodation);
+			model.addAttribute("listAccomodation", listSearchAccomodation);
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("is_deleted" ,is_deleted);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("status", status);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "admin accomodationSearch", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
+		}
+		return "admin/content/accomodation";
+					
+}
+	
+	@RequestMapping(value = "accomodationDetail")
+	public String accomodationDetail(String contentIdStr, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int contentId = 0;
+		if(contentIdStr == null) {
+			contentId = 0;
+		} else {
+			contentId = Integer.parseInt(contentIdStr);
+		}
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
+			log.info("accomodationDetail currentPage0=>"+currentPage);
+			AccomodationContent accomodation = as.detailAccomodation(contentId);
+			log.info("accomodationDetail currentPage1=>"+currentPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("accomodation", accomodation);
+			log.info("accomodationDetail currentPage2=>"+currentPage);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
+		}		
+		return "admin/content/accomodationDetail";
+	}
+	
+	@RequestMapping(value = "accomodationInsertForm")
+	public String accomodationInsertForm(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "start");
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listAreas();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationInsertForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "end");
+		}		
+		return "admin/content/accomodationInsertForm";
+	}
+	
+	@RequestMapping(value = "accomodationInsert")
+	public String accomodationInsert(AccomodationContent accomodation, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "start");
+			as.insertAccomodation(accomodation);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationInsert", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
+		}		
+		return "redirect:/admin/content/accomodation";
+	}	
+	
+	@GetMapping(value="accomodationUpdateForm")
+	public String accomodationUpdateForm(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationUpdateForm", "start");
+			
+			AccomodationContent accomodation = as.detailAccomodation(contentId);
+			
+			List<CommonCodes> listCodes = cs.listCommonCode();
+			List<Areas> listAreas = ars.listAreas();
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("accomodation", accomodation);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationUpdateForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationUpdateForm", "end");
+		}		
+		return "admin/content/accomodationUpdateForm";
+	}
+	
+	@RequestMapping(value = "accomodation/update")
+	public String accomodationUpdate(AccomodationContent accomodation, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int id = 0;
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
+			int result = as.updateAccomodation(accomodation);
+			id = accomodation.getContent_id();
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("contentId", accomodation.getContent_id());
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
+		}		
+		return "forward:/admin/content/accomodationDetail?contentIdStr="+id;
+	}
+	
+	
+	
+	@RequestMapping(value = "accomodationDelete")
+	public String accomodationDelete(int contentId, Model model) {
+		 UUID transactionId = UUID.randomUUID();
+		    try {
+		        log.info("[{}]{}:{}", transactionId, "admin accomodationDelete", "start");
+		        int result = as.accomodationDelete(contentId);
+		        log.info("Delete result: " + result);
+		    } catch (Exception e) {
+		        log.error("[{}]{}:{}", transactionId, "admin accomodationDelete", e.getMessage());
+		    } finally {
+		        log.info("[{}]{}:{}", transactionId, "admin accomodationDelete", "end");
+		    }
+		    return "forward:accomodation";
+		}
+	
+	@ResponseBody
+	@RequestMapping(value = "accomodationDeleteAjax")
+	public String accomodationDeleteAjax(int contentId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		String resultStr = null;
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", "start");
+			int result = as.accomodationDelete(contentId);
+			resultStr = Integer.toString(result);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", "end");
+		}		
+		return resultStr;
+	}
+	
+	@RequestMapping(value = "accomodationApprove")
+	public String accomodationApprove(int contentId, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "start");
+			int result = as.approveAccomodation(contentId);
+			if(result > 0) {
+				model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 			} else {
-				contentId = Integer.parseInt(contentIdStr);
+				model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
 			}
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
-				log.info("accomodationDetail currentPage0=>"+currentPage);
-				AccomodationContent accomodation = as.detailAccomodation(contentId);
-				log.info("accomodationDetail currentPage1=>"+currentPage);
-				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("contentId", contentId);
-				model.addAttribute("accomodation", accomodation);
-				log.info("accomodationDetail currentPage2=>"+currentPage);
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
-			}		
-			return "admin/content/accomodationDetail";
-		}
-		
-		@RequestMapping(value = "accomodationInsertForm")
-		public String accomodationInsertForm(Model model) {
-			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "start");
-				List<CommonCodes> listCodes = cs.listCommonCode();
-				List<Areas> listAreas = ars.listAreas();
-				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listAreas", listAreas);
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationInsertForm", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "end");
-			}		
-			return "admin/content/accomodationInsertForm";
-		}
-		
-		@RequestMapping(value = "accomodationInsert")
-		public String accomodationInsert(AccomodationContent accomodation, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "start");
-				as.insertAccomodation(accomodation);
-				
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationInsert", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
-			}		
-			return "redirect:/admin/content/accomodation";
-		}	
-		
-		@GetMapping(value="accomodationUpdateForm")
-		public String accomodationUpdateForm(int contentId, String currentPage, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationUpdateForm", "start");
-				
-				AccomodationContent accomodation = as.detailAccomodation(contentId);
-				
-				List<CommonCodes> listCodes = cs.listCommonCode();
-				List<Areas> listAreas = ars.listAreas();
-				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listAreas", listAreas);
-				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("contentId", contentId);
-				model.addAttribute("accomodation", accomodation);
-				
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationUpdateForm", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationUpdateForm", "end");
-			}		
-			return "admin/content/accomodationUpdateForm";
-		}
-		
-		@RequestMapping(value = "accomodation/update")
-		public String accomodationUpdate(AccomodationContent accomodation, String currentPage, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			int id = 0;
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
-				int result = as.updateAccomodation(accomodation);
-				id = accomodation.getContent_id();
-				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("contentId", accomodation.getContent_id());
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
-			}		
-			return "forward:/admin/content/accomodationDetail?contentIdStr="+id;
-		}
-		
-		
-		
-		@RequestMapping(value = "accomodationDelete")
-		public String accomodationDelete(int contentId, Model model) {
-			 UUID transactionId = UUID.randomUUID();
-			    try {
-			        log.info("[{}]{}:{}", transactionId, "admin accomodationDelete", "start");
-			        int result = as.accomodationDelete(contentId);
-			        log.info("Delete result: " + result);
-			    } catch (Exception e) {
-			        log.error("[{}]{}:{}", transactionId, "admin accomodationDelete", e.getMessage());
-			    } finally {
-			        log.info("[{}]{}:{}", transactionId, "admin accomodationDelete", "end");
-			    }
-			    return "forward:accomodation";
-			}
-		
-		@ResponseBody
-		@RequestMapping(value = "accomodationDeleteAjax")
-		public String accomodationDeleteAjax(int contentId, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			String resultStr = null;
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", "start");
-				int result = as.accomodationDelete(contentId);
-				resultStr = Integer.toString(result);
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationDeleteAjax", "end");
-			}		
-			return resultStr;
-		}
-		
-		@RequestMapping(value = "accomodationApprove")
-		public String accomodationApprove(int contentId, String currentPage, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "start");
-				int result = as.approveAccomodation(contentId);
-				if(result > 0) {
-					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
-				} else {
-					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
-				}
-				model.addAttribute("contentId", contentId);
-				model.addAttribute("currentPage", currentPage);
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin accomodationApprove", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "end");
-			}		
-			return "forward:accomodationDetail?contentIdStr="+contentId;
-		}
+			model.addAttribute("contentId", contentId);
+			model.addAttribute("currentPage", currentPage);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "admin accomodationApprove", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "end");
+		}		
+		return "forward:accomodationDetail?contentIdStr="+contentId;
+	}
 		
 		@RequestMapping(value = "experienceUpdateForm")
 		public String experienceUpdateForm(int contentId, String currentPage, Model model) {

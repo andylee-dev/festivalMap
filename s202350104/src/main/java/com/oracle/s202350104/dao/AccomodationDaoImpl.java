@@ -140,7 +140,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		
 		try {
 			listSmallCode = session.selectList("syListSmallCodeAll",accomodationContent);
-			log.info("ExperienceDaoImpl listSmallCode() => " + listSmallCode.size());
+			log.info("AccomodationDaoImpl listSmallCode() => " + listSmallCode.size());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

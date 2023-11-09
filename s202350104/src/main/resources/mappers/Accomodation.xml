@@ -156,7 +156,7 @@
 	
 	<select id="syListSmallCodeAll" resultType="AccomodationContent">
         <![CDATA[
-        select small_code, content 
+        select small_code, content	
 		from commoncodes 
 		where big_code = 13
 		and small_code <999
