@@ -8,14 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Contents;
-import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.ContentSerivce;
+import com.oracle.s202350104.service.PagingList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,20 +60,24 @@ public class ContentController {
         return contentList;
     }
 
-	/*TODO : big_code/small_code/area*/	
 	@ResponseBody
 	@RequestMapping(value = "/api/searchContents", method = RequestMethod.POST)
-    public List<Contents> searchContentsList(@RequestBody Contents contents) {
+    public List<Contents> searchContentsList(@RequestBody Contents contents, String currentPage) {
 		UUID transactionId = UUID.randomUUID();
 		List<Contents> contentList =null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "searchContentsList", "start");
-			/* TODO :  contents filter list*/
 			log.info("{}",contents.toString());
-			
+			int totalContents = contentService.getTotalSearchCount(contents);
+			log.info("totalContents:{}",totalContents);
+			PagingList page = new PagingList(totalContents, currentPage);
+			contents.setStart(page.getStart());
+			contents.setEnd(page.getEnd());
+			contents.setPageList(page);
 			contentList = contentService.getSearchContentsList(contents);
-			log.info("contentList:{}",contentList.toString());
-
+			log.info("contentList.size():{}",contentList.size());
+			
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "searchContentsList", e.getMessage());
 		} finally {
@@ -82,7 +85,4 @@ public class ContentController {
 		}		
         return contentList;
     }
-	
-	
-	
 }
