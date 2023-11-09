@@ -6,6 +6,10 @@
 	<select id="nhTagsTotal" resultType="int">
 		SELECT count(*) FROM Tags
 	</select>
+	
+	<select id="nhTagsListAll" resultType="Tags">
+		SELECT * FROM Tags
+	</select>
 
 	<select id="nhTagsListPage" resultType="Tags" parameterType="Tags">
 		SELECT * 

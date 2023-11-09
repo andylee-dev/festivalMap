@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Paging;
 import com.oracle.s202350104.model.Report;
+import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ReportService;
+import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final BoardService boardService;
+	private final TagsService tagsService;
+	
 	//게시판 신고기능 위해 service 추가
 	private final ReportService res;
 	private final UserService us;
@@ -518,9 +522,12 @@ public class BoardController {
 		log.info("BoardController integratedBoardInsertForm bigCode : {}", bigCode);
 		log.info("BoardController integratedBoardInsertForm smallCode : {}", smallCode);
 		
+		List<Tags> tagsAll = tagsService.listTagsAll();		
+		
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("tagList", tagsAll);
 		
 		log.info("BoardController integratedBoardInsertForm end!");
 		
