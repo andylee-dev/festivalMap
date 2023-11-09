@@ -44,5 +44,6 @@ public class AccomodationContent {
 		private int    start;
 		private int    end;
 		
-	
+		// 검색용
+		private String keyword;
 }

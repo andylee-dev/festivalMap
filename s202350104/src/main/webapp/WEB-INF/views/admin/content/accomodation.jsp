@@ -50,7 +50,7 @@
 			<div class="border p-3 m-3">
 					<form action="accomodationSearch" method="get">
 							<input type="text" name="keyword" placeholder="숙소이름을 입력하세요">
-							<button type="submit" class="btn btn-outline-secondary">체험이름검색</button>
+							<button type="submit" class="btn btn-outline-secondary">숙소이름검색</button>
 							<button type="reset" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
 							<input type="hidden" name="big_code" value="13">
 							<select name="is_deleted">
