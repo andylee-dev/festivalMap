@@ -485,7 +485,7 @@ public class BoardController {
 	// review 게시물 생성 form Logic
 	@RequestMapping(value = "/reviewBoardInsertForm")
 	public String reviewBoardInsertForm(String userId, String bigCode, String smallCode, 
-								  		String contentId, String currentPage, Model model) {
+								  		String contentId, String currentPage, String commonCode, Model model) {
 
 		log.info("BoardController reviewBoardInsertForm start!");
 		log.info("BoardController reviewBoardInsertForm userId : {}", userId);
@@ -493,12 +493,14 @@ public class BoardController {
 		log.info("BoardController reviewBoardInsertForm smallCode : {}", smallCode);
 		log.info("BoardController reviewBoardInsertForm contentId : {}", contentId);
 		log.info("BoardController reviewBoardInsertForm currentPage : {}", currentPage);
+		log.info("BoardController reviewBoardInsertForm commonCode : {}", commonCode);
 
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("commonCode", commonCode);
 		
 		log.info("BoardController reviewBoardInsertForm end!");
 

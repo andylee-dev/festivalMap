@@ -50,8 +50,7 @@ public class ExperienceController {
 			
 			List<ExperienceContent> listExperience = es.listExperience(experience);
 			List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
-			List<Areas> listAreas = as.listAreas();
-			
+			List<Areas> listAreas = as.listAreas();			
 			
 			model.addAttribute("totalExperience", totalExperience);
 			model.addAttribute("listExperience", listExperience);
@@ -79,8 +78,13 @@ public class ExperienceController {
 	}
 	
 	@RequestMapping(value = "experience/detail")
-	public String experienceDetail(int contentId, String currentPage, Board board, Model model) {
+	public String experienceDetail(int contentId, String currentPage, 
+								   Board board, Model model) {
+		
 		ExperienceContent experience = es.detailExperience(contentId);
+		
+		log.info("experienceDetail contentId : {} ", contentId);
+		log.info("experienceDetail currentPage : {} ", currentPage);
 		
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("contentId", contentId);

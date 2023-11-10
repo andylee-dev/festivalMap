@@ -33,9 +33,11 @@ public class FestivalController {
 	private final BoardService boardService;
 	private final BannerService bannerService;
 
-	@RequestMapping(value = "festival")
+
+	@GetMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
 			festival.setIs_deleted("0");
@@ -57,7 +59,7 @@ public class FestivalController {
 			log.info("festival sigungu=>"+festival.getSigungu());
 			
 			/*
-			 * Banner Logic 구간 
+			 * Banner Logic 구간  --> bannerHeader, bannerFooter
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
@@ -77,8 +79,10 @@ public class FestivalController {
 	}
 	
 	@GetMapping(value = "festival/detail")
-	public String festivalDetail(Integer contentId, String currentPage, Board board, Model model) {
+	public String festivalDetail(Integer contentId, String currentPage, 
+								 Board board, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
 			log.info("festivalDetail contentId : {} ", contentId);
@@ -87,9 +91,15 @@ public class FestivalController {
 			FestivalsContent festival = fs.detailFestivals(contentId);
 			int result = fs.readcountUp(contentId);
 			
+			model.addAttribute("festival", festival);
+			
+			/*
+			 * review Logic용  
+			 * by 엄민용 
+			 * */
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
-			model.addAttribute("festival", festival);
+
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "festival/detail", e.getMessage());
 		} finally {

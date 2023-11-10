@@ -23,42 +23,41 @@
 	crossorigin="anonymous">	
 </script>
 <style type="text/css">
-#myform fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
-}
-#myform fieldset legend{
-    text-align: right;
-}
-#myform input[type=radio]{
-    display: none;
-}
-#myform label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
-#myform label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
-}
-  
+	#myform fieldset{
+	    display: inline-block;
+	    direction: rtl;
+	    border:0;
+	}
+	#myform fieldset legend{
+	    text-align: right;
+	}
+	#myform input[type=radio]{
+	    display: none;
+	}
+	#myform label{
+	    font-size: 3em;
+	    color: transparent;
+	    text-shadow: 0 0 0 #f0f0f0;
+	}
+	#myform label:hover{
+	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+	}
+	#myform label:hover ~ label{
+	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+	}
+	#myform input[type=radio]:checked ~ label{
+	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+	}
+	#reviewContents {
+	    width: 100%;
+	    height: 150px;
+	    padding: 10px;
+	    box-sizing: border-box;
+	    border: solid 1.5px #D3D3D3;
+	    border-radius: 5px;
+	    font-size: 16px;
+	    resize: none;
+	}  
 </style>
 
 <!-- jQuery 라이브러리 불러오기 -->
@@ -87,7 +86,7 @@
 	    });
 	}
 	
-    function closeWindowAfterSubmit(contentId, currentPage) {
+    function closeWindowAfterSubmit(commonCode, contentId, currentPage) {
     	// 기본 제출 동작 막기
         event.preventDefault();
     	
@@ -97,9 +96,21 @@
             data: $('#myform').serialize(), // 폼 데이터를 직렬화하여 전송
             success: function () {
                 // 성공적으로 서버로 전송된 후에 창을 닫음
+	           	if (commonCode == 11) {
+	                window.opener.location.href = '/festival/detail?contentId=${contentId}&currentPage=${currentPage}';	
+	           	} else if(commonCode == 12){
+	                window.opener.location.href = '/restaurant/detail?contentId=${contentId}&currentPage=${currentPage}';		           		
+	           	} else if(commonCode == 13){
+	                window.opener.location.href = '/accomodation/detail?contentId=${contentId}&currentPage=${currentPage}';		           		
+	           	} else if(commonCode == 14){
+	                window.opener.location.href = '/spot/detail?contentId=${contentId}&currentPage=${currentPage}';		           		
+	           	} else if(commonCode == 15){
+	                window.opener.location.href = '/experience/detail?contentId=${contentId}&currentPage=${currentPage}';		           		
+	           	} else{
+	            	// 기본 & 오류 처리
+	            	window.opener.location.href = '/home';
+	            }
                 window.close();
-                
-                window.opener.location.href = '/festival/detail?contentId=${contentId}&currentPage=${currentPage}';
             }
         });
     }
@@ -114,7 +125,7 @@
 	</div>
     <div class="container mt-5">
         <form class="mb-3" action="#" name="myform" id="myform" 
-        	  method="post" enctype="multipart/form-data" onsubmit="closeWindowAfterSubmit(${contentId },${currentPage })">
+        	  method="post" enctype="multipart/form-data" onsubmit="closeWindowAfterSubmit(${commonCode },${contentId },${currentPage })">
 			<input type="hidden" name="user_id" value="${userId }">
 			<input type="hidden" name="big_code" value="${bigCode }">
 			<input type="hidden" name="small_code" value="${smallCode }">

@@ -11,7 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-	function showPopUp(userId, bigCode, smallCode, currentPage, contentId) {
+	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
 	    console.log("showPopUp 함수가 호출되었습니다.");		
 		//창 크기 지정
 		var width = 550;
@@ -25,7 +25,7 @@
 		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
 		
 	    //연결하고싶은url
-	    const url = "../reviewBoardInsertForm?userId="+ userId + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
+	    const url = "../reviewBoardInsertForm?userId="+ userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
 	
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "hello popup", windowStatus);
@@ -88,7 +88,7 @@
 	<c:set var="num" value="${page.total-page.start+1 }" />
 	<div class="container border p-5">
 		<div class="d-flex justify-content-end">
-		    <button class="btn btn-primary" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${festival.content_id})">리뷰쓰기</button>		
+		    <button class="btn btn-primary" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${festival.content_id},${festival.big_code})">리뷰쓰기</button>		
 		</div><br>
 		<table class="table">
 			<tr class="table-primary text-center">
