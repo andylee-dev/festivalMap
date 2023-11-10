@@ -30,7 +30,9 @@
 				AND	status = #{status}	
 			</if>
      		) 
-		WHERE rn between #{start} and #{end}
+	 		<if test="start != 0 and end != 0">     		
+				WHERE rn between #{start} and #{end}
+			</if>
 	</select>	
 
 	<select id="getTotalSearchCount" resultType="int" parameterType="Contents">
