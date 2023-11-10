@@ -88,7 +88,7 @@
 							<th scope="col">삭제</th>
 						</tr>
 					</thead>
-					<tbody>
+						<tbody>
 						<c:set var="num" value="${page.start}"/>
 						<c:forEach var="accomodation" items="${listAccomodation}" varStatus="st">
 							<tr id="accomodation${st.index}">

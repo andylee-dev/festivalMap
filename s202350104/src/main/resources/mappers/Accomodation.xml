@@ -76,8 +76,8 @@
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
 	</update>
 	
-	<select id="syAccomodationSearchListAll" resultType="AccomodationContent">
-		SELECT *
+	<select id="syAccomodationSearchListAll" parameterType="AccomodationContent"  resultType="AccomodationContent">
+		SELECT id content_id , area, sigungu, big_code, small_code, title, status, is_deleted, address, created_at
 		FROM
 		(
 			SELECT ROWNUM rn, b.*
@@ -115,9 +115,10 @@
 	 	 				<when test="small_code = 999">
 	    				</when>    
   					</choose>
-				</if>) b
+            </if>) b
 		)
 		WHERE rn BETWEEN #{start} and #{end}
+
 	</select>
 	
 	<select id="syAccomodationSearchTotal" parameterType="AccomodationContent" resultType="int">

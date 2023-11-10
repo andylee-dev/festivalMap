@@ -155,6 +155,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		try {
 			listSearchAccomodation = session.selectList("syAccomodationSearchListAll",accomodationContent);
 			log.info("AccomodationDaoImpl listSearchExperience() => " + listSearchAccomodation.size());
+				
 		} catch (Exception e) {
 			log.info("AccomodationDaoImpl listSearchExperience() => " + e.getMessage());
 		}
