@@ -19,10 +19,10 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>&libraries=clusterer"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-
 	let markers = [];
-	var map = null;   
-	var clusterer = null;
+	let map = null;   
+	let clusterer = null;
+
 	function initKakaoMap(){
 	  if ("geolocation" in navigator) {
 		    navigator.geolocation.getCurrentPosition(function(position) {
@@ -35,6 +35,9 @@
 		          minLevel: 10 // 클러스터 할 최소 지도 레벨 
 		      });
 		      setCenter(latitude,longitude);
+		      const placePosition = new kakao.maps.LatLng(latitude, longitude);
+		      addMarker(placePosition,0);
+		      search();
 		    });
 		  } else {
 		    console.log("Geolocation을 지원하지 않는 브라우저입니다.");
@@ -84,28 +87,6 @@
  	    });
  	}
 
-/* 	function search(){
-		$.ajax({
-			url: "/api/content",
-			method: "GET",
-			success: function (contents) {
-				console.log(contents)
-				displayPlaces(contents)
-				
-			},
-			error: function () {
-				alert("contents 정보를 가져오지 못했습니다.");
-			}
-		});		
-	} */
-
-/*     const clusterer = new kakao.maps.MarkerClusterer({
-        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-        minLevel: 10 // 클러스터 할 최소 지도 레벨 
-    });
- 
- */	
 	// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 	const infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -151,19 +132,39 @@
 	        (function(marker, title) {
 	            kakao.maps.event.addListener(marker, 'mouseover', function() {
 	                displayInfowindow(marker, title);
+
 	            });
 
 	            kakao.maps.event.addListener(marker, 'mouseout', function() {
 	                infowindow.close();
 	            });
+	            // 마커 클릭 이벤트 처리
+	            kakao.maps.event.addListener(marker, 'click', function () {
+	                // 클릭한 마커의 위치로 지도 확대
+	                /* map.setLevel(5); */
+	                bound = new kakao.maps.LatLngBounds()
+	                bound.extend(marker.getPosition());
+	                map.setBounds(bound);
+	                map.setCenter(marker.getPosition());
+	            });
 
 	            itemEl.onmouseover =  function () {
 	                displayInfowindow(marker, title);
+	                map.setCenter(marker.getPosition());
 	            };
 
 	            itemEl.onmouseout =  function () {
 	                infowindow.close();
 	            };
+	            
+	            itemEl.onclick = function () {
+	                bound = new kakao.maps.LatLngBounds()
+	                bound.extend(marker.getPosition());
+	                map.setBounds(bound);
+	                map.setCenter(marker.getPosition());
+	            	
+	            };
+	            
 	        })(marker, places[i].title);
 
 	        fragment.appendChild(itemEl);
@@ -278,11 +279,6 @@
 	    }
 	}	
 	
-	
-	
-
-	
-	
 	function getLocation() {
 	  if ("geolocation" in navigator) {
 	    navigator.geolocation.getCurrentPosition(function(position) {
@@ -302,60 +298,20 @@
 	};
 
 </script>
-<script>
-	function updateAreaOptions() {
-		$.ajax({
-			url: "/getAreas",
-			method: "GET",
-			success: function (areas) {
-				// Area select 옵션 업데이트
-				$("#area").empty().append("<option value=''>전체</option>");
-				$("#sigungu").empty().append("<option value=''>전체</option>");
-				areas.forEach(function (area) {
-					$("#area").append(
-						"<option value='" + area.area + "'>" + area.content
-						+ "</option>");
-				});
-			},
-			error: function () {
-				alert("Area 정보를 가져오지 못했습니다.");
-			}
-		});
-	}
-
-	function updateSigunguOptions(selectedArea) {
-		$
-			.ajax({
-				url: "/getSigungu/" + selectedArea,
-				method: "GET",
-				success: function (sigungu) {
-					// Sigungu select 옵션 업데이트
-					$("#sigungu").empty().append(
-						"<option value=''>전체</option>");
-					sigungu.forEach(function (s) {
-						$("#sigungu").append(
-							"<option value='" + s.sigungu + "'>"
-							+ s.content + "</option>");
-					});
-				},
-				error: function () {
-					alert("Sigungu 정보를 가져오지 못했습니다.");
+	<script src="/js/updateArea.js"></script>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+			updateAreaOptions();
+			$(".area-dropdown").change(function() {
+				const selectedArea = $(this).val();
+				if (selectedArea) {
+					updateSigunguOptions(selectedArea);
+				} else {
+					$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
 				}
 			});
-	}
-	document.addEventListener("DOMContentLoaded", function() {
-		updateAreaOptions();
-		$("#area").change(function() {
-				const selectedArea = $(this).val();
-		if (selectedArea) {
-			updateSigunguOptions(selectedArea);
-				} else {
-			$("#sigungu").empty().append("<option value=''>---</option>");
-			}
 		});
-	});
-</script>
-
+	</script>
 </head>
 
 <body>
@@ -420,11 +376,11 @@
 				<div class="container">
 					<div class="m-3">
 						<label for="area" class="form-label">지역</label>
-						<select name="area" id="area" class="form-select col-auto"></select> 
+						<select name="area" id="area" class="form-select col-auto area-dropdown"></select> 
 					</div>
 					<div class="m-3">
 						<label for="sigungu" class="form-label">지역상세</label>
-						<select name="sigungu" id="sigungu" class="form-select col-auto"></select>
+						<select name="sigungu" id="sigungu" class="form-select col-auto sigungu-dropdown "></select>
 					</div>
 					<div class="m-3">
 						<label for="tag" class="form-label">테마별</label>
