@@ -156,9 +156,9 @@
 		</selectKey>
 		insert into board (id, user_id, big_code, small_code, 
 						   title, content, read_count, file_name, 
-						   file_path, created_at) 
+						   file_path, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
-			   #{title}, #{content}, 0, #{file_name}, #{file_path}, sysdate)		
+			   #{title}, #{content}, 0, #{file_name}, #{file_path}, sysdate, 0)		
 	</insert>
 	
 	<insert id="reviewBoardInsert" parameterType="Board">
@@ -166,9 +166,9 @@
 			select board_seq_generator.nextval from dual
 		</selectKey>
 		insert into board (id, content_id, user_id, big_code, small_code, 
-						   title, content, score, created_at) 
+						   title, content, score, created_at, is_deleted) 
 		values(#{id}, #{content_id}, #{user_id}, #{big_code},
-			   #{small_code}, #{title}, #{content}, #{score}, sysdate)		
+			   #{small_code}, #{title}, #{content}, #{score}, sysdate, 0)		
 	</insert>
 	
 	<select id="testRead" parameterType="int" resultType="Board">
