@@ -49,7 +49,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				throw new BadCredentialsException("password is not matched");
 			}
 			*/
-	        userService.updateUserPoint(user.getId(), 9);
+//	        userService.updateUserPoint(user.getId(), 9);
 	        authorities.add(new SimpleGrantedAuthority("ROLE_"+Role.getValueByKey(user.getSmall_code())));	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "AuthenticationProvider", e.getMessage());
