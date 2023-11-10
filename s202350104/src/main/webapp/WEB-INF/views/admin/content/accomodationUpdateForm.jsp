@@ -153,63 +153,51 @@
 								</td>
 							</tr>
 						</table>
-						<div id="clickLatlng"></div>
-						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=API키 입력"></script>
+						
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274&libraries=services"></script>
 						<script>
-  						var accomodation_mapx = ${accomodation.mapx};
+						
+						var accomodation_mapx = ${accomodation.mapx};
   						var accomodation_mapy = ${accomodation.mapy};
-						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-  						mapOption = { 
-       					center: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx), // 지도의 중심좌표
-        				level: 3 // 지도의 확대 레벨
-  						 };
+  						
+						window.onload = function() {
+						    var mapContainer = document.getElementById('map'), 
+						        mapOption = {
+						            center: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx), 
+						            level: 3 
+						        };
 
-					    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-						// 지도를 클릭한 위치에 표출할 마커입니다
-						var marker = new kakao.maps.Marker({ 
-   						 // 지도 중심좌표에 마커를 생성합니다 
-   						position: map.getCenter() 
-						}); 
-						// 지도에 마커를 표시합니다
-						marker.setMap(map);
-
-						// 지도에 클릭 이벤트를 등록합니다
-						// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-						kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+						    var map = new kakao.maps.Map(mapContainer, mapOption); 
+						    var geocoder = new kakao.maps.services.Geocoder();
+						    var marker = new kakao.maps.Marker({
+			        			  position: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx),
+			        			  map: map
+			    													});  // 마커 생성
+						    var infowindow = new kakao.maps.InfoWindow();  // 인포윈도우 생성
 						    
-						    // 클릭한 위도, 경도 정보를 가져옵니다 
-						     var latlng = mouseEvent.latLng; 
-      						 var clickedLat = latlng.getLat();
-        					 var clickedLng = latlng.getLng();
 						    
-						    // 마커 위치를 클릭한 위치로 옮깁니다
-						    marker.setPosition(latlng);
-						    
-						    console.log('클릭한 위치의 위도: ' + clickedLat);
-					        console.log('클릭한 위치의 경도: ' + clickedLng);
 
-					     // 클릭한 위치의 위도와 경도를 각 input 태그에 설정합니다
-					        document.getElementById("mapx_input").value = clickedLng;
-					        document.getElementById("mapy_input").value = clickedLat;
-					    });
+						    document.getElementById('address').onchange = function() {  // onkeyup 대신 onchange 사용
+						        var address = this.value;
 
-					    // 폼을 서버에 제출하는 코드
-					    document.getElementById("accomodationForm").addEventListener("submit", function(e) {
-					        e.preventDefault(); // 폼 제출 기본 동작을 막습니다.
+						        geocoder.addressSearch(address, function(result, status) {
+						            if (status === kakao.maps.services.Status.OK) {
+						                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						                
+						        						                
+						                marker.setPosition(coords);  // 마커 위치 업데이트
+						                infowindow.setContent('<div style="width:150px;text-align:center;padding:6px 0;">우리숙소</div>');  // 인포윈도우 내용 업데이트
+						                infowindow.open(map, marker);
+						                map.setCenter(coords);
 
-					        var form = e.target;
-					        var formData = new FormData(form);
-					        var xhr = new XMLHttpRequest();
-					        xhr.open("POST", form.action, true);
-					        xhr.onreadystatechange = function() {
-					            if (xhr.readyState === 4 && xhr.status === 200) {
-					                console.log("데이터가 성공적으로 업데이트되었습니다.");
-					            }
-					        };
-					        xhr.send(formData);
-					    });
+						                document.getElementById("mapx_input").value = result[0].x;
+						                document.getElementById("mapy_input").value = result[0].y;
+						            } else {  // 주소 검색 실패 시 처리
+						                alert('주소 검색 결과가 없습니다.');
+						            }
+						        });
+						    };
+						};
 					        
 					</script>
 					

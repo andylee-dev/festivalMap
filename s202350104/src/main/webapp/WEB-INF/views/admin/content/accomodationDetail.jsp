@@ -157,9 +157,9 @@
     				  var map = new kakao.maps.Map(mapContainer, mapOption);
 
     				  var marker = new kakao.maps.Marker({
-        			  position: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx),
-        			  map: map
-    													});
+            			  position: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx),
+            			  map: map
+        													});
 					</script>
 					<div align="center">
 						<c:if test="${accomodation.status == 0}">
