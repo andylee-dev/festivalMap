@@ -86,28 +86,28 @@
 							</tr>
 							<tr>
 								<th>주소</th>
-								<td><input type="text" name="address"></td>
+								<td><input type="text" name="address" required="required"></td>
 							</tr>
 							<tr>
 								<th>우편번호</th>
-								<td><input type="text" name="postcode"></td>
+								<td><input type="text" name="postcode" required="required"></td>
 							</tr>
 							<tr>
 								<th>전화번호</th>
 								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000"
-									pattern="\d{2,3}-\d{3,4}-\d{4}"></td>
+									pattern="\d{2,3}-\d{3,4}-\d{4}" required="required"></td>
 							</tr>
 							<tr>
 								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
+								<td><input type="text" name="homepage" required="required"></td>
 							</tr>
 							<tr>
 								<th>객실수</th>
-								<td><input type="text" name="room_count"></td>
+								<td><input type="text" name="room_count" required="required"></td>
 							</tr>
 							<tr>
 								<th>예약처</th>
-								<td><input type="text" name="reservation_url"></td>
+								<td><input type="text" name="reservation_url" required="required"></td>
 							</tr>
 							<tr>
 								<th>환불규정</th>
@@ -121,11 +121,11 @@
 							</tr>
 							<tr>
 								<th>입실시간</th>
-								<td><input type="time" name="chcek_in"></td>
+								<td><input type="time" name="chcek_in" required></td>
 							</tr>
 							<tr>
 								<th>퇴실시간</th>
-								<td><input type="time" name="chcek_out"></td>
+								<td><input type="time" name="chcek_out" required></td>
 							</tr>
 							<tr>
 								<th>이미지</th>
