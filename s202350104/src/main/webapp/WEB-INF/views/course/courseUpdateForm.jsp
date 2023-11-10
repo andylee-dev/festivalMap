@@ -52,28 +52,48 @@
 	}
 	
 	function receiveContentList(contentList) {
+		const contentsTableEl = document.getElementById("contentsTable");
 		
-	    // contentList 데이터를 HTML 테이블로 변환
-	    var table = "<table>";
-	    table += "<thead><tr><th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th></tr></thead>";
-	    table += "<tbody>";
-
-	    for (var i = 0; i < contentList.length; i++) {
-	        table += "<tr>";
-	        table += "<td>" + contentList[i].id + "</td>";
-	        table += "<td><img src='" + contentList[i].img + "' alt='이미지'></td>";
-	        table += "<td>" + contentList[i].title + "</td>";
-	        table += "<td>" + contentList[i].address + "</td>";
-	        table += "<td>" + contentList[i].homepage + "</td>";
-	        table += "<td>" + contentList[i].phone + "</td>";
-	        table += "</tr>";
-	    }
-
-	    table += "</tbody></table>";
-	    
+		for (var i = 0; i < contentList.length; i++) {
+			const tableEl = document.createElement("tr");
+			
+			const idEl = document.createElement("td");
+			idEl.className = "td-id";
+			idEl.textContent = contentList[i].id;
+			tableEl.appendChild(idEl);
+			
+			const imgEl = document.createElement("td");
+			imgEl.className = "td-img";
+			imgEl.textContent = 
+				imgEl.textContent = contentList[i].img;
+			tableEl.appendChild(imgEl);
+			
+			const titleEl = document.createElement("td");
+			titleEl.className = "td-title";
+			titleEl.textContent = contentList[i].title;
+			tableEl.appendChild(titleEl);
+			
+			const addressEl = document.createElement("td");
+			addressEl.className = "td-address";
+			addressEl.textContent = contentList[i].address;
+			tableEl.appendChild(addressEl);
+			
+			const homepageEl = document.createElement("td");
+			homepageEl.className = "td-homepage";
+			homepageEl.textContent = contentList[i].homepage;
+			tableEl.appendChild(homepageEl);
+			
+			const phoneEl = document.createElement("td");
+			phoneEl.className = "td-phone";
+			phoneEl.textContent = contentList[i].phone;
+			tableEl.appendChild(phoneEl);
+			
+			contentsTableEl.appendChild(tableEl);
+		}
+		
 
 	    // 테이블을 HTML 요소에 삽입
-	    document.getElementById("contentTable").innerHTML = table;
+	    /* document.getElementById("contentTable").innerHTML = table; */
 
 	    for (var i = 0; i < contentList.length; i++) {
 	    	const form =document.getElementById("myForm");
@@ -140,7 +160,7 @@
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	
-	<h1>코스 수정</h1>
+	<h1>코스 수정${courseContent.id }</h1>
 	<div class="container mt-5">
 		<form id="myForm" action="courseUpdate" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="id" value="${courseContent.id }">
@@ -152,15 +172,13 @@
 				<div class="form-group">
 					<label>코스항목</label>
 					<button class="btn btn-primary" onclick="showPopUp(); event.preventDefault();">코스 수정</button>
-					<div id="contentTable">
-			
-					</div>
+					
 					<div>
-						<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
-							<table border="1">
-								<tr>
-									<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
-								</tr>
+						<table border="1" id="contentsTable">
+							<tr>
+								<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
+							</tr>
+							<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
 								<tr>
 									<td>${courseContentList.content_id }</td>
 									<td><img alt="${courseContentList.title }" src="${courseContentList.img1 }" style="height: 150px;"></td>
@@ -168,11 +186,11 @@
 									<td>${courseContentList.address }</td>
 									<td>${courseContentList.homepage }</td>
 									<td>${courseContentList.phone }</td>
+									<td><button onclick="deleteCourseContent(${courseContentList.content_id}, ${courseContentList.course_id}); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
 								</tr>
-								<button onclick="deleteCourseContent(${courseContentList.content_id}, ${courseContentList.course_id}); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button>
-
-							</table>
-						</c:forEach>
+							</c:forEach>
+							
+						</table>
 					</div>
 				</div>
 			
