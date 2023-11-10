@@ -80,6 +80,7 @@ public class AdminCourseController {
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
 			
+			course.setCourse_id(id);
 			model.addAttribute("courseContent", course);
 			model.addAttribute("courseContentList", courseContentList);
 //			model.addAttribute("courseContent", courseContent);
@@ -92,12 +93,36 @@ public class AdminCourseController {
 		return "course/courseUpdateForm";
 	}
 	
-	@RequestMapping(value = "courseUpdate")
+
+	@RequestMapping(value = "courseUpdate", method = RequestMethod.POST)
 	public String courseUpdate(Course course, @RequestParam List<String> contents, Model model) {
-		log.info("AdminCourseController courseUpdate course ->" + course);
-		int courseId = cs.courseUpdate(course);
-		log.info("AdminCourseController courseUpdate courseUpdate ->" + courseId);
-		
+		log.info("AdminCourseController courseUpdate start...");
+		try {
+			
+			log.info("courseID:{}",course.getId());
+			log.info("contents Id List:{}",contents.toString());
+			int course_id = cs.courseUpdate(course);
+			log.info("AdminCourseController courseUpdate course_id ->" + course_id);
+			
+			List<CourseContent> courseContent = new ArrayList<CourseContent>();
+			for (int i = 0; i < contents.size(); i++) {
+				CourseContent cc = new CourseContent();
+				cc.setContent_id(Integer.parseInt(contents.get(i)));
+				log.info("setContent_id newCourseId ->" + (contents.get(i)));
+				cc.setCourse_id(course_id);
+				log.info("setCourse_id newCourseId ->" + course_id);
+				cc.setOrder_num(i+1);
+				log.info("setCourse_id newCourseId ->" + i+1);
+				courseContent.add(cc);
+			}
+			log.info(contents.toString());				//	Map<int,List()>
+			int courseContentInsert = cs. courseContentInsert(courseContent);		//list 3
+																				//	int  1
+			log.info("AdminCourseController courseInsert courseInsert ->" + courseContentInsert);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		
 		return "redirect:/admin/course/list";
