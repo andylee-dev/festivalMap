@@ -93,4 +93,25 @@ public class ExperienceServiceImpl implements ExperienceService {
 		int insertExperience = ed.insertExperience(experience);
 		return insertExperience;
 	}
+
+	@Override
+	public int mainTotalExperience() {
+		int mainTotalExperience = 0;
+		mainTotalExperience =ed.mainTotalExperience();
+		return mainTotalExperience;
+	}
+
+	@Override
+	public int totalMainSearchExperience(ExperienceContent experience) {
+		int totalMainSearchExperience = 0;
+		totalMainSearchExperience = ed.totalMainSearchExperience(experience);
+		return totalMainSearchExperience;
+	}
+
+	@Override
+	public List<ExperienceContent> listMainSearchExperience(ExperienceContent experience) {
+		List<ExperienceContent> listMainSearchExperience = null;
+		listMainSearchExperience = ed.listMainSearchExperience(experience);
+		return listMainSearchExperience;
+	}
 }	

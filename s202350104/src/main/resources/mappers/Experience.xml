@@ -3,6 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.ExperienceMapper">
+
+	
+	
+	<select id="shMainTotalExperience" resultType="int">
+		SELECT count(*)
+		FROM   experience e, contents c
+		WHERE  e.content_id = c.id
+		AND 	c.status = 1
+		AND is_deleted = 0
+	</select>
+
 	<select id="shExperienceListAll" resultType="ExperienceContent">
 		SELECT *
 		FROM
@@ -12,6 +23,8 @@
 			(SELECT *
 			 FROM contents c, experience e
 			 WHERE c.id = e.content_id
+			 and c.status = 1
+			 and c.is_deleted = 0
 			 ORDER BY id) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
@@ -20,8 +33,9 @@
 	
 	<select id="shExperienceTotal" resultType="int">
 		SELECT count(*)
-		FROM   experience e, contents c
+		FROM   experience e, content c
 		WHERE  e.content_id = c.id
+		AND 	c.status = 1
 	</select>
 	
 	<select id="shExperienceDetail" resultType="ExperienceContent" parameterType="int">
@@ -43,28 +57,6 @@
 		where c.id = #{content_id}
 	</update>
 	
-	
-	<select id="shExperienceAdminListAll" resultType="ExperienceContent">
-		SELECT *
-		FROM
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT *
-			 FROM experience e, contents c
-			 WHERE e.content_id = c.id
-			 ORDER BY content_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
-	</select>
-	
-	
-	<select id="shExperienceAdminTotal" resultType="int">
-		SELECT count(*)
-		FROM   experience e, contents c
-		WHERE  e.content_id = c.id
-	</select>	
-	
 	<select id="shExperienceSearchListAll" resultType="ExperienceContent">
 		SELECT *
 		FROM
@@ -78,7 +70,7 @@
 				<if test="keyword != null">
 					AND title like '%' || #{keyword} || '%'
 				</if>
-				<if test="status != null">
+				<if test="status != null and status !=3" >
 					<choose>
  	 					<when test="status != 2">
 	    					AND status = #{status}  
@@ -142,6 +134,8 @@
 	   	</if>
 	</select>	
 	
+	
+	
 	<select id="shListSmallCodeAll" resultType="ExperienceContent">
         <![CDATA[
         select small_code, content 
@@ -186,6 +180,66 @@
 		VALUES(contents_id_seq.currval, #{capacity}, #{age}, #{inform}, #{open_time}, 
 				#{rest_time}, #{cost}, #{is_credit}, #{is_pet}, #{is_parking}, #{is_stroller})
 	</insert>
+	
+	<select id="shMainExperienceSearchTotal" parameterType="ExperienceContent" resultType="int">
+		SELECT count(*)
+		FROM   experience e, contents c
+		WHERE  e.content_id = c.id
+				<if test="big_code != null">
+				AND big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+					And status = 1
+					And is_deleted = 0
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+             	<if test="area != 0">
+					and area = #{area}
+				</if>
+		</select>
+		
+	<select id="shMainExperienceSearchListAll" resultType="ExperienceContent">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT * FROM contents 
+				<if test="big_code != null">
+				WHERE big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+					And status = 1
+					And is_deleted = 0
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="area != 0">
+					and area = #{area}
+					<if test=" sigungu != 0">
+					and sigungu = #{sigungu}
+					</if>
+				</if>) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
 	
 	
 </mapper>	

@@ -51,6 +51,7 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		int totalExperienceCnt = 0;
 		try {
 			totalExperienceCnt = session.selectOne("shExperienceTotal");
+			log.info("totalExperienceCnt->"+totalExperienceCnt);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -170,4 +171,38 @@ public class ExperienceDaoImpl implements ExperienceDao {
 		return result;
 	}
 
+	@Override
+	public int mainTotalExperience() {
+		int mainTotalExperience = 0;
+		try {
+			mainTotalExperience = session.selectOne("shMainTotalExperience");
+			log.info("mainTotalExperience->"+mainTotalExperience);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return mainTotalExperience;
+	}
+
+	@Override
+	public int totalMainSearchExperience(ExperienceContent experience) {
+		int totalMainSearchExperience = 0;
+		try {
+			totalMainSearchExperience = session.selectOne("shMainExperienceSearchTotal", experience );
+		} catch (Exception e) {
+			log.info("totalMainSearchExperience->"+totalMainSearchExperience);
+		}
+		return totalMainSearchExperience;
+	}
+
+	@Override
+	public List<ExperienceContent> listMainSearchExperience(ExperienceContent experience) {
+		List<ExperienceContent> listMainSearchExperience = null;
+		try {
+			listMainSearchExperience = session.selectList("shMainExperienceSearchListAll",experience);
+			
+		} catch (Exception e) {
+			log.info("listMainSearchExperience->"+e.getMessage());
+		}
+		return listMainSearchExperience;
+	}
 }
