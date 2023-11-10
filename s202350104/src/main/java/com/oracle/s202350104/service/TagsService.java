@@ -16,10 +16,10 @@ public interface TagsService {
 	List<Tags> searchContentTags(int contentId);
 	List<Tags> listBoardTags(int smallCode);
 	List<Tags> listUserTags();
-
 	List<Tags> listContentTags(int bigCode);
 	List<Tags> searchBoardTagsOne(int boardId);
+	void boardTagsInsert(Tags tags);
+	
 
-	void boardTagsInsert(Map<String, Object> params);
 
 }

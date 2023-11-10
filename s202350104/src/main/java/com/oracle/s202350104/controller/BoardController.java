@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -576,7 +577,6 @@ public class BoardController {
 			log.info("BoardController integratedboardInsert File End..");
 		}
 		
-
 		// 게시물 생성 Logic
 		String redirectURL = "";
 
@@ -591,26 +591,18 @@ public class BoardController {
 			
 			int boardId = board.getId();
 			
-			for (int tagId : tagsList) {
-				log.info("BoardController integratedboardInsert tagId : {}", tagId);
-
-			}	
-			List<Integer> tagIdList = Arrays.stream(tagsList).boxed().collect(Collectors.toList());
-			
-			List<Integer> boardIdList = new ArrayList<>();
-			for (int i = 0; i < tagIdList.size(); i++) {
-			    boardIdList.add(boardId);
+			// hashTag 값이 있으면 반복문으로 insert query
+			if(tagsList.length > 0) {
+				
+				for (int i : tagsList) {
+					
+					tags.setTag_id(i);
+					tags.setBoard_id(boardId);
+					
+					tagsService.boardTagsInsert(tags);
+				}
 			}
-
-			Map<String, Object> params = new HashMap<>();
-			params.put("tagId", tagIdList);
-			params.put("boardId", boardIdList);
-			
-			log.info("BoardController integratedboardInsert params : {}", params.toString());
-			
-			tagsService.boardTagsInsert(params);
-
-			
+						
 			// 게시물 생성 후 Page Handling
 			if (insertBoard > 0 && board.getSmall_code() == 1) {
 				if (board.getUser_id() == 1) {

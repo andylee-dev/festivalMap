@@ -67,32 +67,34 @@
 	<div class="container border p-4 mb-4">
 		<table class="table table-bordered">
 			<tr class="table-primary">
-				<th scope="col">제목</th>
-				<td>${board.title }</td>
-				<th scope="col">작성자</th>
-				<td>${board.name }</td>
-				<th scope="col">작성일</th>
-				<td><fmt:formatDate value="${board.created_at }" type="date"
+				<th scope="col" style="text-align: center;">제목</th>
+				<td style="background-color: white;">${board.title }</td>
+				<th scope="col" style="text-align: center;">작성자</th>
+				<td style="background-color: white;">${board.name }</td>
+				<th scope="col" style="text-align: center;">작성일</th>
+				<td style="background-color: white;">
+					<fmt:formatDate value="${board.created_at }" type="date"
 									pattern="yyyy/MM/dd"/>
 				</td>
 				<c:if test="${board.updated_at != null}">
-        			<th scope="col">수정일</th>
-       		   		<td><fmt:formatDate value="${board.updated_at}" type="date" 
+        			<th scope="col" style="text-align: center;">수정일</th>
+       		   		<td style="background-color: white;">
+       		   			<fmt:formatDate value="${board.updated_at}" type="date" 
        		   							pattern="yyyy/MM/dd" />
        		   		</td>
     			</c:if>
 			</tr>
 			<tr class="table-primary">
-				<th scope="col">내용</th>
-				<td>${board.content }</td>
+				<th scope="col" style="text-align: center;">내용</th>
+				<td colspan="7" style="background-color: white;">${board.content }</td>
 			</tr>
 			<tr class="table-primary">
-				<th scope="col">첨부파일명</th>
-				<td>${board.file_name }</td>
+				<th scope="col" style="text-align: center;">첨부파일명</th>
+				<td colspan="7" style="background-color: white;">${board.file_name }</td>
 			</tr>
 			<tr class="table-primary">
-				<th scope="col">이미지경로</th>
-				<td>${board.file_path }</td>
+				<th scope="col" style="text-align: center;">이미지경로</th>
+				<td colspan="7" style="background-color: white;">${board.file_path }</td>
 			</tr>
 		</table>
 	</div>

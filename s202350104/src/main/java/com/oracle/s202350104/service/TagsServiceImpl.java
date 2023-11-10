@@ -153,12 +153,14 @@ public class TagsServiceImpl implements TagsService {
 		return listTags;
 		
 	}
-
-
 	
 	@Override
-	public void boardTagsInsert(Map<String, Object> params) {
-		td.insertBoardTags(params);
+	public void boardTagsInsert(Tags tags) {
+		log.info("service getTag_id : {}", tags.getTag_id());
+		log.info("service getBoard_id : {}", tags.getBoard_id());
+		
+		td.boardTagsInsert(tags);
+
 	}
 
 }

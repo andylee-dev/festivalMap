@@ -102,10 +102,8 @@
 		DELETE BoardTags WHERE tag_id = #{id}
 	</delete>
 	
-	<insert id="insertBoardTags" parameterType="map">
-	    INSERT INTO BoardTags (tag_id) VALUES
-	    <foreach collection="tagId" item="tagId" index="index" separator=",">
-	       (#{tagId})
-	    </foreach>
+	<insert id="insertBoardTags" parameterType="Tags">
+		insert into BoardTags(tag_id, board_id) values (#{tag_id}, #{board_id})
 	</insert>
+
 </mapper>

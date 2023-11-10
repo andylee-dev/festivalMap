@@ -22,7 +22,8 @@ public interface TagsDao {
 
 	List<Tags> listContentTags(int bigCode);
 	List<Tags> searchBoardTagsOne(int boardId);
+	void boardTagsInsert(Tags tags);
 
-	void insertBoardTags(Map<String, Object> params);
+
 
 }

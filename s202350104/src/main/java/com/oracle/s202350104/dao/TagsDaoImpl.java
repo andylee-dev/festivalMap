@@ -194,11 +194,12 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 	
-	
-
-	public void insertBoardTags(Map<String, Object> params) {
-		session.insert("insertBoardTags", params);
+	@Override
+	public void boardTagsInsert(Tags tags) {
+		log.info("service getTag_id : {}", tags.getTag_id());
+		log.info("service getBoard_id : {}", tags.getBoard_id());
+		
+		session.insert("insertBoardTags", tags);
 	}
-
 
 }
