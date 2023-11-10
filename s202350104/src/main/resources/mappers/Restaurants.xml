@@ -91,7 +91,7 @@
 	
 		
 	<select id="joAdminListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
-		SELECT  x.*, y.content AS theme
+		SELECT  x.*, y.content AS theme, y.small_code
 		FROM	
 				(
 					SELECT ROWNUM rn, c.*
@@ -104,10 +104,10 @@
 	</select>	
 	
 	
-	<select id="joInsertRestaurant" resultType="int" parameterType="RestaurantsContent">
+	<insert id="joInsertRestaurant" parameterType="RestaurantsContent">
 		INSERT INTO restaurants(content_id, first_menu, menu, open_time, rest_date, is_smoking, is_packing, is_parking)
 		VALUES				   (contents_id_seq.currval, #{first_menu}, #{menu}, #{open_time}, #{rest_date}, #{is_smoking}, #{is_packing}, #{is_parking})
-	</select>
+	</insert>
 	
 	
 	<update id="joUpdateRestaurant" parameterType="RestaurantsContent">
@@ -118,10 +118,10 @@
 		
 	
 	<!-- contents 테이블 -->
-	<select id="joInsertContent" resultType="int" parameterType="RestaurantsContent">
+	<insert id="joInsertContent" parameterType="RestaurantsContent">
 		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcount, user_id, created_at, is_deleted)
 		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, '0')
-	</select>
+	</insert>
 	
 	
 	<update id="joUpdateContent" parameterType="RestaurantsContent">
@@ -134,6 +134,12 @@
 	<update id="joDeleteContent" parameterType="int">
 		UPDATE contents 
 		SET    is_deleted=1
+		WHERE  id=#{contentId}
+	</update>
+	
+	<update id="joApproveRestaurant" parameterType="int">
+		UPDATE contents
+		SET    status = 1
 		WHERE  id=#{contentId}
 	</update>
 	

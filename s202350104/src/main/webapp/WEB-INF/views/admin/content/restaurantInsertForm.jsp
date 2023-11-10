@@ -51,7 +51,7 @@
 													<input 	type="button" 	value="중복확인" 	 	onclick="chk()"> -->
 							<tr><th>분류</th>
 								<td>
-									<input type="hidden" name="small_code" value="12">[Restaurant]<br>
+									<input type="hidden" name="big_code" value="12">[Restaurant]<br>
 									<select name="small_code">
 										<c:forEach var="listCodes" items="${listCodes}">
 											<c:if test="${listCodes.big_code == 12 && listCodes.small_code != 999 }">
@@ -64,7 +64,7 @@
 							<tr>
 								<th>지역</th>
 								<td>
-									<select name="area" onchange="getSigungu(this.value)">
+									<select name="area" onchange="getSigungu(this.value)" required="required">
 										<option value="">전체</option>
 										<c:forEach var="areas" items="${listAreas}">
 											<c:if test="${areas.sigungu == 999}">
@@ -72,11 +72,11 @@
 											</c:if>
 										</c:forEach>
 									</select>
-									<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
+									<select name="sigungu" id="sigungu_list_select" required="required"><!-- ajax getSigungu --></select>
 								</td>
 							</tr>
 							<tr><th>주소</th><td><input 		type="text"    	name="address" 		></td></tr>
-							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" 	></td></tr>
+							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" required="required"></td></tr>
 							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}\d{4}"></td>       
 							<tr><th>대표메뉴</th><td><input 	type="text" 	name="first_menu" 	></td></tr>
 							<tr><th>추천메뉴</th><td><input 	type="text" 	name="menu" 		></td></tr>

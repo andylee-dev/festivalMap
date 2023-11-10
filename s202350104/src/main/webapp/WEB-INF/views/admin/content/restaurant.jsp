@@ -41,6 +41,7 @@
 								<option value="6">카페</option>
 								<option value="7">클럽</option>
 							</select>
+							<input type="hidden" name="currentPage" value="${page.currentPage}">
 							<button type="submit" class="btn btn-outline-secondary">검색</button>
 							<input type="reset" class="btn btn-outline-secondary" value="초기화">
 						</form>
@@ -112,7 +113,7 @@
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
 				</c:when>
 				<c:when test="${path==2}">
-					<a href="restaurantSearch?status=${status}?small_code=${small_code}?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
+					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
 				</c:when>
 			</c:choose>	
 		</c:if>
@@ -125,7 +126,14 @@
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${i}" class="pageblock">[${i}]</a>
 				</c:when>
 				<c:when test="${path==2}">
-					<a href="restaurantSearch?status=${status}?small_code=${small_code}?currentPage=${i}" class="pageblock">[${i}]</a>
+					<c:choose>
+						<c:when test="${status=''}">
+							<a href="restaurant"></a>
+						</c:when>
+						<c:otherwise>
+							<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&currentPage=${i}" class="pageblock">[${i}]</a>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 			</c:choose>	
 		</c:forEach>
@@ -138,7 +146,7 @@
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 				</c:when>
 				<c:when test="${path==2}">
-					<a href="restaurantSearch?status=${status}?small_code=${small_code}?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 				</c:when>
 			</c:choose>	
 		</c:if>

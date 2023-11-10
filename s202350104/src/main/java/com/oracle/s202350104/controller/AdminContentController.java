@@ -305,6 +305,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
 				int totalRestaurant = rs.adminConTotalRestaurant(restaurant);
 				int path 			= 2;
+				int small_code      = restaurant.getSmall_code();
 				String status 		= request.getParameter("status");
 				String theme 		= request.getParameter("theme");
 				
@@ -321,6 +322,7 @@ import lombok.RequiredArgsConstructor;
 				model.addAttribute("theme", theme);
 				model.addAttribute("page", page);
 				model.addAttribute("listRestaurant", listSearchRestaurant);
+				model.addAttribute("small_code", small_code);
 				// model.addAttribute("listRestaurant", listRestaurant);
 				
 			} catch (Exception e) {
@@ -382,7 +384,7 @@ import lombok.RequiredArgsConstructor;
 				
 			log.info("[{}]{}:{}", transactionId, "admin restaurant/insert", "start");
 			int result = rs.insertRestaurant(restaurant);
-			if(result > 0) return "redirect:restaurant";
+			if(result > 0) return "redirect:/admin/content/restaurant";
 			else {
 				model.addAttribute("msg", "입력실패 확인해보세요");
 				return "forward:restaurantInsertForm";

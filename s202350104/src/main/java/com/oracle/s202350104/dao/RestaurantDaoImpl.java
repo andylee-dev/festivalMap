@@ -136,10 +136,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		
 		try {
 			log.info("RestaurantDaoImpl insertRestaurant start");
+			result = session.insert("joInsertContent", restaurant);
+			log.info("RestaurantDaoImpl joInsertContent ->" + result);
 			result = session.insert("joInsertRestaurant", restaurant);
 			log.info("RestaurantDaoImpl joInsertRestaurant ->" + result);
-			result = session.insert("joInsertContent", result);
-			log.info("RestaurantDaoImpl joInsertContent ->" + result);
 			transactionManager.commit(txStatus);
 		} catch (Exception e) {
 			transactionManager.rollback(txStatus);
@@ -182,6 +182,21 @@ public class RestaurantDaoImpl implements RestaurantDao {
 			log.error("RestaurantDaoImpl deleteRestaurant Exception ->" + e.getMessage());
 			
 		}
+		return result;
+	}
+
+	@Override
+	public int approveRestaurant(Integer contentId) {
+		int result = 0;
+		
+		try {
+			log.info("RestaurantDaoImpl approveRestaurant start");
+			result = session.update("joApproveRestaurant", contentId);
+			log.info("RestaurantDaoImpl approveRestaurant result ->", result);
+		} catch (Exception e) {
+			log.info("[{}]{}:{}", "RestaurantDaoImpl approveRestaurant Exception", e.getMessage());
+		}
+		
 		return result;
 	}
 

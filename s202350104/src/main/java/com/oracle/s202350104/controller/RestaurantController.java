@@ -88,7 +88,7 @@ public class RestaurantController {
 			listAreas = as.listAreas();
 					
 		} catch (Exception e) {
-			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas Exception", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "RestaurantController listAreas Exception", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController listAreas", "End");
 		}
@@ -113,7 +113,7 @@ public class RestaurantController {
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("restaurant", restaurant);
 		} catch (Exception e) {
-			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail Exception", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail Exception", e.getMessage());
 		}
 		log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "End");
 		
@@ -197,7 +197,7 @@ public class RestaurantController {
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
+			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
 		}	
 				
 		return "restaurant/restaurantList";

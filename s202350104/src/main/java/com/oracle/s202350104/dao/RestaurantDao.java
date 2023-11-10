@@ -18,6 +18,7 @@ public interface RestaurantDao {
 	int                         insertRestaurant(RestaurantsContent restaurant);
 	int                         updateRestaurant(RestaurantsContent restaurant);
 	int                         deleteRestaurant(int contentId);
+	int                         approveRestaurant(Integer contentId);
 	
 	
 }
