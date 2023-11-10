@@ -8,7 +8,9 @@
 		<title>축제 정보 등록</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" />
  	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" type="module"></script>
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		
 		<style>
 		  .form-control-focus {
 		  color: #212529;
@@ -29,35 +31,29 @@
 		}
 		</style>
 		
-		<script type="text/javascript">
-			function getSigungu(pArea){
-				$.ajax(
-						{
-							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
-							data:pArea,
-							dataType:'json',
-							success:function(areas) {
-								$('#sigungu_list_select option').remove();
-								str = "<option value='0'>전체</option>";
-								$(areas).each(
-									function() {
-										strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
-										str += strOption;
-									}		
-								)
-								$('#sigungu_list_select').append(str);
-							}
-						}		
-				)
-			}
-			
-		</script>
-		
 		<script type="module">
    			import Tags from "https://cdn.jsdelivr.net/gh/lekoala/bootstrap5-tags@master/tags.js";
     		Tags.init("select");
  		</script>
+ 		
+ 		<!-- 지역 코드 넣는 코드  Start-->	
+		<script src="/js/updateArea.js"></script>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+					}
+				});
+			});
+		</script>
+		<!-- 지역 코드 넣는 코드  End-->	
 	</head>
+	
 	<body>
 	<div class="container-fluid">
 		<div class="row">
@@ -126,15 +122,10 @@
 							<tr>
 								<th>지역</th>
 								<td>
-									<select name="area" onchange="getSigungu(this.value)">
-										<option value="0">전체</option>
-										<c:forEach var="areas" items="${listAreas}">
-											<c:if test="${areas.sigungu == 999}">
-												<option value="${areas.area}">${areas.content}</option>
-											</c:if>
-										</c:forEach>
-									</select>
-									<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
+									<div class="container">
+										<select name="area" class="area-dropdown"></select>
+										<select name="sigungu"  class="sigungu-dropdown"></select>
+								  	</div>
 								</td>
 							</tr>
 							<tr>

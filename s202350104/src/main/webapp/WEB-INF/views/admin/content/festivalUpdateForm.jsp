@@ -29,29 +29,22 @@
 		}
 		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<!-- 지역 코드 넣는 코드  Start-->	
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
-			function getSigungu(pArea){
-				var pSigungu = ${festival.sigungu}
-				$.ajax(
-						{
-							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
-							dataType:'json',
-							success:function(areas) {
-								$('#sigungu_list_select option').remove();
-								str = "<option value='0'>전체</option>";
-								$(areas).each(
-									function() {
-										strOption = "<option value='"+this.sigungu+"' ${"+this.sigungu+" == "+pSigungu+"? 'selected':''}>"+this.content+"</option>";
-										str += strOption;
-									}		
-								)
-								$('#sigungu_list_select').append(str);
-							}
-						}		
-				)
-			}
-			
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+					}
+				});
+			});
 		</script>
+		<!-- 지역 코드 넣는 코드  End-->	
 		
 		<script type="module">
    			import Tags from "https://cdn.jsdelivr.net/gh/lekoala/bootstrap5-tags@master/tags.js";
@@ -128,7 +121,7 @@
 							<tr>
 								<th>지역</th>
 								<td>${festival.area_content} ${festival.sigungu_content} <br>
-									<select id="area" name="area" onchange="getSigungu(this.value)">
+									<%-- <select id="area" name="area" onchange="getSigungu(this.value)">
 										<option value="0">전체</option>
 										<c:forEach var="areas" items="${listAreas}">
 											<c:if test="${areas.sigungu == 999}">
@@ -143,7 +136,11 @@
 												<option value="${areas.sigungu}" ${areas.sigungu == festival.sigungu? 'selected':''}>${areas.content}</option>
 											</c:if>
 										</c:forEach>
-									</select>
+									</select> --%>
+									<div class="container">
+										<select name="area" class="area-dropdown"></select>
+										<select name="sigungu"  class="sigungu-dropdown"></select>
+								  	</div>
 								</td>
 							</tr>
 							<tr>
