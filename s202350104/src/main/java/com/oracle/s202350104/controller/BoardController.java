@@ -321,9 +321,12 @@ public class BoardController {
 		log.info("BoardController boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
+		List<Tags> hashTags = tagsService.boardTagDetail(id);
 		
-
+		log.info("BoardController boardContent hashTags.size : {} ", hashTags.size());
+		
 		model.addAttribute("board", boards);
+		model.addAttribute("hashTag", hashTags);
 		model.addAttribute("userId", userId);
 
 		return "board/boardDetail";
@@ -338,8 +341,10 @@ public class BoardController {
 		log.info("BoardController boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
+		List<Tags> hashTags = tagsService.boardTagDetail(id);
 
 		model.addAttribute("board", boards);
+		model.addAttribute("hashTag", hashTags);
 		model.addAttribute("userId", userId);
 
 		return "board/photoEventBoardDetail"; 
@@ -413,11 +418,18 @@ public class BoardController {
 
 		// DB 삭제 Logic
 		String redirectURL = "";	
+		int tagDeleteResult = 0;
 		
 		try {
 		 	log.info("BoardController boardDelete Start!!");
-			
-		 	boardService.boardDelete(id);
+		 	
+		 	// BoardTags 선 삭제
+		 	tagDeleteResult = tagsService.boardTagDelete(id);
+		 	
+		 	// BoardTags 선 삭제 후 결과값에 따른 Board 삭제
+		 	if(tagDeleteResult > 0 || tagDeleteResult == 0) {
+			 	boardService.boardDelete(id);
+		 	}
 		 	
 		 	// 게시판 분류와 userId 로 redirect 경로 지정
 			if(smallCode == 1) {
@@ -472,7 +484,8 @@ public class BoardController {
 
 	// review 게시물 생성 form Logic
 	@RequestMapping(value = "/boardInsertForm")
-	public String boardInsertForm(String userId, String bigCode, String smallCode, String contentId, String currentPage, Model model) {
+	public String boardInsertForm(String userId, String bigCode, String smallCode, 
+								  String contentId, String currentPage, Model model) {
 
 		log.info("BoardController boardInsertForm start!");
 		log.info("BoardController boardInsertForm userId : {}", userId);
@@ -486,6 +499,7 @@ public class BoardController {
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("currentPage", currentPage);
+		
 		log.info("BoardController boardInsertForm end!");
 
 		return "board/boardInsertForm";
@@ -522,7 +536,8 @@ public class BoardController {
 	
 	// 통합게시물 생성 form Logic	
 	@RequestMapping(value = "/integratedBoardInsertForm")
-	public String integratedBoardInsertForm(String userId, String bigCode, String smallCode, Model model) {
+	public String integratedBoardInsertForm(String userId, String bigCode, 
+											String smallCode, Model model) {
 		
 		log.info("BoardController integratedBoardInsertForm start!");
 		log.info("BoardController integratedBoardInsertForm userId : {}", userId);
@@ -543,7 +558,8 @@ public class BoardController {
 	
 	// 통합게시판 생성 Logic
 	@RequestMapping(value = "/integratedboardInsert")
-	public String integratedboardInsert(Board board, Tags tags, MultipartFile file, int[] tagsList, Model model) {
+	public String integratedboardInsert(Board board, Tags tags, MultipartFile file, 
+										String[] tagsList, Model model) {
 		// value 확인용
 		log.info("BoardController integratedboardInsert Start!!");
 		log.info("BoardController integratedboardInsert userId : {}", board.getUser_id());
@@ -592,17 +608,17 @@ public class BoardController {
 			
 			int boardId = board.getId();
 			
-			// hashTag 값이 있으면 반복문으로 insert query
-			if(tagsList.length > 0) {
-				
-				for (int i : tagsList) {
-					
-					tags.setTag_id(i);
-					tags.setBoard_id(boardId);
-					
-					tagsService.boardTagsInsert(tags);
-				}
-			}
+			// hashTag 값이 있거나 null 아니면 반복문으로 insert query
+	        if (tagsList != null && tagsList.length > 0) {
+	            for (String i : tagsList) {
+	                if (!i.isEmpty()) { // 빈 문자열이 아닌 경우에만 처리
+	                    tags.setTag_id(Integer.parseInt(i));
+	                    tags.setBoard_id(boardId);
+	                    
+	                    tagsService.boardTagsInsert(tags);
+	                }
+	            }
+	        }	    
 						
 			// 게시물 생성 후 Page Handling
 			if (insertBoard > 0 && board.getSmall_code() == 1) {

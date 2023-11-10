@@ -105,25 +105,36 @@
 		</button>
 	</div>
 	<div class="container border p-5">
-		<table class="table">
-			<tr>
-				<th scope="col">제목</th>
-				<td>${board.title }</td>
-				<th scope="col">작성자</th>
-				<td>${board.name }</td>
+		<table class="table table-bordered">
+			<tr class="table-primary">
+				<th scope="col" style="text-align: center;">제목</th>
+				<td style="background-color: white;">${board.title }</td>
+				
+				<th scope="col" style="text-align: center;">작성자</th>
+				<td style="background-color: white;">${board.name }</td>
 			</tr>
-			<tr>
-				<th scope="col">내용</th>
-				<td>${board.content }</td>
+			
+			<tr class="table-primary">
+				<th scope="col" style="text-align: center;">내용</th>
+				<td colspan="3" style="background-color: white;">${board.content }</td>
+			</tr>
+			
+			<tr class="table-primary">
+				<th scope="col" style="text-align: center;">#해시태그</th>
+				<td colspan="7"  style="background-color: white;">	
+					<c:forEach var="tags" items="${hashTag }">
+						<span class="badge rounded-pill text-bg-info">#${tags.name }</span>
+					</c:forEach>
+				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="text-center">
 		<button class="btn btn-primary" onclick="updateBoard(${board.id})">수정</button>
-		<button class="btn btn-danger" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>
+		<button class="btn btn-warning" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>
 		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
 		<!-- 게시판 신고기능 -송환 -->
-		<button class="btn btn-secondary" onclick="report(${board.id})">신고</button>
+		<button class="btn btn-danger" onclick="report(${board.id})">신고</button>
 	</div>
 </body>
 </html>
