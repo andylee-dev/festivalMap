@@ -70,7 +70,7 @@ public class AdminCsController {
 			log.info("[{}]{}:{}",transactionId, "admin Qna", "start");
 			int totalQnaList = qs.totalQnaList(qna);
 			log.info("totalQnaList=>"+totalQnaList);
-			
+			log.info("user_id"+qna.getUser_id());
 			PagingList page = new PagingList(totalQnaList, currentPage);
 			
 			qna.setStart(page.getStart());

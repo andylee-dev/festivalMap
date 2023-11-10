@@ -123,10 +123,15 @@ public class UserController {
 	@RequestMapping(value = "myPage/insertQnaResult")
 	public String insertQnaResult(Qna qna, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		Users user = null;
 		int result = 0;
 		try {
 			log.info("[{}]{}:{}",transactionId, "qnaInsertResult", "start");
+			int userId = us.getLoggedInId();
+			qna.setUser_id(userId);
+			user = us.getUserById(userId);
 			result = qs.insertQna(qna);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "qnaInsertResult", e.getMessage());
 		}finally { 

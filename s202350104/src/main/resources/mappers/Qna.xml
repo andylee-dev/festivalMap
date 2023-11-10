@@ -12,7 +12,9 @@
                (select q.*, u.name, u.password, u.nickname, u.birthday
                 from   qna q, users u
                 where  q.user_id = u.id
+                <if test="user_id != null and user_id != 0">
                 and    q.user_id = #{user_id}
+                </if>
                 order by q.id) a
       )
       WHERE rn BETWEEN #{start} and #{end}
