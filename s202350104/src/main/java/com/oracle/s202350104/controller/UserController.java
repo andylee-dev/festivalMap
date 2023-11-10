@@ -180,18 +180,28 @@ public class UserController {
 	@RequestMapping(value = "myPage/qnaList")
 	public String qnaList(Qna qna , String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+			Users user = null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "qnaList", "start");
-			int totalQnaList = qs.totalQnaList();
-			log.info("totalQnaList=>"+totalQnaList);
-		
+			
+			int userId = us.getLoggedInId();
+			qna.setUser_id(userId);
+			int small_code = qna.getSmall_code();
+			user = us.getUserById(userId);
+			int totalQnaList = qs.totalQnaList(qna);
+			
 			PagingList page = new PagingList(totalQnaList, currentPage);
 		
 			qna.setStart(page.getStart());
 			qna.setEnd(page.getEnd());
-		
+			
+			
+			log.info("qna list"+totalQnaList);
+			log.info("startPage"+page.getStartPage());
+			
 			List<Qna> listQnaList = qs.listQnaList(qna);
-			log.info("listQnaList=>"+listQnaList.size());
+			
+			model.addAttribute("small_code",small_code);
 			model.addAttribute("totalQnaList",totalQnaList);
 			model.addAttribute("listQnaList",listQnaList);
 			model.addAttribute("page",page);
@@ -199,9 +209,18 @@ public class UserController {
 			log.error("[{}]{}:{}",transactionId,  "qnaList", e.getMessage());
 		}finally { 
 			log.info("[{}]{}:{}",transactionId, "qnaList", "end");
-		}	
-		return "user/myPage/myQnaList";
-	}
+		}
+		if(user.getSmall_code() == 2) {
+			return "user/myPage/myQnaList";
+		}else if (user.getSmall_code() == 3) {
+			return "user/bizPage/bizQnaList";
+		
+		}else {
+			return"home";
+			
+		}
+	}	
+	
 	@ResponseBody
 	@RequestMapping(value="/deleteQnaPro")
 	public String deleteQna(Qna qna) {

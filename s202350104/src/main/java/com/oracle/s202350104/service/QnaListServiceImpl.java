@@ -18,8 +18,8 @@ public class QnaListServiceImpl implements QnaListService {
 
 	private final QnaListDao qd;
 	@Override
-	public int totalQnaList() {
-		int totQnaListCnt = qd.totalQnaList();
+	public int totalQnaList(Qna qna) {
+		int totQnaListCnt = qd.totalQnaList(qna);
 				
 		return totQnaListCnt;
 	}

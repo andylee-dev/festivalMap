@@ -18,11 +18,11 @@ public class QnaListDaoImpl implements QnaListDao {
 	private final SqlSession session;
 	
 	@Override
-	public int totalQnaList() {
+	public int totalQnaList(Qna qna) {
 		int totQnaCount = 0;
 		
 		try {
-			totQnaCount = session.selectOne("qnaTotal");
+			totQnaCount = session.selectOne("qnaTotal", qna);
 		} catch (Exception e) {
 			log.info("QnaListDaoImpl totalQnaList Exception => " + e.getMessage());
 		}

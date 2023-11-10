@@ -68,7 +68,7 @@ public class AdminCsController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin Qna", "start");
-			int totalQnaList = qs.totalQnaList();
+			int totalQnaList = qs.totalQnaList(qna);
 			log.info("totalQnaList=>"+totalQnaList);
 			
 			PagingList page = new PagingList(totalQnaList, currentPage);
