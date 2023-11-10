@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>FestivalDetail</title>
+
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -102,12 +103,18 @@
 			<c:forEach var="review" items="${reviewBoard }">
 				<tr>
 					<td class="text-center">${num }</td>
-					<td class="text-center"><a
-						href="../boardDetail?id=${review.id }">${review.content }</a></td>
+					<td class="text-center">
+						<a href="../boardDetail?id=${review.id }">${review.content }</a></td>
 					<td class="text-center">${review.name }</td>
-					<td class="text-center"><fmt:formatDate
-							value="${review.created_at }" type="date" pattern="YYYY/MM/dd" /></td>
-					<td class="text-center">${review.score }</td>
+					
+					<td class="text-center">
+						<fmt:formatDate value="${review.created_at }" type="date" 
+										pattern="YYYY/MM/dd" /></td>
+					
+					<td class="text-center">
+						<c:forEach begin="1" end="${review.score }">★</c:forEach>
+					</td>
+					
 					<td class="text-center">
 						<button class="btn btn-danger" onclick="report(${review.id})">신고</button>
 					</td>
@@ -120,20 +127,23 @@
 				style="display: flex; list-style: none; padding: 0;">
 				<c:choose>
 					<c:when test="${smallCode eq 6}">
-						<li class="page-item"><c:if
-								test="${page.startPage > page.pageBlock }">
-								<a class="page-link"
-									href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-							</c:if></li>
+						<li class="page-item">
+						<c:if test="${page.startPage > page.pageBlock }">
+								<a class="page-link" href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
+							</c:if>
+						</li>
+						
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item"><a class="page-link"
-								href="reviewBoardList?currentPage=${i}">${i}</a></li>
+							<li class="page-item">
+								<a class="page-link" href="reviewBoardList?currentPage=${i}">${i}</a>
+							</li>
 						</c:forEach>
-						<li class="page-item"><c:if
-								test="${page.endPage < page.totalPage }">
-								<a class="page-link"
-									href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-							</c:if></li>
+						
+						<li class="page-item">
+							<c:if test="${page.endPage < page.totalPage }">
+								<a class="page-link" href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
+							</c:if>
+						</li>
 					</c:when>
 				</c:choose>
 			</ul>

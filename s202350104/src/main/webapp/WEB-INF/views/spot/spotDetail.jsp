@@ -116,7 +116,9 @@
 					<td class="text-center">${review.name }</td>
 					<td class="text-center"><fmt:formatDate
 							value="${review.created_at }" type="date" pattern="YYYY/MM/dd" /></td>
-					<td class="text-center">${review.score }</td>
+					<td class="text-center">
+						<c:forEach begin="1" end="${review.score }">★</c:forEach>
+					</td>
 					<td class="text-center">
 						<button class="btn btn-danger" onclick="report(${review.id})">신고</button>
 					</td>
