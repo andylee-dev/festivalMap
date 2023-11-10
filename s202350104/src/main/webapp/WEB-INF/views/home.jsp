@@ -320,7 +320,8 @@
 	
 	<!-- Main Banner 임시 -->
 	<div id="content_title" class="container border p-5">	
-		<div id="carouselExampleIndicators" class="carousel slide">
+		<div id="carouselExampleIndicators" class="carousel slide" 
+			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover" data-bs-wrap="true">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 						data-bs-slide-to="0" class="active" aria-current="true"
