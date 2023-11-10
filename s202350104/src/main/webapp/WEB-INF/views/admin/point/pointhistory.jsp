@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/components/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +9,11 @@
 <title>회원포인트내역</title>
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<div style="overflow-y: auto; max-height: 80vh;">
 	<h1>회원 포인트 내역</h1>
 		<div class="border p-3 m-3">
 				<button type="button" class="btn btn-outline-secondary" 
@@ -34,6 +38,11 @@
 		</c:forEach>
 	</table>
 	</div>
+	</div>
+	</main>
+	</div>
+	</div>
+	
 
 
 </body>
