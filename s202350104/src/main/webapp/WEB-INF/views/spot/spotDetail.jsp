@@ -30,6 +30,10 @@
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "hello popup", windowStatus);
 	}
+	
+	function report(boardId) {
+	    window.open("../reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
+	}
 </script>
 </head>
 <body>
@@ -114,7 +118,7 @@
 							value="${review.created_at }" type="date" pattern="YYYY/MM/dd" /></td>
 					<td class="text-center">${review.score }</td>
 					<td class="text-center">
-						<button class="btn btn-danger" onclick="">신고</button>
+						<button class="btn btn-danger" onclick="report(${review.id})">신고</button>
 					</td>
 				</tr>
 				<c:set var="num" value="${num - 1 }" />
