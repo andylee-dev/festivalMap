@@ -19,6 +19,8 @@ public interface TagsService {
 	List<Tags> listContentTags(int bigCode);
 	List<Tags> searchBoardTagsOne(int boardId);
 	void boardTagsInsert(Tags tags);
+	List<Tags> boardTagDetail(int id);
+	int boardTagDelete(int id);
 	
 
 

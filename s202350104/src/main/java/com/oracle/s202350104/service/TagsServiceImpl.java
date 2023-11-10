@@ -154,6 +154,10 @@ public class TagsServiceImpl implements TagsService {
 		
 	}
 	
+	/*
+	 * 통합게시물 생성 Logic >> boardTagsInsert
+	 * by. 엄민용
+	 * */		
 	@Override
 	public void boardTagsInsert(Tags tags) {
 		log.info("service getTag_id : {}", tags.getTag_id());
@@ -161,6 +165,19 @@ public class TagsServiceImpl implements TagsService {
 		
 		td.boardTagsInsert(tags);
 
+	}
+	
+	@Override
+	public List<Tags> boardTagDetail(int id) {
+		List<Tags> hashTags = td.boardTagDetail(id);
+		return hashTags;
+	}
+	
+	@Override
+	public int boardTagDelete(int id) {
+	 	int deleteResult = td.boardTagDelete(id);	
+	 	
+	 	return deleteResult;
 	}
 
 }

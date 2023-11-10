@@ -17,7 +17,7 @@
         </a>
       </li>
       <li>
-        <a href="/user/bizPage/qna" class="nav-link  ${currentPage eq '/user/bizPage/qna' ? 'active' : 'text-white'}">
+        <a href="/user/myPage/qnaList" class="nav-link  ${currentPage eq '/user/bizPage/qna' ? 'active' : 'text-white'}">
      1:1문의
         </a>
       </li>

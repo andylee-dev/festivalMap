@@ -102,8 +102,23 @@
 		DELETE BoardTags WHERE tag_id = #{id}
 	</delete>
 	
-	<insert id="insertBoardTags" parameterType="Tags">
+	<!-- Board 관련 Mapper by.엄민용 -->
+	<insert id="myinsertBoardTags" parameterType="Tags">
 		insert into BoardTags(tag_id, board_id) values (#{tag_id}, #{board_id})
 	</insert>
-
+	
+	<select id="myBoardTag" resultType="Tags" parameterType="int">
+		select c.title, b.name
+		from BoardTags a
+		join tags b
+		on a.tag_id = b.id
+		join board c
+		on a.board_id = c.id
+		where c.id = #{id}
+	</select>
+	
+	<delete id="mydeleteBoardTags" parameterType="int">
+		delete from BoardTags
+		where board_id = #{id}
+	</delete>
 </mapper>

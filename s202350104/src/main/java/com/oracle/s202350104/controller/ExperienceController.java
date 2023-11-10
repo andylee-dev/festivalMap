@@ -3,16 +3,19 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
-import com.oracle.s202350104.model.Experience;
 import com.oracle.s202350104.model.ExperienceContent;
-import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Report;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ExperienceService;
@@ -27,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ExperienceController {
 
 	private final ExperienceService es;
+	private final AreaService as;
 	private final BoardService boardService;
 	private final BannerService bannerService;
 	
@@ -35,17 +39,26 @@ public class ExperienceController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
-			int totalExperience = es.totalExperience();
+			
+			int path = 0;
+			
+			int totalExperience = es.mainTotalExperience();
 			
 			Paging page = new Paging(totalExperience, currentPage);
 			experience.setStart(page.getStart());
 			experience.setEnd(page.getEnd());
 			
 			List<ExperienceContent> listExperience = es.listExperience(experience);
+			List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
+			List<Areas> listAreas = as.listAreas();
+			
 			
 			model.addAttribute("totalExperience", totalExperience);
 			model.addAttribute("listExperience", listExperience);
+			model.addAttribute("listSmallCode" , listSmallCode);
+			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
 			
 			/*
 			 * Banner Logic 구간 
@@ -127,4 +140,44 @@ public class ExperienceController {
 		return "experience/writeFormExperience";
 	}
 	
+	@GetMapping(value = "experience1")
+	public String listSearch(ExperienceContent experience,String currentPage, Model model, HttpServletRequest request) {
+//	public String listSearch(String big_code,String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "experience", "start");
+			int totalSearchExperience = es.totalMainSearchExperience(experience);
+			
+			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");			
+			
+			Paging page = new Paging(totalSearchExperience, currentPage);
+			experience.setStart(page.getStart());
+			experience.setEnd(page.getEnd());
+			List<Areas> listAreas = as.listAreas();
+			List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
+			List<ExperienceContent> listSearchExperience = es.listMainSearchExperience(experience);
+			
+			model.addAttribute("totalExperience", totalSearchExperience);
+			model.addAttribute("listExperience", listSearchExperience);
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area", area);
+
+	
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "experience", "end");
+		}
+		return "experience/experienceList";
+	}
 }

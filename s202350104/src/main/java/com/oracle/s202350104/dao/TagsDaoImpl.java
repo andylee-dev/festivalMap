@@ -194,12 +194,30 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 	
+	/*
+	 * 통합게시물 생성 Logic 
+	 * by. 엄민용
+	 * >> boardTagsInsert, boardTagDetail, boardTagDelete
+	 * */	
 	@Override
 	public void boardTagsInsert(Tags tags) {
 		log.info("service getTag_id : {}", tags.getTag_id());
 		log.info("service getBoard_id : {}", tags.getBoard_id());
 		
-		session.insert("insertBoardTags", tags);
+		session.insert("myinsertBoardTags", tags);
+	}
+	
+	@Override
+	public List<Tags> boardTagDetail(int id) {
+		List<Tags> hashTags = session.selectList("myBoardTag", id);
+		return hashTags;
+	}
+	
+	@Override
+	public int boardTagDelete(int id) {
+		int deleteResult = session.delete("mydeleteBoardTags", id);
+		
+		return deleteResult;
 	}
 
 }

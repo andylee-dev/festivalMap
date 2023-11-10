@@ -10,17 +10,20 @@
              SELECT rownum rn, a.*
              FROM 
                (select q.*, u.name, u.password, u.nickname, u.birthday
-                from qna q, users u
-                where q.user_id = u.id
-                 order by q.id) a
+                from   qna q, users u
+                where  q.user_id = u.id
+                and    q.user_id = #{user_id}
+                order by q.id) a
       )
       WHERE rn BETWEEN #{start} and #{end}
       
    </select>
    
-   <select id="qnaTotal" resultType="int">
+   <select id="qnaTotal" resultType="int" parameterType="Qna">
    SELECT   count(*)
-   FROM   qna
+   FROM     qna
+   <if test="user_id != null and user_id != 0">
+   where    user_id = #{user_id}</if>
    </select>
    
    <select id="dhDetailQna" resultType="Qna" parameterType="Qna">

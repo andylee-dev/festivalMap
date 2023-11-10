@@ -84,26 +84,38 @@
        		   		</td>
     			</c:if>
 			</tr>
+			
 			<tr class="table-primary">
 				<th scope="col" style="text-align: center;">내용</th>
 				<td colspan="7" style="background-color: white;">${board.content }</td>
 			</tr>
+			
 			<tr class="table-primary">
 				<th scope="col" style="text-align: center;">첨부파일명</th>
 				<td colspan="7" style="background-color: white;">${board.file_name }</td>
 			</tr>
+			
 			<tr class="table-primary">
 				<th scope="col" style="text-align: center;">이미지경로</th>
 				<td colspan="7" style="background-color: white;">${board.file_path }</td>
+			</tr>
+			
+			<tr class="table-primary">
+				<th scope="col" style="text-align: center;">#해시태그</th>
+				<td colspan="7"  style="background-color: white;">	
+					<c:forEach var="tags" items="${hashTag }">
+						<span class="badge rounded-pill text-bg-info">#${tags.name }</span>
+					</c:forEach>
+				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="text-center">
 		<button class="btn btn-primary" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수정</button>
-		<button class="btn btn-danger" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭제</button>
+		<button class="btn btn-warning" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭제</button>
 		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
 		<!-- 게시판 신고기능 -송환 -->
-		<button class="btn btn-secondary" onclick="report(${board.id})">신고</button>
+		<button class="btn btn-danger" onclick="report(${board.id})">신고</button>
 	</div>
 </body>
 </html>
