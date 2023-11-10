@@ -21,8 +21,8 @@ public class TagsServiceImpl implements TagsService {
 	private final TagsDao td;
 	
 	@Override
-	public int totalTags() {
-		int totalTagsCnt = td.totalTags();
+	public int totalTags(Tags tags) {
+		int totalTagsCnt = td.totalTags(tags);
 		return totalTagsCnt;
 	}
 	

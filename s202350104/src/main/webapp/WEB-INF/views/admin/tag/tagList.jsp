@@ -46,9 +46,11 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="list">
+						검색어<input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					</form>	
 				</div>		
 				
 				<!-- Section3: Table -->		

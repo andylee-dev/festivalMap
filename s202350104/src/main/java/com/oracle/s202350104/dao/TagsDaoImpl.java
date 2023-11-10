@@ -19,10 +19,10 @@ public class TagsDaoImpl implements TagsDao {
 	private final SqlSession session;
 
 	@Override
-	public int totalTags() {
+	public int totalTags(Tags tags) {
 		int totalTagsCnt = 0;
 		try {
-			totalTagsCnt = session.selectOne("nhTagsTotal");
+			totalTagsCnt = session.selectOne("nhTagsTotal", tags);
 		} catch(Exception e) {
 			log.info("TagsDaoImpl totalTags() => " + e.getMessage());
 		}
@@ -33,7 +33,7 @@ public class TagsDaoImpl implements TagsDao {
 	public List<Tags> listTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhTagsListPage", tags);
+			listTags = session.selectList("nhTagsListAll", tags);
 			log.info("TagsDaoImpl listTags() => " + listTags.size());
 		} catch(Exception e) {
 			log.info("TagsDaoImpl listTags() => " + e.getMessage());

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.oracle.s202350104.model.Tags;
 
 public interface TagsDao {
-	int totalTags();
+	int totalTags(Tags tags);
 	List<Tags> listTags(Tags tag);
 	int totalUserTags();
 	int totalBoardTags();

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.oracle.s202350104.model.Tags;
 
 public interface TagsService {
-	int totalTags();
+	int totalTags(Tags tags);
 	List<Tags> listTags(Tags tags);
 	List<Tags> listTagsAll();
 	int insertTags(Tags tags);

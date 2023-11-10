@@ -56,7 +56,7 @@ public class AdminTagController {
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "tagList", "start");
-			int totalTags = ts.totalTags();
+			int totalTags = ts.totalTags(tags);
 			
 			PagingList page = new PagingList(totalTags, currentPage);
 			tags.setStart(page.getStart());
