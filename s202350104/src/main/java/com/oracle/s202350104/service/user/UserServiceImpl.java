@@ -1,11 +1,13 @@
 package com.oracle.s202350104.service.user;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,27 @@ public class UserServiceImpl implements UserService {
 		}
 		return userId;
 	}
+	
+	/**
+	 * @return ADMIN:1 / USER:2 / BIZ:3 / etc:0
+	 */
+	@Override
+	public int getLoggedInUserRole() {
+		int role = 0;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		@SuppressWarnings("unchecked")
+		Collection<SimpleGrantedAuthority> authorities =(Collection<SimpleGrantedAuthority>) authentication.getAuthorities();
+		log.info("{}",authorities.toString());
+		if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))){
+			role = Role.ADMIN.getKey();
+		} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("BIZ"))){
+			role = Role.BIZ.getKey();
+		} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("USER"))){
+			role = Role.USER.getKey();
+		}		
+		return role;
+	}
+	
 	@Override
 	public int totalUsers(Users user) {
 		int totalCount = ud.totalUsers(user);

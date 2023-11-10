@@ -42,8 +42,8 @@ public class UserController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "myPage", "start");
-			
 			int userId = us.getLoggedInId();
+			log.info("userId:{}/ userRole:{}",userId,us.getLoggedInUserRole());
 			Users user = us.getUserById(userId);
 			model.addAttribute("user",user);
 		} catch (Exception e) {
