@@ -11,7 +11,7 @@
 		FROM   experience e, contents c
 		WHERE  e.content_id = c.id
 		AND 	c.status = 1
-		AND is_deleted = 0
+		AND 	is_deleted = 0
 	</select>
 
 	<select id="shExperienceListAll" resultType="ExperienceContent">

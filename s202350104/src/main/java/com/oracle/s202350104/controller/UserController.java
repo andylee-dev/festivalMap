@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.QnaListService;
@@ -31,6 +33,8 @@ public class UserController {
 	
 	private final QnaListService qs;
 	private final UserService us;
+	private final CommonCodeService cs;
+	private final TagsService ts;
 	
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -76,7 +80,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value="bizPage/addContent")
-	public String bizAddContent() {
+	public String bizAddContent(Model model) {
+		Tags tag = new Tags();
+		
+		List<CommonCodes> listCodes = cs.listCommonCode();
+		List<Tags> listTags = ts.listTags(tag);
+		model.addAttribute("listTags", listTags);
+		model.addAttribute("listCodes", listCodes);
+		
 		return "user/bizPage/bizContentInsert";
 	}
 

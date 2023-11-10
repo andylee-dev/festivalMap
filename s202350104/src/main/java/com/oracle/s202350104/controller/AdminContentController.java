@@ -51,6 +51,7 @@ import lombok.RequiredArgsConstructor;
 		private final AreaService ars;
 		private final CommonCodeService cs;
 		private final TagsService ts;
+		private final UserService us;
 		
 		@RequestMapping(value = "festival")
 		public String festival(FestivalsContent festival, String currentPage, Model model) {
@@ -988,6 +989,8 @@ import lombok.RequiredArgsConstructor;
 		@RequestMapping(value = "experienceInsert")
 		public String experienceInsert(ExperienceContent experience, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			int role = us.getLoggedInUserRole();
+			log.info("role->"+role);
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "start");
 				int result = es.insertExperience(experience);
@@ -997,7 +1000,11 @@ import lombok.RequiredArgsConstructor;
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "end");
 			}		
-			return "redirect:experience";
+			if (role == 1) {
+				return "redirect:experience";
+			}else 
+				return "redirect:/user/bizPage";
+			
 		}
 		
 		@GetMapping(value = "experience1")
