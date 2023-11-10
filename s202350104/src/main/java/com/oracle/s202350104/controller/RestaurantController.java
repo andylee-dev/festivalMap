@@ -94,75 +94,99 @@ public class RestaurantController {
 		}
 		
 		return listAreas;
-	}
-	
+	}	
 	
 	
 	@GetMapping(value= "/restaurant/detail")
 	public String restuarntDetail(int contentId, String currentPage, Board board, Model model) {
+		
 		UUID transactionId = UUID.randomUUID();
+		 
+		RestaurantsContent restaurant = null;
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "Start");
-			RestaurantsContent restaurant = rs.detailRestaurant(contentId);
 			
+			// 상세정보 Logic 구간
+			restaurant = rs.detailRestaurant(contentId);
+			
+			model.addAttribute("restaurant", restaurant);
+			
+			/*
+			 * review page handling용
+			 * by 엄민용 
+			 * */
 			log.info("restuarntDetail contentId : {} ", contentId);
 			log.info("restuarntDetail currentPage : {} ", currentPage);
 			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
-			model.addAttribute("restaurant", restaurant);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail Exception", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "End");
 		}
-		log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "End");
 		
 		/*
 		 * review Logic 구간 
 		 * by 엄민용
 		 * */
-		log.info("controller reviewBoardList Start!!");
+		log.info("RestaurantController reviewBoardList Start!!");
+		
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
 		int userId = 1;
+		int countBoard = 0;
 		
-		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
+		// review별 count용
+		board.setCommBigCode(restaurant.getBig_code());
+		board.setCommSmallCode(restaurant.getSmall_code());		
 		
-		// Paging 작업
-		// Parameter board page 추가
-		Paging page = new Paging(countBoard, currentPage);
 		
-		board.setStart(page.getStart());
-		board.setEnd(page.getEnd());
-		board.setContent_id(contentId);
-		
-		log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
-		log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());
-		
-		List<Board> revicewAllList = boardService.getReviewAllList(board); 
-		log.info("controller revicewAllList size : {}", revicewAllList.size());
+		try {
+			// smallCode를 이용해 countBoard를 설정
+			countBoard = boardService.boardCount2(board);
+			
+			// Paging 작업
+			// Parameter board page 추가
+			Paging page = new Paging(countBoard, currentPage);
+			
+			board.setStart(page.getStart());
+			board.setEnd(page.getEnd());
+			board.setContent_id(contentId);
+			
+			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			
+			log.info("RestaurantController reviewBoardList before board.getStart : {} ", board.getStart());
+			log.info("RestaurantController reviewBoardList before board.getEnd : {} ", board.getEnd());
+			log.info("RestaurantController reviewBoardList before board.getEnd : {} ", board.getContent_id());
+			log.info("RestaurantController revicewAllList size : {}", reviewAllList.size());
+			log.info("RestaurantController reviewBoardList after board.getStart : {} ", board.getStart());
+			log.info("RestaurantController reviewBoardList after board.getEnd : {} ", board.getEnd());
+			
+			if(reviewAllList.size() != 0) {
+				bigCode = reviewAllList.get(0).getBig_code();
+			} else {
+				log.error("RestaurantController review 값이 없습니다.");
+			}
+			
+			log.info("RestaurantController reviewBoardList totalBoard : {} ", countBoard);
+			log.info("RestaurantController reviewBoardList smallCode : {} ", smallCode);
+			log.info("RestaurantController reviewBoardList page : {} ", page);
 
-		log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
-		
-		if(revicewAllList.size() != 0) {
-			bigCode = revicewAllList.get(0).getBig_code();
+			model.addAttribute("reviewBoard", reviewAllList);
+			model.addAttribute("page", page);
+			model.addAttribute("bigCode", bigCode);
+			model.addAttribute("smallCode", smallCode);
+			model.addAttribute("userId", userId);
+			
+		} catch (Exception e) {
+			log.error("RestaurantController reviewBoard error : {}", e.getMessage());
+		} finally {
+			log.info("RestaurantController reviewBoard end..");
 		}
-		
-		log.info("controller reviewBoardList totalBoard : {} ", countBoard);
-		log.info("controller reviewBoardList smallCode : {} ", smallCode);
-		log.info("controller reviewBoardList page : {} ", page);
-
-		model.addAttribute("reviewBoard", revicewAllList);
-		model.addAttribute("page", page);
-		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
-		model.addAttribute("userId", userId);
-		
-		log.info("controller reviewBoardList End..");
 		
 		return "restaurant/restaurantDetail";
 	}

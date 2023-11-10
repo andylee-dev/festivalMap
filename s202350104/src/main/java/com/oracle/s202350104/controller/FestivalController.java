@@ -36,12 +36,15 @@ public class FestivalController {
 
 	@GetMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
+		
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
+			
 			festival.setIs_deleted("0");
 			festival.setStatus("1");
+			
 			int totalFestivals = fs.totalFestivals(festival);
 			
 			Paging page = new Paging(totalFestivals, currentPage);
@@ -83,20 +86,25 @@ public class FestivalController {
 								 Board board, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
+		FestivalsContent festival = null;
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
-			log.info("festivalDetail contentId : {} ", contentId);
-			log.info("festivalDetail currentPage : {} ", currentPage);
-
-			FestivalsContent festival = fs.detailFestivals(contentId);
+			
+			// 상세정보 Logic 구간
+			festival = fs.detailFestivals(contentId);
+			
 			int result = fs.readcountUp(contentId);
 			
 			model.addAttribute("festival", festival);
 			
 			/*
-			 * review Logic용  
+			 * review page handling용
 			 * by 엄민용 
 			 * */
+			log.info("festivalDetail contentId : {} ", contentId);
+			log.info("festivalDetail currentPage : {} ", currentPage);
+			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
 
@@ -111,47 +119,66 @@ public class FestivalController {
 		 * by 엄민용
 		 * */
 		log.info("FestivalController review Start!!");
+		
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
 		int userId = 1;
 		int countBoard = 0;
 		
+		// review별 count용
+		board.setCommBigCode(festival.getBig_code());
+		board.setCommSmallCode(festival.getSmall_code());
+		
+		// debug용
+		/*
+		 * int commCode = board.getCommBigCode(); int commCode2 =
+		 * board.getCommSmallCode(); int commCode3 = board.getId();
+		 * log.info("FestivalController commCode : {}", commCode);
+		 * log.info("FestivalController commCode2 : {}", commCode2);
+		 * log.info("FestivalController commCode3 : {}", commCode3);
+		 */
+		
 		try {
 			// smallCode를 이용해 countBoard를 설정
-			countBoard = boardService.boardCount(smallCode);
+			countBoard = boardService.boardCount2(board);
 			
 			// Paging 작업
 			// Parameter board page 추가
-			Paging page = new Paging(countBoard, currentPage);
+			Paging page = new Paging(countBoard, currentPage);			
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
+			
+			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			
 			log.info("FestivalController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getEnd());
 			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getContent_id());
-			
-			List<Board> revicewAllList = boardService.getReviewAllList(board); 
-			log.info("FestivalController revicewAllList size : {}", revicewAllList.size());
-
+			log.info("FestivalController revicewAllList size : {}", reviewAllList.size());
 			log.info("FestivalController reviewBoardList after board.getStart : {} ", board.getStart());
 			log.info("FestivalController reviewBoardList after board.getEnd : {} ", board.getEnd());
 
-			bigCode = revicewAllList.get(0).getBig_code();
+			if(reviewAllList.size() != 0) {
+				bigCode = reviewAllList.get(0).getBig_code();
+			} else {
+				log.error("FestivalController review 값이 없습니다.");
+			}
 
 			log.info("FestivalController reviewBoardList totalBoard : {} ", countBoard);
 			log.info("FestivalController reviewBoardList smallCode : {} ", smallCode);
 			log.info("FestivalController reviewBoardList page : {} ", page);
 
-			model.addAttribute("reviewBoard", revicewAllList);
+			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);
 			model.addAttribute("userId", userId);
+			
 		} catch (Exception e) {
-			log.error("FestivalController review error : {}", e.getMessage());
+			log.error("FestivalController reviewBoard error : {}", e.getMessage());
 		} finally {
-			log.info("FestivalController review end..");
+			log.info("FestivalController reviewBoard end..");
 		}
 		
 		return "festival/festivalDetail";

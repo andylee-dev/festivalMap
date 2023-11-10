@@ -33,5 +33,7 @@ public class Board {
 	private String pageNum;
 	private int start;
 	private int end;
+	private int commBigCode;
+	private int commSmallCode;
 	
 }

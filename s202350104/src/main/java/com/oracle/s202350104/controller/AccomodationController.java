@@ -33,12 +33,15 @@ public class AccomodationController {
 	
 	@GetMapping(value = "/accomodation")
 	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
+		
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}", transactionId, "accomodation", "start");
+			
 			int totalAccomodation = as.totalAccomodation();
 			
-			Paging page = new Paging(totalAccomodation, currentPage);
+			Paging page = new Paging(totalAccomodation, currentPage);			
 			accomodation.setStart(page.getStart());
 			accomodation.setEnd(page.getEnd());
 			
@@ -51,7 +54,7 @@ public class AccomodationController {
 			model.addAttribute("page", page);
 			
 			/*
-			 * Banner Logic 구간 
+			 * Banner Logic 구간 --> bannerHeader, bannerFooter
 			 * by 엄민용
 			 * */
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
@@ -72,68 +75,83 @@ public class AccomodationController {
 	@GetMapping(value = "/accomodation/detail")
 	public String accomodationDetail(int contentId, String currentPage, Board board, Model model) {
 		log.info("AccomodationController detailAccomodation Start...");
-
+		
+		// 상세정보 Logic 구간
 		AccomodationContent accomodation = as.detailAccomodation(contentId);
 		
+		model.addAttribute("accomodation", accomodation);
+		
+		/*
+		 * review page handling용
+		 * by 엄민용 
+		 * */
 		log.info("accomodationDetail contentId : {} ", contentId);
 		log.info("accomodationDetail currentPage : {} ", currentPage);
 		
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("contentId", contentId);
-		model.addAttribute("accomodation", accomodation);
 		
 		/*
 		 * review Logic 구간 
 		 * by 엄민용
 		 * */
-		log.info("FestivalController review Start!!");
+		log.info("AccomodationController review Start!!");
+		
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
 		int userId = 1;
 		int countBoard = 0;
 		
+		// review별 count용
+		board.setCommBigCode(accomodation.getBig_code());
+		board.setCommSmallCode(accomodation.getSmall_code());
+		
 		try {
 			// smallCode를 이용해 countBoard를 설정
-			countBoard = boardService.boardCount(smallCode);
+			countBoard = boardService.boardCount2(board);
 			
 			// Paging 작업
 			// Parameter board page 추가
 			Paging page = new Paging(countBoard, currentPage);
+			
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
-			log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
-			log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
-			log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());
 			
-			List<Board> revicewAllList = boardService.getReviewAllList(board); 
-			log.info("controller revicewAllList size : {}", revicewAllList.size());
+			List<Board> reviewAllList = boardService.getReviewAllList(board);
+			
+			log.info("AccomodationController reviewBoardList before board.getStart : {} ", board.getStart());
+			log.info("AccomodationController reviewBoardList before board.getEnd : {} ", board.getEnd());
+			log.info("AccomodationController reviewBoardList before board.getEnd : {} ", board.getContent_id());
+			log.info("AccomodationController reviewAllList size : {}", reviewAllList.size());
+			log.info("AccomodationController reviewBoardList after board.getStart : {} ", board.getStart());
+			log.info("AccomodationController reviewBoardList after board.getEnd : {} ", board.getEnd());
 
-			log.info("controller reviewBoardList after board.getStart : {} ", board.getStart());
-			log.info("controller reviewBoardList after board.getEnd : {} ", board.getEnd());
+			if(reviewAllList.size() != 0) {
+				bigCode = reviewAllList.get(0).getBig_code();
+			} else {
+				log.error("AccomodationController review 값이 없습니다.");
+			}
 
-			bigCode = revicewAllList.get(0).getBig_code();
+			log.info("AccomodationController reviewBoardList totalBoard : {} ", countBoard);
+			log.info("AccomodationController reviewBoardList smallCode : {} ", smallCode);
+			log.info("AccomodationController reviewBoardList page : {} ", page);
 
-			log.info("controller reviewBoardList totalBoard : {} ", countBoard);
-			log.info("controller reviewBoardList smallCode : {} ", smallCode);
-			log.info("controller reviewBoardList page : {} ", page);
-
-			model.addAttribute("reviewBoard", revicewAllList);
+			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);
 			model.addAttribute("userId", userId);
+			
 		} catch (Exception e) {
-			log.error("FestivalController review error : {}", e.getMessage());
+			log.error("AccomodationController reviewBoard error : {}", e.getMessage());
 		} finally {
-			log.info("FestivalController review end..");
+			log.info("AccomodationController reviewBoard end..");
 		}
 		
-		return "accomodation/accomodationDetail";
-			
+		return "accomodation/accomodationDetail";		
 		
 	}
-	
 	
 }

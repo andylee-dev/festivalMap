@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.FestivalsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardDaoImpl implements BoardDao {
 
 	private final SqlSession session;
+	
+	@Override
+	public int boardCount2(Board board) {
+		int countBoardResult = session.selectOne("boardCount2", board);
+		log.info("BoardDao boardCount2 countBoardResult : {}", countBoardResult);
+		return countBoardResult;
+	}
 
 	// 조회수 증가 logic
 	public void readCountUp(int boardId) {
@@ -31,7 +39,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	// Paging 처리용
 	@Override
-	public int boardCount(int smallCode) {
+	public int boardCount(int commCode, int smallCode) {
 
 		int countBoard = 0;
 

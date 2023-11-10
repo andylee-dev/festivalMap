@@ -36,7 +36,9 @@ public class ExperienceController {
 	
 	@RequestMapping(value = "experience")
 	public String experience(ExperienceContent experience,String currentPage, Model model) {
+		
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
 			
@@ -80,30 +82,40 @@ public class ExperienceController {
 	@RequestMapping(value = "experience/detail")
 	public String experienceDetail(int contentId, String currentPage, 
 								   Board board, Model model) {
-		
+		// 상세정보 Logic 구간
 		ExperienceContent experience = es.detailExperience(contentId);
 		
-		log.info("experienceDetail contentId : {} ", contentId);
-		log.info("experienceDetail currentPage : {} ", currentPage);
+		model.addAttribute("experience", experience);
+		
+		/*
+		 * review page handling용
+		 * by 엄민용 
+		 * */
+		log.info("ExperienceDetail contentId : {} ", contentId);
+		log.info("ExperienceDetail currentPage : {} ", currentPage);
 		
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("contentId", contentId);
-		model.addAttribute("experience", experience);
 		
 		/*
 		 * review Logic 구간 
 		 * by 엄민용
 		 * */
 		log.info("ExperienceController review Start!!");
+		
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
 		int userId = 1;
 		int countBoard = 0;
 		
+		// review별 count용
+		board.setCommBigCode(experience.getBig_code());
+		board.setCommSmallCode(experience.getSmall_code());
+		
 		try {
 			// smallCode를 이용해 countBoard를 설정
-			countBoard = boardService.boardCount(smallCode);
+			countBoard = boardService.boardCount2(board);
 			
 			// Paging 작업
 			// Parameter board page 추가
@@ -111,31 +123,36 @@ public class ExperienceController {
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
+			
+			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			
 			log.info("ExperienceController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("ExperienceController reviewBoardList before board.getEnd : {} ", board.getEnd());
 			log.info("ExperienceController reviewBoardList before board.getEnd : {} ", board.getContent_id());
-			
-			List<Board> revicewAllList = boardService.getReviewAllList(board); 
-			log.info("ExperienceController revicewAllList size : {}", revicewAllList.size());
-
+			log.info("ExperienceController revicewAllList size : {}", reviewAllList.size());
 			log.info("ExperienceController reviewBoardList after board.getStart : {} ", board.getStart());
 			log.info("ExperienceController reviewBoardList after board.getEnd : {} ", board.getEnd());
 
-			bigCode = revicewAllList.get(0).getBig_code();
+			if(reviewAllList.size() != 0) {
+				bigCode = reviewAllList.get(0).getBig_code();
+			} else {
+				log.error("ExperienceController review 값이 없습니다.");
+			}
 
 			log.info("ExperienceController reviewBoardList totalBoard : {} ", countBoard);
 			log.info("ExperienceController reviewBoardList smallCode : {} ", smallCode);
 			log.info("ExperienceController reviewBoardList page : {} ", page);
 
-			model.addAttribute("reviewBoard", revicewAllList);
+			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);
 			model.addAttribute("userId", userId);
+			
 		} catch (Exception e) {
-			log.error("ExperienceController review error : {}", e.getMessage());
+			log.error("ExperienceController reviewBoard error : {}", e.getMessage());
 		} finally {
-			log.info("ExperienceController review end..");
+			log.info("ExperienceController reviewBoard end..");
 		}
 		
 		return "experience/experienceDetail";

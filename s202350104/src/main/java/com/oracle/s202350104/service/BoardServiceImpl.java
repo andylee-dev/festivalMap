@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oracle.s202350104.dao.BoardDao;
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.FestivalsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,17 @@ public class BoardServiceImpl implements BoardService {
 
 	private final BoardDao boardDao;
 	
+	@Override
+	public int boardCount2(Board board) {
+		int countBoard = boardDao.boardCount2(board);
+		return countBoard;
+	}
+	
 	// paging 처리용
 	@Override
-	public int boardCount(int smallCode) {
+	public int boardCount(int commCode, int smallCode) {
 		
-		int countBoard = boardDao.boardCount(smallCode);
+		int countBoard = boardDao.boardCount(commCode,smallCode);
 		
 		return countBoard;
 	}

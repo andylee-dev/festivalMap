@@ -104,7 +104,7 @@
 				<tr>
 					<td class="text-center">${num }</td>
 					<td class="text-center">
-						<a href="../boardDetail?id=${review.id }">${review.content }</a></td>
+						<a href="../boardDetail?id=${review.id }&userId=${userId}">${review.content }</a></td>
 					<td class="text-center">${review.name }</td>
 					
 					<td class="text-center">
