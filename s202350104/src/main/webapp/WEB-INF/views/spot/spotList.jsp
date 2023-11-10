@@ -32,30 +32,21 @@
 
 			
 		</style>
-		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		<!-- 지역 코드 넣는 코드  Start-->	
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
-			function getSigungu(pArea){
-				$.ajax(
-					{
-						url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
-						data:pArea,
-						dataType:'json',
-						success:function(areas){
-							$('#sigungu_list_select option').remove();
-							str = "<option value='0'>전체</option>";
-							$(areas).each(
-								function() {
-										strOption = "<option value='"+this.sigungu+"'>"+this.content+"</option>";
-										str += strOption;
-								}		
-							)
-							$('#sigungu_list_select').append(str);
-						}
-					}		
-				
-				)
-			}
-			
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+					}
+				});
+			});
 		</script>
 	</head>
 	<body>
@@ -93,15 +84,10 @@
 			<input type="text" name="keyword" placeholder="명소이름을 입력하세요">
 			<button type="submit" class="btn btn-outline-secondary">명소이름검색</button>
 			<button type="reset" name="deleted" class="btn btn-outline-secondary">초기화</button><p>
-			<select name="area" onchange="getSigungu(this.value)">
-				<option value="0">전체</option>
-				<c:forEach var="areas" items="${listAreas}">
-					<c:if test="${areas.sigungu == 999}">
-						<option value="${areas.area}">${areas.content}</option>
-					</c:if>
-				</c:forEach>
-			</select>
-			<select name="sigungu" id="sigungu_list_select"></select>
+			<div class="container">
+					<select name="area" class="area-dropdown"></select>
+					<select name="sigungu"  class="sigungu-dropdown"></select>
+			</div>
 		</div>
 		</form>
 		<div class="album py-5 bg-body-tertiary">

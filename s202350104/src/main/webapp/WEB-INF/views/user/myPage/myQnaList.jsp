@@ -54,53 +54,53 @@
 			<!-- Section2: Search Form -->		
 			<div class="border p-3 m-3">
 				<h1 class="border">검색폼</h1>
-				<button type="button" class="btn btn-outline-secondary">검색</button>
-				<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<button type="button" class="btn btn-outline-secondary">검색</button>
+					<button type="button" class="btn btn-outline-secondary">초기화</button>
 			</div>		
 			
 			<!-- Section3: Table -->		
 			<div class="border p-3 m-3">
 				<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertQnaForm'">등록</button>
-				<table class="table table-striped table-sm">
-					<thead>
-						<tr>
-							<th scope="col">순번</th>
-							<th scope="col">문의제목</th>
-							<th scope="col">문의내용</th>
-							<th scope="col">작성일</th>
-							<th scope="col">진행상태</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:set var="num" value="${page.start}"/>
-						<c:forEach var="qna" items="${listQnaList}" varStatus="status">
-							<input type="hidden" name="user_id" value="${qna.user_id}" id="user_id${status.index}">
-							<input type="hidden" name="id" value="${qna.id}" id="id${status.index}">
-							<tr id="qna${status.index}">
-								<td>${num}</td>
-								<td><a href="qnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
-								<td>${qna.question_content}</td>
-								<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
-								<td><c:if test="${qna.status == 0}">답변대기</c:if>
-									<c:if test="${qna.status == 1}">답변완료</c:if>
-								<td><input type="button" onclick="location.href='updateQnaForm?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
-								<td><input type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
+					<table class="table table-striped table-sm">
+						<thead>
+							<tr>
+								<th scope="col">순번</th>
+								<th scope="col">문의제목</th>
+								<th scope="col">문의내용</th>
+								<th scope="col">작성일</th>
+								<th scope="col">진행상태</th>
 							</tr>
+						</thead>
+						<tbody>
+							<c:set var="num" value="${page.start}"/>
+							<c:forEach var="qna" items="${listQnaList}" varStatus="status">
+								<input type="hidden" name="user_id" value="${qna.user_id}" id="user_id${status.index}">
+								<input type="hidden" name="id" value="${qna.id}" id="id${status.index}">
+									<tr id="qna${status.index}">
+										<td>${num}</td>
+										<td><a href="qnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
+										<td>${qna.question_content}</td>
+										<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
+										<td><c:if test="${qna.status == 0}">답변대기</c:if>
+											<c:if test="${qna.status == 1}">답변완료</c:if>
+										<td><input type="button" onclick="location.href='updateQnaForm?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
+										<td><input type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
+									</tr>
 							<c:set var="num" value="${num + 1}"/>
-						</c:forEach>
-					</tbody>
-				</table>
-			<div align="center">
-				<c:if test="${page.startPage > page.pageBlock}">
-					<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="qnaList?currentPage=${i}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${page.endPage < page.totalPage}">
-					<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-				</c:if>
-			</div>
+							</c:forEach>
+						</tbody>
+					</table>
+				<div align="center">
+					<c:if test="${page.startPage > page.pageBlock}">
+						<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<a href="qnaList?currentPage=${i}">[${i}]</a>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage}">
+						<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+					</c:if>
+				</div>
 			</div>		
 		</main>
 	</div>

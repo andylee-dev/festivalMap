@@ -20,18 +20,19 @@
 					<h1 class="border">1:1문의 상세내역</h1>
 				</div>
 				<div class="container border p-4 mb-4">
-				<c:if test="${msg != null}">${msg}</c:if>
-				<form action="insertQnaResult" method="post">
-						제목 <input type="text" name="question_title"><br>
-						내용<input type="text" name="question_content"><br>
-						   <input type="submit" value="등록">
-					</form>
+					<c:if test="${msg != null}">${msg}</c:if>
+						<form action="insertQnaResult" method="post">
+							제목 <input type="text" name="question_title"><br>
+							내용<input type="text" name="question_content"><br>
+						  	 <input type="submit" value="등록">
+						</form>
+				</div>
+				<div class="text-center">
+					<input type="button" value="목록" onclick="location.href='qnaList'">
+				</div>
+			</main>
 		</div>
-		<div class="text-center">
-			<input type="button" value="목록" onclick="location.href='qnaList'">
 		</div>
-				</main>
-			</div>
-			</div>
+		</div>
 	</body>
 </html>

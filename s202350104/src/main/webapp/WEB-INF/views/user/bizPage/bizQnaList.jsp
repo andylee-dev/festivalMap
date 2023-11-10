@@ -86,24 +86,24 @@
 								<td><input type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
 								</td>
 							</tr>
-							<c:set var="num" value="${num + 1}"/>
+						<c:set var="num" value="${num + 1}"/>
 						</c:forEach>
 					</tbody>
 				</table>
-			<div align="center">
-				<c:if test="${page.startPage > page.pageBlock}">
-					<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="qnaList?currentPage=${i}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${page.endPage < page.totalPage}">
-					<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-				</c:if>
-			</div>
+					<div align="center">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<a href="qnaList?currentPage=${i}">[${i}]</a>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+						</c:if>
+					</div>
 			</div>		
-		</main>
-	</div>
-	</div>
+			</main>
+		</div>
+		</div>
 </body>
 </html>
