@@ -6,35 +6,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 정보 등록</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" />
- 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" type="module"></script>
-		<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
-		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-		
-		<style>
-		  .form-control-focus {
-		  color: #212529;
-		  background-color: #fff;
-		  border-color: #86b7fe;
-		  outline: 0;
-		  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-		}
-		
-		.was-validated :valid + .form-control-focus {
-		  border-color: #198754;
-		  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
-		}
-		
-		.was-validated :invalid + .form-control-focus {
-		  border-color: #dc3545;
-		  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-		}
-		</style>
-		
-		<script type="module">
-   			import Tags from "https://cdn.jsdelivr.net/gh/lekoala/bootstrap5-tags@master/tags.js";
-    		Tags.init("select");
- 		</script>
+<!-- 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" />
+ 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" type="module"></script> -->
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
  		
  		<!-- 지역 코드 넣는 코드  Start-->	
 		<script src="/js/updateArea.js"></script>
@@ -46,12 +20,58 @@
 					if (selectedArea) {
 						updateSigunguOptions(selectedArea);
 					} else {
-						$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 					}
 				});
 			});
+		<!-- 지역 코드 넣는 코드  End-->
+			
+		      document.addEventListener("DOMContentLoaded", function() {
+		          const badgeSelect = document.querySelector('#badgeSelect');
+		          const addBadgeBtn = document.querySelector('#addBadgeBtn');
+		          const badgesArea = document.querySelector('#badgesArea');
+
+		          // Initialize the list of available badges
+		          const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
+
+		          addBadgeBtn.addEventListener('click', () => {
+		            if (badgeSelect.value !== '') {
+		              // Create a new badge and add it to the page
+		              const newBadge = document.createElement('span');
+		              newBadge.className = 'badge bg-primary';
+		              newBadge.textContent = badgeSelect.value;
+
+		              const closeButton = document.createElement('button');
+		              closeButton.className = 'btn-close';
+		              closeButton.setAttribute('aria-label', 'Close');
+		              closeButton.addEventListener('click', (event) => {
+		                // When the badge is deleted, add its value back to the select box
+		                const deletedBadgeValue = event.target.parentElement.textContent.trim();
+		                availableBadges.push(deletedBadgeValue);
+		                updateSelectOptions();
+		                event.target.parentElement.remove();
+		              });
+
+		              newBadge.appendChild(closeButton);
+		              badgesArea.appendChild(newBadge);
+
+		              // Remove the added badge's value from the select box
+		              availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
+		              updateSelectOptions();
+		              badgeSelect.value = '';
+		            }
+		          });
+
+		          function updateSelectOptions() {
+		            badgeSelect.innerHTML = '<option value="">Select a badge</option>';
+		            availableBadges.forEach(badge => {
+		              const option = document.createElement('option');
+		              option.value = badge;
+		              option.textContent = badge;
+		              badgeSelect.appendChild(option);
+		            });
+		          }
 		</script>
-		<!-- 지역 코드 넣는 코드  End-->	
 	</head>
 	
 	<body>
@@ -70,10 +90,6 @@
 					<form action="festival/insert" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<table class="table table-striped table-sm">
-	<%-- 						<tr>
-								<th>컨텐츠 ID</th>
-								<td>${festival.content_id}</td>
-							</tr> 등록할 때 컨텐츠 번호를 확인할 수 있으면 좋을 것 같다(nextval, 입력할 때는 currval) --%>
 							<tr>
 								<th>분류</th>
 								<td>
@@ -84,7 +100,7 @@
 												<option value="${code.small_code}">${code.content}</option>
 											</c:if>
 										</c:forEach>
-									</select></td> <!-- select box -->
+									</select></td>
 							</tr>
 							<tr>
 								<th>축제명</th>
@@ -157,19 +173,7 @@
 							<tr>
 								<th>태그</th>
 								<td>
-									 <div class="container">
-										<div class="row mb-3 g-3">
-						      			  <div class="col-md-4">
-						         			 <select class="form-select" id="validationTagsClear" name="tagsClear[]" multiple data-allow-clear="true">
-						            			<option selected disabled hidden value="">태그를 선택해주세요.</option>
-									            <c:forEach var="tag" items="${listTags}">
-									            	<option value="${tag.id}" data-badge-style="info">${tag.name}</option>
-									            </c:forEach>
-									          </select>
-									          <div class="invalid-feedback">유효한 태그를 선택해주세요.</div>
-									        </div>
-									      </div>
-						  			</div>
+									
 								</td>
 							</tr>
 							<tr>
@@ -187,6 +191,18 @@
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>
+					<div class="container">
+									  <select id="badgeSelect">
+									    <option value="">Select a badge</option>
+									    <option value="Badge1">Badge1</option>
+									    <option value="Badge2">Badge2</option>
+									    <!-- Add more options as needed -->
+									  </select>
+									  <button id="addBadgeBtn">Add Badge</button>
+									  <div id="badgesArea">
+									    <!-- New badges will be added here -->
+									  </div>
+									</div>
 				</div>		
 			</main>
 		</div>

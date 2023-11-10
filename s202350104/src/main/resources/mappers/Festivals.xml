@@ -16,29 +16,39 @@
 			(SELECT *
 			 FROM festivals f, contents c
 			 WHERE f.content_id = c.id
-			 AND is_deleted = 0 
-			 AND status = 1 
+			 <if test="is_deleted != null and is_deleted != ''">
+			 AND is_deleted = #{is_deleted}
+			 </if>
+			 <if test="status != null and status != ''">
+			 AND status = #{status}
+			 </if>
+			 <if test="keyword != null and keyword != ''">
+			 	<choose>
+			 		<when test="search == null or search == 's_title'">
+			 			AND title like '%' || #{keyword} || '%'
+			 		</when>
+			 		<when test="search == 's_content'">
+			 			AND content like '%' || #{keyword} || '%'
+			 		</when>
+			 		<when test="search == 's_sponsor'">
+			 			AND sponsor like '%' || #{keyword} || '%'
+			 		</when>
+			 		<when test="search == 's_eventplace'">
+			 			AND eventplace like '%' || #{keyword} || '%'
+			 		</when>
+			 	</choose>
+			 </if>
+			 <if test="area != 0 and area != null">
+			 	AND area = #{area}
+			 	<if test="sigungu != 0 and sigungu != null">
+			 		AND sigungu = #{sigungu}
+			 	</if>
+			 </if>
 			 ORDER BY content_id) t
 		)
-		WHERE rn BETWEEN #{start} and #{end}
-	</select>
-	
-	<select id="nhFestivalsListAdmin" resultType="FestivalsContent" parameterType="FestivalsContent">
-		SELECT *
-		FROM
-		(
-			SELECT ROWNUM rn, t.*, 
-				(SELECT content FROM areas a
-				 WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
-				(SELECT content FROM areas a
-				 WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
-			FROM
-			(SELECT *
-			 FROM festivals f, contents c
-			 WHERE f.content_id = c.id 
-			 ORDER BY content_id) t
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
 	</select>
 	
 	<select id="nhFestivalsDetail" resultType="FestivalsContent" parameterType="int">
@@ -56,19 +66,44 @@
 		AND   f.content_id = #{content_id}
 	</select>
 	
-	<!-- 통합 예정 -->
-	<select id="nhFestivalsTotalAdmin" resultType="int">
-		SELECT count(*)
-		FROM   festivals f, contents c
-		WHERE  f.content_id = c.id
-	</select>
+	<update id="nhReadcountUp" parameterType="int">
+		UPDATE contents
+		SET    readcount = readcount + 1
+		WHERE  id = #{contentId}
+	</update>
 	
-	<select id="nhFestivalsTotal" resultType="int">
+	<select id="nhFestivalsTotal" resultType="int" parameterType="FestivalsContent">
 		SELECT count(*)
 		FROM   festivals f, contents c
 		WHERE  f.content_id = c.id
-		AND    is_deleted = 0
-		AND    status = 1
+		<if test="is_deleted != null and is_deleted != ''">
+			 AND is_deleted = #{is_deleted}
+		</if>
+		<if test="status != null and status != ''">
+			 AND status = #{status}
+		 </if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="search == null or search == 's_title'">
+			 		AND title like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="search == 's_content'">
+			 		AND content like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="search == 's_sponsor'">
+			 		AND sponsor like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="search == 's_eventplace'">
+			 		AND eventplace like '%' || #{keyword} || '%'
+			 	</when>
+			 </choose>
+		</if>
+		<if test="area != 0 and area != null">
+			 AND area = #{area}
+			<if test="sigungu != 0 and sigungu != null">
+				AND sigungu = #{sigungu}
+			</if>
+		</if>
 	</select>
 	
 	<insert id="nhFestivalsInsert" parameterType="FestivalsContent">

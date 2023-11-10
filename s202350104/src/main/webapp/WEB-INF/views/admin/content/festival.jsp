@@ -6,11 +6,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 관리</title>
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
+		
 			function festivalDeleteAjax(pIndex) {
 				var deleteId = Number($('#id'+pIndex).val());
 				var currentPage = ${page.currentPage};
+				
 				if(confirm("정말 삭제하시겠습니까?")) {
 					$.ajax(
 							{
@@ -32,8 +36,22 @@
 					)
 				}
 			}
+			
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+					}
+				});
+			});
+			
 		</script>
 	</head>
+	
 	<body>
 		<div class="container-fluid">
 		<div class="row">
@@ -47,9 +65,35 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="festival" method = "get">
+						
+						지역<select name="area" class="area-dropdown"></select>
+						   <select name="sigungu" class="sigungu-dropdown"></select><p>
+						
+						승인여부<select name = "status">
+							<option value = "">전체</option>
+							<option value = "0">승인대기</option>
+							<option value = "1">승인완료</option>
+							<!-- <option>승인반려</option> -->
+						</select>
+						
+						삭제여부<select name="is_deleted">
+							<option value = "">전체</option>
+							<option value = "0">등록(전시)</option> <!-- 활성화 -->
+							<option value = "1">삭제(미전시)</option><!-- 비활성화 -->
+						</select><p>
+						
+						검색어<select name="search">
+							<option value = "s_title">축제명</option>
+							<option value = "s_content">내용</option>
+							<option value = "s_sponsor">주최자</option>
+							<option value = "s_eventplace">장소</option>
+						</select>						
+						<input type="text" name="keyword" placeholder = "키워드를 입력하세요.">
+						
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					</form>
 				</div>		
 				
 				<!-- Section3: Table -->		
@@ -70,8 +114,10 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${listFestivals.size() == 0}">해당하는 축제 정보가 없습니다.</c:if>
+							
 							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="festival" items="${listFestivals}" varStatus="st">
+							<c:forEach var="festival" items="${listFestivals}" varStatus="st">				
 								<tr id="festival${st.index}">
 									<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
 									<td>${festival.area_content} ${festival.sigungu_content}</td>
@@ -81,7 +127,6 @@
 									<td>
 										<c:if test="${festival.status == 0}">대기</c:if>
 										<c:if test="${festival.status == 1}">완료</c:if>
-										<!-- 승인반려됐을 경우 status -->
 									</td>
 									<td>
 										<c:if test="${festival.status == 1}">
@@ -101,8 +146,10 @@
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
+							
 						</tbody>
 					</table>
+					
 					<p>총 건수 : ${totalFestivals}</p>
 					
 					<div align="center">
@@ -116,6 +163,7 @@
 							<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 						</c:if>
 					</div>
+					
 				</div>		
 			</main>
 		</div>

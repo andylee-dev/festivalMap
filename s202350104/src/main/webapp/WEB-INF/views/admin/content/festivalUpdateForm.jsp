@@ -39,7 +39,7 @@
 					if (selectedArea) {
 						updateSigunguOptions(selectedArea);
 					} else {
-						$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 					}
 				});
 			});

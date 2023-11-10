@@ -7,6 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>FestivalList</title>
+		
 		<style type="text/css">
 			.pageblock {
 				text-align: center;
@@ -24,6 +25,7 @@
 		<!-- 지역 코드 넣는 코드  Start-->	
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
+		
 			document.addEventListener("DOMContentLoaded", function() {
 				updateAreaOptions();
 				$(".area-dropdown").change(function() {
@@ -31,12 +33,14 @@
 					if (selectedArea) {
 						updateSigunguOptions(selectedArea);
 					} else {
-						$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 					}
 				});
 			});
+			
 		</script>
 		<!-- 지역 코드 넣는 코드  End-->	
+		
 	</head>
 	
 	<body>
@@ -70,6 +74,7 @@
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+					<c:if test="${listFestivals.size() == 0}">해당하는 축제 정보가 없습니다.</c:if>
 					<c:forEach var="festival" items="${listFestivals}">
 						<div class="col">
 							<div class="card" style="width: 20rem;">
@@ -88,6 +93,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<div align="center">
 			<c:if test="${page.startPage > page.pageBlock}">
 				<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
@@ -99,6 +105,7 @@
 				<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 			</c:if>	
 		</div>
+		
 	</main>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>

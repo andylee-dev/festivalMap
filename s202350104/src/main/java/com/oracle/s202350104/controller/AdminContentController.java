@@ -58,13 +58,14 @@ import lombok.RequiredArgsConstructor;
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festival", "start");
-				int totalFestivals = fs.totalFestivalsAdmin();
+
+				int totalFestivals = fs.totalFestivals(festival);
 				
 				PagingList page = new PagingList(totalFestivals, currentPage);
 				festival.setStart(page.getStart());
 				festival.setEnd(page.getEnd());
 				
-				List<FestivalsContent> listFestivals = fs.listFestivalsAdmin(festival);
+				List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 				
 				model.addAttribute("totalFestivals", totalFestivals);
 				model.addAttribute("listFestivals", listFestivals);
@@ -106,11 +107,9 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
 				List<CommonCodes> listCodes = cs.listCommonCode();
-				List<Areas> listAreas = ars.listAreas();
 				Tags tag = new Tags();
 				List<Tags> listTags = ts.listTags(tag);
 				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("listTags", listTags);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
@@ -143,8 +142,6 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}",transactionId, "admin festivalUpdateForm", "start");
 				FestivalsContent festival = fs.detailFestivals(contentId);
 				List<CommonCodes> listCodes = cs.listCommonCode();
-				List<Areas> listAreas = ars.listAreas();
-				List<Areas> listSigungu = ars.listSigungu(festival.getArea());
 				
 				Tags tag = new Tags();
 				List<Tags> listTags = ts.listTags(tag);
@@ -159,8 +156,6 @@ import lombok.RequiredArgsConstructor;
 				 */
 				
 				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listAreas", listAreas);
-				model.addAttribute("listSigungu", listSigungu);
 				model.addAttribute("listTags", listTags);
 				model.addAttribute("listMyTags", listMyTags);
 				model.addAttribute("currentPage", currentPage);

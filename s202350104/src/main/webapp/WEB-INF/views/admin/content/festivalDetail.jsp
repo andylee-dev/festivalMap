@@ -144,6 +144,10 @@
 							<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						</tr>
 						<tr>
+							<th>조회수</th>
+							<td>${festival.readcount}</td>
+						</tr>
+						<tr>
 							<th>삭제여부</th>
 							<td><c:if test="${festival.is_deleted == 1}">삭제완료</c:if></td>
 						</tr>

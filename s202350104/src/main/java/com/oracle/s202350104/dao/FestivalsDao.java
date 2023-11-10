@@ -8,11 +8,10 @@ import com.oracle.s202350104.model.FestivalsContent;
 public interface FestivalsDao {
 	List<FestivalsContent> listFestivals(FestivalsContent festival);
 	FestivalsContent detailFestivals(int contentId);
-	int              totalFestivals();
+	int              totalFestivals(FestivalsContent festival);
 	int              insertFestival(FestivalsContent festival);
 	int              deleteFestivals(int contentId);
 	int              approveFestival(int contentId);
 	int              updateFestival(FestivalsContent festival);
-	List<FestivalsContent> listFestivalsAdmin(FestivalsContent festival);
-	int totalFestivalsAdmin();
+	int              readcountUp(int contentId);
 }

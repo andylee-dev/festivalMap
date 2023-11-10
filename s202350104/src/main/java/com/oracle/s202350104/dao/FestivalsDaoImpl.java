@@ -33,18 +33,6 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		}
 		return listFestivals;
 	}
-	
-	@Override
-	public List<FestivalsContent> listFestivalsAdmin(FestivalsContent festival) {
-		List<FestivalsContent> listFestivals = null;
-		try {
-			listFestivals = session.selectList("nhFestivalsListAdmin", festival);
-			log.info("FestivalsDaoImpl listFestivalsAdmin() => " + listFestivals.size());
-		} catch(Exception e) {
-			log.info("FestivalsDaoImpl listFestivalsAdmin() => " + e.getMessage());
-		}
-		return listFestivals;
-	}
 
 	@Override
 	public FestivalsContent detailFestivals(int contentId) {
@@ -59,22 +47,10 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	}
 
 	@Override
-	public int totalFestivals() {
+	public int totalFestivals(FestivalsContent festival) {
 		int totalFestCnt = 0;
 		try {
-			totalFestCnt = session.selectOne("nhFestivalsTotal");
-		} catch(Exception e) {
-			log.info("FestivalsDaoImpl totalFestivals Exception => " + e.getMessage());
-		}
-		
-		return totalFestCnt;
-	}
-	
-	@Override
-	public int totalFestivalsAdmin() {
-		int totalFestCnt = 0;
-		try {
-			totalFestCnt = session.selectOne("nhFestivalsTotalAdmin");
+			totalFestCnt = session.selectOne("nhFestivalsTotal", festival);
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl totalFestivals Exception => " + e.getMessage());
 		}
@@ -143,6 +119,18 @@ public class FestivalsDaoImpl implements FestivalsDao {
 			result = -1;
 		}
 		
+		return result;
+	}
+
+	@Override
+	public int readcountUp(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("nhReadcountUp", contentId);
+			log.info("nhReadcountUp result => " + result);
+		} catch (Exception e) {
+			log.info("FestivalDaoImpl readcountUp Exception => " + e.getMessage());
+		}
 		return result;
 	}
 	

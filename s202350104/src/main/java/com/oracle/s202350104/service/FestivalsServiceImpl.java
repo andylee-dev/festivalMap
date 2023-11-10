@@ -32,17 +32,6 @@ public class FestivalsServiceImpl implements FestivalsService {
 
 		return listFestivals;
 	}
-	
-	@Override
-	public List<FestivalsContent> listFestivalsAdmin(FestivalsContent festival) {
-		List<FestivalsContent> listFestivals = fd.listFestivalsAdmin(festival);
-
-		if(listFestivals == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 리스트가 존재하지 않습니다.");
-		}
-
-		return listFestivals;
-	}
 
 	@Override
 	public FestivalsContent detailFestivals(int contentId) {
@@ -56,14 +45,8 @@ public class FestivalsServiceImpl implements FestivalsService {
 	}
 
 	@Override
-	public int totalFestivals() {
-		int totalFestCnt = fd.totalFestivals();
-		return totalFestCnt;
-	}
-	
-	@Override
-	public int totalFestivalsAdmin() {
-		int totalFestCnt = fd.totalFestivalsAdmin();
+	public int totalFestivals(FestivalsContent festival) {
+		int totalFestCnt = fd.totalFestivals(festival);
 		return totalFestCnt;
 	}
 
@@ -108,6 +91,17 @@ public class FestivalsServiceImpl implements FestivalsService {
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 수정에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int readcountUp(int contentId) {
+		int result = fd.readcountUp(contentId);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 조회수 증가에 실패하였습니다.");
 		}
 		
 		return result;

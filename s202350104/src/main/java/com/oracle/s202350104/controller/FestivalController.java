@@ -33,24 +33,28 @@ public class FestivalController {
 	private final BoardService boardService;
 	private final BannerService bannerService;
 
-	@GetMapping(value = "festival")
+	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
-			int totalFestivals = fs.totalFestivals();
+			festival.setIs_deleted("0");
+			festival.setStatus("1");
+			int totalFestivals = fs.totalFestivals(festival);
 			
 			Paging page = new Paging(totalFestivals, currentPage);
 			festival.setStart(page.getStart());
 			festival.setEnd(page.getEnd());
 			
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
-			List<Areas> listAreas = as.listAreas();
 			
 			model.addAttribute("totalFestivals", totalFestivals);
 			model.addAttribute("listFestivals", listFestivals);
-			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
+			
+			log.info("festival keyword=>"+festival.getKeyword());
+			log.info("festival area=>"+festival.getArea());
+			log.info("festival sigungu=>"+festival.getSigungu());
 			
 			/*
 			 * Banner Logic 구간 
@@ -81,6 +85,7 @@ public class FestivalController {
 			log.info("festivalDetail currentPage : {} ", currentPage);
 
 			FestivalsContent festival = fs.detailFestivals(contentId);
+			int result = fs.readcountUp(contentId);
 			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
