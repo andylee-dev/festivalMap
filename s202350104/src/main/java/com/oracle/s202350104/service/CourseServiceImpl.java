@@ -115,9 +115,10 @@ public class CourseServiceImpl implements CourseService {
 		return courseContentList;
 	}
 
+
 	@Override
-	public int deleteCourseContent(int content_id) {
-		int deleteCourseContent = cd.deleteCourseContent(content_id);
+	public int deleteCourseContent(CourseContent courseContent) {
+		int deleteCourseContent = cd.deleteCourseContent(courseContent);
 		
 		return deleteCourseContent;
 	}

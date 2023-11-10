@@ -85,6 +85,55 @@
 	    }
 	}
 </script>
+<script type="text/javascript">
+	/* function deleteCourseContent(content_id, course_id) {
+		$.ajax({
+			type: 'POST',
+			url:  'deleteCourseContentAjax',
+			data: {content_id: content_id, course_id: course_id},
+			success : function(result) {
+				// // 성공적으로 삭제된 경우의 처리
+				alert('삭제되었습니다.')
+				location.reload();
+			},
+			error: function(xhr, status, error) {
+				//오류 발생 시의 처리
+				alert('삭제에 실패했습니다.');
+			}
+		});
+	} */
+	
+	
+	function deleteCourseContent(content_id, course_id) {
+		alert(content_id)
+		alert(course_id)
+ 	    // ContentCourse 객체를 생성하고 필드에 값을 할당
+ 	    var courseContent = {
+ 	    	course_id: course_id,
+ 	        content_id: content_id
+ 	    };
+
+ 	    $.ajax({
+ 	        url: "/admin/course/deleteCourseContentAjax",
+ 	        method: "POST",
+ 	        contentType: "application/json", 
+ 	        data: JSON.stringify(courseContent), // Contents 객체를 data에 할당
+ 	        success: function(deleteCourseContentStr) {
+ 	        	console.log(deleteCourseContentStr)
+				// 성공적으로 삭제된 경우의 처리
+				alert('삭제되었습니다.')
+ 				location.reload();
+			},
+			error: function(xhr, status, error) {
+				console.log(xhr,status,error)
+				//오류 발생 시의 처리
+				alert('삭제에 실패했습니다.');
+ 				location.reload();
+			}
+ 	    });
+ 	}
+	
+</script>
 
 </head>
 <body>
@@ -120,7 +169,8 @@
 									<td>${courseContentList.homepage }</td>
 									<td>${courseContentList.phone }</td>
 								</tr>
-								<button onclick="location.href='deleteCourseContent?content_id=${courseContentList.content_id}'" class="btn btn-primary">삭제${courseContentList.content_id}</button>
+								<button onclick="deleteCourseContent(${courseContentList.content_id}, ${courseContentList.course_id}); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button>
+
 							</table>
 						</c:forEach>
 					</div>

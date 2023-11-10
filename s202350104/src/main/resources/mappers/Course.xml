@@ -103,7 +103,9 @@
 		</delete>
 		
 		<delete id="noDeleteCourseContent" parameterType="CourseContent">
-			Delete From CourseContents where content_id = ${content_id}
+			DELETE FROM courseContents
+			WHERE course_id = ${course_id}
+			AND content_id = ${content_id}
 		</delete>
 		
 	</mapper>

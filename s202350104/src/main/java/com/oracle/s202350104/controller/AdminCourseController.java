@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.ContentDaoImpl;
 import com.oracle.s202350104.model.Contents;
@@ -18,6 +24,7 @@ import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.PagingList;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -181,20 +188,46 @@ public class AdminCourseController {
 		return "redirect:/admin/course/list";
 	}
 	
-	@RequestMapping(value = "/deleteCourseContent")
-	public String deleteCourseContent(int content_id) {
-		log.info("AdminCourseController deleteCourseContent id ->" + content_id);
+//	@RequestMapping(value = "/deleteCourseContentAjax")
+//	public String deleteCourseContent(@RequestParam("content_id") int contentId, @RequestParam("course_id") int courseId) {
+//		log.info("AdminCourseController deleteCourseContent id ->" + contentId, courseId);
+//		String deleteCourseContentStr = null;
+//		
+//		try {
+//			int deleteCourseContent = cs.deleteCourseContent(contentId, courseId);
+//			log.info("AdminCourseController deleteCourseContent deleteCourseContent ->" + deleteCourseContent);
+//			deleteCourseContentStr = Integer.toString(deleteCourseContent);
+//			
+//		} catch (Exception e) {
+//			log.error("AdminCourseController deleteCourseContent e.getMessage() ->" + e.getMessage());
+//		} finally {
+//			log.info("AdminCourseController deleteCourseContent end...");
+//		}
+//		
+//		return deleteCourseContentStr;
+//	}
+	@ResponseBody
+	@RequestMapping(value = "deleteCourseContentAjax", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteCourseContent(@RequestBody CourseContent courseContent) {
+		log.info("AdminCourseController deleteCourseContent getCourse_id() ->" + courseContent);
+		ResponseEntity<String> response = null;
+		
 		try {
-			int deleteCourseContent = cs.deleteCourseContent(content_id);
+			int deleteCourseContent = cs.deleteCourseContent(courseContent);
 			log.info("AdminCourseController deleteCourseContent deleteCourseContent ->" + deleteCourseContent);
+			if(deleteCourseContent == 0)
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 리스트가 존재하지 않습니다.");
 			
+			response = ResponseEntity.status(HttpStatus.CREATED).body("success");
 		} catch (Exception e) {
 			log.error("AdminCourseController deleteCourseContent e.getMessage() ->" + e.getMessage());
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			
 		} finally {
 			log.info("AdminCourseController deleteCourseContent end...");
 		}
 		
-		return "course/courseUpdateForm";
+		return response;
 	}
 	
 }

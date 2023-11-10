@@ -171,16 +171,32 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 
+//	@Override
+//	public int deleteCourseContent(int contentId, int courseId) {
+//		log.info("CourseDaoImpl deleteCourseContent content_id ->" + contentId, courseId);
+//		int deleteCourseContent = 0;
+//		try {
+//			deleteCourseContent = session.delete("noDeleteCourseContent", contentId, contentId);
+//			log.info("CourseDaoImpl deleteCourseContent ->" + deleteCourseContent);
+//			
+//		} catch (Exception e) {
+//			log.info("CourseDaoImpl deleteCourseContent e.getMessage() ->" + e.getMessage());
+//		}
+//		
+//		return deleteCourseContent;
+//	}
+
+
 	@Override
-	public int deleteCourseContent(int content_id) {
-		log.info("CourseDaoImpl deleteCourseContent content_id ->" + content_id);
+	public int deleteCourseContent(CourseContent courseContent) {
+		log.info("CourseDaoImpl deleteCourseContent courseContent ->" + courseContent);
 		int deleteCourseContent = 0;
 		try {
-			deleteCourseContent = session.delete("noDeleteCourseContent", content_id);
+			deleteCourseContent = session.delete("noDeleteCourseContent", courseContent);
 			log.info("CourseDaoImpl deleteCourseContent ->" + deleteCourseContent);
 			
 		} catch (Exception e) {
-			log.info("CourseDaoImpl deleteCourseContent e.getMessage() ->" + e.getMessage());
+			log.error("CourseDaoImpl deleteCourseContent e.getMessage() ->" + e.getMessage());
 		}
 		
 		return deleteCourseContent;
