@@ -6,18 +6,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-        background-color: #F8FCF4 !important; /* 원하는 배경색으로 변경 */
-        color: #00000 !important; /* 원하는 텍스트 색상으로 변경 */
-    }
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- 지역 코드 넣는 코드  Start-->	
+	<script src="/js/updateArea.js"></script>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+			updateAreaOptions();
+			$(".area-dropdown").change(function() {
+				const selectedArea = $(this).val();
+				if (selectedArea) {
+					updateSigunguOptions(selectedArea);
+				} else {
+					$(".sigungu-dropdown").empty().append("<option value=''>전체</option>");
+				}
+			});
+		});
+	</script>
+	<!-- 지역 코드 넣는 코드  End-->	
 
-    .tab-pane.fade.show.active {
-        background-color: #F8FCF4; /* 원하는 배경색으로 변경 */
-    }
-
-
-</style>
+	<style type="text/css">
+	    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+	        background-color: #F8FCF4 !important; /* 원하는 배경색으로 변경 */
+	        color: #00000 !important; /* 원하는 텍스트 색상으로 변경 */
+	    }
+	    .tab-pane.fade.show.active {
+	        background-color: #F8FCF4; /* 원하는 배경색으로 변경 */
+	    }
+	</style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -36,18 +51,31 @@
 			<div class="tab-content" id="nav-tabContent">
 			  <div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
 			  	<div class="container">
-			  		<%@ include file="/WEB-INF/views/admin/content/festivalInsertForm.jsp" %>
+					<select name="area" class="area-dropdown"></select>
+					<select name="sigungu"  class="sigungu-dropdown"></select>
 			  	</div>
 			  </div>
 			  <div class="tab-pane fade" id="nav-restaurant" role="tabpanel" aria-labelledby="nav-restaurant-tab" tabindex="0">
 			  	맛집 등록 폼				  
+			  	<div class="container">
+					<select name="area" class="area-dropdown"></select>
+					<select name="sigungu"  class="sigungu-dropdown"></select>
+			  	</div>
 			  </div>
 			  <div class="tab-pane fade" id="nav-accomodation" role="tabpanel" aria-labelledby="nav-accomodation-tab" tabindex="0">
-			  	<%@ include file="/WEB-INF/views/admin/content/accomodationInsertForm.jsp" %>
-			  
+				숙박
+			  	<div class="container">
+					<select name="area" class="area-dropdown"></select>
+					<select name="sigungu"  class="sigungu-dropdown"></select>
+			  	</div>
 			  </div>
 			  <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab" tabindex="0">
 			  	체험 등록 폼		  	
+			  	<div class="container">
+					<select name="area" class="area-dropdown"></select>
+					<select name="sigungu"  class="sigungu-dropdown"></select>
+			  	</div>
+
 			  </div>
 			  <div class="tab-pane fade" id="nav-spot" role="tabpanel" aria-labelledby="nav-spot-tab" tabindex="0">
 			  	명소 등록 폼	
