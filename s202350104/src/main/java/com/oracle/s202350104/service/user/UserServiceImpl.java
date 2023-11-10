@@ -1,18 +1,14 @@
 package com.oracle.s202350104.service.user;
 
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.configuration.AppConfig;
 import com.oracle.s202350104.configuration.Role;
@@ -50,18 +46,21 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public int getLoggedInUserRole() {
-		int role = 0;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		@SuppressWarnings("unchecked")
-		Collection<SimpleGrantedAuthority> authorities =(Collection<SimpleGrantedAuthority>) authentication.getAuthorities();
-		log.info("{}",authorities.toString());
-		if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))){
-			role = Role.ADMIN.getKey();
-		} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("BIZ"))){
-			role = Role.BIZ.getKey();
-		} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("USER"))){
-			role = Role.USER.getKey();
-		}		
+		int role = authentication.getAuthorities().stream()
+	        .map(GrantedAuthority::getAuthority)
+	        .filter(authority -> authority.contains("ADMIN") || authority.contains("BIZ") || authority.contains("USER"))
+	        .findFirst()
+	        .map(authority -> {
+	            if (authority.contains("ADMIN")) {
+	                return Role.ADMIN.getKey();
+	            } else if (authority.contains("BIZ")) {
+	                return Role.BIZ.getKey();
+	            } else {
+	                return Role.USER.getKey();
+	            }
+	        })
+	        .orElse(null);
 		return role;
 	}
 	
