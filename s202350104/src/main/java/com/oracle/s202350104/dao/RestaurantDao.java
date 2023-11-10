@@ -17,6 +17,7 @@ public interface RestaurantDao {
 	List<RestaurantsContent>    adminListSearchRestaurant(RestaurantsContent restaurant);
 	int                         insertRestaurant(RestaurantsContent restaurant);
 	int                         updateRestaurant(RestaurantsContent restaurant);
+	int                         deleteRestaurant(int contentId);
 	
 	
 }

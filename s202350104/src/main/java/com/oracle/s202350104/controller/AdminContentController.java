@@ -290,10 +290,11 @@ import lombok.RequiredArgsConstructor;
 				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("page",page);
 				model.addAttribute("path", path);
+				model.addAttribute("currentPage", currentPage);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurant", e.getMessage());
 			} finally {
-				log.error("[{}]{}:{}", transactionId, "admin restaurant", "end");
+				log.info("[{}]{}:{}", transactionId, "admin restaurant", "end");
 			}
 					
 			return "admin/content/restaurant";
@@ -329,7 +330,7 @@ import lombok.RequiredArgsConstructor;
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
 			} finally {
-				log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
+				log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
 			}	
 					
 			return "admin/content/restaurant";
@@ -338,7 +339,7 @@ import lombok.RequiredArgsConstructor;
 		
 		
 		@RequestMapping(value = "restaurantDetail")
-		public String restaurantDetail(Integer contentId, Model model) {
+		public String restaurantDetail(Integer contentId, Model model, String currentPage) {
 			UUID transaction = UUID.randomUUID();
 			
 			try {
@@ -346,12 +347,12 @@ import lombok.RequiredArgsConstructor;
 				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
 								
 				model.addAttribute("restaurant", restaurant);
-				
+				model.addAttribute("currentPage", currentPage);
 				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transaction, "admin restaurantDetail Exception", e.getMessage());
 			} finally {
-				log.error("[{}]{}:{}", transaction, "admin restaurantDetail", "End");
+				log.info("[{}]{}:{}", transaction, "admin restaurantDetail", "End");
 			}
 						
 			return "admin/content/restaurantDetail";
@@ -373,7 +374,7 @@ import lombok.RequiredArgsConstructor;
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm Exception", e.getMessage());
 			} finally {
-				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm", "end");
+				log.info("[{}]{}:{}", transactionId, "admin restaurantInsertForm", "end");
 			}
 			return "admin/content/restaurantInsertForm";		
 		}		
@@ -413,7 +414,7 @@ import lombok.RequiredArgsConstructor;
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdateForm Exception", e.getMessage());
 			} finally {
-				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdateForm", "end");
+				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdateForm", "end");
 			}
 			return "admin/content/restaurantUpdateForm";
 		}
@@ -430,14 +431,30 @@ import lombok.RequiredArgsConstructor;
 				log.info("admin restaurantUpdate updateCount ->" + result);
 				id = restaurant.getContent_id();
 			} catch (Exception e) {
-				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );
+				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate", "end" );
 			} 
-			return "forward:/admin/content/restaurantDetail?contentId=3";
+			return "forward:/admin/content/restaurantDetail?contentId="+id;
 			// return "redirect:restaurant";
 		}
 		
+		
+		@RequestMapping(value = "restaurantDelete")
+		public String restaurantDelete(int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantDelete", "start");;
+				int result = rs.deleteRestaurant(contentId);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin restaurantDelete Exception", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantDelete", "end");
+			}
+			
+			return "redirect:restaurant";	
+		} 
 		
 		@RequestMapping(value = "spot")
 		public String spot(SpotContent spot, String currentPage, Model model) {

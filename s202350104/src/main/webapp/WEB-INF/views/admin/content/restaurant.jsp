@@ -42,7 +42,7 @@
 								<option value="7">클럽</option>
 							</select>
 							<button type="submit" class="btn btn-outline-secondary">검색</button>
-							<button type="button" class="btn btn-outline-secondary">초기화</button>
+							<input type="reset" class="btn btn-outline-secondary" value="초기화">
 						</form>
 					</div>
 
@@ -59,7 +59,7 @@
 								<th scope="col">주소</th>
 								<th scope="col">메뉴</th>
 								<th scope="col">신청일</th>
-								<th scope="col">승인여부</th>
+								<th scope="col">진행상황</th>
 								<th scope="col">수정</th>
 								<th scope="col">삭제</th>
 								<th scope="col">삭제여부</th>
@@ -71,17 +71,27 @@
 								<tr>
 									<td>${num}</td>
 									<td>${restaurant.theme}</td>
-									<td><a href="restaurantDetail?contentId=${restaurant.content_id}">${restaurant.title}</a></td>
+									<td><a href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">${restaurant.title}</a></td>
 									<td>${restaurant.address}</td>
 									<td>${restaurant.menu}</td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
-						 				<c:if test="${restaurant.status == 0 }">승인대기</c:if>
-										<c:if test="${restaurant.status == 1 }">승인완료</c:if>
+						 				<c:if test="${restaurant.status == 0 }">대&emsp;기</c:if>
+										<c:if test="${restaurant.status == 1 }">완&emsp;료</c:if>
 									</td>
-									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="수정" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}?currentPage=${page.currentPage}'"></c:if></td>
-									<td><c:if test="${restaurant.status == 1 }"><input type="button" value="삭제"></c:if></td>		
-									<td></td>			
+									<td><c:if test="${restaurant.status == 1 }">
+										<c:choose>
+											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="수정" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${page.currentPage}'"></c:when>
+											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
+										</c:choose>
+										</c:if></td>
+									<td><c:if test="${restaurant.status == 1 }">		
+										<c:choose>
+											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="삭제" onclick="location.href='restaurantDelete?contentId=${restaurant.content_id}'"></c:when>
+											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
+										</c:choose>
+										</c:if></td>
+									<td><c:if test="${restaurant.is_deleted ==1 }">Y</c:if></td>			
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

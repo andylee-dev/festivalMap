@@ -22,6 +22,7 @@
 		AND   x.big_code = y.big_code AND x.small_code = y.small_code
 	</select>
 	
+	
 	<select id="joRestaurantDetail" resultType="RestaurantsContent" parameterType="int">
 		SELECT 	c.*, r.*, 
 						(SELECT content FROM commoncodes co WHERE  c.big_code = co.big_code AND c.small_code = co.small_code) AS theme,
@@ -32,11 +33,13 @@
 		AND 	r.content_id = #{contentId}
 	</select>
 	
+	
 	<select id="joRestaurantTotal" resultType="int">
 		SELECT count(*)
 		FROM   restaurants r, contents c
 		WHERE  r.content_id = c.id
 	</select>
+	
 	
 	<select id="joConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
 		SELECT count(*)
@@ -46,9 +49,11 @@
 		WHERE   r.content_id = c.id  
 	</select>
 	
+	
 	<select id="RestaurantListAll" resultType="Restaurants">
 		SELECT * FROM restaurants
 	</select>
+	
 	
 	<select id="joListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
 		SELECT *
@@ -71,6 +76,7 @@
 		WHERE   rn between #{start} and #{end}  		  
 	</select>
 	
+	
 	<select id="joAdminConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
 		SELECT COUNT(*)
 		FROM	
@@ -82,6 +88,7 @@
 	 			 )
 		
 	</select>	
+	
 		
 	<select id="joAdminListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
 		SELECT  x.*, y.content AS theme
@@ -96,23 +103,26 @@
 		AND   x.big_code = y.big_code AND x.small_code = y.small_code
 	</select>	
 	
+	
 	<select id="joInsertRestaurant" resultType="int" parameterType="RestaurantsContent">
 		INSERT INTO restaurants(content_id, first_menu, menu, open_time, rest_date, is_smoking, is_packing, is_parking)
 		VALUES				   (contents_id_seq.currval, #{first_menu}, #{menu}, #{open_time}, #{rest_date}, #{is_smoking}, #{is_packing}, #{is_parking})
 	</select>
+	
 	
 	<update id="joUpdateRestaurant" parameterType="RestaurantsContent">
 		UPDATE	restaurants 
 		SET    	first_menu=#{first_menu}, menu=#{menu}, open_time=#{open_time}, rest_date=#{rest_date}, is_smoking=#{is_smoking}, is_packing=#{is_packing}, is_parking=#{is_parking} 
 		WHERE  	content_id=#{content_id}
 	</update>
-	
+		
 	
 	<!-- contents 테이블 -->
 	<select id="joInsertContent" resultType="int" parameterType="RestaurantsContent">
-		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcound, user_id, created_at, is_deleted)
-		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, #{updated_at}, '0')
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcount, user_id, created_at, is_deleted)
+		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, '0')
 	</select>
+	
 	
 	<update id="joUpdateContent" parameterType="RestaurantsContent">
 		UPDATE	contents
@@ -120,5 +130,11 @@
 		WHERE  	id=#{content_id}
 	</update>
 	
+	
+	<update id="joDeleteContent" parameterType="int">
+		UPDATE contents 
+		SET    is_deleted=1
+		WHERE  id=#{contentId}
+	</update>
 	
 </mapper>

@@ -104,4 +104,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return result;
 	}
 
+	@Override
+	public int deleteRestaurant(int contentId) {
+		int result = 0;
+		result = rd.deleteRestaurant(contentId);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "맛집 정보 삭제에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
 }

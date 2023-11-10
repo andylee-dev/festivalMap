@@ -47,7 +47,7 @@
 							<option value="">---</option>
 						</select>
 						<button type="submit" class="btn btn-outline-secondary">검색</button>
-						<button type="button" class="btn btn-outline-secondary">초기화</button>
+						<input type="reset" class="btn btn-outline-secondary" value="초기화">
 					</form>
 				</div>
 									

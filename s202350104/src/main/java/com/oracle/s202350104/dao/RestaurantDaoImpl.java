@@ -170,4 +170,19 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		return result;
 	}
 
+	
+	@Override
+	public int deleteRestaurant(int contentId) {
+		int result = 0;
+		try {
+			log.info("RestaurantDaoImpl deleteRestaurant start");
+			result = session.update("joDeleteContent",contentId);
+			log.info("RestaurantDaoImpl joDeleteContent result ->" + result);
+		} catch (Exception e) {
+			log.error("RestaurantDaoImpl deleteRestaurant Exception ->" + e.getMessage());
+			
+		}
+		return result;
+	}
+
 }

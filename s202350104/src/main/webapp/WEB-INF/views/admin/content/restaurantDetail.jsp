@@ -99,12 +99,12 @@
 						<c:if test="${restaurant.status == 0}">
 							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
 							<button type="button" class="btn btn-outline-secondary">반려</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurant?currentPage=1'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurant'">목록</button>
 						</c:if>
 						<c:if test="${restaurant.status == 1}">
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${currentPage}'">수정</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="deleteConfirm()">삭제</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurant?currentPage=1'">목록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurant'">목록</button>
 						</c:if>
 					</div>
 				</div>												 
