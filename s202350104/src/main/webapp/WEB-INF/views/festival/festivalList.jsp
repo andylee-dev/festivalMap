@@ -24,17 +24,15 @@
 			function getSigungu(pArea){
 				$.ajax(
 						{
-							url:"/getSigungu",
+							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
 							dataType:'json',
 							success:function(areas) {
 								$('#sigungu_list_select option').remove();
-								str = "<option value=''>전체</option>";
+								str = "<option value='0'>전체</option>";
 								$(areas).each(
 									function() {
-										if(pArea == this.area && this.sigungu != 999 && this.content != null) {
-											strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
-											str += strOption;
-										}
+										strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
+										str += strOption;
 									}		
 								)
 								$('#sigungu_list_select').append(str);
@@ -59,20 +57,24 @@
 			</c:forEach>
 			<!-- HeaderBanner end -->
 		</div>
-		<div class="border p-3 m-3">
-			<h1 class="border">검색폼</h1>
-			<select name="area" onchange="getSigungu(this.value)">
-				<option value="">전체</option>
-				<c:forEach var="areas" items="${listAreas}">
-					<c:if test="${areas.sigungu == 999}">
-						<option value="${areas.area}">${areas.content}</option>
-					</c:if>
-				</c:forEach>
-			</select>
-			<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
-			<button type="button" class="btn btn-outline-secondary">검색</button>
-			<button type="button" class="btn btn-outline-secondary">초기화</button>
-		</div>
+		<form action="festival" method="post">
+			<div class="border p-3 m-3">
+				<select name="area" onchange="getSigungu(this.value)">
+					<option value="0">전체</option>
+					<c:forEach var="areas" items="${listAreas}">
+						<c:if test="${areas.sigungu == 999}">
+							<option value="${areas.area}">${areas.content}</option>
+						</c:if>
+					</c:forEach>
+				</select>
+				<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select><p>
+				
+				<input type="text" name="keyword" placeholder="키워드를 입력하세요.">
+				
+				<button type="submit" class="btn btn-outline-secondary">검색</button>
+				<button type="reset" class="btn btn-outline-secondary">초기화</button>
+			</div>
+		</form>
 	
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
