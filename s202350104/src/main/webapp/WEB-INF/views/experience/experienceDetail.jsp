@@ -45,6 +45,7 @@
 					<th scope="col">작성자</th>
 					<th scope="col">작성일</th>
 					<th scope="col">평점</th>
+					<th scope="col">삭제</th>
 				</tr>
 				<c:forEach var="review" items="${reviewBoard }">
 					<tr>
@@ -57,6 +58,9 @@
 							<fmt:formatDate value="${review.created_at }" type="date"
 											pattern="YYYY/MM/dd"/></td>
 						<td class="text-center">${review.score }</td>
+						<td class="text-center">
+							<button class="btn btn-danger" onclick="">삭제</button>
+						</td>
 					</tr>
 					<c:set var="num" value="${num - 1 }"/>
 			</c:forEach>

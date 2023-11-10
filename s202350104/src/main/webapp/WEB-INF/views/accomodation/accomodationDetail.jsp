@@ -76,7 +76,7 @@
 						<td class="text-center">
 							<fmt:formatDate value="${review.created_at }" type="date"
 											pattern="YYYY/MM/dd"/></td>
-						<td class="text-center">${review.score }</td>
+						<td class="text-center">${review.score }</td>				
 					</tr>
 					<c:set var="num" value="${num - 1 }"/>
 			</c:forEach>

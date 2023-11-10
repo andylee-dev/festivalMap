@@ -321,6 +321,7 @@ public class BoardController {
 		log.info("BoardController boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
+		
 
 		model.addAttribute("board", boards);
 		model.addAttribute("userId", userId);
