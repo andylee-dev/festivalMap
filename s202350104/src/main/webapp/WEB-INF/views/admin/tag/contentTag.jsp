@@ -34,6 +34,34 @@
 					   }
 				)
 		   })
+		   
+		   function detail(pId) {
+			  const urlParams = new URL(location.href).searchParams;
+			  const bigCodeStr = urlParams.get('bigCodeStr');
+			  var id = String(pId);
+			   
+			  switch(bigCodeStr) {
+			  	case '11':
+			  		location.href='../content/festivalDetail?contentIdStr='+id;
+			  		break;
+			  	case '12':
+			  		location.href='../content/restaurantDetail?contentId='+id;
+			  		break;
+			  	case '13':
+			  		location.href='../content/accomodationDetail?contentIdStr='+id;
+			  		break;
+			  	case '14':
+			  		location.href='../content/spotDetail?contentIdStr='+id;
+			  		break;
+			  	case '15':
+			  		location.href='../content/experienceDetail?contentId='+id;
+			  		break;
+			  	case '16':
+			  		location.href='';
+			  		break;	
+			  }
+			   
+		   }
 		</script>
 	</head>
 	<body>
@@ -81,7 +109,7 @@
 									<td>${num}</td>
 									<td>${content.big_code}</td>
 									<td><input type="hidden" id="content_id${st.index}" value="${content.id}">${content.id}</td>
-									<td>${content.title}</td>
+									<td><span onclick="detail(${content.id})">${content.title}</span></td>
 									<td id="tag_name${st.index}"></td>
 									<td><input type="button" value="수정"></td>
 								</tr>
