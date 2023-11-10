@@ -5,8 +5,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>체험정보 상세</title>
-    
+<title>체험정보 상세</title>    
+
+<!-- jQuery 라이브러리 불러오기 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	function showPopUp(userId, bigCode, smallCode, currentPage, contentId) {
+		
+		//창 크기 지정
+		var width = 550;
+		var height = 600;
+		
+		//pc화면기준 가운데 정렬
+		var left = (window.screen.width / 2) - (width/2);
+		var top = (window.screen.height / 4);
+		
+	    //윈도우 속성 지정
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+		
+	    //연결하고싶은url
+	    const url = "../reviewBoardInsertForm?userId="+ userId + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
+	
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		window.open(url, "hello popup", windowStatus);
+	}
+</script>
+
 </head>
 <body>
 	<!-- Top bar -->
@@ -35,9 +60,9 @@
 	<!-- review test -->
 		<c:set var="num" value="${page.total-page.start+1 }"/>
 		<div class="container border p-5">
-		    <div class="text-right"> <!-- 버튼을 오른쪽 정렬하는 부분 -->
-		        <button class="btn btn-primary" onclick="location.href='../boardInsertForm?userId=1&bigCode=${bigCode}&smallCode=${smallCode}&contentId=${experience.content_id}'">글쓰기</button>
-		    </div>
+		    <div class="d-flex justify-content-end"> <!-- 버튼을 오른쪽 정렬하는 부분 -->
+		    	<button class="btn btn-primary" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${experience.content_id})">글쓰기팝업용</button>
+		    </div><br> 
 			<table class="table">
 				<tr class="table-primary text-center">
 					<th scope="col">구분</th>

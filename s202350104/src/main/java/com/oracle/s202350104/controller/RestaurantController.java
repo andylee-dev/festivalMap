@@ -106,6 +106,9 @@ public class RestaurantController {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "Start");
 			RestaurantsContent restaurant = rs.detailRestaurant(contentId);
 			
+			log.info("restuarntDetail contentId : {} ", contentId);
+			log.info("restuarntDetail currentPage : {} ", currentPage);
+			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
 			model.addAttribute("restaurant", restaurant);
@@ -113,8 +116,6 @@ public class RestaurantController {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail Exception", e.getMessage());
 		}
 		log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantDetail", "End");
-				
-		
 		
 		/*
 		 * review Logic 구간 
@@ -132,9 +133,11 @@ public class RestaurantController {
 		// Paging 작업
 		// Parameter board page 추가
 		Paging page = new Paging(countBoard, currentPage);
+		
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
 		board.setContent_id(contentId);
+		
 		log.info("controller reviewBoardList before board.getStart : {} ", board.getStart());
 		log.info("controller reviewBoardList before board.getEnd : {} ", board.getEnd());
 		log.info("controller reviewBoardList before board.getEnd : {} ", board.getContent_id());

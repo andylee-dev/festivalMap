@@ -218,9 +218,9 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 			// contentId 값이 있으면 review query 실행 
 			if(insertHandling > 0) {
-				insertBoard = session.delete("boardInsert2", board);
+				insertBoard = session.insert("reviewBoardInsert", board);
 			} else {
-				insertBoard = session.delete("boardInsert", board);
+				insertBoard = session.insert("boardInsert", board);
 			}
 
 		} catch (Exception e) {

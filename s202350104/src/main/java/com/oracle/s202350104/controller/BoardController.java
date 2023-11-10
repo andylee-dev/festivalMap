@@ -483,16 +483,16 @@ public class BoardController {
 	}
 
 	// review 게시물 생성 form Logic
-	@RequestMapping(value = "/boardInsertForm")
-	public String boardInsertForm(String userId, String bigCode, String smallCode, 
-								  String contentId, String currentPage, Model model) {
+	@RequestMapping(value = "/reviewBoardInsertForm")
+	public String reviewBoardInsertForm(String userId, String bigCode, String smallCode, 
+								  		String contentId, String currentPage, Model model) {
 
-		log.info("BoardController boardInsertForm start!");
-		log.info("BoardController boardInsertForm userId : {}", userId);
-		log.info("BoardController boardInsertForm bigCode : {}", bigCode);
-		log.info("BoardController boardInsertForm smallCode : {}", smallCode);
-		log.info("BoardController boardInsertForm contentId : {}", contentId);
-		log.info("BoardController boardInsertForm currentPage : {}", currentPage);
+		log.info("BoardController reviewBoardInsertForm start!");
+		log.info("BoardController reviewBoardInsertForm userId : {}", userId);
+		log.info("BoardController reviewBoardInsertForm bigCode : {}", bigCode);
+		log.info("BoardController reviewBoardInsertForm smallCode : {}", smallCode);
+		log.info("BoardController reviewBoardInsertForm contentId : {}", contentId);
+		log.info("BoardController reviewBoardInsertForm currentPage : {}", currentPage);
 
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
@@ -500,19 +500,20 @@ public class BoardController {
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("currentPage", currentPage);
 		
-		log.info("BoardController boardInsertForm end!");
+		log.info("BoardController reviewBoardInsertForm end!");
 
-		return "board/boardInsertForm";
+		return "board/reviewBoardInsertForm";
 	}
 
 	// review 게시물 생성  Logic
-	@RequestMapping(value = "/boardInsert")
-	public String boardInsert(Board board, Model model) {
+	@RequestMapping(value = "/reviewBoardInsert")
+	public String reviewBoardInsert(Board board, Model model) {
 
-		log.info("BoardController boardInsert userId : {}", board.getUser_id());
-		log.info("BoardController boardInsert bigCode : {}", board.getBig_code());
-		log.info("BoardController boardInsert smallCode : {}", board.getSmall_code());
-		log.info("BoardController boardInsert contentId : {}", board.getContent_id());
+		log.info("BoardController reviewBoardInsert userId : {}", board.getUser_id());
+		log.info("BoardController reviewBoardInsert bigCode : {}", board.getBig_code());
+		log.info("BoardController reviewBoardInsert smallCode : {}", board.getSmall_code());
+		log.info("BoardController reviewBoardInsert contentId : {}", board.getContent_id());
+		log.info("BoardController reviewBoardInsert score : {}", board.getScore());
 
 		int insertBoard = boardService.boardInsert(board);
 
@@ -530,7 +531,7 @@ public class BoardController {
 			return "redirect:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
-			return "forward:/boardInsertForm";
+			return "forward:/reviewBoardInsertForm";
 		}
 	}
 	
@@ -619,25 +620,28 @@ public class BoardController {
 	                }
 	            }
 	        }	    
-						
+
 			// 게시물 생성 후 Page Handling
 			if (insertBoard > 0 && board.getSmall_code() == 1) {
 				if (board.getUser_id() == 1) {
 					redirectURL = "redirect:/admin/notice/notice";
+				} else {
+					redirectURL = "forward:/noticBoardList";
 				}
-				redirectURL = "forward:/noticBoardList";
 
 			} else if (insertBoard > 0 && board.getSmall_code() == 2) {
 				if (board.getUser_id() == 1) {
 					redirectURL = "redirect:/admin/community/magazin";
+				} else {
+					redirectURL = "forward:/magazinBoardList";
 				}
-				redirectURL = "forward:/magazinBoardList";
 
 			} else if (insertBoard > 0 && board.getSmall_code() == 3) {
 				if (board.getUser_id() == 1) {
 					redirectURL = "redirect:/admin/community/board";
+				} else {
+					redirectURL = "forward:/freeBoardList";					
 				}
-				redirectURL = "forward:/freeBoardList";
 
 			} else if (insertBoard > 0 && board.getSmall_code() == 4) {
 				redirectURL = "forward:/photoBoardList";
@@ -645,14 +649,17 @@ public class BoardController {
 			} else if (insertBoard > 0 && board.getSmall_code() == 5) {
 				if (board.getUser_id() == 1) {
 					redirectURL = "redirect:/admin/notice/event";
+				} else {
+					redirectURL = "forward:/eventBoardList";					
 				}
-				redirectURL = "forward:/eventBoardList";
 
 			} else if (insertBoard > 0 && board.getSmall_code() == 6) {
 				if (board.getUser_id() == 1) {
 					redirectURL = "redirect:/admin/community/review";
+				} else {
+					redirectURL = "forward:/";
 				}
-				redirectURL = "forward:/";
+				
 			} else {
 				model.addAttribute("msg", "글쓰기 실패!!, 다시 입력해주세요.");
 				redirectURL = "forward:/integratedBoardInsertForm";
@@ -662,6 +669,8 @@ public class BoardController {
 			model.addAttribute("msg", "글쓰기 실패!!, 회원ID가 일치하지 않습니다. 관리자에게 문의해주세요.");
 			redirectURL = "forward:/integratedBoardInsertForm";
 		}
+		
+		log.info("BoardController integratedboardInsert redirectURL :{}", redirectURL);
 
 		log.info("BoardController integratedboardInsert End..");
 

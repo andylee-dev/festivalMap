@@ -70,11 +70,15 @@ public class AccomodationController {
 	}
 	
 	@GetMapping(value = "/accomodation/detail")
-	public String accomodationDetail(int contentId,String currentPage, Board board,  Model model) {
+	public String accomodationDetail(int contentId, String currentPage, Board board, Model model) {
 		log.info("AccomodationController detailAccomodation Start...");
-		
+
 		AccomodationContent accomodation = as.detailAccomodation(contentId);
 		
+		log.info("accomodationDetail contentId : {} ", contentId);
+		log.info("accomodationDetail currentPage : {} ", currentPage);
+		
+		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("accomodation", accomodation);
 		

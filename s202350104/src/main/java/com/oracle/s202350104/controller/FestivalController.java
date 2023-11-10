@@ -59,7 +59,7 @@ public class FestivalController {
 			List<Banner> bannerHeader = bannerService.getHeaderBanner();
 			List<Banner> bannerFooter = bannerService.getFooterBanner();		
 			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
-			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());			
+			log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());				
 			
 			model.addAttribute("bannerHeader", bannerHeader);
 			model.addAttribute("bannerFooter", bannerFooter); 
@@ -73,10 +73,13 @@ public class FestivalController {
 	}
 	
 	@GetMapping(value = "festival/detail")
-	public String festivalDetail(int contentId, String currentPage, Board board, Model model) {
+	public String festivalDetail(Integer contentId, String currentPage, Board board, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
+			log.info("festivalDetail contentId : {} ", contentId);
+			log.info("festivalDetail currentPage : {} ", currentPage);
+
 			FestivalsContent festival = fs.detailFestivals(contentId);
 			
 			model.addAttribute("currentPage", currentPage);

@@ -97,7 +97,8 @@
 		from (
 				select rownum rn, e.*
 				from (
-		               select a.id, c.title, a.content_id, a.content, b.name, a.created_at, a.big_code, a.small_code
+		               select a.id, c.title, a.content_id, a.content, b.name, a.score,
+		               		  a.created_at, a.big_code, a.small_code
 		               from 
 		                    board a
 		               join 
@@ -160,14 +161,14 @@
 			   #{title}, #{content}, 0, #{file_name}, #{file_path}, sysdate)		
 	</insert>
 	
-	<insert id="boardInsert2" parameterType="Board">
+	<insert id="reviewBoardInsert" parameterType="Board">
 		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
 			select board_seq_generator.nextval from dual
 		</selectKey>
 		insert into board (id, content_id, user_id, big_code, small_code, 
-						   title, content, read_count, created_at) 
+						   title, content, score, created_at) 
 		values(#{id}, #{content_id}, #{user_id}, #{big_code},
-			   #{small_code}, #{title}, #{content}, 0, sysdate)		
+			   #{small_code}, #{title}, #{content}, #{score}, sysdate)		
 	</insert>
 	
 	<select id="testRead" parameterType="int" resultType="Board">

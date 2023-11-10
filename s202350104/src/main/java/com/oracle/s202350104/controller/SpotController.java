@@ -91,6 +91,7 @@ public class SpotController {
 			log.info("[{}]{}:{}",transactionId, "spot/detail", "start");
 			SpotContent spot = ss.detailSpot(contentId);
 			
+			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId",contentId);
 			model.addAttribute("spot",spot);
 		} catch (Exception e) {

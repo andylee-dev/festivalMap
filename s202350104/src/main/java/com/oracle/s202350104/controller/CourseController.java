@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Banner;
+import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 import com.oracle.s202350104.service.BannerService;
@@ -66,6 +67,7 @@ public class CourseController {
 	public String courseDetail(Course course, Model model) {
 		try {
 			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
+			
 			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
 			

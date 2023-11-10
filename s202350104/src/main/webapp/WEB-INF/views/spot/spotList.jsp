@@ -117,7 +117,7 @@
 										명소명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
 										${spot.content}
 									</p>
-									<a href="spot/detail?contentId=${spot.content_id}"class="btn btn-primary">더보기</a>
+									<a href="spot/detail?contentId=${spot.content_id}&currentPage=${page.currentPage}"class="btn btn-primary">더보기</a>
 									<c:set var="card" value="${card - 1}"></c:set>
 								</div>
 							</div>

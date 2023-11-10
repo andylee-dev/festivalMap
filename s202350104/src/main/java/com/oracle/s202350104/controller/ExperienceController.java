@@ -81,6 +81,9 @@ public class ExperienceController {
 	@RequestMapping(value = "experience/detail")
 	public String experienceDetail(int contentId, String currentPage, Board board, Model model) {
 		ExperienceContent experience = es.detailExperience(contentId);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("contentId", contentId);
 		model.addAttribute("experience", experience);
 		
 		/*

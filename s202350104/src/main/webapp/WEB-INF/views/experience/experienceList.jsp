@@ -66,7 +66,7 @@
 			    					체험명 : ${experience.title} <br>
 			    					체험정보 :${experience.content}
     							</p>
-    							<a href="experience/detail?contentId=${experience.id}" class="btn btn-primary">더보기</a>
+    							<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
 			 				 </div>	
 						</div>
 					 </div>	

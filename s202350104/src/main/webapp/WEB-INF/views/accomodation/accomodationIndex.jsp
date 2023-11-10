@@ -4,30 +4,30 @@
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>숙박 리스트</title>
-		<style type="text/css">
-			.pageblock {
-				text-align: center;
-						}
-			.card-text {
-				overflow: hidden;
-				text-overflow: ellipsis; /* 말줄임표 */
-				display: -webkit-box;
-				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-				-webkit-box-orient: vertical;
-						}
-		</style>
-	<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript">
-		function getSigungu(pArea){
-			$.ajax(
-					{
-						url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
-						data:pArea,
-						dataType:'json',
-						success:function(areas) {
+<head>
+<meta charset="UTF-8">
+<title>숙박 리스트</title>
+<style type="text/css">
+	.pageblock {
+		text-align: center;
+	}
+	
+	.card-text {
+		overflow: hidden;
+		text-overflow: ellipsis; /* 말줄임표 */
+		display: -webkit-box;
+		-webkit-line-clamp: 10; /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
+		-webkit-box-orient: vertical;
+	}
+</style>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	function getSigungu(pArea) {
+				$.ajax({
+					url : "<%=request.getContextPath()%>/getSigungu/"+pArea,
+					data:pArea,
+					dataType:'json',
+					success:function(areas) {
 							$('#sigungu_list_select option').remove();
 							str = "<option value=''>전체</option>";
 							$(areas).each(
@@ -44,7 +44,7 @@
 				)
 			}
 			
-		</script>
+</script>
 </head>
 <body>
 	<!-- Top bar -->
@@ -75,9 +75,6 @@
 			<button type="button" class="btn btn-outline-secondary">검색</button>
 			<button type="button" class="btn btn-outline-secondary">초기화</button>
 		</div>
-
-				 	
-
 	<div class="album py-5 bg-body-tertiary">
 		</div>
 			<div class="container">
@@ -85,18 +82,18 @@
 					<c:forEach var="accomodation" items="${listAccomodation}">
 						<div class="col">
 							<div class="card" style="width: 20rem;">
-  							<img src="${accomodation.img1}" class="card-img-top" alt="${accomodation.title}이미지" style="height: 190px;">
-  							<div class="card-body">
-    							<p class="card-text" style="height: 240px;">
-    								숙소명 : ${accomodation.title} <br>
-    								숙소위치 : ${accomodation.address}<br>
-    								숙소소개  : ${accomodation.content}
-    							</p>
-    							<a href="accomodation/detail?contentId=${accomodation.content_id}" class="btn btn-primary">더보기</a>
- 						 </div>	
+  								<img src="${accomodation.img1}" class="card-img-top" alt="${accomodation.title}이미지" style="height: 190px;">
+	  							<div class="card-body">
+	    							<p class="card-text" style="height: 240px;">
+	    								숙소명 : ${accomodation.title} <br>
+	    								숙소위치 : ${accomodation.address}<br>
+	    								숙소소개  : ${accomodation.content}
+	    							</p>
+	    							<a href="accomodation/detail?contentId=${accomodation.content_id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
+								</div>	
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
 				</div>
 			</div>
 			<div align="center">
@@ -109,12 +106,8 @@
 			<c:if test="${page.endPage < page.totalPage}">
 				<a href="accomodation?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 			</c:if>
-		</div>
-		
-	</main>
-	
-	
-	
+		</div>		
+	</main>	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>

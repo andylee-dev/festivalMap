@@ -42,7 +42,7 @@
 				<c:set var="num" value="${page.total-page.start+1 }"/>
 				
 				<div class="border p-3 m-3">
-					<button onclick="location.href='../../integratedBoardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>
+					<button onclick="location.href='../../reviewBoardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
