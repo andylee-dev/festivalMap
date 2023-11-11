@@ -230,7 +230,7 @@ public class AdminTagController {
 			
 			List<Board> listBoard = null;
 			
-			int totalBoard = bs.boardCount(2, smallCode); // commcode => 2
+			int totalBoard = bs.boardCount(smallCode);
 			log.info("controller totalBoard => " +totalBoard);
 			
 			PagingList page = new PagingList(totalBoard, currentPage);
