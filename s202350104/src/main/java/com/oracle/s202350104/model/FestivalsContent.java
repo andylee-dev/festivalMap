@@ -58,4 +58,5 @@ public class FestivalsContent {
 	// 검색용
 	private String search;
 	private String keyword;
+	private String ordering; // 정렬
 }

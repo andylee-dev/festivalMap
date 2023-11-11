@@ -89,7 +89,7 @@
 							<option value = "s_sponsor">주최자</option>
 							<option value = "s_eventplace">장소</option>
 						</select>						
-						<input type="text" name="keyword" placeholder = "키워드를 입력하세요.">
+						<input type="text" name="keyword" placeholder = "검색어를 입력하세요.">
 						
 						<button type="submit" class="btn btn-outline-secondary">검색</button>
 						<button type="reset" class="btn btn-outline-secondary">초기화</button>

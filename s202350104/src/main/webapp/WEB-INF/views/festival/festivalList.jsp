@@ -58,19 +58,29 @@
 			</c:forEach>
 			<!-- HeaderBanner end -->
 		</div>
+		
+		<!-- 검색 -->
 		<form action="festival" method="post">
 			<div class="border p-3 m-3">
-				<div class="container">
-					<select name="area" class="area-dropdown"></select>
-					<select name="sigungu"  class="sigungu-dropdown"></select>
-				</div>
+				<select name="area" class="area-dropdown"></select>
+				<select name="sigungu"  class="sigungu-dropdown"></select>
 				<input type="text" name="keyword" placeholder="키워드를 입력하세요.">
 				
 				<button type="submit" class="btn btn-outline-secondary">검색</button>
 				<button type="reset" class="btn btn-outline-secondary">초기화</button>
 			</div>
 		</form>
+		
+		<!-- 정렬(만드는 중) -->
+		<div align="right">
+			<select name="ordering">
+				<option value="o_id">기본순</option>
+				<option value="o_title">이름순</option>
+				<option value="o_readcount">조회순</option>
+			</select>
+		</div>
 	
+		<!-- 콘텐츠 -->
 		<div class="album py-5 bg-body-tertiary">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

@@ -44,7 +44,18 @@
 			 		AND sigungu = #{sigungu}
 			 	</if>
 			 </if>
-			 ORDER BY content_id) t
+			 <choose>
+			 	<when test="ordering == 'o_title'">
+			 		ORDER BY title
+			 	</when>
+			 	<when test="ordering == 'o_readcount'">
+			 		ORDER BY readcount desc
+			 	</when>
+			 	<otherwise>
+			 		ORDER BY content_id
+			 	</otherwise>
+			 </choose>
+			 ) t
 		)
 		<if test="start != 0 and end != 0">
 			WHERE rn BETWEEN #{start} and #{end}
