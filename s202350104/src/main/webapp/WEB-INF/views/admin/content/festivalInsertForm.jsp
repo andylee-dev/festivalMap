@@ -6,14 +6,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 정보 등록</title>
-<!-- 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" />
- 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" type="module"></script> -->
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
  		
- 		<!-- 지역 코드 넣는 코드  Start-->	
+ 		
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
 			document.addEventListener("DOMContentLoaded", function() {
+				<!-- 지역 코드 넣는 코드  Start-->	
 				updateAreaOptions();
 				$(".area-dropdown").change(function() {
 					const selectedArea = $(this).val();
@@ -24,53 +24,52 @@
 					}
 				});
 			});
-		<!-- 지역 코드 넣는 코드  End-->
+			<!-- 지역 코드 넣는 코드  End-->
+			    const badgeSelect = document.querySelector('#badgeSelect');
+			    const addBadgeBtn = document.querySelector('#addBadgeBtn');
+			    const badgesArea = document.querySelector('#badgesArea');
 			
-		      document.addEventListener("DOMContentLoaded", function() {
-		          const badgeSelect = document.querySelector('#badgeSelect');
-		          const addBadgeBtn = document.querySelector('#addBadgeBtn');
-		          const badgesArea = document.querySelector('#badgesArea');
-
-		          // Initialize the list of available badges
-		          const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
-
-		          addBadgeBtn.addEventListener('click', () => {
-		            if (badgeSelect.value !== '') {
-		              // Create a new badge and add it to the page
-		              const newBadge = document.createElement('span');
-		              newBadge.className = 'badge bg-primary';
-		              newBadge.textContent = badgeSelect.value;
-
-		              const closeButton = document.createElement('button');
-		              closeButton.className = 'btn-close';
-		              closeButton.setAttribute('aria-label', 'Close');
-		              closeButton.addEventListener('click', (event) => {
-		                // When the badge is deleted, add its value back to the select box
-		                const deletedBadgeValue = event.target.parentElement.textContent.trim();
-		                availableBadges.push(deletedBadgeValue);
-		                updateSelectOptions();
-		                event.target.parentElement.remove();
-		              });
-
-		              newBadge.appendChild(closeButton);
-		              badgesArea.appendChild(newBadge);
-
-		              // Remove the added badge's value from the select box
-		              availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
-		              updateSelectOptions();
-		              badgeSelect.value = '';
-		            }
-		          });
-
-		          function updateSelectOptions() {
-		            badgeSelect.innerHTML = '<option value="">Select a badge</option>';
-		            availableBadges.forEach(badge => {
-		              const option = document.createElement('option');
-		              option.value = badge;
-		              option.textContent = badge;
-		              badgeSelect.appendChild(option);
-		            });
-		          }
+			    // Initialize the list of available badges
+			    const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
+			
+			    addBadgeBtn.addEventListener('click', () => {
+			      if (badgeSelect.value !== '') {
+			        // Create a new badge and add it to the page
+			        const newBadge = document.createElement('span');
+			        newBadge.className = 'badge bg-primary';
+			        newBadge.textContent = badgeSelect.value;
+			
+			        const closeButton = document.createElement('button');
+			        closeButton.className = 'btn-close';
+			        closeButton.setAttribute('aria-label', 'Close');
+			        closeButton.addEventListener('click', (event) => {
+			          // When the badge is deleted, add its value back to the select box
+			          const deletedBadgeValue = event.target.parentElement.textContent.trim();
+			          availableBadges.push(deletedBadgeValue);
+			          updateSelectOptions();
+			          event.target.parentElement.remove();
+			        });
+			
+			        newBadge.appendChild(closeButton);
+			        badgesArea.appendChild(newBadge);
+			
+			        // Remove the added badge's value from the select box
+			        availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
+			        updateSelectOptions();
+			        badgeSelect.value = '';
+			      }
+			    });
+			
+			    function updateSelectOptions() {
+			      badgeSelect.innerHTML = '<option value="">Select a badge</option>';
+			      availableBadges.forEach(badge => {
+			        const option = document.createElement('option');
+			        option.value = badge;
+			        option.textContent = badge;
+			        badgeSelect.appendChild(option);
+			      });				
+			    }
+			});
 		</script>
 	</head>
 	
@@ -173,7 +172,19 @@
 							<tr>
 								<th>태그</th>
 								<td>
-									
+									<div class="container">
+									  <select id="badgeSelect" name="tag_id">
+									    <option value="">태그를 선택해주세요.</option>
+									    <c:forEach var="tag" items="${listTags}">
+									    	<option value="${tag.id}">${tag.name}</option>
+									    </c:forEach>
+									    <!-- Add more options as needed -->
+									  </select>
+									  <button id="addBadgeBtn">Add Badge</button>
+									  <div id="badgesArea">
+									    <!-- New badges will be added here -->
+									  </div>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -191,18 +202,6 @@
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>
-					<div class="container">
-									  <select id="badgeSelect">
-									    <option value="">Select a badge</option>
-									    <option value="Badge1">Badge1</option>
-									    <option value="Badge2">Badge2</option>
-									    <!-- Add more options as needed -->
-									  </select>
-									  <button id="addBadgeBtn">Add Badge</button>
-									  <div id="badgesArea">
-									    <!-- New badges will be added here -->
-									  </div>
-									</div>
 				</div>		
 			</main>
 		</div>

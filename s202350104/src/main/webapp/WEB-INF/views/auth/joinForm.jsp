@@ -6,33 +6,56 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원가입</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" />
- 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" type="module"></script>
-
-		<style>
-		  .form-control-focus {
-		  color: #212529;
-		  background-color: #fff;
-		  border-color: #86b7fe;
-		  outline: 0;
-		  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-		}
 		
-		.was-validated :valid + .form-control-focus {
-		  border-color: #198754;
-		  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
-		}
-		
-		.was-validated :invalid + .form-control-focus {
-		  border-color: #dc3545;
-		  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-		}
-		</style>
-		
-		<script type="module">
-   			import Tags from "https://cdn.jsdelivr.net/gh/lekoala/bootstrap5-tags@master/tags.js";
-    		Tags.init("select");
- 		</script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function () {
+			    const badgeSelect = document.querySelector('#badgeSelect');
+			    const addBadgeBtn = document.querySelector('#addBadgeBtn');
+			    const badgesArea = document.querySelector('#badgesArea');
+			
+			    // Initialize the list of available badges
+			    const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
+			
+			    addBadgeBtn.addEventListener('click', () => {
+			      if (badgeSelect.value !== '') {
+			        // Create a new badge and add it to the page
+			        const newBadge = document.createElement('span');
+			        newBadge.className = 'badge bg-primary';
+			        newBadge.textContent = badgeSelect.value;
+			
+			        const closeButton = document.createElement('button');
+			        closeButton.className = 'btn-close';
+			        closeButton.setAttribute('aria-label', 'Close');
+			        closeButton.addEventListener('click', (event) => {
+			          // When the badge is deleted, add its value back to the select box
+			          const deletedBadgeValue = event.target.parentElement.textContent.trim();
+			          availableBadges.push(deletedBadgeValue);
+			          updateSelectOptions();
+			          event.target.parentElement.remove();
+			        });
+			
+			        newBadge.appendChild(closeButton);
+			        badgesArea.appendChild(newBadge);
+			
+			        // Remove the added badge's value from the select box
+			        availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
+			        updateSelectOptions();
+			        badgeSelect.value = '';
+			      }
+			    });
+			
+			    function updateSelectOptions() {
+			      badgeSelect.innerHTML = '<option value="">Select a badge</option>';
+			      availableBadges.forEach(badge => {
+			        const option = document.createElement('option');
+			        option.value = badge;
+			        option.textContent = badge;
+			        badgeSelect.appendChild(option);
+			      });				
+			    }
+			});
+		</script>
 	</head>
 <body>
 	<!-- Top bar -->
@@ -60,19 +83,19 @@
 			주소 <!-- 우편번호 검색 api 및 기본주소 자동입력 -->
 				<input type="text" name="address"><p>
 			관심사
-			 <div class="container">
-				<div class="row mb-3 g-3">
-      			  <div class="col-md-4">
-         			 <select class="form-select" id="validationTagsClear" name="tagsClear[]" multiple data-allow-clear="true">
-            			<option selected disabled hidden value="">태그를 선택해주세요.</option>
-			            <c:forEach var="tag" items="${listTags}">
-			            	<option value="${tag.id}" data-badge-style="primary">${tag.name}</option>
-			            </c:forEach>
-			          </select>
-			          <div class="invalid-feedback">유효한 태그를 선택해주세요.</div>
-			        </div>
-			      </div>
-  			</div>
+	  			<div class="container">
+				  <select id="badgeSelect" name="tag_id">
+				    <option value="">태그를 선택해주세요.</option>
+				    <c:forEach var="tag" items="${listTags}">
+				    	<option value="${tag.id}">${tag.name}</option>
+				    </c:forEach>
+				    <!-- Add more options as needed -->
+				  </select>
+				  <button id="addBadgeBtn">Add Badge</button>
+				  <div id="badgesArea">
+				    <!-- New badges will be added here -->
+				  </div>
+				</div>
 			<button type="submit" class="btn btn-primary">회원가입</button>
 			<button type="reset" class="btn btn-light">초기화</button>
 		</form>
