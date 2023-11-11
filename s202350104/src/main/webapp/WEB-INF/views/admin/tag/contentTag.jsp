@@ -8,7 +8,7 @@
 		<title>컨텐츠 태그</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-		   $(document).ready(function() {
+			document.addEventListener("DOMContentLoaded", function() {
 			   const urlParams = new URL(location.href).searchParams;
 			   const bigCodeStr = urlParams.get('bigCodeStr');
 			   
@@ -33,6 +33,8 @@
 						   }
 					   }
 				)
+				
+				
 		   })
 		   
 		   function detail(pId) {
@@ -95,9 +97,10 @@
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
-								<th scope="col">분류</th>
 								<th scope="col">컨텐츠 번호</th>
+								<th scope="col">분류</th>
 								<th scope="col">이름</th>
+								<th scope="col">지역</th>
 								<th scope="col">태그명</th>
 								<th scope="col">수정</th>
 							</tr>
@@ -107,9 +110,17 @@
 							<c:forEach var="content" items="${listContent}" varStatus="st">
 								<tr>
 									<td>${num}</td>
-									<td>${content.big_code}</td>
 									<td><input type="hidden" id="content_id${st.index}" value="${content.id}">${content.id}</td>
+									<td id="small_code_input${st.index}">
+										<input type="hidden" id="small_code${st.index}" value="${content.small_code}">
+										${content.small_code}
+									</td>
 									<td><span onclick="detail(${content.id})">${content.title}</span></td>
+									<td id="areas_input${st.index}">
+										<input type="hidden" id="area${st.index}" value="${content.area}">
+										<input type="hidden" id="sigungu${st.index}" value="${content.sigungu}">
+										${content.area} ${content.sigungu}
+									</td>
 									<td id="tag_name${st.index}"></td>
 									<td><input type="button" value="수정"></td>
 								</tr>

@@ -49,9 +49,18 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="boardTag">
+						검색어<select name="search">
+							<option value="tagname">태그명</option>
+							<option value="title">제목</option>
+							<option value="name">작성자</option>
+						</select>
+						<input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+						
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					</form>
+					
 				</div>		
 				
 				<!-- Section3: Table -->		
@@ -68,6 +77,9 @@
 								<th scope="col">순번</th>
 								<th scope="col">게시글 번호</th>
 								<th scope="col">제목</th>
+								<th scope="col">작성자</th>
+								<th scope="col">작성일</th>
+								<th scope="col">조회수</th>
 								<th scope="col">태그명</th>
 								<th scope="col">수정</th>
 							</tr>
@@ -78,10 +90,13 @@
 								<tr>
 									<td>${num}</td>
 									<td><input type="hidden" id="board_id${st.index}" value="${board.id}">
-										${board.id}</td><!-- 나중에 상세정보 페이지로 연결할 수 있도록 -->
+										${board.id}</td>
 									<td>${board.title}</td>
+									<td>${board.name}</td>
+									<td><fmt:formatDate value="${board.created_at}" type="date" pattern="YY/MM/dd"/></td>
+									<td>${board.read_count}</td>
 									<td id="tag_name${st.index}"></td>
-									<td><input type="button" value="수정" onclick="location.href='boardTagsUpdateForm?boardId=${board.id}&currentPage=${page.currentPage}'"></td>
+									<td><input type="button" value="수정" onclick="location.href='boardTagsUpdateForm?boardIdStr=${board.id}&currentPage=${page.currentPage}'"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

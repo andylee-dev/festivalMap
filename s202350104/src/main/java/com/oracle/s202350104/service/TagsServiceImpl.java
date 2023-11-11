@@ -120,8 +120,8 @@ public class TagsServiceImpl implements TagsService {
 	}
 
 	@Override
-	public List<Tags> listUserTags() {
-		List<Tags> listTags = td.listUserTags();
+	public List<Tags> listUserTags(Tags tags) {
+		List<Tags> listTags = td.listUserTags(tags);
 		
 		if(listTags == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 태그 리스트가 존재하지 않습니다.");

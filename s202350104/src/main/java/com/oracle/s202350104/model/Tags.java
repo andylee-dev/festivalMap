@@ -20,9 +20,11 @@ public class Tags {
 	private String title; // 콘텐츠, 게시글 제목
 	private String cc_content; // 공통코드 내용
 	private int tag_id;
+	private String tag_name;
 	
 	// 검색용
 	private String search;
 	private String keyword;
+	private String ordering;
 
 }

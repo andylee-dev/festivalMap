@@ -8,6 +8,52 @@
 		<title>Insert title here</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				const badgeSelect = document.querySelector('#badgeSelect');
+			    const addBadgeBtn = document.querySelector('#addBadgeBtn');
+			    const badgesArea = document.querySelector('#badgesArea');
+			
+			    // Initialize the list of available badges
+			    const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
+			
+			    addBadgeBtn.addEventListener('click', () => {
+			      if (badgeSelect.value !== '') {
+			        // Create a new badge and add it to the page
+			        const newBadge = document.createElement('span');
+			        newBadge.className = 'badge bg-primary';
+			        newBadge.textContent = badgeSelect.value;
+			
+			        const closeButton = document.createElement('button');
+			        closeButton.className = 'btn-close';
+			        closeButton.setAttribute('aria-label', 'Close');
+			        closeButton.addEventListener('click', (event) => {
+			          // When the badge is deleted, add its value back to the select box
+			          const deletedBadgeValue = event.target.parentElement.textContent.trim();
+			          availableBadges.push(deletedBadgeValue);
+			          updateSelectOptions();
+			          event.target.parentElement.remove();
+			        });
+			
+			        newBadge.appendChild(closeButton);
+			        badgesArea.appendChild(newBadge);
+			
+			        // Remove the added badge's value from the select box
+			        availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
+			        updateSelectOptions();
+			        badgeSelect.value = '';
+			      }
+			    });
+			
+			    function updateSelectOptions() {
+			      badgeSelect.innerHTML = '<option value="">Select a badge</option>';
+			      availableBadges.forEach(badge => {
+			        const option = document.createElement('option');
+			        option.value = badge;
+			        option.textContent = badge;
+			        badgeSelect.appendChild(option);
+			      });				
+			    }
+			});
 		</script>
 	</head>
 		<body>
@@ -22,52 +68,57 @@
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
-				</div>		
-				
-				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
+				<div class="border p-3 m-3" data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
 					<table class="table table-striped table-sm">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">게시글 번호</th>
-								<th scope="col">제목</th>
-								<th scope="col">태그명</th>
-								<th scope="col">수정</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="board" items="${listBoard}" varStatus="st">
-								<tr>
-									<td>${num}</td>
-									<td><input type="hidden" id="board_id${st.index}" value="${board.id}">
-										${board.id}</td><!-- 나중에 상세정보 페이지로 연결할 수 있도록 -->
-									<td>${board.title}</td>
-									<td id="tag_name${st.index}"></td>
-									<td><input type="button" value="수정" onclick="location.href='boardTagsUpdateForm?boardId=${board.id}&currentPage=${page.currentPage}'"></td>
-								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
+						<tr>
+							<th>게시글 번호</th>
+							<td>${board.id}</td>
+						</tr>
+						<tr>
+							<th>분류</th>
+							<td>${board.big_code}</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td>${board.name}</td>
+						</tr>
+						<tr>
+							<th>작성일</th>
+							<td><fmt:formatDate value="${board.created_at}" type="date" pattern="YY/MM/dd"/></td>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td>${board.title}</td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td>${board.content}</td>
+						</tr>
 					</table>
-					<p>총 건수 : ${totalBoard}</p>
-					<div align="center">
-						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="boardTag?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-						</c:if>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="boardTag?currentPage=${i}" class="pageblock">[${i}]</a>
-						</c:forEach>
-						<c:if test="${page.endPage < page.totalPage}">
-							<a href="boardTag?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-						</c:if>
+					
+					<!-- tag 선택 -->
+					<div class="container">
+						<select id="badgeSelect" name="tag_id">
+							<option value="">태그를 선택해주세요.</option>
+							<c:forEach var="tag" items="${listAllTags}">
+								<option value="${tag.id}">${tag.name}</option>
+							</c:forEach>
+							<!-- Add more options as needed -->
+						</select>
+						<button id="addBadgeBtn">Add Badge</button>
+						<div id="badgesArea">
+							<!-- New badges will be added here -->
+							<c:if test="${listMyTags != null}">
+								<c:forEach var="mytag" items="${listMyTags}">
+									${mytag.name}
+								</c:forEach>
+							</c:if>
+						</div>
 					</div>
-				</div>		
+					
+					<!-- 수정/목록 버튼 -->
+					
+				</div>
 			</main>
 		</div>
 		</div>

@@ -45,9 +45,16 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="userTag">
+						검색어<select name="searchType">
+							<option value="tagname">태그명</option>
+							<option value="email">회원ID</option>
+						</select>
+						<input type="text" name="keyword" placeholder="검색어를 입력하세요.">
+											
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					</form>
 				</div>		
 				
 				<!-- Section3: Table -->		
@@ -57,6 +64,11 @@
 							<tr>
 								<th scope="col">순번</th>
 								<th scope="col">회원ID</th>
+								<th scope="col">이름</th>
+								<th scope="col">닉네임</th>
+								<th scope="col">생년월일</th>
+								<th scope="col">성별</th>
+								<th scope="col">주소</th>
 								<th scope="col">태그명</th>
 							</tr>
 						</thead>
@@ -65,7 +77,15 @@
 							<c:forEach var="user" items="${listUsers}" varStatus="st">
 								<tr>
 									<td>${num}</td>
-									<td><input type="hidden" id="user_id${st.index}" value="${user.id}">${user.id}</td>
+									<td><input type="hidden" id="user_id${st.index}" value="${user.id}">${user.email}</td>
+									<td>${user.name}</td>
+									<td>${user.nickname}</td>
+									<td>${user.birthday}</td>
+									<td>
+										<c:if test="${user.gender == 0}">남</c:if>
+										<c:if test="${user.gender == 1}">여</c:if>
+									</td>
+									<td>${user.address}</td>
 									<td id="tag_name${st.index}"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
@@ -90,6 +110,5 @@
 			</main>
 		</div>
 		</div>
-		<!-- 태그별로 해당 태그를 관심태그로 추가한 회원수 볼 수 있는 기능 추가하기 -->
 	</body>
 </html>

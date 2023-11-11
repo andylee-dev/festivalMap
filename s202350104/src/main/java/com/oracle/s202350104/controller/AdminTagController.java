@@ -203,7 +203,8 @@ public class AdminTagController {
 		List<Tags> listTags = null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "getUserTags", "start");
-			listTags = ts.listUserTags();
+			Tags tags = new Tags();
+			listTags = ts.listUserTags(tags);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "getUserTags", e.getMessage());
 		} finally {
@@ -229,7 +230,7 @@ public class AdminTagController {
 			
 			List<Board> listBoard = null;
 			
-			int totalBoard = bs.boardCount(smallCode);
+			int totalBoard = bs.boardCount(2, smallCode); // commcode => 2
 			log.info("controller totalBoard => " +totalBoard);
 			
 			PagingList page = new PagingList(totalBoard, currentPage);
@@ -287,10 +288,14 @@ public class AdminTagController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "start");
 			Board board = bs.boardDetail(boardId);
-			List<Tags> listTags = ts.searchBoardTagsOne(boardId);
+			List<Tags> listMyTags = ts.searchBoardTagsOne(boardId);
+			Tags tags = new Tags();
+			List<Tags> listAllTags = ts.listTags(tags);
+			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("board", board);
-			model.addAttribute("listTags", listTags);
+			model.addAttribute("listMyTags", listMyTags);
+			model.addAttribute("listAllTags", listAllTags);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "boardTagsUpdateForm", e.getMessage());
 		} finally {
