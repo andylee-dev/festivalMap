@@ -167,12 +167,15 @@ public class ExperienceController {
 	@GetMapping(value = "experience1")
 	public String listSearch(ExperienceContent experience,String currentPage, Model model, HttpServletRequest request) {
 //	public String listSearch(String big_code,String currentPage, Model model) {
+		
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
+			
 			int totalSearchExperience = es.totalMainSearchExperience(experience);
 			
-			int path = 1;
+			int path = 1;			
 			String small_code = request.getParameter("small_code");
 			String big_code = request.getParameter("big_code");
 			String keyword = request.getParameter("keyword");
@@ -181,6 +184,7 @@ public class ExperienceController {
 			Paging page = new Paging(totalSearchExperience, currentPage);
 			experience.setStart(page.getStart());
 			experience.setEnd(page.getEnd());
+			
 			List<Areas> listAreas = as.listAreas();
 			List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
 			List<ExperienceContent> listSearchExperience = es.listMainSearchExperience(experience);

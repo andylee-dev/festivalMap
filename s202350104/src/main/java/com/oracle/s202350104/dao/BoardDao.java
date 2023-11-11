@@ -7,7 +7,7 @@ import com.oracle.s202350104.model.FestivalsContent;
 
 public interface BoardDao {
 	
-	int boardCount(int commCode, int smallCode);
+	int boardCount(int smallCode);
 
 	List<Board> getNoticAllList(Board board);
 

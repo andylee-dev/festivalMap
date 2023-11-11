@@ -54,7 +54,7 @@ public class TagsDaoImpl implements TagsDao {
 			log.info("TagsDaoImpl totalUserTags() => " + e.getMessage());
 		}
 		return totalTagsCnt;
-	}
+	} 
 
 	@Override
 	public int totalBoardTags() {

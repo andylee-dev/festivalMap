@@ -51,13 +51,13 @@ public class BoardController {
 	// 공지사항 List Logic
 	@RequestMapping(value = "/noticBoardList")
 	public String noticBoardList(Board board, String currentPage, Model model) {
-		log.info("controller noticBoardList Start!!");
+		log.info("BoardController noticBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 1;
 		int userId = 1001;
 		
-		// smallCode를 이용해 countBoard를 설정
+		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(smallCode);
 		
 		// Paging 작업
@@ -65,21 +65,25 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("controller noticBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller noticBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> noticAllList = boardService.getNoticAllList(board);
-		log.info("controller noticAllList size : {}", noticAllList.size());
+		
+		log.info("BoardController noticBoardList before board.getStart : {} ", board.getStart());
+		log.info("BoardController noticBoardList before board.getEnd : {} ", board.getEnd());	
+		log.info("BoardController noticAllList size : {}", noticAllList.size());
+		log.info("BoardController noticBoardList after board.getStart : {} ", board.getStart());
+		log.info("BoardController noticBoardList after board.getEnd : {} ", board.getEnd());
 
-		log.info("controller noticBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller noticBoardList after board.getEnd : {} ", board.getEnd());
+		if(noticAllList.size() != 0) {
+			bigCode = noticAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController notice 값이 없습니다.");
+		}
 
-		bigCode = noticAllList.get(0).getBig_code();
-
-		log.info("controller noticBoardList totalBoard : {} ", countBoard);
-		log.info("controller noticBoardList smallCode : {} ", smallCode);
-		log.info("controller freeBoardList userId : {} ", userId);	
-		log.info("controller noticBoardList page : {} ", page);
+		log.info("BoardController noticBoardList totalBoard : {} ", countBoard);
+		log.info("BoardController noticBoardList smallCode : {} ", smallCode);
+		log.info("BoardController noticBoardList userId : {} ", userId);	
+		log.info("BoardController noticBoardList page : {} ", page);
 
 		model.addAttribute("board", noticAllList);
 		model.addAttribute("page", page);
@@ -87,7 +91,7 @@ public class BoardController {
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("userId", userId);
 		
-		log.info("controller noticBoardList End..");
+		log.info("BoardController noticBoardList End..");
 
 		return "board/integratedBoardList";
 	}
@@ -95,13 +99,13 @@ public class BoardController {
 	// 이달의 소식 List Logic
 	@RequestMapping(value = "/magazinBoardList")
 	public String magazinBoardList(Board board, String currentPage, Model model) {
-		log.info("controller magazinBoardList Start!!");
+		log.info("BoardController magazinBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 2;
 		int userId = 1001;
 		
-		// smallCode를 이용해 countBoard를 설정
+		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(smallCode);
 		
 		// Paging 작업
@@ -109,21 +113,15 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("controller magazinBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller magazinBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> magazinAllList = boardService.getMagazinAllList(board);
-		log.info("controller magazinAllList size : {}", magazinAllList.size());
+		log.info("BoardController magazinAllList size : {}", magazinAllList.size());
 
-		log.info("controller magazinBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller magazinBoardList after board.getEnd : {} ", board.getEnd());
-
-		bigCode = magazinAllList.get(0).getBig_code();
-
-		log.info("controller magazinBoardList totalBoard : {} ", countBoard);
-		log.info("controller magazinBoardList smallCode : {} ", smallCode);
-		log.info("controller freeBoardList userId : {} ", userId);	
-		log.info("controller magazinBoardList page : {} ", page);
+		if(magazinAllList.size() != 0) {
+			bigCode = magazinAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController magazin 값이 없습니다.");
+		}
 
 		model.addAttribute("board", magazinAllList);
 		model.addAttribute("page", page);
@@ -131,7 +129,7 @@ public class BoardController {
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("userId", userId);
 		
-		log.info("controller magazinBoardList End..");
+		log.info("BoardController magazinBoardList End..");
 
 		return "board/integratedBoardList";
 	}
@@ -139,13 +137,13 @@ public class BoardController {
 	// 자유게시판 List Logic
 	@RequestMapping(value = "/freeBoardList")
 	public String freeBoardList(Board board, String currentPage, Model model) {
-		log.info("controller freeBoardList Start!!");
+		log.info("BoardController freeBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
 		int userId = 1001;
 		
-		// smallCode를 이용해 countBoard를 설정
+		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(smallCode);
 		
 		// Paging 작업
@@ -153,23 +151,15 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("controller freeBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller freeBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> freeAllList = boardService.getFreeAllList(board);
-		log.info("controller freeAllList size : {}", freeAllList.size());
+		log.info("BoardController freeAllList size : {}", freeAllList.size());
 
-		log.info("controller freeBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller freeBoardList after board.getEnd : {} ", board.getEnd());
-
-		bigCode = freeAllList.get(0).getBig_code();
-		//userId = freeAllList.get(0).getUser_id();
-
-		log.info("controller freeBoardList totalBoard : {} ", countBoard);
-		log.info("controller freeBoardList smallCode : {} ", smallCode);
-		log.info("controller freeBoardList bigCode : {} ", bigCode);
-		log.info("controller freeBoardList userId : {} ", userId);		
-		log.info("controller freeBoardList page : {} ", page);
+		if(freeAllList.size() != 0) {
+			bigCode = freeAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController magazin 값이 없습니다.");
+		}
 
 		model.addAttribute("board", freeAllList);
 		model.addAttribute("page", page);
@@ -177,7 +167,7 @@ public class BoardController {
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("userId", userId);
 		
-		log.info("controller freeBoardList End..");
+		log.info("BoardController freeBoardList End..");
 
 		return "board/integratedBoardList";
 	}
@@ -185,7 +175,7 @@ public class BoardController {
 	// 포토게시판 Logic
 	@RequestMapping(value = "/photoBoardList")
 	public String photoBoardList(Board board, String currentPage, Model model) {
-		log.info("controller photoBoardList Start!!");
+		log.info("BoardController photoBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 4;
@@ -199,20 +189,15 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("controller photoBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller photoBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> photoAllList = boardService.getPhotoAllList(board);
-		log.info("controller photoAllList size : {}", photoAllList.size());
+		log.info("BoardController photoAllList size : {}", photoAllList.size());
 
-		log.info("controller photoBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller photoBoardList after board.getEnd : {} ", board.getEnd());
-
-		bigCode = photoAllList.get(0).getBig_code();
-
-		log.info("controller photoBoardList totalBoard : {} ", countBoard);
-		log.info("controller photoBoardList smallCode : {} ", smallCode);
-		log.info("controller photoBoardList page : {} ", page);
+		if(photoAllList.size() != 0) {
+			bigCode = photoAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController magazin 값이 없습니다.");
+		}
 
 		model.addAttribute("board", photoAllList);
 		model.addAttribute("page", page);
@@ -220,7 +205,7 @@ public class BoardController {
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("userId", userId);
 		
-		log.info("controller photoBoardList End..");
+		log.info("BoardController photoBoardList End..");
 
 		return "board/photoEventBoardList";
 	}
@@ -228,7 +213,7 @@ public class BoardController {
 	// 이벤트게시판 Logic
 	@RequestMapping(value = "/eventBoardList")
 	public String eventBoardList(Board board, String currentPage, Model model) {
-		log.info("controller eventBoardList Start!!");
+		log.info("BoardController eventBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 5;
@@ -242,20 +227,15 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("controller eventBoardList before board.getStart : {} ", board.getStart());
-		log.info("controller eventBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> eventAllList = boardService.getEventAllList(board);
-		log.info("controller eventAllList size : {}", eventAllList.size());
+		log.info("BoardController eventAllList size : {}", eventAllList.size());
 
-		log.info("controller eventBoardList after board.getStart : {} ", board.getStart());
-		log.info("controller eventBoardList after board.getEnd : {} ", board.getEnd());
-
-		bigCode = eventAllList.get(0).getBig_code();
-
-		log.info("controller eventBoardList totalBoard : {} ", countBoard);
-		log.info("controller eventBoardList smallCode : {} ", smallCode);
-		log.info("controller eventBoardList page : {} ", page);
+		if(eventAllList.size() != 0) {
+			bigCode = eventAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController magazin 값이 없습니다.");
+		}
 
 		model.addAttribute("board", eventAllList);
 		model.addAttribute("page", page);
@@ -263,7 +243,7 @@ public class BoardController {
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("userId", userId);
 		
-		log.info("controller eventBoardList End..");
+		log.info("BoardController eventBoardList End..");
 
 		return "board/photoEventBoardList";
 	}
@@ -287,21 +267,15 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("BoardController reviewBoardList before board.getStart : {} ", board.getStart());
-		log.info("BoardController reviewBoardList before board.getEnd : {} ", board.getEnd());
 		
 		List<Board> revicewAllList = boardService.getReviewAllList(board);
 		log.info("BoardController revicewAllList size : {}", revicewAllList.size());
 
-		log.info("BoardController reviewBoardList after board.getStart : {} ", board.getStart());
-		log.info("BoardController reviewBoardList after board.getEnd : {} ", board.getEnd());
-
-		bigCode = revicewAllList.get(0).getBig_code();
-
-		log.info("BoardController reviewBoardList totalBoard : {} ", countBoard);
-		log.info("BoardController reviewBoardList smallCode : {} ", smallCode);
-		log.info("BoardController reviewBoardList smallCode : {} ", bigCode);
-		log.info("BoardController reviewBoardList page : {} ", page);
+		if(revicewAllList.size() != 0) {
+			bigCode = revicewAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController magazin 값이 없습니다.");
+		}
 
 		model.addAttribute("board", revicewAllList);
 		model.addAttribute("page", page);
@@ -348,7 +322,6 @@ public class BoardController {
 		model.addAttribute("userId", userId);
 
 		return "board/photoEventBoardDetail"; 
-
 	}
 
 	// 통합게시판 수정 form Logic
@@ -678,42 +651,52 @@ public class BoardController {
 
 		return redirectURL;
 	}
-	
+
 	// 게시판 신고기능 -송환
 	@GetMapping("/reportBoardFoam")
-    public String reportBoard(int boardId, Model model) {
-		log.info("boardId->"+ boardId);
+	public String reportBoard(int boardId, Model model) {
+		log.info("boardId->" + boardId);
+
 		try {
 			Board reportBoard = boardService.boardDetail(boardId);
-		int userid = us.getLoggedInId();
-		model.addAttribute("board",reportBoard );
-		model.addAttribute("userId",userid);
-		} catch (Exception e) {
 			
+			int userid = us.getLoggedInId();
+			
+			model.addAttribute("board", reportBoard);
+			model.addAttribute("userId", userid);
+		} catch (Exception e) {
+
 		}
-		
-        return "board/boardReportForm";
-    }
+
+		return "board/boardReportForm";
+	}
 	
 	// 게시판 신고기능 -송환
 	@RequestMapping(value = "boardReportUpdate")
 	public String boardReportUpdate(Report report, Model model) {
+		
 		UUID transactionId = UUID.randomUUID();
 		String message = "";
+		
 		try {
-			log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+			log.info("[{}]{}:{}", transactionId, "admin festivalDetail", "start");
+			
 			int result = res.boardReportUpdate(report);
-			 if (result == 0) {
-				 message = "이미 신고한 게시글입니다.";
-		     }else if (result ==1 ) {
-		    	 message = "신고완료";
+			
+			if (result == 0) {
+				message = "이미 신고한 게시글입니다.";
+				
+			} else if (result == 1) {
+				message = "신고완료";
 			}
-			 model.addAttribute("message", message);
+			
+			model.addAttribute("message", message);
+			
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "admin detailExperience", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "admin detailExperience", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "admin detailExperience", "end");
-		}		
+			log.info("[{}]{}:{}", transactionId, "admin detailExperience", "end");
+		}
 		return "board/boardReportClose";
 	}
 } 

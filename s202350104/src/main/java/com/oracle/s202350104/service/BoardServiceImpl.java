@@ -28,9 +28,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	// paging 처리용
 	@Override
-	public int boardCount(int commCode, int smallCode) {
+	public int boardCount(int smallCode) {
 		
-		int countBoard = boardDao.boardCount(commCode,smallCode);
+		int countBoard = boardDao.boardCount(smallCode);
 		
 		return countBoard;
 	}

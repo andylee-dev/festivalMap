@@ -17,13 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardDaoImpl implements BoardDao {
 
 	private final SqlSession session;
-	
-	@Override
-	public int boardCount2(Board board) {
-		int countBoardResult = session.selectOne("boardCount2", board);
-		log.info("BoardDao boardCount2 countBoardResult : {}", countBoardResult);
-		return countBoardResult;
-	}
 
 	// 조회수 증가 logic
 	public void readCountUp(int boardId) {
@@ -36,10 +29,17 @@ public class BoardDaoImpl implements BoardDao {
 			log.error("BoardDao readCountUp Exception : {}", e.getMessage());
 		}
 	}
+	
+	@Override
+	public int boardCount2(Board board) {
+		int countBoardResult = session.selectOne("boardCount2", board);
+		log.info("BoardDao boardCount2 countBoardResult : {}", countBoardResult);
+		return countBoardResult;
+	}
 
 	// Paging 처리용
 	@Override
-	public int boardCount(int commCode, int smallCode) {
+	public int boardCount(int smallCode) {
 
 		int countBoard = 0;
 

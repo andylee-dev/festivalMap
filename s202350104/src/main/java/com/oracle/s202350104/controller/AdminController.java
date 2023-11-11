@@ -14,17 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping(value = "/admin")
-public class AdminController {
-	
+public class AdminController {	
 	
 	@RequestMapping(value = "")
 	public String home() {
 		return "admin/index";
-	}
-
-
-
-
-	
+	}	
 	
 }
