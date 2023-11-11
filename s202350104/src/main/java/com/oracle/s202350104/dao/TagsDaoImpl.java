@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.oracle.s202350104.model.Tags;
 
@@ -17,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TagsDaoImpl implements TagsDao {
 	
 	private final SqlSession session;
+	private final PlatformTransactionManager transactionManager;
 
 	@Override
 	public int totalTags(Tags tags) {
@@ -42,10 +46,10 @@ public class TagsDaoImpl implements TagsDao {
 	}
 
 	@Override
-	public int totalUserTags() {
+	public int totalUserTags(Tags tags) {
 		int totalTagsCnt = 0;
 		try {
-			totalTagsCnt = session.selectOne("nhUserTagsTotal");
+			totalTagsCnt = session.selectOne("nhUserTagsTotal", tags);
 		} catch(Exception e) {
 			log.info("TagsDaoImpl totalUserTags() => " + e.getMessage());
 		}
@@ -123,13 +127,23 @@ public class TagsDaoImpl implements TagsDao {
 	@Override
 	public int deleteTags(int id) {
 		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
-			session.delete("nhUserTagsDelete", id);
-			session.delete("nhContentTagsDelete", id);
-			session.delete("nhBoardTagsDelete", id);
+			// 자식 테이블 데이터부터 삭제할 수 있도록 
+			result = session.delete("nhUserTagsDelete", id);
+			log.info("TagsDaoImpl deleteTags userTags => " + result);
+			result = session.delete("nhContentTagsDelete", id);
+			log.info("TagsDaoImpl deleteTags contentTags => " + result);
+			result = session.delete("nhBoardTagsDelete", id);
+			log.info("TagsDaoImpl deleteTags boardTags => " + result);
 			result = session.delete("nhTagsDelete", id);
+			log.info("TagsDaoImpl deleteTags tags => " + result);
+			transactionManager.commit(txStatus);
 		} catch(Exception e) {
+			transactionManager.rollback(txStatus);
 			log.info("TagsDaoImpl deleteTags() => " + e.getMessage());
+			result = -1;
 		}
 		return result;
 	}
@@ -159,10 +173,10 @@ public class TagsDaoImpl implements TagsDao {
 	}
 
 	@Override
-	public List<Tags> listUserTags() {
+	public List<Tags> listUserTags(Tags tags) {
 		List<Tags> listTags = null;
 		try {
-			listTags = session.selectList("nhUserTagsAll");
+			listTags = session.selectList("nhUserTagsAll", tags);
 			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
 		} catch (Exception e) {
 			log.info("TagsDaoImpl listUserTags() => " + e.getMessage());
