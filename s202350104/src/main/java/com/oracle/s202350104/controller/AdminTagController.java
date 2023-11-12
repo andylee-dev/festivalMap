@@ -49,6 +49,7 @@ public class AdminTagController {
 	private final ContentSerivce cs;
 	private final BoardService bs;
 	private final UserService us;
+	private final FestivalsService fs;
 	
 	@RequestMapping(value = "list")
 	public String tagList(Tags tags, String currentPage, Model model) {
@@ -217,7 +218,7 @@ public class AdminTagController {
 	public String boardTagList(Board board, String smallCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		int smallCode = 0;
-		if(smallCodeStr == null) {
+		if(smallCodeStr == null || smallCodeStr == "") {
 			smallCode = 2;
 		} else {
 			smallCode = Integer.parseInt(smallCodeStr);
@@ -236,7 +237,7 @@ public class AdminTagController {
 			PagingList page = new PagingList(totalBoard, currentPage);
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
-				
+			
 			switch(smallCode) {
 				case 2: listBoard = bs.getMagazinAllList(board); break;
 				case 3: listBoard = bs.getFreeAllList(board); break;
@@ -321,16 +322,7 @@ public class AdminTagController {
 			log.info("[{}]{}:{}",transactionId, "contentTagList", "start");
 			
 			int totalContents = cs.getTotalSearchCount(content); // bigCode에 따라 totalContents 조회
-			
-//			switch(bigCode) {
-//				case 11: festival
-//				case 12: restaurant
-//				case 13: accomodation
-//				case 14: spot
-//				case 15: experience
-//				case 16: course
-//			}
-//			
+					
 			PagingList page = new PagingList(totalContents, currentPage);
 			content.setStart(page.getStart());
 			content.setEnd(page.getEnd());
@@ -338,7 +330,7 @@ public class AdminTagController {
 			List<Contents> listContent = cs.getSearchContentsList(content); // bigCode에 따라 listContent 조회
 
 			log.info("controller listContent => " +listContent.size());
-			log.info("totalContents=>" +totalContents);
+			log.info("totalContents => " +totalContents);
 			
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("totalContents", totalContents);
@@ -352,6 +344,36 @@ public class AdminTagController {
 		}	
 		
 		return "admin/tag/contentTag";
+	}
+	
+	@RequestMapping(value = "contentTagsUpdateForm")
+	public String contentTagsUpdate(String contentIdStr, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		int contentId = 0;
+		if(contentIdStr == null || contentIdStr == "") {
+			contentId = 0;
+		} else {
+			contentId = Integer.parseInt(contentIdStr);
+		}
+		try {
+			log.info("[{}]{}:{}",transactionId, "contentTagsUpdateForm", "start");
+			
+			 Contents contents = fs.detailContents(contentId);
+			 List<Tags> listMyTags = ts.searchContentTags(contentId); 
+			 Tags tags = new Tags(); 
+			 List<Tags> listAllTags = ts.listTags(tags);
+			  
+			 model.addAttribute("currentPage", currentPage); 
+			 model.addAttribute("contents", contents); 
+			 model.addAttribute("listMyTags", listMyTags);
+			 model.addAttribute("listAllTags", listAllTags);
+			 
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "contentTagsUpdateForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "contentTagsUpdateForm", "end");
+		}	
+		return "admin/tag/contentTagsUpdateForm";
 	}
 	
 	@ResponseBody

@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<title>컨텐츠 태그</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
 			document.addEventListener("DOMContentLoaded", function() {
 			   const urlParams = new URL(location.href).searchParams;
@@ -34,8 +35,18 @@
 					   }
 				)
 				
-				
-		   })
+				<!-- 지역 코드 넣는 코드  Start-->	
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+					}
+				});
+				<!-- 지역 코드 넣는 코드  End-->
+		   });
 		   
 		   function detail(pId) {
 			  const urlParams = new URL(location.href).searchParams;
@@ -79,9 +90,21 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+					<form action="contentTag">
+						<!-- 지역 검색 -->
+						<select name="area" class="area-dropdown"></select>
+						<select name="sigungu"  class="sigungu-dropdown"></select><p>
+						
+						검색어<select name="search">
+							<option value="tagname">태그명</option>
+							<option value="title">이름</option>
+							<option value="contentId">컨텐츠 번호</option>
+						</select>
+						<input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+						
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					</form>				
 				</div>		
 				
 				<!-- Section3: Table -->		
@@ -122,7 +145,7 @@
 										${content.area} ${content.sigungu}
 									</td>
 									<td id="tag_name${st.index}"></td>
-									<td><input type="button" value="수정"></td>
+									<td><input type="button" value="수정" onclick="location.href='contentTagsUpdateForm?contentIdStr=${content.id}'"></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

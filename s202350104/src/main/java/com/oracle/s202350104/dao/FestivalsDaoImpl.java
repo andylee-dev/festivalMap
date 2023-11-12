@@ -8,6 +8,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
 
@@ -132,6 +133,18 @@ public class FestivalsDaoImpl implements FestivalsDao {
 			log.info("FestivalDaoImpl readcountUp Exception => " + e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public Contents detailContents(int contentId) {
+		Contents contents = new Contents();
+		try {
+			contents = session.selectOne("nhContentsDetail", contentId);
+			log.info("FestivalsDaoImpl detailContents() contents.getTitle => " + contents.getTitle());
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl detailContents() => " + e.getMessage());
+		}
+		return contents;
 	}
 	
 }

@@ -34,7 +34,7 @@ public class FestivalController {
 	private final BannerService bannerService;
 
 
-	@GetMapping(value = "festival")
+	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
 		
 		UUID transactionId = UUID.randomUUID();
@@ -81,7 +81,7 @@ public class FestivalController {
 		return "festival/festivalList";
 	}
 	
-	@GetMapping(value = "festival/detail")
+	@RequestMapping(value = "festival/detail")
 	public String festivalDetail(Integer contentId, String currentPage, 
 								 Board board, Model model) {
 		UUID transactionId = UUID.randomUUID();

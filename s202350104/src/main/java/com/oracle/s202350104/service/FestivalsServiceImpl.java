@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.ContentsDao;
 import com.oracle.s202350104.dao.FestivalsDao;
+import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
 
@@ -105,6 +106,17 @@ public class FestivalsServiceImpl implements FestivalsService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public Contents detailContents(int contentId) {
+		Contents contents = fd.detailContents(contentId);
+		
+		if(contents == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 컨텐츠 정보가 존재하지 않습니다.");
+		}
+		
+		return contents;
 	}
 
 }
