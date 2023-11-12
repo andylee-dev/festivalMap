@@ -454,6 +454,25 @@ import lombok.RequiredArgsConstructor;
 			return "redirect:restaurant";	
 		} 
 		
+		
+		@RequestMapping(value = "restaurantApprove")
+		public String restaurantApprove(Integer contentId, String currentPage) {
+			UUID transactionId = UUID.randomUUID();
+			
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "Start");
+				int result = rs.approveRestaurant(contentId);
+				
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin restaurantApprove Exception", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "End");
+			}
+			
+			return "forward:restaurant";
+		}
+		
+		
 		@RequestMapping(value = "spot")
 		public String spot(SpotContent spot, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
