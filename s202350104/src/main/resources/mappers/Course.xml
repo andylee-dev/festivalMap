@@ -108,4 +108,23 @@
 			AND content_id = ${content_id}
 		</delete>
 		
+		<update id="noCourseUpdate" parameterType="Course">
+			UPDATE COURSES SET  course_title=#{course_title}
+			WHERE id = #{course_id}
+			
+			<!-- UPDATE COURSES SET  big_code=#{big_code}, small_code=#{small_code},
+								distance=#{distance}, course_info#{course_info}, time=#{time},
+								schedule=#{schedule}, course_title=#{course_title}
+			WHERE id = #{course_id} -->
+		</update>
+		
+		<!-- <update id="noCourseContentList" parameterType="CourseContent">
+			INSERT ALL
+		    <foreach collection="list" item="CourseContent">
+		        INTO CourseContents (content_id, course_id, order_num)
+		        VALUES (#{CourseContent.content_id}, #{CourseContent.course_id}, #{CourseContent.order_num})
+		    </foreach>
+		    SELECT * FROM dual
+		</update> -->
+		
 	</mapper>

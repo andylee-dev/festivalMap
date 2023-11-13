@@ -64,9 +64,14 @@
 			
 			const imgEl = document.createElement("td");
 			imgEl.className = "td-img";
-			imgEl.textContent = 
-				imgEl.textContent = contentList[i].img;
-			tableEl.appendChild(imgEl);
+			
+			// 이미지 URL을 사용하여 img 요소를 생성하고 src 속성을 설정합니다.
+	        const imgTag = document.createElement("img");
+	        imgTag.src = contentList[i].img;
+	        // 이미지의 높이를 150px로 설정합니다.
+	        imgTag.style.height = "150px";
+	        imgEl.appendChild(imgTag);
+	        tableEl.appendChild(imgEl);
 			
 			const titleEl = document.createElement("td");
 			titleEl.className = "td-title";
@@ -87,6 +92,18 @@
 			phoneEl.className = "td-phone";
 			phoneEl.textContent = contentList[i].phone;
 			tableEl.appendChild(phoneEl);
+			
+			// 새로운 td 요소를 만들어 버튼을 추가합니다.
+	        const deleteButtonTd = document.createElement("td");
+	        const deleteButton = document.createElement("button");
+	        deleteButton.textContent = `삭제${contentList[i].id}`;
+	        deleteButton.onclick = function() {
+	            deleteCourseContent(contentList[i].content_id, contentList[i].course_id);
+	            event.preventDefault();
+	        };
+	        deleteButton.className = "btn btn-primary";
+	        deleteButtonTd.appendChild(deleteButton);
+	        tableEl.appendChild(deleteButtonTd);
 			
 			contentsTableEl.appendChild(tableEl);
 		}
@@ -162,9 +179,13 @@
 	
 	<h1>코스 수정${courseContent.id }</h1>
 	<div class="container mt-5">
+		<input type="hidden" name="course_id" value="${course.course_id}">
+		<input type="hidden" name="course_title" value="${courseContent.course_title }">
+		<input type="hidden" name="distance" value="${courseContent.distance }">
+		<input type="hidden" name="time" value="${courseContent.time }">
+		<input type="hidden" name="course_info" value="${courseContent.course_info }">
+		
 		<form id="myForm" action="courseUpdate" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="id" value="${courseContent.id }">
-			<input type="hidden" name="course_title" value="${courseContent.course_title }">
 			<div class="form-group">
 				<label for="course_title">코스 명</label>
 				<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${courseContent.course_title }">
