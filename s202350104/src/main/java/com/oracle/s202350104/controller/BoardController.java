@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Paging;
+import com.oracle.s202350104.model.PhotoPaging;
 import com.oracle.s202350104.model.Report;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ReportService;
 import com.oracle.s202350104.service.TagsService;
@@ -36,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final BoardService boardService;
+	private final BannerService bannerService;
 	private final TagsService tagsService;
 	
 	//게시판 신고기능 위해 service 추가
@@ -73,6 +77,14 @@ public class BoardController {
 		log.info("BoardController noticAllList size : {}", noticAllList.size());
 		log.info("BoardController noticBoardList after board.getStart : {} ", board.getStart());
 		log.info("BoardController noticBoardList after board.getEnd : {} ", board.getEnd());
+		
+		List<Banner> bannerHeader = bannerService.getHeaderBanner();
+		List<Banner> bannerFooter = bannerService.getFooterBanner();		
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
+		
+		model.addAttribute("bannerHeader", bannerHeader);
+		model.addAttribute("bannerFooter", bannerFooter);
 
 		if(noticAllList.size() != 0) {
 			bigCode = noticAllList.get(0).getBig_code();
@@ -116,6 +128,14 @@ public class BoardController {
 		
 		List<Board> magazinAllList = boardService.getMagazinAllList(board);
 		log.info("BoardController magazinAllList size : {}", magazinAllList.size());
+		
+		List<Banner> bannerHeader = bannerService.getHeaderBanner();
+		List<Banner> bannerFooter = bannerService.getFooterBanner();		
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
+		
+		model.addAttribute("bannerHeader", bannerHeader);
+		model.addAttribute("bannerFooter", bannerFooter);
 
 		if(magazinAllList.size() != 0) {
 			bigCode = magazinAllList.get(0).getBig_code();
@@ -154,6 +174,14 @@ public class BoardController {
 		
 		List<Board> freeAllList = boardService.getFreeAllList(board);
 		log.info("BoardController freeAllList size : {}", freeAllList.size());
+		
+		List<Banner> bannerHeader = bannerService.getHeaderBanner();
+		List<Banner> bannerFooter = bannerService.getFooterBanner();		
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
+		
+		model.addAttribute("bannerHeader", bannerHeader);
+		model.addAttribute("bannerFooter", bannerFooter); 
 
 		if(freeAllList.size() != 0) {
 			bigCode = freeAllList.get(0).getBig_code();
@@ -186,12 +214,20 @@ public class BoardController {
 		
 		// Paging 작업
 		// Parameter board page 추가
-		Paging page = new Paging(currentPage, countBoard);
+		PhotoPaging page = new PhotoPaging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
 		
 		List<Board> photoAllList = boardService.getPhotoAllList(board);
 		log.info("BoardController photoAllList size : {}", photoAllList.size());
+		
+		List<Banner> bannerHeader = bannerService.getHeaderBanner();
+		List<Banner> bannerFooter = bannerService.getFooterBanner();		
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
+		
+		model.addAttribute("bannerHeader", bannerHeader);
+		model.addAttribute("bannerFooter", bannerFooter); 
 
 		if(photoAllList.size() != 0) {
 			bigCode = photoAllList.get(0).getBig_code();
@@ -224,12 +260,20 @@ public class BoardController {
 		
 		// Paging 작업
 		// Parameter board page 추가
-		Paging page = new Paging(currentPage, countBoard);
+		PhotoPaging page = new PhotoPaging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
 		
 		List<Board> eventAllList = boardService.getEventAllList(board);
 		log.info("BoardController eventAllList size : {}", eventAllList.size());
+		
+		List<Banner> bannerHeader = bannerService.getHeaderBanner();
+		List<Banner> bannerFooter = bannerService.getFooterBanner();		
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getTitle());
+		log.info("FestivalController bannerHeader : {}", bannerHeader.get(0).getUrl());
+		
+		model.addAttribute("bannerHeader", bannerHeader);
+		model.addAttribute("bannerFooter", bannerFooter); 
 
 		if(eventAllList.size() != 0) {
 			bigCode = eventAllList.get(0).getBig_code();
