@@ -455,28 +455,16 @@
 						</div>
 						<div class="m-3">
 							<label for="tag" class="form-label"><strong>테마별</strong></label>
-						    <div style="width: 110px; height: 35px; border-radius: 23.50px; border: 2px black solid; display: flex; 
-						    			align-items: center; justify-content: center; color: black; font-weight: bold;">
-						       	  #다이나믹한
-						    </div>
-						    <div style="width: 110px; height: 35px; border-radius: 23.50px; border: 2px black solid; display: flex; 
-						    			align-items: center; justify-content: center; color: black; font-weight: bold;">
-						       	  #포토스팟
-						    </div>							
-						    <div style="width: 110px; height: 35px; border-radius: 23.50px; border: 2px black solid; display: flex; 
-						    			align-items: center; justify-content: center; color: black; font-weight: bold;">
-						       	  #내일로
-						    </div>							
-							<select name="tag" id="tag" class="form-select col-auto"></select>
+				        	<input type="checkbox" class="btn-check" value="#다이나믹한"/>							
+<!-- 							<select name="tag" id="tag" class="form-select col-auto"></select> -->
 							<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" />
-							<img style="width: 20px; height: 19px;" src="../image/icon_search1.png" alt="test"/>
+
 						</div>
 						<div class="text-center">
-							<button type="button" class="btn btn-primary" onclick="search()">
-								검색
-							</button>
+							<a href="javascript:search()"> 
+								<img style="width: 20px; height: 19px;" src="../image/icon_search1.png" alt="test"/>
+							</a>
 						</div>
-						<hr />
 					</div>
 					<div class="container-fluid overflow-auto" style="height: 400px">
 						<label for="area" class="form-label">목록 보기</label>
@@ -488,18 +476,21 @@
 		</div>
 
 		<!-- Section4 -->
-		<div class="container border p-5">
+		<div class="container border p-5" >
 		    <div style="width: 60px; height: 30px; border-radius: 23.50px; border: 3px white solid; display: flex; 
-		    			align-items: center; justify-content: center; background-color: #FF4379; color: white; font-weight: bold;">
+		    			align-items: center; justify-content: center; background-color: #FF4379; 
+		    			color: white; font-weight: bold;">
 		       	  AD
 		    </div>
 		    <div>
 				<h2><strong>이런 곳도 있어요!</strong></h2>
+			</div>
+			<div>
+				<img alt="AD_Bannder" src="../image/ADBanner.png" width="100%" height="auto">
 			</div>			
 		</div>
 
 		<!-- Footer -->
 		<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
-
 </html>

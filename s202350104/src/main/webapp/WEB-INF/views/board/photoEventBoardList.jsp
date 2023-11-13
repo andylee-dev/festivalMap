@@ -117,16 +117,14 @@
 				</thead>
 			</table>
 			<div class="d-flex justify-content-end">
-				<div
-					style="width: 300px; height: 40px; background: #F7FBF4; border-radius: 23.50px; border: 2px black solid; margin-right: 10px; display: flex; align-items: center; justify-content: flex-end; position: relative;">
-					<img
-						style="width: 20px; height: 19px; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);"
-						src="../image/icon_search1.png" alt="test" />
+				<div style="width: 300px; height: 40px; background: #F7FBF4; border-radius: 23.50px; border: 2px black solid; margin-right: 10px; display: flex; align-items: center; justify-content: flex-end; position: relative;">
+					<img style="width: 20px; height: 19px; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);"
+						 src="../image/icon_search1.png" alt="test" />
 				</div>
 				<c:choose>
 					<c:when test="${smallCode == 4}">
 						<button class="btn btn-custom"
-							onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+								onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
 					</c:when>
 				</c:choose>
 			</div>
