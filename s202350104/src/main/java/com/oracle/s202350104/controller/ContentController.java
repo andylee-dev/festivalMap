@@ -68,12 +68,12 @@ public class ContentController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "searchContentsList", "start");
 			log.info("{}",contents.toString());
-			int totalContents = contentService.getTotalSearchCount(contents);
-			log.info("totalContents:{}",totalContents);
-			PagingList page = new PagingList(totalContents, currentPage);
-			contents.setStart(page.getStart());
-			contents.setEnd(page.getEnd());
-			contents.setPageList(page);
+//			int totalContents = contentService.getTotalSearchCount(contents);
+//			log.info("totalContents:{}",totalContents);
+//			PagingList page = new PagingList(totalContents, currentPage);
+//			contents.setStart(page.getStart());
+//			contents.setEnd(page.getEnd());
+//			contents.setPageList(page);
 			contentList = contentService.getSearchContentsList(contents);
 			log.info("contentList.size():{}",contentList.size());
 			
