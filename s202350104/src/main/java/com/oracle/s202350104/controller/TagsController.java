@@ -22,8 +22,8 @@ public class TagsController {
 	private final TagsService ts;
 	
 	@ResponseBody
-	@RequestMapping(value = "/getContentTags")
-	public List<Tags> getContentTags(int contentId) {
+	@RequestMapping(value = "/getMyContentTags")
+	public List<Tags> getMyContentTags(int contentId) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> contentTags = null;
 		try {
@@ -35,6 +35,39 @@ public class TagsController {
 			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
 		}
 		return contentTags;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getMyBoardTags")
+	public List<Tags> getMyBoardTags(int boardId) {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> boardTags = null;
+		try {
+			log.info("[{}]{}:{}", transactionId, "getContentTags", "start");
+			boardTags = ts.searchBoardTagsOne(boardId);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "getContentTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
+		}
+		return boardTags;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getAllTags")
+	public List<Tags> getAllTags() {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> allTags = null;
+		try {
+			log.info("[{}]{}:{}", transactionId, "getAllTags", "start");
+			Tags tags = new Tags();
+			allTags = ts.listTags(tags);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "getAllTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "getAllTags", "end");
+		}
+		return allTags;
 	}
 	
 }

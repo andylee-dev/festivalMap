@@ -10,10 +10,8 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
-			var existingTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
-			/* var deletedTags = []; // 삭제할 옵션을 저장할 배열 선언 */
-			var availableTags = []; // 선택할 수 있는 옵션을 저장할 배열 선언 --> existingTags에 있는 요소 제외하고 모두 저장
-			const tagsArea = document.querySelector('#tagsArea');
+			var selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+			var tagOptions = []; // 선택할 수 있는 옵션을 저장할 배열 선언 --> existingTags에 있는 요소 제외하고 모두 저장
 			
 			document.addEventListener("DOMContentLoaded", (event) => {
 				
@@ -31,18 +29,16 @@
 			
 				
 				<!-- 태그 관련 코드 Start -->
+			
+				const tagsArea = document.querySelector('#tagsArea');
 				
-				availableTags.push({id:'1',name:'봄'});
-				availableTags.push({id:'2',name:'여름'});
-				availableTags.push({id:'3',name:'가을'});
-				availableTags.push({id:'4',name:'겨울'});
-				
-				updateTagOptions();
-				// initialTagOptions(); 초기 태그 옵션(DB에 저장되지 않은 태그들만 옵션으로)
+				// insert시에는 초기에 모든 tags 리스트를 가져와서 tagOptions에 저장
+				initialTagOptions();
+				// updateTagOptions();
 				$('#tagSelectBox').change(function() {
 					alert("addTag() start...");
-					alert("existingTags size => "+existingTags.length);
-					alert("availableTags size => "+availableTags.length);
+					alert("selectedTags size => "+selectedTags.length);
+					alert("tagOptions size => "+tagOptions.length);
 					
 					var selectedTagId = $(this).val(); // 선택된 tag의 id를 가져옴
 					var selectedTagName = $(this).find('option:selected').text(); // 선택된 tag의 name을 가져옴
@@ -57,84 +53,109 @@
 					
 					// 이미 배열에 있는 태그인지 체크
 					var isDuplicate = false;
-					for(var i = 0; i < existingTags.length; i++) {
-						if(existingTags[i].id === selectedTag.id) {
+					for(var i = 0; i < selectedTags.length; i++) {
+						if(selectedTags[i].id === selectedTag.id) {
 							isDuplicate = true;
+							alert("i=>"+i);
 							break;
 						}
 					}
 					
+					// 배열에 없었던 태그일 경우에만 추가
 					if(!isDuplicate) {
-						existingTags.push(selectedTag); // 배열에 없었던 태그일 경우에만 추가
+						alert("!isDuplicate");
+						selectedTags.push(selectedTag); 
+						
+						var index = -1;
+						for(var i = 0; i < selectedTags.length; i++) {
+							if(selectedTags[i].id === selectedTag.id) {
+								index = i;
+								break;
+							}
+						}
+						
+						if(index !== -1) {
+							tagOptions.splice(index, 1); // 선택한 태그 목록(existingTags)에서 삭제
+						}
+						
+						// 태그 뱃지 생성
 						const newTag = document.createElement('span');
 						newTag.className = "badge bg-primary";
-						newTag.textContent = selectedTag.name;
+						newTag.textContent = "#"+selectedTag.name;
 						newTag.id = selectedTag.id;
 						
+						// x버튼 및 클릭시의 이벤트 생성
 						const closeButton = document.createElement('button');
 						closeButton.className = "btn-close";
 						closeButton.setAttribute('aria-label', 'Close');
+						closeButton.addEventListener('click', (event) => {
+							event.preventDefault();
+							var deletedTag = {
+								id: event.target.parentElement.id,
+								name: event.target.parentElement.textContent
+							}
+							alert("deletedTag.id => "+deletedTag.id);
+							alert("deletedTag.name => "+deletedTag.name);
+							alert("selectedTags size => " + selectedTags.length);
+							tagOptions.push(deletedTag); // select box의 option 목록에 삭제된 태그 다시 추가
+							
+							// 삭제할 옵션의 인덱스 찾기
+							var index = -1;
+							for(var i = 0; i < selectedTags.length; i++) {
+								if(selectedTags[i].id === deletedTag.id) {
+									index = i;
+									break;
+								}
+							}
+							
+							if(index !== -1) {
+								selectedTags.splice(index, 1); // 선택한 태그 목록(existingTags)에서 삭제
+								event.target.parentElement.remove(); // badge 삭제
+							}
+							
+							updateTagOptions();
+							
+						});
 						
 						newTag.appendChild(closeButton);
 						tagsArea.appendChild(newTag);
+						
+						tagOptions.splice(tagOptions.indexOf(selectedTag.id),1); // 선택한 태그를 select box option에서 삭제
 						updateTagOptions(); // select box의 option을 업데이트하는 method
 					}
 					
-				})
-				
-				$('.btn-close').addEventListener('click', (event) => {
-					event.preventDefault();
-					var deletedTag = {
-						id: event.target.parentElement.id,
-						name: event.target.parentElement.textContent
-					}
-					alert("deletedTag.id => "+deletedTag.id);
-					alert("deletedTag.name => "+deletedTag.name);
-					/* alert("deletedTags size => " + deletedTags.length); */
-					alert("existingTags size => " + existingTags.length);
-					availableTags.push(deletedTag); // option 목록에 삭제된 태그 다시 추가
-					
-					for(var i = 0; i < existingTags.length; i++) {
-						if(existingTags[i].id === deletedTag.id) {
-							index = i;
-							break;
-						}
-					}
-					
-					if(index !== -1) {
-						existingTags.splice(index, 1); // 선택한 태그 목록에서 삭제
-						event.target.parentElement.remove(); // badge 삭제
-					}
 				});
 			
 			});
 			
-<%-- 			function initialTagOptions() { --> 1) existing 불러오기 / 2) 아래 메소드로 태그 옵션 저장하기
+ 			function initialTagOptions() {
 				$.ajax({
-					url: "<%=request.getContextPath()%>/getContentTags",
-					data: contentId,
+					url: "<%=request.getContextPath()%>/getAllTags",
 					method: "GET",
+					dataType: "json",
 					success: function(tags) {
 						$("#tagSelectBox").empty().append("<option value='0'>태그를 선택해주세요.</option>");
 						tags.forEach(function(tag) {
 							$("#tagSelectBox").append("<option value='"+tag.id+"'>"+tag.name+"</option>");
+							tagOptions.push({id:tag.id, name:tag.name});
 						});
-						console.log("initialTagOptions() success");
+						console.log("getAllTags success");
 					},
-					
 					error: function() {
 						console.log("태그 정보를 가져오지 못했습니다.");
 					}
-				}) 
-			} --%>
+				})
+			} 
 			
 			function updateTagOptions() {
 				$("#tagSelectBox").empty().append("<option value='0'>태그를 선택해주세요.</option>");
-				availableTags.forEach(function(tag) {
+				tagOptions.forEach(function(tag) {
 					$("#tagSelectBox").append("<option value='"+tag.id+"'>"+tag.name+"</option>");
 				});
 				console.log("updateTagOptions() success");
 			}
+			
+			<!-- 태그 관련 코드 end -->
 		</script>
 	</head>
 	
@@ -237,7 +258,7 @@
 								<td>
 									<select id="tagSelectBox" name="tag_id" onchange="event.preventDefault();">
 									</select>
-									<div id="tagsArea"><!-- 태그 뱃지가 들어갈 곳 --></div>
+									<div id="tagsArea"><!-- 태그 badge가 들어갈 곳 --></div>
 								</td>
 							</tr>
 							<tr>

@@ -377,6 +377,25 @@ public class AdminTagController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "contentTagsUpdate")
+	public String contentTagsUpdate(String[] listTags, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		String str = "";
+		try {
+			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "start");
+			/*
+			 * int result = ts.contentTagsUpdate(listTags); if(result == 1) { str =
+			 * "태그 수정이 성공적으로 완료되었습니다."; } else { str = "태그 수정에 실패하였습니다."; }
+			 */
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "contentTagsUpdate", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "end");
+		}	
+		return str;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "getContentTags")
 	public List<Tags> getContentTags(String bigCodeStr, Model model) {
 		UUID transactionId = UUID.randomUUID();
