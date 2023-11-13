@@ -28,7 +28,7 @@
 			        </choose>
 			    </if>    
                 <if test="startDate != null and endDate != null">
-		            and q.created_at BETWEEN #{startDate} AND #{endDate}
+		            and q.created_at BETWEEN #{startDate} AND #{endDate}+1
 		        </if>
 		        <if test="status != null and status != ''">
 		        	and q.status = #{status}
@@ -58,7 +58,7 @@
 		</choose>
 	</if>    
     <if test="startDate != null and endDate != null">
-	and q.created_at BETWEEN #{startDate} AND #{endDate}
+	and q.created_at BETWEEN #{startDate} AND #{endDate}+1
 	</if>
 	<if test="status != null and status != ''">
 	and q.status = #{status}

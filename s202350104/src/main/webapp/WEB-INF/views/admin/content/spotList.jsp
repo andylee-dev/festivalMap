@@ -47,10 +47,35 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
-				</div>		
+					<form action="spot" method = "get">
+						
+						지역<select name="area" class="area-dropdown"></select>
+						   <select name="sigungu" class="sigungu-dropdown"></select><p>
+						
+						승인여부<select name = "status">
+							<option value = "">전체</option>
+							<option value = "0">승인대기</option>
+							<option value = "1">승인완료</option>
+							<!-- <option>승인반려</option> -->
+						</select>
+						
+						삭제여부<select name="is_deleted">
+							<option value = "">전체</option>
+							<option value = "0">등록(전시)</option> <!-- 활성화 -->
+							<option value = "1">삭제(미전시)</option><!-- 비활성화 -->
+						</select><p>
+						
+						검색어<select name="search">
+							<option value = "s_title">명소명</option>
+							<option value = "s_content">테마</option>
+							<option value = "s_address">주소</option>
+						</select>						
+						<input type="text" name="keyword" placeholder = "검색어를 입력하세요.">
+						
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					</form>
+				</div>			
 				
 				<!-- Section3: Table -->		
 				<div class="border p-3 m-3">
