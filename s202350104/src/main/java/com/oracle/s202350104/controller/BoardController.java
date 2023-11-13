@@ -557,14 +557,14 @@ public class BoardController {
 	// 통합게시물 생성 form Logic	
 	@RequestMapping(value = "/integratedBoardInsertForm")
 	public String integratedBoardInsertForm(String userId, String bigCode, 
-											String smallCode, Model model) {
+											String smallCode,Tags tags, Model model) {
 		
 		log.info("BoardController integratedBoardInsertForm start!");
 		log.info("BoardController integratedBoardInsertForm userId : {}", userId);
 		log.info("BoardController integratedBoardInsertForm bigCode : {}", bigCode);
 		log.info("BoardController integratedBoardInsertForm smallCode : {}", smallCode);
-		
-		List<Tags> tagsAll = tagsService.listTagsAll();		
+
+		List<Tags> tagsAll = tagsService.listTags(tags);		
 		
 		model.addAttribute("userId", userId);
 		model.addAttribute("bigCode", bigCode);
