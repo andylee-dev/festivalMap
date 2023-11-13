@@ -2,13 +2,17 @@ package com.oracle.s202350104.controller;
 
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.oracle.s202350104.configuration.Role;
 import com.oracle.s202350104.model.Favorite;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.FavoriteService;
@@ -30,10 +34,10 @@ public class AdminUserController {
 	@RequestMapping(value = "userList")
 	public String userList(Model model, Users user, String currentPage ) {
 		UUID transactionId = UUID.randomUUID();
-		String errMsg ="Success";
 		List<Users> listUsers = null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "userList", "start");		
+			user.setSmall_code(2);
 			int totalUsersCount =us.totalUsers(user);
 			log.info(user.toString());
 
@@ -47,7 +51,6 @@ public class AdminUserController {
 			}
 			model.addAttribute("listUsers", listUsers);
 			model.addAttribute("page", page);
-			/* TODO : searchOption */
 			model.addAttribute("searchOption",user);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "userList", e.getMessage());
@@ -56,19 +59,16 @@ public class AdminUserController {
 		}
 		return "admin/user/userList";
 	}
-
+	
 	@RequestMapping(value = "bizUserList")
 	public String bizUserList(Model model,Users user, String currentPage ) {
 		UUID transactionId = UUID.randomUUID();
-		String errMsg ="Success";
 		List<Users> listUsers = null;
 		try {
-			log.info("[{}]{}:{}",transactionId, "userList", "start");		
+			log.info("[{}]{}:{}",transactionId, "bizUserList", "start");		
 			user.setSmall_code(3);
 			int totalUsersCount =us.totalUsers(user);
 			log.info(user.toString());
-			log.info("totalUsersCount:{}",totalUsersCount);
-			log.info("user.getIs_deleted:{}",user.getIs_deleted());
 
 			Paging page = new Paging(totalUsersCount, currentPage);
 			user.setStart(page.getStart());
@@ -80,18 +80,15 @@ public class AdminUserController {
 			}
 			model.addAttribute("listUsers", listUsers);
 			model.addAttribute("page", page);
-			/* TODO : searchOption */
 			model.addAttribute("searchOption",user);
-//			session.setAttribute("searchOption", user);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "userList", e.getMessage());
+			log.error("[{}]{}:{}",transactionId,  "bizUserList", e.getMessage());
 		}finally {
-			log.info("[{}]{}:{}",transactionId, "userList", "end");
+			log.info("[{}]{}:{}",transactionId, "bizUserList", "end");
 		}
 		return "admin/user/bizUserList";
 	}
-	
-	
+		
 	@RequestMapping(value = "favoriteList")
 	public String favoritSearch(Favorite favorite, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
