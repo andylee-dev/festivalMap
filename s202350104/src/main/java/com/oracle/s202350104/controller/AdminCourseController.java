@@ -74,7 +74,7 @@ public class AdminCourseController {
 
 	@RequestMapping(value = "/courseUpdateForm")
 	public String courseUpdateForm(int id, String currentPage, Model model) {
-
+		log.info("AdminCourseController courseUpdateForm start...");
 		try {
 			log.info("AdminCourseController courseUpdateForm id ->" + id);
 		
@@ -87,8 +87,7 @@ public class AdminCourseController {
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
 
-			course.setCourse_id(id);
-			model.addAttribute("courseContent", course);
+			model.addAttribute("course", course);
 			model.addAttribute("courseContentList", courseContentList);
 //			model.addAttribute("courseContent", courseContent);
 
@@ -249,6 +248,7 @@ public class AdminCourseController {
 	@ResponseBody
 	@RequestMapping(value = "deleteCourseContentAjax", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteCourseContent(@RequestBody CourseContent courseContent) {
+		log.info("AdminCourseController deleteCourseContent start...");
 		log.info("AdminCourseController deleteCourseContent getCourse_id() ->" + courseContent);
 		
 		ResponseEntity<String> response = null;

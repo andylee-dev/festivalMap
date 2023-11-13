@@ -110,7 +110,7 @@
 		
 		<update id="noCourseUpdate" parameterType="Course">
 			UPDATE COURSES SET  course_title=#{course_title}
-			WHERE id = #{course_id}
+			WHERE id = #{id}
 			
 			<!-- UPDATE COURSES SET  big_code=#{big_code}, small_code=#{small_code},
 								distance=#{distance}, course_info#{course_info}, time=#{time},

@@ -32,6 +32,7 @@
 <script type="text/javascript">
 	function showPopUp() {
 		 console.log("showPopUp 함수 호출됨");
+		 console.log("course_id value:", ${course.course_id});
 		
 		//창 크기 지정
 		var width = 800;
@@ -45,7 +46,7 @@
 		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
 		
 		//연결하고싶은url
-		const url = "contentListAll"
+		const url = 'contentListAll?course_id=${course.course_id}';
 		
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "contentList popup", windowStatus);
@@ -120,7 +121,42 @@
 	    	hiddenInput.value = contentList[i].id;
 	    	form.appendChild(hiddenInput);
 	    }
+	    
 	}
+	function checkContent() {
+	
+		// ID를 저장할 배열을 만듭니다.
+		var idList = [];
+	
+		// contentsTable 테이블을 찾습니다.
+		var contentsTable = document.getElementById("contentsTable");
+	
+		// contentsTable의 모든 tr 요소를 가져옵니다.
+		var rows = contentsTable.getElementsByTagName("tr");
+	
+		// 첫 번째 행은 헤더이므로 1부터 시작합니다.
+		for (var i = 1; i < rows.length; i++) {
+		    // 현재 행에서 td 요소를 찾습니다.
+		    var cells = rows[i].getElementsByTagName("td");
+	
+		    // ID가 있는 첫 번째 셀을 가져와서 idList 배열에 추가합니다.
+		    var id = cells[0].textContent;
+		    idList.push(id);
+		}
+		// idList 배열을 콘솔에 출력하여 확인합니다.
+		console.log("ID List:", idList);
+	    for (var i = 0; i < idList.length; i++) {
+	    	const form =document.getElementById("myForm");
+	    	const hiddenInput = document.createElement("input");
+	    	hiddenInput.type = "hidden";
+	    	hiddenInput.name = "contents";
+	    	hiddenInput.value = idList[i];
+	    	form.appendChild(hiddenInput);
+	    }
+		alert("idList")
+		
+	}
+	
 </script>
 <script type="text/javascript">
 	/* function deleteCourseContent(content_id, course_id) {
@@ -177,18 +213,18 @@
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	
+	<!-- Add the following lines for debugging -->
+	<script type="text/javascript">
+		console.log("course_id value:", ${course.id});
+	</script>
+	
 	<h1>코스 수정${courseContent.id }</h1>
 	<div class="container mt-5">
-		<input type="hidden" name="course_id" value="${course.course_id}">
-		<input type="hidden" name="course_title" value="${courseContent.course_title }">
-		<input type="hidden" name="distance" value="${courseContent.distance }">
-		<input type="hidden" name="time" value="${courseContent.time }">
-		<input type="hidden" name="course_info" value="${courseContent.course_info }">
-		
 		<form id="myForm" action="courseUpdate" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="${course.id}">
 			<div class="form-group">
 				<label for="course_title">코스 명</label>
-				<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${courseContent.course_title }">
+				<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${course.course_title }">
 			</div>
 				<div class="form-group">
 					<label>코스항목</label>
@@ -217,18 +253,18 @@
 			
 			<div class="form-group">
 				<label for="distance">거리(km)</label>
-				<input type="text" id="distance" name="distance" class="form-control" required="required" value="${courseContent.distance }">
+				<input type="text" id="distance" name="distance" class="form-control" required="required" value="${course.distance }">
 			</div>
 			<div class="form-group">
 				<label for="time">소요시간</label>
-				<input type="text" id="time" name="time" class="form-control" required="required" value="${courseContent.time }">
+				<input type="text" id="time" name="time" class="form-control" required="required" value="${course.time }">
 			</div>
 			<div class="form-group">
 				<label for="course_info">코스 내용</label>
-				<textarea class="form-control" id="course_info" name="course_info" rows="5">${courseContent.course_info }</textarea>
+				<textarea class="form-control" id="course_info" name="course_info" rows="5">${course.course_info }</textarea>
 			</div>
 			<div class="text-center">
-				<button type="submit" class="btn btn-primary">확인</button>
+				<button type="submit" class="btn btn-primary" onclick="checkContent()">확인</button>
 				<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
 			</div>
 		</form>
