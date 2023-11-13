@@ -15,29 +15,54 @@
                 <if test="user_id != null and user_id != 0">
                 and    q.user_id = #{user_id}
                 </if>
+                <if test="keyWord != null and keyWord != ''">
+			        <choose>
+			            <!-- "searchType"이 "name"일 때 -->
+			            <when test="searchType == 'name'">
+							and name like '%' || #{keyWord}|| '%'
+			            </when>
+			            <!-- "searchType"이 "nickname"일 때 -->
+			            <when test="searchType == 'nickname'">
+							and nickname like '%' || #{keyWord}|| '%'
+			            </when>
+			        </choose>
+			    </if>    
                 <if test="startDate != null and endDate != null">
-		            AND q.created_at BETWEEN #{startDate} AND #{endDate}
+		            and q.created_at BETWEEN #{startDate} AND #{endDate}
 		        </if>
 		        <if test="status != null and status != ''">
-		        	AND q.status = #{status}
+		        	and q.status = #{status}
 		        </if>
                 order by q.id) a
       )
       WHERE rn BETWEEN #{start} and #{end}
-      
    </select>
    
    <select id="qnaTotal" resultType="int" parameterType="Qna">
-   SELECT   count(*)
-   FROM     qna
-   <if test="user_id != null and user_id != 0">
-   WHERE    user_id = #{user_id}</if>
-   <if test="startDate != null and endDate != null">
-   AND created_at BETWEEN #{startDate} AND #{endDate}
-   </if>
-   <if test="status != null and status != ''">
-   AND q.status = #{status}
-   </if>
+	select count(*)
+    from   qna q, users u
+    where  q.user_id = u.id
+    <if test="user_id != null and user_id != 0">
+    and    q.user_id = #{user_id}
+    </if>
+    <if test="keyWord != null and keyWord != ''">
+		<choose>
+			<!-- "searchType"이 "name"일 때 -->
+				<when test="searchType == 'name'">
+					and name like '%' || #{keyWord}|| '%'
+				</when>
+			<!-- "searchType"이 "nickname"일 때 -->
+				<when test="searchType == 'nickname'">
+					and nickname like '%' || #{keyWord}|| '%'
+				</when>
+		</choose>
+	</if>    
+    <if test="startDate != null and endDate != null">
+	and q.created_at BETWEEN #{startDate} AND #{endDate}
+	</if>
+	<if test="status != null and status != ''">
+	and q.status = #{status}
+	</if>
    </select>
    
    <select id="dhDetailQna" resultType="Qna" parameterType="Qna">

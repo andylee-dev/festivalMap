@@ -90,6 +90,10 @@ public class AdminCsController {
 			int totalQnaList = qs.totalQnaList(qna);
 			log.info("totalQnaList=>" + totalQnaList);
 			log.info("user_id" + qna.getUser_id());
+			log.info("startDate"+qna.getStartDate());
+			log.info("endDate"+qna.getEndDate());
+			log.info("keyword"+qna.getKeyWord());
+			log.info("SearchType"+qna.getSearchType());
 			
 			PagingList page = new PagingList(totalQnaList, currentPage);
 			qna.setStart(page.getStart());
@@ -98,6 +102,7 @@ public class AdminCsController {
 			List<Qna> listQnaList = qs.listQnaList(qna);
 			log.info("listQnaList=>" + listQnaList.size());
 			
+			model.addAttribute("searchOption",qna);
 			model.addAttribute("totalQnaList", totalQnaList);
 			model.addAttribute("listQnaList", listQnaList);
 			model.addAttribute("page", page);

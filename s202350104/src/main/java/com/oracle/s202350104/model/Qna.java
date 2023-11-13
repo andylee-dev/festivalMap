@@ -43,6 +43,7 @@ public class Qna {
 	//검색용
 	
 	private String dateOptions;
+	private String searchType;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
