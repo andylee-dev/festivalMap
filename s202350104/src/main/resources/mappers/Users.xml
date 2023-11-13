@@ -92,6 +92,10 @@
 			#{file_name}, 0
 		)
 	</insert>
+	<update id="deleteUser" parameterType="int">
+		UPDATE users SET is_deleted = 1 WHERE id = #{id}
+	</update>
+	
     <select id="getUserByEmail" resultType="Users">
         SELECT *
         FROM Users

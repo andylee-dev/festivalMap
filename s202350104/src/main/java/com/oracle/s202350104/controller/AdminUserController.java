@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.configuration.Role;
@@ -88,7 +89,47 @@ public class AdminUserController {
 		}
 		return "admin/user/bizUserList";
 	}
-		
+	
+	@RequestMapping(value = "userUpdateForm/{id}",  method = RequestMethod.POST)
+    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "start");	
+			Users user = us.getUserById(id)
+			  .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+			model.addAttribute("user", user);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "userUpdateForm", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "end");
+		}
+        return "admin/user/userUpdateForm";
+    }
+	
+	@RequestMapping("/users")
+    public ResponseEntity<Integer> updateUser( int id, Users user, Model model) {
+        int result = us.updateUser(user);
+        return ResponseEntity.ok(result);
+    }
+	
+	@RequestMapping(value = "userDeleteAjax",  method = RequestMethod.POST)
+    public ResponseEntity<Integer> deleteUser( int id, Model model) {
+		int result = 0;
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "start");	
+			log.info("id:{}",id);
+			result = us.deletUser(id);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "userUpdateForm", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "end");
+		}		
+		return ResponseEntity.ok(result);
+    }
+
+	
+	
 	@RequestMapping(value = "favoriteList")
 	public String favoritSearch(Favorite favorite, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();

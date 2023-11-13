@@ -66,8 +66,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int deleteUser(int id) {
-		int result = 0;
-		return result;
+		return session.update("deleteUser", id);
 	}
 
 	@Override

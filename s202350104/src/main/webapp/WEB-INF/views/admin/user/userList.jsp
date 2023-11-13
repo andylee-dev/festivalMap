@@ -85,32 +85,60 @@
 			        .filter(([key, value]) => value !== undefined && value !== null && value !== '') // 값이 없는 경우를 필터링합니다.
 			        .map(([key, value]) => key+'='+value).join('&');
 	    }
+	    
+		function userDeleteAjax(index) {
+			const table = document.getElementById("userTable");
+			const row = table.rows[ index + 1 ];
+			const userId = row.querySelector("#userId").textContent;
+			
+			if(confirm("정말 삭제하시겠습니까?")) {
+			$.ajax(
+				{
+					method:"POST",
+					url:"/admin/user/userDeleteAjax",
+					data:{id : userId},
+					dataType:'text',
+					success:
+						function(result) {
+							if(result == '1') {
+								// row.parentNode.removeChild(row);
+								alert("성공적으로 삭제되었습니다.");
+								location.reload();
+							} else {
+								alert("삭제에 실패하였습니다.");
+							}		
+						}
+					}		
+				)
+			}
+		}			
+	    
 	</script>
 </head>
 <body >
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp"%>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 				<!-- Section1: Title -->
-				<div
-					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">일반 회원 리스트 </h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-people-fill "></i>
+						<label  class="admin-header-title ">일반 회원 리스트 </label>					
+					</div>
 				</div>
-
 				<!-- Section2: Search Form -->
-				<div class="border p-3 m-3 ">
-					<h1 class="border">검색폼</h1>
-					<form action="/admin/user/userList" method="POST">
-						<input type="hidden" name="small_code" value="2">						
-						<div class="input-group mb-3">
-							<span class="input-group-text col-auto" >검색어</span>
-							<select name="searchType" class="form-select col-auto" >
-								<option selected value="name">사용자 이름</option>
-								<option value="email">이메일</option>
-								<option value="nickname">닉네임</option>
-							</select>
-							<input type="text" name="keyword" class="form-control col-auto" value="${keyword}">
+				<div class="d-flex justify-content-center my-5">
+					<form action="/admin/user/userList" method="POST" class="col-6">
+						<input class="col-1" type="hidden" name="small_code" value="2">						
+						<div class="d-flex row col-6 mb-3">
+						    <span class="col-2" >검색어</span>
+						    <select name="searchType" class="form-select col-4" >
+						        <option selected value="name">사용자 이름</option>
+						        <option value="email">이메일</option>
+						        <option value="nickname">닉네임</option>
+						    </select>
+						    <input type="text" name="keyword" class="form-control col-6" value="${keyword}">
 						</div>
 						<div class="input-group col-auto mb-3" >
 						   <span class="input-group-text col-auto">가입기간</span>
@@ -154,20 +182,18 @@
 				<!-- Section3: Table -->
 				<div class="border p-3 m-3">
 					<button type="button" class="btn btn-outline-secondary ">등록</button>
-					<table class="table table-striped table-sm">
+					<table id="userTable" class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th scope="col">id</th>
-								<th scope="col">name</th>
-								<th scope="col">password</th>
-								<th scope="col">nickname</th>
-								<th scope="col">birthday</th>
-								<th scope="col">phone_num</th>
-								<th scope="col">email</th>
-								<th scope="col">address</th>
-								<th scope="col">status</th>
-								<th scope="col">created_at</th>
-								<th scope="col">is_deleted</th>
+								<th scope="col">회원번호</th>
+								<th scope="col">이름</th>
+								<th scope="col">비밀번호</th>
+								<th scope="col">닉네임</th>
+								<th scope="col">생년월일</th>
+								<th scope="col">연락처</th>
+								<th scope="col">이메일</th>
+								<th scope="col">주소</th>
+								<th scope="col">가입일</th>
 								<th scope="col">수정</th>
 								<th scope="col">삭제</th>
 							</tr>
@@ -176,19 +202,25 @@
 							<c:set var="num" value="${page.start}"/>
 							<c:forEach var="user" items="${listUsers}" varStatus="st">
 								<tr id="user${st.index}">
-									<td>${user.id}</td>
+								
+									<td id="userId">${user.id}</td>
 									<td>${user.name}</td>
-									<td>${user.password}</td>
+									 
+									<td>${user.password.substring(0, 1)}****${user.password.substring(user.password.length() - 2)}</td>
 									<td>${user.nickname}</td>
 									<td>${user.birthday}</td>
 									<td>${user.phone_num}</td>
 									<td>${user.email}</td>
 									<td>${user.address}</td>
-									<td>${user.status}</td>
 									<td><fmt:formatDate value="${user.created_at}" type="date" pattern="YY/MM/dd"/></td>
-									<td>${user.is_deleted}</td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>
+									<td><a class="btn btn-primary" href="userUpdateForm/${user.id}?currentPage=${page.currentPage}">수정</a></td>
+									<td><c:if test="${user.is_deleted == 0}">
+											<input type="button" value="삭제"
+										 onclick="userDeleteAjax(${st.index})">
+										</c:if>
+										<c:if test="${user.is_deleted == 1}">
+											탈퇴
+										</c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>

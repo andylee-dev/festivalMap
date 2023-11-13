@@ -121,14 +121,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(Users user) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int deletUser(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return ud.deleteUser(id);
 	}
 
 	@Override
