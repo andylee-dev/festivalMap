@@ -1,23 +1,32 @@
 package com.oracle.s202350104.controller;
 
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
@@ -29,9 +38,11 @@ import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.QnaListService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
+import com.oracle.s202350104.service.user.oAuthService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -256,30 +267,18 @@ public class UserController {
 		return resultStr;
 	}
 	
-	@RequestMapping(value = "kakaoLogin")
-	public String kakaoLogin() {
-	    String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?client_id=3d40db7fe264068aa3438b9a0b8b2274&redirect_uri=http://localhost:8189/app/login/kakao&response_type=code";
-	    return "redirect:" + kakaoUrl;
+	
+	@GetMapping("/kakao")
+	public void getKakaoAuthUrl(HttpServletResponse response) throws IOException {
+		response.sendRedirect(kakaoOauth.responseUrl());
 	}
 	
-	@RequestMapping(value = "kakaoOauth")
-	public String kakaoOauth(String code, Model model) {
-	    RestTemplate restTemplate = new RestTemplate();
-	    HttpHeaders headers = new HttpHeaders();
-	    MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-	    
-	    parameters.add("grant_type", "authorization_code");
-	    parameters.add("client_id", "3d40db7fe264068aa3438b9a0b8b2274");
-	    parameters.add("redirect_uri", "http://localhost:8189/app/login/kakao");
-	    parameters.add("code", code);
-	    
-	    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(parameters, headers);
-	    ResponseEntity<String> response = restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request, String.class);
-
-	    // 토큰 정보는 response.getBody()에 담겨 있음
-	    // 이 토큰을 사용하여 사용자 정보를 가져오거나 로그인 처리를 할 수 있습니다.
-
-	    return "redirect:/";
+	@GetMapping("login/kakao")
+	public ResponseEntity<String> kakaoLogin(
+			@RequestParam(name = "code") String code) throws IOException {
+		log.info("카카오 API 서버 code : " + code);
+		return oAuthService.kakaoLogin(code);
 	}
+	
 
 }
