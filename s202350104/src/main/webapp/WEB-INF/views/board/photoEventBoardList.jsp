@@ -17,6 +17,26 @@
 	.font-size-large {
 		font-size: 6px; /* 원하는 크기로 조정하세요. */
 	}
+	
+	a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	.table-custom th {
+        background-color: #EEFFC2; /* 원하는 배경색으로 대체하세요 */
+        color: black; /* 선택사항: 텍스트 색상을 지정하여 가독성을 높일 수 있습니다 */
+    }
+    
+    .border-top {
+		 border-color: black;
+    }
+    
+    .btn-custom {
+    	background-color: #FF4379;
+    	color: white;
+    }
+    
 </style>
 <script type="text/javascript">
 	function showPopUp(id, userId) {
@@ -45,20 +65,73 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 
 	<div id="content_title"	class="container p-5 mb-4 d-flex justify-content-between align-items-center">
-		<c:choose>
-			<c:when test="${smallCode == 5}">
-				<h1>이벤트 게시판</h1>
-			</c:when>
-			<c:otherwise>
-				<h1>포토 게시판</h1>
-				<button class="btn btn-primary" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
-			</c:otherwise>
-		</c:choose>
 	</div>
 
 	<c:set var="num" value="${page.total - page.start + 1}" />
 
 	<div class="container">
+		<div class="text-center" style="margin-bottom: 80px;">
+			<c:choose>
+				<c:when test="${smallCode == 5}">
+					<h1><strong>이벤트 게시판</strong></h1>
+				</c:when>
+				<c:otherwise>
+					<h1><strong>포토 게시판</strong></h1>				
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+		<div style="margin-bottom: 10px;">
+			<table class="table" style="border-top: 2px black solid;">
+				<thead>
+					<tr class="table text-center">
+
+						<th scope="col" style="font-size: 24px;">
+							<a href="/noticBoardList">공지사항</a>
+						</th>
+						<th scope="col" style="font-size: 24px;">
+							<a href="/magazinBoardList">매거진</a>
+						</th>
+						<th scope="col" style="font-size: 24px;">
+							<a href="/freeBoardList">자유게시판</a>
+						</th>
+						<c:choose>
+							<c:when test="${smallCode == 4}">
+								<th scope="col" style="font-size: 24px; position: relative;">
+									<a href="/photoBoardList">포토게시판</a>
+									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>
+								</th>
+								<th scope="col" style="font-size: 24px;">
+									<a href="/eventBoardList">이벤트</a></th>
+							</c:when>
+							<c:when test="${smallCode == 5}">
+								<th scope="col" style="font-size: 24px;">
+									<a href="/photoBoardList">포토게시판</a></th>
+								<th scope="col" style="font-size: 24px; position: relative;">
+									<a href="/eventBoardList">이벤트</a>
+									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>
+								</th>
+							</c:when>
+						</c:choose>
+					</tr>
+				</thead>
+			</table>
+			<div class="d-flex justify-content-end">
+				<div
+					style="width: 300px; height: 40px; background: #F7FBF4; border-radius: 23.50px; border: 2px black solid; margin-right: 10px; display: flex; align-items: center; justify-content: flex-end; position: relative;">
+					<img
+						style="width: 20px; height: 19px; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);"
+						src="../image/icon_search1.png" alt="test" />
+				</div>
+				<c:choose>
+					<c:when test="${smallCode == 4}">
+						<button class="btn btn-custom"
+							onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+					</c:when>
+				</c:choose>
+			</div>
+		</div>
+
 		<div class="row">
 			<c:forEach var="boards" items="${board}">
 				<div class="col-md-4 mb-4">
@@ -127,5 +200,8 @@
 		</nav>	
 		</div>
 	</div>
+	
+	<!-- Footer -->
+	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 </body>
 </html>
