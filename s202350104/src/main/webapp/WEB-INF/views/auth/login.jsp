@@ -10,7 +10,7 @@
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
         <script>
             // 카카오 sdk 초기화
-            Kakao.init('3d40db7fe264068aa3438b9a0b8b2274');
+            Kakao.init('1100bcfd9fdffe4494895e126275157a');
 
             function loginWithKakao() {
                 // 로그인 창을 띄웁니다.
@@ -20,7 +20,8 @@
                     },
                     fail: function(err) {
                         alert(JSON.stringify(err));
-                    }
+                    },
+                    redirectUri: 'http://localhost:8189/app/login/kakao'
                 });
             }
         </script>
