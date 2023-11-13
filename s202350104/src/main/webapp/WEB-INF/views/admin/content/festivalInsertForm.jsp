@@ -8,11 +8,15 @@
 		<title>축제 정보 등록</title>
 		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
- 		
- 		
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
-			document.addEventListener("DOMContentLoaded", function() {
+			var existingTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+			/* var deletedTags = []; // 삭제할 옵션을 저장할 배열 선언 */
+			var availableTags = []; // 선택할 수 있는 옵션을 저장할 배열 선언 --> existingTags에 있는 요소 제외하고 모두 저장
+			const tagsArea = document.querySelector('#tagsArea');
+			
+			document.addEventListener("DOMContentLoaded", (event) => {
+				
 				<!-- 지역 코드 넣는 코드  Start-->	
 				updateAreaOptions();
 				$(".area-dropdown").change(function() {
@@ -23,53 +27,114 @@
 						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 					}
 				});
+				<!-- 지역 코드 넣는 코드  End-->
+			
+				
+				<!-- 태그 관련 코드 Start -->
+				
+				availableTags.push({id:'1',name:'봄'});
+				availableTags.push({id:'2',name:'여름'});
+				availableTags.push({id:'3',name:'가을'});
+				availableTags.push({id:'4',name:'겨울'});
+				
+				updateTagOptions();
+				// initialTagOptions(); 초기 태그 옵션(DB에 저장되지 않은 태그들만 옵션으로)
+				$('#tagSelectBox').change(function() {
+					alert("addTag() start...");
+					alert("existingTags size => "+existingTags.length);
+					alert("availableTags size => "+availableTags.length);
+					
+					var selectedTagId = $(this).val(); // 선택된 tag의 id를 가져옴
+					var selectedTagName = $(this).find('option:selected').text(); // 선택된 tag의 name을 가져옴
+					
+					alert(selectedTagId);
+					alert(selectedTagName);
+					
+					var selectedTag = {
+						id: selectedTagId,
+						name: selectedTagName 
+					};
+					
+					// 이미 배열에 있는 태그인지 체크
+					var isDuplicate = false;
+					for(var i = 0; i < existingTags.length; i++) {
+						if(existingTags[i].id === selectedTag.id) {
+							isDuplicate = true;
+							break;
+						}
+					}
+					
+					if(!isDuplicate) {
+						existingTags.push(selectedTag); // 배열에 없었던 태그일 경우에만 추가
+						const newTag = document.createElement('span');
+						newTag.className = "badge bg-primary";
+						newTag.textContent = selectedTag.name;
+						newTag.id = selectedTag.id;
+						
+						const closeButton = document.createElement('button');
+						closeButton.className = "btn-close";
+						closeButton.setAttribute('aria-label', 'Close');
+						
+						newTag.appendChild(closeButton);
+						tagsArea.appendChild(newTag);
+						updateTagOptions(); // select box의 option을 업데이트하는 method
+					}
+					
+				})
+				
+				$('.btn-close').addEventListener('click', (event) => {
+					event.preventDefault();
+					var deletedTag = {
+						id: event.target.parentElement.id,
+						name: event.target.parentElement.textContent
+					}
+					alert("deletedTag.id => "+deletedTag.id);
+					alert("deletedTag.name => "+deletedTag.name);
+					/* alert("deletedTags size => " + deletedTags.length); */
+					alert("existingTags size => " + existingTags.length);
+					availableTags.push(deletedTag); // option 목록에 삭제된 태그 다시 추가
+					
+					for(var i = 0; i < existingTags.length; i++) {
+						if(existingTags[i].id === deletedTag.id) {
+							index = i;
+							break;
+						}
+					}
+					
+					if(index !== -1) {
+						existingTags.splice(index, 1); // 선택한 태그 목록에서 삭제
+						event.target.parentElement.remove(); // badge 삭제
+					}
+				});
+			
 			});
-			<!-- 지역 코드 넣는 코드  End-->
-			    const badgeSelect = document.querySelector('#badgeSelect');
-			    const addBadgeBtn = document.querySelector('#addBadgeBtn');
-			    const badgesArea = document.querySelector('#badgesArea');
 			
-			    // Initialize the list of available badges
-			    const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
+<%-- 			function initialTagOptions() { --> 1) existing 불러오기 / 2) 아래 메소드로 태그 옵션 저장하기
+				$.ajax({
+					url: "<%=request.getContextPath()%>/getContentTags",
+					data: contentId,
+					method: "GET",
+					success: function(tags) {
+						$("#tagSelectBox").empty().append("<option value='0'>태그를 선택해주세요.</option>");
+						tags.forEach(function(tag) {
+							$("#tagSelectBox").append("<option value='"+tag.id+"'>"+tag.name+"</option>");
+						});
+						console.log("initialTagOptions() success");
+					},
+					
+					error: function() {
+						console.log("태그 정보를 가져오지 못했습니다.");
+					}
+				}) 
+			} --%>
 			
-			    addBadgeBtn.addEventListener('click', () => {
-			      if (badgeSelect.value !== '') {
-			        // Create a new badge and add it to the page
-			        const newBadge = document.createElement('span');
-			        newBadge.className = 'badge bg-primary';
-			        newBadge.textContent = badgeSelect.value;
-			
-			        const closeButton = document.createElement('button');
-			        closeButton.className = 'btn-close';
-			        closeButton.setAttribute('aria-label', 'Close');
-			        closeButton.addEventListener('click', (event) => {
-			          // When the badge is deleted, add its value back to the select box
-			          const deletedBadgeValue = event.target.parentElement.textContent.trim();
-			          availableBadges.push(deletedBadgeValue);
-			          updateSelectOptions();
-			          event.target.parentElement.remove();
-			        });
-			
-			        newBadge.appendChild(closeButton);
-			        badgesArea.appendChild(newBadge);
-			
-			        // Remove the added badge's value from the select box
-			        availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
-			        updateSelectOptions();
-			        badgeSelect.value = '';
-			      }
-			    });
-			
-			    function updateSelectOptions() {
-			      badgeSelect.innerHTML = '<option value="">Select a badge</option>';
-			      availableBadges.forEach(badge => {
-			        const option = document.createElement('option');
-			        option.value = badge;
-			        option.textContent = badge;
-			        badgeSelect.appendChild(option);
-			      });				
-			    }
-			});
+			function updateTagOptions() {
+				$("#tagSelectBox").empty().append("<option value='0'>태그를 선택해주세요.</option>");
+				availableTags.forEach(function(tag) {
+					$("#tagSelectBox").append("<option value='"+tag.id+"'>"+tag.name+"</option>");
+				});
+				console.log("updateTagOptions() success");
+			}
 		</script>
 	</head>
 	
@@ -137,10 +202,8 @@
 							<tr>
 								<th>지역</th>
 								<td>
-									<div class="container">
-										<select name="area" class="area-dropdown"></select>
-										<select name="sigungu"  class="sigungu-dropdown"></select>
-								  	</div>
+									<select name="area" class="area-dropdown"></select>
+									<select name="sigungu"  class="sigungu-dropdown"></select>
 								</td>
 							</tr>
 							<tr>
@@ -172,19 +235,9 @@
 							<tr>
 								<th>태그</th>
 								<td>
-									<div class="container">
-									  <select id="badgeSelect" name="tag_id">
-									    <option value="">태그를 선택해주세요.</option>
-									    <c:forEach var="tag" items="${listTags}">
-									    	<option value="${tag.id}">${tag.name}</option>
-									    </c:forEach>
-									    <!-- Add more options as needed -->
-									  </select>
-									  <button id="addBadgeBtn">Add Badge</button>
-									  <div id="badgesArea">
-									    <!-- New badges will be added here -->
-									  </div>
-									</div>
+									<select id="tagSelectBox" name="tag_id" onchange="event.preventDefault();">
+									</select>
+									<div id="tagsArea"><!-- 태그 뱃지가 들어갈 곳 --></div>
 								</td>
 							</tr>
 							<tr>
@@ -205,6 +258,6 @@
 				</div>		
 			</main>
 		</div>
-		</div>
+		</div>	
 	</body>
 </html>

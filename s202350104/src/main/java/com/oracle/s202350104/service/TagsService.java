@@ -8,7 +8,6 @@ import com.oracle.s202350104.model.Tags;
 public interface TagsService {
 	int totalTags(Tags tags);
 	List<Tags> listTags(Tags tags);
-	List<Tags> listTagsAll();
 	int insertTags(Tags tags);
 	Tags selectTags(int id);
 	int updateTags(Tags tags);
@@ -22,6 +21,4 @@ public interface TagsService {
 	List<Tags> boardTagDetail(int id);
 	int boardTagDelete(int id);
 	
-
-
 }

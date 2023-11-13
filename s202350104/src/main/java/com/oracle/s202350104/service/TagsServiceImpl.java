@@ -24,7 +24,7 @@ public class TagsServiceImpl implements TagsService {
 	public int totalTags(Tags tags) {
 		int totalTagsCnt = td.totalTags(tags);
 		return totalTagsCnt;
-	}
+	}	
 	
 	@Override
 	public List<Tags> listTags(Tags tags) {
@@ -38,19 +38,9 @@ public class TagsServiceImpl implements TagsService {
 	}
 
 	@Override
-	public List<Tags> listTagsAll() {
-		List<Tags> listTags = td.listTagsAll();
-		
-		if(listTags == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "태그 리스트가 존재하지 않습니다.");
-		}
-		
-		return listTags;
-	}
-
-	@Override
 	public int insertTags(Tags tags) {
-		List<Tags> listTags = td.listTagsAll();
+		Tags tag = new Tags();
+		List<Tags> listTags = td.listTags(tag);
 		int result = 0;
 		int searchResult = 0;
 		// 이미 존재하는 tag인 경우 insert되지 않도록
@@ -77,7 +67,8 @@ public class TagsServiceImpl implements TagsService {
 
 	@Override
 	public int updateTags(Tags tags) {
-		List<Tags> listTags = td.listTagsAll();
+		Tags tag = new Tags();
+		List<Tags> listTags = td.listTags(tag);
 		int result = 0;
 		int searchResult = 0;
 		// 이미 존재하는 tag인 경우 update되지 않도록

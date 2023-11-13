@@ -11,7 +11,6 @@ public interface TagsDao {
 	int totalUserTags(Tags tags);
 	int totalBoardTags();
 	int totalContentTags();
-	List<Tags> listTagsAll();
 	int insertTags(Tags tags);
 	Tags selectTags(int id);
 	int updateTags(Tags tags);

@@ -33,6 +33,7 @@ public class TagsDaoImpl implements TagsDao {
 		return totalTagsCnt;
 	}
 	
+	// tags의 모든 데이터 list를 출력하는 dao(keyword / 페이징 작업을 위한 start-end를 설정하면 조건에 맞춰서 출력)
 	@Override
 	public List<Tags> listTags(Tags tags) {
 		List<Tags> listTags = null;
@@ -76,18 +77,6 @@ public class TagsDaoImpl implements TagsDao {
 			log.info("TagsDaoImpl totalContentTags() => " + e.getMessage());
 		}
 		return totalTagsCnt;
-	}
-	
-	@Override
-	public List<Tags> listTagsAll() {
-		List<Tags> listTags = null;
-		try {
-			listTags = session.selectList("nhTagsListAll");
-			log.info("TagsDaoImpl listTagsAll() => " + listTags.size());
-		} catch(Exception e) {
-			log.info("TagsDaoImpl listTagsAll() => " + e.getMessage());
-		}
-		return listTags;
 	}
 
 	@Override
