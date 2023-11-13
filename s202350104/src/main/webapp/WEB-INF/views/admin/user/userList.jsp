@@ -85,8 +85,6 @@
 			        .filter(([key, value]) => value !== undefined && value !== null && value !== '') // 값이 없는 경우를 필터링합니다.
 			        .map(([key, value]) => key+'='+value).join('&');
 	    }
-        
-
 	</script>
 </head>
 <body >
