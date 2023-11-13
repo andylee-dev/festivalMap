@@ -101,8 +101,9 @@ public class AdminCourseController {
 	}
 
 	@RequestMapping(value = "courseUpdate", method = RequestMethod.POST)
-	public String courseUpdate(Course course, @RequestParam List<String> contents, Model model) {
+	public String courseUpdate(@RequestParam(name = "id") int courseId, Course course, @RequestParam List<String> contents, Model model) {
 		log.info("AdminCourseController courseUpdate start...");
+		log.info("AdminCourseController courseUpdate course ->" + course);
 		
 		try {
 

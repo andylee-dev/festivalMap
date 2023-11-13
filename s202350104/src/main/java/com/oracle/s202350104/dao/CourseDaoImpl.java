@@ -143,6 +143,7 @@ public class CourseDaoImpl implements CourseDao {
 	public int courseUpdate(Course course) {
 		log.info("CourseDaoImpl courseUpdate start...");
 		int courseUpdate = 0;
+		log.info("CourseDaoImpl courseUpdate course ->" + course);
 		try {
 			courseUpdate = session.update("noCourseUpdate", course);
 			log.info("CourseDaoImpl courseUpdate courseUpdate ->" + courseUpdate);

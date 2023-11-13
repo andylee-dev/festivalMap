@@ -62,7 +62,7 @@
 	    for (var i = 0; i < contentList.length; i++) {
 	        table += "<tr>";
 	        table += "<td>" + contentList[i].id + "</td>";
-	        table += "<td><img src='" + contentList[i].img + "' alt='이미지'></td>";
+	        table += "<td><img src='" + contentList[i].img + "' alt='이미지' style='height: 150px;'></td>";
 	        table += "<td>" + contentList[i].title + "</td>";
 	        table += "<td>" + contentList[i].address + "</td>";
 	        table += "<td>" + contentList[i].homepage + "</td>";
