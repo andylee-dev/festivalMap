@@ -11,10 +11,23 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
-	<%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%>
 	<script type="text/javascript">
+		// init
 	    $(document).ready(function() {
-			const dateFormat = {
+	        const is_deleted = '${searchOption.is_deleted != null ? searchOption.is_deleted :""}';
+	        const status = '${searchOption.status != null ? searchOption.status : ""}';
+			const dateOptions = '${searchOption.dateOptions != null ? searchOption.dateOptions : ""}';
+	        if(is_deleted != '') {
+	            $('input[name="is_deleted"][value="'+is_deleted+'"]').attr('checked', 'checked');
+	        }
+	        if(status != '') {
+	            $('select[name="status"][value="'+status+'"]').attr('checked', 'checked');
+	        }
+	        if(dateOptions != '') {
+	            $('input[name="dateOptions"][value="'+dateOptions+'"]').attr('checked', 'checked');
+	        }
+
+	        const dateFormat = {
 		          singleDatePicker: true, // 시작 날짜만 선택
 		          linkedCalendars: false, // 두 개의 독립된 달력 사용
 		          autoApply: true, // 날짜를 선택하면 자동으로 적용
@@ -51,6 +64,29 @@
 	        $('input[name="dateOptions"]').change(onChangeDate);        
 	        onChangeDate();        
 	    }); 
+	    
+	    function createQueryURL(page) {
+	        const keyword = document.querySelector('input[name="keyword"]').value;
+	        const is_deleted = document.querySelector('input[name="is_deleted"]:checked') ? document.querySelector('input[name="is_deleted"]:checked').value : '';
+	        const startDate = document.querySelector('input[name="startDate"]').value;
+	        const endDate = document.querySelector('input[name="endDate"]').value;
+	        const dateOptions = document.querySelector('input[name="dateOptions"]:checked') ? document.querySelector('input[name="dateOptions"]:checked').value : '';
+
+	        const params = {
+	            small_code: 2,
+	            dateOptions: dateOptions,
+	            keyword: keyword,
+	            is_deleted: is_deleted,
+	            startDate: startDate,
+	            endDate: endDate,
+	            currentPage: page
+	        };
+	        return 'userList?' + Object.entries(params)
+			        .filter(([key, value]) => value !== undefined && value !== null && value !== '') // 값이 없는 경우를 필터링합니다.
+			        .map(([key, value]) => key+'='+value).join('&');
+	    }
+        
+
 	</script>
 </head>
 <body >
@@ -94,12 +130,6 @@
 						    <label class="btn" for="ALL">전체</label>
 							<input type="date" id="startDatePicker" name="startDate" value="${startDate}">
 							<input type="date" id="endDatePicker" name="endDate" value="${endDate}">
-						</div>
-						
-						<div class="input-group mb-3">
-							<span class="input-group-text col-auto" >지역</span>
-							<select name="area" id="area" class="form-select col-auto"></select> 
-							<select name="sigungu" id="sigungu" class="form-select col-auto"></select>
 						</div>
 						<div class="input-group mb-3 d-flex align-items-center">
 							<span class="input-group-text " >탈퇴 유무</span>
@@ -168,15 +198,15 @@
 					</table>
 
 					<div align="center">
-						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-						</c:if>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${i}" class="pageblock">${i}</a>
+					    <c:if test="${page.startPage > page.pageBlock}">
+					        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock">[이전]</a>
+					    </c:if>
+					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock">${i}</a>					    
 						</c:forEach>
-						<c:if test="${page.endPage < page.totalPage}">
-							<a href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage+page.pageBlock}"  class="pageblock" >[다음]</a>
-						</c:if>
+					    <c:if test="${page.endPage < page.totalPage}">
+					        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock" >[다음]</a>
+					    </c:if>
 					</div>
 				</div>
 			</main>
