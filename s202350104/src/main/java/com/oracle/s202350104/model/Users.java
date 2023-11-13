@@ -32,6 +32,7 @@ public class Users {
 	private int    end;
 
 	// 검색용
+	private String dateOptions;
 	private String searchType;
 	private String keyword;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
