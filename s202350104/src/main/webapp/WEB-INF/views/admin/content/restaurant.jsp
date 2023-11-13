@@ -26,21 +26,22 @@
 						<form action="adminRestaurantSearch">
 							<h1 class="border">검색폼</h1>
 							<select name="status" id="status">
-								<option value="">전체</option>
-								<option value="1">활성화</option>
-								<option value="0">비활성화</option>
+								<option value="2">전체</option>
+								<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>활성화</option>
+								<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>비활성화</option>
 							</select> 
 							
 							<select name="small_code" id="small_code">
-								<option value="">전체</option>
-								<option value="1">한식</option>
-								<option value="2">양식</option>
-								<option value="3">일식</option>
-								<option value="4">중식</option>
-								<option value="5">이색음식점</option>
-								<option value="6">카페</option>
-								<option value="7">클럽</option>
+								<option value="999">전체</option>
+								<option value="1" <c:if test="${small_code =='1'}">selected="selected"</c:if>>한식</option>
+								<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
+								<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
+								<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
+								<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
+								<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
+								<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
 							</select>
+							<input type="hidden" name="big_code" value="12">
 							<input type="hidden" name="currentPage" value="${page.currentPage}">
 							<button type="submit" class="btn btn-outline-secondary">검색</button>
 							<input type="reset" class="btn btn-outline-secondary" value="초기화">
@@ -113,7 +114,7 @@
 					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
 				</c:when>
 				<c:when test="${path==2}">
-					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
+					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>	
 				</c:when>
 			</c:choose>	
 		</c:if>
@@ -123,17 +124,10 @@
 					<a href="restaurant?currentPage=${i}" class="pageblock">[${i}]</a>
 				</c:when>
 				<c:when test="${path==1}">
-					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${i}" class="pageblock">[${i}]</a>
+					<a href="restaurantSearch?area=${area}&sigungu=${sigungu}&currentPage=${i}" class="pageblock">[${i}]</a>
 				</c:when>
 				<c:when test="${path==2}">
-					<c:choose>
-						<c:when test="${status=''}">
-							<a href="restaurant"></a>
-						</c:when>
-						<c:otherwise>
-							<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&currentPage=${i}" class="pageblock">[${i}]</a>
-						</c:otherwise>
-					</c:choose>
+					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${i}" class="pageblock">[${i}]</a>
 				</c:when>
 			</c:choose>	
 		</c:forEach>
@@ -143,10 +137,10 @@
 					<a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 				</c:when>
 				<c:when test="${path==1}">
-					<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+					<a href="restaurantSearch?area=${area}&sigungu=${sigungu}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 				</c:when>
 				<c:when test="${path==2}">
-					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+					<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
 				</c:when>
 			</c:choose>	
 		</c:if>

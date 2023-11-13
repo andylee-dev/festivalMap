@@ -272,6 +272,7 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
 				int totalRestaurant = rs.totalRestaurant();
+				log.info("{}", totalRestaurant);
 				int path = 0;
 				
 				Paging page = new Paging(totalRestaurant, currentPage);
@@ -298,14 +299,19 @@ import lombok.RequiredArgsConstructor;
 	
 		
 		@RequestMapping(value = "adminRestaurantSearch")
-		public String adminRestaurantSearch(RestaurantsContent restaurant, String currentPage, Model model, HttpServletRequest request) {
+		public String adminRestaurantSearch(RestaurantsContent restaurant, String currentPage, Model model, HttpServletRequest request, Integer contentId) {
 			UUID transactionId = UUID.randomUUID();
 			
 			try {
 				log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
 				int totalRestaurant = rs.adminConTotalRestaurant(restaurant);
+				log.info("{}", totalRestaurant);
 				int path 			= 2;
+				log.info("{}", path);
 				int small_code      = restaurant.getSmall_code();
+				int big_code        = restaurant.getBig_code();
+				contentId       = restaurant.getContent_id();
+							
 				String status 		= request.getParameter("status");
 				String theme 		= request.getParameter("theme");
 				
@@ -313,9 +319,9 @@ import lombok.RequiredArgsConstructor;
 				restaurant.setStart(page.getStart());
 				restaurant.setEnd(page.getEnd());
 				
-				List<RestaurantsContent> listSearchRestaurant = rs.adminListSearchRestaurant(restaurant);
-				// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
 				
+				List<RestaurantsContent> listSearchRestaurant = rs.adminListSearchRestaurant(restaurant);
+								
 				model.addAttribute("totalRestaurant", totalRestaurant);
 				model.addAttribute("path", path);
 				model.addAttribute("status", status);
@@ -323,10 +329,13 @@ import lombok.RequiredArgsConstructor;
 				model.addAttribute("page", page);
 				model.addAttribute("listRestaurant", listSearchRestaurant);
 				model.addAttribute("small_code", small_code);
-				// model.addAttribute("listRestaurant", listRestaurant);
+				model.addAttribute("big_code", big_code);
+				model.addAttribute("currentPage", currentPage);
+				
 				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
+			
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "end");
 			}	
@@ -342,6 +351,7 @@ import lombok.RequiredArgsConstructor;
 			
 			try {
 				log.info("[{}]{}:{}", transaction, "admin restaurantDetail", "Start");
+				log.info("admin restaurantDetail -> ", contentId);
 				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
 								
 				model.addAttribute("restaurant", restaurant);
@@ -371,9 +381,11 @@ import lombok.RequiredArgsConstructor;
 								
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm Exception", e.getMessage());
+			
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantInsertForm", "end");
 			}
+			
 			return "admin/content/restaurantInsertForm";		
 		}		
 		
@@ -383,7 +395,9 @@ import lombok.RequiredArgsConstructor;
 			UUID transactionId = UUID.randomUUID();
 				
 			log.info("[{}]{}:{}", transactionId, "admin restaurant/insert", "start");
+			
 			int result = rs.insertRestaurant(restaurant);
+			
 			if(result > 0) return "redirect:/admin/content/restaurant";
 			else {
 				model.addAttribute("msg", "입력실패 확인해보세요");
@@ -428,13 +442,16 @@ import lombok.RequiredArgsConstructor;
 				int result = rs.updateRestaurant(restaurant);
 				log.info("admin restaurantUpdate updateCount ->" + result);
 				id = restaurant.getContent_id();
+			
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );
+			
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate", "end" );
 			} 
-			return "forward:/admin/content/restaurantDetail?contentId="+id;
-			// return "redirect:restaurant";
+			
+			return "forward:restaurantDetail?contentId="+id;
+			// return "redirect:restaurant"; /admin/content/
 		}
 		
 		
@@ -445,8 +462,10 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantDelete", "start");;
 				int result = rs.deleteRestaurant(contentId);
+			
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantDelete Exception", e.getMessage());
+			
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantDelete", "end");
 			}
@@ -465,6 +484,7 @@ import lombok.RequiredArgsConstructor;
 				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantApprove Exception", e.getMessage());
+			
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "End");
 			}

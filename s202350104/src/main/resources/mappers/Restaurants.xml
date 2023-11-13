@@ -84,20 +84,53 @@
 					SELECT c.*
 	 				FROM   restaurants r, contents c
 	 				WHERE  r.content_id = c.id
-	 				AND    c.status = #{status} AND c.small_code = #{small_code}
+	 				<if test="status != null and status !=3">
+	 					<choose>
+	 						<when test="status !=2">	 					
+	 							AND c.status = #{status} 
+	 						</when>
+	 						<when test="status =2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="small_code != null">
+	 					<choose>
+	 						<when test="small_code != 999">
+				 				AND c.small_code = #{small_code} 
+	 						</when>
+	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				</if>
 	 			 )
-		
 	</select>	
 	
 		
 	<select id="joAdminListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
-		SELECT  x.*, y.content AS theme, y.small_code
+		SELECT  x.*, y.content AS theme, y.small_code, x.id AS content_id
 		FROM	
 				(
 					SELECT ROWNUM rn, c.*
 	 				FROM   restaurants r, contents c
 	 				WHERE  r.content_id = c.id
-	 				AND    c.status = #{status} AND c.small_code = #{small_code} 
+	 				<if test="status != null and status !=3">
+	 					<choose>
+	 						<when test="status !=2">	 					
+	 							AND c.status = #{status} 
+	 						</when>
+	 						<when test="status =2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="small_code != null">
+	 					<choose>
+	 						<when test="small_code != 999">
+				 				AND c.small_code = #{small_code} 
+	 						</when>
+	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				</if>
 	 			 ) x, commoncodes y
 		WHERE rn BETWEEN #{start} and #{end}
 		AND   x.big_code = y.big_code AND x.small_code = y.small_code
