@@ -337,77 +337,139 @@
 				});
 			});
 		</script>
+		
+<style type="text/css">
+	@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
+	
+	.form-label {
+		font-size: 20px;
+		font-family: 'Nanum+Pen+Script', sans-serif;
+		font-weight: bold;
+	}
+	
+	.form-select,
+	.form-control {
+		border: 2px black solid;
+		border-radius: 23.50px;
+		margin-bottom: 5px;
+	}
+
+</style>
+
 </head>
 
 <body>
 	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 
-		<!-- Main Banner 임시 -->
-		<div id="content_title" class="container border p-5">
-			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
-				data-bs-pause="hover" data-bs-wrap="true">
-				<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-						class="active" aria-current="true" aria-label="Slide 1"></button>
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-						aria-label="Slide 2"></button>
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-						aria-label="Slide 3"></button>
-				</div>
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="../image/map1.png" class="d-block w-100" alt="..."
-							style="width: 800px; height: 400px" />
-					</div>
-					<div class="carousel-item">
-						<img src="../image/map2.png" class="d-block w-100" alt="..."
-							style="width: 800px; height: 400px" />
-					</div>
-					<div class="carousel-item">
-						<img src="../image/map3.png" class="d-block w-100" alt="..."
-							style="width: 800px; height: 400px" />
-					</div>
-				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
+	<!-- Main Banner 임시 -->
+	<div id="content_title" class="container">
+	</div>
+		<div class="container p-5" style="background-color: #FF4379;">
+		    <div style="width: 220px; height: 40px; border-radius: 23.50px; border: 3px white solid; display: flex; 
+		    			align-items: center; justify-content: center; color: white; font-weight: bold;">
+		        I N T R O D U C I N G
+		    </div>				
+		</div>
+		<div class="container" style="width: 100%; height: 380px; padding: 0;">
+			<div id="carouselExampleIndicators" class="carousel slide"
+			 	 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
+			 	 data-bs-wrap="true">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="0" class="active" aria-current="true"
+						aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="2" aria-label="Slide 3"></button>
 			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="../image/BANNER1.png" class="d-block w-100" alt="메인배너1"
+						 style="width: 100%; height: 400px " />
+				</div>
+				<div class="carousel-item">
+					<img src="../image/BANNER2.png" class="d-block w-100" alt="메인배너2"
+						 style="width: 100%; height: 400px" />
+				</div>
+				<div class="carousel-item">
+					<img src="../image/BANNER3.png" class="d-block w-100" alt="메인배너3"
+						 style="width: 100%; height: 400px" />
+				</div> 
+			</div>
+			<button class="carousel-control-prev" type="button"
+					data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true">
+					<img src="../image/arrowLeft.png" alt="Previous">
+				</span> 
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+					data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true">
+					<img src="../image/arrowRight.png" alt="Next">
+				</span> 
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- Section1 -->
+		<div class="container border p-5">
+		    <div style="width: 300px; height: 30px; border-radius: 23.50px; border: 3px white solid; display: flex; 
+		    			align-items: center; justify-content: center; background-color: #FF4379; color: white; font-weight: bold;">
+				랜덤축제 취향테스트 캘린더 영역
+		    </div>		
 		</div>
 
-		<!-- Section1 -->
-		<div class="container border p-5">랜덤축제 취향테스트 캘린더</div>
-
 		<!-- Section2 -->
-		<div class="container border p-5">md's pick</div>
+		<div class="container border p-5">
+		    <div style="width: 150px; height: 30px; border-radius: 23.50px; border: 3px white solid; display: flex; 
+		    			align-items: center; justify-content: center; background-color: #FF4379; color: white; font-weight: bold;">
+				MD's Pick 영역
+		    </div>		
+		</div>
 
 		<!-- Section3 -->
 		<div class="container p-0 border">
+		    <div style="width: 80px; height: 30px; border-radius: 23.50px; border: 3px white solid; display: flex; 
+		    			align-items: center; justify-content: center; background-color: #FF4379; color: white; font-weight: bold;">
+		       	  <h1>·</h1> LIVE
+		    </div>					
 			<div>
-				<h1>지도지도</h1>
+				<h2><strong>지금 축제중인 지역</strong></h2>
+			</div>
+			<div class="container p-5" style="background-color: #EEFFC2;">
 			</div>
 			<div class="border d-flex">
 				<div id="menu_wrap" class="container col-4">
 					<div class="container-fluid">
 						<div class="m-3">
-							<label for="area" class="form-label">지역</label>
+							<label for="area" class="form-label"><strong>지역별_구분</strong></label>
 							<select name="area" id="area" class="form-select col-auto area-dropdown"></select>
 						</div>
 						<div class="m-3">
-							<label for="sigungu" class="form-label">지역상세</label>
+							<label for="sigungu" class="form-label"><strong>상세지역</strong></label>
 							<select name="sigungu" id="sigungu" class="form-select col-auto sigungu-dropdown"></select>
 						</div>
 						<div class="m-3">
-							<label for="tag" class="form-label">테마별</label>
+							<label for="tag" class="form-label"><strong>테마별</strong></label>
+						    <div style="width: 110px; height: 35px; border-radius: 23.50px; border: 2px black solid; display: flex; 
+						    			align-items: center; justify-content: center; color: black; font-weight: bold;">
+						       	  #다이나믹한
+						    </div>
+						    <div style="width: 110px; height: 35px; border-radius: 23.50px; border: 2px black solid; display: flex; 
+						    			align-items: center; justify-content: center; color: black; font-weight: bold;">
+						       	  #포토스팟
+						    </div>							
+						    <div style="width: 110px; height: 35px; border-radius: 23.50px; border: 2px black solid; display: flex; 
+						    			align-items: center; justify-content: center; color: black; font-weight: bold;">
+						       	  #내일로
+						    </div>							
 							<select name="tag" id="tag" class="form-select col-auto"></select>
 							<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" />
+							<img style="width: 20px; height: 19px;" src="../image/icon_search1.png" alt="test"/>
 						</div>
 						<div class="text-center">
 							<button type="button" class="btn btn-primary" onclick="search()">
@@ -426,7 +488,15 @@
 		</div>
 
 		<!-- Section4 -->
-		<div class="container border p-5">컨텐츠 배너.</div>
+		<div class="container border p-5">
+		    <div style="width: 60px; height: 30px; border-radius: 23.50px; border: 3px white solid; display: flex; 
+		    			align-items: center; justify-content: center; background-color: #FF4379; color: white; font-weight: bold;">
+		       	  AD
+		    </div>
+		    <div>
+				<h2><strong>이런 곳도 있어요!</strong></h2>
+			</div>			
+		</div>
 
 		<!-- Footer -->
 		<%@ include file="/WEB-INF/components/Footer.jsp" %>
