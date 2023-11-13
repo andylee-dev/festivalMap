@@ -43,8 +43,8 @@ public class Qna {
 	//검색용
 	
 	private String dateOptions;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 }
