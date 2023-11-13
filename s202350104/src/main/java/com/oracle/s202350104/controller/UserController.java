@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
@@ -48,7 +49,7 @@ public class UserController {
 			log.info("[{}]{}:{}",transactionId, "myPage", "start");
 			int userId = us.getLoggedInId();
 			log.info("userId:{}/ userRole:{}",userId,us.getLoggedInUserRole());
-			Users user = us.getUserById(userId);
+			Optional<Users> user = us.getUserById(userId);
 			model.addAttribute("user",user);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "myPage", e.getMessage());
@@ -134,7 +135,7 @@ public class UserController {
 	@RequestMapping(value = "myPage/insertQnaResult")
 	public String insertQnaResult(Qna qna, Model model) {
 		UUID transactionId = UUID.randomUUID();
-		Users user = null;
+		Optional<Users> user = null;
 		int result = 0;
 		try {
 			log.info("[{}]{}:{}",transactionId, "qnaInsertResult", "start");
@@ -196,7 +197,7 @@ public class UserController {
 	@RequestMapping(value = "myPage/qnaList")
 	public String qnaList(Qna qna , String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
-			Users user = null;
+			Optional<Users> user = null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "qnaList", "start");
 			
@@ -226,9 +227,9 @@ public class UserController {
 		}finally { 
 			log.info("[{}]{}:{}",transactionId, "qnaList", "end");
 		}
-		if(user.getSmall_code() == 2) {
+		if(user.isPresent() && user.get().getSmall_code() == 2) {
 			return "user/myPage/myQnaList";
-		}else if (user.getSmall_code() == 3) {
+		}else if (user.isPresent() && user.get().getSmall_code() == 3) {
 			return "user/bizPage/bizQnaList";
 		
 		}else {

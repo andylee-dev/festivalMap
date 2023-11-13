@@ -1,6 +1,7 @@
 package com.oracle.s202350104.service.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
@@ -104,17 +105,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Users getUserByEmail(String email) {
+	public Optional<Users> getUserByEmail(String email) {
 		Users user = null;
 		user = ud.getUserByEmail(email);
-		return user;
+		return Optional.of(user);
 	}
 
 	@Override
-	public Users getUserById(int id) {
+	public Optional<Users> getUserById(int id) {
 		Users user = null;
 		user = ud.getUserById(id);
-		return user;
+		return Optional.of(user);
 	}
 
 

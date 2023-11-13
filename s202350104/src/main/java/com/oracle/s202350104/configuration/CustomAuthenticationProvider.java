@@ -2,6 +2,7 @@ package com.oracle.s202350104.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -37,11 +38,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	        username = authentication.getName();
 	        password = authentication.getCredentials().toString();
 	
-	        Users user = userService.getUserById(Integer.parseInt(username) );
+	        Optional<Users> user = userService.getUserById(Integer.parseInt(username));
 	        if (user == null) {
 	            throw new BadCredentialsException("username is not found. username=" + username);
 	        }
-	        if (!password.equals(user.getPassword())) {
+	        if (!password.equals(user.get().getPassword())) {
 	        	throw new BadCredentialsException("password is not matched");        	
 	        }
 	        /* 개발 단계에서는 패스워드 인코딩 생략.
@@ -50,7 +51,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			}
 			*/
 //	        userService.updateUserPoint(user.getId(), 9);
-	        authorities.add(new SimpleGrantedAuthority("ROLE_"+Role.getValueByKey(user.getSmall_code())));	
+	        authorities.add(new SimpleGrantedAuthority("ROLE_"+Role.getValueByKey(user.get().getSmall_code())));	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "AuthenticationProvider", e.getMessage());
 		} finally {
