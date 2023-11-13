@@ -117,4 +117,5 @@ public class QnaListDaoImpl implements QnaListDao {
 		}
 		return result;
 	}
+
 }

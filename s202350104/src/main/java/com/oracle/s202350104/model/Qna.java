@@ -2,6 +2,8 @@ package com.oracle.s202350104.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -37,4 +39,12 @@ public class Qna {
 	private String 	gender;
 	private String 	file_name;
 	private String 	is_deleted;
+	
+	//검색용
+	
+	private String dateOptions;
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date startDate;
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date endDate;
 }

@@ -215,20 +215,22 @@ public class UserController {
 			int totalQnaList = qs.totalQnaList(qna);
 			
 			PagingList page = new PagingList(totalQnaList, currentPage);
-		
 			qna.setStart(page.getStart());
 			qna.setEnd(page.getEnd());
 			
-			
 			log.info("qna list"+totalQnaList);
 			log.info("startPage"+page.getStartPage());
+			log.info("startDate"+qna.getStartDate());
+			log.info("endDate"+qna.getEndDate());
 			
 			List<Qna> listQnaList = qs.listQnaList(qna);
 			
+			model.addAttribute("searchOption",qna);
 			model.addAttribute("small_code",small_code);
 			model.addAttribute("totalQnaList",totalQnaList);
 			model.addAttribute("listQnaList",listQnaList);
 			model.addAttribute("page",page);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "qnaList", e.getMessage());
 		}finally { 

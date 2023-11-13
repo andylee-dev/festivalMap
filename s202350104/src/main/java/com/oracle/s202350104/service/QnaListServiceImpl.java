@@ -70,5 +70,4 @@ public class QnaListServiceImpl implements QnaListService {
 		result = qd.adminUpdateQna(qna);
 		return result;
 	}
-
 }
