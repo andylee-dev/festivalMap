@@ -10,6 +10,51 @@
 <title>숙박 상세</title>
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+	.container {
+      margin-top: 150px; /* 상단 여백을 원하는 크기로 조절하세요. */
+    }
+    .thumbnail {
+      cursor: pointer;
+      width: 70%;
+      height: 70%;
+      display: block;
+      margin: auto;
+    }
+    
+    #largeImage {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 998;
+    }
+    
+    ul {
+        list-style: none; /* 목록 기호 제거 */
+        padding: 0;
+    }
+
+    ul li:before {
+        content: '\2022'; /* 핑크색 원 모양 기호 */
+        color: hotpink; /* 핑크색 */
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+    
+  </style>
 
 <script>
 	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
@@ -43,40 +88,79 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 
 	<h1>숙박 상세</h1>
-	<div class="container border p-5">
-		<img alt="${accomodation.title}이미지1" src="${accomodation.img1}">
-	</div>
-	<div class="container border p-5">
-		<img alt="${accomodation.title}이미지2" src="${accomodation.img2}">
-	</div>
-	<div class="container border p-5">
+	
+	<div class="container border p-5" style="display: flex; justify-content: space-between;">
+    <table>
+        <tr>
+			<td style="width:50%; height: 100%; text-align:left;">
+   			 <img class="thumbnail" alt="${accomodation.title}이미지1" src="${accomodation.img1}" style="width: 100%; height: 100%; object-fit: cover;" align="absmiddle">
+			</td>
+            <td style="width:30%; text-align:center; vertical-align:middle;">
+                <img class="thumbnail" alt="${accomodation.title}이미지2" src="${accomodation.img2}">
+                <br><img class="thumbnail" alt="${accomodation.title}이미지3" src="${accomodation.img3}">
+            </td>
+             <td style="width:30%; text-align:center;">
+               
+            </td>
+        </tr>
+    </table>
+    <!-- ul 태그를 border 안으로 이동 -->
+    <ul>
+        <li><b>상호명</b>  ${accomodation.title}</li>
+        <li><b>주소</b>  ${accomodation.address}</li>
+        <li><b>우편번호</b>  ${accomodation.postcode}</li>
+        <li><b>전화번호</b>  ${accomodation.phone}</li>
+        <li><b>홈페이지</b>  <a href="${accomodation.homepage}">${accomodation.homepage}</a></li>
+        <li><b>객실수</b>  ${accomodation.room_count}</li>
+        <li><b>예약처</b>  <a href="${accomodation.reservation_url}">${accomodation.reservation_url}</a></li>
+        <li><b>환불규정</b>  ${accomodation.refund}</li>
+        <li><b>입실시간</b>  ${accomodation.check_in}</li>
+        <li><b>퇴실시간</b>  ${accomodation.check_out}</li>
+        <li><b>픽업가능</b> 
+         <c:choose>
+                <c:when test="${accomodation.is_cook == 0}">Y</c:when>
+                <c:when test="${accomodation.is_cook == 1}">N</c:when>
+            </c:choose>
+        <li><b>조리가능</b> 
+            <c:choose>
+                <c:when test="${accomodation.is_cook == 0}">Y</c:when>
+                <c:when test="${accomodation.is_cook == 1}">N</c:when>
+            </c:choose>
+        </li>
+        <li><b>주차시설</b>
+            <c:choose>
+                <c:when test="${accomodation.is_parking == 0}">Y</c:when>
+                <c:when test="${accomodation.is_parking == 1}">N</c:when>
+            </c:choose>
+        </li>
+    </ul>
+</div>
+<div id="overlay"></div>
+	<div id="largeImageContainer">
+    <img id="largeImage" src="" alt="Large Image">
+    </div>
+    <script>
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const largeImage = document.getElementById('largeImage');
+    const overlay = document.getElementById('overlay');
 
-		<ul>
-			<li>상호명 : ${accomodation.title}
-			<li>개요 : ${accomodation.content}
-			<li>주소 : ${accomodation.address}
-			<li>우편번호 : ${accomodation.postcode}
-			<li>전화번호 : ${accomodation.phone}
-			<li>홈페이지 : <a href="${accomodation.homepage}">${accomodation.homepage}</a>
-			<li>객실수 : ${accomodation.room_count}
-			<li>예약처 : <a href="${accomodation.reservation_url}">${accomodation.reservation_url}</a>
-			<li>환불규정 : ${accomodation.refund}
-			<li>입실시간 : ${accomodation.check_in}
-			<li>퇴실시간 : ${accomodation.check_out}
-			<li>픽업가능 : ${accomodation.is_pickup}
-			<li>조리가능 : 
-				<c:choose>
-					<c:when test="${accomodation.is_cook == 0}">Y</c:when>
-					<c:when test="${accomodation.is_cook == 1}">N</c:when>
-				</c:choose>
-			<li>주차시설 : 
-				<c:choose>
-					<c:when test="${accomodation.is_parking == 0}">Y</c:when>
-					<c:when test="${accomodation.is_parking == 1}">N</c:when>
-				</c:choose>
-		</ul>
-	</div>
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function () {
+            largeImage.src = this.src;
+            largeImage.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+    });
 
+    overlay.addEventListener('click', function () {
+        largeImage.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+	</script>
+	<div class="container border p-5">
+		<h2 style="color: hotpink;">개요</h2>
+		<p>${accomodation.content}
+	</div>
 	<!-- review test -->
 	<c:set var="num" value="${page.total-page.start+1 }" />
 	<div class="container border p-5">
