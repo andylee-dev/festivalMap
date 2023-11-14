@@ -1,4 +1,5 @@
   // 페이지 로드 후 실행되는 JavaScript 코드
+/*
   $(document).ready(function(){
     // pagination의 각 페이지 버튼에 대한 클릭 이벤트 처리
     $('.pagination .page-item a').on('click', function(e){
@@ -11,3 +12,5 @@
       $(this).parent().addClass('active');
     });
   });
+  
+  */
