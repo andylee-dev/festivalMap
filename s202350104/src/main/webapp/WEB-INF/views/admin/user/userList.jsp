@@ -114,6 +114,22 @@
 		}			
 	    
 	</script>
+<script>
+  // 페이지 로드 후 실행되는 JavaScript 코드
+  $(document).ready(function(){
+    // pagination의 각 페이지 버튼에 대한 클릭 이벤트 처리
+    $('.pagination .page-item a').on('click', function(e){
+      e.preventDefault(); // 기본 동작 방지
+
+      // 모든 페이지 버튼에서 active 클래스 제거
+      $('.pagination .page-item').removeClass('active');
+
+      // 클릭한 페이지 버튼에 active 클래스 추가
+      $(this).parent().addClass('active');
+    });
+  });
+</script>
+
 </head>
 <body >
 	<div class="container-fluid">
@@ -127,60 +143,71 @@
 						<label  class="admin-header-title ">일반 회원 리스트 </label>					
 					</div>
 				</div>
+				
 				<!-- Section2: Search Form -->
-				<div class="d-flex justify-content-center my-5">
-					<form action="/admin/user/userList" method="POST" class="col-6">
-						<input class="col-1" type="hidden" name="small_code" value="2">						
-						<div class="d-flex row col-6 mb-3">
-						    <span class="col-2" >검색어</span>
-						    <select name="searchType" class="form-select col-4" >
-						        <option selected value="name">사용자 이름</option>
-						        <option value="email">이메일</option>
-						        <option value="nickname">닉네임</option>
-						    </select>
-						    <input type="text" name="keyword" class="form-control col-6" value="${keyword}">
-						</div>
-						<div class="input-group col-auto mb-3" >
-						   <span class="input-group-text col-auto">가입기간</span>
-						    <input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off" >
-						    <label class="btn" for="TO">오늘</label>
-						    <input type="radio" class="btn-check" name="dateOptions" id="1W" value="1W" autocomplete="off">
-						    <label class="btn" for="1W">1주일</label>
-						    <input type="radio" class="btn-check" name="dateOptions" id="1M" value="1M" autocomplete="off">
-						    <label class="btn" for="1M">1개월</label>
-						    <input type="radio" class="btn-check" name="dateOptions" id="3M" value="3M" autocomplete="off">
-						    <label class="btn" for="3M">3개월</label>
-						    <input type="radio" class="btn-check" name="dateOptions" id="6M" value="6M" autocomplete="off">
-						    <label class="btn" for="6M">6개월</label>
-						    <input type="radio" class="btn-check" name="dateOptions" id="ALL" value="ALL" autocomplete="off" checked>
-						    <label class="btn" for="ALL">전체</label>
-							<input type="date" id="startDatePicker" name="startDate" value="${startDate}">
-							<input type="date" id="endDatePicker" name="endDate" value="${endDate}">
-						</div>
-						<div class="input-group mb-3 d-flex align-items-center">
-							<span class="input-group-text " >탈퇴 유무</span>
-							<div class="form-check mx-2">
-							  <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted1" value='' checked >
-							  <label class="form-check-label" for="is_deleted1">전체 회원</label>
-							</div>
-							<div class="form-check mx-2">
-							  <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted3" value="0">
-							  <label class="form-check-label" for="is_deleted3">가입 회원</label>
-							</div>
-							<div class="form-check mx-2">
-							  <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted2" value="1">
-							  <label class="form-check-label" for="is_deleted2">탈퇴 회원</label>
-							</div>
-						</div>
-	
-						<button type="submit" class="btn btn-outline-secondary">검색</button>
-						<button type="reset" class="btn btn-outline-secondary">초기화</button>
-					
-					</form>
+				<div class="container col-9 justify-content-center my-5">
+				    <form action="/admin/user/userList" method="POST" class="container justify-content-center">
+					    <input  type="hidden" name="small_code" value="2">						
+				
+				        <!-- 검색어 -->
+			            <div class="col-12 my-4 d-flex align-items-center">
+			                <label for="searchType" class="form-label col-2  mx-2">검색어</label>
+			                <select id="searchType" name="searchType" class="col-form-select col-4  mx-2">
+			                    <option selected value="name">사용자 이름</option>
+			                    <option value="email">이메일</option>
+			                    <option value="nickname">닉네임</option>
+			                </select>
+			                <input type="text" name="keyword" class="form-control col-5  mx-2" value="${keyword}">
+			            </div>
+				
+				        <!-- 기간 -->
+			            <div class="col-12 my-4 d-flex align-items-center ">
+			                <label for="searchType" class="col-form-label col-2  mx-1">가입기간</label>
+				            <div class="col-6  mx-2 d-flex">
+				                <input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off">
+				                <label class="btn col-2" for="TO">오늘</label>
+				                <input type="radio" class="btn-check" name="dateOptions" id="1W" value="1W" autocomplete="off">
+				                <label class="btn col-2" for="1W">1주일</label>
+				                <input type="radio" class="btn-check" name="dateOptions" id="1M" value="1M" autocomplete="off">
+				                <label class="btn col-2" for="1M">1개월</label>
+				                <input type="radio" class="btn-check" name="dateOptions" id="3M" value="3M" autocomplete="off">
+				                <label class="btn col-2" for="3M">3개월</label>
+				                <input type="radio" class="btn-check" name="dateOptions" id="6M" value="6M" autocomplete="off">
+				                <label class="btn col-2" for="6M">6개월</label>
+				                <input type="radio" class="btn-check" name="dateOptions" id="ALL" value="ALL" autocomplete="off" checked>
+				                <label class="btn col-2" for="ALL">전체</label>
+				            </div>
+				            <div class="col-4 ">
+				                <input type="date" id="startDatePicker" name="startDate" value="${startDate}">
+				                <input type="date" id="endDatePicker" name="endDate" value="${endDate}">
+				            </div>
+				        </div>
+				
+				        <!-- 옵션 -->
+			            <div class="col-12 my-4 d-flex align-items-center ">
+			                <label for="searchType" class="col-form-label col-2  mx-1">탈퇴</label>
+				            <div class="form-check mx-2">
+				                <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted1" value='' checked>
+				                <label class="form-check-label" for="is_deleted1">전체 회원</label>
+				            </div>
+				            <div class="form-check mx-2">
+				                <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted3" value="0">
+				                <label class="form-check-label" for="is_deleted3">가입 회원</label>
+				            </div>
+				            <div class="form-check mx-2">
+				                <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted2" value="1">
+				                <label class="form-check-label" for="is_deleted2">탈퇴 회원</label>
+				            </div>
+				        </div>
+				        <div class="container col-10 d-flex justify-content-center">
+					        <button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+					        <button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>				        
+				        </div>
+				    </form>
 				</div>
 
 				<!-- Section3: Table -->
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-5 border">
 					<button type="button" class="btn btn-outline-secondary ">등록</button>
 					<table id="userTable" class="table table-striped table-sm">
 						<thead>
@@ -226,18 +253,25 @@
 							</c:forEach>
 						</tbody>
 					</table>
-
-					<div align="center">
-					    <c:if test="${page.startPage > page.pageBlock}">
-					        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock">[이전]</a>
-					    </c:if>
-					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock">${i}</a>					    
-						</c:forEach>
-					    <c:if test="${page.endPage < page.totalPage}">
-					        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock" >[다음]</a>
-					    </c:if>
-					</div>
+					<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+					    	<c:if test="${page.startPage > page.pageBlock}">
+							    <li class="page-item">
+						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+						    	</li>
+					    	</c:if>
+						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							    <li class="page-item">
+									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+						    	</li>
+							</c:forEach>
+						    <c:if test="${page.endPage < page.totalPage}">
+							    <li class="page-item">
+							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+						    	</li>
+						    </c:if>
+						</ul>
+					</nav>
 				</div>
 			</main>
 		</div>
