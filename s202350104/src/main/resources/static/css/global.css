@@ -1,1 +1,6 @@
 @CHARSET "UTF-8";
+
+:root {
+    --bs-font-sans-serif: 'Noto Sans KR', sans-serif;
+    --bs-btn-font-family: var(--bs-font-sans-serif);
+}
