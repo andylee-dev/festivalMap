@@ -273,11 +273,11 @@ public class TagsDaoImpl implements TagsDao {
 		TransactionStatus txStatus = 
 				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
-			List<Tags> listMyTags = session.selectList("nhContentTagOne", contentId);
-			// DB에 저장된 원래 tag list와 finalTags를 비교하여 finalTags에 존재하지 않는 tag는 delete
-			if(listMyTags != null) {
+			List<Tags> oldTags = session.selectList("nhContentTagOne", contentId);
+			if(oldTags != null && finalTags != null) {
 				boolean isHere = false;
-				for(Tags tag : listMyTags) {
+				// oldTags에는 존재하지만 finalTags에는 존재하지 않는 tag를 delete
+				for(Tags tag : oldTags) {
 					for(int i = 0; i < finalTags.length; i++) {
 						if(tag.getId() == finalTags[i]) {
 							isHere = true;
@@ -290,35 +290,42 @@ public class TagsDaoImpl implements TagsDao {
 						result = session.delete("nhContentTagsDelete", newTag);
 						log.info(newTag.getTag_id()+"result=>"+result);
 					}
+					isHere = false;
 				}
-			} else {
+				// finalTags에만 존재하는 tag를 insert
+				for(int tagId : finalTags) {
+					for(int i = 0; i < oldTags.size(); i++) {
+						if(tagId == oldTags.get(i).getTag_id()) {
+							isHere = true;
+						}
+					}
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setContent_id(contentId);
+						newTag.setTag_id(tagId);
+						result = session.delete("nhContentTagsInsert", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				} 
+				
+			} else if(oldTags != null && finalTags == null) {
+				for(Tags tag : oldTags) {
+					Tags newTag = new Tags();
+					newTag.setContent_id(contentId);
+					newTag.setTag_id(tag.getId());
+					result = session.delete("nhContentTagsDelete", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
+				}
+			} else if(oldTags == null && finalTags != null) {
 				for(int i = 0; i < finalTags.length; i++) {
 					Tags newTag = new Tags();
 					newTag.setContent_id(contentId);
 					newTag.setTag_id(finalTags[i]);
-					result = session.delete("nhContentTagsDelete", newTag);
+					result = session.delete("nhContentTagsInsert", newTag);
 					log.info(newTag.getTag_id()+"result=>"+result);
 				}
-			}
-			
-			// DB에 저장된 원래 tag list와 finalTags를 비교하여 finalTags에만 존재하는 tag는 insert
-			if(finalTags != null) {
-				boolean isHere = false;
-				for(int tagId : finalTags) {
-					for(int i = 0; i < listMyTags.size(); i++) {
-						if(tagId == listMyTags.get(i).getTag_id()) {
-							isHere = true; // finalTags에 기존의 tag가 존재하면  true
-						}
-					}
-					if(!isHere) { // finalTags에만 존재하는 tag
-						Tags newTag = new Tags();
-						newTag.setContent_id(contentId);
-						newTag.setTag_id(tagId);
-						result = session.insert("nhContentTagsInsert", newTag);
-						log.info(newTag.getTag_id()+"result=>"+result);
-					}
-				}
-			}
+			} else result = 0;
 			
 			transactionManager.commit(txStatus);
 		} catch (Exception e) {
