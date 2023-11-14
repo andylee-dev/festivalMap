@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
@@ -303,6 +304,29 @@ public class AdminTagController {
 			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "end");
 		}	
 		return "admin/tag/boardTagsUpdateForm";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "boardTagsUpdate")
+	public String boardTagsUpdate(@RequestParam(value = "tagId[]") int[] finalTags, int boardId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		String str = "";
+		try {
+			log.info("[{}]{}:{}",transactionId, "boardTagsUpdate", "start");
+			int result = ts.updateBoardTags(boardId, finalTags); 
+			if(result == 1) { 
+				str = "태그 수정이 성공적으로 완료되었습니다."; 
+			} else { 
+				str = "태그 수정에 실패하였습니다."; 
+			}
+			log.info("finalTags"+finalTags);
+			log.info("boardId"+boardId);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "boardTagsUpdate", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "boardTagsUpdate", "end");
+		}	
+		return str;
 	}
 	
 	@RequestMapping(value = "contentTag")

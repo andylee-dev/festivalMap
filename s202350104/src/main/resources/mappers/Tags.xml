@@ -102,7 +102,7 @@
 	
 	<select id="nhBoardTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM BoardTags bt, Tags t
+		FROM  BoardTags bt, Tags t
 		WHERE bt.tag_id = t.id
 		AND   bt.board_id = #{boardId}
 		ORDER BY t.name

@@ -145,6 +145,12 @@ public class TagsServiceImpl implements TagsService {
 		
 	}
 	
+	@Override
+	public int updateBoardTags(int boardId, int[] finalTags) {
+		int result = td.updateBoardTags(boardId, finalTags);
+		return result;
+	}
+	
 	/*
 	 * 통합게시물 생성 Logic >> boardTagsInsert
 	 * by. 엄민용

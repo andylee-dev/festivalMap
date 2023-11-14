@@ -24,6 +24,7 @@ public interface TagsDao {
 	void boardTagsInsert(Tags tags);
 	List<Tags> boardTagDetail(int id);
 	int boardTagDelete(int id);
+	int updateBoardTags(int boardId, int[] finalTags);
 
 
 

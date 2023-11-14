@@ -197,6 +197,69 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 	
+	@Override
+	public int updateBoardTags(int boardId, int[] finalTags) {
+		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			List<Tags> listMyTags = session.selectList("nhBoardTagOne", boardId);
+			// DB에 저장된 원래 tag list와 finalTags를 비교하여 finalTags에 존재하지 않는 tag는 delete
+			if(listMyTags != null) {
+				boolean isHere = false;
+				for(Tags tag : listMyTags) {
+					for(int i = 0; i < finalTags.length; i++) {
+						if(tag.getId() == finalTags[i]) {
+							isHere = true;
+						}
+					}
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setBoard_id(boardId);
+						newTag.setTag_id(tag.getId());
+						result = session.delete("nhBoardTagsDelete", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+				}
+			}
+			
+			// DB에 저장된 원래 tag list와 finalTags를 비교하여 finalTags에만 존재하는 tag는 insert
+			if(finalTags != null) {
+				boolean isHere = false;
+				for(int tagId : finalTags) {
+					for(int i = 0; i < listMyTags.size(); i++) {
+						if(tagId == listMyTags.get(i).getTag_id()) {
+							isHere = true; // finalTags에 기존의 tag가 존재하면  true
+						}
+					}
+					if(!isHere) { // finalTags에만 존재하는 tag
+						Tags newTag = new Tags();
+						newTag.setBoard_id(boardId);
+						newTag.setTag_id(tagId);
+						result = session.insert("myinsertBoardTags", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+				}
+			}
+			
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("TagsDaoImpl updateBoardTags updateBoardTags => " + e.getMessage());
+			result = -1;
+		}	
+		return result;
+	}
+	
+	/*
+	 * if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setBoard_id(boardId);
+						newTag.setTag_id(tag.getId());
+						result = session.insert("myinsertBoardTags", tag);
+					}
+	 */
+	
 	/*
 	 * 통합게시물 생성 Logic 
 	 * by. 엄민용
