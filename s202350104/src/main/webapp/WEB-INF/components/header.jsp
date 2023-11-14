@@ -14,5 +14,6 @@
   integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
   crossorigin="anonymous"
 ></script>
-<link href="css/global.css" rel="stylesheet" type="text/css">
-<link href="css/app.css" rel="stylesheet" type="text/css">
+<link href="/css/global.css" rel="stylesheet" type="text/css">
+<link href="/css/app.css" rel="stylesheet" type="text/css">
+<script src="/js/pagenation.js"></script>
