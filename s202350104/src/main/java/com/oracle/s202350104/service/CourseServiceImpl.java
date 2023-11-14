@@ -123,4 +123,11 @@ public class CourseServiceImpl implements CourseService {
 		return deleteCourseContent;
 	}
 
+	@Override
+	public int deleteToContent(List<CourseContent> deleteContent) {
+		int deleteToContent = cd.deleteToContent(deleteContent);
+		
+		return deleteToContent;
+	}
+
 }

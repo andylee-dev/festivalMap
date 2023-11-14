@@ -109,22 +109,50 @@
 		</delete>
 		
 		<update id="noCourseUpdate" parameterType="Course">
-			UPDATE COURSES SET  course_title=#{course_title}
+			UPDATE COURSES SET  distance=#{distance}, course_title=#{course_title},
+								time=#{time}, course_info=#{course_info}
 			WHERE id = #{id}
 			
 			<!-- UPDATE COURSES SET  big_code=#{big_code}, small_code=#{small_code},
-								distance=#{distance}, course_info#{course_info}, time=#{time},
-								schedule=#{schedule}, course_title=#{course_title}
-			WHERE id = #{course_id} -->
+								distance=#{distance}, course_info=#{course_info}, time=#{time},
+								course_title=#{course_title}
+			WHERE id = #{id} -->
 		</update>
 		
-		<!-- <update id="noCourseContentList" parameterType="CourseContent">
-			INSERT ALL
-		    <foreach collection="list" item="CourseContent">
-		        INTO CourseContents (content_id, course_id, order_num)
-		        VALUES (#{CourseContent.content_id}, #{CourseContent.course_id}, #{CourseContent.order_num})
-		    </foreach>
-		    SELECT * FROM dual
-		</update> -->
+		<!-- <delete id="noDeleteToContent" parameterType="java.util.List">
+			<foreach collection="list" item="CourseContent" separator=";">
+				DELETE FROM courseContents
+				WHERE course_id = #{CourseContent.course_id}
+				AND content_id = #{CourseContent.content_id}
+			</foreach>
+		</delete> -->
+		
+		<!-- <delete id="noDeleteToContent" parameterType="java.util.List">
+	        DELETE FROM courseContents
+	        <where>
+	        	<foreach collection="list" item="CourseContent">
+	        		(course_id = #{CourseContent.course_id}
+					AND content_id = #{CourseContent.content_id})
+	        	</foreach>
+	        </where>
+	    </delete> -->
+	    
+	   <!--  <delete id="noDeleteToContent" parameterType="java.util.List">
+	        	DELETE courseContents WHERE course_id = #{CourseContent.course_id}
+	        	AND content_id IN (
+	        <foreach collection="list" item="CourseContent" separator=",">
+	       	 	#{CourseContent.content_id}
+	        </foreach>
+	        )
+	    </delete> -->
+	    
+	    <delete id="noDeleteToContent" parameterType="java.util.Map">
+	        	DELETE courseContents WHERE course_id = #{course_id}
+	        	AND content_id IN (
+	        <foreach collection="list" item="list" separator=",">
+	       	 	#{list.content_id}
+	        </foreach>
+	        )
+	    </delete>
 		
 	</mapper>

@@ -100,42 +100,69 @@ public class AdminCourseController {
 	}
 
 	@RequestMapping(value = "courseUpdate", method = RequestMethod.POST)
-	public String courseUpdate(@RequestParam(name = "id") int courseId, Course course, @RequestParam List<String> contents, Model model) {
+	public String courseUpdate(@RequestParam(name = "id") int courseId,
+								Course course,
+			/* @RequestParam List<String> contents, */
+								@RequestParam(name = "delList", required = false) List<String> delList,
+							    @RequestParam(name = "addList", required = false) List<String> addList,
+								Model model) {
 		log.info("AdminCourseController courseUpdate start...");
 		log.info("AdminCourseController courseUpdate course ->" + course);
 		
+		
 		try {
-
 			log.info("courseID:{}", course.getId());
-			log.info("contents Id List:{}", contents.toString());
-			
 			int course_id = cs.courseUpdate(course);
 			log.info("AdminCourseController courseUpdate course_id ->" + course_id);
-
-			List<CourseContent> courseContent = new ArrayList<CourseContent>();
 			
-			for (int i = 0; i < contents.size(); i++) {
-				CourseContent cc = new CourseContent();
-				
-				cc.setContent_id(Integer.parseInt(contents.get(i)));
-				log.info("setContent_id newCourseId ->" + (contents.get(i)));
-				cc.setCourse_id(course_id);
-				log.info("setCourse_id newCourseId ->" + course_id);
-				cc.setOrder_num(i + 1);
-				log.info("setCourse_id newCourseId ->" + i + 1);
-				courseContent.add(cc);
+			log.info("contentsToAdd : {}", addList);
+			log.info("contentsToDelete : {}", delList);
+
+			
+			log.info("AdminCourseController courseUpdate addToContent start...");
+			List<CourseContent> addToContent = new ArrayList<CourseContent>();
+			
+			if(addList != null) { 
+				for (int i = 0; i < addList.size(); i++) {
+					CourseContent cc = new CourseContent();
+					
+					cc.setContent_id(Integer.parseInt(addList.get(i)));
+					log.info("setContent_id newCourseId ->" + (addList.get(i)));
+					cc.setCourse_id(course.getId());
+					log.info("setCourse_id newCourseId ->" + course.getId());
+					cc.setOrder_num(i + 1);
+					log.info("setOrder_num newCourseId ->" + (i + 1));
+					addToContent.add(cc);
+				}
+			log.info(addList.toString());
+			int courseContentInsert = cs.courseContentInsert(addToContent);
+			log.info("AdminCourseController courseContentInsert ->" + courseContentInsert);
 			}
 			
-			log.info(contents.toString()); // Map<int,List()>
 			
-			int courseContentInsert = cs.courseContentInsert(courseContent); // list 3
-			// int 1
-			log.info("AdminCourseController courseInsert courseInsert ->" + courseContentInsert);
+			log.info("AdminCourseController courseUpdate deleteContent start...");
+			List<CourseContent> deleteContent = new ArrayList<CourseContent>();
+			
+			if(delList != null) {
+				for (int i = 0; i < delList.size(); i++) {
+					CourseContent dd = new CourseContent();
+					
+					dd.setContent_id(Integer.parseInt(delList.get(i)));
+					log.info("setContent_id deleteContentId ->" + (delList.get(i)));
+					dd.setCourse_id(course.getId());
+					log.info("setCourse_id deleteCourseId ->" + course.getId());
+					deleteContent.add(dd);
+				}
+			log.info("AdminCourseController deleteToContent start...");
+			int deleteToContent = cs.deleteToContent(deleteContent);
+			log.info("AdminCourseController delToContent ->" + deleteToContent);
+			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.error("AdminCourseController courseUpdate e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("AdminCourseController courseUpdate end...");
 		}
-
 		return "redirect:/admin/course/list";
 	}
 
@@ -172,9 +199,8 @@ public class AdminCourseController {
 				courseContentList.add(cc);
 			}
 			
-			log.info(contents.toString()); // Map<int,List()>
-			int courseContentInsert = cs.courseContentInsert(courseContentList); // list 3
-			// int 1
+			log.info(contents.toString());
+			int courseContentInsert = cs.courseContentInsert(courseContentList);
 			log.info("AdminCourseController courseInsert courseInsert ->" + courseContentInsert);
 
 		} catch (Exception e) {

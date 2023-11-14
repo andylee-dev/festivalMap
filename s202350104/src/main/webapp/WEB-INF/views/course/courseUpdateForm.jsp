@@ -165,19 +165,31 @@
 	        	delList.push(oldList[i]);
 	        }
  	    }
- 	   const addList = difference(finalList,oldList);
+ 	    const addList = difference(finalList,oldList);
  	    
- 	    console.log("delList",delList);
+ 	    console.log("delList ->",delList);
+ 	    console.log("addList ->",addList);
 
- 	    console.log("addList",addList);
- 	    for (var i = 0; i < newList.length; i++) {
+ 	    // form input에 hidden 요소를 넣는다. 
+ 	    for (var i = 0; i < addList.length; i++) {
 	    	const form =document.getElementById("myForm");
 	    	const hiddenInput = document.createElement("input");
 	    	hiddenInput.type = "hidden";
-	    	hiddenInput.name = "contents";
-	    	hiddenInput.value = newList[i];
+	    	hiddenInput.name = "addList";
+	    	hiddenInput.value = addList[i];
 	    	form.appendChild(hiddenInput);
 	    }			
+
+ 		// form input에 hidden 요소를 넣는다.
+ 	    for (var i = 0; i < delList.length; i++) {
+	    	const form =document.getElementById("myForm");
+	    	const hiddenInput = document.createElement("input");
+	    	hiddenInput.type = "hidden";
+	    	hiddenInput.name = "delList";
+	    	hiddenInput.value = delList[i];
+	    	form.appendChild(hiddenInput);
+	    }			
+ 	    
  	    
  	   alert('submitHandler')
 	};
@@ -223,7 +235,7 @@
 	} */
 	
 	
-	function deleteCourseContent(content_id, course_id) {
+	/* function deleteCourseContent(content_id, course_id) {
 		alert(content_id)
 		alert(course_id)
  	    // ContentCourse 객체를 생성하고 필드에 값을 할당
@@ -250,7 +262,7 @@
  				location.reload();
 			}
  	    });
- 	}
+ 	} */
 	
 </script>
 

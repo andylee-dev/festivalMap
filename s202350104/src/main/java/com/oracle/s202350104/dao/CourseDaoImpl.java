@@ -1,6 +1,8 @@
 package com.oracle.s202350104.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -85,6 +87,7 @@ public class CourseDaoImpl implements CourseDao {
 	public int courseContentInsert(List<CourseContent> courseContentList) {
 		int courseContentInsert = 0;
 		try {
+			log.info("CourseDaoImpl courseContentInsert courseContentList ->" + courseContentList);
 			courseContentInsert = session.insert("noCourseContentInsert", courseContentList);
 			log.info("CourseDaoImpl courseInsert courseContentInsert ->" + courseContentInsert);
 			
@@ -192,6 +195,7 @@ public class CourseDaoImpl implements CourseDao {
 	public int deleteCourseContent(CourseContent courseContent) {
 		log.info("CourseDaoImpl deleteCourseContent courseContent ->" + courseContent);
 		int deleteCourseContent = 0;
+
 		try {
 			deleteCourseContent = session.delete("noDeleteCourseContent", courseContent);
 			log.info("CourseDaoImpl deleteCourseContent ->" + deleteCourseContent);
@@ -201,6 +205,25 @@ public class CourseDaoImpl implements CourseDao {
 		}
 		
 		return deleteCourseContent;
+	}
+
+
+	@Override
+	public int deleteToContent(List<CourseContent> deleteContent) {
+		log.info("CourseDaoImpl deleteToContent delList ->" + deleteContent);
+		int deleteToContent = 0;
+		try {
+			Map<String, Object> params = new HashMap<>();
+			params.put("course_id", deleteContent.get(0).getCourse_id());
+			params.put("list", deleteContent);
+			
+			deleteToContent = session.delete("noDeleteToContent", params);
+			log.info("CourseDaoImpl deleteToContent deleteToContent ->" + deleteToContent);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl deleteToContent e.getMessage() ->" + e.getMessage());
+		}
+		return deleteToContent;
 	}
 
 	
