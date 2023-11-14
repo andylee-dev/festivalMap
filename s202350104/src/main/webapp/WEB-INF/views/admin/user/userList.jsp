@@ -152,12 +152,16 @@
 				        <!-- 검색어 -->
 			            <div class="col-12 my-4 d-flex align-items-center">
 			                <label for="searchType" class="form-label col-2  mx-2">검색어</label>
-			                <select id="searchType" name="searchType" class="col-form-select col-4  mx-2">
-			                    <option selected value="name">사용자 이름</option>
-			                    <option value="email">이메일</option>
-			                    <option value="nickname">닉네임</option>
-			                </select>
-			                <input type="text" name="keyword" class="form-control col-5  mx-2" value="${keyword}">
+			                <div class="col-4">
+				                <select id="searchType" name="searchType" class="form-select">
+				                    <option selected value="name">사용자 이름</option>
+				                    <option value="email">이메일</option>
+				                    <option value="nickname">닉네임</option>
+				                </select>
+			                </div>
+			                <div class="col-5 mx-2">
+				                <input type="text" name="keyword" class="form-control" value="${keyword}">
+			                </div>
 			            </div>
 				
 				        <!-- 기간 -->
