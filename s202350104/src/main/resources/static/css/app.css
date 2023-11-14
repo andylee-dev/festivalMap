@@ -18,3 +18,48 @@
 main {
 	padding-top:90px; 
 }
+ body {
+    margin: 0;
+  	padding: 0;
+  	font-family: 'Noto Sans', sans-serif;
+    }
+
+.app-card {
+    width: 360px;
+    height: 474px;
+    background: white;
+    border-radius: 19px;
+    }
+
+.app-card-img-top {
+    border-radius: 10px 10px 0 0;
+    width: 360px;
+    height: 284px;
+    margin-top: -3px;
+    margin-left: -1px;
+    }
+
+.app-card-text {
+	overflow: hidden;
+	max-height: calc(7 * 1.25em);
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	margin-top: 250px;
+	font-weight: bold;
+	}    
+
+.app-tag-container {
+    width: 100px;
+    height: 30px;
+    position: relative;
+    }
+
+.app-tag {
+    width: 100px;
+    height: 30px;
+    color: black;
+    background: white;
+    border-radius: 14px;
+    border: 2px black solid;
+    }

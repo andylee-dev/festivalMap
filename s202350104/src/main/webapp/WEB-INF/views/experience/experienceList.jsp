@@ -10,15 +10,6 @@
 <meta charset="UTF-8">
 <title>체험정보2211</title>
 
-<style type="text/css">
-	.card-text {
-				overflow: hidden;
-				text-overflow: ellipsis; /* 말줄임표 */
-				display: -webkit-box;
-				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-				-webkit-box-orient: vertical;
-	}
-</style>
 </head>
 <body>
 	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -59,15 +50,22 @@
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 	 				<c:forEach var="experience" items="${listExperience}">
 	 					<div class="col">
-						<div class="card" style="width: 20rem;">
-  							<img src="${experience.img1}" class="card-img-top" alt="${experience.title}이미지" style="height: 190px;">
-  							<div class="card-body">
-    							<p class="card-text" style="height: 240px;">
-			    					체험명 : ${experience.title} <br>
-			    					체험정보 :${experience.content}
+						<div class="card app-card">
+								<div class="app-tag-container" style="position: relative;">
+              					<div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
+                				<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
+             					</div>
+             				<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}">
+  							<img src="${experience.img1}" class="app-card-img-top" alt="${experience.title}이미지"></a>	
+  							</div>
+  							<div class="card-body app-card-body">
+    							<p class="app-card-text">
+			    					체험명 : ${experience.title}<br>
+			    					<span style="color: #FF4379;"> 체험기간 : 2023-01-01~2023-12-31 </span><br>
+			    					<span style="font-weight: normal;"> 체험정보 :${experience.content}</span>
     							</p>
-    							<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
-			 				 </div>	
+    							<%-- <a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a> --%>
+			 				 </div>
 						</div>
 					 </div>	
 				</c:forEach>
@@ -75,8 +73,7 @@
 			</div>
 		</div>				
 		<div align="center">
-					
-						<c:if test="${page.startPage > page.pageBlock}">
+					<c:if test="${page.startPage > page.pageBlock}">
 							<c:choose>
 								<c:when test="${path ==0}">
 									<a href="experience?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
