@@ -30,6 +30,10 @@
 </script>
 
 <script type="text/javascript">
+	let oldList = [];
+	let newList = [];
+
+	// 3. 컨텐츠 등록 창을 열었을 때.
 	function showPopUp() {
 		 console.log("showPopUp 함수 호출됨");
 		 console.log("course_id value:", ${course.course_id});
@@ -47,83 +51,91 @@
 		
 		//연결하고싶은url
 		const url = 'contentListAll?course_id=${course.course_id}';
-		
-		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+	 	
+		 //등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "contentList popup", windowStatus);
 	}
 	
+	//4. popup창에서 받은 데이터 리스트.
 	function receiveContentList(contentList) {
+		console.log("before",newList,oldList)
+		
 		const contentsTableEl = document.getElementById("contentsTable");
 		
 		for (var i = 0; i < contentList.length; i++) {
-			const tableEl = document.createElement("tr");
+			// newList에 contentList[i].id가 있다면 스킵.
+	        if (newList.includes(contentList[i].id)) continue;
+
+			// newList에 contentList[i].id를 넣어준다.
+			newList.push(contentList[i].id);
+			console.log("after",newList,oldList)
+
+			// 테이블의 row 하나를 생성한다.
+			const rowEl = makeTableRow(contentList[i]);
 			
-			const idEl = document.createElement("td");
-			idEl.className = "td-id";
-			idEl.textContent = contentList[i].id;
-			tableEl.appendChild(idEl);
-			
-			const imgEl = document.createElement("td");
-			imgEl.className = "td-img";
-			
-			// 이미지 URL을 사용하여 img 요소를 생성하고 src 속성을 설정합니다.
-	        const imgTag = document.createElement("img");
-	        imgTag.src = contentList[i].img;
-	        // 이미지의 높이를 150px로 설정합니다.
-	        imgTag.style.height = "150px";
-	        imgEl.appendChild(imgTag);
-	        tableEl.appendChild(imgEl);
-			
-			const titleEl = document.createElement("td");
-			titleEl.className = "td-title";
-			titleEl.textContent = contentList[i].title;
-			tableEl.appendChild(titleEl);
-			
-			const addressEl = document.createElement("td");
-			addressEl.className = "td-address";
-			addressEl.textContent = contentList[i].address;
-			tableEl.appendChild(addressEl);
-			
-			const homepageEl = document.createElement("td");
-			homepageEl.className = "td-homepage";
-			homepageEl.textContent = contentList[i].homepage;
-			tableEl.appendChild(homepageEl);
-			
-			const phoneEl = document.createElement("td");
-			phoneEl.className = "td-phone";
-			phoneEl.textContent = contentList[i].phone;
-			tableEl.appendChild(phoneEl);
-			
-			// 새로운 td 요소를 만들어 버튼을 추가합니다.
-	        const deleteButtonTd = document.createElement("td");
-	        const deleteButton = document.createElement("button");
-	        deleteButton.textContent = `삭제${contentList[i].id}`;
-	        deleteButton.onclick = function() {
-	            deleteCourseContent(contentList[i].content_id, contentList[i].course_id);
-	            event.preventDefault();
-	        };
-	        deleteButton.className = "btn btn-primary";
-	        deleteButtonTd.appendChild(deleteButton);
-	        tableEl.appendChild(deleteButtonTd);
-			
-			contentsTableEl.appendChild(tableEl);
+			// contentsTable에 row한줄 추가.
+			contentsTableEl.appendChild(rowEl);
 		}
-		
-
-	    // 테이블을 HTML 요소에 삽입
-	    /* document.getElementById("contentTable").innerHTML = table; */
-
-	    for (var i = 0; i < contentList.length; i++) {
-	    	const form =document.getElementById("myForm");
-	    	const hiddenInput = document.createElement("input");
-	    	hiddenInput.type = "hidden";
-	    	hiddenInput.name = "contents";
-	    	hiddenInput.value = contentList[i].id;
-	    	form.appendChild(hiddenInput);
-	    }
-	    
 	}
-	function checkContent() {
+	
+	// 5. 테이블의 row하나 생성.
+	function makeTableRow(content){
+        const tableEl = document.createElement("tr");
+		
+		const idEl = document.createElement("td");
+		idEl.className = "td-id";
+		idEl.textContent = content.id;
+		tableEl.appendChild(idEl);
+		
+		const imgEl = document.createElement("td");
+		imgEl.className = "td-img";
+		
+		// 이미지 URL을 사용하여 img 요소를 생성하고 src 속성을 설정합니다.
+        const imgTag = document.createElement("img");
+        imgTag.src = content.img;
+        // 이미지의 높이를 150px로 설정합니다.
+        imgTag.style.height = "150px";
+        imgEl.appendChild(imgTag);
+        tableEl.appendChild(imgEl);
+		
+		const titleEl = document.createElement("td");
+		titleEl.className = "td-title";
+		titleEl.textContent = content.title;
+		tableEl.appendChild(titleEl);
+		
+		const addressEl = document.createElement("td");
+		addressEl.className = "td-address";
+		addressEl.textContent = content.address;
+		tableEl.appendChild(addressEl);
+		
+		const homepageEl = document.createElement("td");
+		homepageEl.className = "td-homepage";
+		homepageEl.textContent = content.homepage;
+		tableEl.appendChild(homepageEl);
+		
+		const phoneEl = document.createElement("td");
+		phoneEl.className = "td-phone";
+		phoneEl.textContent = content.phone;
+		tableEl.appendChild(phoneEl);
+		
+		// 새로운 td 요소를 만들어 버튼을 추가합니다.
+        const deleteButtonTd = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = `삭제${content.id}`;
+        deleteButton.onclick = function() {
+        	deleteContent(event);
+            event.preventDefault();
+        };
+        deleteButton.className = "btn btn-primary";
+        deleteButtonTd.appendChild(deleteButton);
+        tableEl.appendChild(deleteButtonTd);		
+
+        return tableEl;
+	}
+	
+	
+	
+	function getCurrentContentList() {
 	
 		// ID를 저장할 배열을 만듭니다.
 		var idList = [];
@@ -143,19 +155,65 @@
 		    var id = cells[0].textContent;
 		    idList.push(id);
 		}
-		// idList 배열을 콘솔에 출력하여 확인합니다.
-		console.log("ID List:", idList);
-	    for (var i = 0; i < idList.length; i++) {
+
+ 		return idList;
+	}
+	
+
+	
+	// 최종적으로 submit 눌렀을때, delList, addList 요소 추가.
+	function submitHandler(){
+		const finalList = getCurrentContentList();	
+		let delList = [];
+ 	    for (var i = 0; i < oldList.length; i++) {
+	        if (!finalList.includes(oldList[i])){
+	        	delList.push(oldList[i]);
+	        }
+ 	    }
+ 	    console.log("delList",delList);
+ 	    console.log("newList",newList);
+ 	    for (var i = 0; i < newList.length; i++) {
 	    	const form =document.getElementById("myForm");
 	    	const hiddenInput = document.createElement("input");
 	    	hiddenInput.type = "hidden";
 	    	hiddenInput.name = "contents";
-	    	hiddenInput.value = idList[i];
+	    	hiddenInput.value = newList[i];
 	    	form.appendChild(hiddenInput);
+	    }			
+ 	    
+ 	   alert('submitHandler')
+	};
+
+	function removeValue(list, value) {
+	    let index = list.indexOf(value);
+	    if (index !== -1) {
+	        list.splice(index, 1);
 	    }
-		alert("idList")
-		
 	}
+	// 화면table에서 삭제버튼 누른 요소를 제거.
+	function deleteContent(event){
+	    // 이벤트가 발생한 요소의 부모 요소인 td를 찾고,
+	    // td의 부모 요소인 tr를 찾습니다.
+	    console.log("deleteContent before",newList);
+	    let trElement = event.target.parentElement.parentElement;
+	    // tr 요소의 첫 번째 자식 요소인 td를 찾고, 그 안의 텍스트를 콘솔에 출력합니다.
+	    const elId = trElement.children[0].textContent;
+		if (newList.includes(elId)){
+			removeValue(newList, elId);
+		}
+		console.log("deleteContent after",newList);
+	    
+	    event.target.parentElement.parentElement.remove();
+	}
+	
+	// 1. 처음에 html이 다 만들어 지고 난 이후에 실행.
+	document.addEventListener('DOMContentLoaded', function() {
+		// 2. 기존에 있던 content리스트를 oldList에 담는다.
+		oldList = getCurrentContentList();
+		newList.push(...oldList.slice());
+		console.log(oldList, newList);
+	});
+	
 	
 </script>
 <script type="text/javascript">
@@ -243,7 +301,7 @@
 									<td>${courseContentList.address }</td>
 									<td>${courseContentList.homepage }</td>
 									<td>${courseContentList.phone }</td>
-									<td><button onclick="deleteCourseContent(${courseContentList.content_id}, ${courseContentList.course_id}); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
+									<td><button onclick="deleteContent(event); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
 								</tr>
 							</c:forEach>
 							
@@ -264,7 +322,7 @@
 				<textarea class="form-control" id="course_info" name="course_info" rows="5">${course.course_info }</textarea>
 			</div>
 			<div class="text-center">
-				<button type="submit" class="btn btn-primary" onclick="checkContent()">확인</button>
+				<button type="submit" class="btn btn-primary" onclick="submitHandler()">확인</button>
 				<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
 			</div>
 		</form>
