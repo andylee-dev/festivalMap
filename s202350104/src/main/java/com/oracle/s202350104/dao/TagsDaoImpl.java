@@ -203,11 +203,11 @@ public class TagsDaoImpl implements TagsDao {
 		TransactionStatus txStatus = 
 				transactionManager.getTransaction(new DefaultTransactionDefinition());
 		try {
-			List<Tags> listMyTags = session.selectList("nhBoardTagOne", boardId);
-			// DB에 저장된 원래 tag list와 finalTags를 비교하여 finalTags에 존재하지 않는 tag는 delete
-			if(listMyTags != null) {
+			List<Tags> oldTags = session.selectList("nhBoardTagOne", boardId);
+			if(oldTags != null && finalTags != null) {
 				boolean isHere = false;
-				for(Tags tag : listMyTags) {
+				// oldTags에는 존재하지만 finalTags에는 존재하지 않는 tag를 delete
+				for(Tags tag : oldTags) {
 					for(int i = 0; i < finalTags.length; i++) {
 						if(tag.getId() == finalTags[i]) {
 							isHere = true;
@@ -220,6 +220,84 @@ public class TagsDaoImpl implements TagsDao {
 						result = session.delete("nhBoardTagsDelete", newTag);
 						log.info(newTag.getTag_id()+"result=>"+result);
 					}
+					isHere = false;
+				}
+				// finalTags에만 존재하는 tag를 insert
+				for(int tagId : finalTags) {
+					for(int i = 0; i < oldTags.size(); i++) {
+						if(tagId == oldTags.get(i).getTag_id()) {
+							isHere = true;
+						}
+					}
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setBoard_id(boardId);
+						newTag.setTag_id(tagId);
+						result = session.delete("myinsertBoardTags", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				} 
+				
+			} else if(oldTags != null && finalTags == null) {
+				for(Tags tag : oldTags) {
+					Tags newTag = new Tags();
+					newTag.setBoard_id(boardId);
+					newTag.setTag_id(tag.getId());
+					result = session.delete("nhBoardTagsDelete", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
+				}
+			} else if(oldTags == null && finalTags != null) {
+				for(int i = 0; i < finalTags.length; i++) {
+					Tags newTag = new Tags();
+					newTag.setBoard_id(boardId);
+					newTag.setTag_id(finalTags[i]);
+					result = session.delete("myinsertBoardTags", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
+				}
+			} else result = 0;
+			
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			transactionManager.rollback(txStatus);
+			log.info("TagsDaoImpl updateBoardTags => " + e.getMessage());
+			result = -1;
+		}	
+		return result;
+	}
+	
+
+	@Override
+	public int updateContentTags(int contentId, int[] finalTags) {
+		int result = 0;
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			List<Tags> listMyTags = session.selectList("nhContentTagOne", contentId);
+			// DB에 저장된 원래 tag list와 finalTags를 비교하여 finalTags에 존재하지 않는 tag는 delete
+			if(listMyTags != null) {
+				boolean isHere = false;
+				for(Tags tag : listMyTags) {
+					for(int i = 0; i < finalTags.length; i++) {
+						if(tag.getId() == finalTags[i]) {
+							isHere = true;
+						}
+					}
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setContent_id(contentId);
+						newTag.setTag_id(tag.getId());
+						result = session.delete("nhContentTagsDelete", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+				}
+			} else {
+				for(int i = 0; i < finalTags.length; i++) {
+					Tags newTag = new Tags();
+					newTag.setContent_id(contentId);
+					newTag.setTag_id(finalTags[i]);
+					result = session.delete("nhContentTagsDelete", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
 				}
 			}
 			
@@ -234,9 +312,9 @@ public class TagsDaoImpl implements TagsDao {
 					}
 					if(!isHere) { // finalTags에만 존재하는 tag
 						Tags newTag = new Tags();
-						newTag.setBoard_id(boardId);
+						newTag.setContent_id(contentId);
 						newTag.setTag_id(tagId);
-						result = session.insert("myinsertBoardTags", newTag);
+						result = session.insert("nhContentTagsInsert", newTag);
 						log.info(newTag.getTag_id()+"result=>"+result);
 					}
 				}
@@ -245,20 +323,11 @@ public class TagsDaoImpl implements TagsDao {
 			transactionManager.commit(txStatus);
 		} catch (Exception e) {
 			transactionManager.rollback(txStatus);
-			log.info("TagsDaoImpl updateBoardTags updateBoardTags => " + e.getMessage());
+			log.info("TagsDaoImpl updateContentTags => " + e.getMessage());
 			result = -1;
 		}	
 		return result;
 	}
-	
-	/*
-	 * if(!isHere) {
-						Tags newTag = new Tags();
-						newTag.setBoard_id(boardId);
-						newTag.setTag_id(tag.getId());
-						result = session.insert("myinsertBoardTags", tag);
-					}
-	 */
 	
 	/*
 	 * 통합게시물 생성 Logic 
@@ -285,5 +354,6 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return deleteResult;
 	}
+
 
 }

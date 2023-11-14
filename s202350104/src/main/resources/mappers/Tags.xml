@@ -151,7 +151,7 @@
 	
 	<delete id="nhContentTagsDelete" parameterType="Tags">
 		DELETE ContentTags 
-		WHERE tag_id = #{id}
+		WHERE tag_id = #{tag_id}
 		<if test="content_id != null and content_id != 0">
 			AND content_id = #{content_id}
 		</if>
@@ -159,7 +159,7 @@
 	
 	<delete id="nhBoardTagsDelete" parameterType="Tags">
 		DELETE BoardTags 
-		WHERE tag_id = #{id}
+		WHERE tag_id = #{tag_id}
 		<if test="board_id != null and board_id != 0">
 			AND board_id = #{board_id}
 		</if>

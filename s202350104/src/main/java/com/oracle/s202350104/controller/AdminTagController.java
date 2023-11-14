@@ -308,7 +308,7 @@ public class AdminTagController {
 	
 	@ResponseBody
 	@RequestMapping(value = "boardTagsUpdate")
-	public String boardTagsUpdate(@RequestParam(value = "tagId[]") int[] finalTags, int boardId, Model model) {
+	public String boardTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int boardId, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		String str = "";
 		try {
@@ -402,15 +402,19 @@ public class AdminTagController {
 	
 	@ResponseBody
 	@RequestMapping(value = "contentTagsUpdate")
-	public String contentTagsUpdate(String[] listTags, Model model) {
+	public String contentTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int contentId, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		String str = "";
 		try {
 			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "start");
-			/*
-			 * int result = ts.contentTagsUpdate(listTags); if(result == 1) { str =
-			 * "태그 수정이 성공적으로 완료되었습니다."; } else { str = "태그 수정에 실패하였습니다."; }
-			 */
+			int result = ts.updateContentTags(contentId, finalTags); 
+			if(result == 1) { 
+				str = "태그 수정이 성공적으로 완료되었습니다."; 
+			} else { 
+				str = "태그 수정에 실패하였습니다."; 
+			}
+			log.info("finalTags"+finalTags);
+			log.info("contentId"+contentId);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "contentTagsUpdate", e.getMessage());
 		} finally {
@@ -435,21 +439,6 @@ public class AdminTagController {
 			log.info("[{}]{}:{}",transactionId, "getContentTags", "end");
 		}	
 		return listTags;
-	}
-	
-	@RequestMapping(value = "insertContentTagForm")
-	public String insertContentTagForm(Model model) {
-		UUID transactionId = UUID.randomUUID();
-		try {
-			log.info("[{}]{}:{}",transactionId, "insertContentTagForm", "start");
-			List<CommonCodes> listCodes = ccs.listCommonCode();
-			model.addAttribute("listCodes", listCodes);
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "insertContentTagForm", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "insertContentTagForm", "end");
-		}	
-		return "admin/tag/insertContentTagForm";
 	}
 	
 }
