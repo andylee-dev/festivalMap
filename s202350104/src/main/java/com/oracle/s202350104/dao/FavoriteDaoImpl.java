@@ -74,4 +74,49 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		return listSearchFavorite;
 	}
 
+	@Override
+	public List<Favorite> getMyLikeList(Favorite favorite) {
+		List<Favorite> getMyLikeList = null;
+		
+		try {
+			log.info("FavoriteDaoImpl getMyLikeList Start");
+			getMyLikeList = session.selectList("joGetMyLikeList", favorite);
+			log.info("FavoriteDaoImpl getMyLikeList.size() -> " + getMyLikeList.size());
+		} catch (Exception e) {
+			log.info("FavoriteDaoImpl getMyLikeList Exception ->" + e.getMessage());
+		}
+		
+		return getMyLikeList;
+	}
+
+	@Override
+	public int totalMyLikeList() {
+		int totalMyLikeList = 0;
+		
+		try {
+			log.info("FavoriteDaoImpl totalMyLikeList Start");
+			totalMyLikeList = session.selectOne("joTotalMyLikeList");
+			log.info("FavoriteDaoImpl totalMyLikeList ->" + totalMyLikeList);
+		
+		} catch (Exception e) {
+			log.error("FavoriteDaoImpl totalMyLikeList Exception ->" + e.getMessage());
+		}
+		
+		return totalMyLikeList;
+	}
+
+	@Override
+	public int deleteMyLikeList(int id) {
+		int result = 0;
+		
+		try {
+			log.info("FavoriteDaoImpl deleteConfirm Start");
+			result = session.delete("joDeleteMyLike", id);
+			log.info("FavoriteDaoImpl deleteConfirm -> {}", result);
+		} catch (Exception e) {
+			log.error("FavoriteDaoImpl deleteConfirm Exception ->" + e.getMessage());
+		}
+		return result;
+	}
+
 }

@@ -57,6 +57,7 @@ public class RestaurantController {
 			model.addAttribute("listRestaurant", listRestaurant);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
+			model.addAttribute("currentPage", currentPage);
 			
 			/*
 			 * Banner Logic 구간 

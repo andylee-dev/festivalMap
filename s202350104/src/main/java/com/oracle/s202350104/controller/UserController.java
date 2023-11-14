@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpEntity;
@@ -32,6 +33,7 @@ import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.model.Favorite;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
@@ -39,6 +41,7 @@ import com.oracle.s202350104.service.QnaListService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
 import com.oracle.s202350104.service.user.oAuthService;
+import com.oracle.s202350104.service.FavoriteService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +57,7 @@ public class UserController {
 	private final UserService us;
 	private final CommonCodeService cs;
 	private final TagsService ts;
+	private final FavoriteService fs;
 	
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -79,8 +83,56 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "myPage/myLike")
-	public String myLike() {
+	public String myLike(String currentPage, Model model, Favorite favorite) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "myLike", "Start");
+			int totalMyLikeList = fs.totalMyLikeList();
+			
+			Paging page = new Paging(totalMyLikeList, currentPage);
+			favorite.setStart(page.getStart());
+			favorite.setEnd(page.getEnd());        
+			
+			log.info("page.getStart -> {}", page.getStart());
+			List<Favorite> myLikeList = fs.getMyLikeList(favorite);
+						
+			/*
+			 * int userId = us.getLoggedInId(); Optional<Users> user =
+			 * us.getUserById(userId);
+			 */
+						
+			model.addAttribute("totalMyLikeList", totalMyLikeList);
+			model.addAttribute("page", page);
+			model.addAttribute("myLikeList", myLikeList);
+			// model.addAttribute("user",user);
+			model.addAttribute("currentPage", currentPage);
+			
+		} catch (Exception e) {
+			log.error("UserController myLike Exception -> " + e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "myLike", "End");
+		}
 		return "user/myPage/myLike";
+	}
+	
+	
+	@RequestMapping(value = "myLikeDelete")
+	public String deleteCofirm(int id) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "UserController deleteConfirm", "Start");
+			int result = fs.deleteMyLikeList(id);
+						
+		} catch (Exception e) {
+			log.error("UserController myLike deleteConfirm Exception ->" + e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "UserController deleteConfirm", "End");
+		}
+			
+		return "forward:user/myPage/myLike";
 	}
 	
 	@RequestMapping(value = "myPage/myTag")

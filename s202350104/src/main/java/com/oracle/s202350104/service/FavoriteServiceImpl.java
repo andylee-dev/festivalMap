@@ -55,4 +55,35 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return listSearchFavorite;
 	}
 
+	@Override
+	public List<Favorite> getMyLikeList(Favorite favorite) {
+		List<Favorite> getMyLikeList = fad.getMyLikeList(favorite);
+		
+		if(getMyLikeList == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "내 찜 목록 리스트가 존재하지 않습니다.");
+		}
+		
+		return getMyLikeList;
+	}
+
+	@Override
+	public int totalMyLikeList() {
+		int totalMyLikeList = 0; 
+		totalMyLikeList = fad.totalMyLikeList();
+		
+		return totalMyLikeList;
+	}
+
+	@Override
+	public int deleteMyLikeList(int id) {
+		int result = 0;
+		result = fad.deleteMyLikeList(id);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		
+		return result;
+	}
+
 }

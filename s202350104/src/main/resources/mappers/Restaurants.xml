@@ -84,12 +84,12 @@
 					SELECT c.*
 	 				FROM   restaurants r, contents c
 	 				WHERE  r.content_id = c.id
-	 				<if test="status != null and status !=3">
+	 				<if test="status != null">
 	 					<choose>
-	 						<when test="status !=2">	 					
+	 						<when test="status != 2">	 					
 	 							AND c.status = #{status} 
 	 						</when>
-	 						<when test="status =2">
+	 						<when test="status = 2">
 	 						</when>
 	 					</choose>
 	 				</if>
@@ -102,7 +102,16 @@
 	 						</when>
 	 					</choose>
 	 				</if>
-	 			 )
+	 				<if test="is_deleted != null">
+	 					<choose>
+	 						<when test="is_deleted != 2">
+				 				AND c.is_deleted = #{is_deleted} 
+	 						</when>
+	 						<when test="is_deleted = 2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 			)
 	</select>	
 	
 		
@@ -113,9 +122,9 @@
 					SELECT ROWNUM rn, c.*
 	 				FROM   restaurants r, contents c
 	 				WHERE  r.content_id = c.id
-	 				<if test="status != null and status !=3">
+	 				<if test="status != null">
 	 					<choose>
-	 						<when test="status !=2">	 					
+	 						<when test="status != 2">	 					
 	 							AND c.status = #{status} 
 	 						</when>
 	 						<when test="status =2">
@@ -128,6 +137,15 @@
 				 				AND c.small_code = #{small_code} 
 	 						</when>
 	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="is_deleted != null">
+	 					<choose>
+	 						<when test="is_deleted != 2">
+				 				AND c.is_deleted = #{is_deleted} 
+	 						</when>
+	 						<when test="is_deleted = 2">
 	 						</when>
 	 					</choose>
 	 				</if>
@@ -155,8 +173,7 @@
 		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcount, user_id, created_at, is_deleted)
 		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, '0')
 	</insert>
-	
-	
+		
 	<update id="joUpdateContent" parameterType="RestaurantsContent">
 		UPDATE	contents
 		SET		small_code=#{small_code}, area=#{area}, sigungu=#{sigungu}, title=#{title}, address=#{address}, postcode=#{postcode}, phone=#{phone}, content=#{content}, img1=#{img1}, img2=#{img2}, img3=#{img3}  

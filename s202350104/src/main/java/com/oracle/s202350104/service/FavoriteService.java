@@ -10,5 +10,7 @@ public interface FavoriteService {
 	int 				 totalFavorite();
 	int                  condTotalFavorite(Favorite favorite);
 	List<Favorite>       listSearchFavorite(Favorite favorite);
-
+	List<Favorite>       getMyLikeList(Favorite favorite);
+	int                  totalMyLikeList();
+	int                  deleteMyLikeList(int id);
 }

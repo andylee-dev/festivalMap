@@ -64,5 +64,30 @@
 			
 	</select>
 	
-	
+	<select id="joGetMyLikeList" parameterType="Favorite" resultType="Favorite">
+		SELECT *
+		FROM
+		(
+			SELECT rownum rn, f.id, c.title, f.create_at
+			FROM   contents c, favorite f
+			WHERE  f.user_id = '1003'
+			AND    f.id = c.id
+		)
+		WHERE rn between #{start} and #{end}
+		
+	</select>
+
+	<select id="joTotalMyLikeList" parameterType="Favorite" resultType="int">
+		SELECT COUNT(*)
+		FROM   favorite f  
+		WHERE  f.user_id = 1003
+    </select>
+    
+    <delete id="joDeleteMyLike" parameterType="int">
+		DELETE *
+		FROM   favorite f  
+		WHERE  f.user_id = 1003 
+		AND    f.id = #{id}
+    </delete>
+    
 </mapper>

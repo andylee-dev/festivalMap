@@ -25,15 +25,10 @@
 					<div class="border p-3 m-3">
 						<form action="adminRestaurantSearch">
 							<h1 class="border">검색폼</h1>
-							<select name="status" id="status">
-								<option value="2">전체</option>
-								<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>활성화</option>
-								<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>비활성화</option>
-							</select> 
-							
+							테마
 							<select name="small_code" id="small_code">
 								<option value="999">전체</option>
-								<option value="1" <c:if test="${small_code =='1'}">selected="selected"</c:if>>한식</option>
+								<option value="1" ${small_code == 1? 'selected':''}>한식</option>
 								<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
 								<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
 								<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
@@ -41,8 +36,21 @@
 								<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
 								<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
 							</select>
+							진행상황
+							<select name="status" id="status">
+								<option value="2">전체</option>
+								<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>완료</option>
+								<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
+							</select> 
+							삭제여부
+							<select name="is_deleted" id="is_deleted">
+								<option value="2">전체</option>
+								<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
+								<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
+							</select>
 							<input type="hidden" name="big_code" value="12">
 							<input type="hidden" name="currentPage" value="${page.currentPage}">
+							<br>
 							<button type="submit" class="btn btn-outline-secondary">검색</button>
 							<input type="reset" class="btn btn-outline-secondary" value="초기화">
 						</form>
@@ -99,11 +107,8 @@
 							</c:forEach>
 						</tbody>
 					</table>
-				</div>		
-			</main>
-		</div>
-		</div>
-		
+		총 건수: ${totalRestaurant}
+					
 		<div align="center">
 		<c:if test="${page.startPage > page.pageBlock}">
 			<c:choose>
@@ -146,5 +151,9 @@
 		</c:if>
 		</div>
 		
+		</div>	
+	  </main>
+	  </div>
+	  </div>
 	</body>
 </html>

@@ -23,7 +23,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	
 	@Override
 	public List<RestaurantsContent> listRestaurant(RestaurantsContent restaurant) {
-		List<RestaurantsContent> listRestaurant = rd.listRestaurant(restaurant);
+		List<RestaurantsContent> listRestaurant= rd.listRestaurant(restaurant); // listRestaurant
 		
 		if(listRestaurant == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "식당 리스트가 존재하지 않습니다.");

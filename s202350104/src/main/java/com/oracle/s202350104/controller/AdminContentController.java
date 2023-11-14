@@ -272,7 +272,6 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
 				int totalRestaurant = rs.totalRestaurant();
-				log.info("{}", totalRestaurant);
 				int path = 0;
 				
 				Paging page = new Paging(totalRestaurant, currentPage);

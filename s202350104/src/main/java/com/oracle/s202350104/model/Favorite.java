@@ -18,7 +18,7 @@ public class Favorite {
 	
 	// 조회용
 	private String name;
-	
+	private String title;
 	private String search;
 	private String keyword;
 
