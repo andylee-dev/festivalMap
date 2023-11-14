@@ -219,7 +219,7 @@
 
 			function truncateText(text, maxLength) {
 				if (text.length > maxLength) {
-					return text.slice(0, maxLength);
+					return ( text.slice(0, maxLength) + "...");
 				}
 				return text;
 			}
@@ -357,7 +357,7 @@
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
-
+<main>
 	<!-- Main Banner 임시 -->
 	<div id="content_title" class="container"></div>
 	<div class="container p-5" style="background-color: #FF4379;">
@@ -407,16 +407,9 @@
 		</div>
 	</div>
 
-	<!-- Section1 -->
-	<div class="container border p-5">
-		<div style="width: 300px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
-					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
-					color: white; font-weight: bold;">
-					랜덤축제 취향테스트 캘린더 영역</div>
-	</div>
 
-	<!-- Section2 -->
-	<div class="container border p-0" >
+	<!-- Section1 -->
+	<div class="container col-12 border p-0" >
 		<div style="width: 150px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
 					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
 					color: white; font-weight: bold; margin-left: 10px;">
@@ -466,6 +459,65 @@
 		</div>
 	</div>	
 	</div>
+	
+	<!-- Section2 -->
+	<div class="container border">
+		<img alt="고민노노" src="/asset/gominNono.svg">
+		<div class="card-group">
+			<div class="card m-3 p-3">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">카드 제목</h5>
+			        <p class="card-text">카드 상세 내용...</p>
+					<a class="dropdown-item" href="/festival/recommend">축제맞춤추천</a>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="card m-3 p-3">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">카드 제목</h5>
+			        <p class="card-text">카드 상세 내용...</p>
+					<a class="dropdown-item" href="/festival/test">축제추천테스트</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="card m-3 p-3">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">카드 제목</h5>
+			        <p class="card-text">카드 상세 내용...</p>
+					<a class="dropdown-item" href="/festival/calendar">축제캘린더</a>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+
+
+
+		<div style="width: 300px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
+					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
+					color: white; font-weight: bold;">
+					랜덤축제 취향테스트 캘린더 영역</div>
+	</div>
+	
 
 	<!-- Section3 -->
 	<div class="container border p-0">
@@ -543,6 +595,7 @@
 		</div>
 	</div>
 
+</main>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 </body>

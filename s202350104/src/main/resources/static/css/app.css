@@ -1,1 +1,20 @@
 @charset "UTF-8";
+
+.navbar {
+    background-color: #F8FCF4; /* 배경색을 변경합니다. */
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.nav-link .active {
+    color: FF4379; 
+}
+
+.nav-link {
+    color: black; 
+ 
+}
+
+main {
+	padding-top:90px; 
+}

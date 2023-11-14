@@ -29,7 +29,6 @@
     color: #FF4379 ;
 }
 
-
 /* Pagination 버튼의 글씨 색상 변경 */
 .pagination .page-link {
   color: #FF4379; /* 원하는 글씨 색상으로 변경 */
@@ -46,9 +45,7 @@
 	justify-content: center;
 }
 
-
-
-   .form-check-input:checked {
-       background-color: #FF4379;
-       border-color: #FF4379;
-   }
+.form-check-input:checked {
+	background-color: #FF4379;
+	border-color: #FF4379;
+}
