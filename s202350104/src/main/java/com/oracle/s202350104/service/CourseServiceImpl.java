@@ -130,4 +130,11 @@ public class CourseServiceImpl implements CourseService {
 		return deleteToContent;
 	}
 
+	@Override
+	public int maxOrderNum(int id) {
+		int maxOrderNum = cd.maxOrderNum(id);
+		
+		return maxOrderNum;
+	}
+
 }

@@ -102,7 +102,6 @@ public class AdminCourseController {
 	@RequestMapping(value = "courseUpdate", method = RequestMethod.POST)
 	public String courseUpdate(@RequestParam(name = "id") int courseId,
 								Course course,
-			/* @RequestParam List<String> contents, */
 								@RequestParam(name = "delList", required = false) List<String> delList,
 							    @RequestParam(name = "addList", required = false) List<String> addList,
 								Model model) {
@@ -117,27 +116,6 @@ public class AdminCourseController {
 			
 			log.info("contentsToAdd : {}", addList);
 			log.info("contentsToDelete : {}", delList);
-
-			
-			log.info("AdminCourseController courseUpdate addToContent start...");
-			List<CourseContent> addToContent = new ArrayList<CourseContent>();
-			
-			if(addList != null) { 
-				for (int i = 0; i < addList.size(); i++) {
-					CourseContent cc = new CourseContent();
-					
-					cc.setContent_id(Integer.parseInt(addList.get(i)));
-					log.info("setContent_id newCourseId ->" + (addList.get(i)));
-					cc.setCourse_id(course.getId());
-					log.info("setCourse_id newCourseId ->" + course.getId());
-					cc.setOrder_num(i + 1);
-					log.info("setOrder_num newCourseId ->" + (i + 1));
-					addToContent.add(cc);
-				}
-			log.info(addList.toString());
-			int courseContentInsert = cs.courseContentInsert(addToContent);
-			log.info("AdminCourseController courseContentInsert ->" + courseContentInsert);
-			}
 			
 			
 			log.info("AdminCourseController courseUpdate deleteContent start...");
@@ -157,6 +135,31 @@ public class AdminCourseController {
 			int deleteToContent = cs.deleteToContent(deleteContent);
 			log.info("AdminCourseController delToContent ->" + deleteToContent);
 			}
+			
+
+			log.info("AdminCourseController courseUpdate addToContent start...");
+			List<CourseContent> addToContent = new ArrayList<CourseContent>();
+			
+			if(addList != null) { 
+				// 주어진 코스에 대한 데이터베이스의 최대 순서 번호 결정
+				int maxOrderNum = cs.maxOrderNum(course.getId());
+				
+				for (int i = 0; i < addList.size(); i++) {
+					CourseContent cc = new CourseContent();
+					
+					cc.setContent_id(Integer.parseInt(addList.get(i)));
+					log.info("setContent_id newCourseId ->" + (addList.get(i)));
+					cc.setCourse_id(course.getId());
+					log.info("setCourse_id newCourseId ->" + course.getId());
+					cc.setOrder_num(maxOrderNum + i + 1);
+					log.info("setOrder_num newCourseId ->" + (maxOrderNum + i + 1));
+					addToContent.add(cc);
+				}
+			log.info(addList.toString());
+			int courseContentInsert = cs.courseContentInsert(addToContent);
+			log.info("AdminCourseController courseContentInsert ->" + courseContentInsert);
+			}
+			
 
 		} catch (Exception e) {
 			log.error("AdminCourseController courseUpdate e.getMessage() ->" + e.getMessage());

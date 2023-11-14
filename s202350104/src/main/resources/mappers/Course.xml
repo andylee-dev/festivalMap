@@ -118,33 +118,6 @@
 								course_title=#{course_title}
 			WHERE id = #{id} -->
 		</update>
-		
-		<!-- <delete id="noDeleteToContent" parameterType="java.util.List">
-			<foreach collection="list" item="CourseContent" separator=";">
-				DELETE FROM courseContents
-				WHERE course_id = #{CourseContent.course_id}
-				AND content_id = #{CourseContent.content_id}
-			</foreach>
-		</delete> -->
-		
-		<!-- <delete id="noDeleteToContent" parameterType="java.util.List">
-	        DELETE FROM courseContents
-	        <where>
-	        	<foreach collection="list" item="CourseContent">
-	        		(course_id = #{CourseContent.course_id}
-					AND content_id = #{CourseContent.content_id})
-	        	</foreach>
-	        </where>
-	    </delete> -->
-	    
-	   <!--  <delete id="noDeleteToContent" parameterType="java.util.List">
-	        	DELETE courseContents WHERE course_id = #{CourseContent.course_id}
-	        	AND content_id IN (
-	        <foreach collection="list" item="CourseContent" separator=",">
-	       	 	#{CourseContent.content_id}
-	        </foreach>
-	        )
-	    </delete> -->
 	    
 	    <delete id="noDeleteToContent" parameterType="java.util.Map">
 	        	DELETE courseContents WHERE course_id = #{course_id}
@@ -154,5 +127,11 @@
 	        </foreach>
 	        )
 	    </delete>
+	    
+	    <select id="noMaxOrderNum" parameterType="int" resultType="int">
+	    	SELECT MAX(order_num) 
+			FROM CourseContents
+			WHERE course_id = #{id}
+	    </select>
 		
 	</mapper>

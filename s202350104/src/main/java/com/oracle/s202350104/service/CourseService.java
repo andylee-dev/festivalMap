@@ -20,5 +20,6 @@ public interface CourseService {
 	List<CourseContent> 	courseContentList(int id);
 	int 					deleteCourseContent(CourseContent courseContent);
 	int 					deleteToContent(List<CourseContent> deleteContent);
-}   	 			
+	int 					maxOrderNum(int id);
+}   	  			
 	 

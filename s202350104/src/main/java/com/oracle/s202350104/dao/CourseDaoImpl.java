@@ -226,6 +226,20 @@ public class CourseDaoImpl implements CourseDao {
 		return deleteToContent;
 	}
 
+
+	@Override
+	public int maxOrderNum(int id) {
+		int maxOrderNum = 0;
+		try {
+			maxOrderNum = session.selectOne("noMaxOrderNum", id);
+			log.info("CourseDaoImpl maxOrderNum maxOrderNum ->" + maxOrderNum);
+		} catch (Exception e) {
+			log.info("CourseDaoImpl maxOrderNum e.getMessage() ->" + e.getMessage());
+		}
+		
+		return maxOrderNum;
+	}
+
 	
 //	@Override
 //	public Course courseDetailContent(int id) {
