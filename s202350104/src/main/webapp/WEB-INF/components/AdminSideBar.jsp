@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<link href="/css/adminSidebar.css" rel="stylesheet" type="text/css">
+
 <div class="sidebar d-flex shadow col-md-2 col-lg-2 p-1 bg-body-tertiary col-2 justify-content-center">
 			<div class="col-10  justify-content-center align-items-center ">
 
