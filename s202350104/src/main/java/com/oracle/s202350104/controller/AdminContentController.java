@@ -107,10 +107,7 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
 				List<CommonCodes> listCodes = cs.listCommonCode();
-				Tags tag = new Tags();
-				List<Tags> listTags = ts.listTags(tag);
 				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listTags", listTags);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
 			} finally {
@@ -144,9 +141,6 @@ import lombok.RequiredArgsConstructor;
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				
 				Tags tag = new Tags();
-				List<Tags> listTags = ts.listTags(tag);
-				List<Tags> listMyTags = ts.searchContentTags(contentId);
-				
 				/*
 				 * String startdate = festival.getStart_date();
 				 * festival.setStart_date(startdate.substring(0,1)+"-"+startdate.substring(2,3)+
@@ -156,8 +150,6 @@ import lombok.RequiredArgsConstructor;
 				 */
 				
 				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listTags", listTags);
-				model.addAttribute("listMyTags", listMyTags);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("festival", festival);
 			} catch (Exception e) {
