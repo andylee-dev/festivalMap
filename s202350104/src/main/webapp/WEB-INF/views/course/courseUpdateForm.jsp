@@ -58,17 +58,12 @@
 	
 	//4. popup창에서 받은 데이터 리스트.
 	function receiveContentList(contentList) {
-		console.log("before",newList,oldList)
 		
 		const contentsTableEl = document.getElementById("contentsTable");
 		
 		for (var i = 0; i < contentList.length; i++) {
 			// newList에 contentList[i].id가 있다면 스킵.
-	        if (newList.includes(contentList[i].id)) continue;
-
-			// newList에 contentList[i].id를 넣어준다.
-			newList.push(contentList[i].id);
-			console.log("after",newList,oldList)
+	        if ( getCurrentContentList().includes(contentList[i].id)) continue;
 
 			// 테이블의 row 하나를 생성한다.
 			const rowEl = makeTableRow(contentList[i]);
@@ -170,8 +165,11 @@
 	        	delList.push(oldList[i]);
 	        }
  	    }
+ 	   const addList = difference(finalList,oldList);
+ 	    
  	    console.log("delList",delList);
- 	    console.log("newList",newList);
+
+ 	    console.log("addList",addList);
  	    for (var i = 0; i < newList.length; i++) {
 	    	const form =document.getElementById("myForm");
 	    	const hiddenInput = document.createElement("input");
@@ -184,6 +182,10 @@
  	   alert('submitHandler')
 	};
 
+	function difference(list1, list2) {
+	    return list1.filter(item => !list2.includes(item));
+	}
+	
 	function removeValue(list, value) {
 	    let index = list.indexOf(value);
 	    if (index !== -1) {
@@ -192,26 +194,12 @@
 	}
 	// 화면table에서 삭제버튼 누른 요소를 제거.
 	function deleteContent(event){
-	    // 이벤트가 발생한 요소의 부모 요소인 td를 찾고,
-	    // td의 부모 요소인 tr를 찾습니다.
-	    console.log("deleteContent before",newList);
-	    let trElement = event.target.parentElement.parentElement;
-	    // tr 요소의 첫 번째 자식 요소인 td를 찾고, 그 안의 텍스트를 콘솔에 출력합니다.
-	    const elId = trElement.children[0].textContent;
-		if (newList.includes(elId)){
-			removeValue(newList, elId);
-		}
-		console.log("deleteContent after",newList);
-	    
 	    event.target.parentElement.parentElement.remove();
 	}
 	
 	// 1. 처음에 html이 다 만들어 지고 난 이후에 실행.
 	document.addEventListener('DOMContentLoaded', function() {
-		// 2. 기존에 있던 content리스트를 oldList에 담는다.
 		oldList = getCurrentContentList();
-		newList.push(...oldList.slice());
-		console.log(oldList, newList);
 	});
 	
 	
