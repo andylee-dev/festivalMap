@@ -11,9 +11,7 @@
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-	.container {
-      margin-top: 150px; /* 상단 여백을 원하는 크기로 조절하세요. */
-    }
+
     .thumbnail {
       cursor: pointer;
       width: 70%;
@@ -86,9 +84,9 @@
 <body>
 
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
-
-	<h1>숙박 상세</h1>
-	
+	<div style="width: 100%; background: #FF4379; color: white; text-align: left; padding: 10px 0; margin-top: 100px;">
+    	<h2>${accomodation.title}</h2>
+	</div>
 	<div class="container border p-5" style="display: flex; justify-content: space-between;">
     <table>
         <tr>
