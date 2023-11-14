@@ -743,4 +743,40 @@ public class BoardController {
 		}
 		return "board/boardReportClose";
 	}
+	
+	// BetaPage
+	@RequestMapping(value = "/betaPage")
+	public String betaPage(Board board, String currentPage, Model model) {			
+		log.info("BoardController reviewBoardList Start!!");
+		int bigCode = 0;
+		// 분류 code 강제 지정
+		int smallCode = 6;
+		
+		// smallCode를 이용해 countBoard를 설정
+		int countBoard = boardService.boardCount(smallCode);
+		
+		// Paging 작업
+		// Parameter board page 추가
+		Paging page = new Paging(currentPage, countBoard);
+		board.setStart(page.getStart());
+		board.setEnd(page.getEnd());
+		
+		List<Board> revicewAllList = boardService.getReviewAllList(board);
+		log.info("BoardController revicewAllList size : {}", revicewAllList.size());
+
+		if(revicewAllList.size() != 0) {
+			bigCode = revicewAllList.get(0).getBig_code();
+		} else {
+			log.error("BoardController magazin 값이 없습니다.");
+		}
+
+		model.addAttribute("board", revicewAllList);
+		model.addAttribute("page", page);
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		
+		log.info("BoardController reviewBoardList End..");
+
+		return "board/betaPage";
+	}
 } 

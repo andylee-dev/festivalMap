@@ -28,6 +28,7 @@ public class Board {
 	
 	// 조회용
 	private String name;
+	private String nickname;
 	private String search;
 	private String keyword;
 	private String pageNum;

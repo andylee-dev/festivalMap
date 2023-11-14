@@ -137,7 +137,7 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.content, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        select a.id, a.user_id, a.content, b.name, b.nickname, a.created_at, a.read_count, a.big_code, a.small_code
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 6
