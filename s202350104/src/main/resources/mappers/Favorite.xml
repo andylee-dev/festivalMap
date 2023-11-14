@@ -84,10 +84,9 @@
     </select>
     
     <delete id="joDeleteMyLike" parameterType="int">
-		DELETE *
-		FROM   favorite f  
-		WHERE  f.user_id = 1003 
-		AND    f.id = #{id}
+		DELETE FROM favorite 
+		WHERE  user_id = '1003' 
+		AND    id = #{id}
     </delete>
     
 </mapper>

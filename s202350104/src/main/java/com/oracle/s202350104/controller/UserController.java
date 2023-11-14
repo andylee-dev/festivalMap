@@ -118,7 +118,7 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value = "myLikeDelete")
+	@RequestMapping(value = "myPage/myLikeDelete")
 	public String deleteCofirm(int id) {
 		UUID transactionId = UUID.randomUUID();
 		
@@ -132,7 +132,7 @@ public class UserController {
 			log.info("[{}]{}:{}", transactionId, "UserController deleteConfirm", "End");
 		}
 			
-		return "forward:user/myPage/myLike";
+		return "redirect:/user/myPage/myLike";
 	}
 	
 	@RequestMapping(value = "myPage/myTag")
