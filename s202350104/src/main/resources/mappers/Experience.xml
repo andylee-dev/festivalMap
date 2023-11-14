@@ -64,13 +64,11 @@
 			SELECT ROWNUM rn, a.*
 			FROM
 			(SELECT * FROM contents 
-				<if test="big_code != null">
-				WHERE big_code = #{big_code}
-				</if>
+				WHERE big_code = 15
 				<if test="keyword != null">
 					AND title like '%' || #{keyword} || '%'
 				</if>
-				<if test="status != null and status !=3" >
+				<if test="status != null">
 					<choose>
  	 					<when test="status != 2">
 	    					AND status = #{status}  
@@ -88,7 +86,7 @@
 	    				</when>    
   					</choose>
 				</if>
-				<if test="small_code != null">
+				<if test="small_code != null and small_code !=0">
 					<choose>
  	 					<when test="small_code != 999">
 	    					AND small_code = #{small_code}  

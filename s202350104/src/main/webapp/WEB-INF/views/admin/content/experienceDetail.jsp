@@ -21,6 +21,10 @@
 				}
 			}
 			
+			function openRejectionPopup(contentId) {
+			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
+			}
+			
 		</script>				
 	</head>
 	<body>
@@ -127,7 +131,7 @@
 					 <div align="center">
 						<c:if test="${experience.status == 0}">
 							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
-							<button type="button" class="btn btn-outline-secondary" onclick="openRejectionPopup()">반려</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="openRejectionPopup(${experience.content_id})">반려</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experience?currentPage=1'">목록</button>
 						</c:if>
 						<c:if test="${experience.status == 1}">
