@@ -1,20 +1,28 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+
 
 /* 공통 css*/
 a {
 	text-decoration: none;
 	color: black;
 }
-
+.general_board_custom{
+	font-family: 'Dongle', sans-serif;	
+}
 /* 상단 title css */
 .header_title_custom {
 	margin-bottom: 60px;
 }
 
+.header_title_custom h1{
+	font-size: 60px;
+}
+
 /* 중간네비게이션 css */
 .md_nav_custom {
 	text-align: center;
-	font-size: 30px;
+	font-size: 40px;
 	font-weight: bolder;
 	border-top: 3px solid black;
 	border-bottom: 3px solid black;
@@ -82,8 +90,10 @@ a {
 	transform: translateY(-50%);
 	background-color: #FF4379;
 	color: white;
-	font-size: 16px;
+	font-size: 24px;
 	font-weight: bold;
+	text-align: center;
+	line-height: 40px;
 }
 
 /* 목록 출력 css */
@@ -96,13 +106,13 @@ a {
 	background-color: #FF4379;
 	text-align: center;
 	color: white;
-	font-size: 20px;
+	font-size: 35px;
 	font-weight: bolder;
 }
 
 .list_custom {
 	text-align: center;
-	font-size: 18px;
+	font-size: 30px;
 	font-weight: bold;
 	border-bottom: 3px solid #747474;
 	padding-top: 15px;
@@ -114,14 +124,24 @@ a {
 /* 목록 출력 css */
 .cardList_custom .card_custom {
 	width: 400px;
-	margin-bottom: 20px;
-	font-size: 20px;
+	height: 480px;
+	border: 0px;
+	border-radius: 0px;
+	border-bottom: 2px solid black; margin-bottom : 20px;
+	font-size: 30px;
 	font-weight: bolder;
+	margin-bottom: 20px;
+	font-family: 'Dongle', sans-serif;
 }
 
 .cardList_custom .card_custom p {
-	font-size: 26px;
+	font-size: 35px;
 	font-weight: bolder;
+}
+
+.cardList_custom .card_custom .img_custom {
+	width: 397px;
+	height: 280px;
 }
 
 .cardList_custom .card_custom .card_body_custom {
@@ -135,37 +155,51 @@ a {
 
 .cardList_custom .card_custom .card_p_custom {
 	color: #FF4379;
-	font-size: 20px;
+	font-size: 30px;
 	font-weight: bolder;
 	margin-bottom: 0px;
 }
 
 .cardList_custom .card_custom .card_p_custom span {
 	color: black;
-	font-size: 18px;
+	font-size: 30px;
 	font-weight: bolder;
 }
 
-.division_photo_custom{
+.division_photo_custom {
 	width: 100%;
 	height: 55px;
-	margin-left:1px;
-	background-color: #FF4379;
+	margin-left: 1px; background-color : #FF4379;
 	text-align: center;
 	color: white;
-	font-size: 15px;
-	font-weight: bolder;	
+	font-size: 30px;
+	font-weight: bolder;
+	background-color: #FF4379;
+	font-family: 'Dongle', sans-serif;
 }
 
 .list_photo_custom {
 	width: 100%;
 	height: 50px;
 	text-align: center;
-	font-size: 18px;
+	font-size: 30px;
 	font-weight: bold;
 	border-bottom: 3px solid #747474;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	margin-left:1px;
+	margin-left: 1px;
 	margin-top: -35px;
+	font-family: 'Dongle', sans-serif;
+}
+
+.detail_custom p {
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 36px;
+	font-family: 'Dongle', sans-serif;
+}
+
+.tags_detail_custom span{
+	font-size: 30px;
+	font-family: 'Dongle', sans-serif;
 }

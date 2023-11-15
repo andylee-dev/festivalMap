@@ -38,7 +38,7 @@
 	<c:set var="num" value="${page.total-page.start+1 }"/>
 	
 	<!-- 전체 content 영역  Start-->
-	<div class="container p-0">
+	<div class="container p-0 general_board_custom">
 	
 		<!-- 상단 title 영역  -->
 		<div class="container p-0 text-center header_title_custom">

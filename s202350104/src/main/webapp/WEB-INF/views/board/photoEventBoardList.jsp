@@ -49,7 +49,7 @@
 	<c:set var="num" value="${page.total - page.start + 1}" />
 
 	<!-- 전체 content 영역  Start-->
-	<div class="container p-0">
+	<div class="container p-0 general_board_custom">
 
 		<!-- 상단 title 영역  -->
 		<div class="container p-0 text-center header_title_custom">
@@ -140,9 +140,9 @@
 				<c:forEach var="boards" items="${board}">
 					<div class="col-6 col-md-4">
 						<!-- content-->
-						<div class="card card_custom" style="">
+						<div class="card card_custom">
 							<a href="javascript:showPopUp(${boards.id},${userId })"> 
-								<img src="../image/sea.jpg" class="card-img-top" alt="sea.jpg">
+								<img src="${boards.file_path }${boards.file_name }" class="card-img-top img_custom" alt="${boards.file_name }">
 							</a>
 							<!-- title, 작성자, 작성일 영역 -->
 							<div class="card-body card_body_custom">

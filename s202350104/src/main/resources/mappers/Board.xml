@@ -81,7 +81,8 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code,
+		         	   a.small_code, a.file_name, a.file_path
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 4

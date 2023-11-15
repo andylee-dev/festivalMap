@@ -78,7 +78,7 @@
 	<!-- 전체 content 영역  Start-->
 	<div class="container p-0" style="width: 100%;">
 	
-		<div class="container p-3"> 
+		<div class="container p-3 border" > 
 			<div class="row row-cols-5 align-items-center division_photo_custom">
 				<div class="col-md-1">글번호</div>
 				<div class="col-md-6">제목</div>
@@ -88,7 +88,7 @@
 			</div>		
 		</div>
 		
-		<div class="container p-3"> 
+		<div class="container p-3 border"> 
 			<div class="row row-cols-5 align-items-center list_photo_custom">
 				<div class="col-md-1">1</div>
 				<div class="col-md-6">${board.title }</div>
@@ -101,18 +101,30 @@
 			</div>		
 		</div>	
 		
-	</div>
-	
-	<div class="container p-3 border">
-		이미지 영역
-	</div>
-	
-	<div class="container p-3 border">
-		content
-	</div>
-	
-	<div class="container p-3 border">
-		해시태그
+		<!-- 이미지 출력 -->
+		<div class="container p-3 border">
+			이미지 영역
+		</div>
+		
+		<!-- 상세내용 출력 -->
+		<div class="container p-3 detail_custom border">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col">
+					<p>${board.content }</p>
+				</div>			
+			</div>
+		</div>
+		
+		<!-- 해시태그 출력 -->
+		<div class="container p-3 tags_detail_custom border">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col">
+					<c:forEach var="tags" items="${hashTag }">
+						<span class="badge rounded-pill text-bg-info">#${tags.name }</span>
+					</c:forEach>				
+				</div>			
+			</div>
+		</div>
 	</div>
 	
 	<div class="text-center">
