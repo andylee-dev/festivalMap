@@ -214,8 +214,7 @@
 				</div>	
 				<!-- Section3: Table -->
 				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table id="userTable" class="table table-striped table-sm text-center">
-						<br>
+					<table id="userTable" class="table table-striped table-sm text-center mb-3">
 						<thead>
 							<tr>
 								<th scope="col">회원번호</th>
