@@ -14,7 +14,7 @@ public interface UserService {
 	int insertUser(Users user);
 	Optional<Users> getUserByEmail(String email);
 	Optional<Users> getUserById(int id);
-	int updateUser(Users user);
+	void  updateUser(Users user);
 	int deletUser(int id);
 	int updateUserPoint(int user_id, int point_id);
 }

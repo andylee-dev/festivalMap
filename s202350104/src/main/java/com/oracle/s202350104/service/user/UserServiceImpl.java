@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oracle.s202350104.configuration.AppConfig;
 import com.oracle.s202350104.configuration.Role;
 import com.oracle.s202350104.dao.UserDao;
+import com.oracle.s202350104.exception.UserNotFoundException;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.PointHistoryService;
@@ -120,8 +121,11 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public int updateUser(Users user) {
-		return ud.updateUser(user);
+	public void  updateUser(Users user) {
+		int result = ud.updateUser(user);
+	    if (result == 0) {
+	        throw new UserNotFoundException("해당하는 사용자가 데이터베이스에 존재하지 않습니다.");
+	    }
 	}
 
 	@Override

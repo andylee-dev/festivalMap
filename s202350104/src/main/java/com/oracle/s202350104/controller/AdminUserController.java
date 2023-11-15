@@ -109,22 +109,20 @@ public class AdminUserController {
 	
 	@RequestMapping("/updateUser")
     public String updateUser( Users user, Model model) {
-        int result = us.updateUser(user);
         String url = "";
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "start");	
 			log.info("user:{}",user.toString());
-			result = us.updateUser(user);
-//			(result == 0){
-//				
-//			}
+			us.updateUser(user);
 			model.addAttribute("user", user);
+
+			/* 1:ADMIN 2:USER 3:BIZ */
 			switch (us.getLoggedInUserRole()) {
-				case 1:
+				case 1: 
 					
 					break;
-				case 2:
+				case 2: 
 					url= "/user/myPage";
 					break;
 				case 3:
