@@ -53,15 +53,12 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Users getUserById(int id) {
-		Users user = null;
-		user = session.selectOne("getUserById", id);
-		return user;
+		return session.selectOne("getUserById", id);
 	}
 
 	@Override
 	public int updateUser(Users user) {
-		int result = 0;
-		return result;
+		return session.update("updateUser",user);
 	}
 
 	@Override

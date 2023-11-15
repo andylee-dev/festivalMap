@@ -203,6 +203,7 @@ const checkDuplicate = (user) => {
 	        return false;
 	    }
 	
+        alert("정보가 정상적으로 수정 되었습니다.");
 	    // 모든 검사를 통과한 경우
 	    return true;
 	}
@@ -316,16 +317,22 @@ const checkDuplicate = (user) => {
 
 							<!-- 회원 정보 수정 화면 -->
 							<div id="edit" style="display: none;">
-								<form action="">
+								<form action="/admin/user/updateUser" method="POST">
+									<input type="hidden" name="id" value="${user.id }"> <input
+										type="hidden" name="birthday" value="${user.birthday }">
+									<input type="hidden" name="status" value="${user.status }">
+									<input type="hidden" name="point" value="${user.point }">
+									<input type="hidden" name="file_name"
+										value="${user.file_name }"> <input type="hidden"
+										name="is_deleted" value="${user.is_deleted }">
 									<div class="mb-2 row align-items-baseline ">
 										<label for="email"
 											class="col-sm-2 col-form-label fw-bold text-end mx-3"
 											style="font-size: 20px;">이메일<SUP
 											style="color: #FF4379; font-size: 18px;">*</SUP></label>
 										<div class="col-sm-6 mx-3">
-											<input type="email" class="form-control " id="email"
-												value="${user.email}" placeholder="festimap@festimap.com"
-												name="email" disabled>
+											<input type="email" class="form-control-plaintext "
+												id="email" value="${user.email}" name="email" readonly>
 										</div>
 									</div>
 									<div class="mb-2 row align-items-baseline ">
@@ -355,13 +362,13 @@ const checkDuplicate = (user) => {
 									</div>
 
 									<div class="mb-2 row align-items-baseline ">
-										<label for="username"
+										<label for="name"
 											class="col-sm-2 col-form-label fw-bold text-end mx-3"
 											style="font-size: 20px;">사용자명<SUP
 											style="color: #FF4379; font-size: 18px;">*</SUP></label>
 										<div class="col-sm-6 mx-3">
-											<input type="text" class="form-control " id="username"
-												value="${user.name}" name="username">
+											<input type="text" class="form-control " id="name"
+												value="${user.name}" name="name">
 											<p class="helptext text-start"></p>
 										</div>
 									</div>

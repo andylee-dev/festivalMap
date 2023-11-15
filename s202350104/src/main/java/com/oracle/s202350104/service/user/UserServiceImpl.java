@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(Users user) {
-		return 0;
+		return ud.updateUser(user);
 	}
 
 	@Override

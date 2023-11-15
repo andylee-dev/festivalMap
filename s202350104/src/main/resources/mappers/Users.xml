@@ -118,6 +118,25 @@
 		UPDATE users SET is_deleted = 1 WHERE id = #{id}
 	</update>
 	
+	<update id="updateUser" parameterType="Users" >
+		UPDATE users SET 
+			name=#{name},
+			password=#{password},
+			nickname=#{nickname},
+			birthday=#{birthday},
+			phone_num=#{phone_num},
+			email=#{email},
+			address=#{address},
+			status=#{status},
+			point=#{point},
+			gender=#{gender},
+			updated_at=sysdate,
+			file_name=#{file_name},
+			is_deleted=#{is_deleted}	
+		WHERE id = #{id}
+	</update>
+	
+	
     <select id="getUserByEmail" resultType="Users">
         SELECT *
         FROM Users

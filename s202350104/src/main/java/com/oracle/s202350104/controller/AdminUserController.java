@@ -107,10 +107,40 @@ public class AdminUserController {
         return "admin/user/userUpdateForm";
     }
 	
-	@RequestMapping("/users")
-    public ResponseEntity<Integer> updateUser( int id, Users user, Model model) {
+	@RequestMapping("/updateUser")
+    public String updateUser( Users user, Model model) {
         int result = us.updateUser(user);
-        return ResponseEntity.ok(result);
+        String url = "";
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "start");	
+			log.info("user:{}",user.toString());
+			result = us.updateUser(user);
+//			(result == 0){
+//				
+//			}
+			model.addAttribute("user", user);
+			switch (us.getLoggedInUserRole()) {
+				case 1:
+					
+					break;
+				case 2:
+					url= "/user/myPage";
+					break;
+				case 3:
+					
+					break;
+	
+				default:
+					break;
+			}
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "userUpdateForm", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "end");
+		}		
+        return "redirect:"+url;
     }
 	
 	@RequestMapping(value = "userDeleteAjax",  method = RequestMethod.POST)
