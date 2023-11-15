@@ -18,14 +18,14 @@
 
 /* 마우스 오버 시 버튼 색상 변경 */
 .btn:hover{
-    background-color: #FF4379 ; 
-    border-color: #FF4379 ; 
+    background-color: #52525C ; 
+    border-color: #52525C ; 
     color: #ffffff ; /* 원하는 글씨 색상으로 변경 */
 }
 
 .btn-primary:hover {
-    background-color: #ffffff ; 
-    border-color: #FF4379; 
+    background-color: #52525C ; 
+    border-color: #52525C; 
     color: #FF4379 ;
 }
 
