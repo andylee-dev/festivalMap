@@ -119,24 +119,27 @@ import lombok.RequiredArgsConstructor;
 		
 		@ResponseBody
 		@RequestMapping(value = "festival/insert")
-		public String festivalInsert(@RequestParam(value = "tagId[]", required = false) int[] finalTags, 
-									 FestivalsContent festival, Model model) {
+		public String festivalInsert(FestivalsContent festival, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			String str = "";
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
 				log.info("area"+festival.getArea());
+				
+				// content 및 festivals 테이블에 정보 등록
 				festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
 				festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
+				
 				int result = fs.insertFestival(festival);
 				log.info("Controller festivalInsert result => "+result);
-				log.info("Controller festivalInsert tagsUpdate result => "+result);
-				if(result == 1) {
+				
+				// result에 따라 alert 메세지 반환
+				if(result > 0) {
 					str = "성공적으로 등록되었습니다."; 
 				} else { 
 					str = "등록에 실패하였습니다."; 
 				}
-				log.info("tag"+finalTags[0]);
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
 			} finally {
@@ -182,13 +185,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "start");
 				int result = fs.updateFestival(festival);
 				log.info("festivalUpdate result => "+result);
-				String[] stringArr = festival.getFinalTags();
-				int[] intArr = new int[stringArr.length];
-				for(int i = 0; i < stringArr.length; i++) {
-					intArr[i] = Integer.parseInt(stringArr[i]);
-				}
-				result = ts.updateContentTags(festival.getContent_id(), intArr);
-				log.info("tagsUpdate result => "+result);
+
 				if(result > 0) {
 					str = "축제 정보 수정에 성공하였습니다.";
 				} else {

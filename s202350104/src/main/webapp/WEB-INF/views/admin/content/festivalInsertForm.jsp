@@ -129,6 +129,30 @@
 				tagsArea.appendChild(newTag);
 			}
 			<!-- 태그 관련 코드 end -->
+			
+			function submitForm() {
+				event.preventDefault();
+				
+				var insertFormData = $('#insertForm').serializeArray();
+				var finalTags = [];
+				for(var i = 0; i < selectedTags.length; i++) {
+					finalTags.push(Number(selectedTags[i].id));
+				}
+				insertFormData.push({name: 'finalTags', value: finalTags});
+				
+				if(confirm("등록하시겠습니까?")) {
+					$.ajax({
+						url: "<%=request.getContextPath()%>/admin/content/festival/insert",
+						method: "POST",
+						data: insertFormData,
+						dataType: "text",
+						success: function(str) {
+							alert(str);
+							location.href="<%=request.getContextPath()%>/admin/content/festival";
+						}
+					})
+				}
+			}
 		</script>
 	</head>
 	
@@ -136,16 +160,19 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">축제 정보 등록</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-pencil-square "></i>
+						<label  class="admin-header-title ">축제 정보 등록 </label>					
+					</div>
 				</div>
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="festival/insert" method="post">
+					<form action="festival/insert" method="post" id="insertForm">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<table class="table table-striped table-sm">
 							<tr>
@@ -245,7 +272,7 @@
 							</tr>
 						</table>
 						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="submitForm()">등록</button>
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>

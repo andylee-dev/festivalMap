@@ -62,4 +62,5 @@ public class FestivalsContent {
 	
 	// 태그 입력용
 	private String[] finalTags;
+	private int      tag_id;
 }

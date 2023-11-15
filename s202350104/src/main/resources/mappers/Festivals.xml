@@ -117,7 +117,8 @@
 		</if>
 	</select>
 	
-	<insert id="nhFestivalsInsert" parameterType="FestivalsContent">
+	<insert id="nhFestivalsInsert" parameterType="FestivalsContent" 
+	        useGeneratedKeys="true" keyColumn="content_id" keyProperty="content_id">
 		INSERT INTO festivals(content_id, hours, start_date, end_date, sponsor, eventplace, 
 				cost, overview, is_parking, is_stroller, is_wheelchair, is_restroom) 
 		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
@@ -165,4 +166,25 @@
 		FROM contents
 		WHERE id = #{contentId}
 	</select>
+	
+	<!-- tag 관련 쿼리 -->
+	<insert id="nhFestivalTagInsert" parameterType="FestivalsContent">
+		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
+	</insert>
+	
+	<select id="nhFestivalTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM ContentTags ct, Tags t
+		WHERE ct.tag_id = t.id
+		AND   ct.content_id = #{festivalKey}
+		ORDER BY t.name
+	</select>
+	
+	<delete id="nhFestivalTagDelete" parameterType="Tags">
+		DELETE ContentTags 
+		WHERE tag_id = #{tag_id}
+		AND content_id = #{content_id}
+	</delete>
+	
+	
 </mapper>

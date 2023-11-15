@@ -85,7 +85,7 @@
 			}; 
 			
 			function initialSelectedTags() {
-				var contentId = Number($('#contentId').val());
+				var contentId = Number($('#content_id').val());
 				$.ajax({
 					url: "<%=request.getContextPath()%>/getMyContentTags",
 					method: "GET",
@@ -158,8 +158,7 @@
 			
 			function updateForm() {
 				event.preventDefault();
-				alert("click event");
-				
+			
 				var updateFormData = $('#updateForm').serializeArray();
 				var finalTags = [];
 				for(var i = 0; i < selectedTags.length; i++) {
@@ -175,6 +174,7 @@
 						dataType: "text",
 						success: function(str) {
 							alert(str);
+							location.href="<%=request.getContextPath()%>/admin/content/festival";
 						}
 					})
 				}
@@ -206,7 +206,7 @@
 						<table class="table table-striped table-sm">
 							<tr>
 								<th>컨텐츠 ID</th>
-								<td><input type="hidden" name="content_id" id="contentId" value="${festival.content_id}">${festival.content_id}</td>
+								<td><input type="hidden" name="content_id" id="content_id" value="${festival.content_id}">${festival.content_id}</td>
 							</tr>
 							<tr>
 								<th>분류</th>
