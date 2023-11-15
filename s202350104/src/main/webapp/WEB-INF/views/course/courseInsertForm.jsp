@@ -151,10 +151,10 @@
 				<!-- Section2: Table -->	
 				<div class="container mt-5 border">
 					<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
-						<div class="form-group course-body-text border"
+						<div class="form-group course-body-text col-12 border"
 							 style="margin-bottom: 26px;">
-							<label for="course_title">코스명</label>
-							<input type="text" class="form-control input-text" id="course_title" name="course_title" required="required">
+							<label class="form-label col-2" for="course_title">코스명</label>
+							<input type="text" class="input-text col-9" id="course_title" name="course_title" required="required">
 						</div>
 							<!-- <div class="card course-card" style="width: 18rem;">
 							  <img src="..." class="card-img-top" alt="...">
@@ -183,8 +183,8 @@
 						</div>
 						<div class="form-group course-body-text"
 							 style="margin-bottom: 24px;">
-							<label for="distance">거리(km)</label>
-							<input type="text" class="form-control" id="distance" name="distance" required="required">
+							<label class="col-2" for="distance">거리(km)</label>
+							<input type="text" class="input-text col-9" id="distance" name="distance" required="required">
 						</div>
 						<div class="form-group course-body-text"
 							 style="margin-bottom: 24px;">
