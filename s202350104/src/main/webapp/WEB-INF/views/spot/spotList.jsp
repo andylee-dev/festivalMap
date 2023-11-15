@@ -95,15 +95,21 @@
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 					<c:forEach var="spot" items="${listSpot}">
 						<div class="col">
-							<div class="card" style="width: 18rem;">
-								<img src="${spot.img1}" class="card-img-top"
-									alt="${spot.title}이미지" style="height: 190px;">
-								<div class="card-body">
-									<p class="card-text" style="height: 240px;">
-										명소명 : ${spot.title} <br> 휴무일 : ${spot.rest_date}<br>
-										${spot.content}
+							<div class="card app-card">
+								<div class="app-tag-container" style="position: relative;">
+              					<div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
+                				<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
+             					</div>
+								<a href="spot/detail?contentId=${spot.content_id}&currentPage=${page.currentPage}">
+								<img src="${spot.img1}" class="app-card-img-top"
+									alt="${spot.title}이미지"></a>
+								</div>	
+								<div class="card-body app-card-body">
+									<p class="app-card-text">
+										명소명 : ${spot.title} <br> 
+										<span style="color: #FF4379;">휴무일 : ${spot.rest_date}</span> <br>
+										<span style="font-weight: normal;">${spot.content}</span>
 									</p>
-									<a href="spot/detail?contentId=${spot.content_id}&currentPage=${page.currentPage}"class="btn btn-primary">더보기</a>
 									<c:set var="card" value="${card - 1}"></c:set>
 								</div>
 							</div>

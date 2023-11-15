@@ -11,13 +11,6 @@
 		<style type="text/css">
 			.pageblock {
 				text-align: center;
-			}
-			.card-text {
-				overflow: hidden;
-				text-overflow: ellipsis; /* 말줄임표 */
-				display: -webkit-box;
-				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-				-webkit-box-orient: vertical;
 			}	
 		</style>
 		
@@ -87,15 +80,21 @@
 					<c:if test="${listFestivals.size() == 0}">해당하는 축제 정보가 없습니다.</c:if>
 					<c:forEach var="festival" items="${listFestivals}">
 						<div class="col">
-							<div class="card" style="width: 20rem;">
-				  				<img src="${festival.img1}" class="card-img-top" alt="${festival.title}이미지" style="height: 190px;">
-				  				<div class="card-body">
-				    				<p class="card-text" style="height: 240px;">
+							<div class="card app-card">
+							<div class="app-tag-container" style="position: relative;">
+              					<div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
+                				<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
+             					</div>
+				  				<a href="festival/detail?contentId=${festival.content_id}&currentPage=${page.currentPage}">
+				  				<img src="${festival.img1}" class="app-card-img-top" alt="${festival.title}이미지""></a>
+				  				</div>
+				  				<div class="card-body app-card-body">
+				    				<p class="app-card-text">
 				    					축제명 : ${festival.title} <br>
-				    					축제기간 : ${festival.start_date} ~ ${festival.end_date} <br>
-				    					${festival.content}
+				    					<span style="color: #FF4379;">축제기간 : ${festival.start_date} ~ ${festival.end_date}</span><br>
+				    					<span style="font-weight: normal;">${festival.content}</span>
 				    				</p>
-				    				<a href="festival/detail?contentId=${festival.content_id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
+				    				
 				 				 </div>	
 				 			</div>
 						</div>

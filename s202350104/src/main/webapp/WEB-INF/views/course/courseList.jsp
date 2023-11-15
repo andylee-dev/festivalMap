@@ -12,14 +12,7 @@
 			.pageblock {
 				text-align: center;
 			}
-			.card-text {
-				overflow: hidden;
-				text-overflow: ellipsis; /* 말줄임표 */
-				display: -webkit-box;
-				-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-				-webkit-box-orient: vertical;
-			}	
-		</style>
+	</style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -41,15 +34,17 @@
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 					<c:forEach var="course" items="${courseList }">
 						<div class="col">
-							<div class="card" style="width: 20em;">
-								<img src="${course.img1 }" class="card-img-top" alt="${course.course_title }" style="height: 190px;" /> 
-								<div class="card-body">
-									<div class="card-text" style="height: 240px;">
-										<h5 class="card-title">${course.course_title }</h5>
-										<br class="card-text">${course.time }</br>
-										<p class="card-text">${course.distance }</p>
-										<p class="card-text">${course.course_info }</p>
-										<a href="course/detail?course_id=${course.course_id }" class="btn btn-primary">상세보기 </a>
+							<div class="card app-card">
+								<div class="app-tag-container" style="position: relative;">
+								<a href="course/detail?course_id=${course.course_id }"> 
+								<img src="${course.img1 }" class="app-card-img-top" alt="${course.course_title }" /></a>
+								</div> 
+								<div class="card-body app-card-body">
+									<div class="app-card-text">
+										코스명 : ${course.course_title }<br>
+										<span style="color: #FF4379;">코스 시간 : ${course.time }</span><br>
+										<span style="font-weight: normal;">코스 거리 : ${course.distance }</span><br>
+										<span style="font-weight: normal;">코스 정보 :${course.course_info }</span>
 									</div>
 								</div>
 							</div>

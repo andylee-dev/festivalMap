@@ -12,13 +12,6 @@
 		text-align: center;
 	}
 	
-	.card-text {
-		overflow: hidden;
-		text-overflow: ellipsis; /* 말줄임표 */
-		display: -webkit-box;
-		-webkit-line-clamp: 10; /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-		-webkit-box-orient: vertical;
-	}
 </style>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
@@ -81,15 +74,21 @@
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 					<c:forEach var="accomodation" items="${listAccomodation}">
 						<div class="col">
-							<div class="card" style="width: 20rem;">
-  								<img src="${accomodation.img1}" class="card-img-top" alt="${accomodation.title}이미지" style="height: 190px;">
-	  							<div class="card-body">
-	    							<p class="card-text" style="height: 240px;">
+							<div class="card app-card">
+								<div class="app-tag-container" style="position: relative;">
+              					<div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
+                				<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
+             					</div>
+             					<a href="accomodation/detail?contentId=${accomodation.content_id}&currentPage=${page.currentPage}">
+  								<img src="${accomodation.img1}" class="app-card-img-top" alt="${accomodation.title}이미지"></a>
+	  							</div>
+	  							<div class="card-body app-card-body">
+	    							<p class="app-card-text">
 	    								숙소명 : ${accomodation.title} <br>
-	    								숙소위치 : ${accomodation.address}<br>
-	    								숙소소개  : ${accomodation.content}
+	    								<span style="color: #FF4379;">숙소위치 : ${accomodation.address}</span><br>
+	    								<span style="font-weight: normal;">숙소소개  : ${accomodation.content}</span>
 	    							</p>
-	    							<a href="accomodation/detail?contentId=${accomodation.content_id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a>
+	    							
 								</div>	
 							</div>
 						</div>
