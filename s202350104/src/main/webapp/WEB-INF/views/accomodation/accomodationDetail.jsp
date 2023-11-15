@@ -68,7 +68,7 @@ h2 {
 	padding: 10px 0; 
 	margin-top: 100px;
 }
-/* .title-bi {
+ .title-bi {
 	background: blue; /* 배경색을 검은색으로 설정 */
 	color: white; /* 아이콘 색상을 흰색으로 설정 */
 	border-radius: 50%; /* 배경을 원형으로 만듦 */
@@ -78,7 +78,50 @@ h2 {
 	font-weight: 800;
 	font-size: 28px;
 	color: #EEFFC2;
-} */
+} 
+ .contentyes-bi {
+	background: hotpink; /* 배경색을 핑크으로 설정 */
+	color: white; /* 아이콘 색상을 흰색으로 설정 */
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 10px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	color: #EEFFC2;
+	}
+	 .contentno-bi {
+	background: #FAD1D9; /* 배경색을 하얀핑크색으로 설정 */
+	color: white; /* 아이콘 색상을 흰색으로 설정 */
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 10px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	color: #EEFFC2;
+	}
+	.topbarbi {
+	background: white;
+	color: hotpink;
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 10px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	}
+	.reportbi {
+	background: black;
+	color: white;
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 10px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	color: #EEFFC2;
+	}
 </style>
 
 <script>
@@ -111,15 +154,29 @@ h2 {
 
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<div class="title-container">
-		<div class="container">
-			<h2>${accomodation.title} <i class="title-bi bi bi-people-fill "></i></h2>
-					<div class="container m-4">
-						<i class="title-bi bi bi-people-fill "></i>
-						<label  class="admin-header-title ">일반 회원 리스트 </label>					
-					</div>	
-			
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>${accomodation.title}</h2>
+        <div>
+        <div style="display: flex;">
+            <div style="display: flex;">
+            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <i class="bi bi-heart" ></i> 
+                <span style="font-size: 10px;">좋아요</span>
+            </div>
+            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <i class="bi bi-share"></i> 
+                <span style="font-size: 10px;">공유하기</span>
+             </div>
+             <div class="reportbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <i class="bi bi-exclamation-diamond"></i>
+                <span style="font-size: 10px;">신고하기</span>
+        	</div>
+    		</div>
+			</div>
+		</div>
 		</div>
 	</div>
+
 	<div class="container hashtag-container">
 		#해시태그 #해시태그	
 	</div>
@@ -156,24 +213,51 @@ h2 {
 						<li><b>환불규정</b> ${accomodation.refund}</li>
 						<li><b>입실시간</b> ${accomodation.check_in}</li>
 						<li><b>퇴실시간</b> ${accomodation.check_out}</li>
-					</ul> <b>픽업가능</b> <c:choose>
-						<c:when test="${accomodation.is_cook == 0}">Y</c:when>
-						<c:when test="${accomodation.is_cook == 1}">N</c:when>
-					</c:choose> <b>조리가능</b> <c:choose>
-						<c:when test="${accomodation.is_cook == 0}">
-							<img src="cooking_icon.png" alt="조리가능 아이콘"
-								style="width: 20px; height: 20px; margin-left: 5px;">
-							<!-- 조리가능 이미지 -->
-						</c:when>
-						<c:when test="${accomodation.is_cook == 1}">N</c:when>
-					</c:choose> <b>주차시설</b> <c:choose>
-						<c:when test="${accomodation.is_parking == 0}">
-							<img src="parking_icon.png" alt="주차시설 아이콘"
-								style="width: 20px; height: 20px; margin-left: 5px;">
-							<!-- 주차시설 이미지 -->
-						</c:when>
-						<c:when test="${accomodation.is_parking == 1}">N</c:when>
-					</c:choose>
+					</ul>
+					<div style="display: flex; justify-content: space-between;">
+						<c:choose>
+							<c:when test="${accomodation.is_pickup == 0}">
+								<div style="text-align: center; margin-right: 10px;">
+								<i class="contentyes-bi bi-car-front"></i>
+								<div style="margin-top: 10px;"><b>픽업가능</b></div>
+								</div>
+								</c:when>
+							<c:when test="${accomodation.is_pickup == 1}">
+							<div style="text-align: center; margin-right: 10px;">
+							<i class="contentno-bi bi-car-front"></i>
+							<div style="margin-top: 10px;"><b>픽업불가</b></div>
+							</div>
+							</c:when>
+						</c:choose>
+						<c:choose>
+							<c:when test="${accomodation.is_cook == 0}">
+							<div style="text-align: center; margin-right: 10px;">
+							<i class="contentyes-bi bi-egg-fried"></i>
+							<div style="margin-top: 10px;"><b>조리가능</b></div>
+							</div>
+							</c:when>
+							<c:when test="${accomodation.is_cook == 1}">
+							<div style="text-align: center; margin-right: 10px;">
+							<i class="contentno-bi bi-egg-fried"></i>
+							<div style="margin-top: 10px;"><b>조리불가</b></div>
+							</div>
+							</c:when>
+						</c:choose>
+						<c:choose>
+							<c:when test="${accomodation.is_parking == 0}">
+							<div style="text-align: center; margin-right: 10px;">
+							<i class="contentyes-bi bi-p-circle"></i>
+							<div style="margin-top: 10px;"><b>주차가능</b></div>
+							</div>
+							</c:when>
+							<c:when test="${accomodation.is_parking == 1}">
+							<div style="text-align: center; margin-right: 10px;">
+							<i class="contentno-bi bi-sign-no-parking"></i>
+							<div style="margin-top: 10px;"><b>주차불가</b></div>
+							</div>
+							</c:when>
+						</c:choose>
+					</div>
 
 
 				</td>
