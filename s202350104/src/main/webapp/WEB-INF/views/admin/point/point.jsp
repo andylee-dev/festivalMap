@@ -12,15 +12,23 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-			<div style="overflow-y: auto; max-height: 80vh;">
+			<main class="col-10 overflow-auto p-0">
 			
-	<h1>포인트관리</h1>
-	<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary" 
-				onclick="location.href='writeFormPoint'">등록</button>
-								
-				<table class="table table-striped table-sm">
+				<!-- Section1: Title -->
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-handbag-fill"></i>
+					<label  class="admin-header-title ">포인트관리</label>
+					</div>
+				</div>	
+				
+				<!-- Section2: Search Form -->
+				<div class="container col-9 justify-content-center my-2">
+					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
+				</div>
+				
+				<div class="container col-9 justify-content-center my-2 border p-2">
+					<table class="table table-striped table-sm text-center mb-2">
 					<thead>
 						<tr>
 							<th scope="col">포인트번호</th>
@@ -31,22 +39,39 @@
 							<th scope="col">수정</th>
 						</tr>
 					</thead>
-		<c:forEach var="point" items="${listPoint}">
-		<tr>
-		<td>${point.id }</td>
-		<td>${point.create_at }</td>
-		<td>${point.title }</td>
-		<td>${point.content }</td>
-		<td>${point.point }</td>
-		<td><a href="/admin/point/updateFormPoint?id=${point.id}">수정</a></td>
-		</tr>
-		</c:forEach>
-	</table>
+						<c:forEach var="point" items="${listPoint}">
+						<tr>
+							<td>${point.id }</td>
+							<td>${point.create_at }</td>
+							<td>${point.title }</td>
+							<td>${point.content }</td>
+							<td>${point.point }</td>
+							<td><input class="btn btn-primary" type="button" value="수정"></td>
+						</tr>
+						</c:forEach>
+					</table>
+					</div>
+					<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+					    	<c:if test="${page.startPage > page.pageBlock}">
+							    <li class="page-item">
+						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+						    	</li>
+					    	</c:if>
+						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							    <li class="page-item">
+									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+						    	</li>
+							</c:forEach>
+						    <c:if test="${page.endPage < page.totalPage}">
+							    <li class="page-item">
+							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+						    	</li>
+						    </c:if>
+						</ul>
+					</nav>
+			</main>
+		</div>
 	</div>
-	</div>
-	</main>
-	</div>
-	</div>
-
 </body>
 </html>

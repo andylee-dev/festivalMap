@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -86,43 +86,115 @@
 	    }
 	}
 </script>
-	
+<style type="text/css">
+.course-card {
+	width: 100%; 
+	height: 100%; 
+	background: #F4F4F4; 
+	border-radius: 10px
+}
+
+.course-body-text {
+	width: 100%; 
+	color: black; 
+	font-size: 16px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	word-wrap: break-word
+}
+
+.course-header-text {
+	color: black; 
+	font-size: 32px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	word-wrap: break-word
+}
+
+.input-text {
+
+	align-self: stretch; 
+	padding-left: 16px; 
+	padding-right: 16px; 
+	padding-top: 14px; 
+	padding-bottom: 14px; 
+	background: white; 
+	border-radius: 10px; 
+	border: 1px #DEE2E6 solid; 
+	justify-content: flex-start; 
+	align-items: center; 
+	gap: 8px; display: inline-flex
+}
+
+</style>
 </head>
 <body>
-	<h1>여기는 코스 등록 화면입니다.</h1>
-	<div class="container mt-5">
-		<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="course_title">코스명</label>
-				<input type="text" class="form-control" id="course_title" name="course_title" required="required">
-			</div>
-			<div class="form-group">
-				<label>코스 등록</label>
-				<button class="btn btn-primary" onclick="showPopUp()">코스 추가</button>
-				<div id="contentTable">
-				
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+			<main class="col-md-1"></main>
+			
+ 			<main class="col-md-8 col-lg-8 px-md-4 row justify-content-md-center">
+			
+				<!-- Section1: Title -->
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="border course-header-text">코스 등록</h1>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="distance">거리(km)</label>
-				<input type="text" class="form-control" id="distance" name="distance" required="required">
-			</div>
-			<div class="form-group">
-				<label for="time">소요시간</label>
-				<input type="text" class="form-control" id="time" name="time" required="required">
-			</div>
-			<div class="form-group">	
-				<label for="course_info">코스 설명</label>
-				<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
-			</div>
-			<div class="form-group">	
-				<label for="tag">태그 등록~~~~(기능 추가 필요) 그리고 공통코드 입력부분 추가 필요</label>
-			</div>
-			<div class="text-center">
-				<button type="submit" class="btn btn-primary">등록</button>
-				<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
-			</div>
-		</form>
+				
+				<!-- Section2: Table -->	
+				<div class="container mt-5 border">
+					<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
+						<div class="form-group course-body-text border">
+							<label for="course_title">코스명</label>
+							<input type="text" class="form-control input-text" id="course_title" name="course_title" required="required">
+						</div>
+							<div class="card course-card" style="width: 18rem;">
+							  <img src="..." class="card-img-top" alt="...">
+							  <div class="card-body">
+							    <h5 class="card-title">Card title</h5>
+							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							    <a href="#" class="btn btn-primary">Go somewhere</a>
+							  </div>
+							</div>
+						<div class="form-group course-body-text">
+							<label>코스 등록</label>
+							<button class="btn btn-primary" onclick="showPopUp()">코스 추가</button>
+							
+							<div id="contentTable">
+								<div class="card course-card" style="width: 18rem;">
+								  <img src="..." class="card-img-top" alt="...">
+								  <div class="card-body">
+								    <h5 class="card-title">Card title</h5>
+								    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								    <a href="#" class="btn btn-primary">Go somewhere</a>
+								  </div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="form-group course-body-text">
+							<label for="distance">거리(km)</label>
+							<input type="text" class="form-control" id="distance" name="distance" required="required">
+						</div>
+						<div class="form-group course-body-text">
+							<label for="time">소요시간</label>
+							<input type="text" class="form-control" id="time" name="time" required="required">
+						</div>
+						<div class="form-group course-body-text">	
+							<label for="course_info">코스 설명</label>
+							<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
+						</div>
+						<div class="form-group course-body-text">	
+							<label for="tag">태그 등록~~~~(기능 추가 필요) 그리고 공통코드 입력부분 추가 필요</label>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary">등록</button>
+							<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
+						</div>
+					</form>
+				</div> -->
+			</main>
+		</div>
 	</div>
 </body>
 </html>
