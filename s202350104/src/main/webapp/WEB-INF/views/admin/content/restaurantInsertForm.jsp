@@ -36,11 +36,14 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h2>맛집정보 입력</h2>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-pencil-square "></i>
+						<label  class="admin-header-title ">맛집 정보 등록 </label>					
+					</div>
 				</div>	
 				
 				<!-- Section2: Table -->		

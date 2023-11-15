@@ -56,48 +56,73 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">축제 관리</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-pencil-square "></i>
+						<label class="admin-header-title ">축제 정보 관리 </label>					
+					</div>
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
-					<form action="festival" method = "get">
+				<div class="container col-9 justify-content-center my-5">
+					<div class="col-12 my-4 d-flex align-items-center">
+						<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+			               <div class="col-4">
+				              <select id="searchType" name="searchType" class="form-select">
+					              <option value="s_title" selected>축제명</option>
+								  <option value="s_content">내용</option>
+								  <option value="s_sponsor">주최자</option>
+								  <option value="s_eventplace">장소</option>
+				              </select>
+			                </div>
+			                <div class="col-5 mx-2">
+				                <input type="text" name="keyword" class="form-control" value="${keyword}"
+				                placeholder="검색어를 입력하세요.">
+			                </div>
+			            </div>
+			            
+			            <div class="col-12 my-4 d-flex align-items-center">
+				            <label for="searchType" class="form-label col-2  mx-2">지역</label>
+				            	<div class="col-4">
+									<select name="area" class="area-dropdown form-select"></select>
+								</div>
+								<div class="col-5 mx-2">
+									<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+								</div>
+						</div>
 						
-						지역<select name="area" class="area-dropdown"></select>
-						   <select name="sigungu" class="sigungu-dropdown"></select><p>
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">승인여부</label>
+								<div class="col-2 align-self-start">
+									<select name = "status" class="form-select">
+										<option value = "" selected>전체</option>
+										<option value = "0">승인대기</option>
+										<option value = "1">승인완료</option>
+										<!-- <option>승인반려</option> -->
+									</select>
+								</div>
 						
-						승인여부<select name = "status">
-							<option value = "">전체</option>
-							<option value = "0">승인대기</option>
-							<option value = "1">승인완료</option>
-							<!-- <option>승인반려</option> -->
-						</select>
-						
-						삭제여부<select name="is_deleted">
-							<option value = "">전체</option>
-							<option value = "0">등록(전시)</option> <!-- 활성화 -->
-							<option value = "1">삭제(미전시)</option><!-- 비활성화 -->
-						</select><p>
-						
-						검색어<select name="search">
-							<option value = "s_title">축제명</option>
-							<option value = "s_content">내용</option>
-							<option value = "s_sponsor">주최자</option>
-							<option value = "s_eventplace">장소</option>
-						</select>						
-						<input type="text" name="keyword" placeholder = "검색어를 입력하세요.">
-						
-						<button type="submit" class="btn btn-outline-secondary">검색</button>
-						<button type="reset" class="btn btn-outline-secondary">초기화</button>
-					</form>
+							<label for="searchType" class="form-label col-2  mx-2">삭제여부</label>
+								<div class="col-2 align-self-end">
+									<select name="is_deleted" class="form-select">
+										<option value = "" selected>전체</option>
+										<option value = "0">등록</option>
+										<option value = "1">삭제</option>
+									</select><p>
+								</div>
+						</div>
+							
+						<div class="container col-10 d-flex justify-content-center">
+							<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+							<button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+						</div>
 				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-5 border">
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='festivalInsertForm'">등록</button>
 					<table class="table table-striped table-sm">
 						<thead>
@@ -114,7 +139,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${listFestivals.size() == 0}">해당하는 축제 정보가 없습니다.</c:if>
+							<c:if test="${listFestivals.size() == 0}"><td colspan="9">해당하는 축제 정보가 없습니다.</td></c:if>
 							
 							<c:set var="num" value="${page.start}"/>
 							<c:forEach var="festival" items="${listFestivals}" varStatus="st">				
@@ -152,17 +177,25 @@
 					
 					<p>총 건수 : ${totalFestivals}</p>
 					
-					<div align="center">
-						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-						</c:if>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="festival?currentPage=${i}" class="pageblock">[${i}]</a>
-						</c:forEach>
-						<c:if test="${page.endPage < page.totalPage}">
-							<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-						</c:if>
-					</div>
+					<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+							<c:if test="${page.startPage > page.pageBlock}">
+								<li class="page-item">
+									<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">이전</a>
+								</li>
+							</c:if>
+							<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+								<li class="page-item">
+									<a href="festival?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${page.endPage < page.totalPage}">
+								<li class="page-item">
+									<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">다음</a>
+								</li>
+							</c:if>
+						</ul>
+					</nav>
 					
 				</div>		
 			</main>

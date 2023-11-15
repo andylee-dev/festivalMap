@@ -38,11 +38,14 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">지역정보 - 명소</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-pencil-square "></i>
+						<label  class="admin-header-title ">명소 정보 관리 </label>					
+					</div>
 				</div>
 		
 				<!-- Section2: Search Form -->		
@@ -116,17 +119,27 @@
 							</c:forEach>
 						</tbody>
 				</table>
-			<div align="center">
-				<c:if test="${page.startPage > page.pageBlock}">
-					<a href="spot?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="spot?currentPage=${i}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${page.endPage < page.totalPage}">
-					<a href="spot?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-				</c:if>
-			</div>
+				
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item">
+								<a href="spot?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">이전</a>
+							</li>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item">
+								<a href="spot?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item">
+								<a href="spot?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">다음</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+				
 			</div>		
 		</main>
 	</div>

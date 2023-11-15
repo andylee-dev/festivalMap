@@ -3,10 +3,11 @@
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>FestivalTest</title>
+	<head>
+	<meta charset="UTF-8">
+	<title>FestivalTest</title>
 </head>
+
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
