@@ -8,22 +8,22 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="/user/myPage" class="nav-link active" aria-current="page">
+        <a href="/user/myPage" class="nav-link ${currentPageUrl eq '/user/myPage' ? 'active' : 'text-white'}" aria-current="page">
           계정관리
         </a>
       </li>
       <li>
-        <a href="/user/myPage/myLike" class="nav-link text-white">
+        <a href="/user/myPage/myLike" class="nav-link ${currentPageUrl eq '/user/myPage/myLike' ? 'active' : 'text-white'}">
           내 찜 목록
         </a>
       </li>
       <li>
-        <a href="/user/myPage/myTag" class="nav-link text-white">
+        <a href="/user/myPage/myTag" class="nav-link ${currentPageUrl eq '/user/myPage/myTag' ? 'active' : 'text-white'}">
           내 관심사
         </a>
       </li>
       <li>
-        <a href="/user/myPage/myPost" class="nav-link text-white">
+        <a href="/user/myPage/myPost" class="nav-link ${currentPageUrl eq '/user/myPage/myPost' ? 'active' : 'text-white'}">
           내 게시글
         </a>
       </li>

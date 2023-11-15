@@ -7,17 +7,17 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="/user/bizPage" class="nav-link ${currentPage eq '/user/bizPage' ? 'active' : 'text-white'} "aria-current="page">
+        <a href="/user/bizPage" class="nav-link ${currentPageUrl eq '/user/bizPage' ? 'active' : 'text-white'} "aria-current="page">
           계정관리${page}
         </a>
       </li>
       <li>
-        <a href="/user/bizPage/content" class="nav-link ${currentPage eq '/user/bizPage/content' ? 'active' : 'text-white'}">
+        <a href="/user/bizPage/content" class="nav-link ${currentPageUrl eq '/user/bizPage/content' ? 'active' : 'text-white'}">
           내 컨텐츠
         </a>
       </li>
       <li>
-        <a href="/user/myPage/qnaList" class="nav-link  ${currentPage eq '/user/bizPage/qna' ? 'active' : 'text-white'}">
+        <a href="/user/myPage/qnaList" class="nav-link  ${currentPageUrl eq '/user/bizPage/qna' ? 'active' : 'text-white'}">
      1:1문의
         </a>
       </li>
