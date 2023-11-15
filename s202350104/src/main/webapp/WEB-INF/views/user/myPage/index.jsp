@@ -106,7 +106,7 @@ h4 {
 	    const username = document.getElementById("username");
 	    const nickname = document.getElementById("nickname");
 	    const phone_num = document.getElementById("phone_num");
-	    const address = document.getElementById("address");
+	    const	 address = document.getElementById("address");
 	    // 추가 필요한 필드...
 	
 	    // 이메일이 제공되었는지 확인
