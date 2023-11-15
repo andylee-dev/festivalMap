@@ -169,27 +169,27 @@
 			                <label for="searchType" class="col-form-label col-2  mx-1">가입기간</label>
 				            <div class="col-6  mx-2 d-flex">
 				                <input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off">
-				                <label class="btn col-2" for="TO">오늘</label>
+				                <label class="btn col-2 mx-1" for="TO">오늘</label>
 				                <input type="radio" class="btn-check" name="dateOptions" id="1W" value="1W" autocomplete="off">
-				                <label class="btn col-2" for="1W">1주일</label>
+				                <label class="btn col-2 mx-1" for="1W">1주일</label>
 				                <input type="radio" class="btn-check" name="dateOptions" id="1M" value="1M" autocomplete="off">
-				                <label class="btn col-2" for="1M">1개월</label>
+				                <label class="btn col-2 mx-1" for="1M">1개월</label>
 				                <input type="radio" class="btn-check" name="dateOptions" id="3M" value="3M" autocomplete="off">
-				                <label class="btn col-2" for="3M">3개월</label>
+				                <label class="btn col-2 mx-1" for="3M">3개월</label>
 				                <input type="radio" class="btn-check" name="dateOptions" id="6M" value="6M" autocomplete="off">
-				                <label class="btn col-2" for="6M">6개월</label>
+				                <label class="btn col-2 mx-1" for="6M">6개월</label>
 				                <input type="radio" class="btn-check" name="dateOptions" id="ALL" value="ALL" autocomplete="off" checked>
-				                <label class="btn col-2" for="ALL">전체</label>
-				            </div>
-				            <div class="col-4 ">
-				                <input type="date" id="startDatePicker" name="startDate" value="${startDate}">
-				                <input type="date" id="endDatePicker" name="endDate" value="${endDate}">
-				            </div>
-				        </div>
-				
+				                <label class="btn col-2 mx-1" for="ALL">전체</label>
+				           
+				           		<div class="col-4 d-flex">
+				                <input type="date" class="mx-1" id="startDatePicker" name="startDate" value="${startDate}">
+				                <input type="date" class="mx-1" id="endDatePicker" name="endDate" value="${endDate}">
+				            	</div>
+				        	</div>
+						 </div>
 				        <!-- 옵션 -->
 			            <div class="col-12 my-4 d-flex align-items-center ">
-			                <label for="searchType" class="col-form-label col-2  mx-1">탈퇴</label>
+			                <label for="searchType" class="col-form-label col-2  mx-1">회원조회</label>
 				            <div class="form-check mx-2">
 				                <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted1" value='' checked>
 				                <label class="form-check-label" for="is_deleted1">전체 회원</label>
@@ -207,13 +207,14 @@
 					        <button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
 					        <button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>				        
 				        </div>
+				       		<button type="button" class="btn btn-outline-secondary mt-4">등록</button>	
 				    </form>
 				</div>
 
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-5 border">
-					<button type="button" class="btn btn-outline-secondary ">등록</button>
-					<table id="userTable" class="table table-striped table-sm">
+				<div class="container col-9 justify-content-center my-2 border p-3">
+					<table id="userTable" class="table table-striped table-sm text-center">
+						<br>
 						<thead>
 							<tr>
 								<th scope="col">회원번호</th>
@@ -246,17 +247,16 @@
 									<td><fmt:formatDate value="${user.created_at}" type="date" pattern="YY/MM/dd"/></td>
 									<td><a class="btn btn-primary" href="userUpdateForm/${user.id}?currentPage=${page.currentPage}">수정</a></td>
 									<td><c:if test="${user.is_deleted == 0}">
-											<input type="button" value="삭제"
+											<input class="btn btn-outline-secondary" type="button" value="삭제"
 										 onclick="userDeleteAjax(${st.index})">
 										</c:if>
-										<c:if test="${user.is_deleted == 1}">
-											탈퇴
-										</c:if></td>
+										<c:if test="${user.is_deleted == 1}">탈퇴</c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 					<nav aria-label="Page navigation example ">
 						<ul class="pagination">
 					    	<c:if test="${page.startPage > page.pageBlock}">
@@ -276,7 +276,6 @@
 						    </c:if>
 						</ul>
 					</nav>
-				</div>
 			</main>
 		</div>
 	</div>
