@@ -398,7 +398,7 @@ const checkDuplicate = (user) => {
 											</div>
 											<div class="form-check mx-2">
 												<input class="form-check-input" type="radio" name="gender"
-													id="female" value="1" ${user.gender =="0"?"checked":""}>
+													id="female" value="1" ${user.gender =="1"?"checked":""}>
 												<label class="form-check-label" for="female">여자</label>
 											</div>
 											<p class="helptext text-start"></p>
