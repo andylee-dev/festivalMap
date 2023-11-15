@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Beta Page</title>
+<!-- 리뷰 슬라이딩 라이브러리  owl.carousel -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
+
 <style type="text/css">
 .form-select {
 	width: 200px;
@@ -14,8 +20,20 @@
 	margin-bottom: 5px;
 	border: 2px black solid;
 }
-</style>
 
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".custom-carousel").owlCarousel({
+            autoWidth: true,
+            loop: true
+        });
+/*         $(".custom-carousel .card").click(function () {
+            $(".custom-carousel .card").not($(this)).removeClass("card");
+            $(this).toggleClass("card");
+        }); */
+    });
+</script>
 </head>
 <body>
 	<!-- Top bar -->
@@ -194,71 +212,61 @@
 	</div>
 	
 	<!-- 리뷰 카드 영역 -->
-	<div class="container p-0 border" style="height: 40%; margin-top: 50px;">
-		<div class="row row-cols-1 row-cols-md-3 g-4">
-			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-				<div class="carousel-inner">
-					<c:forEach var="boards" items="${board }">
-						<div class="carousel-item active">
-							<div class="col">
-								<div class="card" style="border: 3px solid black; border-radius: 23.50px;">
-									<div class="row row-cols-2" style="margin-top: 10px;">
-										<div class="col col-4">
-											<img src="../image/cuteBear.png"
-												 class="card-img-top rounded-circle border" alt="이미지영역"
-												 style="width: 100px; height =100px; margin-left: 15px;">
-										</div>
-										<div class="col col-8">
-											<div class="row row-cols-1" style="margin-left: -20px;">
-												<div class="row row-cols-2">
-													<div class="col"
-														style="font-size: 18px; font-weight: bolder;">${boards.nickname }</div>
-													<div class="col"
-														style="text-align: left; font-size: 16px; font-weight: bolder; color: #8C8C8C; margin-left: -20px; margin-top: 4px;">${boards.user_id }</div>
-												</div>
-
-												<div class="col" style="font-weight: bolder; color: #8C8C8C; margin-top: 2px;">
-													<fmt:formatDate value="${boards.created_at }" type="date" pattern="YYYY.MM.dd, hh:mm:ss" />
-												</div>
-												<div class="col" style="margin-top: 2px;">⭐⭐⭐⭐⭐</div>
-											</div>
-										</div>
+ 	<div class="container p-0" style="height: 40%; margin-top: 50px;">
+		<div class="owl-carousel custom-carousel owl-theme"> 	
+<!-- 		<div class="row row-cols-1 row-cols-md-1 g-4"> -->
+			<c:forEach var="boards" items="${board }">
+<!-- 				<div class="col"> -->
+					<div class="card" style="border: 3px solid black; border-radius: 23.50px; margin: 10px;
+											 width: 400px;">
+						<div class="row row-cols-2" style="margin-top: 10px;">
+							
+							<div class="col col-4">
+								<img src="../image/cuteBear.png"
+									 class="card-img-top rounded-circle border" alt="이미지영역"
+									 style="width: 100px; height: 100px; margin-left: 15px;">
+							</div>
+							
+							<div class="col col-8">
+								<div class="row row-cols-1" style="margin-left: -10px;">
+									<div class="row row-cols-2">
+										<div class="col" style="font-size: 18px; font-weight: bolder;">${boards.nickname }</div>
+										<div class="col" style="text-align: left; font-size: 16px; font-weight: bolder; color: #8C8C8C; margin-left: -20px; margin-top: 4px;">${boards.user_id }</div>
 									</div>
 
-									<div class="card-body">
-										<h5 class="card-title">
-											<strong>${boards.content }</strong>
-										</h5>
-										<p class="card-text">${boards.content }</p>
+									<div class="col" style="font-weight: bolder; color: #8C8C8C; margin-top: 2px;">
+										<fmt:formatDate value="${boards.created_at }" type="date"
+														pattern="YYYY.MM.dd, hh:mm:ss" />
 									</div>
-
-									<div class="card-footer">
-										<img src="../image/cuteBear.png" class="card-img-top" alt="이미지영역" 
-											 style="width: 100px; height =100px; margin-left: 15px;">
-										<img src="../image/cuteBear.png" class="card-img-top" alt="이미지영역"
-											 style="width: 100px; height =100px; margin-left: 15px;">
-										<img src="../image/cuteBear.png" class="card-img-top" alt="이미지영역"
-											 style="width: 100px; height =100px; margin-left: 15px;">
-									</div>
+									
+									<div class="col" style="margin-top: 2px;">⭐⭐⭐⭐⭐</div>
 								</div>
 							</div>
 						</div>
-					</c:forEach>
-					<button class="carousel-control-prev" type="button"
-						data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button"
-						data-bs-target="#carouselExampleControls" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
+
+						<div class="card-body row row-cols-1">
+							<h5 class="card-title col">
+								<strong>${boards.content }</strong>
+							</h5>
+							<p class="card-text col">${boards.content }</p>
+						</div>
+						
+						<div class="card-footer row border-0">
+							<img src="../image/cuteBear.png" class="card-img-top col" alt="이미지영역"
+								 style="width: 100px; height =100px; margin-left: 15px;"> 
+							<img src="../image/cuteBear.png" class="card-img-top col" alt="이미지영역"
+								 style="width: 100px; height =100px; margin-left: 15px;"> 
+							<img src="../image/cuteBear.png" class="card-img-top col" alt="이미지영역"
+								 style="width: 100px; height =100px; margin-left: 15px;">
+						</div>
+					</div>
+<!-- 				</div> -->
+			</c:forEach>
 			</div>
 		</div>
-	</div>
-
+<!-- 	</div>
+ -->
+ 
 	<!-- 경계선 표현 -->
 	<hr class="container p-0"
 		style="border-color: black; border-width: 4px;">

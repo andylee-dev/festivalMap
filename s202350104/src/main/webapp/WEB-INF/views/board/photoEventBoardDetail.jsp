@@ -18,6 +18,9 @@
 	crossorigin="anonymous">
 	
 </script>
+
+<link href="/css/board.css" rel="stylesheet" type="text/css">
+
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -72,63 +75,46 @@
 </script>
 </head>
 <body>
-	<div id="carouselExampleIndicators" class="carousel slide">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="1" aria-label="Slide 2"></button>
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="2" aria-label="Slide 3"></button>
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0" style="width: 100%;">
+	
+		<div class="container p-3"> 
+			<div class="row row-cols-5 align-items-center division_photo_custom">
+				<div class="col-md-1">글번호</div>
+				<div class="col-md-6">제목</div>
+				<div class="col-md-2">작성자</div>
+				<div class="col-md-2">작성일</div>
+				<div class="col-md-1">조회수</div>			
+			</div>		
 		</div>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="../image/sea.jpg" class="d-block w-100" alt="..." style="width: 800px; height: 400px;">
-			</div>
-			<div class="carousel-item">
-				<img src="../image/sea2.jpg" class="d-block w-100" alt="..." style="width: 800px; height: 400px;">
-			</div>
-			<div class="carousel-item">
-				<img src="../image/sea3.jpg" class="d-block w-100" alt="..." style="width: 800px; height: 400px;">
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button" 
-				data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span> 
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button"
-				data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
+		
+		<div class="container p-3"> 
+			<div class="row row-cols-5 align-items-center list_photo_custom">
+				<div class="col-md-1">1</div>
+				<div class="col-md-6">${board.title }</div>
+				<div class="col-md-2">${board.name }</div>
+				<div class="col-md-2">
+					<fmt:formatDate value="${board.created_at }" type="date"
+									pattern="YYYY.MM.dd"/>				
+				</div>
+				<div class="col-md-1">${board.read_count }</div>			
+			</div>		
+		</div>	
+		
 	</div>
-	<div class="container border p-5">
-		<table class="table table-bordered">
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">제목</th>
-				<td style="background-color: white;">${board.title }</td>
-				
-				<th scope="col" style="text-align: center;">작성자</th>
-				<td style="background-color: white;">${board.name }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">내용</th>
-				<td colspan="3" style="background-color: white;">${board.content }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">#해시태그</th>
-				<td colspan="7"  style="background-color: white;">	
-					<c:forEach var="tags" items="${hashTag }">
-						<span class="badge rounded-pill text-bg-info">#${tags.name }</span>
-					</c:forEach>
-				</td>
-			</tr>
-		</table>
+	
+	<div class="container p-3 border">
+		이미지 영역
 	</div>
+	
+	<div class="container p-3 border">
+		content
+	</div>
+	
+	<div class="container p-3 border">
+		해시태그
+	</div>
+	
 	<div class="text-center">
 		<button class="btn btn-primary" onclick="updateBoard(${board.id})">수정</button>
 		<button class="btn btn-warning" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>

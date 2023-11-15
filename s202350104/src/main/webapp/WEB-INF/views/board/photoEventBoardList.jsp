@@ -13,37 +13,15 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
 </script>
-<style>
-	.font-size-large {
-		font-size: 6px; /* 원하는 크기로 조정하세요. */
-	}
-	
-	a {
-		text-decoration: none;
-		color: black;
-	}
-	
-	.table-custom th {
-        background-color: #EEFFC2; /* 원하는 배경색으로 대체하세요 */
-        color: black; /* 선택사항: 텍스트 색상을 지정하여 가독성을 높일 수 있습니다 */
-    }
-    
-    .border-top {
-		 border-color: black;
-    }
-    
-    .btn-custom {
-    	background-color: #FF4379;
-    	color: white;
-    }
-    
-</style>
+
+<link href="/css/board.css" rel="stylesheet" type="text/css">
+
 <script type="text/javascript">
 	function showPopUp(id, userId) {
 		
 		//창 크기 지정
-		var width = 550;
-		var height = 600;
+		var width = 700;
+		var height = 650;
 		
 		//pc화면기준 가운데 정렬
 		var left = (window.screen.width / 2) - (width/2);
@@ -64,98 +42,140 @@
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 
-	<div id="content_title"	class="container p-5 mb-4 d-flex justify-content-between align-items-center">
+	<div id="content_title" class="container p-5 mb-4 text-center">
 	</div>
 
 	<c:set var="num" value="${page.total - page.start + 1}" />
 
-	<div class="container">
-		<div class="text-center" style="margin-bottom: 80px;">
-			<c:choose>
-				<c:when test="${smallCode == 5}">
-					<h1><strong>이벤트 게시판</strong></h1>
-				</c:when>
-				<c:otherwise>
-					<h1><strong>포토 게시판</strong></h1>				
-				</c:otherwise>
-			</c:choose>
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0">
+
+		<!-- 상단 title 영역  -->
+		<div class="container p-0 text-center header_title_custom">
+			<div class="row align-items-start">
+				<div class="col">
+					<c:choose>
+						<c:when test="${smallCode == 4}">
+							<h1>
+								<strong>포토게시판</strong>
+							</h1>
+						</c:when>
+						<c:when test="${smallCode == 5}">
+							<h1>
+								<strong>이벤트</strong>
+							</h1>
+						</c:when>
+					</c:choose>
+				</div>
+			</div>
 		</div>
 
-		<div style="margin-bottom: 10px;">
-			<table class="table" style="border-top: 2px black solid;">
-				<thead>
-					<tr class="table text-center">
-
-						<th scope="col" style="font-size: 24px;">
-							<a href="/noticBoardList">공지사항</a>
-						</th>
-						<th scope="col" style="font-size: 24px;">
-							<a href="/magazinBoardList">매거진</a>
-						</th>
-						<th scope="col" style="font-size: 24px;">
-							<a href="/freeBoardList">자유게시판</a>
-						</th>
-						<c:choose>
-							<c:when test="${smallCode == 4}">
-								<th scope="col" style="font-size: 24px; position: relative;">
-									<a href="/photoBoardList">포토게시판</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>
-								</th>
-								<th scope="col" style="font-size: 24px;">
-									<a href="/eventBoardList">이벤트</a></th>
-							</c:when>
-							<c:when test="${smallCode == 5}">
-								<th scope="col" style="font-size: 24px;">
-									<a href="/photoBoardList">포토게시판</a></th>
-								<th scope="col" style="font-size: 24px; position: relative;">
-									<a href="/eventBoardList">이벤트</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>
-								</th>
-							</c:when>
-						</c:choose>
-					</tr>
-				</thead>
-			</table>
-			<div class="d-flex justify-content-end">
-				<div style="width: 300px; height: 40px; background: #F7FBF4; border-radius: 23.50px; border: 2px black solid; margin-right: 10px; display: flex; align-items: center; justify-content: flex-end; position: relative;">
-					<img style="width: 20px; height: 19px; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);"
-						 src="../image/icon_search1.png" alt="test" />
-				</div>
+		<!-- 중간 네비게이션 영역 -->
+		<div class="container p-3">
+			<div class="row align-items-start md_nav_custom">
+				<!-- 현재창 활성화 bar 표시(4 = 포토게시판, 5 = 이벤트) -->
 				<c:choose>
-					<c:when test="${smallCode == 4}">
-						<button class="btn btn-custom"
-								onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+					<c:when test="${smallCode == 4 }">
+						<div class="col">
+							<span><a href="/noticBoardList">공지사항</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/magazinBoardList">매거진</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/freeBoardList">자유게시판</a></span>
+						</div>
+						<div class="col md_nav_col_active">
+							<span><a href="/photoBoardList">포토게시판</a></span>
+							<div class="md_nav_bar_active"></div>
+						</div>
+						<div class="col">
+							<span><a href="/eventBoardList">이벤트</a></span>
+						</div>
+					</c:when>
+
+					<c:when test="${smallCode == 5 }">
+						<div class="col">
+							<span><a href="/noticBoardList">공지사항</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/magazinBoardList">매거진</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/freeBoardList">자유게시판</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/photoBoardList">포토게시판</a></span>
+						</div>
+						<div class="col md_nav_col_active">
+							<span><a href="/eventBoardList">이벤트</a></span>
+							<div class="md_nav_bar_active"></div>
+						</div>
 					</c:when>
 				</c:choose>
 			</div>
 		</div>
 
-		<div class="row">
-			<c:forEach var="boards" items="${board}">
-				<div class="col-md-4 mb-4">
-					<div class="card">
-						<a href="javascript:showPopUp(${boards.id},${userId })"> 
-							<img src="../image/sea.jpg" class="card-img-top" alt="...">
-						</a>
-						<div class="card-body">
-							<table>
-								<tr>
-									<th class="card-text">${boards.title}</th>
-								</tr>
-								<tr>
-									<th>작성자</th>
-									<td class="font-size-small">${boards.name }</td>
-								</tr>
-								<tr>
-									<th>작성일</th>
-									<td><fmt:formatDate value="${boards.created_at }"
-														type="date" pattern="YYYY/MM/dd" /></td>
-								</tr>
-							</table>
+
+		<!-- 키워드, 검색창 영역 -->
+		<div class="container p-3 keyword_custom">
+			<div class="row align-items-start ">
+				<!-- 포토게시판만 검색창 같이 출력 -->
+				<c:choose>
+					<c:when test="${smallCode == 4}">
+						<div class="col keyword_div_custom">
+							<input class="form-control keyword_custom" type="text" placeholder="&nbsp;키워드를 검색해보세요."> 
+								<img src="../image/icon_search1.png" alt="test" />
+							<button class="btn btn_custom" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+						</div>
+					</c:when>
+				</c:choose>
+			</div>
+		</div>
+
+		<!-- 목록 출력 영역 -->
+		<div class="container p-3 cardList_custom">
+			<div class="row align-items-center">
+				<c:forEach var="boards" items="${board}">
+					<div class="col-6 col-md-4">
+						<!-- content-->
+						<div class="card card_custom" style="">
+							<a href="javascript:showPopUp(${boards.id},${userId })"> 
+								<img src="../image/sea.jpg" class="card-img-top" alt="sea.jpg">
+							</a>
+							<!-- title, 작성자, 작성일 영역 -->
+							<div class="card-body card_body_custom">
+								<div class="row row-cols-1">
+									<div class="row row-cols-3">
+										<div class="col-md-10" style="margin-top: 30px;">
+											<p>${boards.title }</p>
+										</div>
+										<div class="col-md-1" style="margin-left: -60px; ">
+											<img alt="동그라미1.jpg" src="../image/boardStatus1.png">
+										</div>
+										<div class="col-md-1" style="margin-left: 15px;">
+											<img alt="동그라미2.jpg" src="../image/boardStatus2.png">										
+										</div>
+									</div>
+									<div class="col">
+										<p class="card_p_custom">작성자&nbsp;&nbsp;&nbsp;&nbsp;
+										<span>${boards.name }</span></p>								
+									</div>
+									<div class="col">
+										<p class="card_p_custom">작성시간&nbsp;
+										<span>
+											<fmt:formatDate value="${boards.created_at }" type="date"
+															pattern="YYYY.MM.dd hh:mm:ss"/>
+										</span></p>		 							
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</div>
+		</div>
+
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
 				<c:choose>
@@ -196,7 +216,6 @@
 				</c:choose>
 			</ul>
 		</nav>	
-		</div>
 	</div>
 	
 	<!-- Footer -->

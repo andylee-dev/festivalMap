@@ -18,27 +18,9 @@
 	crossorigin="anonymous">
 	
 </script>
-<style>
-	a {
-		text-decoration: none;
-		color: black;
-	}
-	
-	.table-custom th {
-        background-color: #FF4379; /* 원하는 배경색으로 대체하세요 */
-        color: white; /* 선택사항: 텍스트 색상을 지정하여 가독성을 높일 수 있습니다 */
-    }
-    
-    .border-top {
-		 border-color: black;
-    }
-    
-    .btn-custom {
-    	background-color: #FF4379;
-    	color: white;
-    }
-    
-</style>
+
+<link href="/css/board.css" rel="stylesheet" type="text/css">
+
 <script type="text/javascript">
 
 </script>
@@ -50,128 +32,147 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<div id="content_title" class="container p-5 mb-4 text-center">
 	</div>
-
+	
+	<!-- 글번호 Logic -->
 	<c:set var="num" value="${page.total-page.start+1 }"/>
 	
-	<div class="container">
-		<div class="text-center" style="margin-bottom: 80px;">
-			<c:choose>
-				<c:when test="${smallCode == 2}">
-					<h1><strong>이달의 소식</strong></h1>
-				</c:when>
-				<c:when test="${smallCode == 3}">
-					<h1><strong>자유게시판</strong></h1>
-				</c:when>
-				<c:otherwise>
-					<h1><strong>공지사항</strong></h1>
-				</c:otherwise>
-			</c:choose>
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0">
+	
+		<!-- 상단 title 영역  -->
+		<div class="container p-0 text-center header_title_custom">
+			<div class="row align-items-start">
+				<div class="col">
+					<c:choose>
+						<c:when test="${smallCode == 2}">
+							<h1><strong>이달의 소식</strong></h1>
+						</c:when>
+						<c:when test="${smallCode == 3}">
+							<h1><strong>자유게시판</strong></h1>
+						</c:when>
+						<c:otherwise>
+							<h1><strong>공지사항</strong></h1>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
 		</div>
 		
-		<div style="margin-bottom: 10px;">
-			<table class="table" style="border-top:2px black solid;">
-				<thead>
-					<tr class="table text-center">
-						<c:choose>
-							<c:when test="${smallCode == 1}">
-								<th scope="col" style="font-size: 24px; text-align: center; position: relative;">
-									<a href="/noticBoardList">공지사항</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px;  background: #FF4379; border-radius: 20px;
-												position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>
-		
-								</th>
-								<th scope="col" style="font-size: 24px;">
-									<a href="/magazinBoardList">매거진</a>
-								</th>
-								<th scope="col" style="font-size: 24px;">
-									<a href="/freeBoardList">자유게시판</a>
-								</th>							
-							</c:when>
-							<c:when test="${smallCode == 2}">
-								<th scope="col" style="font-size: 24px;">
-									<a href="/noticBoardList">공지사항</a>
-								</th>
-								<th scope="col" style="font-size: 24px; text-align: center; position: relative;">
-									<a href="/magazinBoardList">매거진</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px;  background: #FF4379; border-radius: 20px;
-												position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>								
-								</th>
-								<th scope="col" style="font-size: 24px;">
-									<a href="/freeBoardList">자유게시판</a>
-								</th>							
-							</c:when>
-							<c:when test="${smallCode == 3}">
-								<th scope="col" style="font-size: 24px;">
-									<a href="/noticBoardList">공지사항</a>
-								</th>
-								<th scope="col" style="font-size: 24px;">
-									<a href="/magazinBoardList">매거진</a>
-								</th>
-								<th scope="col" style="font-size: 24px; text-align: center; position: relative;">
-									<a href="/freeBoardList">자유게시판</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px;  background: #FF4379; border-radius: 20px;
-												position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>								
-								</th>							
-							</c:when>													
-						</c:choose>
-							<th scope="col" style="font-size: 24px;">
-								<a href="/photoBoardList">포토게시판</a>
-							</th>
-							<th scope="col" style="font-size: 24px;">
-								<a href="/eventBoardList">이벤트</a>
-							</th>
-					</tr>	
-				</thead>
-			</table>
-			<div class="d-flex justify-content-end">
-				<div style="width: 300px; height: 40px; background: #F7FBF4; border-radius: 23.50px; border: 2px black solid; margin-right: 10px;
-							display: flex; align-items: center; justify-content: flex-end; position: relative;">
-					<img style="width: 20px; height: 19px; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);" src="../image/icon_search1.png" alt="test"/>
-				</div>
+		<!-- 중간 네비게이션 영역 -->
+		<div class="container p-3">
+			<div class="row align-items-start md_nav_custom">
+				<!-- 현재창 활성화 bar 표시(1 = 공지사항, 2 = 이달의 소식, 3 = 자유게시판 활성화) -->				
 				<c:choose>
-					<c:when test="${smallCode == 3}">
-						<button class="btn btn-custom" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+					<c:when test="${smallCode == 1 }">
+						<div class="col md_nav_col_active">
+							<span><a href="/noticBoardList">공지사항</a></span>
+							<div class="md_nav_bar_active"></div>
+						</div>
+						<div class="col">
+							<span><a href="/magazinBoardList">매거진</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/freeBoardList">자유게시판</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/photoBoardList">포토게시판</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/eventBoardList">이벤트</a></span>
+						</div>					
 					</c:when>
+					
+					<c:when test="${smallCode == 2 }">
+						<div class="col">
+							<span><a href="/noticBoardList">공지사항</a></span>
+						</div>
+						<div class="col md_nav_col_active">
+							<span><a href="/magazinBoardList">매거진</a></span>
+							<div class="md_nav_bar_active"></div>					
+						</div>
+						<div class="col">
+							<span><a href="/freeBoardList">자유게시판</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/photoBoardList">포토게시판</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/eventBoardList">이벤트</a></span>
+						</div>					
+					</c:when>
+					
+					<c:when test="${smallCode == 3 }">
+						<div class="col">
+							<span><a href="/noticBoardList">공지사항</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/magazinBoardList">매거진</a></span>
+						</div>
+						<div class="col md_nav_col_active">
+							<span><a href="/freeBoardList">자유게시판</a></span>
+							<div class="md_nav_bar_active"></div>						
+						</div>
+						<div class="col">
+							<span><a href="/photoBoardList">포토게시판</a></span>
+						</div>
+						<div class="col">
+							<span><a href="/eventBoardList">이벤트</a></span>
+						</div>					
+					</c:when>											
 				</c:choose>
 			</div>
 		</div>
-
-		<table class="table">
-			<thead>
-				<tr class="table table-custom text-center">
-					<th scope="col" style="font-size: 18px;">글번호</th>
-					<th scope="col" style="font-size: 18px;">제목</th>
-					<th scope="col" style="font-size: 18px;">작성자</th>
-					<th scope="col" style="font-size: 18px;">작성일</th> 
-					<th scope="col" style="font-size: 18px;">조회수</th>
-				</tr>
-			</thead>
-			<tbody>
+		
+		<!-- 키워드, 검색창 영역 -->
+		<div class="container p-3 keyword_custom">
+			<div class="row align-items-start ">
+				<!-- 자유게시판만 검색창 같이 출력 -->
+				<c:choose>
+					<c:when test="${smallCode == 3}">
+						<div class="col keyword_div_custom">
+							<input class="form-control keyword_custom" type="text" placeholder="&nbsp키워드를 검색해보세요.">
+							<img src="../image/icon_search1.png" alt="test" />
+							<button class="btn btn_custom" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>		
+						</div>
+					</c:when>
+				</c:choose>			
+			</div>
+		</div>
+		
+		<!-- 구분 메뉴 영역 -->
+		<div class="container p-3">
+			<div class="row row-cols-5 align-items-center division_custom">
+				<div class="col-md-1">글번호</div>
+				<div class="col-md-6">제목</div>
+				<div class="col-md-2">작성자</div>
+				<div class="col-md-2">작성일</div>
+				<div class="col-md-1">조회수</div>			
+			</div>		
+		</div>
+		
+		<!-- 목록 출력 영역 -->
+		<div class="container p-3 list_container_custom">
 			<c:forEach var="boards" items="${board }">
-				<tr>
-					<td class="text-center" style="font-size: 18px; font-weight: bold;">${num }</td>
-					<c:choose>
-						<c:when test="${smallCode eq 6}">
-							<td class="text-center" style="font-size: 18px; font-weight: bold;">
-								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.content }</a>
-							</td>
-						</c:when>
-						<c:otherwise>
-							<td class="text-center" style="font-size: 18px; font-weight: bold;">
-								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>
-							</td>
-						</c:otherwise>
-					</c:choose>
-					<td class="text-center" style="font-size: 18px; font-weight: bold;">${boards.name }</td>
-					<td class="text-center" style="font-size: 18px; font-weight: bold;">
+				<div class="row row-cols-5 align-items-center list_custom">
+					<!-- 글번호 Date -->		
+					<div class="col-md-1">${num }</div>
+					<!-- 게시판 제목 -->
+					<div class="col-md-6">
+						<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>
+					</div>
+					<!-- 게시물 작성자 -->
+					<div class="col-md-2">${boards.name }</div>
+					<!-- 게시물 작성일(최초 생성일) -->
+					<div class="col-md-2">		
 						<fmt:formatDate value="${boards.created_at }" type="date"
-										pattern="YYYY/MM/dd"/></td>
-					<td class="text-center" style="font-size: 18px; font-weight: bold;">${boards.read_count }</td>
-				</tr>
-				<c:set var="num" value="${num - 1 }"/>
+										pattern="YYYY/MM/dd"/>
+					</div>
+					<!-- 게시물 조회수 -->
+					<div class="col-md-1">${boards.read_count }</div>				
+				</div>		
 			</c:forEach>
-			</tbody>
-		</table>
+		</div>		
+		
 		<!-- 페이징 처리 구간 -->
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
@@ -247,12 +248,10 @@
 				</c:choose>
 			</ul>
 		</nav>
+	
+	<!-- 전체 content 영역 END -->
 	</div>
 
-		<!--     <div style="width: 146px; left: 1476px; top: 41px; position: absolute; text-align: center; color: black; font-size: 20px; font-family: Coda Caption; font-weight: 800; word-wrap: break-word">마이페이지</div>
-    <div style="width: 101px; height: 31px; left: 1596px; top: 42px; position: absolute; text-align: center; color: black; font-size: 20px; font-family: Coda Caption; font-weight: 800; word-wrap: break-word">비즈니스</div> -->
-<!-- 		<img style="width: 20px; height: 19px; left: 1457px; top: 418px; position: absolute"
-			 src="https://via.placeholder.com/20x19" /> -->
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 </body>
