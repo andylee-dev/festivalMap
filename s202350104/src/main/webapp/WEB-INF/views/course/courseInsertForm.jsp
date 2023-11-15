@@ -112,6 +112,7 @@
 }
 
 .input-text {
+
 	align-self: stretch; 
 	padding-left: 16px; 
 	padding-right: 16px; 
@@ -124,10 +125,6 @@
 	align-items: center; 
 	gap: 8px; display: inline-flex
 }
-
-
-
-
 
 </style>
 </head>
@@ -145,9 +142,9 @@
 				</div>
 				
 				<!-- Section2: Table -->	
-				<div class="container mt-5">
+				<div class="container mt-5 border">
 					<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
-						<div class="form-group course-body-text">
+						<div class="form-group course-body-text border">
 							<label for="course_title">코스명</label>
 							<input type="text" class="form-control input-text" id="course_title" name="course_title" required="required">
 						</div>
