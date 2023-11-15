@@ -171,8 +171,7 @@
 
 				<!-- Section3: Table -->
 				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table id="bizuserTable" class="table table-striped table-sm text-center">
-						<br>
+					<table id="bizuserTable" class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">id</th>

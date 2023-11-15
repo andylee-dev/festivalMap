@@ -14,30 +14,40 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp"%>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-10 overflow-auto p-0">
 				<!-- Section1: Title -->
-				<div
-					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">찜 목록 리스트</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-people-fill "></i>
+					<label  class="admin-header-title ">찜 목록 리스트</label>>
+					</div>
 				</div>
-
+				
 				<!-- Section2: Search Form -->
-				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<form action="favoriteSearch">
-						<select name="search">
-							<option value="s_id">ID조회</option>
-							<option value="s_name">이름조회</option>
-						</select> 
-						<input type="text" name="keyword" placeholder="keyword를 입력하세요">
-						<button type="submit">keyword검색</button>
+				<div class="container col-9 justify-content-center my-5">
+					<form action="favoriteSearch" method="POST" container justify-content-center">	
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+							<div class="col-4">
+								<select name="search" class="form-select">
+									<option value="s_id">ID조회</option>
+									<option value="s_name">이름조회</option>
+								</select> 
+							</div>	
+							<div class="col-5 mx-2 d-flex justify-content-center">	
+								<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
+								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+							</div>
+						</div>	
 					</form>
 				</div>
-
-				<!-- Section3: Table -->
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-2">
 					<button type="button" class="btn btn-outline-secondary ">등록</button>
-					<table class="table table-striped table-sm">
+				</div>
+					
+				<!-- Section3: Table -->
+				<div class="container col-9 justify-content-center my-2 border p-2">
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">회원ID</th>
@@ -55,13 +65,32 @@
 									<td>${favorite.name}</td>
 									<td>${favorite.id}</td>
 									<td><fmt:formatDate value="${favorite.create_at}" type="date" pattern="YY/MM/dd"/></td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>
+									<td><input class="btn btn-primary" type="button" value="수정"></td>
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
+					<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+					    	<c:if test="${page.startPage > page.pageBlock}">
+							    <li class="page-item">
+						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+						    	</li>
+					    	</c:if>
+						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							    <li class="page-item">
+									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+						    	</li>
+							</c:forEach>
+						    <c:if test="${page.endPage < page.totalPage}">
+							    <li class="page-item">
+							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+						    	</li>
+						    </c:if>
+						</ul>
+					</nav>
 			</main>
 		</div>
 	</div>

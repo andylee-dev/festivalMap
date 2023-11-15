@@ -17,7 +17,7 @@
 				<!-- Section1: Title -->
 				<div class="admin-header-container">
 					<div class="container m-4">
-						<i class="title-bi bi bi-people-fill "></i>
+						<i class="title-bi bi bi-gear-fill"></i>
 					<label  class="admin-header-title ">관리자설정 - 관리자리스트</label>>
 					</div>
 				</div>
