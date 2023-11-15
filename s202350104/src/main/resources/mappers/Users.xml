@@ -18,7 +18,10 @@
 		FROM(
 	    		SELECT ROWNUM rn, users.*
 				FROM users
-				WHERE small_code = #{small_code}
+				WHERE 1=1
+		        <if test="small_code != null and small_code != '' and small_code != 0">
+					AND small_code = #{small_code}
+				</if>
 				<if test="keyword != null and keyword != ''">
 			        <choose>
 			            <!-- "searchType"이 "name"일 때 -->
@@ -34,6 +37,13 @@
 							AND nickname like '%' || #{keyword}|| '%'
 			            </when>
 			        </choose>
+		        <if test="email != null and email != ''">
+		            AND email = #{email}
+		        </if>
+		
+		        <if test="nickname != null and nickname != ''">
+		            AND nickname = #{nickname}
+		        </if>
 		        </if>
 		        <!-- "startDate"와 "endDate"로 가입일을 조회 -->
     	        <if test="startDate != null and endDate != null">
@@ -48,7 +58,10 @@
 	<select id="totalUsers" resultType="int">
    		SELECT count(*)
 		FROM users
-		WHERE small_code = #{small_code}
+		WHERE 1=1
+        <if test="small_code != null and small_code != '' and small_code != 0">
+			AND small_code = #{small_code}
+		</if>
 		<if test="keyword != null and keyword != ''">
 	        <choose>
 	            <!-- "searchType"이 "name"일 때 -->
@@ -65,6 +78,15 @@
 	            </when>
 	        </choose>
         </if>
+        
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+
+        <if test="nickname != null and nickname != ''">
+            AND nickname = #{nickname}
+        </if>
+        
         <!-- "startDate"와 "endDate"로 가입일을 조회 -->
         <if test="startDate != null and endDate != null">
             AND created_at BETWEEN #{startDate} AND #{endDate}

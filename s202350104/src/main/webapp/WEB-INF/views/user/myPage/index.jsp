@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +56,7 @@ h4 {
 	word-wrap: break-word
 }
 
-.helptext{
+.helptext {
 	color: #6D6A6A;
 	font-size: 13px;
 	font-family: Noto Sans;
@@ -64,7 +65,45 @@ h4 {
 	word-wrap: break-word
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+const checkDuplicate = (user) => {
+    const {email, nickname} = user;
+    console.log(email,nickname);
+
+    $.ajax({
+        method:"POST",
+        url:"/admin/user/getTotalSearchUserAjax",
+        contentType: "application/json", 
+        data: JSON.stringify(user), 
+        success: function(result) {
+            console.log(result);
+
+            // total user가 1 이상일 경우
+            if (result >= 1) {
+                alert("중복된 사용자가 존재합니다. 다른 이메일 혹은 닉네임을 사용해주세요.");
+
+                // form 제출 방지
+                event.preventDefault();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(xhr, status, error);
+        }
+    });
+}   
+
+	function checkDuplicateEmail() {
+	    const email = document.getElementById("email").value;
+	    if( email )  checkDuplicate({email: email});
+	}
+
+	function checkDuplicateNickname() {
+	    const nickname = document.getElementById("nickname").value;
+	    if( nickname ) checkDuplicate({nickname: nickname});
+	}
+
+	
 	document.addEventListener('DOMContentLoaded', (event) => {
 	    const pw = document.getElementById("pw");
 	    const pw2 = document.getElementById("pw2");
@@ -204,203 +243,212 @@ h4 {
 						<h2>내 정보</h2>
 						<div class="container w-80 my-5" align="center">
 
-						<!-- 회원 정보 조회 화면 -->
-						<div id="view" class="container" align="center">
-							<div class="m-4 row align-items-baseline ">
-								<label for="email-view"
-									class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">이메일</label>
-								<div class="col-sm-6 mx-3">
-									<input type="email" class="form-control-plaintext " id="email-view" 
-										value="${user.email}"readonly>
+							<!-- 회원 정보 조회 화면 -->
+							<div id="view" class="container" align="center">
+								<div class="m-4 row align-items-baseline ">
+									<label for="email-view"
+										class="col-sm-2 col-form-label fw-bold text-end mx-3"
+										style="font-size: 20px;">이메일</label>
+									<div class="col-sm-6 mx-3">
+										<input type="email" class="form-control-plaintext "
+											id="email-view" value="${user.email}" readonly>
+									</div>
 								</div>
-							</div>
-							<div class="m-4 row align-items-baseline ">
-								<label for="username-view"
-									class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">사용자명</label>
-								<div class="col-sm-6 mx-3">
-									<input type="text" class="form-control-plaintext " id="username-view"
-										value="${user.name}" readonly>
+								<div class="m-4 row align-items-baseline ">
+									<label for="username-view"
+										class="col-sm-2 col-form-label fw-bold text-end mx-3"
+										style="font-size: 20px;">사용자명</label>
+									<div class="col-sm-6 mx-3">
+										<input type="text" class="form-control-plaintext "
+											id="username-view" value="${user.name}" readonly>
+									</div>
 								</div>
-							</div>
-							<div class="m-4 row align-items-baseline ">
-								<label for="nickname-view"
-									class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">닉네임</label>
-								<div class="col-sm-6 mx-3">
-									<input type="text" class="form-control-plaintext " id="nickname-view" 
-										value="${user.nickname}" readonly>
+								<div class="m-4 row align-items-baseline ">
+									<label for="nickname-view"
+										class="col-sm-2 col-form-label fw-bold text-end mx-3"
+										style="font-size: 20px;">닉네임</label>
+									<div class="col-sm-6 mx-3">
+										<input type="text" class="form-control-plaintext "
+											id="nickname-view" value="${user.nickname}" readonly>
+									</div>
 								</div>
-							</div>
 
-							<div class="m-4 row align-items-baseline ">
-								<label class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">성별</label>
-								<div class="col-sm-6 mx-3 d-flex">
-						            <div class="form-check mx-2">
-					            	    <input class="form-check-input" type="radio" name="gender-퍋ㅈ" id="male-view" 
-					            	    	value="0" ${user.gender =="0"?"checked":""} disabled>
-										<label class="form-check-label" for="male">남자</label>
-						            </div>
-						            <div class="form-check mx-2">
-						                <input class="form-check-input" type="radio" name="gender" id="female-view" 
-						                	value="1" ${user.gender =="1"?"checked":""} disabled>
-						                <label class="form-check-label" for="female">여자</label>
-						            </div>
-								</div>
-							</div>
-							<div class="m-4 row align-items-baseline ">
-								<label for="phone_num-view"
-									class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">핸드폰번호</label>
-								<div class="col-sm-6 mx-3">
-									<input type="tel" class="form-control-plaintext " id="phone_num-view"
-										value="${user.phone_num}" readonly>
-								</div>
-							</div>
-							<div class="m-4 row align-items-baseline ">
-								<label for="address-view"
-									class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">주소</label>
-								<div class="col-sm-6 mx-3">
-									<input type="text" class="form-control-plaintext " id="address-view" 
-										value="${user.address}" readonly>
-								</div>
-							</div>
-							<div class="container  justify-content-start my-5">
-								<button class="btn btn-primary col-sm-4 mx-3" onclick="editBtnHandler()">수정하기</button>
-							</div>
-						</div>
-						
-						<!-- 회원 정보 수정 화면 -->
-						<div id="edit" style="display: none;">
-	    					<form action="">
-								<div class="mb-2 row align-items-baseline ">
-									<label for="email"
-										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">이메일<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
-									<div class="col-sm-6 mx-3">
-										<input type="email" class="form-control " id="email" 
-											value="${user.email}" placeholder="festimap@festimap.com" name="email">
-										<p class="helptext text-start">아이디는 이메일 주소 형식이어야 합니다.</p>
-									</div>
-									<button class="btn btn-primary col-sm-1 mx-3">중복확인</button>
-								</div>
-								<div class="mb-2 row align-items-baseline ">
-									<label for="pw"
-										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">패스워드<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
-									<div class="col-sm-6 mx-3">
- 										<input type="password" class="form-control " id="pw"  name="password" 
-											autoComplete="off">
-										<p class="helptext text-start">패스워드(비밀번호)는 영문자, 숫자, 특수문자를 모두 포함하여야 합니다.</p>
-									</div>
-								</div>
-	
-								<div class="mb-2 row align-items-baseline ">
-									<label for="pw2"
-										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">패스워드 확인<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
-									<div class="col-sm-6 mx-3">
-										<input type="password" class="form-control "  id="pw2"  autoComplete="off">
-										<p class="helptext text-start">상기 입력한 패스워드를 한 번 더 입력해 주세요.</p>
-									</div>
-								</div>
-	
-								<div class="mb-2 row align-items-baseline ">
-									<label for="username"
-										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">사용자명<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
-									<div class="col-sm-6 mx-3">
-										<input type="text" class="form-control " id="username" 
-											value="${user.name}" name="username">
-										<p class="helptext text-start"></p>
-									</div>
-								</div>
-								<div class="mb-2 row align-items-baseline ">
-									<label for="nickname"
-										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">닉네임<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
-									<div class="col-sm-6 mx-3">
-										<input type="text" class="form-control " id="nickname" 
-											value="${user.nickname}" name="nickname">
-										<p class="helptext text-start"></p>
-									</div>
-									<button class="btn btn-primary col-sm-1 mx-3">중복확인</button>
-								</div>
-	
-								<div class="mb-2 row align-items-baseline ">
+								<div class="m-4 row align-items-baseline ">
 									<label class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">성별<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										style="font-size: 20px;">성별</label>
 									<div class="col-sm-6 mx-3 d-flex">
-							            <div class="form-check mx-2">
-						            	    <input class="form-check-input" type="radio" name="gender" id="male" 
-						            	    	value="0" ${user.gender =="0"?"checked":""}>
-											<label class="form-check-label" for="male">남자</label>
-							            </div>
-							            <div class="form-check mx-2">
-							                <input class="form-check-input" type="radio" name="gender" id="female" 
-							                	value="1" ${user.gender =="0"?"checked":""}>
-							                <label class="form-check-label" for="female">여자</label>
-							            </div>
-										<p class="helptext text-start"></p>
+										<div class="form-check mx-2">
+											<input class="form-check-input" type="radio" name="gender-퍋ㅈ"
+												id="male-view" value="0" ${user.gender =="0"?"checked":""}
+												disabled> <label class="form-check-label" for="male">남자</label>
+										</div>
+										<div class="form-check mx-2">
+											<input class="form-check-input" type="radio" name="gender"
+												id="female-view" value="1" ${user.gender =="1"?"checked":""}
+												disabled> <label class="form-check-label"
+												for="female">여자</label>
+										</div>
 									</div>
 								</div>
-								<div class="mb-2 row align-items-baseline ">
-									<label for="phone_num"
+								<div class="m-4 row align-items-baseline ">
+									<label for="phone_num-view"
 										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">핸드폰번호<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										style="font-size: 20px;">핸드폰번호</label>
 									<div class="col-sm-6 mx-3">
-										<input type="tel" class="form-control " id="phone_num" 
-											value="${user.phone_num}" name="phone_num">
-										<p class="helptext text-start"></p>
+										<input type="tel" class="form-control-plaintext "
+											id="phone_num-view" value="${user.phone_num}" readonly>
 									</div>
 								</div>
-								<div class="mb-2 row align-items-baseline ">
-									<label for="address"
+								<div class="m-4 row align-items-baseline ">
+									<label for="address-view"
 										class="col-sm-2 col-form-label fw-bold text-end mx-3"
-										style="font-size: 20px;">주소<SUP
-										style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										style="font-size: 20px;">주소</label>
 									<div class="col-sm-6 mx-3">
-										<input type="text" class="form-control " id="address" 
-											value="${user.address}" name="address">
-										<p class="helptext text-start"></p>
+										<input type="text" class="form-control-plaintext "
+											id="address-view" value="${user.address}" readonly>
 									</div>
-									<button class="btn btn-primary col-sm-1 mx-3">주소찾기</button>
 								</div>
 								<div class="container  justify-content-start my-5">
-									<button type="submit" class="btn btn-primary col-sm-4 mx-3" onclick="checkSubmitHandler()">저장하기</button>
-									<button type="reset" class="btn col-sm-4 mx-3" onclick="cancelBtnHandler()">취소</button>
+									<button class="btn btn-primary col-sm-4 mx-3"
+										onclick="editBtnHandler()">수정하기</button>
 								</div>
-							</form>
-						</div>
+							</div>
 
-	
+							<!-- 회원 정보 수정 화면 -->
+							<div id="edit" style="display: none;">
+								<form action="">
+									<div class="mb-2 row align-items-baseline ">
+										<label for="email"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">이메일<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="email" class="form-control " id="email"
+												value="${user.email}" placeholder="festimap@festimap.com"
+												name="email" disabled>
+										</div>
+									</div>
+									<div class="mb-2 row align-items-baseline ">
+										<label for="pw"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">패스워드<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="password" class="form-control " id="pw"
+												name="password" autoComplete="off">
+											<p class="helptext text-start">패스워드(비밀번호)는 영문자, 숫자, 특수문자를
+												모두 포함하여야 합니다.</p>
+										</div>
+									</div>
+
+									<div class="mb-2 row align-items-baseline ">
+										<label for="pw2"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">패스워드 확인<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="password" class="form-control " id="pw2"
+												autoComplete="off">
+											<p class="helptext text-start">상기 입력한 패스워드를 한 번 더 입력해
+												주세요.</p>
+										</div>
+									</div>
+
+									<div class="mb-2 row align-items-baseline ">
+										<label for="username"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">사용자명<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="text" class="form-control " id="username"
+												value="${user.name}" name="username">
+											<p class="helptext text-start"></p>
+										</div>
+									</div>
+									<div class="mb-2 row align-items-baseline ">
+										<label for="nickname"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">닉네임<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="text" class="form-control " id="nickname"
+												value="${user.nickname}" name="nickname">
+											<p class="helptext text-start"></p>
+										</div>
+										<button class="btn btn-primary col-sm-1 mx-3"
+											onclick="checkDuplicateNickname();event.preventDefault();">중복확인</button>
+									</div>
+
+									<div class="mb-2 row align-items-baseline ">
+										<label class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">성별<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3 d-flex">
+											<div class="form-check mx-2">
+												<input class="form-check-input" type="radio" name="gender"
+													id="male" value="0" ${user.gender =="0"?"checked":""}>
+												<label class="form-check-label" for="male">남자</label>
+											</div>
+											<div class="form-check mx-2">
+												<input class="form-check-input" type="radio" name="gender"
+													id="female" value="1" ${user.gender =="0"?"checked":""}>
+												<label class="form-check-label" for="female">여자</label>
+											</div>
+											<p class="helptext text-start"></p>
+										</div>
+									</div>
+									<div class="mb-2 row align-items-baseline ">
+										<label for="phone_num"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">핸드폰번호<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="tel" class="form-control " id="phone_num"
+												value="${user.phone_num}" name="phone_num">
+											<p class="helptext text-start"></p>
+										</div>
+									</div>
+									<div class="mb-2 row align-items-baseline ">
+										<label for="address"
+											class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">주소<SUP
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3">
+											<input type="text" class="form-control " id="address"
+												value="${user.address}" name="address">
+											<p class="helptext text-start"></p>
+										</div>
+										<button class="btn btn-primary col-sm-1 mx-3"
+											onclick="event.preventDefault();">주소찾기</button>
+									</div>
+									<div class="container  justify-content-start my-5">
+										<button type="submit" class="btn btn-primary col-sm-4 mx-3"
+											onclick="checkSubmitHandler(event)">저장하기</button>
+										<button type="reset" class="btn col-sm-4 mx-3"
+											onclick="cancelBtnHandler()">취소</button>
+									</div>
+								</form>
+							</div>
+
+
 
 						</div>
 					</div>
 					<div class="container  p-2 my-5">
 						<hr class="hr" />
 						<h2>포인트 내역</h2>
-							<div class="mb-2 row align-items-baseline ">
-								<label for="point"
-									class="col-sm-2 col-form-label fw-bold text-end mx-3"
-									style="font-size: 20px;">잔여포인트</label>
-								<div class="col-sm-6 mx-3">
-									<input type="text" class="form-control " id="point" name="point">
-									<p class="helptext text-start"></p>
-								</div>
-								<button class="btn btn-primary col-sm-2 mx-3">포인트 사용 내역</button>
+						<div class="mb-2 row align-items-baseline ">
+							<label for="point"
+								class="col-sm-2 col-form-label fw-bold text-end mx-3"
+								style="font-size: 20px;">잔여포인트</label>
+							<div class="col-sm-6 mx-3">
+								<input type="text" class="form-control-plaintext " id="point"
+									value="${user.point}" name="point">
+								<p class="helptext text-start"></p>
 							</div>
-						
+							<button class="btn btn-primary col-sm-2 mx-3">포인트 사용 내역</button>
+						</div>
+
 						<div class="container w-50 my-5" align="center">
 							<table class="table table-striped table-sm">
 								<thead>

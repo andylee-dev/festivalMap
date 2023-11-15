@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
@@ -128,6 +129,23 @@ public class AdminUserController {
 		return ResponseEntity.ok(result);
     }
 
+	
+	@RequestMapping(value = "getTotalSearchUserAjax",  method = RequestMethod.POST)
+    public ResponseEntity<Integer> getTotalSearchUser(@RequestBody Users user) {
+		int result = 0;
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "getTotalSearchUser", "start");	
+			log.info(user.toString());
+			result =us.totalUsers(user);
+			log.info("totalUsers:{}",result);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "getTotalSearchUser", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "getTotalSearchUser", "end");
+		}		
+		return ResponseEntity.ok(result);
+    }
 	
 	
 	@RequestMapping(value = "favoriteList")
