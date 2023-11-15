@@ -13,7 +13,7 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-10 overflow-auto p-0">
 				<!-- Section1: Title -->
 				<div class="admin-header-container">
 					<div class="container m-4">

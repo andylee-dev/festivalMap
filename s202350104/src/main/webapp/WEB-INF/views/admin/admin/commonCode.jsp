@@ -13,35 +13,46 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-10 overflow-auto p-0">
 				
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">관리자설정 - 공통코드관리</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-gear-fill"></i>
+					<label  class="admin-header-title ">관리자설정 - 공통코드관리</label>
+					</div>
 				</div>
-		
+				
 				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<form action="commonCodeSearch">
-						<select name="big_code">
-							<option value="">전체</option>
-							<%-- <c:forEach var="common" items="${listCommon}"> --%>
-							<c:forEach var="common" items="${listCommon}">
-								<c:if test="${common.small_code == 999}">
-								<option value="${common.big_code}">${common.content}</option>
-								</c:if>
-							</c:forEach>
-						</select>
-						<button type="submit" class="btn btn-outline-secondary">검색</button>
+				<div class="container col-9 justify-content-center my-5">
+					<form action="commonCodeSearch" method="POST" container justify-content-center >
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">공통코드검색</label>
+							<div class="col-4">
+								<select name="big_code" class="form-select">
+									<option value="">전체</option>
+								<%-- <c:forEach var="common" items="${listCommon}"> --%>
+										<c:forEach var="common" items="${listCommon}">
+										<c:if test="${common.small_code == 999}">
+									<option value="${common.big_code}">${common.content}</option>
+										</c:if>
+										</c:forEach>
+								</select>
+							</div>
+							<div class="col-5 mx-2 d-flex justify-content-center">	
+								<button type="submit" class="btn btn-primary  col-2 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
+							</div>	
+						</div>
 					</form>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+				</div>
+				<div class="container col-9 justify-content-center my-2">
+					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
 				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary ">등록</button>
-					<table class="table table-striped table-sm">
+				<div class="container col-9 justify-content-center my-2 border p-2">
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -60,8 +71,8 @@
 									<td>${commonCode.big_code}</td>
 									<td>${commonCode.small_code}</td>
 						 			<td>${commonCode.content}</td>
-						 			<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>					
+						 			<td><input class="btn btn-primary" type="button" value="수정"></td>
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>					
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>
