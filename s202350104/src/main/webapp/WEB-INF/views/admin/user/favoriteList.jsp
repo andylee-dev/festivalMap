@@ -19,7 +19,7 @@
 				<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-people-fill "></i>
-					<label  class="admin-header-title ">찜 목록 리스트</label>>
+					<label  class="admin-header-title ">찜 목록 리스트</label>
 					</div>
 				</div>
 				
