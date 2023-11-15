@@ -55,7 +55,7 @@
 								<input  class="col-3  mx-2" type="text" name="keyword" placeholder="검색어를 입력해주세요.">
 								<button type="submit" class="btn btn-primary col-1 mx-1">검색</button>
 								<button type="reset" class="btn btn-outline-secondary col-1 mx-1">초기화</button>
-							</div>
+						</div>
 					</form>	
 				</div>		
 				<div class="container col-9 justify-content-center my-2">
