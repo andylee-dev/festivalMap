@@ -25,8 +25,8 @@
 	}
 	
 	.table-custom th {
-        background-color: #EEFFC2; /* 원하는 배경색으로 대체하세요 */
-        color: black; /* 선택사항: 텍스트 색상을 지정하여 가독성을 높일 수 있습니다 */
+        background-color: #FF4379; /* 원하는 배경색으로 대체하세요 */
+        color: white; /* 선택사항: 텍스트 색상을 지정하여 가독성을 높일 수 있습니다 */
     }
     
     .border-top {
@@ -77,7 +77,7 @@
 								<th scope="col" style="font-size: 24px; text-align: center; position: relative;">
 									<a href="/noticBoardList">공지사항</a>
 									<div style="width: 100px; height: 11px; left: 419px; top: 318px;  background: #FF4379; border-radius: 20px;
-												position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>
+												position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>
 		
 								</th>
 								<th scope="col" style="font-size: 24px;">
@@ -94,7 +94,7 @@
 								<th scope="col" style="font-size: 24px; text-align: center; position: relative;">
 									<a href="/magazinBoardList">매거진</a>
 									<div style="width: 100px; height: 11px; left: 419px; top: 318px;  background: #FF4379; border-radius: 20px;
-												position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>								
+												position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>								
 								</th>
 								<th scope="col" style="font-size: 24px;">
 									<a href="/freeBoardList">자유게시판</a>
@@ -110,7 +110,7 @@
 								<th scope="col" style="font-size: 24px; text-align: center; position: relative;">
 									<a href="/freeBoardList">자유게시판</a>
 									<div style="width: 100px; height: 11px; left: 419px; top: 318px;  background: #FF4379; border-radius: 20px;
-												position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>								
+												position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>								
 								</th>							
 							</c:when>													
 						</c:choose>
@@ -139,7 +139,7 @@
 		<table class="table">
 			<thead>
 				<tr class="table table-custom text-center">
-					<th scope="col" style="font-size: 18px;">구분</th>
+					<th scope="col" style="font-size: 18px;">글번호</th>
 					<th scope="col" style="font-size: 18px;">제목</th>
 					<th scope="col" style="font-size: 18px;">작성자</th>
 					<th scope="col" style="font-size: 18px;">작성일</th> 

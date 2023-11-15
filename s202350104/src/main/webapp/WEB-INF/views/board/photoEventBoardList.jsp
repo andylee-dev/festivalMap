@@ -99,7 +99,7 @@
 							<c:when test="${smallCode == 4}">
 								<th scope="col" style="font-size: 24px; position: relative;">
 									<a href="/photoBoardList">포토게시판</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>
+									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>
 								</th>
 								<th scope="col" style="font-size: 24px;">
 									<a href="/eventBoardList">이벤트</a></th>
@@ -109,7 +109,7 @@
 									<a href="/photoBoardList">포토게시판</a></th>
 								<th scope="col" style="font-size: 24px; position: relative;">
 									<a href="/eventBoardList">이벤트</a>
-									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>
+									<div style="width: 100px; height: 11px; left: 419px; top: 318px; background: #FF4379; border-radius: 20px; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);"></div>
 								</th>
 							</c:when>
 						</c:choose>
