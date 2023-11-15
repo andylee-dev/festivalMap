@@ -14,34 +14,43 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-megaphone-fill "></i>
 					<c:choose>
 						<c:when test="${smallCode == 1}">
-							<h1>공지사항 관리</h1>
+							<label  class="admin-header-title ">공지사항 관리</label>
 						</c:when>
 						<c:when test="${smallCode == 5}">
-							<h1>이벤트 관리</h1>
+							<label  class="admin-header-title ">이벤트 관리</label>
 						</c:when>
 				    	<c:otherwise>
-				        	<h1>배너 관리</h1> ${msg }
+				        	<label  class="admin-header-title ">배너 관리</label> ${msg }
 				    	</c:otherwise>
 					</c:choose>
+					</div>
 				</div>
-		
 				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
+				<div class="container col-9 justify-content-center my-5">
+					<form action="favoriteSearch" method="POST" container justify-content-center">	
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+							<div class="col-4">
+								<select name="search" class="form-select">
+									<option value="s_name">제목조회</option>
+								</select> 
+							</div>
+							<div class="col-5 mx-2 d-flex justify-content-center">	
+								<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
+								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+							</div>
+						</div>	
+					</form>
 				</div>
-				
-				<!-- Section3: Table -->		
-				<c:set var="num" value="${page.total-page.start+1 }"/>
-				
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-2">
 					<c:choose>
 						<c:when test="${bigCode eq 3 }">
 							<button onclick="location.href='../../bannerInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>						
@@ -50,7 +59,12 @@
 					<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>						
 						</c:otherwise>
 					</c:choose>
-					<table class="table table-striped table-sm">
+				</div>
+				
+				<!-- Section3: Table -->		
+				<c:set var="num" value="${page.total-page.start+1 }"/>
+				<div class="container col-9 justify-content-center my-2 border p-2">
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -84,13 +98,13 @@
 									</c:choose>
 									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-									<td><input onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
+									<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
 									<c:choose>
 										<c:when test="${bigCode eq 3 }">
-											<td><input onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										
+											<td><input class="btn btn-outline-secondary" onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										
 										</c:when>
 										<c:otherwise>
-											<td><input onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
+											<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
 										</c:otherwise>
 									</c:choose>
 								</tr>
@@ -98,51 +112,67 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<nav aria-label="Page navigation example ">
+					<ul class="pagination">
 					<c:choose>
 						<c:when test="${bigCode eq 2}">
 							<c:choose>
 								<c:when test="${smallCode eq 1}">
-									<div align="center">
 										<c:if test="${page.startPage > page.pageBlock}">
-											<a href="notice?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+											<li class="page-item">
+											<a href="notice?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
+											</li>
 										</c:if>
 										<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-											<a href="notice?currentPage=${i}" class="pageblock">[${i}]</a>
+											<li class="page-item">
+											<a href="notice?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+											</li>
 										</c:forEach>
 										<c:if test="${page.endPage < page.totalPage}">
-											<a href="notice?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+											<li class="page-item">
+											<a href="notice?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+											</li>
 										</c:if>
-									</div>
 								</c:when>
 								<c:when test="${smallCode eq 5}">
-									<div align="center">
 										<c:if test="${page.startPage > page.pageBlock}">
-											<a href="event?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+											<li class="page-item">
+											<a href="event?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
+											</li>
 										</c:if>
 										<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-											<a href="event?currentPage=${i}" class="pageblock">[${i}]</a>
+											<li class="page-item">
+											<a href="event?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+											</li>
 										</c:forEach>
 										<c:if test="${page.endPage < page.totalPage}">
-											<a href="event?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+											<li class="page-item">
+											<a href="event?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+											</li>
 										</c:if>
-									</div>								
 								</c:when>
 							</c:choose>
 						</c:when>
 						<c:when test="${bigCode eq 3}">
-							<div align="center">
 								<c:if test="${page.startPage > page.pageBlock}">
-									<a href="banner?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+									<li class="page-item">
+									<a href="banner?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
+									</li>
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-									<a href="banner?currentPage=${i}" class="pageblock">[${i}]</a>
+									<li class="page-item">
+									<a href="banner?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+									</li>
 								</c:forEach>
 								<c:if test="${page.endPage < page.totalPage}">
-									<a href="banner?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+									<li class="page-item">
+									<a href="banner?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+									</li>
 								</c:if>
-							</div>
 						</c:when>						
-					</c:choose>					
+					</c:choose>
+					</ul>
+					</nav>					
 				</div>
 			</main>
 		</div>
