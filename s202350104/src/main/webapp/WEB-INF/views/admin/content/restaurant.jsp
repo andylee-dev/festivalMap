@@ -24,45 +24,77 @@
 				</div>
 	
 					<!-- Section2: Search Form -->
-					<div class="border p-3 m-3">
+					<div class="container col-9 justify-content-center my-5">
 						<form action="adminRestaurantSearch">
-							<h1 class="border">검색폼</h1>
-							테마
-							<select name="small_code" id="small_code">
-								<option value="999">전체</option>
-								<option value="1" ${small_code == 1? 'selected':''}>한식</option>
-								<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
-								<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
-								<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
-								<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
-								<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
-								<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
-							</select>
-							진행상황
-							<select name="status" id="status">
-								<option value="2">전체</option>
-								<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>완료</option>
-								<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
-							</select> 
-							삭제여부
-							<select name="is_deleted" id="is_deleted">
-								<option value="2">전체</option>
-								<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
-								<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
-							</select>
+							<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+								<div class="col-4">
+					              <select id="searchType" name="searchType" class="form-select">
+						              <option value="s_title" selected>전체</option>
+					              </select>
+				                </div>
+				                <div class="col-5 mx-2">
+					                <input type="text" name="keyword" class="form-control" value="${keyword}"
+					                placeholder="검색어를 입력하세요.">
+				                </div>
+				            </div>	
+				            
+				            <div class="col-12 my-4 d-flex align-items-center">
+				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
+					            	<div class="col-3">
+										<select name="area" class="area-dropdown form-select"></select>
+									</div>
+									<div class="col-3 mx-2">
+										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+									</div>
+									
+					            <label for="searchType" class="form-label col-1  mx-2">테마</label>
+									<select name="small_code" id="small_code" class="form-select">
+										<option value="999">전체</option>
+										<option value="1" ${small_code == 1? 'selected':''}>한식</option>
+										<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
+										<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
+										<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
+										<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
+										<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
+										<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
+									</select>
+							</div>
+							
+							<div class="col-12 my-4 d-flex align-items-center">
+					            <label for="searchType" class="form-label col-2  mx-2">진행상황</label>
+									<select name="status" id="status" class="form-select">
+										<option value="2">전체</option>
+										<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>완료</option>
+										<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
+									</select> 
+
+								<label for="searchType" class="form-label col-2  mx-2">삭제여부</label>
+									<select name="is_deleted" id="is_deleted" class="form-select">
+										<option value="2">전체</option>
+										<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
+										<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
+									</select>
+							</div>
+							
 							<input type="hidden" name="big_code" value="12">
 							<input type="hidden" name="currentPage" value="${page.currentPage}">
 							<br>
-							<button type="submit" class="btn btn-outline-secondary">검색</button>
-							<input type="reset" class="btn btn-outline-secondary" value="초기화">
+							
+							<div class="container col-10 d-flex justify-content-center">
+								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+								<button type="reset"  class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+							</div>
 						</form>
 					</div>
 
 				
 				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary" onclick="location.href='restaurantInsertForm'">등록</button>
-					<table class="table table-striped table-sm">
+				<div class="container col-9 justify-content-center my-2">
+					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='restaurantInsertForm'">등록</button>
+				</div>
+				<div class="container col-9 justify-content-center my-2 border p-2">
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -110,24 +142,25 @@
 						</tbody>
 					</table>
 		총 건수: ${totalRestaurant}
-					
+		</div>	
+		
 		<nav aria-label="Page navigation example ">
 			<ul class="pagination">
 				<c:if test="${page.startPage > page.pageBlock}">
 					<c:choose>
 						<c:when test="${path==0}">
 							<li class="page-item">
-								<a href="restaurant?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">이전</a>
+								<a href="restaurant?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
 							</li>
 						</c:when>
 						<c:when test="${path==1}">
 							<li class="page-item">
-								<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">이전</a>	
+								<a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>	
 							</li>
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">이전</a>	
+								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>	
 							</li>
 						</c:when>
 					</c:choose>	
@@ -155,24 +188,23 @@
 					<c:choose>
 						<c:when test="${path==0}">
 							<li class="page-item">
-								<a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">다음</a>
+								<a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
 							</li>
 						</c:when>
 						<c:when test="${path==1}">
 							<li class="page-item">
-								<a href="restaurantSearch?area=${area}&sigungu=${sigungu}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">다음</a>
+								<a href="restaurantSearch?area=${area}&sigungu=${sigungu}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
 							</li>
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">다음</a>
+								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
 							</li>
 						</c:when>
 					</c:choose>	
 				</c:if>
 			</ul>
 		</nav>
-		</div>	
 	  </main>
 	  </div>
 	  </div>
