@@ -6,28 +6,61 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<style type="text/css">
+
+h1 {
+	color: black;
+	font-size: 28px;
+	font-family: Noto Sans;
+	font-weight: 600;
+	word-wrap: break-word
+}
+a{
+	color: white;
+	font-size: 15px;
+	font-family: Noto Sans;
+	font-weight: 600;
+	line-height: 18px;
+	word-wrap: break-word
+}
+
+.card {
+	border: none;
+	display: inline-block;  /* 또는 display: inline-flex; */
+}
+.card-body {
+	padding:0px;
+	margin-top: 10px;
+}
+main {
+  display: flex;
+  min-height: 75vh;
+}
+
+</style>
 </head>
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-
-	<h1>회원가입</h1>
-	<div class="container border justify-content-center p-5">
-		<table>
-			<tr>
-				<td><a href="/signUp/user">
-				<img src="/asset/registerUser.svg" alt="일반회원이미지">
-				</a><p>
-					일반회원<p>만 14세 이상의 내국인<p></td>
-				<td><a href="/signUp/biz">
-				<img src="/asset/registerBizUser.svg" alt="비즈회원이미지">
-					
-					</a><p>
-					비즈니스회원<p>개인/단체 비즈니스 회원<p></td>
-			</tr>
-		</table>
+	<main class="d-flex justify-content-center align-items-center ">
+	<div class="col-4 d-flex justify-content-around">
+			<div class="card mx-3 my-5 p-5 col-4">
+			  <img src="/asset/registerUser.svg" class="card-img-top" alt="...">
+			  <div class="card-body  text-center">
+			    <h1>일반회원</h1>
+			    <a href="/signUp/user"" class="btn btn-primary">가입하기</a>
+			  </div>
+			</div>
+			<div class="card mx-3 my-5 p-5 col-4 ">
+			  <img src="/asset/registerBizUser.svg" class="card-img-top" alt="...">
+			  <div class="card-body text-center">
+			    <h1>비즈회원</h1>
+			    <a href="/signUp/biz"" class="btn btn-primary">가입하기</a>
+			  </div>
+			</div>
 	</div>
-	
+
+	</main>	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
