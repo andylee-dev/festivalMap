@@ -84,14 +84,14 @@
 					        <button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
 					        <button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>				        
 				        </div>
-				        <br>
-				        <br>
-				       		<button type="button" class="btn btn-outline-secondary mt-4">등록</button>	
 				    </form>
+				</div>
+				<div class="container col-9 justify-content-center my-2">
+					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
 				</div>
 				
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-2 border p-3">
+				<div class="container col-9 justify-content-center my-2 border p-2">
 					<table id="adminTable" class="table table-striped table-sm text-center">
 						<thead>
 							<tr>
