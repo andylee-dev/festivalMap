@@ -72,7 +72,9 @@ public class UserController {
 			int userId = us.getLoggedInId();
 			log.info("userId:{}/ userRole:{}",userId,us.getLoggedInUserRole());
 			Optional<Users> user = us.getUserById(userId);
-			model.addAttribute("user",user);
+			if (user.isPresent()) {
+			    model.addAttribute("user", user.get());
+		    }
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "myPage", e.getMessage());
 		}finally { 
