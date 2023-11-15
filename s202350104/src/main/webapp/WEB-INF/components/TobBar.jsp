@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/MemberCheck.jsp" %>
-	
-
 <header id="topbar" class="d-flex justify-content-center">
-	<nav class="navbar navbar-expand-md navbar-light fixed-top justify-content-between ">
+	<nav class="navbar app-navbar navbar-expand-md navbar-light fixed-top justify-content-between ">
 		<div class="container d-flex justify-content-between">
 			<div>
 				<a class="navbar-brand" href="/">
@@ -19,13 +17,13 @@
 			</div>
 			<div class="collapse navbar-collapse justify-content-center " id="navbarSupportedContent">
 				<ul class="navbar-nav">
-				        <li class="nav-item"><a class="nav-link mx-1" aria-current="page" href="/festival">축제</a></li>
-				        <li class="nav-item"><a class="nav-link mx-1" href="/restaurant">맛집</a></li>
-						<li class="nav-item"><a class="nav-link mx-1" href="/accomodation">숙박</a></li>
-						<li class="nav-item"><a class="nav-link mx-1" href="/spot">명소</a></li>
-						<li class="nav-item"><a class="nav-link mx-1" href="/experience">체험</a></li>
-						<li class="nav-item"><a class="nav-link mx-1" href="/course">코스</a></li>
-						<li class="nav-item"><a class="nav-link mx-1" href="/freeBoardList">커뮤니티</a></li>							
+				        <li class="nav-item"><a class="nav-link app-nav-link mx-1" aria-current="page" href="/festival">축제</a></li>
+				        <li class="nav-item"><a class="nav-link app-nav-link mx-1" href="/restaurant">맛집</a></li>
+						<li class="nav-item"><a class="nav-link app-nav-link mx-1" href="/accomodation">숙박</a></li>
+						<li class="nav-item"><a class="nav-link app-nav-link mx-1" href="/spot">명소</a></li>
+						<li class="nav-item"><a class="nav-link app-nav-link mx-1" href="/experience">체험</a></li>
+						<li class="nav-item"><a class="nav-link app-nav-link mx-1" href="/course">코스</a></li>
+						<li class="nav-item"><a class="nav-link app-nav-link mx-1" href="/freeBoardList">커뮤니티</a></li>							
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
