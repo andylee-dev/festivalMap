@@ -9,7 +9,7 @@ footer {
 }
 </style>
 
-<footer class="container py-5">
+<footer class="py-5">
 	<div class="container p-5" style="background-color: #EEFFC2;">
 		<h1>Footer</h1>
 		
