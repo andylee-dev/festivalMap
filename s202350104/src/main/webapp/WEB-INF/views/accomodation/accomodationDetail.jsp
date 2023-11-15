@@ -7,6 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <title>숙박 상세</title>
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -38,19 +41,21 @@
       background: rgba(0,0,0,0.7);
       z-index: 998;
     }
-    
-    ul {
-        list-style: none; /* 목록 기호 제거 */
-        padding: 0;
-    }
+	.custom-ul {
+   	 list-style: none; /* 목록 기호 제거 */
+   	 padding: 0;
+   	 line-height: 2.5;
 
-    ul li:before {
-        content: '\2022'; /* 핑크색 원 모양 기호 */
-        color: hotpink; /* 핑크색 */
-        display: inline-block;
-        width: 1em;
-        margin-left: -1em;
-    }
+	}
+
+	.custom-ul li:before {
+    	content: '\2022'; /* 핑크색 원 모양 기호 */
+    	color: hotpink; /* 핑크색 */
+    	display: inline-block;
+    	width: 1em;
+    	margin-left: -1em;
+	}
+	
     
   </style>
 
@@ -80,30 +85,24 @@
 	}
 </script>
 </head>
-</head>
 <body>
 
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<div style="width: 100%; background: #FF4379; color: white; text-align: left; padding: 10px 0; margin-top: 100px;">
-    	<h2>${accomodation.title}</h2>
+    	<h2 style="padding-left: 50px;">${accomodation.title}</h2>
 	</div>
-	<div class="container border p-5" style="display: flex; justify-content: space-between;">
+	<div class="container border p-5" style="justify-content: space-between; height: 700px">
     <table>
         <tr>
-			<td style="width:50%; height: 100%; text-align:left;">
-   			 <img class="thumbnail" alt="${accomodation.title}이미지1" src="${accomodation.img1}" style="width: 100%; height: 100%; object-fit: cover;" align="absmiddle">
+			<td style="width:10%; height: 100%; text-align:left; margin-left: -40px;">
+			 <img class="thumbnail" alt="${accomodation.title}이미지1" src="${accomodation.img1}" style="width: 313px; height: 525px; object-fit: cover; margin-left: 0px;" align="absmiddle">
 			</td>
-            <td style="width:30%; text-align:center; vertical-align:middle;">
-                <img class="thumbnail" alt="${accomodation.title}이미지2" src="${accomodation.img2}">
-                <br><img class="thumbnail" alt="${accomodation.title}이미지3" src="${accomodation.img3}">
-            </td>
-             <td style="width:30%; text-align:center;">
-               
-            </td>
-        </tr>
-    </table>
-    <!-- ul 태그를 border 안으로 이동 -->
-    <ul>
+			<td style="width:10%; text-align:center; vertical-align:middle; margin: 16px 0px 16px 0px;">
+	   		 <img class="thumbnail" alt="${accomodation.title}이미지2" src="${accomodation.img2}"  style= "object-fit: cover; margin-left: -40px;" align="absmiddle">
+	   		 <br><img class="thumbnail" alt="${accomodation.title}이미지3" src="${accomodation.img3}" style= "object-fit: cover; margin-left: -40px;" align="absmiddle">
+			</td>
+			<td style="width:20%; text-align:left;">
+			    <ul class="custom-ul" style="width: 50%; padding-left: 20px;">
         <li><b>상호명</b>  ${accomodation.title}</li>
         <li><b>주소</b>  ${accomodation.address}</li>
         <li><b>우편번호</b>  ${accomodation.postcode}</li>
@@ -114,25 +113,34 @@
         <li><b>환불규정</b>  ${accomodation.refund}</li>
         <li><b>입실시간</b>  ${accomodation.check_in}</li>
         <li><b>퇴실시간</b>  ${accomodation.check_out}</li>
-        <li><b>픽업가능</b> 
-         <c:choose>
-                <c:when test="${accomodation.is_cook == 0}">Y</c:when>
-                <c:when test="${accomodation.is_cook == 1}">N</c:when>
-            </c:choose>
-        <li><b>조리가능</b> 
-            <c:choose>
-                <c:when test="${accomodation.is_cook == 0}">Y</c:when>
-                <c:when test="${accomodation.is_cook == 1}">N</c:when>
-            </c:choose>
-        </li>
-        <li><b>주차시설</b>
-            <c:choose>
-                <c:when test="${accomodation.is_parking == 0}">Y</c:when>
-                <c:when test="${accomodation.is_parking == 1}">N</c:when>
-            </c:choose>
-        </li>
     </ul>
-</div>
+    <b>픽업가능</b> 
+            <c:choose>
+                <c:when test="${accomodation.is_cook == 0}">Y</c:when>
+                <c:when test="${accomodation.is_cook == 1}">N</c:when>
+            </c:choose>
+	<b>조리가능</b>  
+    	<c:choose>
+        <c:when test="${accomodation.is_cook == 0}">
+            <img src="cooking_icon.png" alt="조리가능 아이콘" style="width: 20px; height: 20px; margin-left: 5px;"> <!-- 조리가능 이미지 -->
+        </c:when>
+        <c:when test="${accomodation.is_cook == 1}">N</c:when>
+    	</c:choose>
+	
+	  <b>주차시설</b>  
+    	<c:choose>
+        <c:when test="${accomodation.is_parking == 0}">
+            <img src="parking_icon.png" alt="주차시설 아이콘" style="width: 20px; height: 20px; margin-left: 5px;"> <!-- 주차시설 이미지 -->
+        </c:when>
+        <c:when test="${accomodation.is_parking == 1}">N</c:when>
+   	 </c:choose>
+
+			
+			</td>
+           </tr>
+    </table>
+    </div>
+	
 <div id="overlay"></div>
 	<div id="largeImageContainer">
     <img id="largeImage" src="" alt="Large Image">
@@ -250,6 +258,7 @@
 	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
+	
 </body>
 </html>
 
