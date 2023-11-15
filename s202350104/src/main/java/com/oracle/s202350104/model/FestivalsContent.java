@@ -56,7 +56,10 @@ public class FestivalsContent {
 	private String scode_content;	// 소분류
 	
 	// 검색용
-	private String search;
+	private String searchType;
 	private String keyword;
 	private String ordering; // 정렬
+	
+	// 태그 입력용
+	private String[] finalTags;
 }

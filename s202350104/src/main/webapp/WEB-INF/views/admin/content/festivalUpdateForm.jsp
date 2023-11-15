@@ -154,30 +154,32 @@
 				newTag.appendChild(closeButton);
 				tagsArea.appendChild(newTag);
 			};
+			<!-- 태그 관련 코드 end -->
 			
-			function updateTags() {
-				var contentId = Number($('#contentId').val());
+			function updateForm() {
+				event.preventDefault();
+				alert("click event");
+				
+				var updateFormData = $('#updateForm').serializeArray();
 				var finalTags = [];
 				for(var i = 0; i < selectedTags.length; i++) {
 					finalTags.push(Number(selectedTags[i].id));
 				}
-				$.ajax({
-					url: "<%=request.getContextPath()%>/admin/tag/contentTagsUpdate",
-					method: "POST",
-					data: {contentId: contentId,
-						   tagId:     finalTags
-						  },
-					dataType: "text",
-					success: function(str) {
-						alert(str);
-						location.href="<%=request.getContextPath()%>/admin/tag/contentTag";
-					},
-					error: function() {
-						console.log("태그 정보를 가져오지 못했습니다.");
-					}
-				})
-			}
-			<!-- 태그 관련 코드 end -->
+				updateFormData.push({name: 'finalTags', value: finalTags});
+				
+				if(confirm("수정하시겠습니까?")) {
+					$.ajax({
+						url: "<%=request.getContextPath()%>/admin/content/festivalUpdate",
+						method: "POST",
+						data: updateFormData,
+						dataType: "text",
+						success: function(str) {
+							alert(str);
+						}
+					})
+				}
+			};			
+
 		</script>
 	</head>
 	
@@ -185,16 +187,19 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">축제 정보 수정</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-pencil-square "></i>
+						<label  class="admin-header-title ">축제 정보 수정 </label>					
+					</div>
 				</div>
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="festivalUpdate" method="post">
+					<form action="festivalUpdate" method="post" id="updateForm">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<input type="hidden" name="currentPage" value="${currentPage}">
 						<input type="hidden" name="status" value="${festival.status}">
@@ -308,7 +313,7 @@
 							</tr>
 						</table>
 						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('수정하시겠습니까?')">수정</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="updateForm()">수정</button>
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>

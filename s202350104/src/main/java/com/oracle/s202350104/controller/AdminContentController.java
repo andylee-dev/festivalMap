@@ -10,7 +10,8 @@
 	import org.springframework.web.bind.annotation.GetMapping;
 	import org.springframework.web.bind.annotation.PostMapping;
 	import org.springframework.web.bind.annotation.RequestMapping;
-	import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 	
 	import com.oracle.s202350104.model.Accomodation;
 	import com.oracle.s202350104.model.AccomodationContent;
@@ -116,20 +117,32 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalInsertForm";
 		}
 		
+		@ResponseBody
 		@RequestMapping(value = "festival/insert")
-		public String festivalInsert(FestivalsContent festival, Model model) {
+		public String festivalInsert(@RequestParam(value = "tagId[]", required = false) int[] finalTags, 
+									 FestivalsContent festival, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			String str = "";
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
+				log.info("area"+festival.getArea());
 				festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
 				festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
 				int result = fs.insertFestival(festival);
+				log.info("Controller festivalInsert result => "+result);
+				log.info("Controller festivalInsert tagsUpdate result => "+result);
+				if(result == 1) {
+					str = "성공적으로 등록되었습니다."; 
+				} else { 
+					str = "등록에 실패하였습니다."; 
+				}
+				log.info("tag"+finalTags[0]);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
 			}		
-			return "redirect:../festival";
+			return str;
 		}
 		
 		@RequestMapping(value = "festivalUpdateForm")
@@ -160,21 +173,33 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalUpdateForm";
 		}
 		
+		@ResponseBody
 		@RequestMapping(value = "festivalUpdate")
 		public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
-			int id = 0;
+			String str = "";
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "start");
 				int result = fs.updateFestival(festival);
-				id = festival.getContent_id();
+				log.info("festivalUpdate result => "+result);
+				String[] stringArr = festival.getFinalTags();
+				int[] intArr = new int[stringArr.length];
+				for(int i = 0; i < stringArr.length; i++) {
+					intArr[i] = Integer.parseInt(stringArr[i]);
+				}
+				result = ts.updateContentTags(festival.getContent_id(), intArr);
+				log.info("tagsUpdate result => "+result);
+				if(result > 0) {
+					str = "축제 정보 수정에 성공하였습니다.";
+				} else {
+					str = "축제 정보 수정에 실패하였습니다.";
+				}
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin festivalUpdate", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "end");
 			}		
-			return "forward:/admin/content/festivalDetail?contentIdStr="+id;
-			// model은 view로 데이터를 가져가는 것이기 때문에 forward로 넘길 때는 return url에 파라미터를 붙여서 넘겨줘야 한다
+			return str;
 		}
 		
 		@RequestMapping(value = "festivalDelete")

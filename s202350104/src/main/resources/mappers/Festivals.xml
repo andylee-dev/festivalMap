@@ -24,16 +24,16 @@
 			 </if>
 			 <if test="keyword != null and keyword != ''">
 			 	<choose>
-			 		<when test="search == null or search == 's_title'">
+			 		<when test="searchType == null or searchType == 's_title'">
 			 			AND title like '%' || #{keyword} || '%'
 			 		</when>
-			 		<when test="search == 's_content'">
+			 		<when test="searchType == 's_content'">
 			 			AND content like '%' || #{keyword} || '%'
 			 		</when>
-			 		<when test="search == 's_sponsor'">
+			 		<when test="searchType == 's_sponsor'">
 			 			AND sponsor like '%' || #{keyword} || '%'
 			 		</when>
-			 		<when test="search == 's_eventplace'">
+			 		<when test="searchType == 's_eventplace'">
 			 			AND eventplace like '%' || #{keyword} || '%'
 			 		</when>
 			 	</choose>
@@ -95,16 +95,16 @@
 		 </if>
 		<if test="keyword != null and keyword != ''">
 			<choose>
-			 	<when test="search == null or search == 's_title'">
+			 	<when test="searchType == null or searchType == 's_title'">
 			 		AND title like '%' || #{keyword} || '%'
 			 	</when>
-			 	<when test="search == 's_content'">
+			 	<when test="searchType == 's_content'">
 			 		AND content like '%' || #{keyword} || '%'
 			 	</when>
-			 	<when test="search == 's_sponsor'">
+			 	<when test="searchType == 's_sponsor'">
 			 		AND sponsor like '%' || #{keyword} || '%'
 			 	</when>
-			 	<when test="search == 's_eventplace'">
+			 	<when test="searchType == 's_eventplace'">
 			 		AND eventplace like '%' || #{keyword} || '%'
 			 	</when>
 			 </choose>

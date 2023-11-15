@@ -319,7 +319,7 @@ public class AdminTagController {
 			} else { 
 				str = "태그 수정에 실패하였습니다."; 
 			}
-			log.info("finalTags"+finalTags);
+			log.info("finalTags"+finalTags.toString());
 			log.info("boardId"+boardId);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "boardTagsUpdate", e.getMessage());
