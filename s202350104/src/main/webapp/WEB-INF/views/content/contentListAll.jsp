@@ -42,13 +42,112 @@
 	</script>
 	<style type="text/css">
 	
+	.parent-container {
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+        justify-content: center; /* 가로 가운데 정렬 */
+        align-items: center; /* 세로 가운데 정렬 */
+        gap: 8px;
+        display: flex;
+    }
+    
+    .child-container {
+        width: 16px;
+        height: 16px;
+        position: relative;
+    }
+    
+    .outer-circle {
+        width: 16px;
+        height: 16px;
+        left: 0;
+        top: 0;
+        position: absolute;
+        background: #FF4379;
+        border-radius: 50%;
+    }
+    
+    .inner-circle {
+        width: 6px;
+        height: 6px;
+        left: 5px;
+        top: 5px;
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+    }
+    
+    /* 체크박스 스타일 */
+    input[type="checkbox"] {
+        /* 체크박스의 외곽선 제거 */
+        outline: none;
+        /* 체크박스의 기본 스타일 제거 */
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        /* 체크박스 크기 조정 */
+        width: 16px;
+        height: 16px;
+        /* 체크박스 배경색 설정 */
+        background-color: transparent;
+        /* 체크박스 커서 설정 */
+        cursor: pointer;
+        /* 체크박스 위치 설정 */
+        position: relative;
+    }
+    
+    /* 체크박스의 가상 선택자 스타일 설정 */
+    input[type="checkbox"]::before {
+        /* 체크박스의 외곽선 제거 */
+        outline: none;
+        /* 체크박스의 기본 스타일 제거 */
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        /* 체크박스 크기 조정 */
+        width: 16px;
+        height: 16px;
+        /* 체크박스 배경색 설정 */
+        background-color: transparent;
+        /* 체크박스 위치 설정 */
+        position: absolute;
+        /* 체크박스 가상 선택자 스타일 설정 */
+        content: "";
+        /* 체크박스 가상 선택자 스타일 설정 - 외곽선 */
+        border: 2px solid #FF4379;
+        /* 체크박스 가상 선택자 스타일 설정 - 모양 */
+        border-radius: 50%;
+    }
+    
+    /* 체크박스의 가상 선택자 스타일 설정 - 체크된 상태 */
+    input[type="checkbox"]:checked::before {
+        /* 체크박스 가상 선택자 스타일 설정 - 배경색 */
+        background-color: #FF4379;
+        /* 체크박스 가상 선택자 스타일 설정 - 모양 */
+        border-radius: 50%;
+    }
+    
+    /* 체크박스 숨김 처리 */
+    input[type="checkbox"] + label {
+        display: none;
+    }
+    
+    /* 테이블 셀 가운데 정렬 */
+    td, th {
+        text-align: center;
+    }
+    
+    /* 테이블 헤더 고정 너비 설정 */
+    th.check {
+        width: 50px; /* 원하는 너비로 설정해주세요 */
+    }
 	
 	
 	</style>
 </head>
 <body>
 <div class="container-fluid">
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main>
 		<!-- Section1: Title -->
 		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
@@ -69,7 +168,7 @@
 		<div class="border p-3 m-3">
 			<table class="table table-striped table-sm">
 				<tr>
-			        <th class="img1" >선택</th>
+			        <th class="check">선택</th>
 			        <th class="id">번호</th>
 			        <th class="img1">사진</th>
 			        <th class="title">이름</th>
@@ -79,7 +178,7 @@
 				</tr>
 				<c:forEach var="content" items="${listContents }" varStatus="status">
 					<tr>
-						<td><input type="checkbox" name="content" value="${content.id}"></td>
+						<td><input class="parent-container child-container outer-circle inner-circle" style="padding: 0px;" type="checkbox" name="content" value="${content.id}"></td>
 						<td>${content.id }</td>
 						<td><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 150px;"></td>
 						<td>${content.title }</td>

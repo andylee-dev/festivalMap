@@ -56,7 +56,7 @@
 	function receiveContentList(contentList) {
 		
 	    // contentList 데이터를 HTML 테이블로 변환
-	    var table = "<table>";
+	    /* var table = "<table>";
 	    table += "<thead><tr><th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th></tr></thead>";
 	    table += "<tbody>";
 
@@ -71,12 +71,29 @@
 	        table += "</tr>";
 	    }
 
-	    table += "</tbody></table>";
-	    
+	    table += "</tbody></table>"; */
 
 	    // 테이블을 HTML 요소에 삽입
-	    document.getElementById("contentTable").innerHTML = table;
+	    /* document.getElementById("contentTable").innerHTML = table; */
+		
+	    var cardContainer = "";
 
+		for (var i = 0; i < contentList.length; i++) {
+		  var card = '<div class="card course-card" style="width: 208px; height: 288px;">';
+		  card += '<h5 class="card-title">' + contentList[i].contentType + '</h5>';
+		  card += '<img src="' + contentList[i].img + '" class="card-image-size" alt="...">';
+		  card += '<div class="card-body">';
+		  card += '<h5 class="card-title">' + contentList[i].title + '</h5>';
+		  card += '<p class="card-text">' + contentList[i].address + '</p>';
+		  card += '<p class="card-text">' + contentList[i].content + '</p>';
+		  card += '</div></div>';
+		
+		  cardContainer += card;
+		}
+		
+		document.getElementById("cardContainer").innerHTML = cardContainer;
+	    
+	    
 	    for (var i = 0; i < contentList.length; i++) {
 	    	const form =document.getElementById("myForm");
 	    	const hiddenInput = document.createElement("input");
@@ -186,7 +203,6 @@ background: #D9D9D9;
 
 
 
-
 </style>
 </head>
 <body>
@@ -204,15 +220,16 @@ background: #D9D9D9;
 					</div>
 				</div>
 				
-				
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border course-header-text">코스 등록</h1>
+				<div class="container mt-5">
+					<div class="d-flex justify-content-between col-12 flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+						<h1 class="course-header-text">코스 등록</h1>
+					</div>
 				</div>
 				
 				<!-- Section2: Table -->	
-				<div class="container mt-5 border" style="padding: 0px;">
+				<div class="container mt-5" style="padding: 0px;">
 					<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
-						<div class="form-group d-flex course-body-text col-12 border"
+						<div class="form-group d-flex course-body-text col-12"
 							 style="margin-bottom: 26px;">
 							<label class="form-label col-2" for="course_title">코스명</label>
 							<input type="text" class="form-control input-text" id="course_title" name="course_title" required="required">
@@ -223,23 +240,15 @@ background: #D9D9D9;
 							<label class="col-2" style="padding-bottom: 53px">코스 등록</label>
 							<button class="btn btn-primary button-submit-font button-submit-design" onclick="showPopUp()">코스 추가</button>
 							
-							<div style="color: #FF4379; font-size: 16px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">
+							<div style="color: #FF4379; font-size: 16px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word padding-bottom: 53px;">
 								코스미리보기
 							</div>
-							<div style="width: 100%; height: 40%; background: white; padding-bottom: 53px; border-radius: 10px; border: 1px #FF4379 solid">
+							<div style="width: 100%; height: auto; background: white; border-radius: 10px; border: 1px #FF4379 solid">
 							
-							<div id="contentTable">
-								<!-- <div class="card course-card" style="width: 208px; height: 288px;">
-								  <h5 class="card-title">Content Type</h5>
-								  <img src="..." class="card-image-size" alt="...">
-								  <div class="card-body">
-								    <h5 class="card-title">Card title</h5>
-								    <p class="card-text">Address</p>
-								    <p class="card-text">Content</p>
-								  </div>
-								</div> -->
-								<div style="width: 100%; height: 40%; position: relative">
-								    <div style="width: 207px; height: 288px; left: 0px; top: 0px; position: absolute; background: #F4F4F4; border-radius: 10px"></div>
+							<div id="cardContainer" class="d-flex flex-wrap">
+								
+								<!-- <div style="width: 100%; height: 40%; position: relative">
+								    <div style="width: 208px; height: 288px; left: 0px; top: 0px; position: absolute; background: #F4F4F4; border-radius: 10px"></div>
 								    <div style="width: 89px; height: 29px; left: 101px; top: 245px; position: absolute">
 								        <div style="width: 89px; height: 29px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border-radius: 5px"></div>
 								        <div style="width: 49.10px; height: 16px; left: 19.95px; top: 6.50px; position: absolute"></div>
@@ -251,7 +260,7 @@ background: #D9D9D9;
 								    <div style="width: 74px; height: 74px; left: 67px; top: 107px; position: absolute"></div>
 								    <div style="width: 165px; left: 18px; top: 168px; position: absolute; color: black; font-size: 14px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">장소 제목제목제목제목</div>
 								    <div style="width: 165px; left: 18px; top: 16px; position: absolute; color: black; font-size: 14px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">장소분류</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 							
@@ -264,7 +273,7 @@ background: #D9D9D9;
 						<div class="form-group d-flex course-body-text col-12"
 							 style="margin-bottom: 24px;">
 							<label class="form-label col-2" for="time">소요시간</label>
-							<input type="text" class="form-control form-label" id="time" name="time" required="required">
+							<input type="text" class="form-control input-text" id="time" name="time" required="required">
 						</div>
 						<div class="form-group d-flex course-body-text"
 							 style="margin-bottom: 24px;">	
