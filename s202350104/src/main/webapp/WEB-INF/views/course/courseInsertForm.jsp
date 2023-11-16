@@ -79,7 +79,7 @@
 	    var cardContainer = "";
 
 		for (var i = 0; i < contentList.length; i++) {
-		  var card = '<div class="card course-card" style="width: 208px; height: 288px;">';
+		  var card = '<div class="card course-card" style="width: 208px; height: 340px; margin: 20px; padding: 18px;">';
 		  card += '<h5 class="card-title">' + contentList[i].contentType + '</h5>';
 		  card += '<img src="' + contentList[i].img + '" class="card-image-size" alt="...">';
 		  card += '<div class="card-body">';
@@ -199,8 +199,6 @@
 width: 172px; 
 height: 111px; 
 background: #D9D9D9;
-}
-
 
 
 </style>
@@ -242,10 +240,11 @@ background: #D9D9D9;
 							
 							<div style="color: #FF4379; font-size: 16px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word padding-bottom: 53px;">
 								코스미리보기
+								<i class="bi bi-arrow-right-circle-fill" style="color: #FF4379"></i>
 							</div>
 							<div style="width: 100%; height: auto; background: white; border-radius: 10px; border: 1px #FF4379 solid">
 							
-							<div id="cardContainer" class="d-flex flex-wrap">
+							<div id="cardContainer" class="d-flex flex-wrap" style="margin: 20px; padding: 20px;">
 								
 								<!-- <div style="width: 100%; height: 40%; position: relative">
 								    <div style="width: 208px; height: 288px; left: 0px; top: 0px; position: absolute; background: #F4F4F4; border-radius: 10px"></div>
