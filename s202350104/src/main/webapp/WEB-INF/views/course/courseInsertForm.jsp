@@ -127,6 +127,66 @@
 	gap: 8px; display: inline-flex
 }
 
+.button-submit-design{
+	width: 123px; 
+	height: 43px; 
+	padding-left: 24px; 
+	padding-right: 24px; 
+	padding-top: 16px; 
+	padding-bottom: 16px; 
+	background: #FF4379; 
+	border-radius: 10px; 
+	border: 1px #D9D9D9 solid; 
+	justify-content: center; 
+	align-items: center; 
+	gap: 8px; 
+	display: inline-flex
+}
+
+.button-cancle-design{
+	width: 123px; 
+	height: 43px; 
+	padding-left: 24px; 
+	padding-right: 24px; 
+	padding-top: 16px; 
+	padding-bottom: 16px; 
+	background: #FFFFFF; 
+	border-radius: 10px; 
+	border: 1px #D9D9D9 solid; 
+	justify-content: center; 
+	align-items: center; 
+	gap: 8px; 
+	display: inline-flex
+}
+
+
+.button-submit-font {
+	color: white; 
+	font-size: 14px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	line-height: 18px; 
+	word-wrap: break-word
+}
+
+.button-cancle-font {
+	color: black; 
+	font-size: 14px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	line-height: 18px; 
+	word-wrap: break-word
+}
+
+.card-image-size{
+width: 172px; 
+height: 111px; 
+background: #D9D9D9;
+}
+
+
+
+
 </style>
 </head>
 <body>
@@ -144,64 +204,79 @@
 					</div>
 				</div>
 				
+				
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="border course-header-text">코스 등록</h1>
 				</div>
 				
 				<!-- Section2: Table -->	
-				<div class="container mt-5 border">
+				<div class="container mt-5 border" style="padding: 0px;">
 					<form id="myForm" action="courseInsert" method="post" enctype="multipart/form-data">
-						<div class="form-group course-body-text col-12 border"
+						<div class="form-group d-flex course-body-text col-12 border"
 							 style="margin-bottom: 26px;">
 							<label class="form-label col-2" for="course_title">코스명</label>
-							<input type="text" class="input-text col-9" id="course_title" name="course_title" required="required">
+							<input type="text" class="form-control input-text" id="course_title" name="course_title" required="required">
 						</div>
-							<!-- <div class="card course-card" style="width: 18rem;">
-							  <img src="..." class="card-img-top" alt="...">
-							  <div class="card-body">
-							    <h5 class="card-title">Card title</h5>
-							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							    <a href="#" class="btn btn-primary">Go somewhere</a>
-							  </div>
-							</div> -->
+							
 						<div class="form-group course-body-text"
 							 style="margin-bottom: 40px;">
-							<label>코스 등록</label>
-							<button class="btn btn-primary" onclick="showPopUp()">코스 추가</button>
+							<label class="col-2" style="padding-bottom: 53px">코스 등록</label>
+							<button class="btn btn-primary button-submit-font button-submit-design" onclick="showPopUp()">코스 추가</button>
+							
+							<div style="color: #FF4379; font-size: 16px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">
+								코스미리보기
+							</div>
+							<div style="width: 100%; height: 40%; background: white; padding-bottom: 53px; border-radius: 10px; border: 1px #FF4379 solid">
 							
 							<div id="contentTable">
-								<!-- <div class="card course-card" style="width: 18rem;">
-								  <img src="..." class="card-img-top" alt="...">
+								<!-- <div class="card course-card" style="width: 208px; height: 288px;">
+								  <h5 class="card-title">Content Type</h5>
+								  <img src="..." class="card-image-size" alt="...">
 								  <div class="card-body">
 								    <h5 class="card-title">Card title</h5>
-								    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-								    <a href="#" class="btn btn-primary">Go somewhere</a>
+								    <p class="card-text">Address</p>
+								    <p class="card-text">Content</p>
 								  </div>
 								</div> -->
+								<div style="width: 100%; height: 40%; position: relative">
+								    <div style="width: 207px; height: 288px; left: 0px; top: 0px; position: absolute; background: #F4F4F4; border-radius: 10px"></div>
+								    <div style="width: 89px; height: 29px; left: 101px; top: 245px; position: absolute">
+								        <div style="width: 89px; height: 29px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border-radius: 5px"></div>
+								        <div style="width: 49.10px; height: 16px; left: 19.95px; top: 6.50px; position: absolute"></div>
+								        <div style="left: 12px; top: 7px; position: absolute; text-align: center; color: #6D6A6A; font-size: 12px; font-family: Noto Sans; font-weight: 400; word-wrap: break-word">상세정보보기</div>
+								    </div>
+								    <div style="left: 18px; top: 194px; position: absolute; color: black; font-size: 12px; font-family: Noto Sans; font-weight: 500; line-height: 16px; word-wrap: break-word">장소 위치위치위치 주소주소주소주<br/>소주소주소주소주소 주소</div>
+								    <div style="width: 172px; height: 111px; left: 18px; top: 42px; position: absolute; background: #D9D9D9"></div>
+								    <div style="width: 60px; height: 52px; left: 74px; top: 72px; position: absolute; background: white"></div>
+								    <div style="width: 74px; height: 74px; left: 67px; top: 107px; position: absolute"></div>
+								    <div style="width: 165px; left: 18px; top: 168px; position: absolute; color: black; font-size: 14px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">장소 제목제목제목제목</div>
+								    <div style="width: 165px; left: 18px; top: 16px; position: absolute; color: black; font-size: 14px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">장소분류</div>
+								</div>
 							</div>
+						</div>
 							
 						</div>
-						<div class="form-group course-body-text"
+						<div class="form-group d-flex course-body-text col-12"
 							 style="margin-bottom: 24px;">
-							<label class="col-2" for="distance">거리(km)</label>
-							<input type="text" class="input-text col-9" id="distance" name="distance" required="required">
+							<label class="form-label col-2" for="distance">거리(km)</label>
+							<input type="text" class="form-control input-text" id="distance" name="distance" required="required">
 						</div>
-						<div class="form-group course-body-text"
+						<div class="form-group d-flex course-body-text col-12"
 							 style="margin-bottom: 24px;">
-							<label for="time">소요시간</label>
-							<input type="text" class="form-control" id="time" name="time" required="required">
+							<label class="form-label col-2" for="time">소요시간</label>
+							<input type="text" class="form-control form-label" id="time" name="time" required="required">
 						</div>
-						<div class="form-group course-body-text"
+						<div class="form-group d-flex course-body-text"
 							 style="margin-bottom: 24px;">	
-							<label for="course_info">코스 설명</label>
+							<label  class="col-2" for="course_info">코스 설명</label>
 							<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
 						</div>
 						<div class="form-group course-body-text">	
 							<label for="tag">태그 등록~~~~(기능 추가 필요) 그리고 공통코드 입력부분 추가 필요</label>
 						</div>
 						<div class="text-center">
-							<button type="submit" class="btn btn-primary">등록</button>
-							<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
+							<button type="submit" class="btn btn-primary button-submit-font button-submit-design">등록</button>
+							<button class="btn btn-secondary button-cancle-font button-cancle-design" onclick="closeAndRedirect()">취소</button>
 						</div>
 					</form>
 				</div>

@@ -40,6 +40,11 @@
 		    window.close();
 		}
 	</script>
+	<style type="text/css">
+	
+	
+	
+	</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -64,7 +69,7 @@
 		<div class="border p-3 m-3">
 			<table class="table table-striped table-sm">
 				<tr>
-			        <th class="img1">선택</th>
+			        <th class="img1" >선택</th>
 			        <th class="id">번호</th>
 			        <th class="img1">사진</th>
 			        <th class="title">이름</th>
@@ -74,8 +79,8 @@
 				</tr>
 				<c:forEach var="content" items="${listContents }" varStatus="status">
 					<tr>
-						<td><input type="hidden" name="id" value="${content.id }"></td>
-						<td><input type="checkbox" name="content" value="${content.id }"  style="height: 20px;, widows: 20px;"></td>
+						<td><input type="checkbox" name="content" value="${content.id}"></td>
+						<td>${content.id }</td>
 						<td><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 150px;"></td>
 						<td>${content.title }</td>
 						<td>${content.address }</td>
