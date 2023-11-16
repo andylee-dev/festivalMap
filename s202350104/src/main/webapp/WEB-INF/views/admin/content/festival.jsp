@@ -154,8 +154,8 @@
 									<td>${festival.sponsor}</td>
 									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
 									<td>
-										<c:if test="${festival.status == 0}">대기</c:if>
-										<c:if test="${festival.status == 1}">완료</c:if>
+										<c:if test="${festival.status == 0}">승인대기</c:if>
+										<c:if test="${festival.status == 1}">승인완료</c:if>
 									</td>
 									<td>
 										<c:if test="${festival.status == 1}">

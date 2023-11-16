@@ -40,15 +40,7 @@
 				            </div>	
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-3">
-										<select name="area" class="area-dropdown form-select"></select>
-									</div>
-									<div class="col-3 mx-2">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
-									</div>
-									
-					            <label for="searchType" class="form-label col-1  mx-2">테마</label>
+				            	<label for="searchType" class="form-label col-2  mx-2">테마</label>
 									<select name="small_code" id="small_code" class="form-select">
 										<option value="999">전체</option>
 										<option value="1" ${small_code == 1? 'selected':''}>한식</option>
@@ -59,6 +51,14 @@
 										<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
 										<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
 									</select>
+									
+				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
+					            	<div class="col-3">
+										<select name="area" class="area-dropdown form-select"></select>
+									</div>
+									<div class="col-3 mx-2">
+										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+									</div>
 							</div>
 							
 							<div class="col-12 my-4 d-flex align-items-center">
@@ -125,13 +125,15 @@
 									</td>
 									<td><c:if test="${restaurant.status == 1 }">
 										<c:choose>
-											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="수정" onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${page.currentPage}'"></c:when>
+											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="수정" class="btn btn-primary" 
+											onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${page.currentPage}'"></c:when>
 											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
 										</c:choose>
 										</c:if></td>
 									<td><c:if test="${restaurant.status == 1 }">		
 										<c:choose>
-											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="삭제" onclick="location.href='restaurantDelete?contentId=${restaurant.content_id}'"></c:when>
+											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="삭제" class="btn btn-outline-secondary" 
+											onclick="location.href='restaurantDelete?contentId=${restaurant.content_id}'"></c:when>
 											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
 										</c:choose>
 										</c:if></td>

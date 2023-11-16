@@ -87,15 +87,7 @@
 				            </div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-3">
-										<select name="area" class="area-dropdown form-select"></select>
-									</div>
-									<div class="col-3 mx-2">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
-									</div>
-									
-								<label for="searchType" class="form-label col-2  mx-2">분류</label>
+				            	<label for="searchType" class="form-label col-2  mx-2">분류</label>
 									<div class="col-2 align-self-center">
 										<select name="small_code" class="form-select">
 											<option value="999">전체</option>
@@ -104,6 +96,14 @@
 											</c:forEach>
 										</select>
 									</div>
+									
+				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
+					            	<div class="col-3">
+										<select name="area" class="area-dropdown form-select"></select>
+									</div>
+									<div class="col-3 mx-2">
+										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+									</div>		
 							</div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">

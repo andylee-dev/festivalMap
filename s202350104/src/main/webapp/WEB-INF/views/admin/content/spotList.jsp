@@ -67,6 +67,16 @@
 				        </div>
 				        
 				        <div class="col-12 my-4 d-flex align-items-center">
+				        		<label for="searchType" class="form-label col-2  mx-2">분류</label>
+									<div class="col-2 align-self-center">
+										<select name="small_code" class="form-select">
+											<option value="999">전체</option>
+											<c:forEach var="small" items="${listSmallCode}">
+												<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+											</c:forEach>
+										</select>
+									</div>
+									
 					            <label for="searchType" class="form-label col-2  mx-2">지역</label>
 					            	<div class="col-4">
 										<select name="area" class="area-dropdown form-select"></select>
@@ -138,8 +148,10 @@
 										<c:if test="${spot.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
 									</td>
-									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" onclick="location.href='spotUpdateForm?contentId=${spot.content_id}&currentPage=${page.currentPage}'"></c:if></td>
-									<td><c:if test="${spot.status == 1}"><input type="button" value="삭제" onclick="spotDeleteAjax(${st.index})"></c:if></td>
+									<td><c:if test="${spot.status == 1}"><input type="button" value="수정" class="btn btn-primary" 
+									onclick="location.href='spotUpdateForm?contentId=${spot.content_id}&currentPage=${page.currentPage}'"></c:if></td>
+									<td><c:if test="${spot.status == 1}"><input type="button" value="삭제" class="btn btn-outline-secondary" 
+									onclick="spotDeleteAjax(${st.index})"></c:if></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
