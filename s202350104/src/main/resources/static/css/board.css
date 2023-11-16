@@ -253,3 +253,125 @@ a {
 	font-size: 12px;
 }
 
+/* 게시물 생성 Form css */
+
+.insert_title_custom {
+	width: 100%;
+	text-align: left;
+	border-bottom: 3px solid black;
+	padding-bottom: 10px;
+	margin-bottom: 60px;
+}
+
+.insert_title_custom col {
+	margin-left: 0px;
+}
+
+.insert_row_custom .insert_row2_custom{
+	width: 95%;
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+
+.insert_row_custom .insert_row2_custom col{
+	margin-bottom: 10px;
+}
+
+.insert_row_custom .insert_row2_custom label {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: left;
+	width: 100px;
+	height: 80px;
+	margin-left: 0px;
+	margin-bottom: 20px;
+}
+
+.insert_row_custom .insert_row2_custom .lable2 {
+	width: 180px;
+}
+
+.insert_row_custom .insert_row2_custom .tag_row label {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: left;
+	width: 160px;
+	height: 80px;
+	margin-left: 0px;
+	margin-bottom: 20px;
+
+}
+
+.insert_row_custom .insert_row2_custom .tag_row span {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.insert_row_custom .insert_row2_custom .title_row{
+	width: 200px;
+}
+
+.insert_row_custom .insert_row2_custom .title_input{
+	width: 1000px;
+	height: 60px;
+	margin-left: 10px;
+	margin-top: 8px;
+	border: 3px solid #BDBDBD;
+}
+
+.insert_row_custom .insert_row2_custom .text_row{
+	width: 200px;
+}
+.insert_row_custom .insert_row2_custom .text_input{
+	width: 1000px;
+	height: 400px;
+	margin-left: 10px;
+	margin-top: 8px;
+	border: 3px solid #BDBDBD;
+}
+.insert_row_custom .insert_row2_custom .img_row{
+	width: 200px;
+}
+
+.insert_row_custom .insert_row2_custom .img_input{
+	width: 460px;
+	margin-left: 10px;
+	margin-top: 8px;
+	border: 3px solid #BDBDBD;
+	font-size: 22px;	
+}
+
+.insert_row_custom .insert_row2_custom .tag_row{
+	width: 200px;
+}
+
+.insert_row_custom .insert_row2_custom .tag_row2{
+	width: 1000px;
+	border: 3px solid #BDBDBD;
+	border-radius: 10px;
+	margin-left: 18px;
+	margin-top: 8px;
+}
+.insert_row_custom .insert_row2_custom .tag_row2 label{
+	font-size: 18px;
+	font-weight: bold;
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	margin-left: 12px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #FF4379;
+}
+
+.insert_row_custom .insert_row2_custom .tag_input{
+	width: 200px;
+	margin-left: 10px;
+	margin-top: 8px;	
+}
+
+.insert_row_custom .insert_row2_custom .btn_row {
+	text-align: right;
+	margin-left: -50px;
+}

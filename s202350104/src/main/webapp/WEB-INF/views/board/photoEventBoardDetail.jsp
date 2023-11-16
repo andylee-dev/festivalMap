@@ -12,9 +12,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
 
-<!-- jQuery 라이브러리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
 	function deleteAndRedirect(id, smallCode, userId) {
 	    $.ajax({

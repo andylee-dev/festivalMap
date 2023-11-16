@@ -10,9 +10,6 @@
 <meta charset="UTF-8">
 <title>BoardDetail</title>
 
-<!-- jQuery 라이브러리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
 	function closeAndRedirect(smallCode) {
 	    $.ajax({
