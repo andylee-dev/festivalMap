@@ -12,11 +12,41 @@
             	(select s.*, c.*, cc.content cc_content 
             	 from spot s, contents c, commoncodes cc
              	 where s.content_id = c.id
+             	 <if test="big_code != 0 and small_code != 0">
+             	  and c.big_code = #{big_code}
+             	  and c.small_code = #{small_code}
+             	 </if>
              	 and c.big_code = cc.big_code
              	 and c.small_code = cc.small_code
-             	 order by content_id) a
+             	 <if test="is_deleted != null and is_deleted != ''">
+			 		and is_deleted = #{is_deleted}
+			 	</if>
+			 	<if test="status != null and status != ''">
+			 		and status = #{status}
+			 	</if>
+			 	<if test="keyword != null and keyword != ''">
+			 		<choose>
+			 			<when test="searchType == null or searchType == 's_title'">
+			 				and title like '%' || #{keyword} || '%'
+			 			</when>
+			 		</choose>
+			 	</if>
+			 	<if test="area != 0 and area != null">
+			 			and area = #{area}
+			 		<if test="sigungu != 0 and sigungu != null">
+			 			and sigungu = #{sigungu}
+			 		</if>
+				 </if>
+             	 <choose>
+			 	<otherwise>
+			 		ORDER BY content_id
+			 	</otherwise>
+			 </choose>
+			 ) a
 		)
-		WHERE rn BETWEEN #{start} and #{end}
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
 	</select>
 
 	<select id="dhSpotListAll3" resultType="SpotContent" parameterType="SpotContent">
@@ -47,30 +77,33 @@
 		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
-		<select id="dhSpotSearchTotal" parameterType="SpotContent" resultType="int">
-		SELECT count(*)
-		FROM   spot s, contents c , commoncodes cc
-		WHERE  s.content_id = c.id
-				<if test="big_code != 0 and small_code != 0">
+	<select id="dhSpotSearchTotal" parameterType="SpotContent" resultType="int">
+	SELECT	count(*)
+	FROM	spot s , contents c , commoncodes cc
+	WHERE	s.content_id = c.id
+			<if test="big_code != 0 and small_code != 0">
              	  and c.big_code = #{big_code}
              	  and c.small_code = #{small_code}
              	 </if>
              	 and c.big_code = cc.big_code
              	 and c.small_code = cc.small_code
-             	 <if test="keyword != null">
-					AND title like '%' || #{keyword} || '%'
-				</if>
 				<if test="area != 0 and sigungu != 0">
 					and c.area = #{area}
 					and c.sigungu = #{sigungu}
 				</if>
-		</select>
-	
-	<select id="spotTotal" resultType="int">
-	SELECT	count(*)
-	FROM	spot s , contents c
-	WHERE	s.content_id = c.id
-	
+				<if test="is_deleted != null and is_deleted != ''">
+			 	and is_deleted = #{is_deleted}
+				</if>
+				<if test="status != null and status != ''">
+				and status = #{status}
+		 		</if>
+				<if test="keyword != null and keyword != ''">
+				<choose>
+			 		<when test="searchType == null or searchType == 's_title'">
+			 			and title like '%' || #{keyword} || '%'
+			 		</when>
+			 	</choose>
+				</if>
 	</select>
 	
 	<select id="dhSpotDetail" resultType="SpotContent" parameterType="int">

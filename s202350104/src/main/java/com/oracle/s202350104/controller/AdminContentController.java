@@ -511,17 +511,20 @@ import lombok.RequiredArgsConstructor;
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spot", "start");
-				int totalSpot = ss.totalSpot();
+				int totalSearchSpot = ss.totalSearchSpot(spot);
 			
-				PagingList page = new PagingList(totalSpot, currentPage);
+				PagingList page = new PagingList(totalSearchSpot, currentPage);
 				spot.setStart(page.getStart());
 				spot.setEnd(page.getEnd());
 			
 				List<SpotContent> listSpot = ss.listSpot(spot);
-			
-				model.addAttribute("totalSpot",totalSpot);
+				List<CommonCodes> listCommonCodes = cs.listCommonCode();
+				
+				model.addAttribute("listCommonCodes",listCommonCodes);
+				model.addAttribute("totalSearchSpot",totalSearchSpot);
 				model.addAttribute("listSpot", listSpot);
 				model.addAttribute("page",page);
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "admin spot", e.getMessage());
 			}finally {

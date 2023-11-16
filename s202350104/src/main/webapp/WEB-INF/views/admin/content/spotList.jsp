@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<title>spot content</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
 			function spotDeleteAjax(pIndex) {
 				var deleteId = Number($('#id'+pIndex).val());
@@ -32,6 +33,18 @@
 					)
 				}
 			}
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+					}
+				});
+			});
+			
 		</script>
 	</head>
 	<body>
@@ -56,8 +69,6 @@
 				               <div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value = "s_title">명소명</option>
-									  <option value = "s_content">테마</option>
-									  <option value = "s_address">주소</option>
 						          </select>
 				                </div>
 				                <div class="col-5 mx-2">
@@ -67,26 +78,30 @@
 				        </div>
 				        
 				        <div class="col-12 my-4 d-flex align-items-center">
-				        		<label for="searchType" class="form-label col-2  mx-2">분류</label>
+								<label for="searchType" class="form-label col-2  mx-2">분류</label>
 									<div class="col-2 align-self-center">
+									<input type="hidden" name="big_code" value="14">
 										<select name="small_code" class="form-select">
 											<option value="999">전체</option>
-											<c:forEach var="small" items="${listSmallCode}">
+											<c:forEach var="small" items="${listCommonCodes}">
+											<c:if test="${small.big_code == 14 && small.small_code != 999}">
 												<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+											</c:if>
 											</c:forEach>
 										</select>
 									</div>
 									
 					            <label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-4">
+					            	<div class="col-2">
 										<select name="area" class="area-dropdown form-select"></select>
 									</div>
-									<div class="col-5 mx-2">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+									<div class="col-2 mx-2">
+										<select name="sigungu" class="sigungu-dropdown form-select "></select><p>
 									</div>
-						</div>
+							</div>
 						              
-						<div class="col-12 my-4 d-flex align-items-center">
+						
+							<div class="col-12 my-4 d-flex align-items-center">	
 								<label for="searchType" class="form-label col-2  mx-2">승인여부</label>
 									<div class="col-2 align-self-center">
 										<select name = "status" class="form-select">

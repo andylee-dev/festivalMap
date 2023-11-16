@@ -25,17 +25,6 @@ public class SpotDaoImpl implements SpotDao {
 	private final SqlSession session;
 	private final PlatformTransactionManager transactionManager;
 
-	@Override
-	public int totalSpot() {
-		int totSpotCount = 0;
-		
-		try {
-			totSpotCount = session.selectOne("spotTotal");
-		} catch (Exception e) {
-			log.info("SpotDaoImpl totalSpot Exception => " + e.getMessage());
-		}
-		return totSpotCount;
-	}
 	//전체 조회
 	@Override
 	public List<SpotContent> listSpot(SpotContent spotContent) {

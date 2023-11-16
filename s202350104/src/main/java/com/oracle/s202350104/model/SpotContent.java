@@ -45,11 +45,12 @@ public class SpotContent {
 	private String	is_elevator;
 	
 	// 조회용
-	private String search;
+	private String searchType;
 	private String keyword;
 	private String pageNum;
 	private int	   start;
 	private int	   end;
+	
 	
 	//분류
 	private String cc_content;

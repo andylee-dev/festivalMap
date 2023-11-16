@@ -9,7 +9,6 @@ import com.oracle.s202350104.model.SpotContent;
 public interface SpotService {
 
 	List<SpotContent> listSpot(SpotContent spotContent); //  전체조회
-	int               totalSpot();
 	SpotContent       detailSpot(int contentId);
 	int               insertSpot(SpotContent spotContent);
 	int               updateSpot(SpotContent spot);

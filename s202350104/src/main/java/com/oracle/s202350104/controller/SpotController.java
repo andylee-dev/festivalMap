@@ -43,16 +43,16 @@ public class SpotController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "spot", "start");
 
-			int totalSpot = ss.totalSpot();
+			int totalSearchSpot = ss.totalSearchSpot(spotContent);
 
-			Paging page = new Paging(totalSpot, currentPage);
+			Paging page = new Paging(totalSearchSpot, currentPage);
 			spotContent.setStart(page.getStart());
 			spotContent.setEnd(page.getEnd());
 
 			List<SpotContent> listSpot = ss.listSpot(spotContent);
 			List<Areas> listAreas = as.listAreas();
 
-			model.addAttribute("totalSpot", totalSpot);
+			model.addAttribute("totalSearchSpot", totalSearchSpot);
 			model.addAttribute("listSpot", listSpot);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
