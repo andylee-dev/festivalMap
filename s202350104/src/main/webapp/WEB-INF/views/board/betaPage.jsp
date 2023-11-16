@@ -5,13 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>Beta Page</title>
 <!-- 리뷰 슬라이딩 라이브러리  owl.carousel -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
-
+ 
 <style type="text/css">
 .form-select {
 	width: 200px;
@@ -20,6 +21,7 @@
 	margin-bottom: 5px;
 	border: 2px black solid;
 }
+
 
 </style>
 <script type="text/javascript">
@@ -33,6 +35,8 @@
             $(this).toggleClass("card");
         }); */
     });
+
+    
 </script>
 </head>
 <body>
@@ -181,6 +185,7 @@
 			<div class="col-2" style="width: 60px; height:180px;">
 			
 			</div>
+			
 			<!-- 전체 리뷰 현황 -->
 			<div class="col" style="background-color: #FCE7EB; border-radius: 23.50px; font-size: 20px; font-weight: bold;">
 				<div class="row" style="margin-left: 20px; margin-top: 15px;">
@@ -266,6 +271,8 @@
 		</div>
 <!-- 	</div>
  -->
+
+
  
 	<!-- 경계선 표현 -->
 	<hr class="container p-0"

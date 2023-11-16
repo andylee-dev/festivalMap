@@ -1,23 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
+<%@ include file="/WEB-INF/components/header.jsp"%>
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>BoardDetail</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-	crossorigin="anonymous">
-	
-</script>
+
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -58,64 +50,107 @@
 </script>
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+	<div id="content_title" class="container p-5 mb-4 text-center">
+	</div>
 
-	<div class="container mt-4">
-		<h1 class="text-center">게시판 상세정보</h1>
-	</div>
-	<div class="container border p-4 mb-4">
-		<table class="table table-bordered">
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">제목</th>
-				<td style="background-color: white;">${board.title }</td>
-				<th scope="col" style="text-align: center;">작성자</th>
-				<td style="background-color: white;">${board.name }</td>
-				<th scope="col" style="text-align: center;">작성일</th>
-				<td style="background-color: white;">
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0 general_board_custom" style="width: 100%;">
+	
+		<!-- 상단 title 영역  -->
+		<div class="container p-0 text-center header_title_custom">
+			<div class="row align-items-start">
+				<div class="col">
+					<c:choose>
+						<c:when test="${smallCode == 2}">
+							<h1><strong>이달의 소식</strong></h1>
+						</c:when>
+						<c:when test="${smallCode == 3}">
+							<h1><strong>자유게시판</strong></h1>
+						</c:when>
+						<c:otherwise>
+							<h1><strong>${board.title }</strong></h1>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>	
+			
+		<!-- 구분 출력 -->
+		<div class="container p-3" > 
+			<div class="row row-cols-5 align-items-center division_photo_custom">
+				<div class="col-md-1">글번호</div>
+				<div class="col-md-6">제&nbsp;목</div>
+				<div class="col-md-2">작성자</div>
+				<div class="col-md-2">작성일</div>
+				<div class="col-md-1">조회수</div>			
+			</div>		
+		</div>
+		
+		<!-- 구분별 값 출력 -->
+		<div class="container p-3"> 
+			<div class="row row-cols-5 align-items-center list_photo_custom">
+				<div class="col-md-1">${board.id }</div>
+				<div class="col-md-6">${board.title }</div>
+				<div class="col-md-2">${board.name }</div>
+				<div class="col-md-2">
 					<fmt:formatDate value="${board.created_at }" type="date"
-									pattern="yyyy/MM/dd"/>
-				</td>
-				<c:if test="${board.updated_at != null}">
-        			<th scope="col" style="text-align: center;">수정일</th>
-       		   		<td style="background-color: white;">
-       		   			<fmt:formatDate value="${board.updated_at}" type="date" 
-       		   							pattern="yyyy/MM/dd" />
-       		   		</td>
-    			</c:if>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">내용</th>
-				<td colspan="7" style="background-color: white;">${board.content }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">첨부파일명</th>
-				<td colspan="7" style="background-color: white;">${board.file_name }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">이미지경로</th>
-				<td colspan="7" style="background-color: white;">${board.file_path }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">#해시태그</th>
-				<td colspan="7"  style="background-color: white;">	
+									pattern="YYYY.MM.dd"/>				
+				</div>
+				<div class="col-md-1">${board.read_count }</div>			
+			</div>		
+		</div>
+
+		<!-- 이미지 출력 -->
+		<div class="container p-3">
+			<div class="row row-cols-1">
+				<div class="col img_detail_custom">
+					<img alt="${board.file_name }" src="${board.file_path }${board.file_name}">
+				</div>			
+			</div>
+		</div>
+		
+		<!-- 상세내용 출력 -->
+		<div class="container p-3 detail_custom">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col">
+					<p>${board.content }</p>
+				</div>			
+			</div>
+		</div>
+		
+		<!-- 해시태그 출력 -->
+		<div class="container p-3 tags_detail_custom">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col tags_row_custom">
 					<c:forEach var="tags" items="${hashTag }">
-						<span class="badge rounded-pill text-bg-info">#${tags.name }</span>
-					</c:forEach>
-				</td>
-			</tr>
-		</table>
+						<span class="badge rounded-pill text-bg-light">#${tags.name }</span>
+					</c:forEach>				
+				</div>			
+			</div>
+		</div>
+	
+		<!-- 기능버튼 출력 -->		
+		<div class="container p-3" >
+			<div class="row row-cols-4">
+				<div class="col-md-1 btn_border_custom">			
+					<button class="btn btn_detail_custom" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>				
+				</div>
+				<div class="col-md-1 btn_border_custom">			
+					<button class="btn btn_detail_custom" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>				
+				</div>
+ 				<div class="col-md-1 btn_border_custom">
+					<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">취소</button>			
+				</div>
+				<div class="col-md-1 btn_border_custom">
+					<!-- 게시판 신고기능 -송환 -->
+					<button class="btn btn_detail_custom" onclick="report(${board.id})">신&nbsp;고</button>								
+				</div>
+			</div>
+		</div>		
+			
+		
+	<!-- 전체 content 영역  END-->		
 	</div>
-	<div class="text-center">
-		<button class="btn btn-primary" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수정</button>
-		<button class="btn btn-warning" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭제</button>
-		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
-		<!-- 게시판 신고기능 -송환 -->
-		<button class="btn btn-danger" onclick="report(${board.id})">신고</button>
-	</div>
+
 </body>
 </html>

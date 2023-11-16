@@ -1,21 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/components/header.jsp"%>
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>PhotoBoard</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-      crossorigin="anonymous"/>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous">
-</script>
-
-<link href="/css/board.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 	function showPopUp(id, userId) {
@@ -40,9 +32,6 @@
 </script>
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
-
 	<div id="content_title" class="container p-5 mb-4 text-center">
 	</div>
 

@@ -1,25 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
+<%@ include file="/WEB-INF/components/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>PhotoEventBoardDetail</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-	crossorigin="anonymous">
-	
-</script>
 
-<link href="/css/board.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
 
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -68,6 +59,18 @@
 	        }
 	    });
 	}
+	
+    $(document).ready(function () {
+        $(".custom-carousel").owlCarousel({
+            autoWidth: true,
+            loop: true
+        });
+/*         $(".custom-carousel .card").click(function () {
+            $(".custom-carousel .card").not($(this)).removeClass("card");
+            $(this).toggleClass("card");
+        }); */
+    });
+	
 	<!-- 게시판 신고기능 -송환 -->
 	function report(boardId) {
 	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
@@ -77,7 +80,8 @@
 <body>
 	<!-- 전체 content 영역  Start-->
 	<div class="container p-0 general_board_custom" style="width: 100%;">
-	
+		
+		<!-- 구분 출력 -->
 		<div class="container p-3" > 
 			<div class="row row-cols-5 align-items-center division_photo_custom">
 				<div class="col-md-1">글번호</div>
@@ -88,6 +92,7 @@
 			</div>		
 		</div>
 		
+		<!-- 구분별 값 출력 -->
 		<div class="container p-3"> 
 			<div class="row row-cols-5 align-items-center list_photo_custom">
 				<div class="col-md-1">1</div>
