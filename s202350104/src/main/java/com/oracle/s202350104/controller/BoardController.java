@@ -588,15 +588,16 @@ public class BoardController {
 		log.info("BoardController integratedboardInsert tagsList : {}", tagsList.length);
 		
 		// File upload Logic
+        UUID uuid = UUID.randomUUID();
 		String pathDB = null;
 		String fileName = null;
 		String realPath = null;
 
 		try {
 			log.info("BoardController integratedboardInsert File Start!!");
-			fileName = file.getOriginalFilename();
+			fileName = uuid + "_" + file.getOriginalFilename();
 
-			pathDB = "..\\photos\\" + fileName;
+			pathDB = "..\\photos\\";
 
 			realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
 
