@@ -22,7 +22,7 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 			listCommonCodes = session.selectList("CommonCodesListAll");
 			log.info("listCommonCodes.size" + listCommonCodes.size());
 		} catch(Exception e) {
-			log.info("{}",e.getMessage());
+			log.error("{}",e.getMessage());
 		}
 		return listCommonCodes;
 	}
@@ -36,7 +36,7 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 			listCommonCodes = session.selectList("joCommonCodesListAll", commonCode);
 			log.info("listCommonCodes.size" + listCommonCodes.size());
 		} catch(Exception e) {
-			log.info("{}",e.getMessage());
+			log.error("{}",e.getMessage());
 		}
 		return listCommonCodes;
 	}
@@ -47,7 +47,7 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 		try {
 			totalCommonCode = session.selectOne("joCommonCodeTotal");
 		} catch (Exception e) {
-			log.info("CommonCodeDaoImpl totalCommonCode() Exception ->" + e.getMessage());
+			log.error("CommonCodeDaoImpl totalCommonCode() Exception ->" + e.getMessage());
 		}
 		
 		return totalCommonCode;
@@ -75,10 +75,28 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 		try {
 			listSearchCommonCode = session.selectList("joListSearchCommonCode", commonCode);
 		} catch (Exception e) {
-			log.info("CommonCodeDaoImpl joListSearchCommonCode() Exception ->" + e.getMessage());
+			log.error("CommonCodeDaoImpl joListSearchCommonCode() Exception ->" + e.getMessage());
 		}
 		
 		return listSearchCommonCode;
 	}
 
+
+
+	@Override
+	public int insertCommonCode(CommonCodes commonCode) {
+		int result = 0;
+		
+		try {
+			log.info("CommonCodeDaoImpl insertCommonCode Start");
+			result = session.insert("joInsertCommonCode", commonCode);
+			log.info("CommonCodeDaoImpl insertCommonCode -> {}", result);
+		
+		} catch (Exception e) {
+			log.error("CommonCodeDaoImpl insertCommonCode Exception ->" + e.getMessage());
+		
+		}
+		return result;
+	}
+	
 }

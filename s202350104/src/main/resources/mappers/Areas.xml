@@ -67,6 +67,10 @@
      		) 
 		WHERE rn between #{start} and #{end}
 	</select>
-		
+	
+	<insert id="joInsertAreaCode" parameterType="Areas">
+		INSERT INTO areas(area, sigungu, content)
+		VALUES           (#{area}, #{sigungu}, ${content})
+	</insert>	
 	
 </mapper>

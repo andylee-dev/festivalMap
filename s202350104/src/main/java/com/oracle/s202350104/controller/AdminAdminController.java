@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.CommonCodes;
+import com.oracle.s202350104.model.Favorite;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.AdminListService;
 import com.oracle.s202350104.service.AreaService;
@@ -56,7 +57,7 @@ public class AdminAdminController {
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "adminList", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "adminList", "end");
+			log.info("[{}]{}:{}", transactionId, "adminList", "end");
 		}
 
 		return "admin/admin/adminList";
@@ -89,7 +90,7 @@ public class AdminAdminController {
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "commonCode", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "commonCode", "end");
+			log.info("[{}]{}:{}", transactionId, "commonCode", "end");
 		}
 
 		return "admin/admin/commonCode";
@@ -124,12 +125,47 @@ public class AdminAdminController {
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "AdminAdminController commonCodeSearch", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "AdminAdminController commonCodeSearch", "end");
+			log.info("[{}]{}:{}", transactionId, "AdminAdminController commonCodeSearch", "end");
 		}
 
 		return "admin/admin/commonCode";
 	}
 
+	
+	@RequestMapping(value = "/commonCodeInsertForm")
+	public String commonCodeInsertForm() {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeInsertForm", "Start");
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin commonCodeInsertForm Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeInsertForm", "End");
+		}
+			
+		return "admin/admin/commonCodeInsertForm";
+	}
+	
+	
+	@RequestMapping(value = "commonCode/insert")
+	public String commonCodeInsert(Model model, CommonCodes commonCode) {
+		UUID transactionId = UUID.randomUUID();
+		
+		int result = ccs.insertCommonCode(commonCode);
+		
+		if(result > 0) {
+			return "redirect:/admin/admin/commonCode";
+		} else {
+			model.addAttribute("msg", "입력실패 확인해보세요");
+			return "forward:commonCodeInsertForm";
+		}
+			
+	}
+	
+	
 	@RequestMapping(value = "/areaCode")
 	public String areaCode(Areas area, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -143,7 +179,7 @@ public class AdminAdminController {
 			area.setStart(page.getStart());
 			area.setEnd(page.getEnd());
 
-			List<Areas> listAreaCode = null;// as.listAreas(area);
+			List<Areas> listAreaCode = as.listAreas(area);
 			List<Areas> listAreas = as.listAreas();
 
 			model.addAttribute("totalAreaCode", totalAreaCode);
@@ -151,11 +187,12 @@ public class AdminAdminController {
 			model.addAttribute("page", page);
 			model.addAttribute("listAreaCode", listAreaCode);
 			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("currentPage", currentPage);
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "areaCode", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "areaCode", "end");
+			log.info("[{}]{}:{}", transactionId, "areaCode", "end");
 		}
 
 		return "admin/admin/areaCode";
@@ -189,11 +226,43 @@ public class AdminAdminController {
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "areaCode", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "areaCode", "end");
+			log.info("[{}]{}:{}", transactionId, "areaCode", "end");
 		}
 
 		return "admin/admin/areaCode";
-
 	}
 
+	
+	@RequestMapping(value = "areaCodeInsertForm")
+	public String areaCodeInsertForm() {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeInsertForm", "Start");
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin areaCodeInsertForm Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeInsertForm", "End");
+		}
+			
+		return "admin/admin/areaCodeInsertForm";
+	}
+	
+	
+	@RequestMapping(value = "areaCode/insert")
+	public String areaInsert(Model model, Areas area) {
+		UUID transactionId = UUID.randomUUID();
+		
+		int result = as.insertArea(area);
+		
+		if(result>0) {
+			return "redirect:/admin/admin/areaCode";
+		} else {
+			model.addAttribute("msg", "입력실패 확인해보세요");
+			return "forward:areaInsertForm";
+		}
+			
+	}
 }

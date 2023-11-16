@@ -46,7 +46,7 @@
 					</form>
 				</div>
 				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
+					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='areaCodeInsertForm'">등록</button>
 				</div>		
 				
 				<!-- Section3: Table -->		
@@ -78,43 +78,50 @@
 						</tbody>
 					</table>
 				</div>		
-			</main>
+				
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item">
+								<c:choose>
+									<c:when test="${path==0}">
+										<a href="areaCode?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+									</c:when>
+									<c:when test="${path==1}">					
+										<a href="areaCodeSearch?area=${area}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>							
+									</c:when>
+								</c:choose>								
+							</li>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item">
+								<c:choose>
+									<c:when test="${path==0}">
+										<a href="areaCode?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</c:when>
+									<c:when test="${path==1}">
+										<a href="areaCodeSearch?area=${area}&currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</c:when>
+								</c:choose>	
+							</li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item">
+								<c:choose>
+									<c:when test="${path==0}">
+										<a href="areaCode?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+									</c:when>
+									<c:when test="${path==1}">
+										<a href="areaCodeSearch?area=${area}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+									</c:when>
+								</c:choose>	
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+					
+		</main>
 		</div>
 		</div>
-		
-		<div align="center">
-		<c:if test="${page.startPage > page.pageBlock}">
-			<c:choose>
-				<c:when test="${path==0}">
-					<a href="areaCode?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-				</c:when>
-				<c:when test="${path==1}">
-					<a href="areaCodeSearch?area=${area}&currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-				</c:when>	
-			</c:choose>	
-		</c:if>
-		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<c:choose>
-				<c:when test="${path==0}">
-					<a href="areaCode?currentPage=${i}" class="pageblock">[${i}]</a>
-				</c:when>
-				<c:when test="${path==1}">
-					<a href="areaCodeSearch?area=${area}&currentPage=${i}" class="pageblock">[${i}]</a>
-				</c:when>
-			</c:choose>	
-		</c:forEach>
-		<c:if test="${page.endPage < page.totalPage}">
-			<c:choose>
-				<c:when test="${path==0}">
-					 <a href="araeCode?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-				</c:when>	 
-				<c:when test="${path==1}">
-					<a href="areaCodeSearch?area=${area}&currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-				</c:when>
-			</c:choose>				
-		</c:if>
-		</div>
-		
-		
 	</body>
 </html>

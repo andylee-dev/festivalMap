@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.AreasDao;
 import com.oracle.s202350104.model.Areas;
@@ -32,11 +34,11 @@ public class AreaServiceImpl implements AreaService {
 		return listSigungu;
 	}
 	
-//	@Override
-//	public List<Areas> listAreas(Areas area) {
-////		List<Areas> listAreas = ad.listAreas(area);
-//		return listAreas;
-//	}
+	@Override
+	public List<Areas> listAreas(Areas area) {
+		List<Areas> listAreas = ad.listAreas(area);
+		return listAreas;
+	}
 
 	@Override
 	public int totalAreaCode() {
@@ -82,5 +84,16 @@ public class AreaServiceImpl implements AreaService {
         
         return areaNames;
     }
+
+	@Override
+	public int insertArea(Areas area) {
+		int result = 0;
+		result = ad.insertArea(area);
+		
+		if(result >= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
 
 }

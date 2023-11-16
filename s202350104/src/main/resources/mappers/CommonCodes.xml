@@ -43,4 +43,9 @@
 		WHERE rn between #{start} and #{end}
 	</select>
 	
+	<insert id="joInsertCommonCode" parameterType="Commoncodes">
+		INSERT INTO commoncodes(big_code, small_code, content)
+		VALUES                 (#{big_code}, #{small_code}, #{content})
+	</insert>
+	
 </mapper>

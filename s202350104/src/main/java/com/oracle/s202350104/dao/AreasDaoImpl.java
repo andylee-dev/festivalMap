@@ -42,17 +42,17 @@ public class AreasDaoImpl implements AreasDao {
 		return listAreas;
 	}
 	
-//	@Override
-//	public List<Areas> listAreas(Areas area) {
-//		List<Areas> listAreas = null;
-//		try {
-//			listAreas = session.selectList("joAreasListAll", area);
-//			log.info("AreasDaoImpl listAreas size()->" + listAreas.size());			
-//		} catch (Exception e) {
-//			log.info("{}", e.getMessage());
-//		}
-//		return listAreas;
-//	}
+	@Override
+	public List<Areas> listAreas(Areas area) {
+		List<Areas> listAreas = null;
+		try {
+			listAreas = session.selectList("joAreasListAll", area);
+			log.info("AreasDaoImpl listAreas size()->" + listAreas.size());			
+		} catch (Exception e) {
+			log.info("{}", e.getMessage());
+		}
+		return listAreas;
+	}
 
 	@Override
 	public int totalAreaCode() {
@@ -104,6 +104,21 @@ public class AreasDaoImpl implements AreasDao {
 		areas.setArea(area);
 		areas.setSigungu(sigungu);
 		return session.selectOne("getSigunguNameByCode",areas);
+	}
+
+
+	@Override
+	public int insertArea(Areas area) {
+		int result = 0;
+		
+		try {
+			log.info("AreasDaoImpl insertArea Start");
+			result = session.insert("joInsertAreaCode", area);
+			log.info("AreasDaoImpl insertArea -> {}", result);
+		} catch (Exception e) {
+			log.info("AreasDaoImpl insertArea Exception ->" + e.getMessage());
+		}
+		return result;
 	}
 	
 }

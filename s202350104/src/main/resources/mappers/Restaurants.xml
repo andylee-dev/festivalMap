@@ -69,7 +69,7 @@
 			    		(SELECT  *
 						 FROM    restaurants r, (SELECT *
 							   		   			 FROM   contents
-							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu}) c	
+							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu} AND small_code = #{small_code}) c	
 				 		 WHERE    r.content_id = c.id
 				 		 ORDER BY content_id) t
 		  )		 		 

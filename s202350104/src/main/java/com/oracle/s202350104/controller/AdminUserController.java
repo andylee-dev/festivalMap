@@ -211,6 +211,7 @@ public class AdminUserController {
 			model.addAttribute("totalFavorite", totalFavorite);
 			model.addAttribute("page",page);
 			model.addAttribute("listFavorite", listFavorite);
+			model.addAttribute("currentPage", currentPage);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin favorite", e.getMessage());

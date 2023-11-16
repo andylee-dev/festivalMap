@@ -2,7 +2,9 @@ package com.oracle.s202350104.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.CommonCodesDao;
 import com.oracle.s202350104.model.CommonCodes;
@@ -50,5 +52,16 @@ public class CommonCodeServiceImple implements CommonCodeService {
 		return listSearchCommonCode;
 	}
 
+
+	@Override
+	public int insertCommonCode(CommonCodes commonCode) {
+		int result = 0;
+		result = cd.insertCommonCode(commonCode);
+		
+		if(result >= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
 	
 }

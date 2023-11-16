@@ -203,6 +203,7 @@ public class RestaurantController {
 			int path 			= 1;
 			String area 		= request.getParameter("area");
 			String sigungu 		= request.getParameter("sigungu");
+			String small_code   = request.getParameter("small_code");
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
@@ -215,6 +216,7 @@ public class RestaurantController {
 			model.addAttribute("path", path);
 			model.addAttribute("area", area);
 			model.addAttribute("sigungu", path);
+			model.addAttribute("small_code", small_code);
 			model.addAttribute("page", page);
 			model.addAttribute("listRestaurant", listSearchRestaurant);
 			// model.addAttribute("listRestaurant", listRestaurant);
