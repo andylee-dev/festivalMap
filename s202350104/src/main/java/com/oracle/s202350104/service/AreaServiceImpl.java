@@ -90,7 +90,18 @@ public class AreaServiceImpl implements AreaService {
 		int result = 0;
 		result = ad.insertArea(area);
 		
-		if(result >= 0) {
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteAreaCode(int area) {
+		int result = 0;
+		result = ad.deleteAreaCode(area);
+		
+		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 		return result;

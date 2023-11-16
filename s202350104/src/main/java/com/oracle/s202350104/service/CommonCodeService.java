@@ -11,4 +11,5 @@ public interface CommonCodeService {
 	int 			  conTotalCommonCode(CommonCodes commonCode);
 	List<CommonCodes> listSearchCommonCode(CommonCodes commonCode);
 	int               insertCommonCode(CommonCodes commonCode);
+	int               deletecommonCode(int big_code);
 }

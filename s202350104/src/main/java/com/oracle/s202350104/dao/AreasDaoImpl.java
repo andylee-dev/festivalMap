@@ -120,5 +120,21 @@ public class AreasDaoImpl implements AreasDao {
 		}
 		return result;
 	}
+
+
+	@Override
+	public int deleteAreaCode(int area) {
+		int result = 0;
+		try {
+			log.info("AreasDaoImpl deleteAreaCode start");
+			result = session.delete("joDeleteAreaCode", area);
+			log.info("AreasDaoImpl deleteAreaCode result ->" + result);
+		
+		} catch (Exception e) {
+			log.error("AreasDaoImpl deleteAreaCode Exception ->" + e.getMessage());
+		}
+		
+		return result;
+	}
 	
 }

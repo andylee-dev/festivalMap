@@ -48,4 +48,9 @@
 		VALUES                 (#{big_code}, #{small_code}, #{content})
 	</insert>
 	
+	<delete id="joDeleteCommonCode" parameterType="int">
+		DELETE FROM commoncodes
+		WHERE big_code = #{big_code} AND small_code = #{small_code}
+	</delete>
+	
 </mapper>

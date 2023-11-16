@@ -166,6 +166,24 @@ public class AdminAdminController {
 	}
 	
 	
+	@RequestMapping(value = "commonCodeDelete")
+	public String commonCodeDelete(int big_code, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeDelete", "start");;
+			int result = ccs.deletecommonCode(big_code);
+		
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin commonCodeDelete Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeDelete", "end");
+		}
+		
+		return "redirect:commonCode";	
+	} 
+
 	@RequestMapping(value = "/areaCode")
 	public String areaCode(Areas area, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -265,4 +283,25 @@ public class AdminAdminController {
 		}
 			
 	}
+	
+	
+	@RequestMapping(value = "areaCodeDelete")
+	public String areaCodeDelete(int area, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeDelete", "start");;
+			int result = as.deleteAreaCode(area);
+		
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin areaCodeDelete Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeDelete", "end");
+		}
+		
+		return "redirect:areaCode";	
+	} 
+	
+	
 }

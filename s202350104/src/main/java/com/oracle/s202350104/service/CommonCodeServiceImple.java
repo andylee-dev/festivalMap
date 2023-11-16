@@ -63,5 +63,19 @@ public class CommonCodeServiceImple implements CommonCodeService {
 		}
 		return result;
 	}
+
+
+	@Override
+	public int deletecommonCode(int big_code) {
+		int result = 0;
+		result = cd.deletecommonCode(big_code);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
+
+
 	
 }

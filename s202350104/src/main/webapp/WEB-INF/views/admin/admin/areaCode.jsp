@@ -71,7 +71,8 @@
 									<td>${areaCode.sigungu}</td>
 						 			<td>${areaCode.content}</td>
 						 			<td><input class="btn btn-primary" type="button" value="수정"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>					
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제"
+										onclick="location.href='areaCodeDelete?area=${areaCode.area}&sigungu=${areaCode.sigungu}'"></td>					
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

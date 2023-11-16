@@ -72,7 +72,8 @@
 									<td>${commonCode.small_code}</td>
 						 			<td>${commonCode.content}</td>
 						 			<td><input class="btn btn-primary" type="button" value="수정"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>					
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제" 
+										 onclick="location.href='commonCodeDelete?big_code=${commonCode.big_code}&samll_code=${commonCode.small_code}'"></td>					
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

@@ -70,7 +70,12 @@
 	
 	<insert id="joInsertAreaCode" parameterType="Areas">
 		INSERT INTO areas(area, sigungu, content)
-		VALUES           (#{area}, #{sigungu}, ${content})
+		VALUES           (#{area}, #{sigungu}, #{content})
 	</insert>	
+	
+	<delete id="joDeleteAreaCode" parameterType="int">
+		DELETE FROM areas
+		WHERE area = #{area} AND sigungu = #{sigungu}
+	</delete>
 	
 </mapper>
