@@ -32,6 +32,14 @@ html {
 	align-items: center;
 }
 
+/* 리스트에서 관리 페이지로 이동하는 링크에 적용 */
+.detail-link {
+	text-decoration: none;
+	color: #FF4379;
+	font-weight: bold;
+}
+
+
 
 
 

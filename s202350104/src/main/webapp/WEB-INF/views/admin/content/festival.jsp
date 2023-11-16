@@ -137,20 +137,19 @@
 								<th scope="col">주최자</th>
 								<th scope="col">등록일</th>
 								<th scope="col">승인여부</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
 								<th scope="col">삭제여부</th>
+								<th scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${listFestivals.size() == 0}"><td colspan="9">해당하는 축제 정보가 없습니다.</td></c:if>
+							<c:if test="${listFestivals.size() == 0}"><td colspan="8">해당하는 축제 정보가 없습니다.</td></c:if>
 							
 							<c:set var="num" value="${page.start}"/>
 							<c:forEach var="festival" items="${listFestivals}" varStatus="st">				
 								<tr id="festival${st.index}">
 									<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
 									<td>${festival.area_content} ${festival.sigungu_content}</td>
-									<td><a href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}">${festival.title}</a></td>
+									<td>${festival.title}</td>
 									<td>${festival.sponsor}</td>
 									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
 									<td>
@@ -158,20 +157,10 @@
 										<c:if test="${festival.status == 1}">승인완료</c:if>
 									</td>
 									<td>
-										<c:if test="${festival.status == 1}">
-											<input type="button" value="수정" class="btn btn-primary"
-											 onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${page.currentPage}'">
-										</c:if>
-									</td>
-									<td>
-										<c:if test="${festival.status == 1}">
-											<input type="button" value="삭제" class="btn btn-outline-secondary"
-											 onclick="festivalDeleteAjax(${st.index})">
-										</c:if>
-									</td>
-									<td>
+										<c:if test="${festival.is_deleted == 0}">N</c:if>
 										<c:if test="${festival.is_deleted == 1}">Y</c:if>
 									</td>
+									<td><a href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}" class="detail-link">관리</a></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
