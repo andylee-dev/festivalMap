@@ -6,7 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>myQnaList</title>
+<style type="text/css">
+h1 {
+	color: black;
+	font-size: 32px;
+	font-family: Noto Sans;
+	font-weight: 600;
+	word-wrap: break-word
+}
+</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
@@ -109,39 +118,46 @@
 	</script>
 </head>
 <body>
+	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<div class="d-flex">
-	<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
-	<div class="container-fluid">
-	<div class="row">
-		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<main >
+		<div class="d-flex">
+			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
+			<div class="container border p-5">
+				<div class="container my-5">
+				
 			<!-- Section1: Title -->
-			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-				<h1 class="border">my1:1 문의</h1>
-			</div>
-	
+				<h1>my1:1 문의</h1>
+				<hr class="hr" />
+				
 			<!-- Section2: Search Form -->
-			<div class="border p-3 m-3">
-				<form action="qnaList" method="POST">	
-					<div class="input-group col-auto mb-3" >
-						<span class="input-group-text col-auto">작성일</span>
+			<div class="container col-9 justify-content-center my-5">
+				<form action="qnaList" method="POST" class="container justify-content-center">	
+					
+					<div class="col-12 my-4 d-flex align-items-center">
+						<label for="searchType" class="col-form-label col-2  mx-1">작성일</label>
+						<div class="col-7  mx-1 d-flex">	
 							<input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off" >
-							<label class="btn" for="TO">오늘</label>
+							<label class="btn mx-1" for="TO">오늘</label>
 							<input type="radio" class="btn-check" name="dateOptions" id="1W" value="1W" autocomplete="off">
-							<label class="btn" for="1W">1주일</label>
+							<label class="btn mx-1" for="1W">1주일</label>
 							<input type="radio" class="btn-check" name="dateOptions" id="1M" value="1M" autocomplete="off">
-						    <label class="btn" for="1M">1개월</label>
+						    <label class="btn mx-1" for="1M">1개월</label>
 							<input type="radio" class="btn-check" name="dateOptions" id="3M" value="3M" autocomplete="off">
-						    <label class="btn" for="3M">3개월</label>
+						    <label class="btn mx-1" for="3M">3개월</label>
 							<input type="radio" class="btn-check" name="dateOptions" id="6M" value="6M" autocomplete="off">
-						    <label class="btn" for="6M">6개월</label>
+						    <label class="btn mx-1" for="6M">6개월</label>
 							<input type="radio" class="btn-check" name="dateOptions" id="ALL" value="ALL" autocomplete="off" checked>
-						    <label class="btn" for="ALL">전체</label>
-							<input type="date" id="startDatePicker" name="startDate" value="${startDate}">
-							<input type="date" id="endDatePicker" name="endDate" value="${endDate}">
+						    <label class="btn mx-1" for="ALL">전체</label>
+							</div>	
+							<div class="col-3 d-flex">
+								<input class="mx-1" type="date" id="startDatePicker" name="startDate" value="${startDate}">
+								<input class="mx-1" type="date" id="endDatePicker" name="endDate" value="${endDate}">
+							</div>
 					</div>
-					<div class="input-group mb-3 d-flex align-items-center">
-						<span class="input-group-text " >진행 상태</span>
+					<!-- 옵션 -->
+					<div class="col-12 my-4 d-flex align-items-center ">
+					<label for="searchType" class="col-form-label col-2  mx-1">진행 상태</label>
 						<div class="form-check mx-2">
 							<input class="form-check-input" type="radio" name="status" id="status1" value="0">
 							<label class="form-check-label" for="status1">답변대기</label>
@@ -151,15 +167,19 @@
 							<label class="form-check-label" for="status2">답변완료</label>
 						</div>
 					</div>
-						<button type="submit" class="btn btn-outline-secondary">검색</button>
-						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+					<div class="container col-10 d-flex justify-content-center">
+						<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+						<button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+					</div>
 				</form>
 			</div>		
 			
 			<!-- Section3: Table -->		
-			<div class="border p-3 m-3">
-				<button type="button" class="btn btn-outline-secondary" onclick="location.href='insertQnaForm'">등록</button>
-					<table class="table table-striped table-sm">
+			<div class="container col-9 justify-content-center my-2">
+				<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='insertQnaForm'">등록</button>
+				</div>
+				<div class="container col-9 justify-content-center my-2 border p-2">
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -181,28 +201,36 @@
 										<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
 										<td><c:if test="${qna.status == 0}">답변대기</c:if>
 											<c:if test="${qna.status == 1}">답변완료</c:if>
-										<td><input type="button" onclick="location.href='updateQnaForm?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
-										<td><input type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
+										<td><input class="btn btn-primary" type="button" onclick="location.href='updateQnaForm?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
+										<td><input class="btn btn-outline-secondary" type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
 									</tr>
-							<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
+									<c:set var="num" value="${num + 1}"/>
+								</c:forEach>
 						</tbody>
-					</table>
-				<div align="center">
-					<c:if test="${page.startPage > page.pageBlock}">
-						<a href="qnaList?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-					</c:if>
-					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-						<a href="qnaList?currentPage=${i}">[${i}]</a>
-					</c:forEach>
-					<c:if test="${page.endPage < page.totalPage}">
-						<a href="qnaList?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-					</c:if>
+						</table>
+						</div>
+						<nav aria-label="Page navigation example ">
+							<ul class="pagination">
+								<c:if test="${page.startPage > page.pageBlock}">
+									<li class="page-item">
+										<a href="qnaList?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
+									</li>
+								</c:if>
+								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+									<li class="page-item">
+										<a href="qnaList?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+									</li>
+								</c:forEach>
+								<c:if test="${page.endPage < page.totalPage}">
+									<li class="page-item">
+										<a href="qnaList?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+									</li>
+								</c:if>
+							</ul>
+						</nav>	
 				</div>
-			</div>		
-		</main>
-	</div>
-	</div>
-	</div>
+			</div>	
+		</div>		
+	</main>
 </body>
 </html>
