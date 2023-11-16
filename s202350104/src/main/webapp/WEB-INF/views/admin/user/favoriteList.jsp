@@ -42,7 +42,7 @@
 					</form>
 				</div>
 				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary ">등록</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='favoriteInsertForm'">등록</button>
 				</div>
 					
 				<!-- Section3: Table -->

@@ -1,6 +1,8 @@
 package com.oracle.s202350104.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +56,31 @@ public class AreaServiceImpl implements AreaService {
 		return listSearchAreaCode;
 	}
 
-	
-	
-	
+//	@Override
+//	public String getAreaNameByCode(int areaCode) {
+//		return ad.getAreaNameByCode(areaCode);
+//	}
+//
+//	@Override
+//	public String getSigunguNameByCode(int area, int sigungu) {
+//		return ad.getSigunguNameByCode(area,sigungu);
+//	}
+
+	@Override
+    public Map<String, String> getAreaNamesByCode(int areaCode, int sigunguCode) {
+        Map<String, String> areaNames = new HashMap<>();
+        
+        String area = ad.getAreaNameByCode(areaCode);
+        if (area != null) {
+            areaNames.put("area", area);
+        }
+        
+        String sigungu = ad.getSigunguNameByCode(areaCode,sigunguCode);
+        if (sigungu != null) {
+            areaNames.put("sigungu",sigungu);
+        }
+        
+        return areaNames;
+    }
+
 }

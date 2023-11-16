@@ -119,4 +119,18 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		return result;
 	}
 
+	@Override
+	public int insertFavorite(Favorite favorite) {
+		int result = 0;
+		
+		try {
+			log.info("FavaoriteDaoImpl insertFavorite Start");
+			result = session.insert("joInsertFavorite", favorite);
+			log.info("FavaoriteDaoImpl insertFavorite -> {}", result);
+		} catch (Exception e) {
+			log.info("FavaoriteDaoImpl insertFavorite Exception ->" + e.getMessage());
+		}
+		return result;
+	}
+
 }
