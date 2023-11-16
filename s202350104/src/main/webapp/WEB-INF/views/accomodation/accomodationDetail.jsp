@@ -95,19 +95,19 @@ h2 {
 	background: white;
 	color: hotpink;
 	border-radius: 50%; /* 배경을 원형으로 만듦 */
-	padding: 10px; /* 아이콘 주위에 여백 추가 */
-	margin: 20px;
+	padding: 15px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px; /* 아이콘간 간격 설정 */
+	width: 70px;  /* 배경을 원하는 너비로 설정 */
+    height: 70px;  /* 배경을 원하는 높이로 설정 */
 	align-items: center;
 	font-weight: 800;
-	font-size: 28px;
-	}
-	.topbarbi {
-    display: flex;
+	font-size: 25px;
+	display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     font-family: 'Noto Sans', sans-serif;
 	}
+	
 	.topbarbi span {
     font-size: 10px;
 	}
@@ -150,11 +150,11 @@ h2 {
             <div style="display: flex;">
             <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;">
                 <i class="bi bi-heart" ></i> 
-                <span style="font-size: 10px;">좋아요</span>
+                <span>좋아요</span>
             </div>
             <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;">
                 <i class="bi bi-share"></i> 
-                <span style="font-size: 10px;">공유하기</span>
+                <span>공유하기</span>
              </div>
 
         	</div>
