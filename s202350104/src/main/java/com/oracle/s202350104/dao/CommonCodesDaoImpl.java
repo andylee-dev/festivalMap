@@ -100,18 +100,18 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 	}
 	
 	
-	@Override
+	 @Override
 	public int deletecommonCode(int big_code) {
-		int result = 0;
-		try {
-			log.info("CommonCodeDaoImpl deletecommonCode start");
-			result = session.delete("joDeleteCommonCode", big_code);
-			log.info("CommonCodeDaoImpl deletecommonCode result ->" + result);
+		 int result = 0;
+		// try {
+		// 	log.info("CommonCodeDaoImpl deletecommonCode start");
+		// 	result = session.delete("joDeleteCommonCode", big_code);
+		// 	log.info("CommonCodeDaoImpl deletecommonCode result ->" + result);
 		
-		} catch (Exception e) {
-			log.error("CommonCodeDaoImpl deletecommonCode Exception ->" + e.getMessage());
-		}
+		// } catch (Exception e) {
+		// 	log.error("CommonCodeDaoImpl deletecommonCode Exception ->" + e.getMessage());
+		// }
 		
-		return result;
+		 return result;
 	}
 }
