@@ -29,6 +29,7 @@ public class AccomodationContent {
 		private Date   created_at;
 		private Date   updated_at;
 		private String is_deleted;
+		
 		// Accomodations 컬럼
 		private int    content_id;
 		private int	   room_count;
@@ -39,6 +40,7 @@ public class AccomodationContent {
 		private String is_pickup;
 		private String is_cook;
 		private String is_parking;
+		
 		// 페이지 처리용
 		private String pageNum;
 		private int    start;
@@ -46,4 +48,8 @@ public class AccomodationContent {
 		
 		// 검색용
 		private String keyword;
+		
+		// join용
+		private String area_content;
+		private String sigungu_content;
 }

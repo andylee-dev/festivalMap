@@ -67,17 +67,6 @@ h2 {
 	text-align: left; 
 	padding: 10px 0; 
 	margin-top: 100px;
-}
- .title-bi {
-	background: blue; /* 배경색을 검은색으로 설정 */
-	color: white; /* 아이콘 색상을 흰색으로 설정 */
-	border-radius: 50%; /* 배경을 원형으로 만듦 */
-	padding: 10px; /* 아이콘 주위에 여백 추가 */
-	margin: 20px;
-	align-items: center;
-	font-weight: 800;
-	font-size: 28px;
-	color: #EEFFC2;
 } 
  .contentyes-bi {
 	background: hotpink; /* 배경색을 핑크으로 설정 */

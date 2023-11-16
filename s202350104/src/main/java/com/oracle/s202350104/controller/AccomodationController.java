@@ -3,14 +3,18 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.RestaurantsContent;
 import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.BannerService;
@@ -33,7 +37,7 @@ public class AccomodationController {
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
 	 */ 
-
+	
 	@GetMapping(value = "/accomodation")
 	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
 
@@ -43,7 +47,7 @@ public class AccomodationController {
 			log.info("[{}]{}:{}", transactionId, "accomodation", "start");
 
 			int totalAccomodation = as.totalAccomodation();
-
+			
 			Paging page = new Paging(totalAccomodation, currentPage);
 			accomodation.setStart(page.getStart());
 			accomodation.setEnd(page.getEnd());
@@ -153,5 +157,41 @@ public class AccomodationController {
 		return "accomodation/accomodationDetail";
 
 	}
+	//accomodationIndex 페이지 서치
+	@RequestMapping(value = "indexaccomodationSearch")
+	public String indexaccomodationSearch(AccomodationContent accomodation, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "Start");
+			int totalAccomodation = as.conTotalAccomodation(accomodation);
+			int path 			= 1;
+			String area 		= request.getParameter("area");
+			String sigungu 		= request.getParameter("sigungu");
+			
+			Paging page = new Paging(totalAccomodation, currentPage);
+			accomodation.setStart(page.getStart());
+			accomodation.setEnd(page.getEnd());
+			
+			List<AccomodationContent> listSearchAccomodation = as.indexlistSearchAccomodation(accomodation);
+			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
+			
+			model.addAttribute("totalAccomodation", totalAccomodation);
+			model.addAttribute("path", path);
+			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
+			model.addAttribute("page", page);
+			model.addAttribute("listAccomodation", listSearchAccomodation);
+			// model.addAttribute("listRestaurant", listRestaurant);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "end");
+		}	
+				
+		return "accomodation/accomodationIndex";	
+	
+	}	
 
 }

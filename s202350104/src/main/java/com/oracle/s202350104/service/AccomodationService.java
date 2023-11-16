@@ -18,6 +18,8 @@ public interface AccomodationService {
 	List<AccomodationContent>  listSmallCode(AccomodationContent accomodationContent);
 	List<AccomodationContent>  listSearchAccomodation(AccomodationContent accomodationContent);
 	int                        totalSearchAccomodation(AccomodationContent accomodationContent);
+	int                        conTotalAccomodation(AccomodationContent accomodation);
+	List<AccomodationContent>  indexlistSearchAccomodation(AccomodationContent accomodation);
 
 
 	

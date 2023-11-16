@@ -17,6 +17,8 @@ public interface AccomodationDao {
 	List<AccomodationContent>       listSmallCode(AccomodationContent accomodationContent);
 	List<AccomodationContent>       listSearchAccomodation(AccomodationContent accomodationContent);
 	int                             totalSearchAccomodation(AccomodationContent accomodationContent);
+	int                             conTotalAccomdation(AccomodationContent accomodation);
+	List<AccomodationContent>       indexlistSearchAccomodation(AccomodationContent accomodation);
 
 	
 

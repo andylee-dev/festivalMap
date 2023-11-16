@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.AccomodationDao;
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.RestaurantsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -113,6 +114,18 @@ public class AccomodationServiceImpl implements AccomodationService {
 	public int totalSearchAccomodation(AccomodationContent accomodationContent) {
 		int totalSearchAccomodation = ad.totalSearchAccomodation(accomodationContent);
 		return totalSearchAccomodation;
+	}
+
+	@Override
+	public int conTotalAccomodation(AccomodationContent accomodation) {
+		int conTotalAccomodaiton = ad.conTotalAccomdation(accomodation);
+		return conTotalAccomodaiton;
+	}
+
+	@Override
+	public List<AccomodationContent> indexlistSearchAccomodation(AccomodationContent accomodation) {
+		List<AccomodationContent> indexlistSearchAccomodation = ad.indexlistSearchAccomodation(accomodation);
+		return indexlistSearchAccomodation;
 	}
 		
 

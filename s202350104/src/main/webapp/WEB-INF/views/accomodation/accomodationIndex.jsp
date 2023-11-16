@@ -4,41 +4,17 @@
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>숙박 리스트</title>
-<style type="text/css">
-	.pageblock {
-		text-align: center;
-	}
+	<head>
+	<meta charset="UTF-8">
+	<title>숙박 리스트</title>
+		<%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%>
+	<style type="text/css">
+		.pageblock {
+			text-align: center;
+		}
 	
-</style>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript">
-	function getSigungu(pArea) {
-				$.ajax({
-					url : "<%=request.getContextPath()%>/getSigungu/"+pArea,
-					data:pArea,
-					dataType:'json',
-					success:function(areas) {
-							$('#sigungu_list_select option').remove();
-							str = "<option value=''>전체</option>";
-							$(areas).each(
-								function() {
-									if(this.sigungu != 999 && this.content != null) {
-										strOption = "<option value='"+this.sigungu+"'> "+this.content+"</option>";
-										str += strOption;
-									}
-								}		
-							)
-							$('#sigungu_list_select').append(str);
-						}
-						}		
-				)
-			}
-			
-</script>
-</head>
+	</style>
+	</head>
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
@@ -55,19 +31,17 @@
 		<!-- HeaderBanner end -->
 	</div>
 	<div class="border p-3 m-3">
-				<h1 class="border">검색폼</h1>
-			<select name="area" onchange="getSigungu(this.value)">
-				<option value="">전체</option>
-				<c:forEach var="areas" items="${listAreas}">
-					<c:if test="${areas.sigungu == 999}">
-						<option value="${areas.area}">${areas.content}</option>
-					</c:if>
-				</c:forEach>
-			</select>
-			<select name="sigungu" id="sigungu_list_select"><!-- ajax getSigungu --></select>
-			<button type="button" class="btn btn-outline-secondary">검색</button>
-			<button type="button" class="btn btn-outline-secondary">초기화</button>
-		</div>
+		<form action="indexaccomodationSearch">
+						<h1 class="border">검색폼</h1>
+						<select name="area" id="area">
+							<option value="">전체</option>
+						</select> <select name="sigungu" id="sigungu">
+							<option value="">---</option>
+						</select>
+						<button type="submit" class="btn btn-outline-secondary">검색</button>
+						<input type="reset" class="btn btn-outline-secondary" value="초기화">
+					</form>
+				</div>
 	<div class="album py-5 bg-body-tertiary">
 		</div>
 			<div class="container">

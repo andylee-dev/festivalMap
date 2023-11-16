@@ -12,6 +12,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.FestivalsContent;
+import com.oracle.s202350104.model.RestaurantsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -172,5 +173,28 @@ public class AccomodationDaoImpl implements AccomodationDao {
 			log.info("AccomodationDaoImpl totalSearchAccomodation ->"+e.getMessage() );
 		}
 		return totalSearchAccomodation;
+	}
+
+	@Override
+	public int conTotalAccomdation(AccomodationContent accomodation) {
+		int conTotalAccomodation = 0;
+		try {
+			conTotalAccomodation = session.selectOne("ConTotalAccomodation", accomodation);
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl ConTotalAccomodation() Exception ->" + e.getMessage());
+		}
+				
+		return conTotalAccomodation;
+		}
+
+	@Override
+	public List<AccomodationContent> indexlistSearchAccomodation(AccomodationContent accomodation) {
+		List<AccomodationContent> indexlistSearchAccomodation = null;
+		try {
+			indexlistSearchAccomodation = session.selectList("indexlistSearchAccomodation", accomodation);
+		} catch (Exception e) {
+			 log.info("AccomodationDaoImpl indexlistSearchAccomodation() Exception ->" + e.getMessage());
+		}
+		return indexlistSearchAccomodation;
 	}
 }
