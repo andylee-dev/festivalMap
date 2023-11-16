@@ -186,7 +186,9 @@
 						</li>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 							<li class="page-item">
-								<a class="page-link" href="noticBoardList?currentPage=${i}">${i}</a>
+								<a class="page-link" href="noticBoardList?currentPage=${i}">
+					        		<span class="pagig_a_custom">${i}</span>
+								</a>
 							</li>						
 						</c:forEach>
 						<li class="page-item">
@@ -203,7 +205,9 @@
 				       	</li>
 					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 					        <li class="page-item">
-					        	<a class="page-link" href="magazinBoardList?currentPage=${i}">${i}</a>
+					        	<a class="page-link" href="magazinBoardList?currentPage=${i}">
+					        		<span>${i}</span>
+					        	</a>
 					        </li>
 					    </c:forEach>
 					    <li class="page-item">
