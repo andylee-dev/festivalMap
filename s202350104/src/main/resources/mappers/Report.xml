@@ -28,7 +28,7 @@
 			           ROWNUM as rn
 			    FROM report r
 			    JOIN users u ON r.user_id = u.id
-			    WHERE r.board_id = 244 AND r.status = 1
+			    WHERE r.board_id = #{boardId} AND r.status = 1
 			)
 	</select>
 	
