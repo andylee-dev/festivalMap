@@ -138,7 +138,7 @@
 								<th scope="col">등록일</th>
 								<th scope="col">승인여부</th>
 								<th scope="col">삭제여부</th>
-								<th scope="col">관리</th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>

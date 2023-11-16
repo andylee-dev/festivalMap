@@ -81,42 +81,53 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">컨텐츠 태그 관리</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-grid-fill "></i>
+					<label  class="admin-header-title ">컨텐츠태그</label>
+					</div>
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-5">
 					<form action="contentTag">
-						<!-- 지역 검색 -->
-						<select name="area" class="area-dropdown"></select>
-						<select name="sigungu"  class="sigungu-dropdown"></select><p>
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+								<div class="col-4">
+									<select name="search" class="form-select">
+										<option value="tagname">태그명</option>
+										<option value="title">이름</option>
+										<option value="contentId">컨텐츠 번호</option>
+									</select>
+								</div>
+								<div class="col-5 mx-2">
+					                <input type="text" name="keyword" class="form-control" value="${keyword}"
+					                placeholder="검색어를 입력하세요.">
+				                </div>
+						</div>
 						
-						검색어<select name="search">
-							<option value="tagname">태그명</option>
-							<option value="title">이름</option>
-							<option value="contentId">컨텐츠 번호</option>
-						</select>
-						<input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-						
-						<button type="submit" class="btn btn-outline-secondary">검색</button>
-						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+						<div class="container col-10 d-flex justify-content-center">					
+							<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+							<button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+						</div>
+
 					</form>				
 				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-2">
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=11'">축제</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=12'">맛집</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=13'">숙박</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=14'">명소</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=15'">체험</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='contentTag?bigCodeStr=16'">코스</button>
-					
-					<table class="table table-striped table-sm">
+				</div>
+				<div class="container col-9 justify-content-center my-2 border p-2">						
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -125,7 +136,7 @@
 								<th scope="col">이름</th>
 								<th scope="col">지역</th>
 								<th scope="col">태그명</th>
-								<th scope="col">수정</th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -145,26 +156,34 @@
 										${content.area} ${content.sigungu}
 									</td>
 									<td id="tag_name${st.index}"></td>
-									<td><input type="button" value="수정" onclick="location.href='contentTagsUpdateForm?contentIdStr=${content.id}'"></td>
+									<td><a href="contentTagsUpdateForm?contentIdStr=${content.id}" class="detail-link">관리</a></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>
 					</table>
 					<p>총 건수 : ${totalContents}</p>
-					
-					<div align="center">
+				</div>	
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="contentTag?currentPage=${page.startPage-page.pageBlock}&bigCodeStr=${bigCode}" class="pageblock">[이전]</a>
+							<li class="page-item">
+								<a href="contentTag?currentPage=${page.startPage-page.pageBlock}&bigCodeStr=${bigCode}" class="pageblock page-link">Prev</a>
+							</li>
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="contentTag?currentPage=${i}&bigCodeStr=${bigCode}" class="pageblock">[${i}]</a>
+							<li class="page-item">
+								<a href="contentTag?currentPage=${i}&bigCodeStr=${bigCode}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
-							<a href="contentTag?currentPage=${page.startPage+page.pageBlock}&bigCodeStr=${bigCode}" class="pageblock">[다음]</a>
+							<li class="page-item">
+								<a href="contentTag?currentPage=${page.startPage+page.pageBlock}&bigCodeStr=${bigCode}" class="pageblock page-link">Next</a>
+							</li>
 						</c:if>
-					</div>
-				</div>		
+					</ul>
+				</nav>
+					
 			</main>
 		</div>
 		</div>

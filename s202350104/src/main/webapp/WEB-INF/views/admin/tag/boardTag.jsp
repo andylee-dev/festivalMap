@@ -40,38 +40,52 @@
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-auto">
+			<main class="col-10 overflow-auto p-0">
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">게시판 태그 관리</h1>
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-grid-fill "></i>
+					<label  class="admin-header-title ">게시판태그</label>
+					</div>
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-5">
 					<form action="boardTag">
-						검색어<select name="search">
-							<option value="tagname">태그명</option>
-							<option value="title">제목</option>
-							<option value="name">작성자</option>
-						</select>
-						<input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+								<div class="col-4">
+									<select name="search" class="form-select">
+										<option value="tagname">태그명</option>
+										<option value="title">제목</option>
+										<option value="name">작성자</option>
+									</select>
+								</div>
+								
+								<div class="col-5 mx-2">
+					                <input type="text" name="keyword" class="form-control" value="${keyword}"
+					                placeholder="검색어를 입력하세요.">
+				                </div>
+				        </div>
 						
-						<button type="submit" class="btn btn-outline-secondary">검색</button>
-						<button type="reset" class="btn btn-outline-secondary">초기화</button>
+						<div class="container col-10 d-flex justify-content-center">					
+							<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+							<button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+						</div>
 					</form>
-					
 				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
+				<div class="container col-9 justify-content-center my-2">
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
-					
-					<table class="table table-striped table-sm">
+				</div>
+				<div class="container col-9 justify-content-center my-2 border p-2">						
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -81,7 +95,7 @@
 								<th scope="col">작성일</th>
 								<th scope="col">조회수</th>
 								<th scope="col">태그명</th>
-								<th scope="col">수정</th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -96,24 +110,33 @@
 									<td><fmt:formatDate value="${board.created_at}" type="date" pattern="YY/MM/dd"/></td>
 									<td>${board.read_count}</td>
 									<td id="tag_name${st.index}"></td>
-									<td><input type="button" value="수정" onclick="location.href='boardTagsUpdateForm?boardIdStr=${board.id}&currentPage=${page.currentPage}'"></td>
+									<td><a href='boardTagsUpdateForm?boardIdStr=${board.id}&currentPage=${page.currentPage}' class="detail-link">관리</a></td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>
 					</table>
 					<p>총 건수 : ${totalBoard}</p>
-					<div align="center">
-						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="boardTag?currentPage=${page.startPage-page.pageBlock}&smallCodeStr=${smallCode}" class="pageblock">[이전]</a>
-						</c:if>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="boardTag?currentPage=${i}&smallCodeStr=${smallCode}" class="pageblock">[${i}]</a>
-						</c:forEach>
-						<c:if test="${page.endPage < page.totalPage}">
-							<a href="boardTag?currentPage=${page.startPage+page.pageBlock}&smallCodeStr=${smallCode}" class="pageblock">[다음]</a>
-						</c:if>
-					</div>
+					
+					<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+							<c:if test="${page.startPage > page.pageBlock}">
+								<li class="page-item">
+									<a href="boardTag?currentPage=${page.startPage-page.pageBlock}&smallCodeStr=${smallCode}" class="pageblock page-link">Prev</a>
+								</li>
+							</c:if>
+							<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+								<li class="page-item">
+									<a href="boardTag?currentPage=${i}&smallCodeStr=${smallCode}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${page.endPage < page.totalPage}">
+								<li class="page-item">
+									<a href="boardTag?currentPage=${page.startPage+page.pageBlock}&smallCodeStr=${smallCode}" class="pageblock page-link">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</nav>
 				</div>		
 			</main>
 		</div>

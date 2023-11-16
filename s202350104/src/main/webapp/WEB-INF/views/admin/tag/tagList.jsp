@@ -42,7 +42,7 @@
 				<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-grid-fill "></i>
-					<label  class="admin-header-title ">태그관리</label>
+					<label  class="admin-header-title ">태그리스트</label>
 					</div>
 				</div>
 		
