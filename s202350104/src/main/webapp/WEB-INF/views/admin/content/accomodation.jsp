@@ -125,9 +125,9 @@
 								<th scope="col">숙박업장이름</th>
 								<th scope="col">주소</th>
 								<th scope="col">신청일</th>
-								<th scope="col">승인여부</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
+								<th scope="col">게시</th>
+								<th scope="col"></th>
+								
 							</tr>
 						</thead>
 						<tbody>
@@ -136,17 +136,15 @@
 								<tr id="accomodation${st.index}">
 										<td><input type="hidden" value="${accomodation.content_id}" id="id${st.index}">${num}</td>
 										<td>${accomodation.area} ${accomodation.sigungu}</td>
-										<td><a href="accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}">${accomodation.title}</a></td>
+										<td>${accomodation.title}</a></td>
 										<td>${accomodation.address}</td>
 										<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
 										<td>
-							 				<c:if test="${accomodation.status == 0 }">승인대기</c:if>
-											<c:if test="${accomodation.status == 1 }">승인완료</c:if>
+							 				<c:if test="${accomodation.status == 0 }">N</c:if>
+											<c:if test="${accomodation.status == 1 }">Y</c:if>
 										</td>
-										<td><c:if test="${accomodation.status == 1}"><input type="button" value="수정" class="btn btn-primary" 
-											onclick="location.href='accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${page.currentPage}'"></c:if></td>
-										<td><c:if test="${accomodation.status == 1}"><input type="button" value="삭제" class="btn btn-outline-secondary" 
-											onclick="accomodationDeleteAjax(${st.index})"></c:if></td>
+										<td><input type="button" value="관리" class="btn btn-primary" 
+											onclick="location.href='accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}'"></td>
 									 
 									 	<td>
 											<c:if test="${accomodation.is_deleted == 1}">삭제완료</c:if>
