@@ -225,10 +225,44 @@ public class AdminUserController {
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin favoriteSearch", e.getMessage());
 		} finally {
-			log.error("[{}]{}:{}", transactionId, "admin favoriteSearch", "end");
+			log.info("[{}]{}:{}", transactionId, "admin favoriteSearch", "end");
 		}
 				
 		return "admin/user/favoriteList";
+	}
+	
+	
+	@RequestMapping(value = "favoriteInsertForm")
+	public String favoriteInsertForm() {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin favoriteInsertForm", "Start");
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin favoriteInsertForm Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin favoriteInsertForm", "End");
+		}
+			
+		return "admin/user/favoriteInsertForm";
+	}
+	
+	
+	@RequestMapping(value = "favorite/insert")
+	public String favoriteInsert(Model model, Favorite favorite) {
+		UUID transactionId = UUID.randomUUID();
+		
+		int result = fas.insertFavorite(favorite);
+		
+		if(result>0) {
+			return "redirect:/admin/user/favorite";
+		} else {
+			model.addAttribute("msg", "입력실패 확인해보세요");
+			return "forward:favoriteInsertForm";
+		}
+			
 	}
 	
 	

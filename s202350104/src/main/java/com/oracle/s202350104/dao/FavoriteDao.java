@@ -13,5 +13,6 @@ public interface FavoriteDao {
 	List<Favorite>         getMyLikeList(Favorite favorite);
 	int                    totalMyLikeList();
 	int                    deleteMyLikeList(int id);
+	int                    insertFavorite(Favorite favorite);
 
 }

@@ -86,4 +86,16 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return result;
 	}
 
+	@Override
+	public int insertFavorite(Favorite favorite) {
+		int result = 0;
+		result = fad.insertFavorite(favorite);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		
+		return result;
+	}
+
 }

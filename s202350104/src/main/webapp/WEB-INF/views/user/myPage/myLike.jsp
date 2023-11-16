@@ -8,8 +8,16 @@
 		<title>Festival</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
+			function deleteConfirm(id){
+				console.log(id);
+				if(confirm("정말 삭제하시겠습니까?")){
+					var id = Number(id);
+					location.href="myLikeDelete?id="+id;
+				}
+			}
 		</script>
 	</head>
+	
 	<body>
 		<!-- Top bar -->
 		<%@ include file="/WEB-INF/components/TobBar.jsp"%>
@@ -41,7 +49,7 @@
 											<td>${myLikeList.id}</td>
 											<td>${myLikeList.title}</td>
 											<td><fmt:formatDate value="${myLikeList.create_at}" type="date" pattern="YY/MM/dd" /></td>
-											<td><button type="button" onclick="location.href='myLikeDelete?id=${myLikeList.id}'">취소</button></td>
+											<td><button type="button" onclick="deleteConfirm(${myLikeList.id})">취소</button></td>
 										</tr>
 									<c:set var="num" value="${num + 1 }"/>	
 									</c:forEach>
