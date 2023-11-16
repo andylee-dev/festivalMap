@@ -176,9 +176,23 @@ h2 {
 		</div>
 		</div>
 	</div>
-
-	<div class="container hashtag-container">
-		#해시태그 #해시태그	
+	
+	<div class="container" style="display: flex;">
+	  <div class="hashtag-container">
+	    <div class="app-tag-container" style="position: relative;">
+	      <div class="app-tag" style="position: absolute;">
+	        <div class="app-tag-text" style="font-size: 12;">#해시태그</div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	  <div class="hashtag-container">
+	    <div class="app-tag-container" style="position: relative;">
+	      <div class="app-tag" style="position: absolute;">
+	        <div class="app-tag-text" style="font-size: 12;">#해시태그2</div>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 	<div class="container border p-5"
 		style="justify-content: space-between; height: 700px">
