@@ -20,8 +20,10 @@
 		(
 			SELECT ROWNUM rn, a.*
 			FROM
-			(SELECT * FROM contents 
-				WHERE big_code = 15
+			(SELECT * 
+				FROM contents c, experience e
+				WHERE c.id = e.content_id
+				and big_code = 15
 				<if test="keyword != null">
 					AND title like '%' || #{keyword} || '%'
 				</if>

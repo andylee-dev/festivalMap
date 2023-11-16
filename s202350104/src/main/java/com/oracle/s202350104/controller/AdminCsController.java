@@ -39,9 +39,11 @@ public class AdminCsController {
 		report.setEnd(page.getEnd());
 
 		List<Report> listReport = res.listReport(report);
+		int totalReportCount = res.totalReportCount();
 		
 		model.addAttribute("totalReport", totalReport);
 		model.addAttribute("listReport", listReport);
+		model.addAttribute("totalReportCount" , totalReportCount);
 		model.addAttribute("page", page);
 		
 		return "admin/cs/report";

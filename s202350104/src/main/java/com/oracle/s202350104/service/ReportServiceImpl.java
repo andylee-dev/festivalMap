@@ -60,4 +60,11 @@ public class ReportServiceImpl implements ReportService {
 		return totalReport;
 	}
 
+	@Override
+	public int totalReportCount() {
+		int totalReportCount = 0;
+		totalReportCount = rd.totalReportCount();
+		return totalReportCount;
+	}
+
 }

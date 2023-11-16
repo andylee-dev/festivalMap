@@ -13,5 +13,6 @@ public interface ReportService {
 	int 			reportUpdate(int id);
 	int 			boardReportUpdate(Report report);
 	int 			totalReport();
+	int 			totalReportCount();
 
 }

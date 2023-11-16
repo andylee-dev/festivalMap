@@ -59,4 +59,11 @@
 			)
 	</select>
 	
+	<select id="shtotalReportCount" resultType="int">
+		SELECT COUNT(*) AS row_count
+		FROM report r
+		JOIN board b ON r.board_id = b.id
+		WHERE b.is_deleted = 0 AND r.status = 1
+	</select>
+	
 </mapper>	

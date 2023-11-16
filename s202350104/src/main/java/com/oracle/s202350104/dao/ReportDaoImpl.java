@@ -95,4 +95,15 @@ public class ReportDaoImpl implements ReportDao {
 		}
 		return totalReport;
 	}
+
+	@Override
+	public int totalReportCount() {
+		int totalReportCount = 0;
+		try {
+			totalReportCount = session.selectOne("shtotalReportCount");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalReportCount;
+	}
 }
