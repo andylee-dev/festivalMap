@@ -91,10 +91,10 @@ a {
 	transform: translateY(-50%);
 	background-color: #FF4379;
 	color: white;
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
-	line-height: 40px;
+	line-height: 26px;
 }
 
 /* 목록 출력 css */
@@ -233,6 +233,7 @@ a {
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
+	line-height: 20px;
 }
 
 .img_detail_custom {

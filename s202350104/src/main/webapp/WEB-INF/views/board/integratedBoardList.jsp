@@ -131,7 +131,7 @@
 				<c:choose>
 					<c:when test="${smallCode == 3}">
 						<div class="col keyword_div_custom">
-							<input class="form-control keyword_custom" type="text" placeholder="&nbsp키워드를 검색해보세요.">
+							<input class="form-control keyword_custom" type="text" placeholder="&nbsp;키워드를 검색해보세요.">
 							<img src="../image/icon_search1.png" alt="test" />
 							<button class="btn btn_custom" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>		
 						</div>
@@ -144,7 +144,7 @@
 		<div class="container p-3">
 			<div class="row row-cols-5 align-items-center division_custom">
 				<div class="col-md-1">글번호</div>
-				<div class="col-md-6">제목</div>
+				<div class="col-md-6">제&nbsp;목</div>
 				<div class="col-md-2">작성자</div>
 				<div class="col-md-2">작성일</div>
 				<div class="col-md-1">조회수</div>			

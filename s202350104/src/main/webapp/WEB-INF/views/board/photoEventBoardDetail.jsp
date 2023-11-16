@@ -81,7 +81,7 @@
 		<div class="container p-3" > 
 			<div class="row row-cols-5 align-items-center division_photo_custom">
 				<div class="col-md-1">글번호</div>
-				<div class="col-md-6">제목</div>
+				<div class="col-md-6">제&nbsp;목</div>
 				<div class="col-md-2">작성자</div>
 				<div class="col-md-2">작성일</div>
 				<div class="col-md-1">조회수</div>			
@@ -134,17 +134,17 @@
 		<div class="container p-3" >
 			<div class="row row-cols-4">
 				<div class="col-md-1 btn_border_custom">
-					<button class="btn btn_detail_custom" onclick="updateBoard(${board.id})">수정</button>				
+					<button class="btn btn_detail_custom" onclick="updateBoard(${board.id})">수&nbsp;정</button>				
 				</div>
 				<div class="col-md-1 btn_border_custom">
-					<button class="btn btn_detail_custom" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>				
+					<button class="btn btn_detail_custom" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭&nbsp;제</button>				
 				</div>
 <%-- 				<div class="col-md-1 btn_border_custom">
 					<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">취소</button>				
 				</div> --%>
 				<div class="col-md-1 btn_border_custom">
 					<!-- 게시판 신고기능 -송환 -->
-					<button class="btn btn_detail_custom" onclick="report(${board.id})">신고</button>				
+					<button class="btn btn_detail_custom" onclick="report(${board.id})">신&nbsp;고</button>				
 				</div>
 			</div>
 		</div>
