@@ -96,10 +96,10 @@
 				<if test="keyword != null">
 					AND title like '%' || #{keyword} || '%'
 				</if>
-				<if test="area != null">
+				<if test="area != null and area != 0">
 					AND area = #{area}
 				</if>
-				<if test="sigungu != null">
+				<if test="sigungu != null and sigungu != 0">
 					AND sigungu = #{sigungu}
 				</if>
 				<if test="status != null">
@@ -143,10 +143,10 @@
 		<if test="big_code != null and big_code != 0">
 			And c.big_code = #{big_code}
 		</if>
-		<if test="area != null">
+		<if test="area != null and area != 0">
 					AND area = #{area}
 				</if>
-				<if test="sigungu != null">
+				<if test="sigungu != null and sigungu != 0">
 					AND sigungu = #{sigungu}
 				</if>
 		<if test="status != null">
