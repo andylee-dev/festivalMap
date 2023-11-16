@@ -99,7 +99,10 @@
 									<td>${course.time }</td>
 									<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td>-</td>
-									<td><a href="location.href='courseUpdateForm?id=${course.course_id}'" class="detail-link">관리${course.course_id}</a></td>
+									<%-- <td><input onclick="location.href='courseUpdateForm?id=${course.course_id}'" type="button" 
+									class="btn btn-primary" value="관리${course.course_id}"></td> --%>
+									
+									<td><a href="courseUpdateForm?id=${course.course_id}" class="detail-link">관리${course.course_id}</a></td>
 									
 								</tr>
 							</c:forEach>
