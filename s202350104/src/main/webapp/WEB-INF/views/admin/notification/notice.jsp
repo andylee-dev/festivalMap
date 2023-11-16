@@ -98,7 +98,7 @@
 									</c:choose>
 									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-									<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
+									<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
 									<c:choose>
 										<c:when test="${bigCode eq 3 }">
 											<td><input class="btn btn-outline-secondary" onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										

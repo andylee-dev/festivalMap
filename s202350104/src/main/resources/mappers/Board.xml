@@ -149,13 +149,24 @@
 	</select>
 
 	<select id="boardDetail" parameterType="int" resultType="Board">
-		select *
+		select substr(a.file_name, 38) file_name_custom, a.id, a.title, a.content, b.name, a.created_at, a.read_count, a.file_name, 
+			   a.file_path, a.big_code, a.small_code
 		from board a, users b
 		where a.user_id = b.id
 		and a.id = #{boardId}
 	</select>
 	
 	<update id="boardUpdate" parameterType="Board">
+		update board
+		set
+			title = #{title},
+			content = #{content},
+			file_name = #{file_name},
+			updated_at = sysdate
+		where id = #{id}
+	</update>
+	
+	<update id="boardUpdate2" parameterType="Board">
 		update board
 		set
 			title = #{title},

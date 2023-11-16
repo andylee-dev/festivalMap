@@ -1,29 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/components/header.jsp"%>    
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>BoardUpdateForm</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-	crossorigin="anonymous">
-	
-</script>
 
-<!-- jQuery 라이브러리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 	function closeAndRedirect() {
+    	// 기본 제출 동작 막기
+        event.preventDefault();
+    	
 		// 취소 시 이전페이지 이동
 		window.history.back();
 	}
@@ -31,34 +22,91 @@
 
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+
+	<div id="content_title" class="container p-5 mb-4 text-center"></div>
+
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0 general_board_custom">
 	
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="text-center">게시판 수정</h2>
-            </div>
-            <div class="card-body">
-                <form action="boardUpdate" method="post">
-                    <input type="hidden" name="id" value="${board.id }">
-                    <input type="hidden" name="name" value="${board.name }">
-                    <input type="hidden" name="userId" value="${userId}">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">제목</label>
-                        <input type="text" id="title" name="title" class="form-control" required="required" value="${board.title }">
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">내용</label>
-                         <textarea id="content" name="content" class="form-control" required="required" rows="5">${board.content }</textarea>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">확인</button>
-                        <a href="#" class="btn btn-secondary" onclick="closeAndRedirect()">취소</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+		<!-- 상단 title 영역  -->
+		<div class="container p-0 text-center">
+			<div class="row align-items-start insert_title_custom">
+				<div class="col">
+					<c:choose>
+						<c:when test="${smallCode == 1}">
+							<h1><strong>공지사항, 수정</strong></h1>
+						</c:when>
+						<c:when test="${smallCode == 2}">
+							<h1><strong>이달의소식, 수정</strong></h1>
+						</c:when>
+						<c:when test="${smallCode == 3}">
+							<h1><strong>자유게시판, 수정</strong></h1>
+							<c:if test="${msg!=null }">${msg }</c:if>
+						</c:when>
+						<c:when test="${smallCode == 4}">
+							<h1><strong>포토게시판, 수정</strong></h1>
+						</c:when>
+						<c:when test="${smallCode == 5}">
+							<h1><strong>이벤트, 수정</strong></h1>
+						</c:when>
+						<c:otherwise>
+							<h1><strong>일반 게시물 수정</strong></h1>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>	
+		
+		<!-- input 영역 -->
+		<div class="container p-0 text-left">
+			<form action="boardUpdate" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="id" value="${board.id }"> 
+				<input type="hidden" name="name" value="${board.name }"> 
+				<input type="hidden" name="userId" value="${userId}">
+				<div class="row row-cols-1 p-0 insert_row_custom">
+
+					<div class="row row-cols-2 p-0 insert_row2_custom">
+						<div class="form-group col title_row">
+							<label for="title">제&nbsp;목</label>
+						</div>
+						<div class="form-group col">
+							<input type="text" class="form-control title_input" id="title"
+								   name="title" required="required" value="${board.title }">
+						</div>
+					</div>
+					
+					<div class="row row-cols-2 p-0 insert_row2_custom">
+						<div class="form-group col text_row">
+							<label for="content">내&nbsp;용</label>
+						</div>
+						<div class="form-group col">
+							<textarea class="form-control text_input" id="content"
+								name="content" rows="5" required>${board.content }</textarea>
+						</div>
+					</div>
+					
+		            <div class="row row-cols-2 p-0 insert_row2_custom">
+			            <div class="form-group col img_row">
+							<label class="lable2" for="image">이미지 첨부</label> 
+						</div>
+			            <div class="form-group col">
+							<input type="file" class="form-control img_input" name="file">
+							<p>기존&nbsp;파일&nbsp;:&nbsp;<span>${board.file_name_custom }</span></p>
+						</div>
+						</div>									
+						
+		            <div class="row row-cols-1 p-0 insert_row2_custom">					
+			            <div class="form-group col btn_row">
+				            <button type="submit" class="btn btn_detail_custom">등록</button>
+				            <button class="btn btn_detail_custom" onclick="closeAndRedirect()">취소</button>
+			       		</div>
+			       	</div>					
+					
+				</div>
+			</form>
+		<!-- input 영역 END -->
+		</div>		
+	<!-- 전체 content 영역  END-->
+	</div>	
 </body>
 </html>

@@ -190,9 +190,17 @@ public class BoardDaoImpl implements BoardDao {
 	public int boardUpdate(Board board) {
 
 		int updateBoard = 0;
-
+		log.info("BoardDao boardUpdate getFile_name : {}", board.getFile_name());
+		
 		try {
-			updateBoard = session.update("boardUpdate", board);
+			if(board.getFile_name() == null) {
+				log.info("BoardDao noboardUpdate normal Start!!");				
+				updateBoard = session.update("boardUpdate2", board);
+			} else {
+				log.info("BoardDao noboardUpdate image Start!!");				
+				updateBoard = session.update("boardUpdate", board);
+			}	
+
 		} catch (Exception e) {
 			log.error("BoardDao boardUpdate Exception : {}", e.getMessage());
 		}

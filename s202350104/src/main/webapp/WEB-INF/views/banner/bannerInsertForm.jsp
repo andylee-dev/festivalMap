@@ -1,32 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/components/header.jsp"%>    
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>BannerInsertForm</title>
-<!-- 부트스트랩 4.5.2 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- 부트스트랩 5.3.1-->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous" />
-
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-	crossorigin="anonymous">	
-</script>
-
-<!-- jQuery 라이브러리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 	function closeAndRedirect() {
@@ -45,56 +26,106 @@
 
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+	<div id="content_title" class="container p-5 mb-4 text-center"></div>
 
-	<div id="content_title" class="container p-5 mb-4 text-center">
-		<h2>신규 배너 생성</h2>
-		<c:if test="${msg!=null }">${msg }</c:if>
-	</div>
-	<div class="container mt-5">
-		<form action="bannerInsert" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="user_id" value="${userId }"> 
-			<input type="hidden" name="big_code" value="${bigCode }"> 
-			<input type="hidden" name="small_code" id="small_code" value="${smallCode }">
-			
-			<div class="form-group">
-				<label for="title">제목</label> 
-				<input type="text" class="form-control" id="title" name="title" required>
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0 general_board_custom">
+		
+		<!-- 상단 title 영역  -->
+		<div class="container p-0 text-center">
+			<div class="row align-items-start insert_title_custom">
+				<div class="col">
+					<h1><strong>배너, 신규 등록</strong></h1>
+					<c:if test="${msg!=null }">${msg }</c:if>					
+				</div>
 			</div>
-			
-			<div class="form-group">
-				<label for="content">내용</label>
-				<textarea class="form-control" id="content" 
-						  name="content" rows="4" required></textarea>
-			</div>
+		</div>
+		
+		<!-- input 영역 -->
+		<div class="container p-0 text-left">
+        	<form action="bannerInsert" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="user_id" value="${userId }">
+				<input type="hidden" name="big_code" value="${bigCode }">
+				<input type="hidden" name="small_code" id="small_code" value="${smallCode }">
+				<input type="hidden" name="tagsList" value="" />		
 
-			<div class="form-group">
-				<label for="url">URL</label> 
-				<input type="text" class="form-control" name="url" placeholder="URL주소가 필요한 경우만 입력하세요. ">
-			</div>
-			
-			<div class="form-group">
-				<label for="image">이미지 첨부</label> 
-				<input type="file" class="form-control" name="file">
-			</div>		
-				
-			<div class="form-group">
-				<label for="smallCode">소분류 코드</label><p>
-					<input type="radio" name="smallCode" value="1"
-						   onchange="updateSmallCode(1)"> Home 
-					<input type="radio" name="smallCode" value="2" 
-						   onchange="updateSmallCode(2)"> Footer 
-					<input type="radio" name="smallCode" value="3"
-						   onchange="updateSmallCode(3)"> Sidebar 
-					<input type="radio" name="smallCode" value="4" 
-						   onchange="updateSmallCode(4)"> Content
-			</div>
+				<div class="row row-cols-1 p-0 insert_row_custom">
+					
+					<!-- 제목 입력 -->
+					<div class="row row-cols-2 p-0 insert_row2_custom">
+						<div class="form-group col title_row">
+		               		<label for="title">제&nbsp;목</label>				
+						</div>
+						<div class="form-group col">
+		                	<input type="text" class="form-control title_input" id="title" 
+		                		   name="title" required="required">					
+						</div>
+					</div>
+					
+					<!-- content 입력 -->
+					<div class="row row-cols-2 p-0 insert_row2_custom">	
+			            <div class="form-group col text_row">
+			                <label for="content">내&nbsp;용</label>
+			            </div>
+			            <div class="form-group col">
+			                <textarea class="form-control text_input" id="content" name="content" 
+			                		  rows="4" required="required"></textarea>
+			            </div>
+		            </div>					
 
-			<button type="submit" class="btn btn-primary">등록</button>
-			<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
-		</form>
-	</div>
-
+					<!-- URL 입력 -->
+					<div class="row row-cols-2 p-0 insert_row2_custom">	
+			            <div class="form-group col text_row">
+			                <label for="url">U&nbsp;R&nbsp;L</label>
+			            </div>
+			            <div class="form-group col">
+		                	<input type="text" class="form-control title_input" id="url" 
+		                		   name="url" placeholder="URL주소가 필요한 경우만 입력하세요.">			            
+			            </div>
+		            </div>
+		            
+					<!-- 첨부파일 -->
+		            <div class="row row-cols-2 p-0 insert_row2_custom">
+			            <div class="form-group col img_row">
+							<label class="lable2" for="image">이미지 첨부</label> 
+						</div>
+			            <div class="form-group col">
+							<input type="file" class="form-control img_input" name="file">
+						</div>
+					</div>
+					
+					<!-- 분류 입력 -->
+					<div class="row row-cols-2 p-0 insert_row2_custom">
+						<div class="form-group col title_row">
+		               		<label for="title">분류코드</label>				
+						</div>
+						<div class="form-group col">
+		                	<input type="radio" name="smallCode" value="1"
+						   		   onchange="updateSmallCode(1)"> 'Home' 					
+							<input type="radio" name="smallCode" value="2" 
+								   onchange="updateSmallCode(2)"> 'Footer' 
+							<input type="radio" name="smallCode" value="3"
+								   onchange="updateSmallCode(3)"> 'Sidebar' 
+							<input type="radio" name="smallCode" value="4" 
+								   onchange="updateSmallCode(4)"> 'Content'						
+						</div>
+					</div>						
+					
+					<!-- 버튼 영역 -->					
+		            <div class="row row-cols-1 p-0 insert_row2_custom">					
+			            <div class="form-group col btn_row" style="">
+				            <button type="submit" class="btn btn_detail_custom">등록</button>
+				            <button class="btn btn_detail_custom" onclick="closeAndRedirect()">취소</button>
+			       		</div>
+			       	</div>					
+					
+						            						
+				</div>		
+			</form>
+		</div>
+		
+	<!-- 전체 content 영역  Start-->		
+	</div>	
+	
 </body>
 </html>

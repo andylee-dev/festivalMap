@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -36,7 +34,7 @@
 				
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-					<form action="favoriteSearch" method="POST" container justify-content-center">	
+					<form action="favoriteSearch" method="POST" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
@@ -52,7 +50,14 @@
 					</form>
 				</div>
 				<div class="container col-9 justify-content-center my-2">
-					<button onclick="location.href='../../reviewBoardInsertForm?userId=1&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>
+					<c:choose>
+						<c:when test="${smallCode eq 2}">
+							<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>					
+						</c:when>			
+						<c:when test="${smallCode eq 3}">
+							<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>					
+						</c:when>			
+					</c:choose>
 				</div>
 				
 				<!-- Section3: Table -->		
@@ -85,13 +90,14 @@
 									<td>${boards.name }</td>
 									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-									<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}'" type="button" value="수정 "></td>
+									<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
 									<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
 								</tr>
 								<c:set var="num" value="${num - 1 }"/>
 							</c:forEach>
 						</tbody>
 					</table>
+					
 					<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 					<c:choose>
@@ -104,7 +110,7 @@
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 									<li class="page-item">
-										<a href="magazin?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+										<a href="magazin?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 									</li>
 								</c:forEach>
 								<c:if test="${page.endPage < page.totalPage}">
@@ -123,7 +129,7 @@
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 									<li class="page-item">
-										<a href="board?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+										<a href="board?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 									</li>
 								</c:forEach>
 								<c:if test="${page.endPage < page.totalPage}">
@@ -142,7 +148,7 @@
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 									<li class="page-item">
-										<a href="review?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+										<a href="review?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 									</li> 
 								</c:forEach>
 								<c:if test="${page.endPage < page.totalPage}">
@@ -155,6 +161,7 @@
 					</c:choose>
 					</ul>
 					</nav>
+					
 				</div>
 			</main>
 		</div>

@@ -92,6 +92,7 @@
 				
 				<div class="row row-cols-1 p-0 insert_row_custom">
 					
+					<!-- 제목 입력 -->
 					<div class="row row-cols-2 p-0 insert_row2_custom">
 						<div class="form-group col title_row">
 		               		<label for="title">제&nbsp;목</label>				
@@ -101,6 +102,7 @@
 						</div>
 					</div>
 					
+					<!-- content 입력 -->
 					<div class="row row-cols-2 p-0 insert_row2_custom">	
 			            <div class="form-group col text_row">
 			                <label for="content">내&nbsp;용</label>
@@ -110,6 +112,7 @@
 			            </div>
 		            </div>
 		            
+					<!-- 첨부파일 -->
 		            <div class="row row-cols-2 p-0 insert_row2_custom">
 			            <div class="form-group col img_row">
 							<label class="lable2" for="image">이미지 첨부</label> 
@@ -118,7 +121,8 @@
 							<input type="file" class="form-control img_input" name="file">
 						</div>
 					</div>
-					
+
+					<!-- 태그 입력	 -->				
 		            <div class="row row-cols-2 p-0 insert_row2_custom">					
 						<div class="form-group col tag_row">
 						    <label for="tags">#태&nbsp;그 <br><span>(최대 3개 선택)</span></label>
@@ -132,6 +136,7 @@
 						</div>
 					</div>
 					
+					<!-- 버튼 영역 -->					
 		            <div class="row row-cols-1 p-0 insert_row2_custom">					
 			            <div class="form-group col btn_row" style="">
 				            <button type="submit" class="btn btn_detail_custom">등록</button>
@@ -144,7 +149,6 @@
 
 	<!-- 전체 content 영역  END-->	
 	</div>
-
 
 </body>
 </html>

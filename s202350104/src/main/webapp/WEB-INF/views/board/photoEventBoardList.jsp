@@ -170,39 +170,40 @@
 			<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
 				<c:choose>
 					<c:when test="${smallCode eq 4}">
-						<li class="page-item">
-							<c:if test="${page.startPage > page.pageBlock }">
-								<a class="page-link" href="photoBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-							</c:if>
-						</li>
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item"><a
+								href="photoBoardList?currentPage=${page.startPage-page.pageBlock}"
+								class="pageblock page-link">[이전]</a></li>
+						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a class="page-link" href="photoBoardList?currentPage=${i}">${i}</a>
-							</li>						
+							<li class="page-item"><a href="photoBoardList?currentPage=${i}"
+								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
 						</c:forEach>
-						<li class="page-item">
-							<c:if test="${page.endPage < page.totalPage }">
-								<a class="page-link" href="photoBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-							</c:if>
-						</li>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item"><a
+								href="photoBoardList?currentPage=${page.startPage+page.pageBlock}"
+								class="pageblock page-link">[다음]</a></li>
+						</c:if>
 					</c:when>
+					
 					<c:when test="${smallCode eq 5}">
-				   		 <li class="page-item">
-				        	<c:if test="${page.startPage > page.pageBlock }">
-				            	<a class="page-link" href="eventBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-				       		</c:if>
-				       	</li>
-					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					        <li class="page-item">
-					        	<a class="page-link" href="eventBoardList?currentPage=${i}">${i}</a>
-					        </li>
-					    </c:forEach>
-					    <li class="page-item">
-				        	<c:if test="${page.endPage < page.totalPage }">
-				       			<a class="page-link" href="eventBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-				       	 	</c:if>
-				   		</li>
-				    </c:when>
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item"><a
+								href="eventBoardList?currentPage=${page.startPage-page.pageBlock}"
+								class="pageblock page-link">[이전]</a></li>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item"><a href="eventBoardList?currentPage=${i}"
+								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item"><a
+								href="eventBoardList?currentPage=${page.startPage+page.pageBlock}"
+								class="pageblock page-link">[다음]</a></li>
+						</c:if>
+					</c:when>
 				</c:choose>
 			</ul>
 		</nav>	

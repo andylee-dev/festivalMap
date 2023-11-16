@@ -129,19 +129,28 @@
 		<!-- 기능버튼 출력 -->		
 		<div class="container p-3" >
 			<div class="row row-cols-4">
-				<div class="col-md-1 btn_border_custom">			
-					<button class="btn btn_detail_custom" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>				
-				</div>
-				<div class="col-md-1 btn_border_custom">			
-					<button class="btn btn_detail_custom" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>				
-				</div>
- 				<div class="col-md-1 btn_border_custom">
-					<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">취소</button>			
-				</div>
-				<div class="col-md-1 btn_border_custom">
-					<!-- 게시판 신고기능 -송환 -->
-					<button class="btn btn_detail_custom" onclick="report(${board.id})">신&nbsp;고</button>								
-				</div>
+				<c:choose>
+					<c:when test="${board.small_code eq 3 }">
+						<div class="col-md-1 btn_border_custom">			
+							<button class="btn btn_detail_custom" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>				
+						</div>
+						<div class="col-md-1 btn_border_custom">			
+							<button class="btn btn_detail_custom" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>				
+						</div>
+		 				<div class="col-md-1 btn_border_custom">
+							<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">취소</button>			
+						</div>
+						<div class="col-md-1 btn_border_custom">
+							<!-- 게시판 신고기능 -송환 -->
+							<button class="btn btn_detail_custom" onclick="report(${board.id})">신&nbsp;고</button>								
+						</div>			
+					</c:when>
+					<c:otherwise>
+		 				<div class="col-md-1 btn_border_custom">
+							<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">목록</button>			
+						</div>					
+					</c:otherwise>				
+				</c:choose>
 			</div>
 		</div>		
 			

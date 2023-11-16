@@ -163,80 +163,79 @@
 		
 		<!-- 페이징 처리 구간 -->
 		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center" style="display: flex; list-style: none; padding: 0;">
+			<ul class="pagination">
 				<c:choose>
 					<c:when test="${smallCode eq 1}">
-						<li class="page-item">
-							<c:if test="${page.startPage > page.pageBlock }">
-								<a class="page-link" href="noticBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-							</c:if>
-						</li>
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item"><a
+								href="noticBoardList?currentPage=${page.startPage-page.pageBlock}"
+								class="pageblock page-link">[이전]</a></li>
+						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a class="page-link" href="noticBoardList?currentPage=${i}">
-					        		<span class="pagig_a_custom">${i}</span>
-								</a>
-							</li>						
+							<li class="page-item"><a href="noticBoardList?currentPage=${i}"
+								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
 						</c:forEach>
-						<li class="page-item">
-							<c:if test="${page.endPage < page.totalPage }">
-								<a class="page-link" href="noticBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-							</c:if>
-						</li>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item"><a
+								href="noticBoardList?currentPage=${page.startPage+page.pageBlock}"
+								class="pageblock page-link">[다음]</a></li>
+						</c:if>
 					</c:when>
+
 					<c:when test="${smallCode eq 2}">
-				   		 <li class="page-item">
-				        	<c:if test="${page.startPage > page.pageBlock }">
-				            	<a class="page-link" href="magazinBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-				       		</c:if>
-				       	</li>
-					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					        <li class="page-item">
-					        	<a class="page-link" href="magazinBoardList?currentPage=${i}">
-					        		<span>${i}</span>
-					        	</a>
-					        </li>
-					    </c:forEach>
-					    <li class="page-item">
-				        	<c:if test="${page.endPage < page.totalPage }">
-				       			<a class="page-link" href="magazinBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-				       	 	</c:if>
-				   		</li>
-				    </c:when>
-				    <c:when test="${smallCode eq 3}">
-						<li class="page-item">
-							<c:if test="${page.startPage > page.pageBlock }">
-								<a class="page-link" href="freeBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-							</c:if>
-						</li>
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item"><a
+								href="magazinBoardList?currentPage=${page.startPage-page.pageBlock}"
+								class="pageblock page-link">[이전]</a></li>
+						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a class="page-link" href="freeBoardList?currentPage=${i}">${i}</a>
-							</li>						
+							<li class="page-item"><a href="magazinBoardList?currentPage=${i}"
+								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
 						</c:forEach>
-						<li class="page-item">
-							<c:if test="${page.endPage < page.totalPage }">
-								<a class="page-link" href="freeBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-							</c:if>
-						</li>
-				    </c:when>
-				    <c:when test="${smallCode eq 6}">
-						<li class="page-item">
-							<c:if test="${page.startPage > page.pageBlock }">
-								<a class="page-link" href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-							</c:if>
-						</li>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item"><a
+								href="magazinBoardList?currentPage=${page.startPage+page.pageBlock}"
+								class="pageblock page-link">[다음]</a></li>
+						</c:if>
+					</c:when>
+
+					<c:when test="${smallCode eq 3}">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item"><a
+								href="freeBoardList?currentPage=${page.startPage-page.pageBlock}"
+								class="pageblock page-link">[이전]</a></li>
+						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a class="page-link" href="reviewBoardList?currentPage=${i}">${i}</a>
-							</li>						
+							<li class="page-item"><a href="freeBoardList?currentPage=${i}"
+								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
 						</c:forEach>
-						<li class="page-item">
-							<c:if test="${page.endPage < page.totalPage }">
-								<a class="page-link" href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-							</c:if>
-						</li>
-				    </c:when>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item"><a
+								href="freeBoardList?currentPage=${page.startPage+page.pageBlock}"
+								class="pageblock page-link">[다음]</a></li>
+						</c:if>
+					</c:when>
+					
+					<c:when test="${smallCode eq 6}">
+						<c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item"><a
+								href="reviewBoardList?currentPage=${page.startPage-page.pageBlock}"
+								class="pageblock page-link">[이전]</a></li>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item"><a href="reviewBoardList?currentPage=${i}"
+								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item"><a
+								href="reviewBoardList?currentPage=${page.startPage+page.pageBlock}"
+								class="pageblock page-link">[다음]</a></li>
+						</c:if>
+					</c:when>
 				</c:choose>
 			</ul>
 		</nav>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/header.jsp"%>    
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,14 +61,14 @@
 	        success: function () {
 	            // 취소 버튼 실행 시 이전페이지 이동 + 새로고침
 	           	if (smallCode == 6) {
-	                // 포토게시판으로 리디렉션
+	                // 리뷰게시판으로 리디렉션
 	                window.opener.location.href = '/festival/detail?contentId=${contentId}&currentPage=${currentPage}';
 	            } else if(smallCode == 5) {
 	            	// 이벤트게시판으로 리디렉션
 	                window.opener.location.href = '/eventBoardList';
 	            } else{
 	            	// 기본 & 오류 처리
-	            	window.opener.location.href = '/home';
+	        		window.history.back();
 	            }
 	           	window.close();
 	        }
@@ -140,7 +142,7 @@
  				
  				<div class="form-group">
             		<button type="submit" class="btn btn-primary">등록</button>
-            		<button class="btn btn-secondary" onclick="closeAndRedirect(${smallCode}, ${currentPage})">취소</button>
+					<button class="btn btn-secondary" onclick="closeAndRedirect(${smallCode}, ${currentPage})">취소</button>
         		</div>
         </form>
     </div>

@@ -385,13 +385,73 @@ public class BoardController {
 
 	// 통합게시판 수정 Logic
 	@PostMapping(value = "/boardUpdate")
-	public String boardUpdate(Board board, int userId, Model model) {
+	public String boardUpdate(Board board, int userId, MultipartFile file, Model model) {
+		
+		// File upload Logic
+        UUID uuid = UUID.randomUUID();
+		String pathDB = null;
+		String fileName = null;
+		String realPath = null;
+		int realName = file.getOriginalFilename().length();
 
-		int updateBoard = boardService.boardUpdate(board);
+		try {
+			//realName = file.getOriginalFilename();
+			log.info("BoardController boardUpdate realName : {}", realName);			
+			if(realName > 0) {
+				log.info("BoardController boardUpdate File Start!!");
+				fileName = uuid + "_" + file.getOriginalFilename();
+
+				pathDB = "..\\photos\\";
+
+				realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
+
+				File savaFile = new File(realPath, fileName);
+
+				log.info("BannerController fileName : {}", fileName);
+				log.info("BannerController pathDB : {}", pathDB);
+				log.info("BannerController realPath : {}", realPath);
+				log.info("BannerController savaFile : {}", savaFile);
+
+				file.transferTo(savaFile);
+				
+			} else {
+				log.info("BoardController boardUpdate File Save False! = Null!");		
+			}			
+	
+		} catch (Exception e) {
+			log.error("BoardController File upload error : {}", e.getMessage());
+		} finally {
+			log.info("BoardController boardUpdate File End..");
+		}		
+		log.info("BoardController boardUpdate getFile_name : {}", board.getFile_name());
+		log.info("BoardController boardUpdate getOriginalFilename : {}", file.getOriginalFilename().length());
+
+		// User ID 값이 있어야만 실행
+		board.setUser_id(userId);
+		
+		int updateBoard = 0;
+		
+		if (board.getUser_id() > 0) {
+			log.info("BoardController boardUpdate Start!!");
+			log.info("BoardController boardUpdate realName : {}", realName);
+			
+			if(realName > 0) {
+				log.info("BoardController boardUpdate image Start!!");
+				// File명, 경로 setting
+				board.setFile_name(fileName);
+				board.setFile_path(pathDB);
+				
+				updateBoard = boardService.boardUpdate(board);
+			} else {
+				log.info("BoardController boardUpdate normal Start!!");
+				updateBoard = boardService.boardUpdate(board);
+			}
+			
+			model.addAttribute("board", updateBoard);
+		}
 		
 		log.info("BoardController boardUpdate userId : {}", userId);
 		
-		model.addAttribute("board", updateBoard);
 		model.addAttribute("userId", userId);
 
 		return "forward:/boardDetail"; 

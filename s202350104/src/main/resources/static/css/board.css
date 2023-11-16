@@ -333,6 +333,12 @@ a {
 	width: 200px;
 }
 
+.insert_row_custom .insert_row2_custom p{
+	margin-left: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
 .insert_row_custom .insert_row2_custom .img_input{
 	width: 460px;
 	margin-left: 10px;
