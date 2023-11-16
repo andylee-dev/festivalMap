@@ -152,8 +152,7 @@
 								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제/복원</th>
+								<th scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -168,7 +167,7 @@
 										<c:if test="${experience.small_code == 4}">이색</c:if>
 										<c:if test="${experience.small_code == 5}">레포츠</c:if>										
 									</td>
-									<td><a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}">${experience.title}</a></td>
+									<td>${experience.title}</td>
 									<td>${experience.address}</td>
 									<td>${experience.user_id}</td>
 									<td><fmt:formatDate value="${experience.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
@@ -178,19 +177,7 @@
 										<!-- 승인반려됐을 경우 status -->
 									</td>
 									<td>
-									<c:if test="${experience.status == 0}">
-									</c:if>
-									<c:if test="${experience.status == 1}">
-									<button onclick="location.href='experienceUpdateForm?contentId=${experience.id}'" class="btn btn-primary">수정</button>
-									</c:if>
-									</td>
-									<td>
-									<c:if test="${experience.is_deleted == 1}">
-									<button onclick="confirmRestore(${experience.id})" class="btn btn-outline-secondary">복원</button>
-									</c:if>
-									<c:if test="${experience.is_deleted == 0}">									
-									<button onclick="confirmDelete(${experience.id})" class="btn btn-outline-secondary">삭제</button>
-									</c:if>
+									<a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}" class="detail-link">관리</a>
 									</td>
 								</tr>
 								<c:set var="num" value="${num + 1}"/>
