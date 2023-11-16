@@ -156,14 +156,11 @@ h2 {
                 <i class="bi bi-share"></i> 
                 <span style="font-size: 10px;">공유하기</span>
              </div>
-             <div class="reportbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <i class="bi bi-exclamation-diamond"></i>
-                <span style="font-size: 10px;">신고하기</span>
+
         	</div>
-    		</div>
-			</div>
+    	</div>
 		</div>
-		</div>
+	</div>
 	</div>
 	
 	<div class="container" style="display: flex;">
