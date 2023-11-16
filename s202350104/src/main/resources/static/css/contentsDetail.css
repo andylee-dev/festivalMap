@@ -31,13 +31,31 @@
 	padding: 0;
 	line-height: 2.5;
 	font-family: Noto Sans;
+	display: table;
+    width: 100%;
 }
+
+.custom-ul li {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+.custom-ul li span {
+        display: table-cell;
+        width: 50%;
+    }
+
+.custom-ul li span:first-child {
+        font-weight: bold;
+        text-align: left;
+        width: 20%;
+    }
 
 .custom-ul li:before {
 	content: '\2022'; /* 핑크색 원 모양 기호 */
 	color: hotpink; /* 핑크색 */
 	display: inline-block;
-	width: 1em;
+	width: 11px;
 	margin-left: -1em;
 }
 

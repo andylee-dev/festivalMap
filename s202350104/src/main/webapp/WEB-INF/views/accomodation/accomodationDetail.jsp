@@ -10,108 +10,8 @@
 <title>숙박 상세</title>
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<style>
-.thumbnail {
-	cursor: pointer;
-	width: 70%;
-	height: 70%;
-	display: block;
-	margin: auto;
-}
 
-#largeImage {
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 999;
-}
-
-#overlay {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.7);
-	z-index: 998;
-}
-
-.custom-ul {
-	list-style: none; /* 목록 기호 제거 */
-	padding: 0;
-	line-height: 2.5;
-	font-family: Noto Sans;
-}
-
-.custom-ul li:before {
-	content: '\2022'; /* 핑크색 원 모양 기호 */
-	color: hotpink; /* 핑크색 */
-	display: inline-block;
-	width: 1em;
-	margin-left: -1em;
-}
-
-h2 {
-	color: white;
-	font-size: 32px;
-	font-family: Noto Sans;
-	font-weight: 700;
-	word-wrap: break-word
-}
-.title-container {
-	width: 100%; 
-	background: #FF4379; 
-	color: white; 
-	text-align: left; 
-	padding: 10px 0; 
-	margin-top: 100px;
-} 
- .contentyes-bi {
-	background: hotpink; /* 배경색을 핑크으로 설정 */
-	color: white; /* 아이콘 색상을 흰색으로 설정 */
-	border-radius: 50%; /* 배경을 원형으로 만듦 */
-	padding: 10px; /* 아이콘 주위에 여백 추가 */
-	margin: 20px;
-	align-items: center;
-	font-weight: 800;
-	font-size: 28px;
-	color: #EEFFC2;
-	}
-	 .contentno-bi {
-	background: #FAD1D9; /* 배경색을 하얀핑크색으로 설정 */
-	color: white; /* 아이콘 색상을 흰색으로 설정 */
-	border-radius: 50%; /* 배경을 원형으로 만듦 */
-	padding: 10px; /* 아이콘 주위에 여백 추가 */
-	margin: 20px;
-	align-items: center;
-	font-weight: 800;
-	font-size: 28px;
-	color: #EEFFC2;
-	}
-	.topbarbi {
-	background: white;
-	color: hotpink;
-	border-radius: 50%; /* 배경을 원형으로 만듦 */
-	padding: 15px; /* 아이콘 주위에 여백 추가 */
-	margin: 20px; /* 아이콘간 간격 설정 */
-	width: 70px;  /* 배경을 원하는 너비로 설정 */
-    height: 70px;  /* 배경을 원하는 높이로 설정 */
-	align-items: center;
-	font-weight: 800;
-	font-size: 25px;
-	display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Noto Sans', sans-serif;
-	}
-	
-	.topbarbi span {
-    font-size: 10px;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="/css/contentsDetail.css">
 
 <script>
 	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
@@ -165,7 +65,7 @@ h2 {
 	
 	<div class="container" style="display: flex;">
 	  <div class="hashtag-container">
-	    <div class="app-tag-container" style="position: relative;">
+	    <div class="app-tag-container" style="position: relative;  margin-right: 10px; margin-top: 10px">
 	      <div class="app-tag" style="position: absolute;">
 	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그</div>
 	      </div>
@@ -173,15 +73,15 @@ h2 {
 	  </div>
 	  
 	  <div class="hashtag-container">
-	    <div class="app-tag-container" style="position: relative;">
+	    <div class="app-tag-container" style="position: relative; margin-top: 10px">
 	      <div class="app-tag" style="position: absolute;">
 	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그2</div>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-	<div class="container border p-5"
-		style="justify-content: space-between; height: 700px">
+	<div class="container border-bottem p-5"
+		style="justify-content: space-between; height: 700px; border-bottom: 3px solid black;">
 		<table>
 			<tr>
 				<td
@@ -202,28 +102,28 @@ h2 {
 					style="object-fit: cover; margin-left: -40px;" align="absmiddle">
 				</td>
 				<td style="width: 20%; text-align: left;">
-					<ul class="custom-ul" style="padding-left: 20px;">
-						<li><b>상호명</b> ${accomodation.title}</li>
-						<li><b>주소</b> ${accomodation.address}</li>
-						<li><b>우편번호</b> ${accomodation.postcode}</li>
-						<li><b>전화번호</b> ${accomodation.phone}</li>
-						<li><b>홈페이지</b> <a href="${accomodation.homepage}">${accomodation.homepage}</a></li>
-						<li><b>객실수</b> ${accomodation.room_count}</li>
-						<li><b>예약처</b> <a href="${accomodation.reservation_url}">${accomodation.reservation_url}</a></li>
-						<li><b>환불규정</b> ${accomodation.refund}</li>
-						<li><b>입실시간</b> ${accomodation.check_in}</li>
-						<li><b>퇴실시간</b> ${accomodation.check_out}</li>
+					<ul class="custom-ul">
+						<li><span>상호명</span><span>${accomodation.title}</span></li>
+						<li><span>주소</span><span>${accomodation.address}</span></li>
+						<li><span><b>우편번호</b></span><span>${accomodation.postcode}</span></li>
+						<li><span><b>전화번호</b></span><span>${accomodation.phone}</span></li>
+						<li><span><b>홈페이지</b></span><a href="${accomodation.homepage}"><span>${accomodation.homepage}</span></a></li>
+						<li><span><b>객실수</b></span><span>${accomodation.room_count}</span></li>
+						<li><span><b>예약처</b></span><a href="${accomodation.reservation_url}"><span>${accomodation.reservation_url}</span></a></li>
+						<li><span><b>환불규정</b></span><span>${accomodation.refund}</span></li>
+						<li><span><b>입실시간</b></span><span>${accomodation.check_in}</span></li>
+						<li><span><b>퇴실시간</b></span><span>${accomodation.check_out}</span></li>
 					</ul>
-					<div style="display: flex; justify-content: space-between;">
+					<div style="display: flex; justify-content: flex-start; text-align: left; padding-top: 30px">
 						<c:choose>
 							<c:when test="${accomodation.is_pickup == 0}">
-								<div style="text-align: center; margin-right: 10px;">
+								<div style="text-align: center; margin-right: 5px;">
 								<i class="contentyes-bi bi-car-front"></i>
 								<div style="margin-top: 10px;"><b>픽업가능</b></div>
 								</div>
 								</c:when>
 							<c:when test="${accomodation.is_pickup == 1}">
-							<div style="text-align: center; margin-right: 10px;">
+							<div style="text-align: center; margin-right: 5px;">
 							<i class="contentno-bi bi-car-front"></i>
 							<div style="margin-top: 10px;"><b>픽업불가</b></div>
 							</div>
@@ -231,13 +131,13 @@ h2 {
 						</c:choose>
 						<c:choose>
 							<c:when test="${accomodation.is_cook == 0}">
-							<div style="text-align: center; margin-right: 10px;">
+							<div style="text-align: center; margin-right: 5px;">
 							<i class="contentyes-bi bi-egg-fried"></i>
 							<div style="margin-top: 10px;"><b>조리가능</b></div>
 							</div>
 							</c:when>
 							<c:when test="${accomodation.is_cook == 1}">
-							<div style="text-align: center; margin-right: 10px;">
+							<div style="text-align: center; margin-right: 5px;">
 							<i class="contentno-bi bi-egg-fried"></i>
 							<div style="margin-top: 10px;"><b>조리불가</b></div>
 							</div>
@@ -245,13 +145,13 @@ h2 {
 						</c:choose>
 						<c:choose>
 							<c:when test="${accomodation.is_parking == 0}">
-							<div style="text-align: center; margin-right: 10px;">
+							<div style="text-align: center; margin-right: 0px;">
 							<i class="contentyes-bi bi-p-circle"></i>
 							<div style="margin-top: 10px;"><b>주차가능</b></div>
 							</div>
 							</c:when>
 							<c:when test="${accomodation.is_parking == 1}">
-							<div style="text-align: center; margin-right: 10px;">
+							<div style="text-align: center; margin-right: 0px;">
 							<i class="contentno-bi bi-sign-no-parking"></i>
 							<div style="margin-top: 10px;"><b>주차불가</b></div>
 							</div>
@@ -287,13 +187,13 @@ h2 {
         overlay.style.display = 'none';
     });
 	</script>
-	<div class="container border p-5">
+	<div class="container border-bottem p-5" style="border-bottom: 3px solid black;">
 		<h2 style="color: hotpink;">개요</h2>
 		<p>${accomodation.content}
 	</div>
 	<!-- review test -->
 	<c:set var="num" value="${page.total-page.start+1 }" />
-	<div class="container border p-5">
+	<div class="container border-bottem p-5" style="border-bottom: 3px solid black;">
 		<div class="d-flex justify-content-end">
 			<button class="btn btn-primary"
 				onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${accomodation.content_id},${accomodation.big_code})">리뷰쓰기</button>
