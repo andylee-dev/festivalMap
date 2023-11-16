@@ -1070,6 +1070,8 @@ import lombok.RequiredArgsConstructor;
 				String is_deleted = request.getParameter("is_deleted");
 				String keyword = request.getParameter("keyword");
 				String status = request.getParameter("status");
+				String area = request.getParameter("area");
+				String sigungu = request.getParameter("sigungu");
 				
 				Paging page = new Paging(totalSearchExperience, currentPage);
 				experience.setStart(page.getStart());
@@ -1088,6 +1090,8 @@ import lombok.RequiredArgsConstructor;
 				model.addAttribute("is_deleted" ,is_deleted);
 				model.addAttribute("keyword", keyword);
 				model.addAttribute("status", status);
+				model.addAttribute("area" , area);
+				model.addAttribute("sigungu", sigungu);
 		
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "experience", e.getMessage());

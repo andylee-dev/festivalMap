@@ -9,6 +9,7 @@
 		<meta charset="UTF-8">
 		<title>experience content</title>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
 		function confirmDelete(contentId) {
 	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
@@ -53,6 +54,18 @@
 	            // 필요한 로직을 추가하세요.
 	        }
 	    }
+		
+		document.addEventListener("DOMContentLoaded", function() {
+			updateAreaOptions();
+			$(".area-dropdown").change(function() {
+				const selectedArea = $(this).val();
+				if (selectedArea) {
+					updateSigunguOptions(selectedArea);
+				} else {
+					$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+				}
+			});
+		});
 		
 		</script>
 	</head>
@@ -101,7 +114,7 @@
 					            	<div class="col-3">
 										<select name="area" class="area-dropdown form-select"></select>
 									</div>
-									<div class="col-3 mx-2">
+									<div class="col-3 mx-2 mt-3">
 										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
 									</div>		
 							</div>
@@ -142,7 +155,7 @@
 					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='experienceInsertForm'">등록</button>
 				</div>	
 				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm">
+					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -152,6 +165,7 @@
 								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
+								<th scope="col">삭제여부</th>
 								<th scope="col">관리</th>
 							</tr>
 						</thead>
@@ -175,6 +189,10 @@
 										<c:if test="${experience.status == 0}">승인대기</c:if>
 										<c:if test="${experience.status == 1}">승인완료</c:if>
 										<!-- 승인반려됐을 경우 status -->
+									</td>
+									<td>
+										<c:if test="${experience.is_deleted == 0}">N</c:if>
+										<c:if test="${experience.is_deleted == 1}">Y</c:if>
 									</td>
 									<td>
 									<a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}" class="detail-link">관리</a>
@@ -211,7 +229,7 @@
 									</c:when>
 									<c:when test="${path == 1}">
 										<li class="page-item">
-											<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&is_deleted=${is_deleted}&status=${status}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+											<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&is_deleted=${is_deleted}&status=${status}&area=${area}&sigungu=${sigungu}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 										</li>
 									</c:when>
 								</c:choose>
