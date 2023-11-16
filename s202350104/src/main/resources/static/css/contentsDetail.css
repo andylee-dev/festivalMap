@@ -30,6 +30,7 @@
 	list-style: none; /* 목록 기호 제거 */
 	padding: 0;
 	line-height: 2.5;
+	font-family: Noto Sans;
 }
 
 .custom-ul li:before {
@@ -97,4 +98,14 @@ h2 {
 	font-weight: 800;
 	font-size: 28px;
 	color: #EEFFC2;
+	}
+	.topbarbi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Noto Sans', sans-serif;
+	}
+	.topbarbi span {
+    font-size: 10px;
 	}

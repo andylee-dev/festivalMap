@@ -43,6 +43,7 @@
 	list-style: none; /* 목록 기호 제거 */
 	padding: 0;
 	line-height: 2.5;
+	font-family: Noto Sans;
 }
 
 .custom-ul li:before {
@@ -100,16 +101,15 @@ h2 {
 	font-weight: 800;
 	font-size: 28px;
 	}
-	.reportbi {
-	background: black;
-	color: white;
-	border-radius: 50%; /* 배경을 원형으로 만듦 */
-	padding: 10px; /* 아이콘 주위에 여백 추가 */
-	margin: 20px;
-	align-items: center;
-	font-weight: 800;
-	font-size: 28px;
-	color: #EEFFC2;
+	.topbarbi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Noto Sans', sans-serif;
+	}
+	.topbarbi span {
+    font-size: 10px;
 	}
 </style>
 
@@ -148,11 +148,11 @@ h2 {
         <div>
         <div style="display: flex;">
             <div style="display: flex;">
-            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;">
                 <i class="bi bi-heart" ></i> 
                 <span style="font-size: 10px;">좋아요</span>
             </div>
-            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;">
                 <i class="bi bi-share"></i> 
                 <span style="font-size: 10px;">공유하기</span>
              </div>
@@ -167,7 +167,7 @@ h2 {
 	  <div class="hashtag-container">
 	    <div class="app-tag-container" style="position: relative;">
 	      <div class="app-tag" style="position: absolute;">
-	        <div class="app-tag-text" style="font-size: 12;">#해시태그</div>
+	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그</div>
 	      </div>
 	    </div>
 	  </div>
@@ -175,7 +175,7 @@ h2 {
 	  <div class="hashtag-container">
 	    <div class="app-tag-container" style="position: relative;">
 	      <div class="app-tag" style="position: absolute;">
-	        <div class="app-tag-text" style="font-size: 12;">#해시태그2</div>
+	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그2</div>
 	      </div>
 	    </div>
 	  </div>
