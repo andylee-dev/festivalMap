@@ -30,6 +30,20 @@
 		AND not sigungu in ('999')	
 		AND content IS NOT NULL
 	</select>	
+
+	<select id="getAreaNameByCode" parameterType="int" resultType ="string" >
+		SELECT content
+		FROM areas
+		WHERE sigungu ='999'
+		AND area = #{area}
+	</select>
+
+	<select id="getSigunguNameByCode" parameterType="Areas" resultType ="string">
+		SELECT content
+		FROM areas
+		WHERE area = #{area}
+		AND sigungu = #{sigungu}
+	</select>
 	
 	<select id="joTotalAreaCode" resultType="int">
 		SELECT count(*)

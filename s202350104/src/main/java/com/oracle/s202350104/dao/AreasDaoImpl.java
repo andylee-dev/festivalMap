@@ -1,6 +1,7 @@
 package com.oracle.s202350104.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -90,5 +91,19 @@ public class AreasDaoImpl implements AreasDao {
 	}
 
 
+	@Override
+	public String getAreaNameByCode(int areaCode) {
+		String areaName = session.selectOne("getAreaNameByCode",areaCode);
+		return areaName;
+	}
+
+
+	@Override
+	public String getSigunguNameByCode(int area, int sigungu) {
+		Areas areas = new Areas();
+		areas.setArea(area);
+		areas.setSigungu(sigungu);
+		return session.selectOne("getSigunguNameByCode",areas);
+	}
 	
 }

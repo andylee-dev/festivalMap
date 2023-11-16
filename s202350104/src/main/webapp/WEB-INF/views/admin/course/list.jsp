@@ -87,8 +87,7 @@
 								<th scope="col">소요시간</th>
 								<th scope="col">등록일</th>
 								<th scope="col">지역</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
+								<th scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -100,10 +99,8 @@
 									<td>${course.time }</td>
 									<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
 									<td>-</td>
-									<td><input onclick="location.href='courseUpdateForm?id=${course.course_id}'" type="button" 
-									class="btn btn-primary" value="수정${course.course_id}"></td>
-									<td><input onclick="location.href='courseDelete?id=${course.course_id}'" type="button" 
-									class="btn btn-outline-secondary" value="삭제${course.course_id}"></td>
+									<td><a href="location.href='courseUpdateForm?id=${course.course_id}'" class="detail-link">관리${course.course_id}</a></td>
+									
 								</tr>
 							</c:forEach>
 						</tbody>
