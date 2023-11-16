@@ -324,6 +324,7 @@
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary" onclick="submitHandler()">확인</button>
 				<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
+				<button class="btn btn-primary" onclick="location.href='courseDelete?id=${course.course_id}'">삭제</button>
 			</div>
 		</form>
 	</div>
