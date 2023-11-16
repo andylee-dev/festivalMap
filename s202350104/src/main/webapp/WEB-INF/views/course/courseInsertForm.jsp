@@ -276,7 +276,7 @@ background: #D9D9D9;
 						</div>
 						<div class="form-group d-flex course-body-text"
 							 style="margin-bottom: 24px;">	
-							<label  class="col-2" for="course_info">코스 설명</label>
+							<label  class="col-2" for="course_info">코스 내용</label>
 							<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
 						</div>
 						<div class="form-group course-body-text">	

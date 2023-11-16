@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -266,72 +267,191 @@
 	
 </script>
 
+<style type="text/css">
+.course-card {
+	width: 100%; 
+	height: 100%; 
+	background: #F4F4F4; 
+	border-radius: 10px
+}
+
+.course-body-text {
+	width: 100%; 
+	color: black; 
+	font-size: 16px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	word-wrap: break-word
+}
+
+.course-header-text {
+	color: black; 
+	font-size: 32px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	word-wrap: break-word
+}
+
+.input-text {
+
+	align-self: stretch; 
+	padding-left: 16px; 
+	padding-right: 16px; 
+	padding-top: 14px; 
+	padding-bottom: 14px; 
+	background: white; 
+	border-radius: 10px; 
+	border: 1px #DEE2E6 solid; 
+	justify-content: flex-start; 
+	align-items: center; 
+	gap: 8px; display: inline-flex
+}
+
+.button-submit-design{
+	width: 123px; 
+	height: 43px; 
+	padding-left: 24px; 
+	padding-right: 24px; 
+	padding-top: 16px; 
+	padding-bottom: 16px; 
+	background: #FF4379; 
+	border-radius: 10px; 
+	border: 1px #D9D9D9 solid; 
+	justify-content: center; 
+	align-items: center; 
+	gap: 8px; 
+	display: inline-flex
+}
+
+.button-cancle-design{
+	width: 123px; 
+	height: 43px; 
+	padding-left: 24px; 
+	padding-right: 24px; 
+	padding-top: 16px; 
+	padding-bottom: 16px; 
+	background: #FFFFFF; 
+	border-radius: 10px; 
+	border: 1px #D9D9D9 solid; 
+	justify-content: center; 
+	align-items: center; 
+	gap: 8px; 
+	display: inline-flex
+}
+
+
+.button-submit-font {
+	color: white; 
+	font-size: 14px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	line-height: 18px; 
+	word-wrap: break-word
+}
+
+.button-cancle-font {
+	color: black; 
+	font-size: 14px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	line-height: 18px; 
+	word-wrap: break-word
+}
+
+.card-image-size{
+width: 172px; 
+height: 111px; 
+background: #D9D9D9;
+</style>
+
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
-	
-	<!-- Add the following lines for debugging -->
-	<script type="text/javascript">
-		console.log("course_id value:", ${course.id});
-	</script>
-	
-	<h1>코스 수정${courseContent.id }</h1>
-	<div class="container mt-5">
-		<form id="myForm" action="courseUpdate" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="id" value="${course.id}">
-			<div class="form-group">
-				<label for="course_title">코스 명</label>
-				<input type="text" id="course_title" name="course_title" class="form-control" required="required" value="${course.course_title }">
-			</div>
-				<div class="form-group">
-					<label>코스항목</label>
-					<button class="btn btn-primary" onclick="showPopUp(); event.preventDefault();">코스 수정</button>
-					
-					<div>
-						<table border="1" id="contentsTable">
-							<tr>
-								<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
-							</tr>
-							<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
-								<tr>
-									<td>${courseContentList.content_id }</td>
-									<td><img alt="${courseContentList.title }" src="${courseContentList.img1 }" style="height: 150px;"></td>
-									<td>${courseContentList.title }</td>
-									<td>${courseContentList.address }</td>
-									<td>${courseContentList.homepage }</td>
-									<td>${courseContentList.phone }</td>
-									<td><button onclick="deleteContent(event); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
-								</tr>
-							</c:forEach>
-							
-						</table>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+			
+			<main class="col-10 overflow-auto p-0">
+				
+				<!-- Section1: Title -->
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-pencil-square "></i>
+						<label class="admin-header-title">코스 관리</label>					
 					</div>
 				</div>
-			
-			<div class="form-group">
-				<label for="distance">거리(km)</label>
-				<input type="text" id="distance" name="distance" class="form-control" required="required" value="${course.distance }">
-			</div>
-			<div class="form-group">
-				<label for="time">소요시간</label>
-				<input type="text" id="time" name="time" class="form-control" required="required" value="${course.time }">
-			</div>
-			<div class="form-group">
-				<label for="course_info">코스 내용</label>
-				<textarea class="form-control" id="course_info" name="course_info" rows="5">${course.course_info }</textarea>
-			</div>
-			<div class="text-center">
-				<button type="submit" class="btn btn-primary" onclick="submitHandler()">확인</button>
-				<button class="btn btn-secondary" onclick="closeAndRedirect()">취소</button>
-				<button class="btn btn-primary" onclick="location.href='courseDelete?id=${course.course_id}'">삭제</button>
-			</div>
-		</form>
-	</div>
-	
-	<!-- review test -->
-	<div>
-		<h3>review 구역</h3>
+				
+				<div class="container mt-5">
+					<div class="d-flex justify-content-between col-12 flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+						<h1 class="course-header-text">코스 수정</h1>
+					</div>
+				</div>
+				
+				<!-- Section2: Table -->
+				<div class="container mt-5" style="padding: 0px;">
+					<form id="myForm" action="courseUpdate" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="${course.id}">
+						<div class="form-group d-flex course-body-text col-12"
+							 style="margin-bottom: 26px;">
+							<label class="form-label col-2" for="course_title">코스명</label>
+							<input type="text" id="course_title" name="course_title" class="form-control input-text" required="required" value="${course.course_title }">
+						</div>
+						
+						<div class="form-group course-body-text"
+							 style="margin-bottom: 40px;">
+							<label class="col-2" style="padding-bottom: 53px">코스항목</label>
+							<button class="btn btn-primary button-submit-font button-submit-design" onclick="showPopUp(); event.preventDefault();">코스 수정</button>
+							
+							<div>
+								<table border="1" id="contentsTable">
+									<tr>
+										<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
+									</tr>
+									<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
+										<tr>
+											<td>${courseContentList.content_id }</td>
+											<td><img alt="${courseContentList.title }" src="${courseContentList.img1 }" style="height: 150px;"></td>
+											<td>${courseContentList.title }</td>
+											<td>${courseContentList.address }</td>
+											<td>${courseContentList.homepage }</td>
+											<td>${courseContentList.phone }</td>
+											<td><button onclick="deleteContent(event); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
+										</tr>
+									</c:forEach>
+									
+								</table>
+							</div>
+						</div>
+						
+						<div class="form-group d-flex course-body-text col-12"
+							 style="margin-bottom: 24px;">
+							<label class="form-label col-2" for="distance">거리(km)</label>
+							<input type="text" id="distance" name="distance" class="form-control input-text" required="required" value="${course.distance }">
+						</div>
+						<div class="form-group d-flex course-body-text col-12"
+							 style="margin-bottom: 24px;">
+							<label class="form-label col-2" for="time">소요시간</label>
+							<input type="text" id="time" name="time" class="form-control input-text" required="required" value="${course.time }">
+						</div>
+						<div class="form-group d-flex course-body-text"
+							 style="margin-bottom: 24px;">
+							<label class="col-2" for="course_info">코스 내용</label>
+							<textarea class="form-control" id="course_info" name="course_info" rows="5">${course.course_info }</textarea>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary button-submit-font button-submit-design" onclick="submitHandler()">확인</button>
+							<button class="btn btn-secondary button-cancle-font button-cancle-design" onclick="closeAndRedirect()">취소</button>
+							<button class="btn btn-primary button-submit-font button-submit-design" onclick="location.href='courseDelete?id=${course.course_id}'">삭제</button>
+							
+						</div>
+					</form>
+				</div>
+				
+				<!-- review test -->
+				<div>
+					<h3>review 구역</h3>
+				</div>
+			</main>
+		</div>
 	</div>
 	
 </body>
