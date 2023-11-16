@@ -76,9 +76,9 @@
 </head>
 <body>
 	<!-- 전체 content 영역  Start-->
-	<div class="container p-0" style="width: 100%;">
+	<div class="container p-0 general_board_custom" style="width: 100%;">
 	
-		<div class="container p-3 border" > 
+		<div class="container p-3" > 
 			<div class="row row-cols-5 align-items-center division_photo_custom">
 				<div class="col-md-1">글번호</div>
 				<div class="col-md-6">제목</div>
@@ -88,7 +88,7 @@
 			</div>		
 		</div>
 		
-		<div class="container p-3 border"> 
+		<div class="container p-3"> 
 			<div class="row row-cols-5 align-items-center list_photo_custom">
 				<div class="col-md-1">1</div>
 				<div class="col-md-6">${board.title }</div>
@@ -102,12 +102,16 @@
 		</div>	
 		
 		<!-- 이미지 출력 -->
-		<div class="container p-3 border">
-			이미지 영역
+		<div class="container p-3">
+			<div class="row row-cols-1">
+				<div class="col img_detail_custom">
+					<img alt="${board.file_name }" src="${board.file_path }${board.file_name}">
+				</div>			
+			</div>
 		</div>
 		
 		<!-- 상세내용 출력 -->
-		<div class="container p-3 detail_custom border">
+		<div class="container p-3 detail_custom">
 			<div class="row row-cols-1 align-items-start">
 				<div class="col">
 					<p>${board.content }</p>
@@ -116,23 +120,37 @@
 		</div>
 		
 		<!-- 해시태그 출력 -->
-		<div class="container p-3 tags_detail_custom border">
+		<div class="container p-3 tags_detail_custom">
 			<div class="row row-cols-1 align-items-start">
-				<div class="col">
+				<div class="col tags_row_custom">
 					<c:forEach var="tags" items="${hashTag }">
-						<span class="badge rounded-pill text-bg-info">#${tags.name }</span>
+						<span class="badge rounded-pill text-bg-light">#${tags.name }</span>
 					</c:forEach>				
 				</div>			
 			</div>
 		</div>
+		
+		<!-- 기능버튼 출력 -->		
+		<div class="container p-3" >
+			<div class="row row-cols-4">
+				<div class="col-md-1 btn_border_custom">
+					<button class="btn btn_detail_custom" onclick="updateBoard(${board.id})">수정</button>				
+				</div>
+				<div class="col-md-1 btn_border_custom">
+					<button class="btn btn_detail_custom" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>				
+				</div>
+<%-- 				<div class="col-md-1 btn_border_custom">
+					<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">취소</button>				
+				</div> --%>
+				<div class="col-md-1 btn_border_custom">
+					<!-- 게시판 신고기능 -송환 -->
+					<button class="btn btn_detail_custom" onclick="report(${board.id})">신고</button>				
+				</div>
+			</div>
+		</div>
+		
+	<!-- 전체 content 영역  END-->		
 	</div>
-	
-	<div class="text-center">
-		<button class="btn btn-primary" onclick="updateBoard(${board.id})">수정</button>
-		<button class="btn btn-warning" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭제</button>
-		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
-		<!-- 게시판 신고기능 -송환 -->
-		<button class="btn btn-danger" onclick="report(${board.id})">신고</button>
-	</div>
+
 </body>
 </html>

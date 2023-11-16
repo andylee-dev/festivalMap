@@ -21,8 +21,8 @@
 	function showPopUp(id, userId) {
 		
 		//창 크기 지정
-		var width = 700;
-		var height = 650;
+		var width = 800;
+		var height = 700;
 		
 		//pc화면기준 가운데 정렬
 		var left = (window.screen.width / 2) - (width/2);

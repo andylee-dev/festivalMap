@@ -192,18 +192,62 @@ a {
 	margin-top: -35px;
 }
 
+/* photo, event detail css */
+
 .detail_custom p {
-	font-size: 30px;
+	font-size: 20px;
 	font-weight: bold;
-	line-height: 36px;
-	font-family: 'Dongle', sans-serif;
+	line-height: 40px;
+}
+
+.tags_detail_custom {
+	width: 99%;
+	margin-top: -30px;
+	border-bottom: 3px solid black;
+}
+
+.tags_detail_custom .tags_row_custom {
+	margin-left: -12px;
 }
 
 .tags_detail_custom span {
-	font-size: 30px;
-	font-family: 'Dongle', sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	font-style: italic;
+	border-bottom: 2px solid black;
+
 }
 
-.page-link .pagig_a_custom {
-	font-size: 15px;
+.btn_border_custom{
+	margin-left: -12px;
+	margin-right: 24px;
+ 
 }
+
+.btn_detail_custom {
+	width: 100px;
+	height: 36px;
+	border-radius: 23.50px;
+	background-color: #FF4379;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.img_detail_custom {
+	text-align: center;
+}
+
+.img_detail_custom img{
+	width: 700px;
+	height: 460px;
+}
+
+
+/* 페이징 처리 css */
+
+.page-link .pagig_a_custom {
+	font-size: 12px;
+}
+
