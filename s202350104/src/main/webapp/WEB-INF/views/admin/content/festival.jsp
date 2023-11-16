@@ -41,11 +41,11 @@
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="container col-9 justify-content-center my-5">
+				<div class="container col-7 justify-content-center my-5">
 					<form action="festival" method = "get">
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
-				               <div class="col-1">
+							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+				               <div class="col-3">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="s_title" selected>축제명</option>
 									  <option value="s_content">내용</option>
@@ -53,7 +53,7 @@
 									  <option value="s_eventplace">장소</option>
 					              </select>
 				                </div>
-				                <div class="col-5 mx-2">
+				                <div class="col-7 mx-2">
 					                <input type="text" name="keyword" class="form-control" value="${keyword}"
 					                placeholder="검색어를 입력하세요.">
 				                </div>

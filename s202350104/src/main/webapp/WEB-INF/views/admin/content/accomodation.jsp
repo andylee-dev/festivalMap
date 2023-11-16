@@ -53,8 +53,8 @@
 			<div class="container col-9 justify-content-center my-5">
 					<form action="accomodationSearch" method="get">
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
-								<div class="col-4">
+							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
+								<div class="col-1">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="" selected>숙소명</option>
 						          </select>
@@ -65,8 +65,8 @@
 						</div>
 						
 						<div class="col-12 my-4 d-flex align-items-center">
-								<label for="searchType" class="form-label col-2  mx-2">분류</label>
-								<div class="col-2 align-self-center">
+								<label for="searchType" class="form-label col-1  mx-2">분류</label>
+								<div class="col-2 d-flex align-items-center">
 									<select name="small_code" class="form-select">
 										<option value="999">전체</option>
 										<c:forEach var="small" items="${listSmallCode}">

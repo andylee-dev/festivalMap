@@ -27,8 +27,8 @@
 					<div class="container col-9 justify-content-center my-5">
 						<form action="adminRestaurantSearch">
 							<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
-								<div class="col-4">
+							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
+								<div class="col-1">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="s_title" selected>전체</option>
 					              </select>
@@ -40,41 +40,46 @@
 				            </div>	
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="form-label col-2  mx-2">테마</label>
-									<select name="small_code" id="small_code" class="form-select">
-										<option value="999">전체</option>
-										<option value="1" ${small_code == 1? 'selected':''}>한식</option>
-										<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
-										<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
-										<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
-										<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
-										<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
-										<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
-									</select>
+				            	<label for="searchType" class="form-label col-1  mx-2">테마</label>
+									<div class="col-2 d-flex align-items-center">
+										<select name="small_code" id="small_code" class="form-select">
+											<option value="999">전체</option>
+											<option value="1" ${small_code == 1? 'selected':''}>한식</option>
+											<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
+											<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
+											<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
+											<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
+											<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
+											<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
+										</select>
+									</div>
 									
-				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-3">
+				            	<label for="searchType" class="form-label col-1  mx-2">지역</label>
+					            	<div class="col-2 d-flex align-items-center">
 										<select name="area" class="area-dropdown form-select"></select>
 									</div>
-									<div class="col-3 mx-2">
+									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
 									</div>
 							</div>
 							
 							<div class="col-12 my-4 d-flex align-items-center">
-					            <label for="searchType" class="form-label col-2  mx-2">진행상황</label>
-									<select name="status" id="status" class="form-select">
-										<option value="2">전체</option>
-										<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>완료</option>
-										<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
-									</select> 
+					            <label for="searchType" class="form-label col-1  mx-2">필터링</label>
+					            	<div class="col-2 d-flex align-items-center">
+										<select name="status" id="status" class="form-select">
+											<option value="2">승인여부</option>
+											<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>완료</option>
+											<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
+										</select> 
+									</div>
 
-								<label for="searchType" class="form-label col-2  mx-2">삭제여부</label>
-									<select name="is_deleted" id="is_deleted" class="form-select">
-										<option value="2">전체</option>
-										<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
-										<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
-									</select>
+									<div class="col-2 mx-2 d-flex align-items-center">
+										<select name="is_deleted" id="is_deleted" class="form-select">
+											<option value="2">삭제여부</option>
+											<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
+											<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
+										</select>
+									</div>
 							</div>
 							
 							<input type="hidden" name="big_code" value="12">
@@ -90,11 +95,11 @@
 
 				
 				<!-- Section3: Table -->		
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='restaurantInsertForm'">등록</button>
+				<div class="container col-9 d-flex justify-content-end my-2">
+					<button type="button" class="btn btn-primary mt-4" onclick="location.href='restaurantInsertForm'">등록</button>
 				</div>
 				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
+					<table class="table table-bordered table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>

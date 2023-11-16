@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 		   $(document).ready(function() {
@@ -85,7 +86,7 @@
 					<button type="button" class="btn btn-outline-secondary" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
 				</div>
 				<div class="container col-9 justify-content-center my-2 border p-2">						
-					<table class="table table-striped table-sm text-center mb-2">
+					<table class="table table-bordered table-sm text-center mb-2">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
