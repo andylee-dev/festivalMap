@@ -61,7 +61,7 @@
   							<div class="card-body app-card-body">
     							<p class="app-card-text">
 			    					체험명 : ${experience.title}<br>
-			    					<span style="color: #FF4379;"> 체험기간 : 2023-01-01~2023-12-31 </span><br>
+			    					<span style="color: #FF4379;"> 휴무일 : ${experience.rest_time } </span><br>
 			    					<span style="font-weight: normal;"> 체험정보 :${experience.content}</span>
     							</p>
     							<%-- <a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a> --%>

@@ -11,13 +11,14 @@ public class Report {
 	private String result;
 	private String status;
 	private Date created_at;
-	private Date updated_at;
 	
 	//조회용
 	private String content;
 	private String title;
 	private int count;
 	private int id;
+	private String name;
+	private int rn;
 	
 	//paging
 	private String pageNum;

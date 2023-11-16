@@ -30,8 +30,10 @@
 				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
-							<th scope="col">신고ID</th>
+							<th scope="col">번호</th>
 							<th scope="col">글내용</th>
+							<th scope="col">작성ID</th>
+							<th scope="col">작성자</th>
 							<th scope="col">작성일</th>
 							<th scope="col">상태</th>
 							
@@ -40,9 +42,11 @@
 					<tbody>
 						<c:forEach var="report" items="${reportDetail}">
 							<tr>
-								<td>${report.user_id}</td>
+								<td>${report.rn}</td>
 								<td>${report.content}</td>
-								<td>${report.created_at}</td>
+								<td>${report.user_id}</td>
+								<td>${report.name}</td>
+								<td><fmt:formatDate value="${report.created_at}" type="date" pattern="YY/MM/dd"/></td>
 								<td>
 								<c:choose>
 									<c:when test="${report.status == 1}">신고접수</c:when>

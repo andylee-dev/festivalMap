@@ -5,23 +5,31 @@
 <mapper namespace="com.oracle.s202350104.ReportMapper">
 	<select id="shReportListAll" parameterType="report" resultType="Report">
 	<![CDATA[
-		SELECT * FROM (
-    	SELECT inner_query.*, ROWNUM as rnum FROM (
-        SELECT r.board_id, b.content, b.user_id, COUNT(r.user_id) AS count 
-        FROM board b  
-        INNER JOIN report r ON b.id = r.board_id 
-        WHERE b.is_deleted = 0 AND r.status = 1
-        GROUP BY b.content, r.board_id, b.user_id
-        ORDER BY count DESC
-    ) inner_query
-    WHERE ROWNUM <= #{end}
+	SELECT * FROM (
+	    SELECT inner_query.*, ROWNUM as rnum FROM (
+	        SELECT r.board_id, b.title, b.user_id, u.name, COUNT(r.user_id) AS count 
+	        FROM board b  
+	        INNER JOIN report r ON b.id = r.board_id 
+	        INNER JOIN users u ON b.user_id = u.id
+	        WHERE b.is_deleted = 0 AND r.status = 1
+	        GROUP BY b.title, r.board_id, b.user_id, u.name
+	        ORDER BY count DESC
+	    ) inner_query
+	    WHERE ROWNUM <= #{end}
 	)
 	WHERE rnum >= #{start}
 	]]>
 	</select>
 	
 	<select id="shReportDetail" resultType="Report" parameterType="int">
-		select * from report where board_id= #{boardId} and status=1
+			SELECT *
+			FROM (
+			    SELECT r.*, u.name as name, 
+			           ROWNUM as rn
+			    FROM report r
+			    JOIN users u ON r.user_id = u.id
+			    WHERE r.board_id = 244 AND r.status = 1
+			)
 	</select>
 	
 	<select id="shBoardDetail" resultType="Report" parameterType="int">
