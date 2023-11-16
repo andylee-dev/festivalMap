@@ -40,8 +40,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int insertUser(Users user) {
-		int result = session.insert("insertUser",user);
-		return result;
+		return session.insert("insertUser",user);
 	}
 
 	@Override

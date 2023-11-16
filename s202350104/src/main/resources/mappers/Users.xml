@@ -107,7 +107,7 @@
 			file_name,is_deleted	
 		) 
 		VALUES (
-			#{id}, #{big_code}, #{small_code}, 
+			users_id_seq.NEXTVAL, #{big_code}, #{small_code}, 
 			#{name}, #{password}, #{nickname}, #{birthday}, 
 			#{phone_num}, #{email}, #{address}, #{status}, 
 			#{point}, #{gender}, sysdate, sysdate, 

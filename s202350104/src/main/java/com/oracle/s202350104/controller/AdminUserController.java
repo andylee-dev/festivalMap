@@ -91,6 +91,24 @@ public class AdminUserController {
 		return "admin/user/bizUserList";
 	}
 	
+	@RequestMapping(value = "userDetail/{id}")
+    public String userDetail(@PathVariable("id") int id, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userDetail", "start");	
+			Users user = us.getUserById(id)
+			  .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+			model.addAttribute("user", user);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "userDetail", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "userDetail", "end");
+		}
+        return "admin/user/userDetail";
+    }
+
+	
+	
 	@RequestMapping(value = "userUpdateForm/{id}",  method = RequestMethod.POST)
     public String showUpdateForm(@PathVariable("id") int id, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -112,7 +130,7 @@ public class AdminUserController {
         String url = "";
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "start");	
+			log.info("[{}]{}:{}",transactionId, "updateUser", "start");	
 			log.info("user:{}",user.toString());
 			us.updateUser(user);
 			model.addAttribute("user", user);
@@ -134,9 +152,9 @@ public class AdminUserController {
 			}
 			
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "userUpdateForm", e.getMessage());
+			log.error("[{}]{}:{}",transactionId,  "updateUser", e.getMessage());
 		}finally {
-			log.info("[{}]{}:{}",transactionId, "userUpdateForm", "end");
+			log.info("[{}]{}:{}",transactionId, "updateUser", "end");
 		}		
         return "redirect:"+url;
     }

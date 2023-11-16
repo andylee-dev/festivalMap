@@ -68,14 +68,14 @@ main {
 	<main class="d-flex justify-content-center">
 		<div class="col-4 justify-content-center">
 			<div id="card-container" class="d-flex justify-content-around">
-				<div class="card mx-3 mt-5 p-5 pb-3 col-4">
+				<div class="card mx-3 mt-5 p-5 pb-4 col-4">
 					<img src="/asset/registerUser.svg" class="card-img-top" alt="...">
 					<div class="card-body  text-center">
 						<h1>일반회원</h1>
 						<a href="/signUp/user" " class="btn btn-primary">가입하기</a>
 					</div>
 				</div>
-				<div class="card mx-3 mt-5 p-5 pb-3 col-4 ">
+				<div class="card mx-3 mt-5 p-5 pb-4 col-4 ">
 					<img src="/asset/registerBizUser.svg" class="card-img-top" alt="...">
 					<div class="card-body text-center">
 						<h1>비즈회원</h1>

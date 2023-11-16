@@ -1,16 +1,21 @@
 package com.oracle.s202350104.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -49,14 +54,6 @@ public class AuthController {
 		return "auth/login";
 	}
 
-//	@RequestMapping(value = "/auth")
-//	public String auth() {
-//		log.info("auth");
-//		
-//		return "auth/login";
-//	}
-
-	
 	@RequestMapping(value = "/join")
 	public String userJoin() {
 		return "auth/join";
@@ -93,6 +90,7 @@ public class AuthController {
 			List<Tags> listTags = ts.listTags(tag);
 			log.info("listTags"+listTags.size());
 			model.addAttribute("listTags", listTags);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "userSignUp", e.getMessage());
 		} finally {
@@ -112,15 +110,44 @@ public class AuthController {
 	}
 	
 	@RequestMapping(value = "/signUp")
-	public String SignUp(Users user, Model model) {
-        try {
-        	us.insertUser(user);
-        } catch (DuplicateKeyException e) {
-            return "redirect:/signUp?error_code=-1";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/signUp?error_code=-99";
-        }
+	public String SignUp(@Valid Users user,BindingResult bindingResult, Model model) {
+		List<String> errorMessages= null;
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "userJoinForm", "start");
+        	log.info(user.toString());
+            if (bindingResult.hasErrors()) {
+                errorMessages = bindingResult.getAllErrors()
+                        .stream()
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                        .collect(Collectors.toList());
+                log.info(errorMessages.toString());
+                String url="";
+                model.addAttribute("errorMessages", errorMessages);
+                model.addAttribute("user", user);
+
+    			switch (user.getSmall_code()) {
+					case 2: 
+						url= "/signUp/user";
+						break;
+					case 3:
+						url= "/signUp/biz";
+						break;
+					default:
+						url = "/signUp";
+						break;
+				}
+                return "redirect:" + url+"?errorMessages="+URLEncoder.encode(errorMessages.get(0), "UTF-8");	           
+            }else {
+                log.info("valid Pass");
+            	us.insertUser(user);            	
+                log.info("no error");
+            }
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "userSignUp", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "userSignUp", "end");
+		}
         return "redirect:/login";
 	}
 	

@@ -66,41 +66,55 @@ h4 {
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/checkUserDuplicate.js"></script>
 <script>
-const checkDuplicate = (user) => {
-    const {email, nickname} = user;
-    console.log(email,nickname);
 
-    $.ajax({
-        method:"POST",
-        url:"/admin/user/getTotalSearchUserAjax",
-        contentType: "application/json", 
-        data: JSON.stringify(user), 
-        success: function(result) {
-            console.log(result);
 
-            // total user가 1 이상일 경우
-            if (result >= 1) {
-                alert("중복된 사용자가 존재합니다. 다른 이메일 혹은 닉네임을 사용해주세요.");
-
-                // form 제출 방지
-                event.preventDefault();
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log(xhr, status, error);
-        }
-    });
-}   
 
 	function checkDuplicateEmail() {
-	    const email = document.getElementById("email").value;
-	    if( email )  checkDuplicate({email: email});
+	    const emailEl = document.getElementById("email");
+		const emailValidationFeedback = document.getElementById("emailValidationFeedback");
+/* 	    if( emailEl.value ) {
+	    	if( isDuplicate({email: emailEl.value}), function(isDuplicate)  ){
+		    	emailEl.classList.remove("is-valid");
+		    	emailEl.classList.add("is-invalid");
+		    	emailValidationFeedback.textContent = "중복된 아이디입니다.";
+    		} else {
+		    	emailEl.classList.remove("is-invalid");
+		    	emailEl.classList.add("is-valid");
+		    	emailValidationFeedback.textContent = "사용 가능한 아이디입니다.";    			
+    		}
+    	} */
 	}
 
 	function checkDuplicateNickname() {
-	    const nickname = document.getElementById("nickname").value;
-	    if( nickname ) checkDuplicate({nickname: nickname});
+	    const nicknameEl = document.getElementById("nickname");
+		const nicknameValidationFeedback = document.getElementById("nicknameValidationFeedback");
+	    if (nicknameEl.value) {
+	    	console.log('${user.nickname}',nicknameEl.value)
+	    	if(nicknameEl.value === '${user.nickname}'){
+                nicknameEl.classList.add("is-valid");
+                nicknameEl.classList.remove("is-invalid");
+                nicknameValidationFeedback.textContent = "현재 귀하가 사용중인 닉네임 입니다.";
+                return;
+	    	}
+	    	
+	        isDuplicate({ nickname: nicknameEl.value }, function(isDuplicate) {
+	            if (isDuplicate) {
+	                nicknameEl.classList.add("is-invalid");
+	                nicknameEl.classList.remove("is-valid");
+	                nicknameValidationFeedback.textContent = "중복된 닉네임입니다.";
+	            } else {
+	                nicknameEl.classList.add("is-valid");
+	                nicknameEl.classList.remove("is-invalid");
+	                nicknameValidationFeedback.textContent = "사용 가능한 닉네임입니다.";
+	            }
+	        });
+	    } else {
+	        nicknameEl.classList.add("is-invalid");
+	        nicknameEl.classList.remove("is-valid");
+	        nicknameValidationFeedback.textContent = "닉네임을 입력바랍니다.";
+	    }
 	}
 
 	
@@ -137,6 +151,8 @@ const checkDuplicate = (user) => {
 	        }
 	    }
 	});
+	
+	
 	function checkSubmitHandler(event) {
 	    // 필요한 입력 필드 가져오기
 	    const email = document.getElementById("email");
@@ -380,7 +396,7 @@ const checkDuplicate = (user) => {
 										<div class="col-sm-6 mx-3">
 											<input type="text" class="form-control " id="nickname"
 												value="${user.nickname}" name="nickname">
-											<p class="helptext text-start"></p>
+											<p id="nicknameValidationFeedback" class="helptext text-start"></p>
 										</div>
 										<button class="btn btn-primary col-sm-1 mx-3"
 											onclick="checkDuplicateNickname();event.preventDefault();">중복확인</button>

@@ -84,24 +84,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int insertUser(Users user) {
+	public int insertUser(Users user)  {
 		int result = 0;
-		UUID transactionId = UUID.randomUUID();
-		try {
-			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "signUp", "start");
-			if (!user.getEmail().equals("")) {
-				/* 비밀번호 암호화*/
+			/* 비밀번호 암호화*/
 // 				user.setPassword(appConfig.encodePwd().encode(user.getPassword()));
-				user.setBirthday(user.getBirthday().replace("-", ""));
-				result = ud.insertUser(user);
-			} else {
-				log.info("no email");
-			}
-		} catch (Exception e) {
-			log.error("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "userJoinForm", e.getMessage());
-		} finally {
-			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "signUp", "end");
-		}
+		user.setBirthday(user.getBirthday().replace("-", ""));
+		result = ud.insertUser(user);
 		return result;
 	}
 
