@@ -123,7 +123,7 @@
 					</div>
 			</div>
 			<!-- Section2: Search Form -->		
-			<div class="container col-9 justify-content-center my-5">
+			<div class="container col-12 justify-content-center my-5">
 				<form action="qna" method="POST" class="container justify-content-center">
 						<!-- 검색어 -->
 						<div class="col-12 my-4 d-flex align-items-center">
