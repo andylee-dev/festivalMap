@@ -67,6 +67,18 @@ h2 {
 	padding-top: 5px;
 }
 
+#detail-top-id{
+	color: #FF4379;
+	font-family: Noto Sans;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: -0.48px;
+	padding-top: 5px;
+}
+
+
 .form-label{
 	color: #000;
 	
@@ -146,23 +158,24 @@ h2 {
 					</div>
 					<div class="my-5">
 						<div class="" id="detail-main-container">
-							<div class="container" id="detail-top-container">
-								<label id="detail-top-text">회원 | 일반</label>
+							<div class="container d-flex justify-content-around" id="detail-top-container">
+								<label id="detail-top-text">회원 | 일반 </label>
+								<label id="detail-top-id" >${user.id }</label>
 							</div>
 							<div class="container p-5 mx-3" id="form-container">
 							    <form action="/admin/user/updateUser" method="POST">
-							        <div class="form-row">
-							            <div class="col-md-6 mb-3">
+							        <div class="form-row d-flex justify-content-between">
+							            <div class="col-md-6 mb-3 px-2">
 							                <label for="name" class="form-label">이름</label>
-							                <input type="text" class="form-control form-control-lg form-input" id="name" value="ahaha" disabled>
+							                <input type="text" class="form-control form-control-lg form-input" id="name" value="${user.name }" disabled>
 							            </div>								
-							            <div class="col-md-6 mb-3">
+							            <div class="col-md-6 mb-3 px-2">
 							                <label for="nickname" class="form-label">닉네임</label>
 							                <input type="text" class="form-control form-control-lg form-input" id="nickname" value="ahaha" disabled>
 							            </div>								
 							        </div>
 							        <div class="form-row">
-							            <div class="mb-3">
+							            <div class="mb-3 px-2">
 							                <label for="email" class="form-label">이메일</label>
 							                <input type="email" class="form-control form-control-lg form-input" id="email" value="ahaha" disabled>
 							            </div>								
