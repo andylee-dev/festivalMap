@@ -37,6 +37,14 @@
 	function report(boardId) {
 	    window.open("../reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
 	}
+    function like() {
+        alert("찜하였습니다.");
+    }
+
+    function share() {
+        navigator.clipboard.writeText(window.location.href);
+        alert("링크를 복사하였습니다.");
+    }
 </script>
 </head>
 <body>
@@ -48,11 +56,11 @@
         <div>
         <div style="display: flex;">
             <div style="display: flex;">
-            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;">
+            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;" onClick="like()">
                 <i class="bi bi-heart" ></i> 
                 <span>좋아요</span>
             </div>
-            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;">
+            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;" onClick="share()">
                 <i class="bi bi-share"></i> 
                 <span>공유하기</span>
              </div>
