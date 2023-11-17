@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Favorite;
+import com.oracle.s202350104.model.RestaurantsContent;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.AdminListService;
 import com.oracle.s202350104.service.AreaService;
@@ -167,23 +168,46 @@ public class AdminAdminController {
 	
 	
 	@RequestMapping(value = "commonCodeDelete")
-	public String commonCodeDelete(int big_code, Model model) {
+	public String commonCodeDelete(Model model, CommonCodes commonCode) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}", transactionId, "admin commonCodeDelete", "start");;
-			int result = ccs.deletecommonCode(big_code);
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeDelete", "Start");
+			int result = ccs.deleteCommonCode(commonCode);
 		
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin commonCodeDelete Exception", e.getMessage());
 		
 		} finally {
-			log.info("[{}]{}:{}", transactionId, "admin commonCodeDelete", "end");
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeDelete", "End");
 		}
 		
 		return "redirect:commonCode";	
 	} 
+	
+	
+	@RequestMapping(value = "commonCodeUpdateForm")
+	public String commonCodeUpdateForm(Model model, String currentPage, CommonCodes commonCode) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeUpdateForm", "Start");
+			commonCode = ccs.detailCommonCode(commonCode);
+			
+			model.addAttribute("commonCode", commonCode);
+			model.addAttribute("currentPage", currentPage);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin commonCodeUpdateForm Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeUpdateForm", "End");
+		}
+		
+		return "admin/admin/commonCodeUpdateForm";	
+	} 
 
+	
 	@RequestMapping(value = "/areaCode")
 	public String areaCode(Areas area, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -286,7 +310,7 @@ public class AdminAdminController {
 	
 	
 	@RequestMapping(value = "areaCodeDelete")
-	public String areaCodeDelete(int area, Model model) {
+	public String areaCodeDelete(Areas area, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
@@ -303,5 +327,26 @@ public class AdminAdminController {
 		return "redirect:areaCode";	
 	} 
 	
+	
+	@RequestMapping(value = "areaCodeUpdateForm")
+	public String areaCodeUpdateForm(Model model, Areas area, String currentPage) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeUpdateForm", "start" );
+			Areas areaCode = as.detailAreaCode(area);
+			
+			model.addAttribute("areaCode", areaCode);
+			model.addAttribute("currentPage", currentPage);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin areaCodeUpdateForm Exception", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeUpdateForm", "end");
+		}
+		return "admin/admin/areaCodeUpdateForm";
+	}
+		
+		
 	
 }

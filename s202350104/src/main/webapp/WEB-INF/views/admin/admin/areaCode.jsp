@@ -72,7 +72,8 @@
 									<td>${areaCode.area}</td>
 									<td>${areaCode.sigungu}</td>
 						 			<td>${areaCode.content}</td>
-						 			<td><input class="btn btn-primary" type="button" value="수정"></td>
+						 			<td><input class="btn btn-primary" type="button" value="수정"
+						 				onclick="location.href='areaCodeUpdateForm?area=${areaCode.area}&sigungu=${areaCode.sigungu}&currentPage=${page.currentPage}'"></td>
 									<td><input class="btn btn-outline-secondary" type="button" value="삭제"
 										onclick="location.href='areaCodeDelete?area=${areaCode.area}&sigungu=${areaCode.sigungu}'"></td>					
 								 </tr>

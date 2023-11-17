@@ -66,14 +66,26 @@ public class CommonCodeServiceImple implements CommonCodeService {
 
 
 	@Override
-	public int deletecommonCode(int big_code) {
+	public int deleteCommonCode(CommonCodes commonCode) {
 		int result = 0;
-		result = cd.deletecommonCode(big_code);
+		result = cd.deleteCommonCode(commonCode);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 		return result;
+	}
+
+
+	@Override
+	public CommonCodes detailCommonCode(CommonCodes commonCode) {
+		CommonCodes detailCommonCode = cd.detailCommonCode(commonCode);
+		
+		if(detailCommonCode == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "공통코드 정보가 없습니다");
+		}
+		
+		return detailCommonCode;
 	}
 
 

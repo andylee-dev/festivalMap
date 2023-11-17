@@ -15,5 +15,6 @@ public interface AreasDao {
 	String getAreaNameByCode(int areaCode);
 	String getSigunguNameByCode(int area, int sigungu);
 	int         insertArea(Areas area);
-	int         deleteAreaCode(int area);
+	int         deleteAreaCode(Areas area);
+	Areas       detailAreaCode(Areas area);
 }

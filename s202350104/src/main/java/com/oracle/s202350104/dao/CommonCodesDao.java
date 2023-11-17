@@ -11,5 +11,6 @@ public interface CommonCodesDao {
 	int               conTotalCommonCode(CommonCodes commonCode);
 	List<CommonCodes> listSearchCommonCode(CommonCodes commonCode);
 	int               insertCommonCode(CommonCodes commonCode);
-	int               deletecommonCode(int big_code);
+	int               deleteCommonCode(CommonCodes commonCode);
+	CommonCodes       detailCommonCode(CommonCodes commonCode);
 }

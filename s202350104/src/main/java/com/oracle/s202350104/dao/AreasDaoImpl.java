@@ -123,7 +123,7 @@ public class AreasDaoImpl implements AreasDao {
 
 
 	@Override
-	public int deleteAreaCode(int area) {
+	public int deleteAreaCode(Areas area) {
 		int result = 0;
 		try {
 			log.info("AreasDaoImpl deleteAreaCode start");
@@ -136,5 +136,19 @@ public class AreasDaoImpl implements AreasDao {
 		
 		return result;
 	}
-	
+
+
+	@Override
+	public Areas detailAreaCode(Areas area) {
+		Areas areaCode = null;
+		try {
+			log.info("AreasDaoImpl detailAreaCode start");
+			areaCode = session.selectOne("joDetailAreaCode", area);
+			// log.info("AreasDaoImpl detailAreaCode.size() ->" + areaCode.getTitle());
+		
+		} catch (Exception e) {
+			log.error("AreasDaoImpl detailAreaCode Exception ->" + e.getMessage());
+		}
+		return areaCode;
+	}
 }

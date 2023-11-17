@@ -97,7 +97,7 @@ public class AreaServiceImpl implements AreaService {
 	}
 
 	@Override
-	public int deleteAreaCode(int area) {
+	public int deleteAreaCode(Areas area) {
 		int result = 0;
 		result = ad.deleteAreaCode(area);
 		
@@ -105,6 +105,17 @@ public class AreaServiceImpl implements AreaService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 		return result;
+	}
+
+	@Override
+	public Areas detailAreaCode(Areas area) {
+		Areas areaCode = ad.detailAreaCode(area);
+		
+		if(areaCode == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 지역코드 정보가 존재하지 않습니다");
+		}
+		
+		return areaCode;
 	}
 
 }

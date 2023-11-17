@@ -73,9 +73,15 @@
 		VALUES           (#{area}, #{sigungu}, #{content})
 	</insert>	
 	
-	<delete id="joDeleteAreaCode" parameterType="int">
+	<delete id="joDeleteAreaCode" parameterType="Areas">
 		DELETE FROM areas
 		WHERE area = #{area} AND sigungu = #{sigungu}
 	</delete>
+	
+	<select id="joDetailAreaCode" parameterType="Areas" resultType="Areas">
+		SELECT *
+		FROM   areas
+		WHERE  area = #{area} AND sigungu = #{sigungu}
+	</select>
 	
 </mapper>

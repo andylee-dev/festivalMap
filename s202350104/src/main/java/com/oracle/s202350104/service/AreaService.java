@@ -14,6 +14,7 @@ public interface AreaService {
 	List<Areas> listSearchAreaCode(Areas area);
 	Map<String, String> getAreaNamesByCode(int areaCode, int sigunguCode);
 	int         insertArea(Areas area);
-	int         deleteAreaCode(int area);
+	int         deleteAreaCode(Areas area);
+	Areas       detailAreaCode(Areas area);
 }
 	

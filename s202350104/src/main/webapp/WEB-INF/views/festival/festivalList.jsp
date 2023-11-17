@@ -32,6 +32,15 @@
 					}
 				});
 	});
+	
+	 	
+	// 서치이미지를 클릭할 때 폼을 제출하는 함수
+	$(document).ready(function () {
+    	$("#searchIcon").click(function () {
+       		$("#").submit();
+    	});
+	});
+	
 </script>
 <!-- 지역 코드 넣는 코드  End-->
 
@@ -99,7 +108,7 @@
 			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
 		</div>
 		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
-		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png"/>
+		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" />
 	</div>
 	
 	<!-- 경계선 표현 -->

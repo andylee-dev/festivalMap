@@ -30,6 +30,65 @@
 		</c:forEach>
 		<!-- HeaderBanner end -->
 	</div>
+	
+	
+	<!-- 상단 분홍색 영역 -->
+	<div class="container p-0 top_custom"></div>
+	
+	<!-- keyword, title 영역 -->	
+	<div class="container p-0 keyword_title_custom border">
+		<div class="co1 title_div">
+					F E S T I V A L!</div>
+		<div class="co1 text_div">
+			<h4><strong>어느 숙소에서 지내볼까요~♫</strong></h4>
+		</div>
+		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 숙소의 이름이나 키워드를 검색해보세요.">
+		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png"/>
+	</div>
+	
+	<!-- 경계선 표현 -->
+	<hr class="container p-0">	
+	
+	<!-- select 영역 -->
+	<div class="container p-0 select_custom">
+		<div class="row g-2 text-center">
+			<div class="col d-flex justify-content-center">
+				<select class="form-select text-center border-3 select_text_custom area-dropdown" 
+						aria-label="Default select example" name="area">
+				</select>
+			</div>
+			<div class="col d-flex justify-content-center">
+				<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
+						aria-label="Default select example" name="sigungu">
+					<option selected>시,군,구 선택</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+			<div class="col d-flex justify-content-center">
+				<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
+					<option selected>진행 기간 선택</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+			<div class="col d-flex justify-content-center">
+				<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
+					<option selected>진행 여부 선택</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+		</div>		
+	</div>	
+	
+	<!-- 경계선 표현 -->
+	<hr class="container p-0 hr_custom">	
+	
+	
 	<div class="border p-3 m-3">
 		<form action="indexaccomodationSearch">
 						<h1 class="border">검색폼</h1>
