@@ -1012,10 +1012,17 @@ import lombok.RequiredArgsConstructor;
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceDetail", "start");
-				ExperienceContent detailExperience = es.detailExperience(contentId);
+				ExperienceContent experience = es.detailExperience(contentId);
+				List<ExperienceContent> listSmallCode  = es.listSmallCode(experience);
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(experience.getArea());
 				
 				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("experience", detailExperience);
+				model.addAttribute("experience", experience);
+				model.addAttribute("listSmallCode", listSmallCode);
+				model.addAttribute("listAreas" , listAreas);
+				model.addAttribute("listSigungu", listSigungu);
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin experienceDetail", e.getMessage());
 			} finally {
