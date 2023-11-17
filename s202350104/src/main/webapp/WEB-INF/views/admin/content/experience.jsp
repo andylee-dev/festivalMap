@@ -111,10 +111,10 @@
 									</div>
 									
 				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-3">
+					            	<div class="col-2">
 										<select name="area" class="area-dropdown form-select"></select>
 									</div>
-									<div class="col-3 mx-2 mt-3">
+									<div class="col-1 mx-2 mt-3">
 										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
 									</div>		
 							</div>

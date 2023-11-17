@@ -23,6 +23,7 @@
 		<!-- Section3: Table -->		
 			<div class="container col-9 justify-content-center mt-10 my-2 border p-2">
 				<div class="border p-3 m-3">
+				<h3><i class="bi bi-clipboard2-minus"></i>신고 게시글</h3>
 				<table class="table table-striped table-sm mb-3">
 					<tr><th>게시글ID</th><td>${boardDetail.id}</td></tr>
 					<tr><th>작성자ID</th><td>${boardDetail.user_id}</td></tr>
@@ -31,6 +32,7 @@
 				</table>	
 				</div>
 			<div class="border p-3 m-3">
+				<h4><i class="bi bi-exclamation-triangle-fill ml-10"></i>신고내역</h4>
 				<table class="table table-striped table-sm text-center mb-3">
 					<thead>
 						<tr>
@@ -43,6 +45,7 @@
 							
 						</tr>
 					</thead>
+					
 					<tbody>
 						<c:forEach var="report" items="${reportDetail}">
 							<tr>
