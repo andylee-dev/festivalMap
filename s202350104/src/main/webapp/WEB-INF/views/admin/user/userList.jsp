@@ -129,7 +129,86 @@
     });
   });
 </script>
+<style type="text/css">
+.detail-btn{
+	color: #FF4379;
+	font-size:15;
+	font-family: Noto Sans;
+	font-style: normal;
+	font-weight: 800;
+	line-height: 18px; /* 138.462% */
+	text-decoration: none;
+}
+table td {
+    text-align: center; 
+    vertical-align: middle;
+}
+table {
+  border-collapse: collapse;
+}
+table td {
+  border: 1px solid #D9D9D9; 
+}
+table th {
+  border: 1px solid #D9D9D9; 
+}
 
+
+table tr:first-child td {
+  border-top: 0;
+}
+table tr td:first-child {
+  border-left: 0;
+}
+table tr:last-child td {
+  border-bottom: 0;
+}
+table tr td:last-child {
+  border-right: 0;
+}
+
+
+table tr:first-child th {
+  border-top: 0;
+}
+table tr th:first-child {
+  border-left: 0;
+}
+table tr th:last-child {
+  border-right: 0;
+}
+
+.col-form-label{
+color: #000;
+
+font-family: Noto Sans;
+font-size: 16px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.table-container{
+border-radius: 10px;
+border: 1px solid #000;
+}
+
+#userTable {
+    width: 100%; /* 테이블의 너비를 컨테이너의 너비에 맞게 조정 */
+}
+
+#regist-btn {
+	display: flex;
+	width: 69px;
+	height: 29px;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+	border-radius: 10px;
+}
+
+</style>
 </head>
 <body >
 	<div class="container-fluid">
@@ -145,13 +224,13 @@
 				</div>
 				
 				<!-- Section2: Search Form -->
-				<div class="container col-9 justify-content-center my-5">
+				<div class="container col-9 justify-content-center mt-5">
 				    <form action="/admin/user/userList" method="POST" class="container justify-content-center">
 					    <input  type="hidden" name="small_code" value="2">						
 				
 				        <!-- 검색어 -->
 			            <div class="col-12 my-4 d-flex align-items-center">
-			                <label for="searchType" class="form-label col-2  mx-2">검색어</label>
+			                <label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 			                <div class="col-4">
 				                <select id="searchType" name="searchType" class="form-select">
 				                    <option selected value="name">사용자 이름</option>
@@ -209,73 +288,71 @@
 				        </div>
 				    </form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
-				</div>	
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table id="userTable" class="table table-striped table-sm text-center mb-3">
-						<thead>
-							<tr>
-								<th scope="col">회원번호</th>
-								<th scope="col">이름</th>
-								<th scope="col">비밀번호</th>
-								<th scope="col">닉네임</th>
-								<th scope="col">생년월일</th>
-								<th scope="col">연락처</th>
-								<th scope="col">이메일</th>
-								<th scope="col">주소</th>
-								<th scope="col">가입일</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="user" items="${listUsers}" varStatus="st">
-								<tr id="user${st.index}">
-								
-									<td id="userId">${user.id}</td>
-									<td>${user.name}</td>
-									 
-									<td>${user.password.substring(0, 1)}****${user.password.substring(user.password.length() - 2)}</td>
-									<td>${user.nickname}</td>
-									<td>${user.birthday}</td>
-									<td>${user.phone_num}</td>
-									<td>${user.email}</td>
-									<td>${user.address}</td>
-									<td><fmt:formatDate value="${user.created_at}" type="date" pattern="YY/MM/dd"/></td>
-									<td><a class="btn btn-primary" href="userUpdateForm/${user.id}?currentPage=${page.currentPage}">수정</a></td>
-									<td><c:if test="${user.is_deleted == 0}">
-											<input class="btn btn-outline-secondary" type="button" value="삭제"
-										 onclick="userDeleteAjax(${st.index})">
-										</c:if>
-										<c:if test="${user.is_deleted == 1}">탈퇴</c:if></td>
-								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
-					</table>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>
 					</div>
-					<nav aria-label="Page navigation example ">
-						<ul class="pagination">
-					    	<c:if test="${page.startPage > page.pageBlock}">
-							    <li class="page-item">
-						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
-						    	</li>
-					    	</c:if>
-						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							    <li class="page-item">
-									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-						    	</li>
-							</c:forEach>
-						    <c:if test="${page.endPage < page.totalPage}">
-							    <li class="page-item">
-							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
-						    	</li>
-						    </c:if>
-						</ul>
-					</nav>
+					<div class="container table-container p-4">
+					<div class="table-responsive">
+						<table id="userTable" class="table table-md text-center p-3">
+							<thead>
+								<tr>
+									<th scope="col">회원번호</th>
+									<th scope="col">이름</th>
+									<th scope="col">비밀번호</th>
+									<th scope="col">닉네임</th>
+									<th scope="col">생년월일</th>
+									<th scope="col">연락처</th>
+									<th scope="col">이메일</th>
+									<th scope="col">주소</th>
+									<th scope="col">가입일</th>
+									<th scope="col">관리</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:set var="num" value="${page.start}"/>
+								<c:forEach var="user" items="${listUsers}" varStatus="st">
+									<tr id="user${st.index}">
+									
+										<td id="userId">${user.id}</td>
+										<td>${user.name}</td>
+										 
+										<td>${user.password.substring(0, 1)}****${user.password.substring(user.password.length() - 2)}</td>
+										<td>${user.nickname}</td>
+										<td>${user.birthday}</td>
+										<td>${user.phone_num}</td>
+										<td>${user.email}</td>
+										<td>${user.address}</td>
+										<td><fmt:formatDate value="${user.created_at}" type="date" pattern="YY/MM/dd"/></td>
+										<td><a class="detail-btn" href="userDetail/${user.id}?currentPage=${page.currentPage}">관리</a></td>
+									</tr>
+									<c:set var="num" value="${num + 1}"/>
+								</c:forEach>
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+				    	<c:if test="${page.startPage > page.pageBlock}">
+						    <li class="page-item">
+					        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+					    	</li>
+				    	</c:if>
+					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						    <li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+					    	</li>
+						</c:forEach>
+					    <c:if test="${page.endPage < page.totalPage}">
+						    <li class="page-item">
+						        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+					    	</li>
+					    </c:if>
+					</ul>
+				</nav>
 			</main>
 		</div>
 	</div>
