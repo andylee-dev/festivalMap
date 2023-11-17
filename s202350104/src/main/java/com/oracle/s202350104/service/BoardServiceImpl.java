@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oracle.s202350104.dao.BoardDao;
 import com.oracle.s202350104.model.Board;
-import com.oracle.s202350104.model.FestivalsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,19 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 
 	private final BoardDao boardDao;
-	
+
 	@Override
 	public int boardCount2(Board board) {
 		int countBoard = boardDao.boardCount2(board);
 		return countBoard;
 	}
-	
+
 	// paging 처리용
 	@Override
 	public int boardCount(int smallCode) {
-		
+
 		int countBoard = boardDao.boardCount(smallCode);
-		
+
 		return countBoard;
 	}
 
@@ -61,36 +60,36 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> getFreeAllList(Board board) {
 
 		List<Board> freeAllList = boardDao.getFreeAllList(board);
-		
+
 		log.info("boardService freeAllList size : {}", freeAllList.size());
 
 		return freeAllList;
 	}
-	
+
 	// 포토게시판
 	@Override
 	public List<Board> getPhotoAllList(Board board) {
-		
+
 		List<Board> phothAllList = boardDao.getPhotoAllList(board);
-		
+
 		return phothAllList;
 	}
-	
+
 	// 이벤트게시판
 	@Override
 	public List<Board> getEventAllList(Board board) {
-		
+
 		List<Board> eventAllList = boardDao.getEventAllList(board);
-		
+
 		return eventAllList;
 	}
-	
+
 	// review
 	@Override
 	public List<Board> getReviewAllList(Board board) {
 
-		List<Board> reviewAllList = boardDao.getReviewAllList(board); 
-		
+		List<Board> reviewAllList = boardDao.getReviewAllList(board);
+
 		log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
 
 		return reviewAllList;
@@ -106,7 +105,16 @@ public class BoardServiceImpl implements BoardService {
 
 		return boards;
 	}
-	
+
+	// 통합게시판 생성
+	@Override
+	public int boardInsert(Board board) {
+
+		int insertBoard = boardDao.boardInsert(board);
+
+		return insertBoard;
+	}
+
 	// 통합게시판 수정
 	@Override
 	public int boardUpdate(Board board) {
@@ -115,30 +123,22 @@ public class BoardServiceImpl implements BoardService {
 
 		return updateBoard;
 	}
-	
+
 	// 통합게시판 삭제
 	@Override
 	public int boardDelete(int boardId) {
-		
+
 		int deleteBoard = boardDao.boardDelete(boardId);
-		
+
 		return deleteBoard;
 	}
-	
-	// 통합게시판 생성
-	@Override
-	public int boardInsert(Board board) {
 
-		int insertBoard = boardDao.boardInsert(board);
-		
-		return insertBoard;
-	}
-	
+	// 통합게시판 첨부파일 삭제
 	@Override
 	public Board boardRead(int id) {
-		
+
 		Board board = boardDao.boardRead(id);
-		
+
 		return board;
 	}
 

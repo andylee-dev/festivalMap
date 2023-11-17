@@ -200,7 +200,7 @@
 			   #{small_code}, #{title}, #{content}, #{score}, sysdate, 0)		
 	</insert>
 	
-	<select id="testRead" parameterType="int" resultType="Board">
+	<select id="boardImageRead" parameterType="int" resultType="Board">
 		select *
 		from board
 		where id = #{id}

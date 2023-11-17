@@ -42,19 +42,35 @@
 		order by id
 	</select>	
 	
-	<insert id="bannerInsert" parameterType="Banner">
+	<insert id="bannerNormalInsert" parameterType="Banner">
+		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
+			select banner_seq_generator.nextval from dual
+		</selectKey>
+		insert into banner (id, big_code, small_code, title, status, 
+							content, url, created_at) 
+		values(#{id}, #{big_code}, #{small_code}, #{title}, 
+			   0, #{content}, #{url}, sysdate)		
+	</insert>
+	
+	<insert id="bannerImageInsert" parameterType="Banner">
 		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
 			select banner_seq_generator.nextval from dual
 		</selectKey>
 		insert into banner (id, big_code, small_code, title, status, 
 							content, url, image, created_at) 
 		values(#{id}, #{big_code}, #{small_code}, #{title}, 
-			   0, #{content}, #{url}, #{image},sysdate)		
-	</insert>
+			   0, #{content}, #{url}, #{image}, sysdate)		
+	</insert>	
 
 	
 	<delete id="bannerDelete" parameterType="int">
 		delete from banner
 		where id = #{id}	
 	</delete>
+	
+	<select id="bannerImageRead" parameterType="int" resultType="Banner">
+		select *
+		from banner
+		where id = #{id}
+	</select>
 </mapper>

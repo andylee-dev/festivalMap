@@ -387,6 +387,10 @@ public class BoardController {
 	@PostMapping(value = "/boardUpdate")
 	public String boardUpdate(Board board, int userId, MultipartFile file, Model model) {
 		
+		// value 확인용
+		log.info("BoardController boardUpdate getFile_name : {}", board.getFile_name());
+		log.info("BoardController boardUpdate getOriginalFilename : {}", file.getOriginalFilename().length());	
+		
 		// File upload Logic
         UUID uuid = UUID.randomUUID();
 		String pathDB = null;
@@ -395,8 +399,8 @@ public class BoardController {
 		int realName = file.getOriginalFilename().length();
 
 		try {
-			//realName = file.getOriginalFilename();
 			log.info("BoardController boardUpdate realName : {}", realName);			
+			// 파일 값이 있으면 저장			
 			if(realName > 0) {
 				log.info("BoardController boardUpdate File Start!!");
 				fileName = uuid + "_" + file.getOriginalFilename();
@@ -423,13 +427,12 @@ public class BoardController {
 		} finally {
 			log.info("BoardController boardUpdate File End..");
 		}		
-		log.info("BoardController boardUpdate getFile_name : {}", board.getFile_name());
-		log.info("BoardController boardUpdate getOriginalFilename : {}", file.getOriginalFilename().length());
 
+
+		// 게시물 생성 Logic(초기화)	
+		int updateBoard = 0;
 		// User ID 값이 있어야만 실행
 		board.setUser_id(userId);
-		
-		int updateBoard = 0;
 		
 		if (board.getUser_id() > 0) {
 			log.info("BoardController boardUpdate Start!!");
@@ -652,6 +655,7 @@ public class BoardController {
 		String pathDB = null;
 		String fileName = null;
 		String realPath = null;
+		File savaFile = null;
 
 		try {
 			log.info("BoardController integratedboardInsert File Start!!");
@@ -661,7 +665,7 @@ public class BoardController {
 
 			realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
 
-			File savaFile = new File(realPath, fileName);
+			savaFile = new File(realPath, fileName);
 
 			log.info("BannerController fileName : {}", fileName);
 			log.info("BannerController pathDB : {}", pathDB);

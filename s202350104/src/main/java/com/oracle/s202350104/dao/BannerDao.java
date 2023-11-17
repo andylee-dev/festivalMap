@@ -19,4 +19,6 @@ public interface BannerDao {
 
 	int bannerDelete(int id);
 
+	Banner bannerRead(int id);
+
 }
