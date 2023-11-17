@@ -9,17 +9,8 @@
 <meta charset="UTF-8">
 <title>Beta Page</title>
 
-<!-- css 영역 -->
-<style type="text/css">
-.form-select {
-	width: 200px;
-	border: 2px black solid;
-	border-radius: 23.50px;
-	margin-bottom: 5px;
-	border: 2px black solid;
-}
-
-</style>
+<!-- 지역 코드 넣는 코드  -->
+<script src="/js/updateArea.js"></script>
 
 <!-- script 영역 -->
 <script type="text/javascript">
@@ -32,107 +23,57 @@
             $(".custom-carousel .card").not($(this)).removeClass("card");
             $(this).toggleClass("card");
         }); */
-    });    
+    }); 
+    
+	document.addEventListener("DOMContentLoaded", function() {
+		updateAreaOptions();
+		$(".area-dropdown").change(
+				function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append(
+								"<option value='0'>전체</option>");
+					}
+				});
+	});
 </script>
 
 </head>
 <body>
 	<!-- 임시, 여백용-->
-	<div id="content_title" class="container"></div>
+	<div id="content_title" class="container whiteSpace_custom" style=""></div>
 	
-	<!-- 상단 banner 영역 -->
-	<div class="container p-0 border" style="width: 100%; height: 400px; margin-top:100px;">
-		<div id="carouselExampleIndicators" class="carousel slide"
-			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
-			 data-bs-wrap="true">
-			 <!-- 중앙 하단 버튼용 -->			 
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleIndicators"
-						data-bs-slide-to="0" class="active" aria-current="true"
-						aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExampleIndicators"
-						data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExampleIndicators"
-						data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
-			<!-- 아이템 재료 영역 -->			
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img src="../image/BANNER1.png" class="d-block w-100" alt="메인배너1"
-						 style="width: 100%; height: 400px" />
-				</div>
-				<div class="carousel-item">
-					<img src="../image/BANNER2.png" class="d-block w-100" alt="메인배너2"
-						 style="width: 100%; height: 400px" />
-				</div>
-				<div class="carousel-item">
-					<img src="../image/BANNER3.png" class="d-block w-100" alt="메인배너3"
-						 style="width: 100%; height: 400px" />
-				</div>
-			</div>
-			
-			<!-- 좌,우 버튼 영역 -->
-			<button class="carousel-control-prev" type="button"
-					data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true">
-					<img src="../image/arrowLeft.png" alt="Previous">
-				</span> 
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button"
-					data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true">
-					<img src="../image/arrowRight.png" alt="Next">
-				</span> 
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
-	</div>
-	
-	<!-- 상단 분홍색 영역 -->
-	<div class="container p-0" style="width: 100%; height: 80px; background-color: #FF4379;"></div>
-	
-	<!-- 배지, 타이틀 영역 -->	
-	<div class="container border p-0" style="height:80px; position: relative;">
-		<div class="co1" style="width: 140px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
-					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
-					color: white; font-weight: bold; margin-left: 10px; margin-top: 10px;">
+	<!-- keyword, title 영역 -->	
+	<div class="container p-0 keyword_title_custom">
+		<div class="co1 title_div">
 					F E S T I V A L!</div>
-		<div class="co1" style="margin-left: 15px; flex: 1;">
+		<div class="co1 text_div">
 			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
 		</div>
-		<input class="form-control" type="text" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요."
-			   style="width: 30%; border:none; position: absolute; right: 25px; top: 68%; transform: translateY(-50%);">
-		<img style="width: 20px; height: 19px; right: 10px; top: 70%; position:absolute; transform: translateY(-50%);" src="../image/icon_search1.png" alt="test"/>
+		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
+		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png"/>
 	</div>
 	
 	<!-- 경계선 표현 -->
-	<hr class="container p-0" style="border-color: black; border-width: 4px;">
-	
-	<!-- 셀렉터 영역 -->
-	<div class="container p-0" style="height: 50px;">
+	<hr class="container p-0 hr_custom">	
+		
+	<!-- select 영역 -->
+	<div class="container p-0 select_custom">
 		<div class="row g-2 text-center">
 			<div class="col d-flex justify-content-center">
-				<select class="form-select text-center border-3" aria-label="Default select example"
-						style="font-size:20px; font-weight: bolder;">
-					<option selected>시,도 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+				<select class="form-select text-center border-3 select_text_custom area-dropdown" 
+						aria-label="Default select example" name="area">
 				</select>
 			</div>
 			<div class="col d-flex justify-content-center">
-				<select class="form-select text-center border-3" aria-label="Default select example"
-						style="font-size:20px; font-weight: bolder;">
-					<option selected>시,군,구 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+				<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
+						aria-label="Default select example" name="sigungu">
 				</select>
 			</div>
 			<div class="col d-flex justify-content-center">
-				<select class="form-select text-center border-3" aria-label="Default select example"
-						style="font-size:20px; font-weight: bolder;">
+				<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
 					<option selected>진행 기간 선택</option>
 					<option value="1">One</option>
 					<option value="2">Two</option>
@@ -140,8 +81,7 @@
 				</select>
 			</div>
 			<div class="col d-flex justify-content-center">
-				<select class="form-select text-center border-3" aria-label="Default select example"
-						style="font-size:20px; font-weight: bolder;">
+				<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
 					<option selected>진행 여부 선택</option>
 					<option value="1">One</option>
 					<option value="2">Two</option>
@@ -151,13 +91,126 @@
 		</div>		
 	</div>
 	
+	<!-- 상단 분홍색 title 출력-->
+	<div class="container p-0 top_title_custom">
+		<div class="row row-cols-1">
+			<div class="col title_custom">
+				<p>2023 꿈나라 꿈나라 축제</p>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 상단 tag 출력-->
+	<div class="container p-0">
+		<div class="row row-cols-6">
+			<div class="col-sm-1 hashTag_custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag_custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag_custom">
+				<button value="">#해시태그</button>
+			</div>			
+		</div>
+	</div>
+	
+	<!-- 이미지, 기본 정보 출력 -->
+	<div class="container p-0 basic-custom">
+		<div class="row row-cols-3">
+			<div class="col basic-img-custom">
+				<img alt="기본 이미지" src="...">
+			</div>
+			<div class="col basic-sideImg-custom">
+				<div class="row row-cols-1">
+					<div class="col sideImg-custom">1</div>
+					<div class="col sideImg-custom">2</div>
+					<div class="col sideImg-custom">3</div>
+					<div class="col sideImg-custom">4</div>
+					<div class="col sideImg-custom">5</div>
+				</div>
+			</div>
+			<div class="col basic-text-custom">
+				<div class="row row-cols-1">
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">축제명</p>
+						<p>꿈나라꿈나라</p>
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-sm-custom">기간</p>
+						<span>꿈나라꿈나라</span>						
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-sm-custom">시간</p>
+						<span>꿈나라꿈나라</span>						
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">입장료</p>
+						<span>꿈나라꿈나라</span>						
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-sm-custom">위치</p>
+						<span>꿈나라꿈나라</span>
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-sm-custom">주최</p>
+						<span>꿈나라꿈나라</span>
+					</div>
+	
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>문의전화</p>
+						<span>꿈나라꿈나라</span>					
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>문의메일</p>
+						<span>꿈나라꿈나라</span>											
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>홈페이지</p>	
+						<span>꿈나라꿈나라</span>										
+					</div>
+					<div class="col text-icon-custom">
+						<div class="row row-cols-6">
+							<div class="col icon-custom">1</div>
+							<div class="col icon-custom">2</div>
+							<div class="col icon-custom">3</div>
+							<div class="col icon-custom">4</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
 	<!-- 경계선 표현 -->
-	<hr class="container p-0" style="border-color: black; border-width: 4px;">
+	<hr class="container p-0 hr_custom">
+	
+	<!-- 상세정보 출력 -->
+	<div class="container p-0">
+		<h2 style="color: #FF4379;"><strong>OVERVIEW</strong></h2>
+	</div>
+	
+	<div class="container p-0 content_custom">
+		<div class="content_detail"></div>
+	</div>
+
+	<!-- 경계선 표현 -->
+	<hr class="container p-0 hr_custom">
 	
 	<!-- 리뷰 영역 -->
 	<div class="container p-0">
-		<h3 style="color: #FF4379;"><strong>REVIEW</strong></h3>
+		<h2 style="color: #FF4379;"><strong>REVIEW</strong></h2>
 	</div>
+	
 	<div class="container p-0">
 		<div class="row g-2">
 			<!-- 평점 현황 -->
@@ -215,7 +268,7 @@
 	</div>
 	
 	<!-- 리뷰 카드 영역 -->
- 	<div class="container p-0" style="height: 40%; margin-top: 50px;">
+ 	<div class="container p-0" style="margin-top: 50px;">
 		<div class="owl-carousel custom-carousel owl-theme"> 	
 <!-- 		<div class="row row-cols-1 row-cols-md-1 g-4"> -->
 			<c:forEach var="boards" items="${board }">
@@ -267,10 +320,96 @@
 			</c:forEach>
 			</div>
 		</div>
-<!-- </div> --> 
-
+<!-- </div> --> 	
+	
 	<!-- 경계선 표현 -->
-	<hr class="container p-0"
-		style="border-color: black; border-width: 4px;">
+	<hr class="container p-0 hr_custom">
+	
+	<!-- 찾아가기 출력 -->
+	<div class="container p-0">
+		<h2 style="color: #FF4379;"><strong>찾아가기</strong></h2>
+	</div>
+	
+	<div class="container p-0 map_custom">
+		<div class="map_detail">
+		
+		</div>	
+	</div>
+	
+	<!-- 경계선 표현 -->
+	<hr class="container p-0 hr_custom">
+	
+	<!-- 비슷한 축제 출력 -->
+	<div class="container p-0">
+		<h2 style="color: #FF4379;"><strong>비슷한 축제</strong></h2>
+	</div>	
+
+	<div class="container p-0 list_custom">
+		<div class="row row-cols-3 g-2">
+			<div class="col d-flex justify-content-center">
+				<div class="card card_custom border-0">
+					<div class="tag_custom">
+						<div class="tag_custom2">
+							<p class="tag_p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="..." class="card-img-top"
+							alt="image.jpg">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<p class="card-text title_p">축제 제목</p>
+						<p class="card-text period_p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet_p">content영역</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col d-flex justify-content-center">
+				<div class="card card_custom border-0">
+					<div class="tag_custom">
+						<div class="tag_custom2">
+							<p class="tag_p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="..." class="card-img-top"
+							alt="image.jpg">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<p class="card-text title_p">축제 제목</p>
+						<p class="card-text period_p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet_p">content영역</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col d-flex justify-content-center">
+				<div class="card card_custom border-0">
+					<div class="tag_custom">
+						<div class="tag_custom2">
+							<p class="tag_p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="..." class="card-img-top"
+							alt="image.jpg">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<p class="card-text title_p">축제 제목</p>
+						<p class="card-text period_p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet_p">content영역</p>
+					</div>
+				</div>
+			</div>						
+		</div>
+	</div>
+	
+	<div align="center">
+		<button onclick="location.href='../festival'">목록</button>
+	</div>
 </body>
 </html>

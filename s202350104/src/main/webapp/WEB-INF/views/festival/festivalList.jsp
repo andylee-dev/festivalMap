@@ -101,7 +101,7 @@
 	<div class="container p-0 top_custom"></div>
 
 	<!-- keyword, title 영역 -->	
-	<div class="container p-0 keyword_title_custom border">
+	<div class="container p-0 keyword_title_custom">
 		<div class="co1 title_div">
 					F E S T I V A L!</div>
 		<div class="co1 text_div">
@@ -112,7 +112,7 @@
 	</div>
 	
 	<!-- 경계선 표현 -->
-	<hr class="container p-0">	
+	<hr class="container p-0 hr_custom">	
 		
 	<!-- select 영역 -->
 	<div class="container p-0 select_custom">
@@ -125,10 +125,6 @@
 			<div class="col d-flex justify-content-center">
 				<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
 						aria-label="Default select example" name="sigungu">
-					<option selected>시,군,구 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
 				</select>
 			</div>
 			<div class="col d-flex justify-content-center">
@@ -163,6 +159,7 @@
 	 --%>											
 				<div class="col d-flex justify-content-center">
 					<div class="card card_custom border-0">
+					
 						<div class="tag_custom">
 							<div class="tag_custom2">
 								<p class="tag_p">#지역태그</p>
