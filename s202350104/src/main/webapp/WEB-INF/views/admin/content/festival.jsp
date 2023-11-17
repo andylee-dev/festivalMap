@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>축제 관리</title>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
@@ -41,11 +42,11 @@
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="container col-7 justify-content-center my-5">
+				<div class="container col-9 justify-content-center my-5">
 					<form action="festival" method = "get">
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
-				               <div class="col-3">
+							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
+				               <div class="col-2">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="s_title" selected>축제명</option>
 									  <option value="s_content">내용</option>
@@ -97,49 +98,52 @@
 				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="container col-9 d-flex justify-content-end my-2">
-					<button type="button" class="btn btn-primary mt-4" onclick="location.href='festivalInsertForm'">등록</button>
-				</div>
-				<!-- 컬럼 -->
-				<div class="container p-3 list-column-nh">
-					<div class="row row-cols-8 align-items-start">
-						<div class="col-md-1">순번</div>
-						<div class="col-md-2">지역</div>
-						<div class="col-md-2">축제명</div>
-						<div class="col-md-3">주최자</div>
-						<div class="col-md-1">등록일</div>
-						<div class="col-md-1">승인여부</div>
-						<div class="col-md-1">삭제여부</div>
-						<div class="col-md-1"></div>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='festivalInsertForm'">등록</button>
 					</div>
 				</div>
-					
-				<!-- 행 -->
-				<div class="container p-3 list-rows-nh">
-					<div class="row row-cols-8 align-items-start">
-						<c:if test="${listFestivals.size() == 0}"><div class="col-8">해당하는 축제 정보가 없습니다.</div></c:if>	
-						<c:set var="num" value="${page.start}"/>
-							<c:forEach var="festival" items="${listFestivals}">				
-								<div class="row row-cols-5 align-items-center">
-									<div class="col-md-1"><input type="hidden" value="${festival.content_id}">${num}</div>
-									<div class="col-md-2">${festival.area_content} ${festival.sigungu_content}</div>
-									<div class="col-md-2">${festival.title}</div>
-									<div class="col-md-3">${festival.sponsor}</div>
-									<div class="col-md-1"><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></div>
-									<div class="col-md-1">
+				<div class="container table-container p-4">
+				<div class="table-responsive">
+					<table id="userTable"class="table table-md text-center p-3">
+						<thead>
+							<tr>
+								<th scope="col">순번</th>
+								<th scope="col">지역</th>
+								<th scope="col">축제명</th>
+								<th scope="col">주최자</th>
+								<th scope="col">등록일</th>
+								<th scope="col">승인여부</th>
+								<th scope="col">삭제여부</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${listFestivals.size() == 0}"><td colspan="8">해당하는 축제 정보가 없습니다.</td></c:if>
+							
+							<c:set var="num" value="${page.start}"/>
+							<c:forEach var="festival" items="${listFestivals}" varStatus="st">				
+								<tr id="festival${st.index}">
+									<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
+									<td>${festival.area_content} ${festival.sigungu_content}</td>
+									<td>${festival.title}</td>
+									<td>${festival.sponsor}</td>
+									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
+									<td>
 										<c:if test="${festival.status == 0}">승인대기</c:if>
 										<c:if test="${festival.status == 1}">승인완료</c:if>
-									</div>
-									<div class="col-md-1">
+									</td>
+									<td>
 										<c:if test="${festival.is_deleted == 0}">N</c:if>
 										<c:if test="${festival.is_deleted == 1}">Y</c:if>
-									</div>
-									<div class="col-md-1"><a href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}" class="detail-link">관리</a></div>
-								</div>
+									</td>
+									<td><a class="detail-btn" href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}">관리</a></td>
+								</tr>
 								<c:set var="num" value="${num + 1}"/>
 							</c:forEach>
-					</div>
-					<p>총 건수 : ${totalFestivals}</p>			
+						</tbody>
+					</table>
+				</div>
 				</div>	
 					
 				<nav aria-label="Page navigation example ">
@@ -161,7 +165,6 @@
 						</c:if>
 					</ul>
 				</nav>
-				
 			</main>
 		</div>
 		</div>
