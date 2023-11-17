@@ -69,7 +69,7 @@
 	        if ( getCurrentContentList().includes(contentList[i].id)) continue;
 
 			// 테이블의 row 하나를 생성한다.
-			const rowEl = makeTableRow(contentList[i]);
+			const rowEl = makeCard(contentList[i]);
 			
 			// contentsTable에 row한줄 추가.
 			contentsTableEl.appendChild(rowEl);
@@ -77,7 +77,7 @@
 	}
 	
 	// 5. 테이블의 row하나 생성.
-	function makeTableRow(content){
+	/* function makeTableRow(content){
         const tableEl = document.createElement("tr");
 		
 		const idEl = document.createElement("td");
@@ -129,27 +129,32 @@
         tableEl.appendChild(deleteButtonTd);		
 
         return tableEl;
-	}
+	} */
 	
-	/* function makeCard(content) {
+	function makeCard(content) {
 	    // 카드를 위한 div 요소 생성
 	    const cardEl = document.createElement("div");
 	    cardEl.className = "card course-card";
 	    cardEl.style = "width: 208px; height: 340px; margin: 20px; padding: 18px;";
 
-	    // 카드를 삭제하는 버튼 생성
-	    const deleteButton = document.createElement("button");
-	    deleteButton.textContent = `삭제${content.id}`;
-	    deleteButton.onclick = function() {
-	        deleteContent(event);
-	        event.preventDefault();
+	 	// 카드 삭제 아이콘을 위한 div 요소 생성
+	    const deleteIconContainerEl = document.createElement("div");
+	    deleteIconContainerEl.className = "d-flex justify-content-end";
+
+	    const deleteIconEl = document.createElement("i");
+	    deleteIconEl.className = "bi bi-x-square-fill";
+	    deleteIconEl.style = "color: #FF4379";
+	    deleteIconEl.onclick = function(event) {
+	      deleteContent(event);
+	      event.preventDefault();
 	    };
-	    deleteButton.className = "btn btn-primary";
-	    cardEl.appendChild(deleteButton);
+
+	    deleteIconContainerEl.appendChild(deleteIconEl);
+	    cardEl.appendChild(deleteIconContainerEl);
 
 	    // 카드 콘텐츠를 위한 요소 생성
 	    const titleEl = document.createElement("h5");
-	    titleEl.className = "card-title";
+	    titleEl.className = "card-title card-font-title";
 	    titleEl.textContent = "컨텐츠 타입";
 	    cardEl.appendChild(titleEl);
 
@@ -192,7 +197,7 @@
 	    cardEl.appendChild(linkEl);
 
 	    return cardEl;
-	} */
+	}
 	
 	
 	
@@ -515,7 +520,7 @@
 											<div class="d-flex justify-content-end">
 										    	<i onclick="deleteContent(event)" class="bi bi-x-square-fill" style="color: #FF4379"></i>
 											</div>
-											<h5 class="card-title">컨텐츠 타입</h5>
+											<h5 class="card-title card-font-title">컨텐츠 타입</h5>
 											<img src="${courseContentList.img1 }" class="card-image-size" alt="${courseContentList.title }">
 											<div class="card-body" style="padding: 0px; padding-top: 16px;">
 												<h5 class="card-title card-font-title">${courseContentList.title }</h5>

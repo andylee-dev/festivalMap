@@ -80,7 +80,7 @@
 
 		for (var i = 0; i < contentList.length; i++) {
 		  var card = '<div class="card course-card" style="width: 208px; height: 340px; margin: 20px; padding: 18px;">';
-		  card += '<h5 class="card-title">' + contentList[i].contentType + '</h5>';
+		  card += '<h5 class="card-title card-font-title">' + contentList[i].contentType + '</h5>';
 		  card += '<img src="' + contentList[i].img + '" class="card-image-size" alt="...">';
 		  card += '<div class="card-body" style="padding: 0px; padding-top: 16px;">';
 		  card += '<h5 class="card-title card-font-title">' + contentList[i].title + '</h5>';
@@ -238,7 +238,6 @@
 	background: #D9D9D9; 
 	border-radius: 5px
 }
-
 
 
 </style>
