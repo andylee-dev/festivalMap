@@ -63,7 +63,7 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-					<form action="spot" method = "get">
+					<form action="spot" method ="get">
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
 				               <div class="col-4">
@@ -82,7 +82,7 @@
 									<div class="col-2 align-self-center">
 									<input type="hidden" name="big_code" value="14">
 										<select name="small_code" class="form-select">
-											<option value="999">전체</option>
+											<option value="0">전체</option>
 											<c:forEach var="small" items="${listCommonCodes}">
 											<c:if test="${small.big_code == 14 && small.small_code != 999}">
 												<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
@@ -92,10 +92,10 @@
 									</div>
 									
 					            <label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-2">
+					            	<div class="col-2 d-flex align-items-center">
 										<select name="area" class="area-dropdown form-select"></select>
 									</div>
-									<div class="col-2 mx-2">
+									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="sigungu" class="sigungu-dropdown form-select "></select><p>
 									</div>
 							</div>
@@ -144,8 +144,7 @@
 								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
+								<th scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
