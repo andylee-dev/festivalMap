@@ -51,7 +51,7 @@
 				
 				<!-- Section2: Table -->		
 				<div class="border p-3 m-3">
-					<form action="accomodation/update" method="post">
+					<form action="http://localhost:8189/admin/content/accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${currentPage}" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<input type="hidden" name="currentPage" value="${currentPage}">
 						<input type="hidden" name="status" value="${accomodation.status}">

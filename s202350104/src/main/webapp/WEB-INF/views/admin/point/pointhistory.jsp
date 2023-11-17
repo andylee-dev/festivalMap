@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,18 +50,19 @@
 				<!-- Section3: Table -->	
 				<div class="container col-9 justify-content-center my-2 border p-2">
 					<table class="table table-striped table-sm text-center mb-2">
+					<thead>
 						<tr>
 							<th scope="col">회원ID</th>
 							<th scope="col">포인트번호</th>
 							<th scope="col">포인트생성일</th>
 							<th scope="col">포인트삭제</th>
-						</tr>	
+						</tr>
 					</thead>
 						<c:forEach var="pointhistory" items="${listPointHistory}">
 						<tr>
 							<td>${pointhistory.user_id }</td>
 							<td>${pointhistory.point_id }</td>
-							<td>${pointhistory.created_at }</td>
+							<td><fmt:formatDate value="${pointhistory.created_at}" pattern="yyyy/MM/dd" /></td>
 							<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
 						</tr>
 						</c:forEach>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,20 +33,20 @@
 					<thead>
 						<tr>
 							<th scope="col">포인트번호</th>
-							<th scope="col">생성날짜</th>
 							<th scope="col">포인트이름</th>
-							<th scope="col">포인트내용</th>
+							<th scope="col">내용</th>
 							<th scope="col">포인트점수</th>
+							<th scope="col">생성날짜</th>
 							<th scope="col">수정</th>
 						</tr>
 					</thead>
 						<c:forEach var="point" items="${listPoint}">
 						<tr>
 							<td>${point.id }</td>
-							<td>${point.create_at }</td>
 							<td>${point.title }</td>
 							<td>${point.content }</td>
 							<td>${point.point }</td>
+							<td><fmt:formatDate value="${point.create_at}" pattern="yyyy/MM/dd" /></td>
 							<td><input class="btn btn-primary" type="button" value="수정"></td>
 						</tr>
 						</c:forEach>
