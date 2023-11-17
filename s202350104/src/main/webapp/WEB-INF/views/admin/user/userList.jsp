@@ -130,6 +130,10 @@
   });
 </script>
 <style type="text/css">
+#userTable td, .detail-btn {
+    white-space: nowrap; /* 줄바꿈을 방지 */
+}
+
 .detail-btn{
 	color: #FF4379;
 	font-size:15;
