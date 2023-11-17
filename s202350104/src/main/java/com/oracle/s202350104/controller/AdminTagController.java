@@ -52,18 +52,22 @@ public class AdminTagController {
 	private final UserService us;
 	private final FestivalsService fs;
 	
+	// 전체 tag list 페이지로 이동하는 logic
 	@RequestMapping(value = "list")
 	public String tagList(Tags tags, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "tagList", "start");
+			// 검색 조건에 맞는 전체 tags의 데이터수를 저장
 			int totalTags = ts.totalTags(tags);
 			
+			// 페이징 처리
 			PagingList page = new PagingList(totalTags, currentPage);
 			tags.setStart(page.getStart());
 			tags.setEnd(page.getEnd());
 			
+			// 검색 조건에 맞는 전체 tags의 리스트를 가져와서 저장
 			List<Tags> listTags = ts.listTags(tags);
 			
 			model.addAttribute("totalTags", totalTags);
@@ -78,6 +82,7 @@ public class AdminTagController {
 		return "admin/tag/tagList";
 	}
 	
+	// 새 태그를 등록하는 폼으로 이동하는 logic
 	@RequestMapping(value = "insertTagsForm")
 	public String insertTagsForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -93,12 +98,15 @@ public class AdminTagController {
 		return "admin/tag/insertTagsForm";
 	}
 	
+	// 폼에서 입력한 tag 정보를 insert하기 위한 logic
 	@RequestMapping(value = "insertTagsResult")
 	public String insertTagsResult(Tags tags, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		int result = 0;
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "insertTagsResult", "start");
+			// tag를 insert한 결과를 반환(1이면 성공적으로 insert한 것)
 			result = ts.insertTags(tags);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "insertTagsResult", e.getMessage());
@@ -106,23 +114,26 @@ public class AdminTagController {
 			log.info("[{}]{}:{}",transactionId, "insertTagsResult", "end");
 		}	
 		
-		if(result > 0) {
-			return "redirect:list";
-		} else if(result == -1) {
+		// result 값에 따라 넘어가는 페이지가 다름
+		if(result > 0) {			// 성공적으로 insert했을 경우 list페이지로 돌아감
+			return "redirect:list"; 
+		} else if(result == -1) {	// 기존 태그와 이름이 같을 경우 입력 폼으로 다시 돌아감
 			model.addAttribute("msg", "이미 존재하는 태그입니다.");
 			return "forward:insertTagsForm";
-		} else {
+		} else {					// 등록에 실패했을 경우 입력 폼으로 다시 돌아감
 			model.addAttribute("msg", "등록에 실패하였습니다.");
 			return "forward:insertTagsForm";
 		}
 	}
 	
+	// 태그 정보를 수정하는 폼으로 이동하는 logic
 	@RequestMapping(value = "updateTagsForm")
 	public String updateTagsForm(int id, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "updateTagsForm", "start");
+			// id에 해당하는 태그 정보를 찾아 저장
 			Tags tags = ts.selectTags(id);
 			model.addAttribute("tags", tags);
 		} catch (Exception e) {
@@ -134,12 +145,15 @@ public class AdminTagController {
 		return "admin/tag/updateTagsForm";
 	}
 	
+	// 폼에서 입력받은 tag 정보를 update하기 위한 logic
 	@PostMapping(value = "updateTagsResult") 
 	public String updateTagsResult(Tags tags, Model model) { 
 		 UUID transactionId = UUID.randomUUID(); 
 		 int result = 0;
+		 
 		 try { 
 			 log.info("[{}]{}:{}",transactionId, "updateTagsResult", "start");
+			 // tag 정보를 update한 결과값을 저장(1이면 성공적으로 update된 것)
 			 result = ts.updateTags(tags); 
 		 } catch (Exception e) {
 			 log.error("[{}]{}:{}",transactionId, "updateTagsResult", e.getMessage()); 
@@ -147,43 +161,45 @@ public class AdminTagController {
 			 log.info("[{}]{}:{}",transactionId, "updateTagsResult", "end"); 
 		 }
 	  
-		 if(result > 0) { 
+		 // result값에 따라 다른 페이지로 이동
+		 if(result > 0) { 				// 정상적으로 수정되었을 경우 list 페이지로 이동
 			 return "redirect:list"; 
-		 } else if(result == -1) {
+		 } else if(result == -1) {		// 기존 태그와 이름이 같을 경우 다시 수정폼으로 이동
 			 model.addAttribute("msg", "이미 존재하는 태그입니다."); 
-			 return "forward:updateTagsForm"; 
-		 } else { 
+			 return "forward:updateTagsForm"; 	
+		 } else { 						// 등록에 실패했을 경우 다시 수정폼으로 이동
 			 model.addAttribute("msg", "등록에 실패하였습니다."); 
 			 return "forward:updateTagsForm"; 
 		 } 
 	}
 	  
+	// 태그 정보를 삭제하고 그 결과를 반환하는 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "deleteTags")
 	public String deleteTags(Tags tags) {
 		int result = ts.deleteTags(tags.getId());
+		// view에서 text로 받을 수 있도록 String형으로 변환
 		String resultStr = Integer.toString(result);
 		return resultStr;
 	}
-	 
 	
+	// 회원 태그 관리 페이지로 이동하기 위한 logic
 	@RequestMapping(value = "userTag")
 	public String userTagList(Users user, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "userTagList", "start");
-			user.setSmall_code(2);  
-			int totalUsers = us.totalUsers(user); // 일반회원만
-			
+			user.setSmall_code(2);				  // 일반회원 small code 지정
+			int totalUsers = us.totalUsers(user); // 일반회원수만 반환
 			log.info("totalUsers => " + totalUsers);
 			
+			// 페이징 처리
 			PagingList page = new PagingList(totalUsers, currentPage);
 			user.setStart(page.getStart());
 			user.setEnd(page.getEnd());
 			
-			List<Users> listUsers = us.getSearchUserList(user); // 일반회원만
-			
+			List<Users> listUsers = us.getSearchUserList(user); // 일반회원 리스트만 반환
 			log.info("listUsers => " + listUsers.size());
 			
 			model.addAttribute("totalUsers", totalUsers);
@@ -198,11 +214,13 @@ public class AdminTagController {
 		return "admin/tag/userTag";
 	}
 	
+	// 회원 태그 리스트를 전부 view로 가져가는 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "getUserTags")
 	public List<Tags> getUserTags(Model model) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> listTags = null;
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "getUserTags", "start");
 			Tags tags = new Tags();
@@ -212,33 +230,37 @@ public class AdminTagController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "getUserTags", "end");
 		}	
+		
 		return listTags;
 	}
 	
+	// 게시판 태그 관리 페이지로 이동하기 위한 logic
 	@RequestMapping(value = "boardTag")
 	public String boardTagList(Board board, String smallCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		// String으로 받은 smallCode값을 int형으로 변환
 		int smallCode = 0;
 		if(smallCodeStr == null || smallCodeStr == "") {
-			smallCode = 2;
+			smallCode = 2;	// code값이 null일 경우 2로 강제 지정(매거진)
 		} else {
 			smallCode = Integer.parseInt(smallCodeStr);
 		}
-		
 		log.info("controller smallCode => " +smallCode);
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "boardTagList", "start");
 			
-			List<Board> listBoard = null;
-			
+			// smallCode에 해당하는 Board의 총 데이터 수를 저장
 			int totalBoard = bs.boardCount(smallCode);
 			log.info("controller totalBoard => " +totalBoard);
 			
+			// 페이징 처리
 			PagingList page = new PagingList(totalBoard, currentPage);
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			
+			// smallCode에 따라 해당하는 Board의 list를 저장
+			List<Board> listBoard = null;
 			switch(smallCode) {
 				case 2: listBoard = bs.getMagazinAllList(board); break;
 				case 3: listBoard = bs.getFreeAllList(board); break;
@@ -260,11 +282,13 @@ public class AdminTagController {
 		return "admin/tag/boardTag";
 	}
 	
+	// 게시판 태그 리스트를 전부 view로 가져가는 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "getBoardTags")
 	public List<Tags> getBoardTags(String smallCodeStr, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> listTags = null;
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "getBoardTags", "start");
 			int smallCode = Integer.parseInt(smallCodeStr);
@@ -275,22 +299,27 @@ public class AdminTagController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "getBoardTags", "end");
 		}	
+		
 		return listTags;
 	}
 	
+	// 게시글 태그를 수정하는 폼으로 이동하기 위한 logic
 	@RequestMapping(value = "boardTagsUpdateForm")
 	public String boardTagsUpdate(String boardIdStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		// String으로 받은 boardId를 int형으로 변환
 		int boardId = 0;
 		if(boardIdStr == null) {
-			boardId = 0;
+			boardId = 0;	// boardId가 null일 경우 0으로 지정
 		} else {
 			boardId = Integer.parseInt(boardIdStr);
 		}
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "start");
 			Board board = bs.boardDetail(boardId);
 			List<Tags> listMyTags = ts.searchBoardTagsOne(boardId);
+			
 			Tags tags = new Tags();
 			List<Tags> listAllTags = ts.listTags(tags);
 			
@@ -303,17 +332,21 @@ public class AdminTagController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "end");
 		}	
+		
 		return "admin/tag/boardTagsUpdateForm";
 	}
 	
+	// tag를 수정하고 그 결과에 따라 메세지를 반환하기 위한 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "boardTagsUpdate")
 	public String boardTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int boardId, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		String str = "";
+		
 		try {
-			log.info("[{}]{}:{}",transactionId, "boardTagsUpdate", "start");
+			log.info("[{}]{}:{}", transactionId, "boardTagsUpdate", "start");
 			int result = ts.updateBoardTags(boardId, finalTags); 
+			// update결과에 따라 다른 메세지 반환
 			if(result == 1) { 
 				str = "태그 수정이 성공적으로 완료되었습니다."; 
 			} else { 
@@ -322,36 +355,41 @@ public class AdminTagController {
 			log.info("finalTags"+finalTags.toString());
 			log.info("boardId"+boardId);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "boardTagsUpdate", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "boardTagsUpdate", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "boardTagsUpdate", "end");
+			log.info("[{}]{}:{}", transactionId, "boardTagsUpdate", "end");
 		}	
+		
 		return str;
 	}
 	
+	// 컨텐츠 태그 관리 페이지로 이동하기 위한 logic
 	@RequestMapping(value = "contentTag")
 	public String contentTagList(Contents content, String bigCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		// String으로 받은 bigCode값을 int형으로 변환
 		int bigCode = 0;
 		if(bigCodeStr == null) {
 			bigCode = 2;
 		} else {
 			bigCode = Integer.parseInt(bigCodeStr);
 		}
-		
 		log.info("controller bigCode => " +bigCode);
 		content.setBig_code(bigCode);
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "contentTagList", "start");
+			log.info("[{}]{}:{}", transactionId, "contentTagList", "start");
 			
-			int totalContents = cs.getTotalSearchCount(content); // bigCode에 따라 totalContents 조회
-					
+			// bigCode에 따라 컨텐츠의 totalContents 조회
+			int totalContents = cs.getTotalSearchCount(content);
+			
+			// 페이징 처리
 			PagingList page = new PagingList(totalContents, currentPage);
 			content.setStart(page.getStart());
 			content.setEnd(page.getEnd());
 			
-			List<Contents> listContent = cs.getSearchContentsList(content); // bigCode에 따라 listContent 조회
+			// bigCode에 따라 listContent 조회
+			List<Contents> listContent = cs.getSearchContentsList(content); 
 
 			log.info("controller listContent => " +listContent.size());
 			log.info("totalContents => " +totalContents);
@@ -360,30 +398,35 @@ public class AdminTagController {
 			model.addAttribute("totalContents", totalContents);
 			model.addAttribute("listContent", listContent);
 			model.addAttribute("page", page);
-
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "contentTagList", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "contentTagList", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "contentTagList", "end");
+			log.info("[{}]{}:{}", transactionId, "contentTagList", "end");
 		}	
 		
 		return "admin/tag/contentTag";
 	}
 	
+	// 컨텐츠 태그 수정폼으로 이동하는 logic
 	@RequestMapping(value = "contentTagsUpdateForm")
 	public String contentTagsUpdate(String contentIdStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		// String으로 받은 contentId를 int형으로 변환
 		int contentId = 0;
 		if(contentIdStr == null || contentIdStr == "") {
 			contentId = 0;
 		} else {
 			contentId = Integer.parseInt(contentIdStr);
 		}
+		
 		try {
-			log.info("[{}]{}:{}",transactionId, "contentTagsUpdateForm", "start");
+			 log.info("[{}]{}:{}", transactionId, "contentTagsUpdateForm", "start");
 			
+			 // 수정할 컨텐츠의 상세정보 저장
 			 Contents contents = fs.detailContents(contentId);
 			 List<Tags> listMyTags = ts.searchContentTags(contentId); 
+			 
+			 // 전체 태그 리스트 저장
 			 Tags tags = new Tags(); 
 			 List<Tags> listAllTags = ts.listTags(tags);
 			  
@@ -391,23 +434,26 @@ public class AdminTagController {
 			 model.addAttribute("contents", contents); 
 			 model.addAttribute("listMyTags", listMyTags);
 			 model.addAttribute("listAllTags", listAllTags);
-			 
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "contentTagsUpdateForm", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "contentTagsUpdateForm", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "contentTagsUpdateForm", "end");
+			log.info("[{}]{}:{}", transactionId, "contentTagsUpdateForm", "end");
 		}	
+		
 		return "admin/tag/contentTagsUpdateForm";
 	}
 	
+	// 컨텐츠 태그를 수정하고 결과 메세지를 반환하는 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "contentTagsUpdate")
 	public String contentTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int contentId, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		String str = "";
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "start");
 			int result = ts.updateContentTags(contentId, finalTags); 
+			// 결과값에 따라 다른 메세지 반환
 			if(result == 1) { 
 				str = "태그 수정이 성공적으로 완료되었습니다."; 
 			} else { 
@@ -420,14 +466,17 @@ public class AdminTagController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "end");
 		}	
+		
 		return str;
 	}
 	
+	// bigCode에 해당하는 컨텐츠 태그 리스트를 전부 가져오기 위한 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "getContentTags")
 	public List<Tags> getContentTags(String bigCodeStr, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> listTags = null;
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "getContentTags", "start");
 			int bigCode = Integer.parseInt(bigCodeStr);
@@ -437,7 +486,8 @@ public class AdminTagController {
 			log.error("[{}]{}:{}",transactionId, "getContentTags", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "getContentTags", "end");
-		}	
+		}
+		
 		return listTags;
 	}
 	

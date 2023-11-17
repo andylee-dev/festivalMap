@@ -3,6 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.TagsMapper">
+
+	<!-- TAGS -->
+	
 	<select id="nhTagsTotal" resultType="int" parameterType="Tags">
 		SELECT count(*) FROM Tags
 		WHERE 1=1
@@ -28,6 +31,24 @@
 			WHERE rn BETWEEN #{start} and #{end}
 		</if>
 	</select>
+	
+	<insert id="nhTagsInsert" parameterType="Tags">
+		INSERT INTO Tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+	</insert>
+	
+	<select id="nhTagsSelect" parameterType="int" resultType="Tags">
+		SELECT * FROM Tags WHERE id = #{id}
+	</select>
+	
+	<update id="nhTagsUpdate" parameterType="Tags">
+		UPDATE Tags SET name = #{name} WHERE id = #{id}
+	</update>
+	
+	<delete id="nhTagsDelete" parameterType="Tags">
+		DELETE Tags WHERE id = #{id}
+	</delete>
+	
+	<!-- USER TAGS -->
 	
 	<select id="nhUserTagsTotal">
 		SELECT count(*)
@@ -55,34 +76,6 @@
 		ORDER BY t.name
 	</select>
 	
-	<!-- <select id="nhUserTagsAll" resultType="Tags" parameterType="Tags">
-		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT u.*, ut.user_id, t.id tag_id, t.name tag_name
-			 FROM users u, usertags ut, tags t
-			 WHERE ut.tag_id = t.id
-			 AND   ut.user_id = u.id
-			 AND   u.small_code = 2
-			 <if test="keyword != null and keyword != ''">
-			 	<choose>
-			 		<when test="search == 'tagname'">
-			 			AND t.name like '%' || #{keyword} || '%'
-			 		</when>
-			 		<when test="search == 'email'">
-			 			AND u.email like '%' || #{keyword} || '%' 
-			 		</when>
-			 	</choose>
-	  		 </if>
-	  		 ORDER BY t.name) a		
-		)
-		<if test="start != 0 and end != 0">
-			WHERE rn BETWEEN #{start} and #{end}
-		</if>
-	</select> -->
-	
 	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
 		SELECT *
 		FROM usertags u, tags t
@@ -90,6 +83,20 @@
 		AND   u.user_id = #{id}
 		ORDER BY t.name
 	</select>
+		
+	<insert id="nhUserTagsInsert" parameterType="Tags">
+		INSERT INTO UserTags(user_id, tag_id) VALUES(#{user_id}, #{tag_id})
+	</insert>
+	
+	<delete id="nhUserTagsDelete" parameterType="Tags">
+		DELETE UserTags 
+		WHERE tag_id = #{id}
+		<if test="user_id != null and user_id != 0">
+			AND user_id = #{user_id}
+		</if>
+	</delete>
+	
+	<!-- BOARD TAGS -->
 	
 	<select id="nhBoardTagsAll" resultType="Tags" parameterType="int">
 		SELECT *
@@ -107,6 +114,16 @@
 		AND   bt.board_id = #{boardId}
 		ORDER BY t.name
 	</select>
+		
+	<delete id="nhBoardTagsDelete" parameterType="Tags">
+		DELETE BoardTags 
+		WHERE tag_id = #{tag_id}
+		<if test="board_id != null and board_id != 0">
+			AND board_id = #{board_id}
+		</if>
+	</delete>
+	
+	<!-- CONTENT TAGS -->
 	
 	<select id="nhContentTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
@@ -125,29 +142,9 @@
 		ORDER BY t.name
 	</select>
 	
-	<insert id="nhTagsInsert" parameterType="Tags">
-		INSERT INTO Tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+	<insert id="nhContentTagsInsert" parameterType="Tags">
+		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
 	</insert>
-	
-	<select id="nhTagsSelect" parameterType="int" resultType="Tags">
-		SELECT * FROM Tags WHERE id = #{id}
-	</select>
-	
-	<update id="nhTagsUpdate" parameterType="Tags">
-		UPDATE Tags SET name = #{name} WHERE id = #{id}
-	</update>
-	
-	<delete id="nhTagsDelete" parameterType="Tags">
-		DELETE Tags WHERE id = #{id}
-	</delete>
-	
-	<delete id="nhUserTagsDelete" parameterType="Tags">
-		DELETE UserTags 
-		WHERE tag_id = #{id}
-		<if test="user_id != null and user_id != 0">
-			AND user_id = #{user_id}
-		</if>
-	</delete>
 	
 	<delete id="nhContentTagsDelete" parameterType="Tags">
 		DELETE ContentTags 
@@ -156,23 +153,9 @@
 			AND content_id = #{content_id}
 		</if>
 	</delete>
-	
-	<delete id="nhBoardTagsDelete" parameterType="Tags">
-		DELETE BoardTags 
-		WHERE tag_id = #{tag_id}
-		<if test="board_id != null and board_id != 0">
-			AND board_id = #{board_id}
-		</if>
-	</delete>
-	
-	<insert id="nhUserTagsInsert" parameterType="Tags">
-		INSERT INTO UserTags(user_id, tag_id) VALUES(#{user_id}, #{tag_id})
-	</insert>
-	
-	<insert id="nhContentTagsInsert" parameterType="Tags">
-		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
-	</insert>
-	
+
+
+
 	<!-- Board 관련 Mapper by.엄민용 -->
 	<insert id="myinsertBoardTags" parameterType="Tags">
 		insert into BoardTags(tag_id, board_id) values (#{tag_id}, #{board_id})

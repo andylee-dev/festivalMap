@@ -23,6 +23,7 @@ public class TagsServiceImpl implements TagsService {
 	@Override
 	public int totalTags(Tags tags) {
 		int totalTagsCnt = td.totalTags(tags);
+		
 		return totalTagsCnt;
 	}	
 	
@@ -40,17 +41,21 @@ public class TagsServiceImpl implements TagsService {
 	@Override
 	public int insertTags(Tags tags) {
 		Tags tag = new Tags();
+		// 전체 tag 리스트를 listTags에 저장
 		List<Tags> listTags = td.listTags(tag);
+		
 		int result = 0;
-		int searchResult = 0;
-		// 이미 존재하는 tag인 경우 insert되지 않도록
+		int searchResult = -1;
+		
+		// 이미 존재하는 tag인 경우 insert되지 않도록 DB에 저장된 tag(searchTag)와 tags의 name을 비교
 		for(Tags searchTag : listTags) {
 			if(tags.getName().equals(searchTag.getName())) {
-				searchResult = 1;
+				searchResult = 0;
 			}
 		}
 		
-		if(searchResult != 1) {
+		// searchResult의 값에 따라 tag를 insert하고 그 결과값 반환
+		if(searchResult > 0) {
 			result = td.insertTags(tags);
 		} else {
 			result = -1;
@@ -59,26 +64,32 @@ public class TagsServiceImpl implements TagsService {
 		return result;
 	}
 
+	// 파라미터로 들어간 tag의 id에 해당하는 tag 정보를 반환
 	@Override
 	public Tags selectTags(int id) {
 		Tags tags = td.selectTags(id);
+		
 		return tags;
 	}
 
 	@Override
 	public int updateTags(Tags tags) {
 		Tags tag = new Tags();
+		// 전체 tag리스트를 listTags에 저장
 		List<Tags> listTags = td.listTags(tag);
+		
 		int result = 0;
-		int searchResult = 0;
-		// 이미 존재하는 tag인 경우 update되지 않도록
+		int searchResult = -1;
+		
+		// 이미 존재하는 tag name인 경우 update되지 않도록
 		for(Tags searchTag : listTags) {
 			if(tags.getName().equals(searchTag.getName())) {
-				searchResult = 1;
+				searchResult = 0;
 			}
 		}
 		
-		if(searchResult != 1) {
+		// searchResult에 따라 update하고 그 결과값 반환
+		if(searchResult > 0) {
 			result = td.updateTags(tags);
 		} else {
 			result = -1;
@@ -87,15 +98,18 @@ public class TagsServiceImpl implements TagsService {
 		return result;
 	}
 
+	// tags 테이블에서 태그 정보 삭제
 	@Override
 	public int deleteTags(int id) {
 		int result = td.deleteTags(id);
+		
 		return result;
 	}
 
 	@Override
 	public List<Tags> searchContentTags(int contentId) {
 		List<Tags> listTags = td.searchContentTags(contentId);
+		
 		return listTags;
 	}
 
@@ -148,14 +162,19 @@ public class TagsServiceImpl implements TagsService {
 	@Override
 	public int updateBoardTags(int boardId, int[] finalTags) {
 		int result = td.updateBoardTags(boardId, finalTags);
+		
 		return result;
 	}
 	
 	@Override
 	public int updateContentTags(int contentId, int[] finalTags) {
 		int result = td.updateContentTags(contentId, finalTags);
+		
 		return result;
 	}
+	
+	
+	
 	
 	/*
 	 * 통합게시물 생성 Logic >> boardTagsInsert

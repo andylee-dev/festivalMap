@@ -3,6 +3,41 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.FestivalsMapper">
+	
+	<select id="nhFestivalsTotal" resultType="int" parameterType="FestivalsContent">
+		SELECT count(*)
+		FROM   festivals f, contents c
+		WHERE  f.content_id = c.id
+		<if test="is_deleted != null and is_deleted != ''">
+			 AND is_deleted = #{is_deleted}
+		</if>
+		<if test="status != null and status != ''">
+			 AND status = #{status}
+		 </if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == null or searchType == 's_title'">
+			 		AND title like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="searchType == 's_content'">
+			 		AND content like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="searchType == 's_sponsor'">
+			 		AND sponsor like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="searchType == 's_eventplace'">
+			 		AND eventplace like '%' || #{keyword} || '%'
+			 	</when>
+			 </choose>
+		</if>
+		<if test="area != 0 and area != null">
+			 AND area = #{area}
+			<if test="sigungu != 0 and sigungu != null">
+				AND sigungu = #{sigungu}
+			</if>
+		</if>
+	</select>
+	
 	<select id="nhFestivalsListAll" resultType="FestivalsContent" parameterType="FestivalsContent">
 		SELECT *
 		FROM
@@ -83,57 +118,8 @@
 		WHERE  id = #{contentId}
 	</update>
 	
-	<select id="nhFestivalsTotal" resultType="int" parameterType="FestivalsContent">
-		SELECT count(*)
-		FROM   festivals f, contents c
-		WHERE  f.content_id = c.id
-		<if test="is_deleted != null and is_deleted != ''">
-			 AND is_deleted = #{is_deleted}
-		</if>
-		<if test="status != null and status != ''">
-			 AND status = #{status}
-		 </if>
-		<if test="keyword != null and keyword != ''">
-			<choose>
-			 	<when test="searchType == null or searchType == 's_title'">
-			 		AND title like '%' || #{keyword} || '%'
-			 	</when>
-			 	<when test="searchType == 's_content'">
-			 		AND content like '%' || #{keyword} || '%'
-			 	</when>
-			 	<when test="searchType == 's_sponsor'">
-			 		AND sponsor like '%' || #{keyword} || '%'
-			 	</when>
-			 	<when test="searchType == 's_eventplace'">
-			 		AND eventplace like '%' || #{keyword} || '%'
-			 	</when>
-			 </choose>
-		</if>
-		<if test="area != 0 and area != null">
-			 AND area = #{area}
-			<if test="sigungu != 0 and sigungu != null">
-				AND sigungu = #{sigungu}
-			</if>
-		</if>
-	</select>
+	<!-- festival 정보 insert -->
 	
-	<insert id="nhFestivalsInsert" parameterType="FestivalsContent" 
-	        useGeneratedKeys="true" keyColumn="content_id" keyProperty="content_id">
-		INSERT INTO festivals(content_id, hours, start_date, end_date, sponsor, eventplace, 
-				cost, overview, is_parking, is_stroller, is_wheelchair, is_restroom) 
-		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
-				#{cost}, #{overview}, #{is_parking}, #{is_stroller}, #{is_wheelchair}, #{is_restroom})
-	</insert>
-	
-	<update id="nhFestivalsUpdate" parameterType="FestivalsContent">
-		UPDATE festivals 
-		SET hours=#{hours}, start_date=#{start_date}, end_date=#{end_date}, sponsor=#{sponsor},
-		eventplace=#{eventplace}, cost=#{cost}, overview=#{overview}, is_parking=#{is_parking}, 
-		is_stroller=#{is_stroller}, is_wheelchair=#{is_wheelchair}, is_restroom=#{is_restroom} 
-		WHERE content_id = #{content_id}
-	</update>
-	
-	<!-- contents 테이블 -->
 	<insert id="nhContentsInsert" parameterType="FestivalsContent">
 		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
 				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
@@ -143,12 +129,22 @@
 				0, #{user_id}, sysdate, '0')
 	</insert>
 	
-	<update id="nhContentsDelete" parameterType="int">
-		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
-	</update>
+	<insert id="nhFestivalsInsert" parameterType="FestivalsContent" 
+	        useGeneratedKeys="true" keyColumn="content_id" keyProperty="content_id">
+		INSERT INTO festivals(content_id, hours, start_date, end_date, sponsor, eventplace, 
+				cost, overview, is_parking, is_stroller, is_wheelchair, is_restroom) 
+		VALUES(contents_id_seq.currval, #{hours}, #{start_date}, #{end_date}, #{sponsor}, #{eventplace}, 
+				#{cost}, #{overview}, #{is_parking}, #{is_stroller}, #{is_wheelchair}, #{is_restroom})
+	</insert>
 	
-	<update id="nhFestivalsApprove" parameterType="int">
-		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	<!-- festival 정보 update -->
+	
+	<update id="nhFestivalsUpdate" parameterType="FestivalsContent">
+		UPDATE festivals 
+		SET hours=#{hours}, start_date=#{start_date}, end_date=#{end_date}, sponsor=#{sponsor},
+		eventplace=#{eventplace}, cost=#{cost}, overview=#{overview}, is_parking=#{is_parking}, 
+		is_stroller=#{is_stroller}, is_wheelchair=#{is_wheelchair}, is_restroom=#{is_restroom} 
+		WHERE content_id = #{content_id}
 	</update>
 	
 	<update id="nhContentsUpdate" parameterType="FestivalsContent">
@@ -160,14 +156,23 @@
 		WHERE id = #{content_id}
 	</update>
 	
+	<!-- festival 정보 delete -->	
+	<update id="nhContentsDelete" parameterType="int">
+		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
+	</update>
 	
+	<update id="nhFestivalsApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
+	
+	<!-- contents 테이블 -->
 	<select id="nhContentsDetail" parameterType="int" resultType="Contents">
 		SELECT *
 		FROM contents
 		WHERE id = #{contentId}
 	</select>
 	
-	<!-- tag 관련 쿼리 -->
+	<!-- tag insert/delete 관련 쿼리 -->
 	<insert id="nhFestivalTagInsert" parameterType="FestivalsContent">
 		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
 	</insert>
@@ -185,6 +190,5 @@
 		WHERE tag_id = #{tag_id}
 		AND content_id = #{content_id}
 	</delete>
-	
 	
 </mapper>

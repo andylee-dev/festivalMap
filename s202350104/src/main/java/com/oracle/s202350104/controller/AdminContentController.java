@@ -54,82 +54,105 @@ import lombok.RequiredArgsConstructor;
 		private final TagsService ts;
 		private final UserService us;
 		
+		// festival <나희>
+		// 관리자 지역정보 축제 리스트로 넘어가는 logic
 		@RequestMapping(value = "festival")
 		public String festival(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin festival", "start");
+			
+			try {	
+				log.info("[{}]{}:{}", transactionId, "admin festival", "start");
 
+				// 조건에 맞는 festival의 총 개수를 가져옴
 				int totalFestivals = fs.totalFestivals(festival);
 				
+				// 페이징 처리
 				PagingList page = new PagingList(totalFestivals, currentPage);
 				festival.setStart(page.getStart());
 				festival.setEnd(page.getEnd());
 				
+				// 조건에 맞는 festival의 list를 가져옴
 				List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 				
 				model.addAttribute("totalFestivals", totalFestivals);
 				model.addAttribute("listFestivals", listFestivals);
 				model.addAttribute("page", page);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festival", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festival", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festival", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festival", "end");
+			}	
+			
 			return "admin/content/festival";
 		}
 		
+		// 관리자 축제 상세 페이지로 넘어가는 logic
 		@RequestMapping(value = "festivalDetail")
 		public String festivalDetail(String contentIdStr, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
+			// String으로 넘어온 컨텐츠 아이디를 int형으로 바꿔줌
 			int contentId = 0;
 			if(contentIdStr == null) {
-				contentId = 0;
+				contentId = 0;	// 만약 컨텐츠 아이디가 null일 경우 0으로 처리
 			} else {
 				contentId = Integer.parseInt(contentIdStr);
 			}
+			
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
+				log.info("[{}]{}:{}", transactionId, "admin festivalDetail", "start");
+				
+				// festival 상세 정보를 담을 인스턴스 생성하여 값을 저장
 				FestivalsContent festival = fs.detailFestivals(contentId);
+				
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("festival", festival);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDetail", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalDetail", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festivalDetail", "end");
+			}	 
+			
 			return "admin/content/festivalDetail";
 		}
 		
+		// 관리자 축제 정보 입력 폼으로 넘어가는 logic
 		@RequestMapping(value = "festivalInsertForm")
 		public String festivalInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "start");
+				log.info("[{}]{}:{}", transactionId, "admin festivalInsertForm", "start");
+			
+				// 축제 중분류를 선택할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
+				
 				model.addAttribute("listCodes", listCodes);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalInsertForm", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalInsertForm", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalInsertForm", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festivalInsertForm", "end");
+			}
+			
 			return "admin/content/festivalInsertForm";
 		}
 		
+		// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리하기 위한 logic(AJAX 연결)
 		@ResponseBody
 		@RequestMapping(value = "festival/insert")
 		public String festivalInsert(FestivalsContent festival, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			String str = "";
+			
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "start");
-				log.info("area"+festival.getArea());
+				log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
 				
-				// content 및 festivals 테이블에 정보 등록
+				// 폼에 입력된 date 정보를 DB에 저장된 형식으로 변환
 				festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
 				festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
 				
+				// festival을 insert한 결과를 result에 저장
 				int result = fs.insertFestival(festival);
 				log.info("Controller festivalInsert result => "+result);
 				
@@ -139,117 +162,118 @@ import lombok.RequiredArgsConstructor;
 				} else { 
 					str = "등록에 실패하였습니다."; 
 				}
-				
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalInsert", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalInsert", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalInsert", "end");
+				log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "end");
 			}		
+			
+			// alert 메세지 반환
 			return str;
 		}
 		
+		// 관리자 축제 정보 수정 폼으로 넘어가는 logic
 		@RequestMapping(value = "festivalUpdateForm")
 		public String festivalUpdateForm(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalUpdateForm", "start");
+				log.info("[{}]{}:{}", transactionId, "admin festivalUpdateForm", "start");
+				// 수정할 festival의 상세 정보를 가져와서 festival 인스턴스에 저장
 				FestivalsContent festival = fs.detailFestivals(contentId);
+				// 중분류를 수정할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
+
 				
-				Tags tag = new Tags();
-				/*
-				 * String startdate = festival.getStart_date();
-				 * festival.setStart_date(startdate.substring(0,1)+"-"+startdate.substring(2,3)+
-				 * "-"+startdate.substring(4,5)); String enddate = festival.getEnd_date();
-				 * festival.setEnd_date(enddate.substring(0,1)+"-"+enddate.substring(2,3)+"-"+
-				 * enddate.substring(4,5));
-				 */
+				/* date 정보를 가져와서 보여주기 위한 방법 생각해서 추가하기 */
+				
 				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("festival", festival);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalUpdateForm", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalUpdateForm", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalUpdateForm", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festivalUpdateForm", "end");
+			}	
+			
 			return "admin/content/festivalUpdateForm";
 		}
 		
+		// 축제 정보를 수정한 후 DB(content 및 festivals 테이블)에 update하기 위한 logic(AJAX 연결)
 		@ResponseBody
 		@RequestMapping(value = "festivalUpdate")
 		public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			String str = "";
+			
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "start");
+				log.info("[{}]{}:{}", transactionId, "admin festivalUpdate", "start");
+				// update한 결과를 result에 저장
 				int result = fs.updateFestival(festival);
-				log.info("festivalUpdate result => "+result);
 
+				// result 값에 따라 alert 메세지 반환
 				if(result > 0) {
 					str = "축제 정보 수정에 성공하였습니다.";
 				} else {
 					str = "축제 정보 수정에 실패하였습니다.";
 				}
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalUpdate", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalUpdate", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalUpdate", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festivalUpdate", "end");
+			}	
+			
+			// alert로 메시지 반환
 			return str;
 		}
 		
+		// festival을 삭제하기 위한 logic
 		@RequestMapping(value = "festivalDelete")
 		public String festivalDelete(int contentId, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDelete", "start");
+				log.info("[{}]{}:{}", transactionId, "admin festivalDelete", "start");
+				// festival 삭제
 				fs.deleteFestivals(contentId);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDelete", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalDelete", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDelete", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festivalDelete", "end");
+			}	
+			
 			return "forward:festival";
 		}
 		
-		@ResponseBody
-		@RequestMapping(value = "festivalDeleteAjax")
-		public String festivalDeleteAjax(int contentId, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			String resultStr = null;
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", "start");
-				int result = fs.deleteFestivals(contentId);
-				resultStr = Integer.toString(result);
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalDeleteAjax", "end");
-			}		
-			return resultStr;
-		}
-		
+		// festival 등록을 승인하기 위한 logic
 		@RequestMapping(value = "festivalApprove")
 		public String festivalApprove(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
-				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "start");
+				log.info("[{}]{}:{}", transactionId, "admin festivalApprove", "start");
+				// approve한 결과를 result에 저장
 				int result = fs.approveFestival(contentId);
+				
+				// result값에 따라 alert에서 표시될 메세지가 달라짐
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 				} else {
 					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
 				}
+				
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("currentPage", currentPage);
 			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin festivalApprove", e.getMessage());
+				log.error("[{}]{}:{}", transactionId, "admin festivalApprove", e.getMessage());
 			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin festivalApprove", "end");
-			}		
+				log.info("[{}]{}:{}", transactionId, "admin festivalApprove", "end");
+			}	
+			
+			// model은 view단으로 데이터를 가져가는 것이기 때문에 forward로 넘길 때는 return하는 url에 파라미터를 붙여서 넘겨줘야 한다
 			return "forward:festivalDetail?contentIdStr="+contentId;
 		}
+		
 	
 		@RequestMapping(value = "experience")
 		public String experience(ExperienceContent experience,String currentPage, Model model) {

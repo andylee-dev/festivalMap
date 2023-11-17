@@ -33,24 +33,26 @@ public class FestivalController {
 	private final BoardService boardService;
 	private final BannerService bannerService;
 
-
+	// festival 소개 리스트 페이지로 넘어가는 logic
 	@RequestMapping(value = "festival")
 	public String festival(FestivalsContent festival, String currentPage, Model model) {
-		
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}",transactionId, "festival", "start");
 			
-			festival.setIs_deleted("0");
-			festival.setStatus("1");
+			festival.setIs_deleted("0");	// 삭제X 상태 지정
+			festival.setStatus("1");		// 승인완료 상태 지정
 			
+			// 검색 조건에 따라 해당 festival의 총 데이터수를 저장
 			int totalFestivals = fs.totalFestivals(festival);
 			
+			// 페이징 처리
 			Paging page = new Paging(totalFestivals, currentPage);
 			festival.setStart(page.getStart());
 			festival.setEnd(page.getEnd());
 			
+			// 검색 조건에 따라 해당 festival의 데이터를 list에 저장
 			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 			
 			model.addAttribute("totalFestivals", totalFestivals);
