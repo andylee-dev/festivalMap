@@ -22,5 +22,7 @@
 <link href="/css/global.css" rel="stylesheet" type="text/css">
 <link href="/css/app.css" rel="stylesheet" type="text/css">
 <link href="/css/board.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
+<link rel="stylesheet" type="text/css" href="/css/contentsDetail.css">
 
 <script src="/js/pagenation.js"></script>
