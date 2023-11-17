@@ -21,11 +21,14 @@ public class TagsController {
 
 	private final TagsService ts;
 	
+	
+	// 하나의 컨텐츠가 가진 tag들을 모두 불러와 view단으로 넘기는 logic(contentTags)
 	@ResponseBody
 	@RequestMapping(value = "/getMyContentTags")
 	public List<Tags> getMyContentTags(int contentId) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> contentTags = null;
+		
 		try {
 			log.info("[{}]{}:{}", transactionId, "getContentTags", "start");
 			contentTags = ts.searchContentTags(contentId);
@@ -34,14 +37,17 @@ public class TagsController {
 		} finally {
 			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
 		}
+		
 		return contentTags;
 	}
 	
+	// 하나의 게시글이 가진 tag들을 모두 불러와 view단으로 넘기는 logic(boardTags)
 	@ResponseBody
 	@RequestMapping(value = "/getMyBoardTags")
 	public List<Tags> getMyBoardTags(int boardId) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> boardTags = null;
+		
 		try {
 			log.info("[{}]{}:{}", transactionId, "getContentTags", "start");
 			boardTags = ts.searchBoardTagsOne(boardId);
@@ -50,14 +56,17 @@ public class TagsController {
 		} finally {
 			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
 		}
+		
 		return boardTags;
 	}
 	
+	// 검색 조건에 따라 해당하는 전체 태그 리스트를 불러오는 logic(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "/getAllTags")
 	public List<Tags> getAllTags() {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> allTags = null;
+		
 		try {
 			log.info("[{}]{}:{}", transactionId, "getAllTags", "start");
 			Tags tags = new Tags();
@@ -67,6 +76,7 @@ public class TagsController {
 		} finally {
 			log.info("[{}]{}:{}", transactionId, "getAllTags", "end");
 		}
+		
 		return allTags;
 	}
 	

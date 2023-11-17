@@ -1,9 +1,6 @@
 package com.oracle.s202350104.service;
 
-import java.io.IOException;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
@@ -18,8 +15,10 @@ public interface BannerService {
 
 	int bannerCount();
 
-	int bannerInsert(Banner banner, MultipartFile file) throws Exception;
+	int bannerInsert(Banner banner);
 
 	int bannerDelete(int id);
+
+	Banner bannerRead(int id);
 
 }

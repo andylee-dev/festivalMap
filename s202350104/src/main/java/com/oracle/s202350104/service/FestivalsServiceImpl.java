@@ -48,6 +48,7 @@ public class FestivalsServiceImpl implements FestivalsService {
 	@Override
 	public int totalFestivals(FestivalsContent festival) {
 		int totalFestCnt = fd.totalFestivals(festival);
+		
 		return totalFestCnt;
 	}
 

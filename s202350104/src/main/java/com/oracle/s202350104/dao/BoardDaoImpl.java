@@ -184,6 +184,30 @@ public class BoardDaoImpl implements BoardDao {
 
 		return boards;
 	}
+	
+	// 통합게시판 생성, DB연동
+	@Override
+	public int boardInsert(Board board) {
+
+		int insertBoard = 0;
+		int insertHandling = board.getContent_id();
+
+		log.info("BoardDao boardInsert getContent_id : {}", insertHandling);
+		try {
+			// contentId 값이 있으면 review query 실행 
+			if(insertHandling > 0) {
+				insertBoard = session.insert("reviewBoardInsert", board);
+			} else {
+				insertBoard = session.insert("boardInsert", board);
+			}
+
+		} catch (Exception e) {
+			log.error("BoardDao boardInsert Exception : {}", e.getMessage());
+		}
+
+		return insertBoard;
+
+	}		
 
 	// 통합게시판 수정, DB연동
 	@Override
@@ -215,43 +239,35 @@ public class BoardDaoImpl implements BoardDao {
 		int deleteBoard = 0;
 
 		try {
+			log.info("BoardDao boardDelete Start!!");
+			
 			deleteBoard = session.delete("boardDelete", boardId);
 		} catch (Exception e) {
 			log.error("BoardDao boardDelete Exception : {}", e.getMessage());
+		} finally {
+			log.info("BoardDao boardDelete End..");			
 		}
 
 		return deleteBoard;
 	}
-
-	// 통합게시판 생성, DB연동
-	@Override
-	public int boardInsert(Board board) {
-
-		int insertBoard = 0;
-		int insertHandling = board.getContent_id();
-
-		log.info("BoardDao boardInsert getContent_id : {}", insertHandling);
-		try {
-			// contentId 값이 있으면 review query 실행 
-			if(insertHandling > 0) {
-				insertBoard = session.insert("reviewBoardInsert", board);
-			} else {
-				insertBoard = session.insert("boardInsert", board);
-			}
-
-		} catch (Exception e) {
-			log.error("BoardDao boardInsert Exception : {}", e.getMessage());
-		}
-
-		return insertBoard;
-
-	}	
 	
+	// 통합게시판 첨부파일 삭제, DB연동
 	@Override
 	public Board boardRead(int id) {
-		Board board = session.selectOne("testRead", id);
 		
-		log.info("BoardDao boardRead getTitle : {}", board.getTitle());
+		Board board = null;
+		
+		try {
+			log.info("BoardDao boardRead Start!!");
+			
+			board = session.selectOne("boardImageRead", id);
+			log.info("BoardDao boardRead getTitle : {}", board.getTitle());
+			
+		} catch (Exception e) {
+			log.error("BoardDao boardRead Exception : {}", e.getMessage());
+		} finally {
+			log.info("BoardDao boardRead End..");			
+		}
 		
 		return board;
 	}

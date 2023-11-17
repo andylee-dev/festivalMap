@@ -1,4 +1,4 @@
-package com.oracle.s202350104.service;
+package com.oracle.s202350104.service.point;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface PointService {
 	
 	int 				getPointScoreById(int id);
 
-
+	void addPointAndHistory(int userId, int pointId);
 }

@@ -440,7 +440,7 @@ background: #D9D9D9;
 						<div class="text-center">
 							<button type="submit" class="btn btn-primary button-submit-font button-submit-design" onclick="submitHandler()">확인</button>
 							<button class="btn btn-secondary button-cancle-font button-cancle-design" onclick="closeAndRedirect()">취소</button>
-							<button class="btn btn-primary button-submit-font button-submit-design" onclick="location.href='courseDelete?id=${course.course_id}'">삭제</button>
+							<button class="btn btn-primary button-submit-font button-submit-design" onclick="location.href='courseDelete?id=${course.id}'">삭제</button>
 							
 						</div>
 					</form>

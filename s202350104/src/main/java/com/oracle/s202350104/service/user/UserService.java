@@ -16,6 +16,5 @@ public interface UserService {
 	Optional<Users> getUserById(int id);
 	void  updateUser(Users user);
 	int deletUser(int id);
-	int updateUserPoint(int user_id, int point_id);
 }
 	
