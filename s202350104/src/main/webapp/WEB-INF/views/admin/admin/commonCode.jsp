@@ -8,7 +8,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>CommonCode content</title>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 	</head>
+	
 	<body>
 		<div class="container-fluid">
 		<div class="row">
@@ -25,10 +27,10 @@
 				
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-					<form action="commonCodeSearch" method="POST" container justify-content-center >
+					<form action="commonCodeSearch" method="POST">
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="form-label col-2  mx-2">공통코드검색</label>
-							<div class="col-4">
+							<div class="col-4 mx-2">
 								<select name="big_code" class="form-select">
 									<option value="">전체</option>
 								<%-- <c:forEach var="common" items="${listCommon}"> --%>
@@ -39,20 +41,20 @@
 										</c:forEach>
 								</select>
 							</div>
-							<div class="col-5 mx-2 d-flex justify-content-center">	
-								<button type="submit" class="btn btn-primary  col-2 mx-1">검색</button>
-								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
-							</div>	
+								<button type="submit" class="btn btn-primary  col-1 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-1 mx-1">초기화</button>
 						</div>
 					</form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='commonCodeInsertForm'">등록</button>
-				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='commonCodeInsertForm'">등록</button>
+					</div>
+				<div class="container table-container p-4">
+				<div class="table-responsive">	
+					<table id="userTable"class="table table-md text-center p-3">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -79,9 +81,9 @@
 							</c:forEach>
 						</tbody>
 					</table>
-				</div>		
-		
-		
+				</div>
+				</div>	
+			</div>	
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
@@ -122,7 +124,6 @@
 						</c:if>
 					</ul>
 				</nav>
-					
 		</main>
 		</div>
 		</div>

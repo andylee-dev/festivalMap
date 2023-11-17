@@ -8,12 +8,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>AdminList content</title>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 	</head>
+	
 	<body>
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 			<main class="col-10 overflow-auto p-0">
+			
 				<!-- Section1: Title -->
 				<div class="admin-header-container">
 					<div class="container m-4">
@@ -21,6 +24,7 @@
 					<label  class="admin-header-title ">관리자설정 - 관리자리스트</label>>
 					</div>
 				</div>
+				
 				<!-- Section2: Search Form -->
 				<div class="container col-9 justify-content-center my-5">
 				    <form action="/admin/adminList" method="POST" class="container justify-content-center">
@@ -40,6 +44,7 @@
 				                <input type="text" name="keyword" class="form-control" value="${keyword}">
 			                </div>
 			            </div>
+			            
 						<!-- 기간 -->
 			            <div class="col-12 my-4 d-flex align-items-center ">
 			                <label for="searchType" class="col-form-label col-2  mx-1">가입기간</label>
@@ -86,13 +91,15 @@
 				        </div>
 				    </form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
-				</div>
 				
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table id="adminTable" class="table table-striped table-sm text-center">
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>
+					</div>
+				<div class="container table-container p-4">
+				<div class="table-responsive">	
+					<table id="adminTable" class="table table-md text-center p-3">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -130,28 +137,30 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					</div>
-					<nav aria-label="Page navigation example ">
-						<ul class="pagination">
-					    	<c:if test="${page.startPage > page.pageBlock}">
-							    <li class="page-item">
-						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
-						    	</li>
-					    	</c:if>
-						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							    <li class="page-item">
-									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-						    	</li>
-							</c:forEach>
-						    <c:if test="${page.endPage < page.totalPage}">
-							    <li class="page-item">
-							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
-						    	</li>
-						    </c:if>
-						</ul>
-					</nav>
+				</div>
+				</div>	
+			</div>
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+					    <c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item">
+						        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+						    </li>
+					    </c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+						    </li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+						   	</li>
+						</c:if>
+					</ul>
+				</nav>
 			</main>
 		</div>
-	</div>
-</body>
+		</div>
+	</body>
 </html>
