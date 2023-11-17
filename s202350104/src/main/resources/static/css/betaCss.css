@@ -1,0 +1,153 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* 공통 css 영역 */
+div {
+	font-family: 'Hahmlet', serif;
+}
+
+/* 상단 banner 영역 */
+.banner_custom {
+	width: 100%;
+	height: 340px;
+	margin-top: 100px;
+}
+
+.banner_custom .banner_img img {
+	width: 100%;
+	height: 340px
+}
+
+/* 상단 분홍색 영역 */
+.top_custom {
+	width: 100%;
+	height: 80px;
+	background-color: #FF4379;
+}
+
+/* keyword, 타이틀 영역 */
+.keyword_title_custom {
+	height: 80px;
+	position: relative;
+}
+
+.keyword_title_custom .title_div {
+	width: 160px;
+	height: 30px;
+	border-radius: 23.50px;
+	border: 3px white solid;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #FF4379;
+	color: white;
+	font-weight: bold;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.keyword_title_custom .text_div {
+	margin-left: 15px;
+	flex: 1;
+}
+
+.keyword_title_custom .keyword_input {
+	width: 30%;
+	border: none;
+	position: absolute;
+	right: 25px;
+	top: 68%;
+	transform: translateY(-50%);
+}
+
+.keyword_title_custom .keyword_img {
+	width: 20px;
+	height: 19px;
+	right: 10px;
+	top: 70%;
+	position: absolute;
+	transform: translateY(-50%);
+}
+
+/* select css */
+.select_custom {
+	height: 50px;
+}
+
+.select_custom .select_text_custom {
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+/* 경계선 css */
+.hr_custom {
+	border-color: black;
+	border-width: 4px;
+}
+
+/* 목록 영역 css */
+.list_custom {
+	margin-bottom: 10px;
+}
+
+.form-select {
+	width: 200px;
+	border: 2px black solid;
+	border-radius: 23.50px;
+	margin-bottom: 5px;
+	border: 2px black solid;
+}
+
+.tag_custom{
+	position: relative;
+
+}
+
+.tag_custom .tag_custom2 {
+	width: 100px;
+	height: 30px;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 23.50px;
+	position: absolute;
+	left: 12px;
+	top: 12px;
+}
+
+.tag_custom img{
+	width: 420px;
+	height: 280px;
+}
+
+.tag_custom .tag_custom2 .tag_p{
+	font-size:16px;
+	font-weight: bold;
+}
+
+.card_custom {
+	width: 600px;
+	height: 460px;
+}
+
+.card_custom .title_p{
+	font-size: 28px;
+	font-weight: bold;
+	text-align: left;
+	margin-bottom: 2px;
+}
+
+.card_custom .period_p{
+	font-size: 18px;
+	font-weight: bold;
+	text-align: left;
+	color: #FF4379;
+	margin-bottom: 4px;
+}
+
+.card_custom .contet_p{
+	font-size:16px;
+	font-weight: bold;
+	text-align: left;
+}
+

@@ -19,9 +19,15 @@
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<!-- 리뷰 슬라이딩 라이브러리  owl.carousel -->
+<script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
+
 <link href="/css/global.css" rel="stylesheet" type="text/css">
 <link href="/css/app.css" rel="stylesheet" type="text/css">
 <link href="/css/board.css" rel="stylesheet" type="text/css">
+<link href="/css/betaCss.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 <link rel="stylesheet" type="text/css" href="/css/contentsDetail.css">
 

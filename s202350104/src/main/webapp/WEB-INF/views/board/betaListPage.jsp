@@ -1,48 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/components/header.jsp"%>
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/components/header.jsp"%> 
 <!-- Top bar -->
-<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FestivalList</title>
-
-<style type="text/css">
-	.pageblock {
-		text-align: center;
-	}
-</style>
-
-<!-- 지역 코드 넣는 코드  Start-->
-<script src="/js/updateArea.js"></script>
-
-<script type="text/javascript">
-	document.addEventListener("DOMContentLoaded", function() {
-		updateAreaOptions();
-		$(".area-dropdown").change(
-				function() {
-					const selectedArea = $(this).val();
-					if (selectedArea) {
-						updateSigunguOptions(selectedArea);
-					} else {
-						$(".sigungu-dropdown").empty().append(
-								"<option value='0'>전체</option>");
-					}
-				});
-	});
-</script>
-<!-- 지역 코드 넣는 코드  End-->
-
+<title>Beta List Page</title>
 </head>
-
 <body>
 	<!-- 임시, 여백용-->
 	<div id="content_title" class="container"></div>
 	
 	<!-- 상단 banner 영역 -->
-	<div class="container p-0 banner_custom" style="">
+	<div class="container p-0 banner_custom border" style="">
 		<div id="carouselExampleIndicators" class="carousel slide"
 			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
 			 data-bs-wrap="true">
@@ -88,6 +60,7 @@
 			</button>
 		</div>
 	</div>
+	
 	<!-- 상단 분홍색 영역 -->
 	<div class="container p-0 top_custom"></div>
 
@@ -98,24 +71,26 @@
 		<div class="co1 text_div">
 			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
 		</div>
-		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
+		<input class="form-control keyword_input" type="text" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
 		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png"/>
 	</div>
 	
 	<!-- 경계선 표현 -->
 	<hr class="container p-0">	
-		
+
 	<!-- select 영역 -->
 	<div class="container p-0 select_custom">
 		<div class="row g-2 text-center">
 			<div class="col d-flex justify-content-center">
-				<select class="form-select text-center border-3 select_text_custom area-dropdown" 
-						aria-label="Default select example" name="area">
+				<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
+					<option selected>시,도 선택</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
 				</select>
 			</div>
 			<div class="col d-flex justify-content-center">
-				<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
-						aria-label="Default select example" name="sigungu">
+				<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
 					<option selected>시,군,구 선택</option>
 					<option value="1">One</option>
 					<option value="2">Two</option>
@@ -139,65 +114,95 @@
 				</select>
 			</div>
 		</div>		
-	</div>	
+	</div>
 	
 	<!-- 경계선 표현 -->
-	<hr class="container p-0 hr_custom">	
+	<hr class="container p-0 hr_custom">
 
 	<!-- 목록 영역 -->
-	<div class="container p-0 list_custom">
-		<c:if test="${listFestivals.size() == 0}">해당하는 축제 정보가 없습니다.</c:if>
-		<div class="row row-cols-3 g-2">
-			<c:forEach var="festival" items="${listFestivals}">
-<%-- 			<fmt:formatDate var="startDate" value="${festival.start_date}" type="date" pattern="yyyy.MM.dd"/>
-			<fmt:formatDate var="endDate" value="${festival.end_date}" type="date" pattern="yyyy.MM.dd"/>
-	 --%>											
-				<div class="col d-flex justify-content-center">
-					<div class="card card_custom border-0">
-						<div class="tag_custom">
-							<div class="tag_custom2">
-								<p class="tag_p">#지역태그</p>
-							</div>
-							<a href="festival/detail?contentId=${festival.content_id}&currentPage=${page.currentPage}">
-								<img src="${festival.img1}" class="card-img-top" alt="${festival.title}">
-							</a>
-						</div>
-
-						<div class="card-body">
-					    <p class="card-text title_p">${festival.title}</p>
-					    <p class="card-text period_p">${festival.start_date}&nbsp;~&nbsp;${festival.end_date}</p>
-					    <p class="card-text contet_p">content영역</p>
+	<div class="container p-0 border">
+		<div class="row row-cols-3 g-2 border">
+			<div class="col d-flex justify-content-center border">
+				<div class="card card_custom">
+				  <div class="tag_custom" style="">	
+					  <div class="tag_custom2" style="">
+					  	<p class="tag_p">#지역태그</p>
 					  </div>
-					</div>			
-				</div>
-			</c:forEach>
+				  </div>			
+				  <img src="../photos/aquarium1.png" class="card-img-top" alt="이미지.jpg">
+				  <div class="card-body">
+				    <p class="card-text title_p">축제 제목</p>
+				    <p class="card-text period_p">2023.00.00 ~ 00.00</p>
+				    <p class="card-text contet_p">어쩌구저쩌구</p>
+				  </div>
+				</div>			
+			</div>
+			<div class="col d-flex justify-content-center border">
+				<div class="card card_custom">
+				  <div class="tag_custom" style="">	
+					  <div class="tag_custom2" style="">
+					  	<p class="tag_p">#지역태그</p>
+					  </div>
+				  </div>		
+				  <img src="../photos/aquarium1.png" class="card-img-top" alt="이미지.jpg">
+				  <div class="card-body">
+				    <p class="card-text title_p">축제 제목</p>
+				    <p class="card-text period_p">2023.00.00 ~ 00.00</p>
+				    <p class="card-text contet_p">어쩌구저쩌구</p>
+				  </div>
+				</div>			
+			</div>
+			<div class="col d-flex justify-content-center border">
+				<div class="card card_custom">
+				  <div class="tag_custom" style="">	
+					  <div class="tag_custom2" style="">
+					  	<p class="tag_p">#지역태그</p>
+					  </div>
+				  </div>		
+				  <img src="../photos/aquarium1.png" class="card-img-top" alt="이미지.jpg">
+				  <div class="card-body">
+				    <p class="card-text title_p">축제 제목</p>
+				    <p class="card-text period_p">2023.00.00 ~ 00.00</p>
+				    <p class="card-text contet_p">어쩌구저쩌구</p>
+				  </div>
+				</div>			
+			</div>						
 		</div>	
 	</div>
 	
-	<!-- 페이징 처리 -->
-	<nav aria-label="Page navigation example">
-		<ul class="pagination">
-
-			<c:if test="${page.startPage > page.pageBlock}">
-				<li class="page-item">
-					<a href="festival?currentPage=${page.startPage-page.pageBlock}"
-					   class="pageblock page-link">[이전]</a></li>
-			</c:if>
-			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-				<li class="page-item">
-					<a href="festival?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
-				</li>
+			<div
+			class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+			<!-- HeaderBanner by.엄민용 -->
+			<c:forEach var="headers" items="${bannerHeader }">
+				<c:choose>
+					<c:when test="${headers.title == '축제' }">
+						<img alt="축제_headerBanner" src="${headers.image }">
+					</c:when>
+				</c:choose>
 			</c:forEach>
-			<c:if test="${page.endPage < page.totalPage}">
-				<li class="page-item">
-					<a href="festival?currentPage=${page.startPage+page.pageBlock}"
-					   class="pageblock page-link">[다음]</a></li>
-			</c:if>
+			<!-- HeaderBanner end -->
+		</div>
+		
+				<!-- 검색 -->
+		<form action="festival" method="post">
+			<div class="border p-3 m-3">
+				<select name="area" class="area-dropdown"></select> 
+				<select name="sigungu" class="sigungu-dropdown"></select> 
+				<input 	type="text" name="keyword" placeholder="키워드를 입력하세요.">
 
-		</ul>
-	</nav>
+				<button type="submit" class="btn btn-outline-secondary">검색</button>
+				<button type="reset" class="btn btn-outline-secondary">초기화</button>
+			</div>
+		</form>
+		
+				<!-- 정렬(만드는 중) -->
+		<div align="right">
+			<select name="ordering">
+				<option value="o_id">기본순</option>
+				<option value="o_title">이름순</option>
+				<option value="o_readcount">조회순</option>
+			</select>
+		</div>
 	
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 </body>
 </html>

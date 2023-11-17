@@ -844,4 +844,11 @@ public class BoardController {
 
 		return "board/betaPage";
 	}
+	
+	// BetaPage
+	@RequestMapping(value = "/betaListPage")
+	public String betaListPage(Board board, String currentPage, Model model) {			
+
+		return "board/betaListPage";
+	}
 } 

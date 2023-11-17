@@ -1,18 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/header.jsp"%>    
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>Beta Page</title>
-<!-- 리뷰 슬라이딩 라이브러리  owl.carousel -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
- 
+
+<!-- css 영역 -->
 <style type="text/css">
 .form-select {
 	width: 200px;
@@ -22,8 +19,9 @@
 	border: 2px black solid;
 }
 
-
 </style>
+
+<!-- script 영역 -->
 <script type="text/javascript">
     $(document).ready(function () {
         $(".custom-carousel").owlCarousel({
@@ -34,23 +32,20 @@
             $(".custom-carousel .card").not($(this)).removeClass("card");
             $(this).toggleClass("card");
         }); */
-    });
-
-    
+    });    
 </script>
+
 </head>
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
-	<!-- 임시 -->
-	<div id="content_title" class="container">
-	</div>
+	<!-- 임시, 여백용-->
+	<div id="content_title" class="container"></div>
 	
-	<!-- banner 영역 -->
+	<!-- 상단 banner 영역 -->
 	<div class="container p-0 border" style="width: 100%; height: 400px; margin-top:100px;">
 		<div id="carouselExampleIndicators" class="carousel slide"
 			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
 			 data-bs-wrap="true">
+			 <!-- 중앙 하단 버튼용 -->			 
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 						data-bs-slide-to="0" class="active" aria-current="true"
@@ -60,6 +55,7 @@
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 						data-bs-slide-to="2" aria-label="Slide 3"></button>
 			</div>
+			<!-- 아이템 재료 영역 -->			
 			<div class="carousel-inner">
 				<div class="carousel-item active">
 					<img src="../image/BANNER1.png" class="d-block w-100" alt="메인배너1"
@@ -74,25 +70,27 @@
 						 style="width: 100%; height: 400px" />
 				</div>
 			</div>
+			
+			<!-- 좌,우 버튼 영역 -->
 			<button class="carousel-control-prev" type="button"
 					data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true">
 					<img src="../image/arrowLeft.png" alt="Previous">
-				</span> <span class="visually-hidden">Previous</span>
+				</span> 
+				<span class="visually-hidden">Previous</span>
 			</button>
 			<button class="carousel-control-next" type="button"
 					data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
 				<span class="carousel-control-next-icon" aria-hidden="true">
 					<img src="../image/arrowRight.png" alt="Next">
-				</span> <span class="visually-hidden">Next</span>
+				</span> 
+				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
 	</div>
 	
-	<!-- 분홍색 영역 -->
-	<div class="container p-0" style="width: 100%; height: 80px; background-color: #FF4379;">
-	
-	</div>
+	<!-- 상단 분홍색 영역 -->
+	<div class="container p-0" style="width: 100%; height: 80px; background-color: #FF4379;"></div>
 	
 	<!-- 배지, 타이틀 영역 -->	
 	<div class="container border p-0" style="height:80px; position: relative;">
@@ -265,15 +263,12 @@
 								 style="width: 100px; height =100px; margin-left: 15px;">
 						</div>
 					</div>
-<!-- 				</div> -->
+			<!-- </div> -->
 			</c:forEach>
 			</div>
 		</div>
-<!-- 	</div>
- -->
+<!-- </div> --> 
 
-
- 
 	<!-- 경계선 표현 -->
 	<hr class="container p-0"
 		style="border-color: black; border-width: 4px;">
