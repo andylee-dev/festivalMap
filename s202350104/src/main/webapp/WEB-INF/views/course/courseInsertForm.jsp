@@ -82,11 +82,15 @@
 		  var card = '<div class="card course-card" style="width: 208px; height: 340px; margin: 20px; padding: 18px;">';
 		  card += '<h5 class="card-title">' + contentList[i].contentType + '</h5>';
 		  card += '<img src="' + contentList[i].img + '" class="card-image-size" alt="...">';
-		  card += '<div class="card-body">';
-		  card += '<h5 class="card-title">' + contentList[i].title + '</h5>';
-		  card += '<p class="card-text">' + contentList[i].address + '</p>';
-		  card += '<p class="card-text">' + contentList[i].content + '</p>';
-		  card += '</div></div>';
+		  card += '<div class="card-body" style="padding: 0px; padding-top: 16px;">';
+		  card += '<h5 class="card-title card-font-title">' + contentList[i].title + '</h5>';
+		  card += '<p class="card-text card-font-content">' + contentList[i].address + '</p>';
+		  card += '<p class="card-text card-font-content">' + contentList[i].content + '</p>';
+		  card += '</div>';
+		  card += '<div class="d-flex justify-content-end mt-auto">'; // 버튼을 오른쪽에 배치하기 위한 추가된 div
+		  card += '<a href="" class="btn btn-primary card-button-style card-button-text">상세정보보기</a>'; // 버튼 추가
+		  card += '</div>'; // 추가된 div 닫기
+		  card += '</div>';
 		
 		  cardContainer += card;
 		}
@@ -196,9 +200,45 @@
 }
 
 .card-image-size{
-width: 172px; 
-height: 111px; 
-background: #D9D9D9;
+	width: 172px; 
+	height: 111px; 
+	background: #D9D9D9;
+}
+
+.card-font-title {
+	width: 100%; 
+	color: black; 
+	font-size: 14px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	word-wrap: break-word;
+}
+
+.card-font-content {
+	color: black; 
+	font-size: 12px; 
+	font-family: Noto Sans; 
+	font-weight: 500; 
+	line-height: 16px; 
+	word-wrap: break-word;
+}
+
+.card-button-text {
+	text-align: center; 
+	color: #6D6A6A; 
+	font-size: 12px; 
+	font-family: Noto Sans; 
+	font-weight: 400; 
+	word-wrap: break-word"
+}
+
+.card-button-style {
+	width: 100px; 
+	height: 29px; 
+	background: #D9D9D9; 
+	border-radius: 5px
+}
+
 
 
 </style>
@@ -243,27 +283,12 @@ background: #D9D9D9;
 								<i class="bi bi-arrow-right-circle-fill" style="color: #FF4379"></i>
 							</div>
 							<div style="width: 100%; height: auto; background: white; border-radius: 10px; border: 1px #FF4379 solid">
-							
-							<div id="cardContainer" class="d-flex flex-wrap" style="margin: 20px; padding: 20px;">
-								
-								<!-- <div style="width: 100%; height: 40%; position: relative">
-								    <div style="width: 208px; height: 288px; left: 0px; top: 0px; position: absolute; background: #F4F4F4; border-radius: 10px"></div>
-								    <div style="width: 89px; height: 29px; left: 101px; top: 245px; position: absolute">
-								        <div style="width: 89px; height: 29px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border-radius: 5px"></div>
-								        <div style="width: 49.10px; height: 16px; left: 19.95px; top: 6.50px; position: absolute"></div>
-								        <div style="left: 12px; top: 7px; position: absolute; text-align: center; color: #6D6A6A; font-size: 12px; font-family: Noto Sans; font-weight: 400; word-wrap: break-word">상세정보보기</div>
-								    </div>
-								    <div style="left: 18px; top: 194px; position: absolute; color: black; font-size: 12px; font-family: Noto Sans; font-weight: 500; line-height: 16px; word-wrap: break-word">장소 위치위치위치 주소주소주소주<br/>소주소주소주소주소 주소</div>
-								    <div style="width: 172px; height: 111px; left: 18px; top: 42px; position: absolute; background: #D9D9D9"></div>
-								    <div style="width: 60px; height: 52px; left: 74px; top: 72px; position: absolute; background: white"></div>
-								    <div style="width: 74px; height: 74px; left: 67px; top: 107px; position: absolute"></div>
-								    <div style="width: 165px; left: 18px; top: 168px; position: absolute; color: black; font-size: 14px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">장소 제목제목제목제목</div>
-								    <div style="width: 165px; left: 18px; top: 16px; position: absolute; color: black; font-size: 14px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word">장소분류</div>
-								</div> -->
+								<div id="cardContainer" class="d-flex flex-wrap" style="margin: 20px; padding: 20px;">
+									
+								</div>
 							</div>
 						</div>
-							
-						</div>
+						
 						<div class="form-group d-flex course-body-text col-12"
 							 style="margin-bottom: 24px;">
 							<label class="form-label col-2" for="distance">거리(km)</label>

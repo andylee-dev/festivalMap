@@ -9,6 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>course UpdateForm</title>
+
+<!-- 부트스트랩 5.3.1-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -129,6 +131,69 @@
         return tableEl;
 	}
 	
+	/* function makeCard(content) {
+	    // 카드를 위한 div 요소 생성
+	    const cardEl = document.createElement("div");
+	    cardEl.className = "card course-card";
+	    cardEl.style = "width: 208px; height: 340px; margin: 20px; padding: 18px;";
+
+	    // 카드를 삭제하는 버튼 생성
+	    const deleteButton = document.createElement("button");
+	    deleteButton.textContent = `삭제${content.id}`;
+	    deleteButton.onclick = function() {
+	        deleteContent(event);
+	        event.preventDefault();
+	    };
+	    deleteButton.className = "btn btn-primary";
+	    cardEl.appendChild(deleteButton);
+
+	    // 카드 콘텐츠를 위한 요소 생성
+	    const titleEl = document.createElement("h5");
+	    titleEl.className = "card-title";
+	    titleEl.textContent = "컨텐츠 타입";
+	    cardEl.appendChild(titleEl);
+
+	    const imgEl = document.createElement("img");
+	    imgEl.src = content.img;
+	    imgEl.className = "card-image-size";
+	    imgEl.alt = content.title;
+	    cardEl.appendChild(imgEl);
+
+	    const bodyEl = document.createElement("div");
+	    bodyEl.className = "card-body";
+	    bodyEl.style = "padding: 0px; padding-top: 16px;";
+
+	    const cardTitleEl = document.createElement("h5");
+	    cardTitleEl.className = "card-title card-font-title";
+	    cardTitleEl.textContent = content.title;
+	    bodyEl.appendChild(cardTitleEl);
+
+	    const addressEl = document.createElement("p");
+	    addressEl.className = "card-text card-font-content";
+	    addressEl.textContent = content.address;
+	    bodyEl.appendChild(addressEl);
+
+	    const phoneEl = document.createElement("p");
+	    phoneEl.className = "card-text card-font-content";
+	    phoneEl.textContent = content.phone;
+	    bodyEl.appendChild(phoneEl);
+
+	    cardEl.appendChild(bodyEl);
+
+	    const linkEl = document.createElement("div");
+	    linkEl.className = "d-flex justify-content-end mt-auto";
+
+	    const detailLink = document.createElement("a");
+	    detailLink.href = "";
+	    detailLink.className = "btn btn-primary card-button-style card-button-text";
+	    detailLink.textContent = "상세정보보기";
+	    linkEl.appendChild(detailLink);
+
+	    cardEl.appendChild(linkEl);
+
+	    return cardEl;
+	} */
+	
 	
 	
 	function getCurrentContentList() {
@@ -189,10 +254,9 @@
 	    	hiddenInput.name = "delList";
 	    	hiddenInput.value = delList[i];
 	    	form.appendChild(hiddenInput);
-	    }			
+	    }
  	    
- 	    
- 	   alert('submitHandler')
+		alert('submitHandler')
 	};
 
 	function difference(list1, list2) {
@@ -358,10 +422,47 @@
 	word-wrap: break-word
 }
 
-.card-image-size{
-width: 172px; 
-height: 111px; 
-background: #D9D9D9;
+.card-image-size {
+	width: 172px; 
+	height: 111px; 
+	background: #D9D9D9;
+}
+
+.card-font-title {
+	width: 100%; 
+	color: black; 
+	font-size: 14px; 
+	font-family: Noto Sans; 
+	font-weight: 600; 
+	word-wrap: break-word;
+}
+
+.card-font-content {
+	color: black; 
+	font-size: 12px; 
+	font-family: Noto Sans; 
+	font-weight: 500; 
+	line-height: 16px; 
+	word-wrap: break-word;
+}
+
+.card-button-text {
+	text-align: center; 
+	color: #6D6A6A; 
+	font-size: 12px; 
+	font-family: Noto Sans; 
+	font-weight: 400; 
+	word-wrap: break-word"
+}
+
+.card-button-style {
+	width: 100px; 
+	height: 29px; 
+	background: #D9D9D9; 
+	border-radius: 5px
+}
+
+
 </style>
 
 </head>
@@ -401,8 +502,47 @@ background: #D9D9D9;
 							<label class="col-2" style="padding-bottom: 53px">코스항목</label>
 							<button class="btn btn-primary button-submit-font button-submit-design" onclick="showPopUp(); event.preventDefault();">코스 수정</button>
 							
-							<div>
-								<table border="1" id="contentsTable">
+							<div style="color: #FF4379; font-size: 16px; font-family: Noto Sans; font-weight: 600; word-wrap: break-word padding-bottom: 53px;">
+								코스미리보기
+								<i class="bi bi-arrow-right-circle-fill" style="color: #FF4379"></i>
+							</div>
+							<div style="width: 100%; height: auto; background: white; border-radius: 10px; border: 1px #FF4379 solid">
+								
+								<div id="contentsTable" class="d-flex flex-wrap" style="margin: 20px; padding: 20px;">
+									<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
+										<div class="card course-card" style="width: 208px; height: 340px; margin: 20px; padding: 18px;">
+											
+											<div class="d-flex justify-content-end">
+										    	<i onclick="deleteContent(event)" class="bi bi-x-square-fill" style="color: #FF4379"></i>
+											</div>
+											<h5 class="card-title">컨텐츠 타입</h5>
+											<img src="${courseContentList.img1 }" class="card-image-size" alt="${courseContentList.title }">
+											<div class="card-body" style="padding: 0px; padding-top: 16px;">
+												<h5 class="card-title card-font-title">${courseContentList.title }</h5>
+												<p class="card-text card-font-content">${courseContentList.address }</p>
+												<p class="card-text card-font-content">${courseContentList.address }</p>
+											</div>
+											<div class="d-flex justify-content-end mt-auto">
+												<a href="" class="btn btn-primary card-button-style card-button-text">상세정보보기</a>
+											</div>
+										</div>
+									</c:forEach>
+								</div>
+								
+								<%-- <c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
+									<div class="card course-card" style="width: 18rem;">
+									  <h5 class="card-title">컨텐츠 타입</h5>
+									  <img src="${courseContentList.img1 }" class="card-img-top" alt="${courseContentList.title }">
+									  <div class="card-body">
+									    <h5 class="card-title">${courseContentList.title }</h5>
+									    <p class="card-text">${courseContentList.address }</p>
+									    <p class="card-text">${courseContentList.address }</p>
+									    <a href="" class="btn btn-primary">삭제${courseContentList.content_id}</a>
+									  </div>
+									</div>
+								</c:forEach> --%>
+							
+								<%-- <table border="1" id="contentsTable">
 									<tr>
 										<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
 									</tr>
@@ -417,8 +557,7 @@ background: #D9D9D9;
 											<td><button onclick="deleteContent(event); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
 										</tr>
 									</c:forEach>
-									
-								</table>
+								</table> --%>
 							</div>
 						</div>
 						
