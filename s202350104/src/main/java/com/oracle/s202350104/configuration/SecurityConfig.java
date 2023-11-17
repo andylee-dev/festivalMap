@@ -23,6 +23,13 @@ public class SecurityConfig {
 	@Autowired
 	private  CustomAuthenticationProvider authProvider;
 
+	private final CustomAuthenticationSuccessHandler successHandler;
+
+	public SecurityConfig(CustomAuthenticationSuccessHandler successHandler) {
+        this.successHandler = successHandler;
+    }
+	
+
 	/**
 	 * @see 시큐리티 무시할 경로 설정. static, h2데이터 확인하기 위한 h2-console.
 	 */
@@ -55,7 +62,7 @@ public class SecurityConfig {
                 .passwordParameter("password")	// login에 필요한 password 값  (default password)
 				.permitAll()
 				.defaultSuccessUrl("/")
-				.successHandler(new CustomAuthenticationSuccessHandler())
+				.successHandler(successHandler)
 			);
 		// Logout 설정.
 		http.logout((logout) -> logout
