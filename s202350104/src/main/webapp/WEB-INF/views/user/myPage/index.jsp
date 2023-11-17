@@ -64,28 +64,20 @@ h4 {
 	line-height: 20px;
 	word-wrap: break-word
 }
+
+.birthday-text{
+	font-size: 16px;
+	font-family: Noto Sans;
+	font-weight: 600;
+	margin-right: 20px;	
+	margin-left:  10px;
+	text-align: center;
+}
+
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/checkUserDuplicate.js"></script>
 <script>
-
-
-
-	function checkDuplicateEmail() {
-	    const emailEl = document.getElementById("email");
-		const emailValidationFeedback = document.getElementById("emailValidationFeedback");
-/* 	    if( emailEl.value ) {
-	    	if( isDuplicate({email: emailEl.value}), function(isDuplicate)  ){
-		    	emailEl.classList.remove("is-valid");
-		    	emailEl.classList.add("is-invalid");
-		    	emailValidationFeedback.textContent = "중복된 아이디입니다.";
-    		} else {
-		    	emailEl.classList.remove("is-invalid");
-		    	emailEl.classList.add("is-valid");
-		    	emailValidationFeedback.textContent = "사용 가능한 아이디입니다.";    			
-    		}
-    	} */
-	}
 
 	function checkDuplicateNickname() {
 	    const nicknameEl = document.getElementById("nickname");
@@ -150,8 +142,50 @@ h4 {
 	            pw.setCustomValidity("");
 	        }
 	    }
+	    
+	    // 년도 옵션 생성
+	    const yearSelect = document.getElementById("year");
+	    const currentYear = new Date().getFullYear();
+	    for (let i = currentYear; i >= currentYear - 100; i--) {
+	        const option = document.createElement("option");
+	        option.value = i;
+	        option.text = i;
+	        yearSelect.appendChild(option);
+	    }
+
+	    // 월 옵션 생성
+	    const monthSelect = document.getElementById("month");
+	    for (let j = 1; j <= 12; j++) {
+	        const option = document.createElement("option");
+	        option.value = j;
+	        option.text = j;
+	        monthSelect.appendChild(option);
+	    }
+
+	    // 일 옵션 생성
+	    const daySelect = document.getElementById("day");
+	    for (let k = 1; k <= 31; k++) {
+	        const option = document.createElement("option");
+	        option.value = k;
+	        option.text = k ;
+	        daySelect.appendChild(option);
+	    }
+
+	    
 	});
-	
+	// 선택된 값으로 생년월일 입력 필드 업데이트
+	function updateBirthday() {
+	    const yearSelect = document.getElementById("year");
+	    const monthSelect = document.getElementById("month");
+	    const daySelect = document.getElementById("day");
+
+	    
+	    const year = yearSelect.value;
+		const month = monthSelect.value.padStart(2, '0');
+		const day = daySelect.value.padStart(2, '0');
+		const birthday = year + month + day;
+	    document.getElementById("birthday").value = birthday;
+	}
 	
 	function checkSubmitHandler(event) {
 	    // 필요한 입력 필드 가져오기
@@ -420,6 +454,33 @@ h4 {
 											<p class="helptext text-start"></p>
 										</div>
 									</div>
+									<div class="mb-2 row align-items-center ">
+										<label class="col-sm-2 col-form-label fw-bold text-end mx-3"
+											style="font-size: 20px;">생일<SUP
+												style="color: #FF4379; font-size: 18px;">*</SUP></label>
+										<div class="col-sm-6 mx-3 d-flex">
+											<div class="col-4"	>
+											    <select class="form-select text-center" id="year">
+											        <option value=""></option>
+											    </select>
+											</div>
+											<span class="birthday-text">년</span>
+											<div class="col-3"	>
+											    <select class="form-select text-center" id="month">
+											        <option value=""></option>
+											    </select>
+											</div>
+											<span class="birthday-text">월</span>
+											<div class="col-3 "	>
+											    <select class="form-select text-center" id="day">
+											        <option value=""></option>
+											    </select>
+											</div>
+											<span class="birthday-text">일</span>
+										</div>
+									</div>
+									
+									
 									<div class="mb-2 row align-items-baseline ">
 										<label for="phone_num"
 											class="col-sm-2 col-form-label fw-bold text-end mx-3"
