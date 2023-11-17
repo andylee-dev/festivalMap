@@ -18,7 +18,7 @@ import com.oracle.s202350104.exception.UserNotFoundException;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.PointHistoryService;
-import com.oracle.s202350104.service.PointService;
+import com.oracle.s202350104.service.point.PointService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 	private final UserDao ud;
 	private final AppConfig appConfig;
-	private final PointHistoryService phs;
-	private final PointService ps;
 
 	@Override
 	public int getLoggedInId() {
@@ -121,34 +119,5 @@ public class UserServiceImpl implements UserService {
 		return ud.deleteUser(id);
 	}
 
-	@Override
-	@Transactional 
-	public int updateUserPoint(int user_id, int point_id) {
-		UUID transactionId = UUID.randomUUID();
-		try {
-			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "updatePoint", "start");
 
-			// Update Point
-			int score = ps.getPointScoreById(point_id);
-	
-			Users user = new Users();
-			user.setId(user_id);
-			user.setPoint(score);
-	
-			ud.updateUserPoint(user);
-	
-			log.info("updatePoint user:{} / score:{}",user_id,score);
-
-			// Write Point History
-			PointHistory pointHistory = new PointHistory();
-			pointHistory.setUser_id(user_id);
-			pointHistory.setPoint_id(point_id);
-			phs.writePointHistory(pointHistory);
-		} catch (Exception e) {
-			log.error("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "updatePoint", e.getMessage());
-		} finally {
-			log.info("[{}]{}-{}:{}",transactionId,"UserServiceImpl", "updatePoint", "end");
-		}		
-		return 0;
-	}
 }
