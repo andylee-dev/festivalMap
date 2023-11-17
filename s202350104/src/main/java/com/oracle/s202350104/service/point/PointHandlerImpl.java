@@ -43,7 +43,6 @@ public class PointHandlerImpl implements PointHandler {
     @Override
     public void handle(int userId, int pointId) {
 		UUID transactionId = UUID.randomUUID();
-		List<Contents> contentList =null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "PointHandlerImpl", "start");        
 			if (handlerMap.containsKey(pointId)) {
