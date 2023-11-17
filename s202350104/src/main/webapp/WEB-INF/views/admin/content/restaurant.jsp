@@ -9,26 +9,28 @@
 		<meta charset="UTF-8">
 		<title>Restaurant content</title>
 		<%-- <%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%> --%>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="row">
 				<%@ include file="/WEB-INF/components/AdminSideBar.jsp"%>
 				<main class="col-10 overflow-auto p-0">
+				
 					<!-- Section1: Title -->
 					<div class="admin-header-container">
-					<div class="container m-4">
-						<i class="title-bi bi bi-pencil-square "></i>
-						<label  class="admin-header-title ">맛집 정보 관리 </label>					
+						<div class="container m-4">
+							<i class="title-bi bi bi-pencil-square "></i>
+							<label  class="admin-header-title ">맛집 정보 관리 </label>					
+						</div>
 					</div>
-				</div>
 	
 					<!-- Section2: Search Form -->
-					<div class="container col-9 justify-content-center my-5">
-						<form action="adminRestaurantSearch">
+					<div class="container col-9 justify-content-center mt-5">
+						<form action="adminRestaurantSearch" class="container justify-content-center">
 							<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
-								<div class="col-1">
+							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
+								<div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="s_title" selected>전체</option>
 					              </select>
@@ -40,7 +42,7 @@
 				            </div>	
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="form-label col-1  mx-2">테마</label>
+				            	<label for="searchType" class="col-form-label col-1  mx-2">테마</label>
 									<div class="col-2 d-flex align-items-center">
 										<select name="small_code" id="small_code" class="form-select">
 											<option value="999">전체</option>
@@ -53,18 +55,20 @@
 											<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
 										</select>
 									</div>
-									
-				            	<label for="searchType" class="form-label col-1  mx-2">지역</label>
-					            	<div class="col-2 d-flex align-items-center">
-										<select name="area" class="area-dropdown form-select"></select>
-									</div>
-									<div class="col-2 mx-2 d-flex align-items-center">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
-									</div>
+								
+								<div class="col-12 my-4 d-flex align-items-center">	
+					            	<label for="searchType" class="col-form-label col-1  mx-2">지역</label>
+						            	<div class="col-2 d-flex align-items-center">
+											<select name="area" class="area-dropdown form-select"></select>
+										</div>
+										<div class="col-2 mx-2 d-flex align-items-center">
+											<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+										</div>
+								</div>
 							</div>
 							
 							<div class="col-12 my-4 d-flex align-items-center">
-					            <label for="searchType" class="form-label col-1  mx-2">필터링</label>
+					            <label for="searchType" class="col-form-label col-1  mx-2">필터링</label>
 					            	<div class="col-2 d-flex align-items-center">
 										<select name="status" id="status" class="form-select">
 											<option value="2">승인여부</option>
@@ -72,7 +76,8 @@
 											<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
 										</select> 
 									</div>
-
+										
+								<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="is_deleted" id="is_deleted" class="form-select">
 											<option value="2">삭제여부</option>
@@ -95,9 +100,10 @@
 
 				
 				<!-- Section3: Table -->		
-				<div class="container col-9 d-flex justify-content-end my-2">
-					<button type="button" class="btn btn-primary mt-4" onclick="location.href='restaurantInsertForm'">등록</button>
-				</div>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='restaurantInsertForm'">등록</button>
+					</div>
 				<div class="container col-9 justify-content-center my-2 border p-2">
 					<table class="table table-bordered table-sm text-center mb-2">
 						<thead>
@@ -149,6 +155,7 @@
 						</tbody>
 					</table>
 		총 건수: ${totalRestaurant}
+		</div>
 		</div>	
 		
 		<nav aria-label="Page navigation example ">

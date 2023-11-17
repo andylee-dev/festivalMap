@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>지역정보 숙박</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			function accomodationDeleteAjax(pIndex) {
@@ -52,11 +53,11 @@
 			</div>
 	
 			<!-- Section2: Search Form -->		
-			<div class="container col-9 justify-content-center my-5">
-					<form action="accomodationSearch" method="get">
+			<div class="container col-9 justify-content-center mt-5">
+					<form action="accomodationSearch" method="get" class="container justify-content-center">
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
-								<div class="col-1">
+							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
+								<div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="" selected>숙소명</option>
 						          </select>
@@ -67,7 +68,7 @@
 						</div>
 						
 						<div class="col-12 my-4 d-flex align-items-center">
-								<label for="searchType" class="form-label col-1  mx-2">분류</label>
+							<label for="searchType" class="col-form-label col-1  mx-2">분류</label>
 								<div class="col-2 d-flex align-items-center">
 									<select name="small_code" class="form-select">
 										<option value="999">전체</option>
@@ -77,18 +78,20 @@
 									</select>
 								</div>
 								
-				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-3">
-										<select name="area" class="area-dropdown form-select"></select>
-									</div>
-									<div class="col-3 mx-2">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
-									</div>				
+								<div class="col-12 my-4 d-flex align-items-center">
+					            	<label for="searchType" class="col-form-label col-1  mx-2">지역</label>
+						            	<div class="col-2 d-flex align-items-center">
+											<select name="area" class="area-dropdown form-select"></select>
+										</div>
+										<div class="col-2 mx-2 d-flex align-items-center">
+											<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+										</div>
+								</div>				
 						</div>
 						
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">승인여부</label>
-								<div class="col-2 align-self-center">
+							<label for="searchType" class="col-form-label col-1  mx-2">승인여부</label>
+								<div class="col-2 d-flex align-items-center">
 									<select name="status" class="form-select">
 										<option value="2" ${status == 2 ? 'selected' : ''}>전체</option>
 										<option value="1" ${status == 1 ? 'selected' : ''}>활성화</option>
@@ -96,8 +99,8 @@
 									</select>
 								</div>
 						
-							<label for="searchType" class="form-label col-2  mx-2">삭제여부</label>
-								<div class="col-2 align-self-center">
+							<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+								<div class="col-2 mx-2 d-flex align-items-center">
 									<input type="hidden" name="big_code" value="13">
 									<select name="is_deleted" class="form-select">
 										<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
@@ -115,11 +118,13 @@
 			</div>		
 			
 			<!-- Section3: Table -->		
-			<div class="container col-9 justify-content-center my-2">
-				<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='accomodationInsertForm'">등록</button>
-			</div>	
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
+			<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+				<div class="container d-flex justify-content-end p-0">
+					<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='accomodationInsertForm'">등록</button>
+				</div>	
+				<div class="container table-container p-4">
+				<div class="table-responsive">
+					<table id="userTable" class="table table-md text-center p-3">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
@@ -138,25 +143,28 @@
 								<tr id="accomodation${st.index}">
 										<td><input type="hidden" value="${accomodation.content_id}" id="id${st.index}">${num}</td>
 										<td>${accomodation.area} ${accomodation.sigungu}</td>
-										<td>${accomodation.title}</a></td>
+										<td>${accomodation.title}</td>
 										<td>${accomodation.address}</td>
 										<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
 										<td>
 							 				<c:if test="${accomodation.status == 0 }">N</c:if>
 											<c:if test="${accomodation.status == 1 }">Y</c:if>
 										</td>
-										<td><input type="button" value="관리" class="btn btn-primary" 
-											onclick="location.href='accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}'"></td>
-									 
-									 	<td>
+										<td>
 											<c:if test="${accomodation.is_deleted == 1}">삭제완료</c:if>
 										</td>
+										<td><a class="detail-btn" 
+											href='accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}'>관리</a></td>
+									 	
 								</tr>
 									 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
+				</div>
+			</div>
+				
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">

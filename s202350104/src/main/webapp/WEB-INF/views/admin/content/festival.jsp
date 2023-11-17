@@ -7,7 +7,6 @@
 		<meta charset="UTF-8">
 		<title>축제 관리</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
-		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
@@ -42,11 +41,11 @@
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="container col-9 justify-content-center my-5">
-					<form action="festival" method = "get">
+				<div class="container col-9 justify-content-center mt-5">
+					<form action="festival" method = "get" class="container justify-content-center">
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-1  mx-2">검색어</label>
-				               <div class="col-2">
+							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
+				               <div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
 						              <option value="s_title" selected>축제명</option>
 									  <option value="s_content">내용</option>
@@ -54,14 +53,14 @@
 									  <option value="s_eventplace">장소</option>
 					              </select>
 				                </div>
-				                <div class="col-7 mx-2">
+				                <div class="col-5 mx-2">
 					                <input type="text" name="keyword" class="form-control" value="${keyword}"
 					                placeholder="검색어를 입력하세요.">
 				                </div>
 				        </div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-					            <label for="searchType" class="form-label col-1  mx-2"></label>
+					            <label for="searchType" class="col-form-label col-1  mx-2"></label>
 					            	<div class="col-2 d-flex align-items-center">
 										<select name="area" class="area-dropdown form-select"></select>
 									</div>
@@ -71,7 +70,7 @@
 							</div>
 							
 							<div class="col-12 my-4 d-flex align-items-center">
-								<label for="searchType" class="form-label col-1  mx-2">필터링</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">필터링</label>
 									<div class="col-2 d-flex align-items-center">
 										<select name = "status" class="form-select">
 											<option value = "" selected>승인여부</option>
@@ -102,49 +101,49 @@
 					<div class="container d-flex justify-content-end p-0">
 						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='festivalInsertForm'">등록</button>
 					</div>
+					<div class="container table-container p-4">
+						<div class="table-responsive">
+							<table id="userTable" class="table table-md text-center p-3">
+								<thead>
+									<tr>
+										<th scope="col">순번</th>
+										<th scope="col">지역</th>
+										<th scope="col">축제명</th>
+										<th scope="col">주최자</th>
+										<th scope="col">등록일</th>
+										<th scope="col">승인여부</th>
+										<th scope="col">삭제여부</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${listFestivals.size() == 0}"><td colspan="8">해당하는 축제 정보가 없습니다.</td></c:if>
+									
+									<c:set var="num" value="${page.start}"/>
+									<c:forEach var="festival" items="${listFestivals}" varStatus="st">				
+										<tr id="festival${st.index}">
+											<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
+											<td>${festival.area_content} ${festival.sigungu_content}</td>
+											<td>${festival.title}</td>
+											<td>${festival.sponsor}</td>
+											<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
+											<td>
+												<c:if test="${festival.status == 0}">승인대기</c:if>
+												<c:if test="${festival.status == 1}">승인완료</c:if>
+											</td>
+											<td>
+												<c:if test="${festival.is_deleted == 0}">N</c:if>
+												<c:if test="${festival.is_deleted == 1}">Y</c:if>
+											</td>
+											<td><a class="detail-btn" href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}">관리</a></td>
+										</tr>
+										<c:set var="num" value="${num + 1}"/>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>	
 				</div>
-				<div class="container table-container p-4">
-				<div class="table-responsive">
-					<table id="userTable"class="table table-md text-center p-3">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">지역</th>
-								<th scope="col">축제명</th>
-								<th scope="col">주최자</th>
-								<th scope="col">등록일</th>
-								<th scope="col">승인여부</th>
-								<th scope="col">삭제여부</th>
-								<th scope="col"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${listFestivals.size() == 0}"><td colspan="8">해당하는 축제 정보가 없습니다.</td></c:if>
-							
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="festival" items="${listFestivals}" varStatus="st">				
-								<tr id="festival${st.index}">
-									<td><input type="hidden" value="${festival.content_id}" id="id${st.index}">${num}</td>
-									<td>${festival.area_content} ${festival.sigungu_content}</td>
-									<td>${festival.title}</td>
-									<td>${festival.sponsor}</td>
-									<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
-									<td>
-										<c:if test="${festival.status == 0}">승인대기</c:if>
-										<c:if test="${festival.status == 1}">승인완료</c:if>
-									</td>
-									<td>
-										<c:if test="${festival.is_deleted == 0}">N</c:if>
-										<c:if test="${festival.is_deleted == 1}">Y</c:if>
-									</td>
-									<td><a class="detail-btn" href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}">관리</a></td>
-								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				</div>	
 					
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
