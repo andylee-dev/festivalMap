@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>포인트관리</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -24,53 +25,57 @@
 				</div>	
 				
 				<!-- Section2: Search Form -->
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
-				</div>
-				
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
-					<thead>
-						<tr>
-							<th scope="col">포인트번호</th>
-							<th scope="col">포인트이름</th>
-							<th scope="col">내용</th>
-							<th scope="col">포인트점수</th>
-							<th scope="col">생성날짜</th>
-							<th scope="col">수정</th>
-						</tr>
-					</thead>
-						<c:forEach var="point" items="${listPoint}">
-						<tr>
-							<td>${point.id }</td>
-							<td>${point.title }</td>
-							<td>${point.content }</td>
-							<td>${point.point }</td>
-							<td><fmt:formatDate value="${point.create_at}" pattern="yyyy/MM/dd" /></td>
-							<td><input class="btn btn-primary" type="button" value="수정"></td>
-						</tr>
-						</c:forEach>
-					</table>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm m-2">등록</button>
 					</div>
-					<nav aria-label="Page navigation example ">
-						<ul class="pagination">
-					    	<c:if test="${page.startPage > page.pageBlock}">
-							    <li class="page-item">
-						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
-						    	</li>
-					    	</c:if>
-						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							    <li class="page-item">
-									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-						    	</li>
-							</c:forEach>
-						    <c:if test="${page.endPage < page.totalPage}">
-							    <li class="page-item">
-							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
-						    	</li>
-						    </c:if>
-						</ul>
-					</nav>
+				
+					<div class="container table-container p-4">
+					<div class="table-responsive">
+						<table id="userTable" class="table table-md text-center p-3">
+							<thead>
+								<tr>
+									<th scope="col">포인트번호</th>
+									<th scope="col">포인트이름</th>
+									<th scope="col">내용</th>
+									<th scope="col">포인트점수</th>
+									<th scope="col">생성날짜</th>
+									<th scope="col">수정</th>
+								</tr>
+							</thead>
+								<c:forEach var="point" items="${listPoint}">
+								<tr>
+									<td>${point.id }</td>
+									<td>${point.title }</td>
+									<td>${point.content }</td>
+									<td>${point.point }</td>
+									<td><fmt:formatDate value="${point.create_at}" pattern="yyyy/MM/dd" /></td>
+									<td><input class="btn btn-primary" type="button" value="수정"></td>
+								</tr>
+								</c:forEach>
+						</table>
+					</div>
+					</div>
+				</div>
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+					    <c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">Prev</a>
+						    </li>
+					    </c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+							</li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >Next</a>
+						    </li>
+						</c:if>
+					</ul>
+				</nav>
 			</main>
 		</div>
 	</div>

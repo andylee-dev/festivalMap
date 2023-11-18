@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>free Board</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -33,10 +34,10 @@
 				</div>
 				
 				<!-- Section2: Search Form -->		
-				<div class="container col-9 justify-content-center my-5">
+				<div class="container col-9 justify-content-center mt-5">
 					<form action="favoriteSearch" method="POST" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
 								<select name="search" class="form-select">
 									<option value="s_name">제목조회</option>
@@ -49,56 +50,63 @@
 						</div>	
 					</form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<c:choose>
-						<c:when test="${smallCode eq 2}">
-							<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>					
-						</c:when>			
-						<c:when test="${smallCode eq 3}">
-							<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode }&smallCode=${smallCode }'" type="button" class="btn btn-outline-secondary">등록</button>					
-						</c:when>			
-					</c:choose>
-				</div>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<c:choose>
+							<c:when test="${smallCode eq 2}">
+								<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode }&smallCode=${smallCode }'" 
+								id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>					
+							</c:when>			
+							<c:when test="${smallCode eq 3}">
+								<button onclick="location.href='../../integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode }&smallCode=${smallCode }'" 
+								id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>					
+							</c:when>			
+						</c:choose>
+					</div>
 				
-				<!-- Section3: Table -->		
-				<c:set var="num" value="${page.total-page.start+1 }"/>
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">제목</th>
-								<th scope="col">작성자</th>
-								<th scope="col">등록일</th>
-								<th scope="col">수정일</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="boards" items="${admin }">
-								<tr>
-									<td>${num }</td>
-									<c:choose>
-										<c:when test="${smallCode eq 6}">
-											<td>${boards.content }</td>
-										</c:when>
-										<c:otherwise>
-											<td>${boards.title }</td>
-										</c:otherwise>
-									</c:choose>
-									<td>${boards.name }</td>
-									<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
-									<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-									<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
-									<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
-								</tr>
-								<c:set var="num" value="${num - 1 }"/>
-							</c:forEach>
-						</tbody>
-					</table>
+					<!-- Section3: Table -->		
+					<c:set var="num" value="${page.total-page.start+1 }"/>
+					<div class="container table-container p-4">
+						<div class="table-responsive">
+							<table id="userTable" class="table table-md text-center p-3">
+								<thead>
+									<tr>
+										<th scope="col">순번</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">등록일</th>
+										<th scope="col">수정일</th>
+										<th scope="col">수정</th>
+										<th scope="col">삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="boards" items="${admin }">
+										<tr>
+											<td>${num }</td>
+											<c:choose>
+												<c:when test="${smallCode eq 6}">
+													<td>${boards.content }</td>
+												</c:when>
+												<c:otherwise>
+													<td>${boards.title }</td>
+												</c:otherwise>
+											</c:choose>
+											<td>${boards.name }</td>
+											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
+											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
+											<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
+											<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
+										</tr>
+										<c:set var="num" value="${num - 1 }"/>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 					
-					<nav aria-label="Page navigation example ">
+				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 					<c:choose>
 						<c:when test="${smallCode eq 2}">
@@ -160,9 +168,7 @@
 						</c:when>
 					</c:choose>
 					</ul>
-					</nav>
-					
-				</div>
+				</nav>	
 			</main>
 		</div>
 	</div>

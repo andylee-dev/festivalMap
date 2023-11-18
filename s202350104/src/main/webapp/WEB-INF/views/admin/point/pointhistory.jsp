@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원포인트내역</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -25,10 +26,10 @@
 				</div>
 				
 				<!-- Section2: Search Form -->
-				<div class="container col-9 justify-content-center my-5">
-					<form action="favoriteSearch" method="POST" container justify-content-center">	
+				<div class="container col-9 justify-content-center mt-5">
+					<form action="favoriteSearch" method="POST" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
 								<select name="search" class="form-select">
 									<option value="s_id">회원ID</option>
@@ -43,50 +44,55 @@
 						</div>	
 					</form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary ">등록</button>
-				</div>
+				
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-2">등록</button>
+					</div>
 					
-				<!-- Section3: Table -->	
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
-					<thead>
-						<tr>
-							<th scope="col">회원ID</th>
-							<th scope="col">포인트번호</th>
-							<th scope="col">포인트생성일</th>
-							<th scope="col">포인트삭제</th>
-						</tr>
-					</thead>
-						<c:forEach var="pointhistory" items="${listPointHistory}">
-						<tr>
-							<td>${pointhistory.user_id }</td>
-							<td>${pointhistory.point_id }</td>
-							<td><fmt:formatDate value="${pointhistory.created_at}" pattern="yyyy/MM/dd" /></td>
-							<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
-						</tr>
-						</c:forEach>
-					</table>
+					<!-- Section3: Table -->	
+					<div class="container table-container p-4">
+					<div class="table-responsive">
+						<table id="userTable" class="table table-md text-center p-3">
+							<thead>
+								<tr>
+									<th scope="col">회원ID</th>
+									<th scope="col">포인트번호</th>
+									<th scope="col">포인트생성일</th>
+									<th scope="col">포인트삭제</th>
+								</tr>
+							</thead>
+								<c:forEach var="pointhistory" items="${listPointHistory}">
+								<tr>
+									<td>${pointhistory.user_id }</td>
+									<td>${pointhistory.point_id }</td>
+									<td><fmt:formatDate value="${pointhistory.created_at}" pattern="yyyy/MM/dd" /></td>
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
+								</tr>
+								</c:forEach>
+						</table>
+					</div>
+					</div>
 				</div>
-					<nav aria-label="Page navigation example ">
-						<ul class="pagination">
-					    	<c:if test="${page.startPage > page.pageBlock}">
-							    <li class="page-item">
-						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
-						    	</li>
-					    	</c:if>
-						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							    <li class="page-item">
-									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-						    	</li>
-							</c:forEach>
-						    <c:if test="${page.endPage < page.totalPage}">
-							    <li class="page-item">
-							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
-						    	</li>
-						    </c:if>
-						</ul>
-					</nav>
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+					    <c:if test="${page.startPage > page.pageBlock}">
+							<li class="page-item">
+						    	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+						   	</li>
+					    </c:if>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+						    </li>
+						</c:forEach>
+						<c:if test="${page.endPage < page.totalPage}">
+							<li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
 			</main>
 		</div>
 	</div>

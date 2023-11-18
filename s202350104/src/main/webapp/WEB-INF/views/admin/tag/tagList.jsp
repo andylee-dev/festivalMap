@@ -47,50 +47,53 @@
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="container col-9 justify-content-center my-5">
+				<div class="container col-9 justify-content-center mt-5">
 					<form action="list" method="POST" class="container justify-content-center">
 						<!-- 검색어 -->
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
-							<div class="col-5 mx-2">
+							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+							<div class="col-6 mx-2">
 								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요.">
 							</div>
-							
-							<button type="submit" class="btn btn-primary col-1 mx-1">검색</button>
-							<button type="reset" class="btn btn-outline-secondary col-1 mx-1">초기화</button>
+							<div class="container col-10 d-flex justify-content-center">
+								<button type="submit" class="btn btn-primary col-1 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-1 mx-1">초기화</button>
+							</div>
 						</div>
-					</form>	
-				</div>		
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='insertTagsForm'">등록</button>
-				
-				</div>
-				<!-- Section3: Table -->		
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">태그명</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="tag" items="${listTags}" varStatus="st">
-								<tr id="tag${st.index}">
-									<td><input type="hidden" value="${tag.id}" id="id${st.index}">${num}</td>
-									<td>${tag.name}</td>
-									<td><input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="tagDelete(${st.index})"></td>
-								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
-					</table>
-					<p>총 건수 : ${totalTags}</p>
-				</div>		
+					</form>			
+					<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+						<div class="container d-flex justify-content-end p-0">
+							<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='insertTagsForm'">등록</button>
+						</div>
+						<!-- Section3: Table -->		
+						<div class="container table-container p-4">
+						<div class="table-responsive">
+							<table id="userTable" class="table table-md text-center p-3">
+								<thead>
+									<tr>
+										<th scope="col">순번</th>
+										<th scope="col">태그명</th>
+										<th scope="col">수정</th>
+										<th scope="col">삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:set var="num" value="${page.start}"/>
+									<c:forEach var="tag" items="${listTags}" varStatus="st">
+										<tr id="tag${st.index}">
+											<td><input type="hidden" value="${tag.id}" id="id${st.index}">${num}</td>
+											<td>${tag.name}</td>
+											<td><input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
+											<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="tagDelete(${st.index})"></td>
+										</tr>
+										<c:set var="num" value="${num + 1}"/>
+									</c:forEach>
+								</tbody>
+							</table>
+							<p>총 건수 : ${totalTags}</p>
+						</div>	
+					</div>
+				</div>	
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
