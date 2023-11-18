@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
@@ -119,15 +120,15 @@
 			<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-chat-dots-fill"></i>
-				<label  class="admin-header-title ">1:1 문의 </label>
+						<label  class="admin-header-title ">1:1 문의 </label>
 					</div>
 			</div>
 			<!-- Section2: Search Form -->		
-			<div class="container col-12 justify-content-center my-5">
+			<div class="container col-9 justify-content-center mt-5">
 				<form action="qna" method="POST" class="container justify-content-center">
 						<!-- 검색어 -->
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
 							<select name="searchType" name="searchType" class="form-select" >
 								<option selected value="name">사용자 이름</option>
@@ -144,17 +145,17 @@
 						   <label for="searchType" class="col-form-label col-2  mx-1">등록기간</label>
 						    <div class="col-6  mx-2 d-flex">
 						    	<input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off" >
-						    	<label class="btn mx-1" for="TO">오늘</label>
+						    	<label class="btn col-2 mx-1" for="TO">오늘</label>
 						    	<input type="radio" class="btn-check" name="dateOptions" id="1W" value="1W" autocomplete="off">
-						    	<label class="btn mx-1" for="1W">1주일</label>
+						    	<label class="btn col-2 mx-1" for="1W">1주일</label>
 						    	<input type="radio" class="btn-check" name="dateOptions" id="1M" value="1M" autocomplete="off">
-						    	<label class="btn mx-1" for="1M">1개월</label>
+						    	<label class="btn col-2 mx-1" for="1M">1개월</label>
 						    	<input type="radio" class="btn-check" name="dateOptions" id="3M" value="3M" autocomplete="off">
-						    	<label class="btn mx-1" for="3M">3개월</label>
+						    	<label class="btn col-2 mx-1" for="3M">3개월</label>
 						    	<input type="radio" class="btn-check" name="dateOptions" id="6M" value="6M" autocomplete="off">
-						    	<label class="btn mx-1" for="6M">6개월</label>
+						    	<label class="btn col-2 mx-1" for="6M">6개월</label>
 						    	<input type="radio" class="btn-check" name="dateOptions" id="ALL" value="ALL" autocomplete="off" checked>
-						    	<label class="btn mx-1" for="ALL">전체</label>
+						    	<label class="btn col-2 mx-1" for="ALL">전체</label>
 							
 								<div class="col-4 d-flex">
 									<input type="date" class="mx-1" id="startDatePicker" name="startDate" value="${startDate}">
@@ -182,8 +183,10 @@
 			</div>	
 			
 			<!-- Section3: Table -->		
-			<div class="container col-9 justify-content-center my-2 border p-2">
-					<table id="qnaTable" class="table table-striped table-sm text-center mb-3">
+			<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+				<div class="container table-container p-4">
+					<div class="table-responsive">	
+					<table id="userTable" class="table table-md text-center p-3">
 					<thead>
 						<tr>
 							<th scope="col">순번</th>
@@ -224,6 +227,8 @@
 					</tbody>
 				</table>
 				</div>
+			</div>
+		</div>
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">

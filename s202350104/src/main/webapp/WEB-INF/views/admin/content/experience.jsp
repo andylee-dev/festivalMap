@@ -8,6 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>experience content</title>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
@@ -84,10 +85,10 @@
 				</div>
 		
 				<!-- Section2: Search Form -->		
-				<div class="container col-9 justify-content-center my-5">
-						<form action="experience1" method="get">
+				<div class="container col-9 justify-content-center mt-5">
+						<form action="experience1" method="get" class="container justify-content-center">
 							<div class="col-12 my-4 d-flex align-items-center">
-								<label for="searchType" class="form-label col-2  mx-2">검색어</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 					               <div class="col-4">
 						              <select id="searchType" name="searchType" class="form-select">
 						              	<option value="" selected>체험명</option>
@@ -100,8 +101,8 @@
 				            </div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="form-label col-2  mx-2">분류</label>
-									<div class="col-2 align-self-center">
+				            	<label for="searchType" class="col-form-label col-1  mx-2">분류</label>
+									<div class="col-2 d-flex align-items-center">
 										<select name="small_code" class="form-select">
 											<option value="999">전체</option>
 											<c:forEach var="small" items="${listSmallCode}">
@@ -110,99 +111,103 @@
 										</select>
 									</div>
 									
-				            	<label for="searchType" class="form-label col-2  mx-2">지역</label>
-					            	<div class="col-2">
-										<select name="area" class="area-dropdown form-select"></select>
+									<div class="col-12 my-4 d-flex align-items-center">	
+				            			<label for="searchType" class="col-form-label col-1  mx-2">지역</label>
+					            			<div class="col-2 mx-2 d-flex align-items-center">
+												<select name="area" class="area-dropdown form-select"></select>
+											</div>
+											<div class="col-2 mx-2 d-flex align-items-center">
+												<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+											</div>		
 									</div>
-									<div class="col-1 mx-2 mt-3">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
-									</div>		
 							</div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-					            <label for="searchType" class="form-label col-2  mx-2">삭제여부</label>
-					            	<div class="col-2 align-self-center">
-						            	<select name="is_deleted" class="form-select">
-											<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
-											<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록체험</option>
-											<option value="1" ${is_deleted == 1 ? 'selected' : ''}>삭제체험</option>
-										</select>
-									</div>
-										
-								<label for="searchType" class="form-label col-2  mx-2">승인여부</label>
-									<div class="col-2 align-self-center">
+								<label for="searchType" class="col-form-label col-1  mx-2">승인여부</label>
+									<div class="col-2 d-flex align-items-center">
 										<select name="status" class="form-select">
 											<option value="2" ${status == 2 ? 'selected' : ''}>전체</option>
 											<option value="1" ${status == 1 ? 'selected' : ''}>활성화</option>
 											<option value="0" ${status == 0 ? 'selected' : ''}>비활성화</option>
 										</select>
-									</div>
+									</div>				            
+				            	
+					            <label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+					            	<div class="col-2 mx-2 d-flex align-items-center">
+						            	<select name="is_deleted" class="form-select">
+											<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
+											<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록체험</option>
+											<option value="1" ${is_deleted == 1 ? 'selected' : ''}>삭제체험</option>
+										</select>
+									</div>			
 							</div>
 							
 							<div class="container col-10 d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
 								<button type="reset" name="deleted" class="btn btn-outline-secondary col-2 mx-3">초기화</button><p>
 								<input type="hidden" name="big_code" value="15">
-							</div>
-							
-							
-							
+							</div>		
 						</form>
 				</div>		
 				
 				<!-- Section3: Table -->		
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='experienceInsertForm'">등록</button>
-				</div>	
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">테마</th>
-								<th scope="col">체험명</th>
-								<th scope="col">주소</th>
-								<th scope="col">작성자</th>
-								<th scope="col">신청일</th>
-								<th scope="col">승인여부</th>
-								<th scope="col">삭제여부</th>
-								<th scope="col">관리</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="experience" items="${listExperience}">
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='experienceInsertForm'">등록</button>
+					</div>	
+					<div class="container table-container p-4">
+					<div class="table-responsive">
+						<table id="userTable" class="table table-md text-center p-3">
+							<thead>
 								<tr>
-									<td>${num}</td>
-									<td>
-										<c:if test="${experience.small_code == 1}">자연</c:if>
-										<c:if test="${experience.small_code == 2}">전통</c:if>
-										<c:if test="${experience.small_code == 3}">산사</c:if>
-										<c:if test="${experience.small_code == 4}">이색</c:if>
-										<c:if test="${experience.small_code == 5}">레포츠</c:if>										
-									</td>
-									<td>${experience.title}</td>
-									<td>${experience.address}</td>
-									<td>${experience.user_id}</td>
-									<td><fmt:formatDate value="${experience.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
-									<td>
-										<c:if test="${experience.status == 0}">승인대기</c:if>
-										<c:if test="${experience.status == 1}">승인완료</c:if>
-										<!-- 승인반려됐을 경우 status -->
-									</td>
-									<td>
-										<c:if test="${experience.is_deleted == 0}">N</c:if>
-										<c:if test="${experience.is_deleted == 1}">Y</c:if>
-									</td>
-									<td>
-									<a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}" class="detail-link">관리</a>
-									</td>
+									<th scope="col">순번</th>
+									<th scope="col">테마</th>
+									<th scope="col">체험명</th>
+									<th scope="col">주소</th>
+									<th scope="col">작성자</th>
+									<th scope="col">신청일</th>
+									<th scope="col">승인여부</th>
+									<th scope="col">삭제여부</th>
+									<th scope="col">관리</th>
 								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
-					</table>					
+							</thead>
+							<tbody>
+								<c:set var="num" value="${page.start}"/>
+								<c:forEach var="experience" items="${listExperience}">
+									<tr>
+										<td>${num}</td>
+										<td>
+											<c:if test="${experience.small_code == 1}">자연</c:if>
+											<c:if test="${experience.small_code == 2}">전통</c:if>
+											<c:if test="${experience.small_code == 3}">산사</c:if>
+											<c:if test="${experience.small_code == 4}">이색</c:if>
+											<c:if test="${experience.small_code == 5}">레포츠</c:if>										
+										</td>
+										<td>${experience.title}</td>
+										<td>${experience.address}</td>
+										<td>${experience.user_id}</td>
+										<td><fmt:formatDate value="${experience.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
+										<td>
+											<c:if test="${experience.status == 0}">승인대기</c:if>
+											<c:if test="${experience.status == 1}">승인완료</c:if>
+											<!-- 승인반려됐을 경우 status -->
+										</td>
+										<td>
+											<c:if test="${experience.is_deleted == 0}">N</c:if>
+											<c:if test="${experience.is_deleted == 1}">Y</c:if>
+										</td>
+										<td>
+										<a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}" class="detail-link">관리</a>
+										</td>
+									</tr>
+									<c:set var="num" value="${num + 1}"/>
+								</c:forEach>
+							</tbody>
+						</table>					
+					</div>
+					</div>
 				</div>
+				
 					<nav aria-label="Page navigation example ">
 						<ul class="pagination">
 							<c:if test="${page.startPage > page.pageBlock}">

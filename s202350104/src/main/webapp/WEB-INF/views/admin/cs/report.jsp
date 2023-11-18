@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -17,14 +18,16 @@
 			<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-chat-dots-fill"></i>
-				<label class="admin-header-title ">신고리스트 </label>
+						<label class="admin-header-title ">신고리스트 </label>
 					</div>
 			</div>
-				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center mt-10 my-2 border p-2">
+			<!-- Section3: Table -->
+			<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-3">
+				<div class="container table-container p-4">
 				<h3><i class="bi bi-clipboard2-minus"></i>총 신고게시글 :${totalReport}&nbsp;&nbsp;
 					<i class="bi bi-exclamation-triangle-fill ml-10"></i>총 신고건수:${totalReportCount}</h3>
-					<table id="qnaTable" class="border table table-striped table-sm text-center mb-3">
+					<div class="table-responsive">
+					<table id="userTable" class="table table-md text-center p-3">
 					<thead>
 						<tr>
 							<th scope="col">게시판ID</th>
@@ -55,7 +58,9 @@
 						</c:forEach>
 					</tbody>
 					</table>
-				</div>	
+				</div>
+				</div>
+			</div>
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">

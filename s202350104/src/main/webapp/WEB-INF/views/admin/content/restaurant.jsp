@@ -68,10 +68,10 @@
 							</div>
 							
 							<div class="col-12 my-4 d-flex align-items-center">
-					            <label for="searchType" class="col-form-label col-1  mx-2">필터링</label>
+					            <label for="searchType" class="col-form-label col-1  mx-2">승인여부</label>
 					            	<div class="col-2 d-flex align-items-center">
 										<select name="status" id="status" class="form-select">
-											<option value="2">승인여부</option>
+											<option value="2">전체</option>
 											<option value="1" <c:if test="${status =='1'}">selected="selected"</c:if>>완료</option>
 											<option value="0" <c:if test="${status =='0'}">selected="selected"</c:if>>대기</option>
 										</select> 
@@ -80,7 +80,7 @@
 								<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="is_deleted" id="is_deleted" class="form-select">
-											<option value="2">삭제여부</option>
+											<option value="2">전체</option>
 											<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
 											<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
 										</select>
@@ -104,19 +104,19 @@
 					<div class="container d-flex justify-content-end p-0">
 						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" onclick="location.href='restaurantInsertForm'">등록</button>
 					</div>
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-bordered table-sm text-center mb-2">
+					<div class="container table-container p-4">
+					<div class="table-responsive">
+					<table id="userTable" class="table table-md text-center p-3">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
-								<th scope="col">테마</th>
+								<th scope="col">분류</th>
 								<th scope="col">음식점명</th>
 								<th scope="col">주소</th>
 								<th scope="col">메뉴</th>
 								<th scope="col">신청일</th>
 								<th scope="col">진행상황</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
+								<th scope="col">관리</th>
 								<th scope="col">삭제여부</th>
 							</tr>
 						</thead>
@@ -126,15 +126,20 @@
 								<tr>
 									<td>${num}</td>
 									<td>${restaurant.theme}</td>
-									<td><a href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">${restaurant.title}</a></td>
+							  <!-- 	<td><a href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">${restaurant.title}</a></td> -->
+									<td>${restaurant.title}</td>
 									<td>${restaurant.address}</td>
 									<td>${restaurant.menu}</td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
-						 				<c:if test="${restaurant.status == 0 }">대&emsp;기</c:if>
-										<c:if test="${restaurant.status == 1 }">완&emsp;료</c:if>
+						 			<!-- <c:if test="${restaurant.status == 0 }">대&emsp;기</c:if>
+										<c:if test="${restaurant.status == 1 }">완&emsp;료</c:if> -->
+										<c:if test="${restaurant.status == 0 }">대기</c:if>
+										<c:if test="${restaurant.status == 1 }">완료</c:if> 
 									</td>
-									<td><c:if test="${restaurant.status == 1 }">
+									<td><a class="detail-btn" 
+									href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">관리</a></td>
+							  <!-- <td><c:if test="${restaurant.status == 1 }">
 										<c:choose>
 											<c:when test="${restaurant.is_deleted == 0 }"><input type="button" value="수정" class="btn btn-primary" 
 											onclick="location.href='restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${page.currentPage}'"></c:when>
@@ -147,7 +152,8 @@
 											onclick="location.href='restaurantDelete?contentId=${restaurant.content_id}'"></c:when>
 											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
 										</c:choose>
-										</c:if></td>
+										</c:if></td> -->
+										
 									<td><c:if test="${restaurant.is_deleted ==1 }">Y</c:if></td>			
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
