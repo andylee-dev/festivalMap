@@ -48,7 +48,9 @@
 			                <label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 			                <div class="col-4">
 				                <select id="searchType" name="searchType" class="form-select">
-				                    <option selected value="">전체</option>
+				                    <option selected value="">코스명</option>
+				                    <option selected value="">지역</option>
+				                    <option selected value="">코스내용</option>
 				                </select>
 			                </div>
 			                <div class="col-5 mx-2">
