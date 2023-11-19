@@ -59,10 +59,10 @@
 		AND   u.small_code = 2
 		<if test="keyword != null and keyword != ''">
 			<choose>
-			 	<when test="search == 'tagname'">
+			 	<when test="searchType == 'tagname'">
 			 		AND t.name like '%' || #{keyword} || '%'
 			 	</when>
-			 	<when test="search == 'email'">
+			 	<when test="searchType == 'user_id'">
 			 		AND u.id like '%' || #{keyword} || '%' 
 			 	</when>
 			</choose>
@@ -74,6 +74,12 @@
 		FROM usertags u, tags t
 		WHERE u.tag_id = t.id
 		ORDER BY t.name
+	</select>
+	
+	<select id="nhUserTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   usertags
+		WHERE  tag_id = #{tagId}
 	</select>
 	
 	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
@@ -114,6 +120,12 @@
 		AND   bt.board_id = #{boardId}
 		ORDER BY t.name
 	</select>
+	
+	<select id="nhBoardTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   boardtags
+		WHERE  tag_id = #{tagId}
+	</select>
 		
 	<delete id="nhBoardTagsDelete" parameterType="Tags">
 		DELETE BoardTags 
@@ -140,6 +152,12 @@
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = #{contentId}
 		ORDER BY t.name
+	</select>
+	
+	<select id="nhContentTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   contenttags
+		WHERE  tag_id = #{tagId}
 	</select>
 	
 	<insert id="nhContentTagsInsert" parameterType="Tags">
@@ -170,6 +188,12 @@
 		WHERE ct.tag_id = t.id
 		AND   ct.course_id = #{courseId}
 		ORDER BY t.name
+	</select>
+	
+	<select id="nhCourseTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   coursetags
+		WHERE  tag_id = #{tagId}
 	</select>
 	
 	<insert id="nhCourseTagsInsert" parameterType="Tags">

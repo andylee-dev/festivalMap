@@ -54,7 +54,7 @@
 							<div class="col-2">
 								<select name="searchType" class="form-select">
 									<option value="tagname">태그명</option>
-									<option value="email">회원ID</option>
+									<option value="user_id">회원번호</option>
 								</select>
 							</div>
 							<div class="col-5 mx-2">

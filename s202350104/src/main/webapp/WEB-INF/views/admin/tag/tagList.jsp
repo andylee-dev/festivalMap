@@ -79,6 +79,10 @@
 								<tr>
 									<th scope="col">순번</th>
 									<th scope="col">태그명</th>
+									<th scope="col">회원태그</th>
+									<th scope="col">게시판태그</th>
+									<th scope="col">컨텐츠태그</th>
+									<th scope="col">코스태그</th>
 									<th scope="col">수정</th>
 									<th scope="col">삭제</th>
 								</tr>
@@ -89,6 +93,10 @@
 									<tr id="tag${st.index}">
 										<td><input type="hidden" value="${tag.id}" id="id${st.index}">${num}</td>
 										<td>${tag.name}</td>
+										<td>${tag.userCnt}</td>
+										<td>${tag.boardCnt}</td>
+										<td>${tag.contentCnt}</td>
+										<td>${tag.courseCnt}</td>
 										<td><input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
 										<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="tagDelete(${st.index})"></td>
 									</tr>
