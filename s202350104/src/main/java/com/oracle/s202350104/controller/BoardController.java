@@ -11,11 +11,14 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Banner;
@@ -350,10 +353,10 @@ public class BoardController {
 		return "board/boardDetail";
 
 	}
-
+	
 	// 이벤트,포토게시판 상세정보 Logic
 	@RequestMapping(value = "/photoEventBoardDetail")
-	public String photoBoardDetail(int id, int userId, Model model) {
+	public String photoBoardDetail(int id, int userId,Model model) {
 
 		log.info("BoardController boardContent boardId : {} ", id);
 		log.info("BoardController boardContent userId : {} ", userId);

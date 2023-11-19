@@ -34,6 +34,10 @@ public class ExperienceController {
 	private final BoardService boardService;
 	private final BannerService bannerService;
 	
+	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
+	 * by.엄민용
+	 */ 
+	
 	@RequestMapping(value = "experience")
 	public String experience(ExperienceContent experience,String currentPage, Model model) {
 		
