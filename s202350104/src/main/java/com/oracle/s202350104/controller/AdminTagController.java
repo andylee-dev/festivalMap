@@ -72,6 +72,14 @@ public class AdminTagController {
 			// 검색 조건에 맞는 전체 tags의 리스트를 가져와서 저장
 			List<Tags> listTags = ts.listTags(tags);
 			
+			for(Tags tag : listTags) {
+				int tagId = tag.getId();
+				tag.setUserCnt(ts.selectUserTagsCnt(tagId));
+				tag.setBoardCnt(ts.selectBoardTagsCnt(tagId));
+				tag.setContentCnt(ts.selectContentTagsCnt(tagId));
+				tag.setCourseCnt(ts.selectCourseTagsCnt(tagId));
+			}
+			
 			model.addAttribute("totalTags", totalTags);
 			model.addAttribute("listTags", listTags);
 			model.addAttribute("page", page);

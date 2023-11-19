@@ -563,7 +563,71 @@ public class TagsDaoImpl implements TagsDao {
 		return result;
 	}
 	
-	
+
+	// tagId에 해당하는 태그를 가지고 있는 user수 반환
+	@Override
+	public int selectUserTagsCnt(int tagId) {
+		int userTagsCnt = 0;
+		
+		try {
+			userTagsCnt = session.selectOne("nhUserTagsCount", tagId);
+			log.info("TagsDaoImpl selectUserTagsCnt => " + userTagsCnt);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl selectUserTagsCnt => " + e.getMessage());
+		}
+		
+		return userTagsCnt;
+	}
+
+	// tagId에 해당하는 태그를 가지고 있는 board수 반환
+	@Override
+	public int selectBoardTagsCnt(int tagId) {
+		int boardTagsCnt = 0;
+		
+		try {
+			boardTagsCnt = session.selectOne("nhBoardTagsCount", tagId);
+			log.info("TagsDaoImpl selectBoardTagsCnt => " + boardTagsCnt);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl selectBoardTagsCnt => " + e.getMessage());
+		}
+		
+		return boardTagsCnt;
+	}
+
+	// tagId에 해당하는 태그를 가지고 있는 content수 반환
+	@Override
+	public int selectContentTagsCnt(int tagId) {
+		int contentTagsCnt = 0;
+		
+		try {
+			contentTagsCnt = session.selectOne("nhContentTagsCount", tagId);
+			log.info("TagsDaoImpl selectContentTagsCnt => " + contentTagsCnt);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl selectContentTagsCnt => " + e.getMessage());
+		}
+		
+		return contentTagsCnt;
+	}
+
+	// tagId에 해당하는 태그를 가지고 있는 course수 반환
+	@Override
+	public int selectCourseTagsCnt(int tagId) {
+		int courseTagsCnt = 0;
+		
+		try {
+			courseTagsCnt = session.selectOne("nhCourseTagsCount", tagId);
+			log.info("TagsDaoImpl selectCourseTagsCnt => " + courseTagsCnt);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl selectCourseTagsCnt => " + e.getMessage());
+		}
+		
+		return courseTagsCnt;
+	}
+
 	
 	
 	

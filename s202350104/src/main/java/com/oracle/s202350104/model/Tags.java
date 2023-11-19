@@ -24,8 +24,14 @@ public class Tags {
 	private String tag_name;
 	
 	// 검색용
-	private String search;
+	private String searchType;
 	private String keyword;
 	private String ordering;
+	
+	// 통계용
+	private int userCnt;
+	private int boardCnt;
+	private int contentCnt;
+	private int courseCnt;
 
 }

@@ -201,6 +201,36 @@ public class TagsServiceImpl implements TagsService {
 		
 		return result;
 	}
+	
+
+	@Override
+	public int selectUserTagsCnt(int tagId) {
+		int result = td.selectUserTagsCnt(tagId);
+		
+		return result;
+	}
+
+	@Override
+	public int selectBoardTagsCnt(int tagId) {
+		int result = td.selectBoardTagsCnt(tagId);
+		
+		return result;
+	}
+
+	@Override
+	public int selectContentTagsCnt(int tagId) {
+		int result = td.selectContentTagsCnt(tagId);
+		
+		return result;
+	}
+
+	@Override
+	public int selectCourseTagsCnt(int tagId) {
+		int result = td.selectCourseTagsCnt(tagId);
+		
+		return result;
+	}
+
 
 	
 	
@@ -231,5 +261,5 @@ public class TagsServiceImpl implements TagsService {
 	 	
 	 	return deleteResult;
 	}
-
+	
 }

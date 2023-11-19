@@ -28,6 +28,10 @@ public interface TagsDao {
 	List<Tags> listCourseTags();
 	List<Tags> searchCourseTags(int courseId);
 	int updateCourseTags(int courseId, int[] finalTags);
+	int selectUserTagsCnt(int tagId);
+	int selectBoardTagsCnt(int tagId);
+	int selectContentTagsCnt(int tagId);
+	int selectCourseTagsCnt(int tagId);
 
 
 
