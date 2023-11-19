@@ -79,7 +79,16 @@
 			 		AND sigungu = #{sigungu}
 			 	</if>
 			 </if>
-			 ORDER BY content_id
+			 <if test="ordering != null and ordering != ''">
+			 	<choose>
+			 		<when test="ordering == 'o_readcount'">
+			 			ORDER BY c.readcount
+			 		</when>
+			 		<otherwise>
+			 			ORDER BY content_id
+			 		</otherwise>
+			 	</choose>
+			 </if>
 			 ) t
 		)
 		<if test="start != 0 and end != 0">

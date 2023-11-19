@@ -228,8 +228,12 @@
 								</td>
 							</tr>
 							<tr>
+								<th>우편번호</th>
+								<td><input type="text" name="postcode"></td>
+							</tr>
+							<tr>
 								<th>주소</th>
-								<td><%-- postcode & address --%></td>
+								<td><input type="text" name="address"></td>
 							</tr>
 							<tr>
 								<th>개요</th>

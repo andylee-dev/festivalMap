@@ -263,8 +263,12 @@
 								</td>
 							</tr>
 							<tr>
+								<th>우편번호</th>
+								<td><input type="text" name="postcode" value="${festival.postcode}"></td>
+							</tr>
+							<tr>
 								<th>주소</th>
-								<td><%-- postcode & address --%></td>
+								<td><input type="text" name="address" value="${festival.address}"></td>
 							</tr>
 							<tr>
 								<th>개요</th>
