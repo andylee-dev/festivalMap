@@ -255,6 +255,23 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return listTags;
 	}
+	
+	// course의 tags 정보들을 모두 가져옴
+	@Override
+	public List<Tags> listCourseTags() {
+		List<Tags> listTags = null;
+		
+		try {
+			
+			listTags = session.selectList("nhCourseTagsAll");
+			log.info("TagsDaoImpl listCourseTags() => " + listTags.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listCourseTags() => " + e.getMessage());
+		}
+		
+		return listTags;
+	}
 
 	// 파라미터로 들어온 boardId의 tags 정보들을 모두 가져와 list에 저장, 반환
 	@Override
@@ -264,10 +281,10 @@ public class TagsDaoImpl implements TagsDao {
 		try {
 			
 			listTags = session.selectList("nhBoardTagOne", boardId);
-			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
+			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 			
 		} catch(Exception e) {
-			log.info("TagsDaoImpl listContentTags() => " + e.getMessage());
+			log.info("TagsDaoImpl listBoardTags() => " + e.getMessage());
 		}
 		
 		return listTags;
@@ -421,7 +438,7 @@ public class TagsDaoImpl implements TagsDao {
 					log.info(delTag.getTag_id()+"result=>"+result);
 				}
 				
-			  // 기존에 태그 정보는 null이지만 폼으로 넘어온 태그 정보는 존재할 때, 즉 해당 게시글에 태그를 새롭게 입력했을 때	
+			  // 기존에 태그 정보는 null이지만 폼으로 넘어온 태그 정보는 존재할 때, 즉 해당 컨텐츠에 태그를 새롭게 입력했을 때	
 			} else if(oldTags == null && finalTags != null) {
 				for(int i = 0; i < finalTags.length; i++) {
 					Tags newTag = new Tags();
@@ -443,6 +460,110 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return result;
 	}
+	
+	// 파라미터인 courseId에 해당하는 Tags들을 모두 list에 저장, 반환
+	@Override
+	public List<Tags> searchCourseTags(int courseId) {
+		List<Tags> listTags = null;
+		
+		try {
+			
+			listTags = session.selectList("nhCourseTagOne", courseId);
+			log.info("TagsDaoImpl listCourseTags() => " + listTags.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listCourseTags() => " + e.getMessage());
+		}
+		
+		return listTags;
+	}
+	
+	// 폼을 통해 넘어온 tag 정보를 새롭게 courseTags 테이블에 insert, delete
+	@Override
+	public int updateCourseTags(int courseId, int[] finalTags) {
+		int result = 0;
+		// insert/delete를 여러 번 시행해야 할 수 있으므로 transaction 처리를 해줌 
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		
+		try {
+			// 해당 코스가 이미 가지고 있던(기존에 DB에 저장되어 있던) tag 정보들을 가져와 list에 저장
+			List<Tags> oldTags = session.selectList("nhCourseTagOne", courseId);
+			
+			// 기존에 태그 정보 존재, 폼으로 넘어온 태그 정보 존재할 때
+			if(oldTags != null && finalTags != null) {
+				// 폼으로 넘어온 태그가 기존 DB에 이미 존재하는 정보인지 아닌지 확인하는 작업
+				boolean isHere = false;
+				
+				for(Tags tag : oldTags) {
+					for(int i = 0; i < finalTags.length; i++) {
+						if(tag.getId() == finalTags[i]) {
+							isHere = true;	// 폼으로 넘어온 태그 정보가 DB에 이미 있던 태그일 때 true로 값 바꿈
+						}
+					}
+					// oldTags에는 존재하지만 finalTags에는 존재하지 않는 tag를 delete
+					if(!isHere) {
+						Tags delTag = new Tags();
+						delTag.setCourse_id(courseId);
+						delTag.setTag_id(tag.getId());
+						result = session.delete("nhCourseTagsDelete", delTag);
+						log.info(delTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				}
+				
+				// finalTags에만 존재하는 tag를 insert
+				for(int tagId : finalTags) {
+					for(int i = 0; i < oldTags.size(); i++) {
+						if(tagId == oldTags.get(i).getTag_id()) {
+							isHere = true;	// 폼으로 넘어온 태그가 DB에 없던 새로운 태그일 때 true로 값 변경
+						}
+					}
+					// oldTags에는 존재하지 않지만 finalTags에는 존재하는 tag를 insert
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setCourse_id(courseId);
+						newTag.setTag_id(tagId);
+						result = session.delete("nhCourseTagsInsert", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				} 
+				
+			  // 기존에 태그 정보는 존재하지만 폼으로 넘어온 태그 정보는 null일 때, 즉 태그를 전부 삭제했을 때
+			} else if(oldTags != null && finalTags == null) {
+				for(Tags tag : oldTags) {
+					Tags delTag = new Tags();
+					delTag.setCourse_id(courseId);
+					delTag.setTag_id(tag.getId());
+					result = session.delete("nhCourseTagsDelete", delTag);
+					log.info(delTag.getTag_id()+"result=>"+result);
+				}
+				
+			  // 기존에 태그 정보는 null이지만 폼으로 넘어온 태그 정보는 존재할 때, 즉 해당 코스에 태그를 새롭게 입력했을 때	
+			} else if(oldTags == null && finalTags != null) {
+				for(int i = 0; i < finalTags.length; i++) {
+					Tags newTag = new Tags();
+					newTag.setCourse_id(courseId);
+					newTag.setTag_id(finalTags[i]);
+					result = session.delete("nhCourseTagsInsert", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
+				}
+			  // DB에 저장되어있던 태그 정보도 없고, 새로 폼으로 들어온 태그 정보도 없을 때	
+			} else result = 0;
+			// 모든 작업 하나하나가 정상적으로 실행되면 commit
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			// 하나의 작업이라도 실패하면 rollback
+			transactionManager.rollback(txStatus);
+			log.info("TagsDaoImpl updateCourseTags => " + e.getMessage());
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	
 	
 	
 	
@@ -471,6 +592,5 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return deleteResult;
 	}
-
 
 }

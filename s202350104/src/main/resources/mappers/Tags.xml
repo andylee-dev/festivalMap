@@ -153,6 +153,36 @@
 			AND content_id = #{content_id}
 		</if>
 	</delete>
+	
+	<!-- COURSE TAGS -->
+	
+	<select id="nhCourseTagsAll" resultType="Tags">	
+		SELECT *
+		FROM　  CourseTags ct, Tags t, Courses c
+		WHERE ct.tag_id = t.id
+		AND   ct.course_id = c.id
+		ORDER BY t.name
+	</select>
+	
+	<select id="nhCourseTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM  CourseTags ct, Tags t
+		WHERE ct.tag_id = t.id
+		AND   ct.course_id = #{courseId}
+		ORDER BY t.name
+	</select>
+	
+	<insert id="nhCourseTagsInsert" parameterType="Tags">
+		INSERT INTO CourseTags(tag_id, course_id) VALUES(#{tag_id}, #{course_id})
+	</insert>
+	
+	<delete id="nhCourseTagsDelete" parameterType="Tags">
+		DELETE CourseTags 
+		WHERE tag_id = #{tag_id}
+		<if test="course_id != null and course_id != 0">
+			AND course_id = #{course_id}
+		</if>
+	</delete>
 
 
 

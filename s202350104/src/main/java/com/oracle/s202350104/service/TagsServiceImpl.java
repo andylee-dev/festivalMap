@@ -112,6 +112,29 @@ public class TagsServiceImpl implements TagsService {
 		
 		return listTags;
 	}
+	
+	@Override
+	public List<Tags> searchBoardTagsOne(int boardId) {
+		List<Tags> listTags = td.searchBoardTagsOne(boardId);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시판 태그가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+		
+	}
+	
+	@Override
+	public List<Tags> searchCourseTags(int courseId) {
+		List<Tags> listTags = td.searchCourseTags(courseId);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 태그가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
 
 	@Override
 	public List<Tags> listBoardTags(int smallCode) {
@@ -146,17 +169,16 @@ public class TagsServiceImpl implements TagsService {
 		
 		return listTags;
 	}
-
+	
 	@Override
-	public List<Tags> searchBoardTagsOne(int boardId) {
-		List<Tags> listTags = td.searchBoardTagsOne(boardId);
+	public List<Tags> listCourseTags() {
+		List<Tags> listTags = td.listCourseTags();
 		
 		if(listTags == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시판 태그가 존재하지 않습니다.");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 태그 리스트가 존재하지 않습니다.");
 		}
 		
 		return listTags;
-		
 	}
 	
 	@Override
@@ -172,6 +194,14 @@ public class TagsServiceImpl implements TagsService {
 		
 		return result;
 	}
+	
+	@Override
+	public int updateCourseTags(int courseId, int[] finalTags) {
+		int result = td.updateCourseTags(courseId, finalTags);
+		
+		return result;
+	}
+
 	
 	
 	

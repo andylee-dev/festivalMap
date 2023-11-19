@@ -22,5 +22,8 @@ public interface TagsService {
 	int boardTagDelete(int id);
 	int updateBoardTags(int boardId, int[] finalTags);
 	int updateContentTags(int contentId, int[] finalTags);
+	List<Tags> listCourseTags();
+	List<Tags> searchCourseTags(int courseId);
+	int updateCourseTags(int courseId, int[] finalTags);
 	
 }

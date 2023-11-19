@@ -19,6 +19,7 @@ import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Contents;
+import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
@@ -51,6 +52,7 @@ public class AdminTagController {
 	private final BoardService bs;
 	private final UserService us;
 	private final FestivalsService fs;
+	private final CourseService crs;
 	
 	// 전체 tag list 페이지로 이동하는 logic
 	@RequestMapping(value = "list")
@@ -58,7 +60,7 @@ public class AdminTagController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "tagList", "start");
+			log.info("[{}]{}:{}", transactionId, "tagList", "start");
 			// 검색 조건에 맞는 전체 tags의 데이터수를 저장
 			int totalTags = ts.totalTags(tags);
 			
@@ -74,9 +76,9 @@ public class AdminTagController {
 			model.addAttribute("listTags", listTags);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "tagList", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "tagList", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "tagList", "end");
+			log.info("[{}]{}:{}", transactionId, "tagList", "end");
 		}		
 		
 		return "admin/tag/tagList";
@@ -88,11 +90,11 @@ public class AdminTagController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "insertTagsForm", "start");
+			log.info("[{}]{}:{}", transactionId, "insertTagsForm", "start");
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "insertTagsForm", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "insertTagsForm", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "insertTagsForm", "end");
+			log.info("[{}]{}:{}", transactionId, "insertTagsForm", "end");
 		}		
 		
 		return "admin/tag/insertTagsForm";
@@ -105,13 +107,13 @@ public class AdminTagController {
 		int result = 0;
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "insertTagsResult", "start");
+			log.info("[{}]{}:{}", transactionId, "insertTagsResult", "start");
 			// tag를 insert한 결과를 반환(1이면 성공적으로 insert한 것)
 			result = ts.insertTags(tags);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "insertTagsResult", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "insertTagsResult", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "insertTagsResult", "end");
+			log.info("[{}]{}:{}", transactionId, "insertTagsResult", "end");
 		}	
 		
 		// result 값에 따라 넘어가는 페이지가 다름
@@ -132,14 +134,14 @@ public class AdminTagController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "updateTagsForm", "start");
+			log.info("[{}]{}:{}", transactionId, "updateTagsForm", "start");
 			// id에 해당하는 태그 정보를 찾아 저장
 			Tags tags = ts.selectTags(id);
 			model.addAttribute("tags", tags);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "updateTagsForm", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "updateTagsForm", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "updateTagsForm", "end");
+			log.info("[{}]{}:{}", transactionId, "updateTagsForm", "end");
 		}		
 		
 		return "admin/tag/updateTagsForm";
@@ -152,13 +154,13 @@ public class AdminTagController {
 		 int result = 0;
 		 
 		 try { 
-			 log.info("[{}]{}:{}",transactionId, "updateTagsResult", "start");
+			 log.info("[{}]{}:{}", transactionId, "updateTagsResult", "start");
 			 // tag 정보를 update한 결과값을 저장(1이면 성공적으로 update된 것)
 			 result = ts.updateTags(tags); 
 		 } catch (Exception e) {
-			 log.error("[{}]{}:{}",transactionId, "updateTagsResult", e.getMessage()); 
+			 log.error("[{}]{}:{}", transactionId, "updateTagsResult", e.getMessage()); 
 		 } finally { 
-			 log.info("[{}]{}:{}",transactionId, "updateTagsResult", "end"); 
+			 log.info("[{}]{}:{}", transactionId, "updateTagsResult", "end"); 
 		 }
 	  
 		 // result값에 따라 다른 페이지로 이동
@@ -189,7 +191,7 @@ public class AdminTagController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "userTagList", "start");
+			log.info("[{}]{}:{}", transactionId, "userTagList", "start");
 			user.setSmall_code(2);				  // 일반회원 small code 지정
 			int totalUsers = us.totalUsers(user); // 일반회원수만 반환
 			log.info("totalUsers => " + totalUsers);
@@ -206,9 +208,9 @@ public class AdminTagController {
 			model.addAttribute("listUsers", listUsers);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "userTagList", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "userTagList", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "userTagList", "end");
+			log.info("[{}]{}:{}", transactionId, "userTagList", "end");
 		}	
 		
 		return "admin/tag/userTag";
@@ -222,13 +224,13 @@ public class AdminTagController {
 		List<Tags> listTags = null;
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "getUserTags", "start");
+			log.info("[{}]{}:{}", transactionId, "getUserTags", "start");
 			Tags tags = new Tags();
 			listTags = ts.listUserTags(tags);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getUserTags", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "getUserTags", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "getUserTags", "end");
+			log.info("[{}]{}:{}", transactionId, "getUserTags", "end");
 		}	
 		
 		return listTags;
@@ -248,7 +250,7 @@ public class AdminTagController {
 		log.info("controller smallCode => " +smallCode);
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "boardTagList", "start");
+			log.info("[{}]{}:{}", transactionId, "boardTagList", "start");
 			
 			// smallCode에 해당하는 Board의 총 데이터 수를 저장
 			int totalBoard = bs.boardCount(smallCode);
@@ -274,9 +276,9 @@ public class AdminTagController {
 			model.addAttribute("listBoard", listBoard);
 			model.addAttribute("page", page);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "boardTagList", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "boardTagList", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "boardTagList", "end");
+			log.info("[{}]{}:{}", transactionId, "boardTagList", "end");
 		}		
 		
 		return "admin/tag/boardTag";
@@ -290,14 +292,14 @@ public class AdminTagController {
 		List<Tags> listTags = null;
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "getBoardTags", "start");
+			log.info("[{}]{}:{}", transactionId, "getBoardTags", "start");
 			int smallCode = Integer.parseInt(smallCodeStr);
 			log.info("smallCode=>" + smallCode);
 			listTags = ts.listBoardTags(smallCode);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getBoardTags", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "getBoardTags", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "getBoardTags", "end");
+			log.info("[{}]{}:{}", transactionId, "getBoardTags", "end");
 		}	
 		
 		return listTags;
@@ -316,7 +318,7 @@ public class AdminTagController {
 		}
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "start");
+			log.info("[{}]{}:{}", transactionId, "boardTagsUpdateForm", "start");
 			Board board = bs.boardDetail(boardId);
 			List<Tags> listMyTags = ts.searchBoardTagsOne(boardId);
 			
@@ -328,9 +330,9 @@ public class AdminTagController {
 			model.addAttribute("listMyTags", listMyTags);
 			model.addAttribute("listAllTags", listAllTags);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "boardTagsUpdateForm", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "boardTagsUpdateForm", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "boardTagsUpdateForm", "end");
+			log.info("[{}]{}:{}", transactionId, "boardTagsUpdateForm", "end");
 		}	
 		
 		return "admin/tag/boardTagsUpdateForm";
@@ -451,7 +453,7 @@ public class AdminTagController {
 		String str = "";
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "start");
+			log.info("[{}]{}:{}", transactionId, "contentTagsUpdate", "start");
 			int result = ts.updateContentTags(contentId, finalTags); 
 			// 결과값에 따라 다른 메세지 반환
 			if(result == 1) { 
@@ -462,9 +464,9 @@ public class AdminTagController {
 			log.info("finalTags"+finalTags);
 			log.info("contentId"+contentId);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "contentTagsUpdate", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "contentTagsUpdate", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "contentTagsUpdate", "end");
+			log.info("[{}]{}:{}", transactionId, "contentTagsUpdate", "end");
 		}	
 		
 		return str;
@@ -478,17 +480,134 @@ public class AdminTagController {
 		List<Tags> listTags = null;
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "getContentTags", "start");
+			log.info("[{}]{}:{}", transactionId, "getContentTags", "start");
 			int bigCode = Integer.parseInt(bigCodeStr);
 			log.info("bigCode=>" + bigCode);
 			listTags = ts.listContentTags(bigCode);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "getContentTags", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "getContentTags", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "getContentTags", "end");
+			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
 		}
 		
 		return listTags;
+	}
+	
+	// 코스 태그 관리 페이지로 이동하기 위한 logic
+	@RequestMapping(value = "courseTag")
+	public String courseTagList(Course course, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+			
+		try {
+			log.info("[{}]{}:{}", transactionId, "contentTagList", "start");
+				
+			// 전체 코스 수 조회 => 추후 검색 조건 설정
+			int totalCourses = crs.courseCount();
+				
+			// 페이징 처리
+			PagingList page = new PagingList(totalCourses, currentPage);
+			course.setStart(page.getStart());
+			course.setEnd(page.getEnd());
+				
+			// 전체 코스 리스트 조회 => 추후 검색 조건 설정
+			List<Course> listCourse = crs.courseList(course);
+
+			log.info("controller listCourse => " +listCourse.size());
+			log.info("totalCourses => " +totalCourses);
+				
+			model.addAttribute("totalCourses", totalCourses);
+			model.addAttribute("listCourse", listCourse);
+			model.addAttribute("page", page);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "contentTagList", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "contentTagList", "end");
+		}	
+			
+		return "admin/tag/courseTag";
+	}
+	
+	// 코스 태그 리스트를 전부 가져오기 위한 logic(AJAX 연결) => 추후 small_code에 맞게 가져올 수 있도록 수정 예정
+	@ResponseBody
+	@RequestMapping(value = "getCourseTags")
+	public List<Tags> getCourseTags(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> listTags = null;
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "getCourseTags", "start");
+			listTags = ts.listCourseTags();
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "getCourseTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "getCourseTags", "end");
+		}
+		
+		return listTags;
+	}
+	
+	// 코스 태그 수정폼으로 이동하는 logic
+	@RequestMapping(value = "courseTagsUpdateForm")
+	public String courseTagsUpdate(String courseIdStr, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		// String으로 받은 contentId를 int형으로 변환
+		int courseId = 0;
+		if(courseIdStr == null || courseIdStr == "") {
+			courseId = 0;
+		} else {
+			courseId = Integer.parseInt(courseIdStr);
+		}
+			
+		try {
+			 log.info("[{}]{}:{}", transactionId, "courseTagsUpdateForm", "start");
+			
+			 // 수정할 코스의 상세정보 저장
+			 // Course course = crs.courseDetail(courseId);
+			 List<Tags> listMyTags = ts.searchCourseTags(courseId); 
+				 
+			 // 전체 태그 리스트 저장
+			 Tags tags = new Tags(); 
+			 List<Tags> listAllTags = ts.listTags(tags);
+				  
+			 model.addAttribute("courseId", courseId);
+			 model.addAttribute("currentPage", currentPage); 
+			 // model.addAttribute("course", course); 
+			 model.addAttribute("listMyTags", listMyTags);
+			 model.addAttribute("listAllTags", listAllTags);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "courseTagsUpdateForm", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "courseTagsUpdateForm", "end");
+		}	
+			
+		return "admin/tag/courseTagsUpdateForm";
+	}
+		
+	// 코스 태그를 수정하고 결과 메세지를 반환하는 logic(AJAX 연결)
+	@ResponseBody
+	@RequestMapping(value = "courseTagsUpdate")
+	public String courseTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int courseId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		String str = "";
+			
+		try {
+			log.info("[{}]{}:{}", transactionId, "courseTagsUpdate", "start");
+			int result = ts.updateCourseTags(courseId, finalTags); 
+			// 결과값에 따라 다른 메세지 반환
+			if(result == 1) { 
+				str = "태그 수정이 성공적으로 완료되었습니다."; 
+			} else { 
+				str = "태그 수정에 실패하였습니다."; 
+			}
+			log.info("finalTags"+finalTags);
+			log.info("courseId"+courseId);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "courseTagsUpdate", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "courseTagsUpdate", "end");
+		}	
+			
+		return str;
 	}
 	
 }

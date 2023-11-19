@@ -30,12 +30,12 @@ public class TagsController {
 		List<Tags> contentTags = null;
 		
 		try {
-			log.info("[{}]{}:{}", transactionId, "getContentTags", "start");
+			log.info("[{}]{}:{}", transactionId, "getMyContentTags", "start");
 			contentTags = ts.searchContentTags(contentId);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "getContentTags", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "getMyContentTags", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
+			log.info("[{}]{}:{}", transactionId, "getMyContentTags", "end");
 		}
 		
 		return contentTags;
@@ -49,15 +49,34 @@ public class TagsController {
 		List<Tags> boardTags = null;
 		
 		try {
-			log.info("[{}]{}:{}", transactionId, "getContentTags", "start");
+			log.info("[{}]{}:{}", transactionId, "getMyBoardTags", "start");
 			boardTags = ts.searchBoardTagsOne(boardId);
 		} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "getContentTags", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "getMyBoardTags", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}", transactionId, "getContentTags", "end");
+			log.info("[{}]{}:{}", transactionId, "getMyBoardTags", "end");
 		}
 		
 		return boardTags;
+	}
+	
+	// 하나의 코스가 가진 tag들을 모두 불러와 view단으로 넘기는 logic(courseTags)
+	@ResponseBody
+	@RequestMapping(value = "/getMyCourseTags")
+	public List<Tags> getMyCourseTags(int courseId) {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> courseTags = null;
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "getMyCourseTags", "start");
+			courseTags = ts.searchCourseTags(courseId);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "getMyCourseTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "getMyCourseTags", "end");
+		}
+		
+		return courseTags;
 	}
 	
 	// 검색 조건에 따라 해당하는 전체 태그 리스트를 불러오는 logic(AJAX 연결)

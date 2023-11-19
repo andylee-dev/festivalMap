@@ -74,7 +74,7 @@
 				
 				<!-- Section3: Table -->		
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
-					<div class="container d-flex justify-content-start p-0">
+					<div class="container col-10 d-flex justify-content-center p-0">
 						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
 						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
 						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>

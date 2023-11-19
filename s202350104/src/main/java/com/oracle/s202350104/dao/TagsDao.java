@@ -18,7 +18,6 @@ public interface TagsDao {
 	List<Tags> searchContentTags(int contentId);
 	List<Tags> listBoardTags(int smallCode);
 	List<Tags> listUserTags(Tags tags);
-
 	List<Tags> listContentTags(int bigCode);
 	List<Tags> searchBoardTagsOne(int boardId);
 	void boardTagsInsert(Tags tags);
@@ -26,6 +25,9 @@ public interface TagsDao {
 	int boardTagDelete(int id);
 	int updateBoardTags(int boardId, int[] finalTags);
 	int updateContentTags(int contentId, int[] finalTags);
+	List<Tags> listCourseTags();
+	List<Tags> searchCourseTags(int courseId);
+	int updateCourseTags(int courseId, int[] finalTags);
 
 
 
