@@ -112,7 +112,7 @@
 										<th scope="col">주최자</th>
 										<th scope="col">등록일</th>
 										<th scope="col">승인여부</th>
-										<th scope="col">삭제여부</th>
+										<th scope="col">게시</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
@@ -126,7 +126,7 @@
 											<td>${festival.area_content} ${festival.sigungu_content}</td>
 											<td>${festival.title}</td>
 											<td>${festival.sponsor}</td>
-											<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td> <!-- 신청일 컬럼?? -->
+											<td><fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/></td>
 											<td>
 												<c:if test="${festival.status == 0}">승인대기</c:if>
 												<c:if test="${festival.status == 1}">승인완료</c:if>
