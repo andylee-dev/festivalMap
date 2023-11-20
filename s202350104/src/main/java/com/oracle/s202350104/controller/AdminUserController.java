@@ -17,8 +17,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.oracle.s202350104.configuration.Role;
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Favorite;
+import com.oracle.s202350104.model.History;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.FavoriteService;
+import com.oracle.s202350104.service.HistoryService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.user.UserService;
 
@@ -33,6 +35,7 @@ public class AdminUserController {
 
 	private final UserService us;
 	private final FavoriteService fas;
+	private final HistoryService hs;
 
 	@RequestMapping(value = "userList")
 	public String userList(Model model, Users user, String currentPage ) {
@@ -81,7 +84,14 @@ public class AdminUserController {
 			if(listUsers == null) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 리스트가 존재하지 않습니다.");
 			}
+			
+			History pHistory = new History();
+			pHistory.setBig_code(user.getBig_code());
+			pHistory.setTarget_id(user.getId());
+			History history = hs.getLatestHistory(pHistory);
+
 			model.addAttribute("listUsers", listUsers);
+			model.addAttribute("history", history);
 			model.addAttribute("page", page);
 			model.addAttribute("searchOption",user);
 		} catch (Exception e) {
@@ -99,6 +109,16 @@ public class AdminUserController {
 			log.info("[{}]{}:{}",transactionId, "userDetail", "start");	
 			Users user = us.getUserById(id)
 			  .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+			log.info("user : {}", user);
+			
+			History pHistory = new History();
+			pHistory.setBig_code(user.getBig_code());
+			pHistory.setTarget_id(user.getId());
+			History history = hs.getLatestHistory(pHistory);
+			if( history != null) {
+				log.info("history : {}", history);				
+			}
+			model.addAttribute("history", history);
 			model.addAttribute("user", user);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "userDetail", e.getMessage());
@@ -127,28 +147,39 @@ public class AdminUserController {
     }
 	
 	@RequestMapping("/updateUser")
-    public String updateUser( Users user, Model model) {
+    public String updateUser( Users user,History history, Model model) {
         String url = "";
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "updateUser", "start");	
 			log.info("user:{}",user.toString());
-			us.updateUser(user);
+			int result = us.updateUser(user);
+			if(result  == 1) {
+				log.info("history:{}",history.toString());
+				if(history.getTitle() != null && history.getTitle() != "") {
+					int hsResult = hs.insertHistory(history);
+					log.info("history insert result:{}",hsResult);
+				}
+			}
+			log.info("result : {}",result);
 			model.addAttribute("user", user);
+			
 
 			/* 1:ADMIN 2:USER 3:BIZ */
-			switch (us.getLoggedInUserRole()) {
+			int role = us.getLoggedInUserRole();
+			log.info("role:{}",role);
+			switch (role) {
 				case 1: 
-					
+					url ="/admin/user/userDetail/"+user.getId();
 					break;
 				case 2: 
 					url= "/user/myPage";
 					break;
 				case 3:
-					
 					break;
 	
 				default:
+					url ="/admin/user/userDetail/"+user.getId();
 					break;
 			}
 			

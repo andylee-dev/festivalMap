@@ -33,4 +33,9 @@ public class HistoryDaoImpl implements HistoryDao {
 		return result;
 	}
 
+	@Override
+	public History getLatestHistory(History history) {
+		return session.selectOne("getLatestHistory",history);
+	}
+
 }

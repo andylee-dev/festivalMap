@@ -28,4 +28,9 @@ public class HistoryServiceImpl implements HistoryService {
 		return result;
 	}
 
+	@Override
+	public History getLatestHistory(History history) {
+		return hd.getLatestHistory(history);
+	}
+
 }
