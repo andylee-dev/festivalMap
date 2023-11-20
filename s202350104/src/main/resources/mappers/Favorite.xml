@@ -89,4 +89,25 @@
 		AND    id = #{id}
     </delete>
     
+    <delete id="joDeleteFavorite" parameterType="favorite">
+		DELETE FROM favorite 
+		WHERE  user_id = #{user_id} 
+		AND    id = #{id}
+    </delete>
+    
+    <select id="joDetailFavorite" parameterType="Favorite" resultType="Favorite">
+		SELECT f.*, u.name
+		FROM 	users u, (
+							SELECT *
+							FROM   favorite f  
+							WHERE  f.user_id = #{user_id} AND f.id = #{id} ) f
+		WHERE u.id = f.user_id		
+    </select>
+    
+    <update id="joUpdateFavorite" parameterType="Favorite">
+		UPDATE favorite
+		SET    create_at = #{create_at}
+		WHERE  user_id = #{user_id}
+	</update>
+    
 </mapper>

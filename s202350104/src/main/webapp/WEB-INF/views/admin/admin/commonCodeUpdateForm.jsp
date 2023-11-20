@@ -24,15 +24,15 @@
 					
 					<!-- Section2: Table -->		
 					<div class="border p-3 m-3">
-						<form action="commonCode/insert" method="post">
+						<form action="commonCodeUpdate" method="post">
 							<table class="table table-striped table-sm">
 								<tr>
 									<th>대분류</th>
-									<td><input type="number" name="big_code" required="required" value="${commonCode.big_code}"></td>	
+									<td>${commonCode.big_code}<input type="hidden" name="big_code" required="required" value="${commonCode.big_code}"></td>
 								</tr>
 								<tr>
 									<th>소분류</th>
-									<td><input type="number" name="samll_code" required="required" value="${commonCode.small_code}"></td>
+									<td>${commonCodes.small_code}<input type="hidden" name="samll_code" required="required" value="${commonCode.small_code}"></td>
 								</tr>
 								<tr>
 									<th>내용</th>

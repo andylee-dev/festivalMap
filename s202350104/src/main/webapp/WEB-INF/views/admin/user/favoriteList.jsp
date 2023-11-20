@@ -65,8 +65,8 @@
 									<td>${favorite.name}</td>
 									<td>${favorite.id}</td>
 									<td><fmt:formatDate value="${favorite.create_at}" type="date" pattern="YY/MM/dd"/></td>
-									<td><input class="btn btn-primary" type="button" value="수정"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
+									<td><input class="btn btn-primary" type="button" value="수정" onclick="location.href='favoriteUpdateForm?user_id=${favorite.user_id}&id=${favorite.id}'"></td>
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="location.href='favoriteDelete?user_id=${favorite.user_id}&id=${favorite.id}'"></td>
 								</tr>
 							</c:forEach>
 						</tbody>

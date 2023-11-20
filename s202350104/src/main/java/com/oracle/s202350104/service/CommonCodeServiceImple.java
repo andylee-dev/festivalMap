@@ -89,5 +89,17 @@ public class CommonCodeServiceImple implements CommonCodeService {
 	}
 
 
+	@Override
+	public int updateCommonCode(CommonCodes commonCode) {
+		int result = 0;
+		result = cd.updateCommonCode(commonCode);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "공통코드 정보 수정에 실패하였습니다.");
+		}
+		return result;
+	}
+
+
 	
 }

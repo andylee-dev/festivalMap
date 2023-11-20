@@ -133,4 +133,50 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		return result;
 	}
 
+	@Override
+	public int deleteFavorite(Favorite favorite) {
+		int result = 0;
+		
+		try {
+			log.info("FavaoriteDaoImpl deleteFavorite Start");
+			result = session.delete("joDeleteFavorite", favorite);
+			log.info("FavaoriteDaoImpl deleteFavorite -> {}", result);
+		} catch (Exception e) {
+			log.info("FavaoriteDaoImpl deleteFavorite Exception ->" + e.getMessage());
+		}
+		return result;
+	}
+	
+	
+	@Override
+	public Favorite detailFavorite(Favorite favorite) {
+		Favorite detailFavorite = null;
+		
+		try {
+			log.info("FavaoriteDaoImpl detailFavorite Start");
+			detailFavorite = session.selectOne("joDetailFavorite", favorite);
+			
+		} catch (Exception e) {
+			log.info("FavaoriteDaoImpl detailFavorite Exception ->" + e.getMessage());
+		}
+		return detailFavorite;
+	}
+
+	
+	@Override
+	public int updateFavortie(Favorite favorite) {
+		int result = 0;
+		
+		try {
+			log.info("FavoriteDaoImpl updateFavorite Start");
+			result = session.update("joUpdateFavorite", favorite);
+			log.info("FavoriteDaoImpl updateFavorite result -> {}", result);
+			
+		} catch (Exception e) {
+			log.error("FavoriteDaoImpl updateFavorite Exception ->", e.getMessage());
+		}
+		
+		return result;
+	}
+
 }

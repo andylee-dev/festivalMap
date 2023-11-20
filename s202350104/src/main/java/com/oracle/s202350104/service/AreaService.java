@@ -16,5 +16,7 @@ public interface AreaService {
 	int         insertArea(Areas area);
 	int         deleteAreaCode(Areas area);
 	Areas       detailAreaCode(Areas area);
+	int         updateAreaCode(Areas area);
+
 }
 	

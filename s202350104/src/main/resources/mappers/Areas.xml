@@ -84,4 +84,10 @@
 		WHERE  area = #{area} AND sigungu = #{sigungu}
 	</select>
 	
+	<update id="joUpdateAreaCode" parameterType="Areas">
+		UPDATE areas 
+		SET    content = #{content}
+		WHERE  area = #{area} AND sigungu = #{sigungu}
+	</update>
+	
 </mapper>

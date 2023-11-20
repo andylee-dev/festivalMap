@@ -98,4 +98,39 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return result;
 	}
 
+	@Override
+	public int deleteFavorite(Favorite favorite) {
+		int result = 0;
+		result = fad.deleteFavorite(favorite);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록 업데이트 삭제를 실패하였습니다.");
+		}
+		return result;
+	}
+
+	@Override
+	public Favorite detailFavorite(Favorite favorite) {
+		Favorite detailFavorite = null;
+		detailFavorite = fad.detailFavorite(favorite);
+		
+		if(detailFavorite == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜관리 상세내용이 존재하지 않습니다.");
+		}
+		
+		return detailFavorite;
+	}
+
+	@Override
+	public int updateFavorite(Favorite favorite) {
+		int result = 0;
+		result = fad.updateFavortie(favorite);
+		
+		if(result <= 0 ) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록의 정보수정을 실패하였습니다");
+		}
+		return result;
+	}
+
+	
 }

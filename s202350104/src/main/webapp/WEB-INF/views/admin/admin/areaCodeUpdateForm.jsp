@@ -24,15 +24,15 @@
 					
 					<!-- Section2: Table -->		
 					<div class="border p-3 m-3">
-						<form action="areaCodeUpdaete" method="post">
+						<form action="areaCodeUpdate" method="post">
 							<table class="table table-striped table-sm">
 								<tr>
 									<th>대분류</th>
-									<td><input type="number" name="area" required="required" value="${areaCode.area}"></td>	
+									<td>${areaCode.area}<input type="hidden" name="area" value="${areaCode.area}"></td>
 								</tr>
 								<tr>
 									<th>소분류</th>
-									<td><input type="number" name="sigungu" required="required" value="${areaCode.sigungu}"></td>
+									<td>${areaCode.sigungu}<input type="hidden" name="sigungu" value="${areaCode.sigungu}"></td>
 								</tr>
 								<tr>
 									<th>내용</th>

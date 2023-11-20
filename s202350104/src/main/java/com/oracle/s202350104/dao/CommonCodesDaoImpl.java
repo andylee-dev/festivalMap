@@ -102,7 +102,7 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 	
 	 @Override
 	public int deleteCommonCode(CommonCodes commonCode) {
-		 int result = 0;
+		int result = 0;
 		try {
 		 	log.info("CommonCodeDaoImpl deletecommonCode start");
 		 	result = session.delete("joDeleteCommonCode", commonCode);
@@ -130,5 +130,22 @@ public class CommonCodesDaoImpl implements CommonCodesDao {
 		 }
 		
 		 return detailCommonCode;
+	}
+
+
+
+	@Override
+	public int updateCommonCode(CommonCodes commonCode) {
+		int result = 0;
+		try {
+		 	log.info("CommonCodeDaoImpl updateCommonCode start");
+		 	result = session.delete("joUpdateCommonCode", commonCode);
+		 	log.info("CommonCodeDaoImpl updateCommonCode result ->" + result);
+		
+		 } catch (Exception e) {
+		 	log.error("CommonCodeDaoImpl updateCommonCode Exception ->" + e.getMessage());
+		 }
+		
+		 return result;
 	}
 }

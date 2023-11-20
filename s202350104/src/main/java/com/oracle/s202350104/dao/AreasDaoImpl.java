@@ -151,4 +151,21 @@ public class AreasDaoImpl implements AreasDao {
 		}
 		return areaCode;
 	}
+
+
+	@Override
+	public int updateAreaCode(Areas area) {
+		int result = 0;
+		
+		try {
+			log.info("AreaDaoImpl updateAreaCode Start");
+			result = session.update("joUpdateAreaCode", area);
+			log.info("AreaDaoImpl updateAreaCode reulst -> {}" + result);
+		} catch (Exception e) {
+			log.error("AreasDaoImpl updateAreaCode Exception ->" + e.getMessage());
+		}
+		return result;
+	}
+	
+	
 }
