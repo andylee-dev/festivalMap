@@ -26,6 +26,7 @@
 						if(data == '1'){
 							
 							alert("성공적으로 삭제 되었습니다.")
+							location.href='qna'
 						}else{
 							alert("삭제되지않았습니다.다시 시도하세요")
 						}
@@ -52,7 +53,7 @@
 			<div class="container my-5">
 				<h1>1:1 문의</h1>
 				<hr class="hr" />
-				<h3 style="color: #FF4379" class="container col-9 justify-content-center align-items-center">내역</h3>
+				<h3 style="color: #FF4379" class="container col-9 justify-content-center align-items-center">문의</h3>
 				<c:if test="${msg != null}">${msg}</c:if>
 				<form action="qnaUpdateResult" method="post">
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
@@ -65,7 +66,7 @@
 							</div>
 							<div class="mb-3 ">
 						  		<label for="content_id" class="form-label">내용:</label>
-						  		<textarea class="form-control" name="question_title" rows="5" readonly>${qna.question_content}</textarea>
+						  		<textarea class="form-control" name="question_content" rows="5" readonly>${qna.question_content}</textarea>
 							</div>
 						</div>
 					</div>
