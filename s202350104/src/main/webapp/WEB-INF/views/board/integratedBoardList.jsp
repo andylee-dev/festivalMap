@@ -141,7 +141,7 @@
 		<!-- 목록 출력 영역 -->
 		<div class="container p-3 list_container_custom">
 			<c:forEach var="boards" items="${board }">
-				<div class="row row-cols-5 align-items-center list_custom">
+				<div class="row row-cols-5 align-items-center list-board-custom">
 					<!-- 글번호 Date -->		
 					<div class="col-md-1">${num }</div>
 					<c:set var="num" value="${num -1 }"/>	
@@ -149,7 +149,19 @@
 					<!-- 게시판 제목 -->
 					<div class="col-md-6">
 						<c:if test="${boards.comment_indent > 0 }"></c:if>
-						<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
+						<c:choose>
+							<c:when test="${boards.small_code eq 3 }">
+ 								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
+							</c:when>
+							<c:otherwise>
+								<p class="d-inline-flex gap-1 coll-btn-custom m-0">
+								  <button class="btn mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#contentCall${boards.id }"
+								  		  aria-expanded="false" aria-controls="collapseExample">
+								    ${boards.title }
+								  </button>
+								</p>							
+							</c:otherwise>
+						</c:choose>
 					</div>
 					
 					<!-- 게시물 작성자 -->
@@ -162,9 +174,14 @@
 					</div>
 					
 					<!-- 게시물 조회수 -->
-					<div class="col-md-1">${boards.read_count }</div>				
-					
-				</div>	
+					<div class="col-md-1">${boards.read_count }</div>
+				</div>
+				
+				<div class="collapse list-coll-custom" id="contentCall${boards.id }">
+					<div class="card card-body list-content-custom border-0">
+						<p>${boards.content }</p>
+					</div>
+				</div>
 			</c:forEach>
 		</div>		
 		

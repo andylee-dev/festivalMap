@@ -15,13 +15,13 @@ a {
 }
 
 .header_title_custom h1 {
-	font-size: 60px;
+	font-size: 56px;
 }
 
 /* 중간네비게이션 css */
 .md_nav_custom {
 	text-align: center;
-	font-size: 34px;
+	font-size: 30px;
 	font-weight: bolder;
 	border-top: 3px solid black;
 	border-bottom: 3px solid black;
@@ -105,17 +105,47 @@ a {
 	background-color: #FF4379;
 	text-align: center;
 	color: white;
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: bold;
 }
 
-.list_custom {
+.list-board-custom {
 	text-align: center;
-	font-size: 26px;
+	font-size: 22px;
 	font-weight: bold;
-	border-bottom: 3px solid #747474;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	border-bottom: 2px solid #747474;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.list-board-custom .coll-btn-custom {
+
+}
+
+.list-board-custom .coll-btn-custom button{
+	width: 640px;
+	height: 40px;
+	background-color: transparent;
+	color: black;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	border: 0px;
+}
+
+.list-coll-custom {
+	width: 90%;
+	margin-left: 90px;
+	margin-top: 6px;
+	margin-bottom: 100px;
+}
+
+.list-content-custom p{
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	margin-bottom: 0px;
+	border: 0px;
 }
 
 /* 포토게시판, 이벤트 */

@@ -154,100 +154,106 @@
 			</div>
 		</div>
 		
-		<!-- 댓글 출력 -->
-		<div class="container p-3 comment-custom border">
-			<div class="row row-cols-1 align-items-start">
-				<div class="col">				
-					<!-- input 영역 -->
-					<div class="container p-0">
-						<form action="commentInsert" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="id" value="${board.id }"> 
-							<input type="hidden" name="name" value="${board.name }"> 
-							<input type="hidden" name="user_id" value="${userId }"> 
-							<input type="hidden" name="big_code" value="${board.big_code }">
-							<input type="hidden" name="small_code" value="${board.small_code }"> 
-							<input type="hidden" name="comment_group_id" value="${board.comment_group_id }">
-							<input type="hidden" name="comment_step" value="${board.comment_step }"> 
-							<input type="hidden" name="comment_indent" value="${board.comment_indent }">
-
-							<div class="row row-cols-3 p-0">
-								<div class="form-group col comment-title">
-									<p>댓글작성자닉네임</p>
+		<c:choose>
+			<c:when test="${board.small_code eq 3 }">
+			<!-- 댓글 출력 -->
+			<div class="container p-3 comment-custom border">
+				<div class="row row-cols-1 align-items-start">
+					<div class="col">				
+						<!-- input 영역 -->
+						<div class="container p-0">
+							<form action="commentInsert" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="id" value="${board.id }"> 
+								<input type="hidden" name="name" value="${board.name }"> 
+								<input type="hidden" name="user_id" value="${userId }"> 
+								<input type="hidden" name="big_code" value="${board.big_code }">
+								<input type="hidden" name="small_code" value="${board.small_code }"> 
+								<input type="hidden" name="comment_group_id" value="${board.comment_group_id }">
+								<input type="hidden" name="comment_step" value="${board.comment_step }"> 
+								<input type="hidden" name="comment_indent" value="${board.comment_indent }">
+	
+								<div class="row row-cols-3 p-0">
+									<div class="form-group col comment-title">
+										<p>댓글작성자닉네임</p>
+									</div>
+	
+									<div class="form-group col comment-input">
+										<input type="text" class="form-control" name="content" required="required" 
+											   placeholder="댓글을 입력하세요.">
+									</div>
+	
+									<div class="form-group col comment-btn">
+										<button type="submit" class="btn btn_detail_custom">등록</button>
+									</div>
 								</div>
-
-								<div class="form-group col comment-input">
-									<input type="text" class="form-control" name="content" required="required" 
-										   placeholder="댓글을 입력하세요.">
-								</div>
-
-								<div class="form-group col comment-btn">
-									<button type="submit" class="btn btn_detail_custom">등록</button>
-								</div>
-							</div>
-						</form>
-
-					<!-- input 영역 END -->
-					</div>
-					
-					<!-- 댓글 출력  -->
-					<div class="container p-3 comments-custom">
-						<c:forEach var="comments" items="${comment }">
-							<div class="row row-cols-2 align-items-start">
-								<div class="col comments-nickname">
-									<p>${comments.name }</p>
-								</div>
-								
-								<div class="col comments-content">								
-									<p class="d-inline-flex gap-1">
-									  <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${comments.id}" aria-expanded="false" aria-controls="collapseExample"
-									  		  style="width: 900px; text-align: left;">
-								   		 ${comments.content }
-								 	 </button>
-									</p>
-								</div>
-																	
-								<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}"
-									 style="">
-									<div class="card card-body comments-body-custom">
-									<!-- input 영역 -->
-										<div class="container p-0">
-											<form action="commentInsert" method="post" enctype="multipart/form-data">
-												<input type="hidden" name="id" value="${board.id }"> 
-												<input type="hidden" name="name" value="${comments.name }"> 
-												<input type="hidden" name="user_id" value="${userId }"> 
-												<input type="hidden" name="big_code" value="${board.big_code }">
-												<input type="hidden" name="small_code" value="${board.small_code }"> 
-												<input type="hidden" name="comment_group_id" value="${comments.comment_group_id }">
-												<input type="hidden" name="comment_step" value="${board.comment_step }"> 
-												<input type="hidden" name="comment_indent" value="${comments.comment_indent }">
-					
-												<div class="row row-cols-3 p-0">
-													<div class="form-group col comment-md-title">
-														<p>대댓글</p>
+							</form>
+	
+						<!-- input 영역 END -->
+						</div>
+						
+						<!-- 댓글 출력  -->
+						<div class="container p-3 comments-custom">
+							<c:forEach var="comments" items="${comment }">
+								<div class="row row-cols-2 align-items-start">
+									<div class="col comments-nickname">
+										<p>${comments.name }</p>
+									</div>
+									
+									<div class="col comments-content">								
+										<p class="d-inline-flex gap-1">
+										  <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${comments.id}" aria-expanded="false" aria-controls="collapseExample"
+										  		  style="width: 900px; text-align: left;">
+									   		 ${comments.content }
+									 	 </button>
+										</p>
+									</div>
+																		
+									<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}"
+										 style="">
+										<div class="card card-body comments-body-custom">
+										<!-- input 영역 -->
+											<div class="container p-0">
+												<form action="commentInsert" method="post" enctype="multipart/form-data">
+													<input type="hidden" name="id" value="${board.id }"> 
+													<input type="hidden" name="name" value="${comments.name }"> 
+													<input type="hidden" name="user_id" value="${userId }"> 
+													<input type="hidden" name="big_code" value="${board.big_code }">
+													<input type="hidden" name="small_code" value="${board.small_code }"> 
+													<input type="hidden" name="comment_group_id" value="${comments.comment_group_id }">
+													<input type="hidden" name="comment_step" value="${board.comment_step }"> 
+													<input type="hidden" name="comment_indent" value="${comments.comment_indent }">
+						
+													<div class="row row-cols-3 p-0">
+														<div class="form-group col comment-md-title">
+															<p>대댓글</p>
+														</div>
+						
+														<div class="form-group col comment-md-input">
+															<input type="text" class="form-control" name="content" required="required" 
+																   placeholder="댓글을 입력하세요.">
+														</div>
+						
+														<div class="form-group col comment-md-btn">
+															<button type="submit" class="btn btn_detail_custom">등록</button>
+														</div>
 													</div>
-					
-													<div class="form-group col comment-md-input">
-														<input type="text" class="form-control" name="content" required="required" 
-															   placeholder="댓글을 입력하세요.">
-													</div>
-					
-													<div class="form-group col comment-md-btn">
-														<button type="submit" class="btn btn_detail_custom">등록</button>
-													</div>
-												</div>
-											</form>
-					
-										<!-- input 영역 END -->
+												</form>
+						
+											<!-- input 영역 END -->
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</c:forEach>
-					</div>
-					
-				</div>			
-			</div>
-		</div>		
+							</c:forEach>
+						</div>
+						
+					</div>			
+				</div>
+			</div>			
+			
+			</c:when>	
+		</c:choose>
+		
 			
 		
 	<!-- 전체 content 영역  END-->		
