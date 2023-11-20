@@ -140,7 +140,7 @@
 											<c:if test="${accomodation.status == 1 }">Y</c:if>
 										</td>
 										<td><a class="detail-btn" 
-											href='accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}'>관리</a></td>
+											href='accomodationDetail?contentId=${accomodation.content_id}&currentPage=${page.currentPage}'>관리</a></td>
 									 	
 								</tr>
 									 <c:set var="num" value="${num + 1}"/>

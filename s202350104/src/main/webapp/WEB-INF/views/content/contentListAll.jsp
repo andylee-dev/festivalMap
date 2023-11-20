@@ -43,8 +43,8 @@
 		                img: columns[2].querySelector("img").getAttribute("src"),
 		                title: columns[3].textContent,
 		                address: columns[4].textContent,
-		                homepage: columns[5].textContent,
-		                phone: columns[6].textContent
+		                /* homepage: columns[5].textContent, */
+		                phone: columns[5].textContent
 		            };
 
 		            contentList.push(contentData);
@@ -229,7 +229,7 @@
 							        <th class="img1">사진</th>
 							        <th class="title">이름</th>
 							        <th class="address">주소</th>
-							        <th class="homepage">홈페이지</th>
+							        <!-- <th class="homepage">홈페이지</th> -->
 							        <th class="phone">연락처</th>
 								</tr>
 							</thead>
@@ -241,7 +241,7 @@
 										<td style="white-space: normal;"><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 100px; width: 150px;"></td>
 										<td style="white-space: normal;">${content.title }</td>
 										<td style="white-space: normal;">${content.address }</td>
-										<td style="white-space: normal;">${content.homepage }</td>
+										<%-- <td style="white-space: normal;">${content.homepage }</td> --%>
 										<td style="white-space: normal;">${content.phone }</td>
 									</tr>
 								</c:forEach>

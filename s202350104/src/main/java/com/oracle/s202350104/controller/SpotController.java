@@ -48,6 +48,9 @@ public class SpotController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "spot", "start");
 
+			spotContent.setIs_deleted("0");
+			spotContent.setStatus("1");
+			
 			int totalSearchSpot = ss.totalSearchSpot(spotContent);
 
 			Paging page = new Paging(totalSearchSpot, currentPage);
