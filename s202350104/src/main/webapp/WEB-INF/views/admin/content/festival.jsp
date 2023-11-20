@@ -132,8 +132,8 @@
 												<c:if test="${festival.status == 1}">승인완료</c:if>
 											</td>
 											<td>
-												<c:if test="${festival.is_deleted == 0}">N</c:if>
-												<c:if test="${festival.is_deleted == 1}">Y</c:if>
+												<c:if test="${festival.is_deleted == 0}">Y</c:if>
+												<c:if test="${festival.is_deleted == 1}">N</c:if>
 											</td>
 											<td><a class="detail-btn" href="festivalDetail?contentIdStr=${festival.content_id}&currentPage=${page.currentPage}">관리</a></td>
 										</tr>
