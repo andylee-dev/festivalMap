@@ -70,7 +70,7 @@
 	
 	<!-- 게시판 신고기능 -송환 -->
 	function report(boardId) {
-	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
+	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=1500, height=500, top=100, left=100");
 	}
 </script>
 </head>

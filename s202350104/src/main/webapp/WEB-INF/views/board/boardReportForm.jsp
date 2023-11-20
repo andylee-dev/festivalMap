@@ -18,67 +18,93 @@
 	crossorigin="anonymous">
 	
 </script>
+<link href="/css/global.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 function closeWindow() {
     window.close();
 }
-
 </script>
+<style type="text/css">
+	#report-container {
+		position: relative;
+		border: 1px solid #000;
+		border-radius: 10px;
+		background-color: white;
+	}
+	h1 {
+		margin-top : 30px;
+		color: black;
+		font-size: 32px;
+		font-family: Noto Sans;
+		font-weight: 600;
+		word-wrap: break-word
+	}
+
+
+
+</style>
 </head>
 <body>
-	<h1 align="center">신고하기</h1>	
-		<c:if test="${userId == 0}">
-		    <div class="container border p-5">
-		        <div class="row">
-		            <div class="col text-center">
-		                <p>로그인 후 신고 가능합니다</p>
-		            </div>
-		        </div>
-		        <div class="row">
-		            <div class="col text-center">
-		                <button class="btn btn-secondary" onclick="closeWindow()">취소</button>
-		            </div>
-		        </div>
-		    </div>
-		</c:if>
-		<c:if test="${userId != 0 }">
-		<form action="boardReportUpdate">
-			
-			<div class="container border p-5">
-			<table class="table table-bordered">
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">제목</th>
-				<td style="background-color: white;">
-				<input type="hidden" name="board_id" value="${board.id }">${board.title }</td>
-				
-				<th scope="col" style="text-align: center;">작성자</th>
-				<td style="background-color: white;">
-				<input type="hidden" name="user_id" value="${board.user_id }">${board.name }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">신고인</th>
-				<td colspan="3" style="background-color: white;">
-				<input type="hidden" name="id" value="${userId }">${userId }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">내용</th>
-				<td colspan="3" style="background-color: white;">${board.content }</td>
-			</tr>
-			
-			<tr class="table-primary">
-				<th scope="col" style="text-align: center;">신고내용</th>
-				<td colspan="7"  style="background-color: white;">	
-				<input type="text" name="content" class="form-control" placeholder="신고내용을 입력하세요">	
-				</td>
-			</tr>
-			</table>
-			<button type="submit" class="btn btn-danger" >신고</button>
-			<button class="btn btn-secondary" onclick="closeWindow()">취소</button>
+	<div class="container-fluid">
+		<div class="row">
+			<main class="col-10 offset-1">
+				<h1 align="left">신고하기</h1>
+					<hr class="hr" />	
+					<c:if test="${userId == 0}">
+					    <div class="container border p-5">
+					        <div class="row">
+					            <div class="col text-center">
+					                <p>로그인 후 신고 가능합니다</p>
+					            </div>
+					        </div>
+					        <div class="row">
+					            <div class="col text-center">
+					                <button class="btn btn-primary" onclick="closeWindow()">취소</button>
+					            </div>
+					        </div>
+					    </div>
+					</c:if>
+					<c:if test="${userId != 0 }">
+					
+					<div>
+					<form action="boardReportUpdate">
+						
+						<div class="table-container p-5" id="report-container">
+						<table class="table table-bordered">
+						<tr class="table">
+							<th scope="col" style="text-align: center;">제목</th>
+							<td style="background-color: white;">
+							<input type="hidden" name="board_id" value="${board.id }">${board.title }</td>
+							
+							<th scope="col" style="text-align: center;">작성자</th>
+							<td style="background-color: white;">
+							<input type="hidden" name="user_id" value="${board.user_id }">${board.name }</td>
+						</tr>
+						
+						<tr class="table">
+							<th scope="col" style="text-align: center;">내용</th>
+							<td colspan="3" style="background-color: white;">${board.content }</td>
+						</tr>
+						
+					
+						
+						<tr class="table">
+							<th scope="col" style="text-align: center;">신고내용</th>
+							<td colspan="3"  style="background-color: white;">	
+							<input type="hidden" name="id" value="${userId }">
+							<input type="text" name="content" class="form-control" placeholder="신고내용을 입력하세요" >	
+							</td>
+						</tr>
+						</table>
+						<button type="submit" class="btn btn-primary" >신고</button>
+						<button class="btn btn-primary" onclick="closeWindow()">취소</button>
+					</div>
+					</form>
+					</div>
+				</c:if>
+			</main>		
 		</div>
-		</form>
-		</c:if>
+	</div>	
 </body>
 </html>
