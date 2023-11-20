@@ -28,12 +28,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.model.Favorite;
+import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
@@ -58,6 +60,7 @@ public class UserController {
 	private final CommonCodeService cs;
 	private final TagsService ts;
 	private final FavoriteService fs;
+	private final BoardService boardService;
 	
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -171,7 +174,32 @@ public class UserController {
 
 
 	@RequestMapping(value = "myPage/myPost")
-	public String myPost() {
+	public String myPost(Board board , String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		Optional<Users> user = null;
+		
+		log.info("[{}]{}:{}",transactionId, "myPost", "start");
+		
+		int userId = us.getLoggedInId();
+		board.setUser_id(userId);
+		
+		int smallCode = board.getSmall_code();
+		user = us.getUserById(userId);
+		
+		int countBoard = boardService.boardCount(smallCode);
+		
+		Paging page = new Paging(countBoard, currentPage);
+		board.setStart(page.getStart());
+		board.setEnd(page.getEnd());
+		
+		List<Board> freeAllList = boardService.getFreeAllList(board);
+		
+		model.addAttribute("searchOption",board);
+		model.addAttribute("smallCode",smallCode);
+		model.addAttribute("countBoard",countBoard);
+		model.addAttribute("freeAllList",freeAllList);
+		model.addAttribute("page",page);		
+		
 		return "user/myPage/myPost";
 	}
 
