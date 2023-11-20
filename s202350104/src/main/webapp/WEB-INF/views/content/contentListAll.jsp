@@ -157,12 +157,6 @@
     td, th {
         text-align: center;
     }
-    
-    /* 텍스트 길이가 길 경우 줄바꿈 */
-	td {
-	    white-space: normal;
-	}
-    
 	
 	
 	</style>
@@ -236,20 +230,20 @@
 							        <th class="img1">사진</th>
 							        <th class="title">이름</th>
 							        <th class="address">주소</th>
-							        <th class="homepage">홈페이지</th>
+							        <!-- <th class="homepage">홈페이지</th> -->
 							        <th class="phone">연락처</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="content" items="${listContents }" varStatus="status">
 									<tr>
-										<td><input class="parent-container child-container outer-circle inner-circle" style="padding: 0px; width: 40px;" type="checkbox" name="content" value="${content.id}"></td>
-										<td>${content.id }</td>
-										<td><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 100px; width: 150px;"></td>
-										<td>${content.title }</td>
-										<td>${content.address }</td>
-										<td>${content.homepage }</td>
-										<td>${content.phone }</td>
+										<td style="white-space: normal;"><input class="parent-container child-container outer-circle inner-circle" style="padding: 0px; width: 40px;" type="checkbox" name="content" value="${content.id}"></td>
+										<td style="white-space: normal;">${content.id }</td>
+										<td style="white-space: normal;"><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 100px; width: 150px;"></td>
+										<td style="white-space: normal;">${content.title }</td>
+										<td style="white-space: normal;">${content.address }</td>
+			 							<%-- <td style="white-space: normal;">${content.homepage }</td> --%>
+										<td style="white-space: normal;">${content.phone }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
