@@ -745,7 +745,7 @@ import lombok.RequiredArgsConstructor;
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "end");
 			}		
-			return "forward:spotDetail";
+			return "forward:spotDetail?contentIdStr="+contentId;
 		}
 		
 		@RequestMapping(value = "accomodation")

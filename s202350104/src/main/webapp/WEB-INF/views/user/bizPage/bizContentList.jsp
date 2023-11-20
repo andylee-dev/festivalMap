@@ -9,6 +9,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<main>
 	<div class="d-flex">
 		<%@ include file="/WEB-INF/components/BizPageSideBar.jsp" %>
 		
@@ -20,6 +21,6 @@
 			</div>
 		</div>
 	</div>
-
+	</main>
 </body>
 </html>

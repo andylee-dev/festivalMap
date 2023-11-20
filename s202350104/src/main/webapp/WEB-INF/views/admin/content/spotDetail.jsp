@@ -15,9 +15,8 @@
 			}
 			
 			function approveConfirm() {
-				var contentId = Number(${spot.content_id});
 				if(confirm("승인하시겠습니까?")) {
-					location.href="spotApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="spotApprove?contentId=${spot.content_id}&currentPage=${currentPage}";
 				}
 			}
 			// 승인하고나서 승인이 완료되었습니다 메세지도 띄울 수 있었으면 좋겠다

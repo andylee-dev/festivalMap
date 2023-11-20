@@ -123,7 +123,7 @@
 	
 	<insert id="dhContentInsert" parameterType="SpotContent">
 	INSERT INTO contents(id,area,sigungu,big_code,small_code,title,content,status,img1,img2,img3,address,postcode,mapx,mapy,email,phone,homepage,readcount,user_id,created_at)
-	VALUES(contents_id_seq.nextval,#{area},#{sigungu},#{big_code},#{small_code},#{title},#{content},#{status},#{img1},#{img2},#{img3},#{address},#{postcode},#{mapx},#{mapy},#{email},#{phone},#{homepage},#{readcount},#{user_id},sysdate)
+	VALUES(contents_id_seq.nextval,#{area},#{sigungu},#{big_code},#{small_code},#{title},#{content},'0',#{img1},#{img2},#{img3},#{address},#{postcode},#{mapx},#{mapy},#{email},#{phone},#{homepage},#{readcount},#{user_id},sysdate)
 	</insert>
 	
 		<insert id="dhSpotInsert" parameterType="SpotContent">

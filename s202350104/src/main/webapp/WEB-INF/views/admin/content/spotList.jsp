@@ -149,6 +149,7 @@
 									<th scope="col">작성자</th>
 									<th scope="col">신청일</th>
 									<th scope="col">승인여부</th>
+									<th scope="col">게시</th>
 									<th scope="col">관리</th>
 								</tr>
 							</thead>
@@ -165,7 +166,10 @@
 										<td>
 											<c:if test="${spot.status == 0}">승인대기</c:if>
 											<c:if test="${spot.status == 1}">승인완료</c:if>
-											<!-- 승인반려됐을 경우 status -->
+										</td>
+										<td>
+											<c:if test="${spot.is_deleted == 0}">Y</c:if>
+											<c:if test="${spot.is_deleted == 1}">N</c:if>
 										</td>
 										<td><a class="detail-btn" 
 										href="spotDetail?contentIdStr=${spot.content_id}&currentPage=${page.currentPage}">관리</a></td>

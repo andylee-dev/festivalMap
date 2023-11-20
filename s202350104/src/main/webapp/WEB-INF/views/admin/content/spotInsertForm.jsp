@@ -116,10 +116,6 @@
 									placeholder="명소에 대한 설명을 4000자 이내로 입력해주세요"></textarea></td>
 							</tr>
 							<tr>
-								<th>입장료</th>
-								<td><input type="text" name="entrance_fee"></td>
-							</tr>
-							<tr>
 								<th>홈페이지</th>
 								<td><input type="text" name="homepage"></td>
 							</tr>

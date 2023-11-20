@@ -92,7 +92,7 @@ h1 {
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<main >
+	<main>
 		<div class="d-flex">
 			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
 			<div class="container border p-5">
