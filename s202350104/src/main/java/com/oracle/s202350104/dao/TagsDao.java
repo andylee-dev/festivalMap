@@ -3,7 +3,11 @@ package com.oracle.s202350104.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.Contents;
+import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 
 public interface TagsDao {
 	int totalTags(Tags tags);
@@ -25,13 +29,21 @@ public interface TagsDao {
 	int boardTagDelete(int id);
 	int updateBoardTags(int boardId, int[] finalTags);
 	int updateContentTags(int contentId, int[] finalTags);
-	List<Tags> listCourseTags();
+	List<Tags> listCourseTags(int smallCode);
 	List<Tags> searchCourseTags(int courseId);
 	int updateCourseTags(int courseId, int[] finalTags);
 	int selectUserTagsCnt(int tagId);
 	int selectBoardTagsCnt(int tagId);
 	int selectContentTagsCnt(int tagId);
 	int selectCourseTagsCnt(int tagId);
+	int userTagsTotal(Tags tag);
+	List<Tags> searchUserTagsList(Tags tag);
+	int boardTagsTotal(Tags tag);
+	List<Tags> searchBoardTagsList(Tags tag);
+	int contentTagsTotal(Tags tag);
+	List<Tags> searchContentTagsList(Tags tag);
+	int courseTagsTotal(Tags tag);
+	List<Tags> searchCourseTagsList(Tags tag);
 
 
 

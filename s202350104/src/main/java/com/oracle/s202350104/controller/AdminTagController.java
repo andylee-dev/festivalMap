@@ -35,7 +35,6 @@ import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.RestaurantService;
 import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.TagsService;
-import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +49,6 @@ public class AdminTagController {
 	private final CommonCodeService ccs;
 	private final ContentSerivce cs;
 	private final BoardService bs;
-	private final UserService us;
 	private final FestivalsService fs;
 	private final CourseService crs;
 	
@@ -203,21 +201,20 @@ public class AdminTagController {
 	
 	// 회원 태그 관리 페이지로 이동
 	@RequestMapping(value = "userTag")
-	public String userTagList(Users user, String currentPage, Model model) {
+	public String userTagList(Tags tag, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "userTagList", "start");
-			user.setSmall_code(2);				  // 일반회원 small code 지정
-			int totalUsers = us.totalUsers(user); // 일반회원수만 반환
+			int totalUsers = ts.userTagsTotal(tag); // 일반회원수만 반환
 			log.info("totalUsers => " + totalUsers);
 			
 			// 페이징 처리
 			PagingList page = new PagingList(totalUsers, currentPage);
-			user.setStart(page.getStart());
-			user.setEnd(page.getEnd());
+			tag.setStart(page.getStart());
+			tag.setEnd(page.getEnd());
 			
-			List<Users> listUsers = us.getSearchUserList(user); // 일반회원 리스트만 반환
+			List<Tags> listUsers = ts.searchUserTagsList(tag); // 일반회원 리스트만 반환
 			log.info("listUsers => " + listUsers.size());
 			
 			model.addAttribute("totalUsers", totalUsers);
@@ -254,43 +251,44 @@ public class AdminTagController {
 	
 	// 게시판 태그 관리 페이지로 이동
 	@RequestMapping(value = "boardTag")
-	public String boardTagList(Board board, String smallCodeStr, String currentPage, Model model) {
+	public String boardTagList(Tags tag, String smallCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
-		// String으로 받은 smallCode값을 int형으로 변환
+		// String으로 받은 bigCode값을 int형으로 변환
 		int smallCode = 0;
-		if(smallCodeStr == null || smallCodeStr == "") {
-			smallCode = 2;	// code값이 null일 경우 2로 강제 지정(매거진)
+		if(smallCodeStr == null) {
+			smallCode = 2;
 		} else {
 			smallCode = Integer.parseInt(smallCodeStr);
 		}
 		log.info("controller smallCode => " +smallCode);
 		
+		
 		try {
 			log.info("[{}]{}:{}", transactionId, "boardTagList", "start");
+	
+			tag.setSmall_code(smallCode);
+			
+			System.out.println(""+tag.getSmall_code());
+			System.out.println(""+tag.getSearchType());
+			System.out.println(""+tag.getKeyword());
 			
 			// smallCode에 해당하는 Board의 총 데이터 수를 저장
-			int totalBoard = bs.boardCount(smallCode);
+			int totalBoard = ts.boardTagsTotal(tag);
 			log.info("controller totalBoard => " +totalBoard);
 			
 			// 페이징 처리
 			PagingList page = new PagingList(totalBoard, currentPage);
-			board.setStart(page.getStart());
-			board.setEnd(page.getEnd());
+			tag.setStart(page.getStart());
+			tag.setEnd(page.getEnd());
 			
-			// smallCode에 따라 해당하는 Board의 list를 저장
-			List<Board> listBoard = null;
-			switch(smallCode) {
-				case 2: listBoard = bs.getMagazinAllList(board); break;
-				case 3: listBoard = bs.getFreeAllList(board); break;
-				case 4: listBoard = bs.getPhotoAllList(board); break;
-				case 5: listBoard = bs.getEventAllList(board); break;
-				case 6: listBoard = bs.getReviewAllList(board);
-			}
+			// smallCode에 해당하는 Board의 list를 저장
+			List<Tags> listBoard = ts.searchBoardTagsList(tag);
 			log.info("controller listBoard => " +listBoard.size());
 			
 			model.addAttribute("totalBoard", totalBoard);
 			model.addAttribute("listBoard", listBoard);
 			model.addAttribute("page", page);
+			model.addAttribute("smallCode", smallCode);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "boardTagList", e.getMessage());
 		} finally {
@@ -312,6 +310,7 @@ public class AdminTagController {
 			int smallCode = Integer.parseInt(smallCodeStr);
 			log.info("smallCode=>" + smallCode);
 			listTags = ts.listBoardTags(smallCode);
+			model.addAttribute("smallCode", smallCode);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "getBoardTags", e.getMessage());
 		} finally {
@@ -383,7 +382,7 @@ public class AdminTagController {
 	
 	// 컨텐츠 태그 관리 페이지로 이동
 	@RequestMapping(value = "contentTag")
-	public String contentTagList(Contents content, String bigCodeStr, String currentPage, Model model) {
+	public String contentTagList(Tags tag, String bigCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		// String으로 받은 bigCode값을 int형으로 변환
 		int bigCode = 0;
@@ -393,21 +392,21 @@ public class AdminTagController {
 			bigCode = Integer.parseInt(bigCodeStr);
 		}
 		log.info("controller bigCode => " +bigCode);
-		content.setBig_code(bigCode);
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "contentTagList", "start");
 			
+			tag.setBig_code(bigCode);
 			// bigCode에 따라 컨텐츠의 totalContents 조회
-			int totalContents = cs.getTotalSearchCount(content);
+			int totalContents = ts.contentTagsTotal(tag);
 			
 			// 페이징 처리
 			PagingList page = new PagingList(totalContents, currentPage);
-			content.setStart(page.getStart());
-			content.setEnd(page.getEnd());
+			tag.setStart(page.getStart());
+			tag.setEnd(page.getEnd());
 			
 			// bigCode에 따라 listContent 조회
-			List<Contents> listContent = cs.getSearchContentsList(content); 
+			List<Tags> listContent = ts.searchContentTagsList(tag); 
 
 			log.info("controller listContent => " +listContent.size());
 			log.info("totalContents => " +totalContents);
@@ -500,6 +499,7 @@ public class AdminTagController {
 			int bigCode = Integer.parseInt(bigCodeStr);
 			log.info("bigCode=>" + bigCode);
 			listTags = ts.listContentTags(bigCode);
+			model.addAttribute("bigCode", bigCode);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "getContentTags", e.getMessage());
 		} finally {
@@ -511,22 +511,30 @@ public class AdminTagController {
 	
 	// 코스 태그 관리 페이지로 이동
 	@RequestMapping(value = "courseTag")
-	public String courseTagList(Course course, String currentPage, Model model) {
+	public String courseTagList(Tags tag, String smallCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		// String으로 받은 smallCode값을 int형으로 변환
+		int smallCode = 0;
+		if(smallCodeStr == null || smallCodeStr == "") {
+			smallCode = 2;
+		} else {
+			smallCode = Integer.parseInt(smallCodeStr);
+		}
 			
 		try {
 			log.info("[{}]{}:{}", transactionId, "contentTagList", "start");
 				
-			// 전체 코스 수 조회 => 추후 검색 조건 설정
-			int totalCourses = crs.courseCount();
+			tag.setSmall_code(smallCode);
+			// 전체 코스 수 조회
+			int totalCourses = ts.courseTagsTotal(tag);
 				
 			// 페이징 처리
 			PagingList page = new PagingList(totalCourses, currentPage);
-			course.setStart(page.getStart());
-			course.setEnd(page.getEnd());
+			tag.setStart(page.getStart());
+			tag.setEnd(page.getEnd());
 				
-			// 전체 코스 리스트 조회 => 추후 검색 조건 설정
-			List<Course> listCourse = crs.courseList(course);
+			// 전체 코스 리스트 조회
+			List<Tags> listCourse = ts.searchCourseTagsList(tag);
 
 			log.info("controller listCourse => " +listCourse.size());
 			log.info("totalCourses => " +totalCourses);
@@ -534,6 +542,7 @@ public class AdminTagController {
 			model.addAttribute("totalCourses", totalCourses);
 			model.addAttribute("listCourse", listCourse);
 			model.addAttribute("page", page);
+			model.addAttribute("smallCode", smallCode);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "contentTagList", e.getMessage());
 		} finally {
@@ -546,13 +555,16 @@ public class AdminTagController {
 	// 코스 태그 리스트를 전부 가져오기(AJAX 연결) => 추후 small_code에 맞게 가져올 수 있도록 수정 예정
 	@ResponseBody
 	@RequestMapping(value = "getCourseTags")
-	public List<Tags> getCourseTags(Model model) {
+	public List<Tags> getCourseTags(String smallCodeStr, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		List<Tags> listTags = null;
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "getCourseTags", "start");
-			listTags = ts.listCourseTags();
+			int smallCode = Integer.parseInt(smallCodeStr);
+			log.info("smallCode=>" + smallCode);
+			listTags = ts.listCourseTags(smallCode);
+			model.addAttribute("smallCode", smallCode);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "getCourseTags", e.getMessage());
 		} finally {

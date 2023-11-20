@@ -34,18 +34,6 @@
 							   }
 						   }
 					   })
-				
-				<!-- 지역 코드 넣는 코드  Start-->	
-				updateAreaOptions();
-				$(".area-dropdown").change(function() {
-					const selectedArea = $(this).val();
-					if (selectedArea) {
-						updateSigunguOptions(selectedArea);
-					} else {
-						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
-					}
-				});
-				<!-- 지역 코드 넣는 코드  End-->
 		   });
 		   
 		   function detail(pId) {
@@ -91,13 +79,14 @@
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
 					<form action="contentTag" method="GET" class="container justify-content-center">
+						<input type="hidden" name="bigCodeStr" value="${bigCode}">
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 							<div class="col-2">
-								<select name="search" class="form-select">
-									<option value="tagname">태그명</option>
+								<select name="searchType" class="form-select">
+									<option value="tag_name">태그명</option>
 									<option value="title">이름</option>
-									<option value="contentId">컨텐츠 번호</option>
+									<option value="content_id">컨텐츠 번호</option>
 								</select>
 							</div>
 							<div class="col-5 mx-2">
@@ -137,24 +126,18 @@
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${listContent.size() == 0}"><td colspan="8">해당하는 태그가 없습니다.</td></c:if>
 								<c:set var="num" value="${page.start}"/>
 								<c:forEach var="content" items="${listContent}" varStatus="st">
 									<tr>
 										<td>${num}</td>
-										<td><input type="hidden" id="content_id${st.index}" value="${content.id}">${content.id}</td>
-										<td id="small_code_input${st.index}">
-											<input type="hidden" id="small_code${st.index}" value="${content.small_code}">
-											${content.small_code}
-										</td>
+										<td><input type="hidden" id="content_id${st.index}" value="${content.content_id}">${content.content_id}</td>
+										<td>${content.scode_content}</td>
 										<td>${content.title}</td>
-										<td id="areas_input${st.index}">
-											<input type="hidden" id="area${st.index}" value="${content.area}">
-											<input type="hidden" id="sigungu${st.index}" value="${content.sigungu}">
-											${content.area} ${content.sigungu}
-										</td>
+										<td>${content.area_content} ${content.sigungu_content}</td>
 										<td id="tag_name${st.index}"></td>
-										<td><span onclick="detail(${content.id})" class="detail-link">이동</span></td>
-										<td><a href="contentTagsUpdateForm?contentIdStr=${content.id}" class="detail-link">관리</a></td>
+										<td><span onclick="detail(${content.content_id})" class="detail-link">이동</span></td>
+										<td><a href="contentTagsUpdateForm?contentIdStr=${content.content_id}" class="detail-link">관리</a></td>
 									</tr>
 									<c:set var="num" value="${num + 1}"/>
 								</c:forEach>

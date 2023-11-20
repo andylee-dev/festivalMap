@@ -50,23 +50,60 @@
 	
 	<!-- USER TAGS -->
 	
-	<select id="nhUserTagsTotal">
+	<select id="nhUserTagsTotal" parameterType="Tags" resultType="int">
 		SELECT count(*)
-		FROM
-		users u, usertags ut, tags t
-		WHERE ut.tag_id = t.id
-		AND   ut.user_id = u.id
-		AND   u.small_code = 2
+		FROM  users u
+		WHERE u.small_code = 2
 		<if test="keyword != null and keyword != ''">
 			<choose>
-			 	<when test="searchType == 'tagname'">
-			 		AND t.name like '%' || #{keyword} || '%'
-			 	</when>
+			 	<when test="searchType == 'tag_name'">
+				 		AND u.id IN
+				 		(SELECT user_id
+				 		 FROM   usertags ut, tags t
+				 		 WHERE  ut.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				</when>
 			 	<when test="searchType == 'user_id'">
 			 		AND u.id like '%' || #{keyword} || '%' 
 			 	</when>
+			 	<when test="searchType == 'user_name'">
+			 		AND u.name like '%' || #{keyword} || '%' 
+			 	</when>
 			</choose>
 	  	</if>
+	</select>
+	
+	<select id="nhUserTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT u.id user_id, u.name user_name, u.birthday, u.email, u.gender, u.address
+			 FROM   users u
+			 WHERE  u.small_code = 2 
+			 <if test="keyword != null and keyword != ''">
+				<choose>
+				 	<when test="searchType == 'tag_name'">
+				 		AND u.id IN
+				 		(SELECT user_id
+				 		 FROM   usertags ut, tags t
+				 		 WHERE  ut.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	</when>
+				 	<when test="searchType == 'user_id'">
+				 		AND u.id like '%' || #{keyword} || '%' 
+				 	</when>
+				 	<when test="searchType == 'user_name'">
+				 		AND u.name like '%' || #{keyword} || '%' 
+				 	</when>
+				</choose>
+			 </if> 
+			 ORDER BY u.id) a
+		)
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
 	</select>
 	
 	<select id="nhUserTagsAll" resultType="Tags">
@@ -104,6 +141,68 @@
 	
 	<!-- BOARD TAGS -->
 	
+	<select id="nhBoardTagsTotal" parameterType="Tags" resultType="int">
+		SELECT count(*)
+		FROM  board b
+		WHERE 1=1
+		<if test="small_code != null and small_code != 0">
+			AND b.small_code = #{small_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tag_name'">
+			 		AND b.id IN
+			 		(SELECT board_id
+			 		 FROM   boardtags bt, tags t
+			 		 WHERE  bt.tag_id = t.id
+			 		 AND    t.name like '%' || #{keyword} || '%')
+			 	</when>
+			 	<when test="searchType == 'title'">
+			 		AND b.title like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'user_id'">
+			 		AND b.user_id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhBoardTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT id board_id, title, user_id, created_at
+			 FROM  board b
+			 WHERE 1=1
+			 <if test="small_code != null and small_code != 0">
+			 	AND b.small_code = #{small_code}
+			 </if>
+			 <if test="keyword != null and keyword != ''">
+				<choose>
+					 <when test="searchType == 'tag_name'">
+				 		AND b.id IN
+				 		(SELECT board_id
+				 		 FROM   boardtags bt, tags t
+				 		 WHERE  bt.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	 </when>
+					 <when test="searchType == 'title'">
+					 	AND b.title like '%' || #{keyword} || '%' 
+					 </when>
+					 <when test="searchType == 'user_id'">
+					 	AND b.user_id like '%' || #{keyword} || '%' 
+					 </when>
+				</choose>
+			  </if>
+			  ORDER BY b.id) a
+		 )
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
+	
 	<select id="nhBoardTagsAll" resultType="Tags" parameterType="int">
 		SELECT *
 		FROM  BoardTags bt, Tags t, Board b
@@ -136,6 +235,71 @@
 	</delete>
 	
 	<!-- CONTENT TAGS -->
+	
+	<select id="nhContentTagsTotal" parameterType="Tags" resultType="int">
+		SELECT count(*)
+		FROM   contents c
+		WHERE  1=1
+		<if test="big_code != null and big_code != 0">
+			AND c.big_code = #{big_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tag_name'">
+			 		AND c.id IN
+			 		(SELECT content_id
+			 		 FROM   contenttags ct, tags t
+			 		 WHERE  ct.tag_id = t.id
+			 		 AND    t.name like '%' || #{keyword} || '%')
+			 	</when>
+			 	<when test="searchType == 'title'">
+			 		AND c.title like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'content_id'">
+			 		AND c.id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhContentTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT id content_id, title, big_code, small_code, area, sigungu,
+					(SELECT content FROM commoncodes cc WHERE cc.big_code = c.big_code AND cc.small_code = c.small_code) scode_content,
+					(SELECT content FROM areas a WHERE a.area = c.area AND a.sigungu = 999) area_content,
+					(SELECT content FROM areas a WHERE a.area = c.area AND a.sigungu = c.sigungu) sigungu_content
+			 FROM  contents c
+			 WHERE 1=1
+			 <if test="big_code != null and big_code != 0">
+				AND c.big_code = #{big_code}
+			 </if>
+		  	 <if test="keyword != null and keyword != ''">
+				<choose>
+				 	<when test="searchType == 'tag_name'">
+				 		AND c.id IN
+				 		(SELECT content_id
+				 		 FROM   contenttags ct, tags t
+				 		 WHERE  ct.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	 </when>
+					 <when test="searchType == 'title'">
+					 	AND c.title like '%' || #{keyword} || '%' 
+					 </when>
+					 <when test="searchType == 'content_id'">
+					 	AND c.id like '%' || #{keyword} || '%' 
+					  </when>
+				</choose>
+			  </if>
+			  ORDER BY c.id) a
+		 )
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
 	
 	<select id="nhContentTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
@@ -174,11 +338,74 @@
 	
 	<!-- COURSE TAGS -->
 	
-	<select id="nhCourseTagsAll" resultType="Tags">	
+	<select id="nhCourseTagsTotal" parameterType="Tags" resultType="int">
+		SELECT count(*)
+		FROM   courses c
+		WHERE  1=1
+		<if test="small_code != null and small_code != 0">
+			AND c.small_code = #{small_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tag_name'">
+			 		AND c.id IN
+			 		(SELECT course_id
+			 		 FROM   coursetags ct, tags t
+			 		 WHERE  ct.tag_id = t.id
+			 		 AND    t.name like '%' || #{keyword} || '%')
+			 	</when>
+			 	<when test="searchType == 'title'">
+			 		AND c.course_title like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'content_id'">
+			 		AND c.id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhCourseTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT id AS course_id, course_title AS title, big_code, small_code
+			 FROM  courses c
+			 WHERE 1=1
+			<if test="small_code != null and small_code != 0">
+				AND c.small_code = #{small_code}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				<choose>
+				 	 <when test="searchType == 'tag_name'">
+				 		AND c.id IN
+				 		(SELECT course_id
+				 		 FROM   coursetags ct, tags t
+				 		 WHERE  ct.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	 </when>
+					 <when test="searchType == 'title'">
+					 	AND c.course_title like '%' || #{keyword} || '%' 
+					 </when>
+					 <when test="searchType == 'course_id'">
+					 	AND c.id like '%' || #{keyword} || '%' 
+					 </when>
+				</choose>
+			  </if>
+			  ORDER BY c.id) a
+		 )
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
+	
+	<select id="nhCourseTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
 		FROM　  CourseTags ct, Tags t, Courses c
 		WHERE ct.tag_id = t.id
 		AND   ct.course_id = c.id
+		AND   c.small_code = #{smallCode}
 		ORDER BY t.name
 	</select>
 	

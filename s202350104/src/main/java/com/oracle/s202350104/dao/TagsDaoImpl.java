@@ -9,7 +9,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.Contents;
+import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -194,7 +198,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhBoardTagsAll", smallCode);
 			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 			
@@ -211,7 +214,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhContentTagOne", contentId);
 			log.info("TagsDaoImpl searchContentTags() => " + listTags.size());
 			
@@ -228,7 +230,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhUserTagsAll", tags);
 			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
 			
@@ -245,7 +246,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhContentTagsAll", bigCode);
 			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
 			
@@ -256,14 +256,13 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 	
-	// course의 tags 정보들을 모두 가져옴
+	// smallCode에 따라 course의 tags 정보들을 모두 가져옴
 	@Override
-	public List<Tags> listCourseTags() {
+	public List<Tags> listCourseTags(int smallCode) {
 		List<Tags> listTags = null;
 		
 		try {
-			
-			listTags = session.selectList("nhCourseTagsAll");
+			listTags = session.selectList("nhCourseTagsAll", smallCode);
 			log.info("TagsDaoImpl listCourseTags() => " + listTags.size());
 			
 		} catch(Exception e) {
@@ -279,7 +278,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhBoardTagOne", boardId);
 			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 			
@@ -627,6 +625,134 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return courseTagsCnt;
 	}
+	
+	// 검색조건에 해당하는 user의 총 수를 반환
+	@Override
+	public int userTagsTotal(Tags tag) {
+		int totalUsers = 0;
+		
+		try {
+			totalUsers= session.selectOne("nhUserTagsTotal", tag);
+			log.info("TagsDaoImpl userTagsTotal => " + totalUsers);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl userTagsTotal => " + e.getMessage());
+		}
+		
+		return totalUsers;
+	}
+
+	// 검색조건에 해당하는 user의 리스트를 반환
+	@Override
+	public List<Tags> searchUserTagsList(Tags tag) {
+		List<Tags> listUsers = null;
+		
+		try {
+			listUsers = session.selectList("nhUserTagsList", tag);
+			log.info("TagsDaoImpl searchUserTagsList() => " + listUsers.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchUserTagsList() => " + e.getMessage());
+		}
+		
+		return listUsers;
+	}
+	
+	// 검색조건에 해당하는 board의 총 수를 반환
+	@Override
+	public int boardTagsTotal(Tags tag) {
+		int totalBoard = 0;
+		
+		try {
+			totalBoard= session.selectOne("nhBoardTagsTotal", tag);
+			log.info("TagsDaoImpl boardTagsTotal => " + totalBoard);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl boardTagsTotal => " + e.getMessage());
+		}
+		
+		return totalBoard;
+	}
+
+	// 검색조건에 해당하는 board의 리스트를 반환
+	@Override
+	public List<Tags> searchBoardTagsList(Tags tag) {
+		List<Tags> listBoard = null;
+		
+		try {
+			listBoard = session.selectList("nhBoardTagsList", tag);
+			log.info("TagsDaoImpl searchBoardTagsList() => " + listBoard.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchBoardTagsList() => " + e.getMessage());
+		}
+		
+		return listBoard;
+	}
+	
+	// 검색조건에 해당하는 content의 총 수 반환
+	@Override
+	public int contentTagsTotal(Tags tag) {
+		int totalContents = 0;
+		
+		try {
+			totalContents= session.selectOne("nhContentTagsTotal", tag);
+			log.info("TagsDaoImpl contentTagsTotal => " + totalContents);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl contentTagsTotal => " + e.getMessage());
+		}
+		
+		return totalContents;
+	}
+
+	// 검색조건에 해당하는 content의 리스트 반환
+	@Override
+	public List<Tags> searchContentTagsList(Tags tag) {
+		List<Tags> listContent = null;
+		
+		try {
+			listContent = session.selectList("nhContentTagsList", tag);
+			log.info("TagsDaoImpl searchContentTagsList() => " + listContent.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchContentTagsList() => " + e.getMessage());
+		}
+		
+		return listContent;
+	}
+	
+	// 검색조건에 해당하는 course의 총 수 반환
+	@Override
+	public int courseTagsTotal(Tags tag) {
+		int totalCourses = 0;
+		
+		try {
+			totalCourses= session.selectOne("nhCourseTagsTotal", tag);
+			log.info("TagsDaoImpl courseTagsTotal => " + totalCourses);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl courseTagsTotal => " + e.getMessage());
+		}
+		
+		return totalCourses;
+	}
+
+	// 검색조건에 해당하는 course의 리스트 반환
+	@Override
+	public List<Tags> searchCourseTagsList(Tags tag) {
+		List<Tags> listCourse = null;
+		
+		try {
+			listCourse = session.selectList("nhCourseTagsList", tag);
+			log.info("TagsDaoImpl searchCourseTagsList() => " + listCourse.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchCourseTagsList() => " + e.getMessage());
+		}
+		
+		return listCourse;
+	}
 
 	
 	
@@ -656,5 +782,6 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return deleteResult;
 	}
+
 
 }

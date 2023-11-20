@@ -10,11 +10,14 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
-			document.addEventListener("DOMContentLoaded", function() {			   
+			document.addEventListener("DOMContentLoaded", function() {	
+				const urlParams = new URL(location.href).searchParams;
+				const smallCodeStr = urlParams.get('smallCodeStr');
 			   // 행별로 저장된 태그를 가져와서 뱃지로 표시
 			   $.ajax({
 						   method:"POST",
 						   url:"<%=request.getContextPath()%>/admin/tag/getCourseTags",
+						   data:{smallCodeStr : smallCodeStr},
 						   dataType:'json',
 						   success:function(listTags) {
 							   for(let i = 0; i < ${page.end - page.start + 1}; i++) {
@@ -29,18 +32,6 @@
 							   }
 						   }
 					   })
-					   
-				<!-- 지역 코드 넣는 코드  Start-->	
-				updateAreaOptions();
-				$(".area-dropdown").change(function() {
-					const selectedArea = $(this).val();
-					if (selectedArea) {
-						updateSigunguOptions(selectedArea);
-					} else {
-						$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
-					}
-				});
-				<!-- 지역 코드 넣는 코드  End-->
 		   });
 			
 			
@@ -62,14 +53,15 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-					<form action="contentTag" method="GET" class="container justify-content-center">
+					<form action="courseTag" method="GET" class="container justify-content-center">
+						<input type="hidden" name="smallCodeStr" value="${smallCode}">
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 							<div class="col-2">
-								<select name="search" class="form-select">
-									<option value="tagname">태그명</option>
+								<select name="searchType" class="form-select">
+									<option value="tag_name">태그명</option>
 									<option value="title">코스명</option>
-									<option value="contentId">코스번호</option>
+									<option value="course_id">코스번호</option>
 								</select>
 							</div>
 							<div class="col-5 mx-2">
@@ -113,16 +105,12 @@
 								<c:forEach var="course" items="${listCourse}" varStatus="st">
 									<tr>
 										<td>${num}</td>
-										<td><input type="hidden" id="course_id${st.index}" value="${course.id}">${course.id}</td>
-										<td>${course.course_title}</td>
-										<td id="areas_input${st.index}">
-											<%-- <input type="hidden" id="area${st.index}" value="${content.area}">
-											<input type="hidden" id="sigungu${st.index}" value="${content.sigungu}">
-											${content.area} ${content.sigungu} --%>
-										</td>
+										<td><input type="hidden" id="course_id${st.index}" value="${course.course_id}">${course.course_id}</td>
+										<td>${course.title}</td>
+										<td>${course.area_content} ${course.sigungu_content}</td>
 										<td id="tag_name${st.index}"></td>
-										<td><a href="../course/courseUpdateForm?id=${course.id}" class="detail-link">이동</a></td>
-										<td><a href="courseTagsUpdateForm?courseIdStr=${course.id}" class="detail-link">관리</a></td>
+										<td><a href="../course/courseUpdateForm?id=${course.course_id}" class="detail-link">이동</a></td>
+										<td><a href="courseTagsUpdateForm?courseIdStr=${course.course_id}" class="detail-link">관리</a></td>
 									</tr>
 									<c:set var="num" value="${num + 1}"/>
 								</c:forEach>
@@ -136,17 +124,17 @@
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
 							<li class="page-item">
-								<a href="courseTag?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+								<a href="courseTag?currentPage=${page.startPage-page.pageBlock}&smallCodeStr=${smallCode}" class="pageblock page-link">Prev</a>
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 							<li class="page-item">
-								<a href="courseTag?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':''}">${i}</a>
+								<a href="courseTag?currentPage=${i}&smallCodeStr=${smallCode}" class="pageblock page-link ${page.currentPage == i ? 'active':''}">${i}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
 							<li class="page-item">
-								<a href="courseTag?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+								<a href="courseTag?currentPage=${page.startPage+page.pageBlock}&smallCodeStr=${smallCode}" class="pageblock page-link">Next</a>
 							</li>
 						</c:if>
 					</ul>

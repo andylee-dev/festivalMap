@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.TagsDao;
+import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.Contents;
+import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -171,8 +175,8 @@ public class TagsServiceImpl implements TagsService {
 	}
 	
 	@Override
-	public List<Tags> listCourseTags() {
-		List<Tags> listTags = td.listCourseTags();
+	public List<Tags> listCourseTags(int smallCode) {
+		List<Tags> listTags = td.listCourseTags(smallCode);
 		
 		if(listTags == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 태그 리스트가 존재하지 않습니다.");
@@ -229,6 +233,79 @@ public class TagsServiceImpl implements TagsService {
 		int result = td.selectCourseTagsCnt(tagId);
 		
 		return result;
+	}
+	
+
+	@Override
+	public int userTagsTotal(Tags tag) {
+		int totalUsers = td.userTagsTotal(tag);
+		
+		return totalUsers;
+	}
+
+	@Override
+	public List<Tags> searchUserTagsList(Tags tag) {
+		List<Tags> listUsers = td.searchUserTagsList(tag);
+		
+		if(listUsers == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 리스트가 존재하지 않습니다.");
+		}
+		
+		return listUsers;
+	}
+	
+	@Override
+	public int boardTagsTotal(Tags tag) {
+		int totalBoards = td.boardTagsTotal(tag);
+		
+		return totalBoards;
+	}
+
+	@Override
+	public List<Tags> searchBoardTagsList(Tags tag) {
+		List<Tags> listBoard = td.searchBoardTagsList(tag);
+		
+		if(listBoard == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글 리스트가 존재하지 않습니다.");
+		}
+		
+		return listBoard;
+	}
+	
+	@Override
+	public int contentTagsTotal(Tags tag) {
+		int totalContents = td.contentTagsTotal(tag);
+		
+		return totalContents;
+	}
+
+	@Override
+	public List<Tags> searchContentTagsList(Tags tag) {
+		List<Tags> listContent = td.searchContentTagsList(tag);
+		
+		if(listContent == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "컨텐츠 리스트가 존재하지 않습니다.");
+		}
+		
+		return listContent;
+	}
+	
+	@Override
+	public int courseTagsTotal(Tags tag) {
+		int totalCourses = td.courseTagsTotal(tag);
+		
+		return totalCourses;
+	}
+
+	@Override
+	public List<Tags> searchCourseTagsList(Tags tag) {
+		List<Tags> listCourse = td.searchCourseTagsList(tag);
+		
+		if(listCourse == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 리스트가 존재하지 않습니다.");
+		}
+		
+		return listCourse;
 	}
 
 

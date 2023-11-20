@@ -12,7 +12,7 @@
 		   $(document).ready(function() {
 			   const urlParams = new URL(location.href).searchParams;
 			   const smallCodeStr = urlParams.get('smallCodeStr');
-			   
+			   // 행별로 저장된 태그를 가져와서 뱃지로 표시
 			   $.ajax({
 						   method:"POST",
 						   url:"<%=request.getContextPath()%>/admin/tag/getBoardTags",
@@ -27,7 +27,7 @@
 										   str += " ";
 									   }
 								   }	   
-								   $("#tag_name"+i).append(str);   
+								   $("#tag_name"+i).append(str);  
 							   }
 						   }
 				})
@@ -51,13 +51,14 @@
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
 					<form action="boardTag" method="GET" class="container justify-content-center">
+						<input type="hidden" name="smallCodeStr" value="${smallCode}">
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 							<div class="col-2">
-								<select name="search" class="form-select">
-									<option value="tagname">태그명</option>
+								<select name="searchType" class="form-select">
+									<option value="tag_name">태그명</option>
 									<option value="title">제목</option>
-									<option value="name">작성자</option>
+									<option value="user_id">작성자</option>
 								</select>
 							</div>
 							<div class="col-5 mx-2">
@@ -91,7 +92,6 @@
 									<th scope="col">제목</th>
 									<th scope="col">작성자</th>
 									<th scope="col">작성일</th>
-									<th scope="col">조회수</th>
 									<th scope="col">태그명</th>
 									<th scope="col"></th>
 								</tr>
@@ -101,14 +101,13 @@
 								<c:forEach var="board" items="${listBoard}" varStatus="st">
 									<tr>
 										<td>${num}</td>
-										<td><input type="hidden" id="board_id${st.index}" value="${board.id}">
-											${board.id}</td>
+										<td><input type="hidden" id="board_id${st.index}" value="${board.board_id}">
+											${board.board_id}</td>
 										<td>${board.title}</td>
 										<td>${board.name}</td>
 										<td><fmt:formatDate value="${board.created_at}" type="date" pattern="YY/MM/dd"/></td>
-										<td>${board.read_count}</td>
 										<td id="tag_name${st.index}"></td>
-										<td><a href='boardTagsUpdateForm?boardIdStr=${board.id}&currentPage=${page.currentPage}' class="detail-link">관리</a></td>
+										<td><a href='boardTagsUpdateForm?boardIdStr=${board.board_id}&currentPage=${page.currentPage}' class="detail-link">관리</a></td>
 									</tr>
 									<c:set var="num" value="${num + 1}"/>
 								</c:forEach>
