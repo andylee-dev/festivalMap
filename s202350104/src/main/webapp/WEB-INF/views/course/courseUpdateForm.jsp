@@ -61,18 +61,21 @@
 	
 	//4. popup창에서 받은 데이터 리스트.
 	function receiveContentList(contentList) {
+		console.log("contentList", contentList);
 		
 		const contentsTableEl = document.getElementById("contentsTable");
 		
 		for (var i = 0; i < contentList.length; i++) {
 			// newList에 contentList[i].id가 있다면 스킵.
-	        if ( getCurrentContentList().includes(contentList[i].id)) continue;
+	        if (getCurrentContentList().includes(contentList[i].id)) continue;
 
 			// 테이블의 row 하나를 생성한다.
 			const rowEl = makeCard(contentList[i]);
 			
 			// contentsTable에 row한줄 추가.
 			contentsTableEl.appendChild(rowEl);
+			console.log("contentsTableEl : ", contentsTableEl);
+			console.log("rowEl : ", rowEl);
 		}
 	}
 	
@@ -208,8 +211,21 @@
 	
 		// contentsTable 테이블을 찾습니다.
 		var contentsTable = document.getElementById("contentsTable");
+		
+		// contentsTable의 모든 card 요소를 가져옵니다.
+	    var cards = contentsTable.getElementsByClassName("card");
+		
+	 	// 각 card의 ID를 idList 배열에 추가합니다.
+	    /* for (var i = 0; i < cards.length; i++) { */
+	    	/* // 현재 행에서 td 요소를 찾습니다.
+		    var cells = rows[i].getElementsByTagName("contentId"); */
+	    	
+			// ID가 있는 첫 번째 셀을 가져와서 idList 배열에 추가합니다.
+	        /* var cardId = cards[i].id;
+	        idList.push(cardId);
+	    } */
 	
-		// contentsTable의 모든 tr 요소를 가져옵니다.
+		/* // contentsTable의 모든 tr 요소를 가져옵니다.
 		var rows = contentsTable.getElementsByTagName("tr");
 	
 		// 첫 번째 행은 헤더이므로 1부터 시작합니다.
@@ -220,9 +236,17 @@
 		    // ID가 있는 첫 번째 셀을 가져와서 idList 배열에 추가합니다.
 		    var id = cells[0].textContent;
 		    idList.push(id);
-		}
+		} */ 
+		
+		// 각 card의 ID를 idList 배열에 추가합니다.
+	    for (var i = 0; i < cards.length; i++) {
+	        // cardId에서 "card"를 제외한 부분을 가져와서 idList 배열에 추가합니다.
+	        var cardId = cards[i].id.replace("card", "");
+	        idList.push(cardId);
+	    }
 
  		return idList;
+ 		console.log("idList : ", idList)
 	}
 	
 
@@ -230,13 +254,17 @@
 	// 최종적으로 submit 눌렀을때, delList, addList 요소 추가.
 	function submitHandler(){
 		const finalList = getCurrentContentList();	
+		console.log("getCurrentContentList() ->",getCurrentContentList());
 		let delList = [];
  	    for (var i = 0; i < oldList.length; i++) {
-	        if (!finalList.includes(oldList[i])){
+	        if (!finalList.includes(oldList[i])) {
 	        	delList.push(oldList[i]);
 	        }
  	    }
  	    const addList = difference(finalList,oldList);
+ 	    
+ 	    console.log("finalList :", finalList)
+ 	    console.log("oldList :", oldList)
  	    
  	    console.log("delList ->",delList);
  	    console.log("addList ->",addList);
@@ -282,8 +310,9 @@
 	// 1. 처음에 html이 다 만들어 지고 난 이후에 실행.
 	document.addEventListener('DOMContentLoaded', function() {
 		oldList = getCurrentContentList();
+		
+		console.log("oldList : ", oldList);
 	});
-	
 	
 </script>
 <script type="text/javascript">
@@ -515,8 +544,8 @@
 								
 								<div id="contentsTable" class="d-flex flex-wrap" style="margin: 20px; padding: 20px;">
 									<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
-										<div class="card course-card" style="width: 208px; height: 340px; margin: 20px; padding: 18px;">
-											
+										<div id="card${courseContentList.content_id}" class="card course-card" style="width: 208px; height: 340px; margin: 20px; padding: 18px;">
+											<input type="hidden" id="content_id" value="${courseContentList.content_id}">
 											<div class="d-flex justify-content-end">
 										    	<i onclick="deleteContent(event)" class="bi bi-x-square-fill" style="color: #FF4379"></i>
 											</div>
@@ -528,11 +557,29 @@
 												<p class="card-text card-font-content">${courseContentList.address }</p>
 											</div>
 											<div class="d-flex justify-content-end mt-auto">
-												<a href="" class="btn btn-primary card-button-style card-button-text">상세정보보기</a>
+												<a id="contentId${courseContentList.content_id}" href="" class="btn btn-primary card-button-style card-button-text">상세정보보기</a>
 											</div>
 										</div>
 									</c:forEach>
 								</div>
+									
+									
+								 <%-- <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+                                     <li  class="pagination justify-content-center">
+                                        <c:choose>
+                                        <c:when test="${oldBook.ob_status  eq '0' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=0" >${i}</a></c:when>
+                                        <c:when test="${oldBook.ob_status  eq '1' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=1" >${i}</a></c:when>
+                                        <c:when test="${oldBook.ob_status  eq '2' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=2" >${i}</a></c:when>
+                                        <c:when test="${oldBook.ob_status  eq '3' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=3" >${i}</a></c:when>
+                                        <c:otherwise><c:out value=""></c:out>
+                                        </c:otherwise>
+                                        </c:choose>
+                                    </li>
+                                 </c:forEach> --%>
+									
+									
+									
+								
 								
 								<%-- <c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
 									<div class="card course-card" style="width: 18rem;">
