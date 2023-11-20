@@ -21,9 +21,17 @@
 <link href="/css/global.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-function closeWindow() {
-    window.close();
-}
+	function closeWindow() {
+	    window.close();
+	}
+	
+	function checkMinLength(element, minLength) {
+	    if (element.value.length < minLength) {
+	        element.setCustomValidity('최소 ' + minLength + '글자 이상 입력하세요.');
+	    } else {
+	        element.setCustomValidity('');
+	    }
+	}
 </script>
 <style type="text/css">
 	#report-container {
@@ -71,7 +79,7 @@ function closeWindow() {
 					<form action="boardReportUpdate">
 						
 						<div class="table-container p-5" id="report-container">
-						<table class="table table-bordered">
+						<table class="table table-bordered" style="border-radius: 10px;">
 						<tr class="table">
 							<th scope="col" style="text-align: center;">제목</th>
 							<td style="background-color: white;">
@@ -87,16 +95,22 @@ function closeWindow() {
 							<td colspan="3" style="background-color: white;">${board.content }</td>
 						</tr>
 						
-					
-						
-						<tr class="table">
+						<%-- <tr class="table">
 							<th scope="col" style="text-align: center;">신고내용</th>
 							<td colspan="3"  style="background-color: white;">	
 							<input type="hidden" name="id" value="${userId }">
-							<input type="text" name="content" class="form-control" placeholder="신고내용을 입력하세요" >	
+							<input type="text" name="content" class="form-control" placeholder="신고내용을 입력하세요(10글자 이상)" minlength="10" required="required">	
 							</td>
-						</tr>
+						</tr> --%>
 						</table>
+						
+						<div class="mb-3">
+  							<label for="exampleFormControlTextarea1" class="form-label">신고내용</label>
+  								<input type="hidden" name="id" value="${userId }">
+  								<textarea style="background-color: #F4F4F4;" class="form-control" name="content" id="exampleFormControlTextarea1" rows="2" 
+  										 placeholder="신고내용을 입력하세요(10글자 이상)" oninput="checkMinLength(this, 10)" required></textarea>
+						</div>
+						
 						<button type="submit" class="btn btn-primary" >신고</button>
 						<button class="btn btn-primary" onclick="closeWindow()">취소</button>
 					</div>
