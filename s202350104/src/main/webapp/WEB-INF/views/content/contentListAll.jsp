@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/components/header.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -158,7 +158,6 @@
         text-align: center;
     }
 	
-	
 	</style>
 </head>
 <body>
@@ -230,7 +229,7 @@
 							        <th class="img1">사진</th>
 							        <th class="title">이름</th>
 							        <th class="address">주소</th>
-							        <!-- <th class="homepage">홈페이지</th> -->
+							        <th class="homepage">홈페이지</th>
 							        <th class="phone">연락처</th>
 								</tr>
 							</thead>
@@ -242,7 +241,7 @@
 										<td style="white-space: normal;"><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 100px; width: 150px;"></td>
 										<td style="white-space: normal;">${content.title }</td>
 										<td style="white-space: normal;">${content.address }</td>
-			 							<%-- <td style="white-space: normal;">${content.homepage }</td> --%>
+										<td style="white-space: normal;">${content.homepage }</td>
 										<td style="white-space: normal;">${content.phone }</td>
 									</tr>
 								</c:forEach>
