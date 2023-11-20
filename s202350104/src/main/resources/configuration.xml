@@ -4,18 +4,20 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-<!-- 	<typeAliases>
-		<typeAlias alias="Emp" 
-				   type="com.oracle.oBootMyBatis01.model.Emp" />		
-	</typeAliases> -->
+	<!-- 파라미터가 null이어도 DB에 insert / update할 수 있도록 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
 	<typeAliases>
 		<typeAlias alias="Festivals"         type="com.oracle.s202350104.model.Festivals"/>
 		<typeAlias alias="FestivalsContent"  type="com.oracle.s202350104.model.FestivalsContent"/>
 		<typeAlias alias="Restaurants"       type="com.oracle.s202350104.model.Restaurants"/>
 		<typeAlias alias="RestaurantsContent" type="com.oracle.s202350104.model.RestaurantsContent"/>
-		<typeAlias alias="Accomodations"     type="com.oracle.s202350104.model.Accomodations"/>
-		<typeAlias alias="AccomodationsContent"     type="com.oracle.s202350104.model.AccomodationsContent"/>
+		<typeAlias alias="Accomodation"     type="com.oracle.s202350104.model.Accomodation"/>
+		<typeAlias alias="AccomodationContent"     type="com.oracle.s202350104.model.AccomodationContent"/>
 		<typeAlias alias="Course"            type="com.oracle.s202350104.model.Course"/>
+		<typeAlias alias="CourseContent"     type="com.oracle.s202350104.model.CourseContent"/>
 		<typeAlias alias="Experience"        type="com.oracle.s202350104.model.Experience"/>
 		<typeAlias alias="ExperienceContent" type="com.oracle.s202350104.model.ExperienceContent"/>
 		<typeAlias alias="Spot"		         type="com.oracle.s202350104.model.Spot"/>
@@ -23,12 +25,15 @@
 		<typeAlias alias="Tags"              type="com.oracle.s202350104.model.Tags"/>
 		<typeAlias alias="Users"			 type="com.oracle.s202350104.model.Users"/>
 		<typeAlias alias="Board" 			 type="com.oracle.s202350104.model.Board"/>
+		<typeAlias alias="Banner" 			 type="com.oracle.s202350104.model.Banner"/>
 		<typeAlias alias="Report" 			 type="com.oracle.s202350104.model.Report"/>
 		<typeAlias alias="Qna" 				 type="com.oracle.s202350104.model.Qna"/>
 		<typeAlias alias="Point" 			 type="com.oracle.s202350104.model.Point"/>
 		<typeAlias alias="PointHistory"		 type="com.oracle.s202350104.model.PointHistory"/>
 		<typeAlias alias="Areas"			 type="com.oracle.s202350104.model.Areas"/>
 		<typeAlias alias="CommonCodes"		 type="com.oracle.s202350104.model.CommonCodes"/>
+		<typeAlias alias="Contents"		 	 type="com.oracle.s202350104.model.Contents"/>
+		<typeAlias alias="Favorite"          type="com.oracle.s202350104.model.Favorite"/>
 	</typeAliases>
 	
 	

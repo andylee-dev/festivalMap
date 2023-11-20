@@ -3,85 +3,230 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.TagsMapper">
-	<select id="nhTagsTotal" resultType="int">
-		SELECT count(*) FROM Tags
-	</select>
 
-	<select id="nhTagsListPage" resultType="Tags" parameterType="Tags">
+	<!-- TAGS -->
+	
+	<select id="nhTagsTotal" resultType="int" parameterType="Tags">
+		SELECT count(*) FROM Tags
+		WHERE 1=1
+		<if test="keyword != null and keyword != ''">
+			AND name like '%' || #{keyword} || '%'
+		</if>
+	</select>
+	
+	<select id="nhTagsListAll" resultType="Tags" parameterType="Tags">
 		SELECT * 
 		FROM 
 		(
 			SELECT ROWNUM rn, a.*
 			FROM
-			(SELECT * FROM tags ORDER BY id) a
+			(SELECT * FROM tags 
+			 WHERE 1=1
+			 <if test="keyword != null and keyword != ''">
+				AND name like '%' || #{keyword} || '%'
+			 </if>
+			 ORDER BY id) a
 		)
-		WHERE rn BETWEEN #{start} and #{end}
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
 	</select>
 	
-	<select id="nhUserTagsTotal" resultType="int">
-		SELECT count(*) FROM UserTags
+	<insert id="nhTagsInsert" parameterType="Tags">
+		INSERT INTO Tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+	</insert>
+	
+	<select id="nhTagsSelect" parameterType="int" resultType="Tags">
+		SELECT * FROM Tags WHERE id = #{id}
 	</select>
 	
-	<select id="nhUserTagsListPage" resultType="Tags" parameterType="Tags">
+	<update id="nhTagsUpdate" parameterType="Tags">
+		UPDATE Tags SET name = #{name} WHERE id = #{id}
+	</update>
+	
+	<delete id="nhTagsDelete" parameterType="Tags">
+		DELETE Tags WHERE id = #{id}
+	</delete>
+	
+	<!-- USER TAGS -->
+	
+	<select id="nhUserTagsTotal">
+		SELECT count(*)
+		FROM
+		users u, usertags ut, tags t
+		WHERE ut.tag_id = t.id
+		AND   ut.user_id = u.id
+		AND   u.small_code = 2
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tagname'">
+			 		AND t.name like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="searchType == 'user_id'">
+			 		AND u.id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhUserTagsAll" resultType="Tags">
 		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT user_id, tag_id AS id, name
-			 FROM usertags u, tags t
-			 WHERE u.tag_id = t.id 
-			 GROUP BY user_id, tag_id, name
-			 ORDER BY user_id, tag_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		FROM usertags u, tags t
+		WHERE u.tag_id = t.id
+		ORDER BY t.name
 	</select>
 	
-	<select id="nhBoardTagsTotal" resultType="int">
-		SELECT count(*) FROM BoardTags
+	<select id="nhUserTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   usertags
+		WHERE  tag_id = #{tagId}
 	</select>
 	
-	<select id="nhBoardTagsListPage" resultType="Tags" parameterType="Tags">
+	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT board_id, tag_id AS id, name, b.title, cc.content AS cc_content
-			 FROM boardtags bt, tags t, board b, commoncodes cc
-			 WHERE bt.tag_id = t.id 
-             AND   bt.board_id = b.id
-             AND   b.big_code = cc.big_code
-             AND   b.small_code = cc.small_code
-			 GROUP BY board_id, tag_id, name, b.title, cc.content
-			 ORDER BY board_id, tag_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		FROM usertags u, tags t
+		WHERE u.tag_id = t.id
+		AND   u.user_id = #{id}
+		ORDER BY t.name
 	</select>
+		
+	<insert id="nhUserTagsInsert" parameterType="Tags">
+		INSERT INTO UserTags(user_id, tag_id) VALUES(#{user_id}, #{tag_id})
+	</insert>
 	
-	<select id="nhContentTagsTotal" resultType="int">
-		SELECT count(*) FROM ContentTags
-	</select>
+	<delete id="nhUserTagsDelete" parameterType="Tags">
+		DELETE UserTags 
+		WHERE tag_id = #{id}
+		<if test="user_id != null and user_id != 0">
+			AND user_id = #{user_id}
+		</if>
+	</delete>
 	
-	<select id="nhContentTagsListPage" resultType="Tags" parameterType="Tags">
+	<!-- BOARD TAGS -->
+	
+	<select id="nhBoardTagsAll" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM 
-		(
-			SELECT ROWNUM rn, a.*
-			FROM
-			(SELECT content_id, tag_id AS id, name, c.title, cc.content AS cc_content
-			 FROM contenttags ct, tags t, contents c, commoncodes cc 
-			 WHERE ct.tag_id = t.id 
-			 AND   ct.content_id = c.id
-             AND   c.big_code = cc.big_code
-             AND   cc.small_code = 999
-			 GROUP BY content_id, tag_id, name, c.title, cc.content
-			 ORDER BY content_id, tag_id) a
-		)
-		WHERE rn BETWEEN #{start} and #{end}
+		FROM  BoardTags bt, Tags t, Board b
+		WHERE bt.tag_id = t.id
+		AND   bt.board_id = b.id
+		AND   b.small_code = #{smallCode}
+		ORDER BY t.name
 	</select>
 	
-	<select id="nhTagsListAll" resultType="Tags">
-		SELECT * FROM Tags
+	<select id="nhBoardTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM  BoardTags bt, Tags t
+		WHERE bt.tag_id = t.id
+		AND   bt.board_id = #{boardId}
+		ORDER BY t.name
 	</select>
+	
+	<select id="nhBoardTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   boardtags
+		WHERE  tag_id = #{tagId}
+	</select>
+		
+	<delete id="nhBoardTagsDelete" parameterType="Tags">
+		DELETE BoardTags 
+		WHERE tag_id = #{tag_id}
+		<if test="board_id != null and board_id != 0">
+			AND board_id = #{board_id}
+		</if>
+	</delete>
+	
+	<!-- CONTENT TAGS -->
+	
+	<select id="nhContentTagsAll" resultType="Tags" parameterType="int">	
+		SELECT *
+		FROM　ContentTags ct, Tags t, Contents c
+		WHERE ct.tag_id = t.id
+		AND   ct.content_id = c.id
+		AND   c.big_code = #{bigCode}
+		ORDER BY t.name
+	</select>
+	
+	<select id="nhContentTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM ContentTags ct, Tags t
+		WHERE ct.tag_id = t.id
+		AND   ct.content_id = #{contentId}
+		ORDER BY t.name
+	</select>
+	
+	<select id="nhContentTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   contenttags
+		WHERE  tag_id = #{tagId}
+	</select>
+	
+	<insert id="nhContentTagsInsert" parameterType="Tags">
+		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
+	</insert>
+	
+	<delete id="nhContentTagsDelete" parameterType="Tags">
+		DELETE ContentTags 
+		WHERE tag_id = #{tag_id}
+		<if test="content_id != null and content_id != 0">
+			AND content_id = #{content_id}
+		</if>
+	</delete>
+	
+	<!-- COURSE TAGS -->
+	
+	<select id="nhCourseTagsAll" resultType="Tags">	
+		SELECT *
+		FROM　  CourseTags ct, Tags t, Courses c
+		WHERE ct.tag_id = t.id
+		AND   ct.course_id = c.id
+		ORDER BY t.name
+	</select>
+	
+	<select id="nhCourseTagOne" resultType="Tags" parameterType="int">
+		SELECT *
+		FROM  CourseTags ct, Tags t
+		WHERE ct.tag_id = t.id
+		AND   ct.course_id = #{courseId}
+		ORDER BY t.name
+	</select>
+	
+	<select id="nhCourseTagsCount" resultType="int" parameterType="int">
+		SELECT count(tag_id)
+		FROM   coursetags
+		WHERE  tag_id = #{tagId}
+	</select>
+	
+	<insert id="nhCourseTagsInsert" parameterType="Tags">
+		INSERT INTO CourseTags(tag_id, course_id) VALUES(#{tag_id}, #{course_id})
+	</insert>
+	
+	<delete id="nhCourseTagsDelete" parameterType="Tags">
+		DELETE CourseTags 
+		WHERE tag_id = #{tag_id}
+		<if test="course_id != null and course_id != 0">
+			AND course_id = #{course_id}
+		</if>
+	</delete>
+
+
+
+	<!-- Board 관련 Mapper by.엄민용 -->
+	<insert id="myinsertBoardTags" parameterType="Tags">
+		insert into BoardTags(tag_id, board_id) values (#{tag_id}, #{board_id})
+	</insert>
+	
+	<select id="myBoardTag" resultType="Tags" parameterType="int">
+		select c.title, b.name
+		from BoardTags a
+		join tags b
+		on a.tag_id = b.id
+		join board c
+		on a.board_id = c.id
+		where c.id = #{id}
+	</select>
+	
+	<delete id="mydeleteBoardTags" parameterType="int">
+		delete from BoardTags
+		where board_id = #{id}
+	</delete>
 </mapper>

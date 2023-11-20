@@ -1,30 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
+<%@ include file="/WEB-INF/components/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>PhotoEventBoardDetail</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-	crossorigin="anonymous">
-	
-</script>
-<!-- jQuery 라이브러리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
 
 <script>
-	function deleteAndRedirect(id, smallCode) {
+	function deleteAndRedirect(id, smallCode, userId) {
 	    $.ajax({
-	        url: 'boardDelete?id=' + id + '&smallCode=' + smallCode,
+	        url: 'boardDelete?id=' + id + '&smallCode=' + smallCode + '&userId=' + userId,
 	        method: 'GET',
 	        success: function () {
 	            // 삭제 요청이 성공 후 부모 창 redirect
@@ -40,8 +31,8 @@
 	    });
 	}
 	
-	function updateBoard(boardId) {
-	    window.opener.location.href = 'boardUpdateForm?id=' + boardId;
+	function updateBoard(boardId, userId) {
+	    window.opener.location.href = 'boardUpdateForm?id=' + boardId + '&userId=' + userId;
 	    window.close();
 	}
 
@@ -65,59 +56,109 @@
 	        }
 	    });
 	}
+	
+    $(document).ready(function () {
+        $(".custom-carousel").owlCarousel({
+            autoWidth: true,
+            loop: true
+        });
+/*         $(".custom-carousel .card").click(function () {
+            $(".custom-carousel .card").not($(this)).removeClass("card");
+            $(this).toggleClass("card");
+        }); */
+    });
+	
+	<!-- 게시판 신고기능 -송환 -->
+	function report(boardId) {
+	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
+	}
 </script>
 </head>
 <body>
-	<div id="carouselExampleIndicators" class="carousel slide">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="1" aria-label="Slide 2"></button>
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="2" aria-label="Slide 3"></button>
+	<!-- 전체 content 영역  Start-->
+	<div class="container p-0 general_board_custom" style="width: 100%;">
+		
+		<!-- 구분 출력 -->
+		<div class="container p-3" > 
+			<div class="row row-cols-5 align-items-center division_photo_custom">
+				<div class="col-md-1">글번호</div>
+				<div class="col-md-6">제&nbsp;목</div>
+				<div class="col-md-2">작성자</div>
+				<div class="col-md-2">작성일</div>
+				<div class="col-md-1">조회수</div>			
+			</div>		
 		</div>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="../image/sea.jpg" class="d-block w-100" alt="..." style="width: 800px; height: 400px;">
-			</div>
-			<div class="carousel-item">
-				<img src="../image/sea2.jpg" class="d-block w-100" alt="..." style="width: 800px; height: 400px;">
-			</div>
-			<div class="carousel-item">
-				<img src="../image/sea3.jpg" class="d-block w-100" alt="..." style="width: 800px; height: 400px;">
+		
+		<!-- 구분별 값 출력 -->
+		<div class="container p-3"> 
+			<div class="row row-cols-5 align-items-center list_photo_custom">
+				<div class="col-md-1">1</div>
+				<div class="col-md-6">${board.title }</div>
+				<div class="col-md-2">${board.name }</div>
+				<div class="col-md-2">
+					<fmt:formatDate value="${board.created_at }" type="date"
+									pattern="YYYY.MM.dd"/>				
+				</div>
+				<div class="col-md-1">${board.read_count }</div>			
+			</div>		
+		</div>	
+		
+		<!-- 이미지 출력 -->
+		<div class="container p-3">
+			<div class="row row-cols-1">
+				<div class="col img_detail_custom">
+					<img alt="${board.file_name }" src="${board.file_path }${board.file_name}">
+				</div>			
 			</div>
 		</div>
-		<button class="carousel-control-prev" type="button" 
-				data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span> 
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button"
-				data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
+		
+		<!-- 상세내용 출력 -->
+		<div class="container p-3 detail_custom">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col">
+					<p>${board.content }</p>
+				</div>			
+			</div>
+		</div>
+		
+		<!-- 해시태그 출력 -->
+		<div class="container p-3 tags_detail_custom">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col tags_row_custom">
+					<c:forEach var="tags" items="${hashTag }">
+						<span class="badge rounded-pill text-bg-light">#${tags.name }</span>
+					</c:forEach>				
+				</div>			
+			</div>
+		</div>
+		
+		<!-- 기능버튼 출력 -->		
+		<div class="container p-3" >
+			<div class="row row-cols-4">
+				<c:choose>
+					<c:when test="${board.small_code eq 4 }">
+						<div class="col-md-1 btn_border_custom">
+							<button class="btn btn_detail_custom" onclick="updateBoard(${board.id}, ${userId })">수&nbsp;정</button>				
+						</div>
+						<div class="col-md-1 btn_border_custom">
+							<button class="btn btn_detail_custom" onclick="deleteAndRedirect(${board.id}, ${board.small_code}, ${userId })">삭&nbsp;제</button>				
+						</div>
+						<div class="col-md-1 btn_border_custom">
+							<!-- 게시판 신고기능 -송환 -->
+							<button class="btn btn_detail_custom" onclick="report(${board.id})">신&nbsp;고</button>				
+						</div>				
+					</c:when>
+					<c:otherwise>
+		 				<div class="col-md-1 btn_border_custom">
+							<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">목록</button>				
+						</div> 					
+					</c:otherwise>				
+				</c:choose>
+			</div>
+		</div>
+		
+	<!-- 전체 content 영역  END-->		
 	</div>
-	<div class="container border p-5">
-		<table class="table">
-			<tr>
-				<th scope="col">제목</th>
-				<td>${board.title }</td>
-				<th scope="col">작성자</th>
-				<td>${board.name }</td>
-			</tr>
-			<tr>
-				<th scope="col">내용</th>
-				<td>${board.content }</td>
-			</tr>
-		</table>
-	</div>
-	<div class="text-center">
-		<button class="btn btn-primary" onclick="updateBoard(${board.id})">수정</button>
-		<button class="btn btn-danger" onclick="deleteAndRedirect(${board.id}, ${board.small_code})">삭제</button>
-		<button class="btn btn-secondary" onclick="closeAndRedirect(${board.small_code })">취소</button>
-	</div>
+
 </body>
 </html>

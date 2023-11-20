@@ -8,6 +8,12 @@ import com.oracle.s202350104.model.SpotContent;
 public interface SpotDao {
 
 	List<SpotContent> listSpot(SpotContent spotContent);
-	int               totalSpot();
+	SpotContent       detailSpot(int contentId);
+	int               insertSpot(SpotContent spotContent);
+	int               updateSpot(SpotContent spot);
+	int               deleteSpot(int contentId);
+	int               approveSpot(int contentId);
+	List<SpotContent> listSpot3(SpotContent spotContent);
+	int               totalSearchSpot(SpotContent spotContent); //테마별조회
 
 }

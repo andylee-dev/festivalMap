@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">    
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
   rel="stylesheet"
@@ -14,64 +16,27 @@
   integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
   crossorigin="anonymous"
 ></script>
-<style type="text/css">
-    body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-  }
-  
-  html {
-    height: -webkit-fill-available;
-  }
-  
-  main {
-    height: 100vh;
-    height: -webkit-fill-available;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  
-  .dropdown-toggle { outline: 0; }
-  
-  .btn-toggle {
-    padding: .25rem .5rem;
-    font-weight: 600;
-    color: var(--bs-emphasis-color);
-    background-color: transparent;
-  }
-  .btn-toggle:hover,
-  .btn-toggle:focus {
-    color: rgba(var(--bs-emphasis-color-rgb), .85);
-    background-color: var(--bs-tertiary-bg);
-  }
-  
-  .btn-toggle::before {
-    width: 1.25em;
-    line-height: 0;
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-    transition: transform .35s ease;
-    transform-origin: .5em 50%;
-  }
-  
-  [data-bs-theme="dark"] .btn-toggle::before {
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%28255,255,255,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-  }
-  
-  .btn-toggle[aria-expanded="true"] {
-    color: rgba(var(--bs-emphasis-color-rgb), .85);
-  }
-  .btn-toggle[aria-expanded="true"]::before {
-    transform: rotate(90deg);
-  }
-  
-  .btn-toggle-nav a {
-    padding: .1875rem .5rem;
-    margin-top: .125rem;
-    margin-left: 1.25rem;
-  }
-  .btn-toggle-nav a:hover,
-  .btn-toggle-nav a:focus {
-    background-color: var(--bs-tertiary-bg);
-  }
-    </style>
+<script src="/js/pagenation.js"></script>
+<link href="/css/global.css" rel="stylesheet" type="text/css">
+<link href="/css/admin.css" rel="stylesheet" type="text/css">
+<script>
+function toggleTab(tabId) {
+    var tabs = ["user-tab", "content-tab", "course-tab", "cs-tab", "notice-tab", "community-tab", "point-tab", "tag-tab", "admin-tab"];
+    var collapses = ["user-collapse", "content-collapse", "course-collapse", "cs-collapse", "notice-collapse", "community-collapse", "point-collapse", "tag-collapse", "admin-collapse"];
+    for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i] == tabId && document.getElementById(tabs[i]).getAttribute('aria-expanded') == 'false') {
+            document.getElementById(tabs[i]).setAttribute('aria-expanded', 'true'); 
+            document.getElementById(collapses[i]).style.transition = "height 0.2s ease-out";
+            document.getElementById(collapses[i]).classList.add('show'); 
+        } else if (tabs[i] == tabId && document.getElementById(tabs[i]).getAttribute('aria-expanded') == 'true') {
+            document.getElementById(collapses[i]).style.transitionDuration = "0s";
+            continue;
+        } else {
+            document.getElementById(tabs[i]).setAttribute('aria-expanded', 'false'); 
+            document.getElementById(collapses[i]).style.transition = "height 0.5s ease-out";
+            document.getElementById(collapses[i]).classList.remove('show'); 
+        }
+    }
+}
+</script>
+    

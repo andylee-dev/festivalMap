@@ -1,0 +1,59 @@
+
+body {
+	min-height: 100vh;
+	min-height: -webkit-fill-available;
+}
+
+html {
+	height: -webkit-fill-available;
+}
+
+.admin-header-container {
+	background: black;
+	display: flex;
+	align-items: center;
+	height: 110px;
+	justify-content: left;
+}
+
+.title-bi {
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	color: #EEFFC2;
+}
+
+.admin-header-title {
+	color: #EEFFC2;
+	font-size: 24px;
+	font-family: Noto Sans;
+	font-weight: 800;
+	align-items: center;
+}
+
+/* 리스트에서 관리 페이지로 이동하는 링크에 적용 */
+.detail-link {
+	text-decoration: none;
+	color: #FF4379;
+	font-weight: bold;
+}
+
+.list-column-nh {
+	font-weight: bold;
+	text-align: center;
+}
+
+.list-rows-nh {
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+

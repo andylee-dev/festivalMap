@@ -1,1 +1,51 @@
 @CHARSET "UTF-8";
+
+:root {
+    --bs-font-sans-serif: 'Noto Sans KR', sans-serif;
+    --bs-btn-font-family: var(--bs-font-sans-serif);
+}
+.btn {
+    border-color: #FF4379; 
+    color: #FF4379;
+}
+
+.btn-primary {
+    background-color: #FF4379; 
+    border-color: #FF4379; 
+    color: white;
+}
+
+
+/* 마우스 오버 시 버튼 색상 변경 */
+.btn:hover{
+    background-color: #52525C ; 
+    border-color: #52525C ; 
+    color: #ffffff ; /* 원하는 글씨 색상으로 변경 */
+}
+
+.btn-primary:hover {
+    background-color: #52525C ; 
+    border-color: #52525C; 
+    color: #FF4379 ;
+}
+
+/* Pagination 버튼의 글씨 색상 변경 */
+.pagination .page-link {
+  color: #FF4379; /* 원하는 글씨 색상으로 변경 */
+}
+
+/* Active 상태일 때 버튼의 배경 색상 변경 */
+.pagination .page-item .page-link.active {
+  background-color: #FF4379; /* 원하는 배경 색상으로 변경 */
+  border-color: #FF4379; /* 원하는 테두리 색상으로 변경 */
+  color: #ffffff; /* 원하는 글씨 색상으로 변경 */
+}
+
+.pagination {
+	justify-content: center;
+}
+
+.form-check-input:checked {
+	background-color: #FF4379;
+	border-color: #FF4379;
+}

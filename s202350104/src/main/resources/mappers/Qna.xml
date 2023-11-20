@@ -10,16 +10,97 @@
              SELECT rownum rn, a.*
              FROM 
                (select q.*, u.name, u.password, u.nickname, u.birthday
-                from qna q, users u
-                where q.user_id = u.id
-                 order by q.id) a
+                from   qna q, users u
+                where  q.user_id = u.id
+                <if test="user_id != null and user_id != 0">
+                and    q.user_id = #{user_id}
+                </if>
+                <if test="keyWord != null and keyWord != ''">
+			        <choose>
+			            <!-- "searchType"이 "name"일 때 -->
+			            <when test="searchType == 'name'">
+							and name like '%' || #{keyWord}|| '%'
+			            </when>
+			            <!-- "searchType"이 "nickname"일 때 -->
+			            <when test="searchType == 'nickname'">
+							and nickname like '%' || #{keyWord}|| '%'
+			            </when>
+			        </choose>
+			    </if>    
+                <if test="startDate != null and endDate != null">
+		            and q.created_at BETWEEN #{startDate} AND #{endDate}+1
+		        </if>
+		        <if test="status != null and status != ''">
+		        	and q.status = #{status}
+		        </if>
+                order by q.id) a
       )
       WHERE rn BETWEEN #{start} and #{end}
-      
    </select>
-   <select id="qnaTotal" resultType="int">
-   SELECT   count(*)
-   FROM   qna
+   
+   <select id="qnaTotal" resultType="int" parameterType="Qna">
+	select count(*)
+    from   qna q, users u
+    where  q.user_id = u.id
+    <if test="user_id != null and user_id != 0">
+    and    q.user_id = #{user_id}
+    </if>
+    <if test="keyWord != null and keyWord != ''">
+		<choose>
+			<!-- "searchType"이 "name"일 때 -->
+				<when test="searchType == 'name'">
+					and name like '%' || #{keyWord}|| '%'
+				</when>
+			<!-- "searchType"이 "nickname"일 때 -->
+				<when test="searchType == 'nickname'">
+					and nickname like '%' || #{keyWord}|| '%'
+				</when>
+		</choose>
+	</if>    
+    <if test="startDate != null and endDate != null">
+	and q.created_at BETWEEN #{startDate} AND #{endDate}+1
+	</if>
+	<if test="status != null and status != ''">
+	and q.status = #{status}
+	</if>
    </select>
+   
+   <select id="dhDetailQna" resultType="Qna" parameterType="Qna">
+   SELECT 	*
+   FROM		qna
+   WHERE	id = #{id}	
+   AND		user_id = #{user_id}
+   
+   </select>
+   
+    <insert id="dhQnaInsert" parameterType="Qna">
+   INSERT INTO 	qna(user_id, id, question_title, question_content, created_at)
+   VALUES(#{user_id},qna_id_seq.nextval,#{question_title},#{question_content},sysdate)
+   </insert>
+   
+   <select id="dhQnaSelect" resultType="Qna" parameterType="Qna">
+   SELECT 	*
+   FROM		qna
+   WHERE	id = #{id}	
+   AND		user_id = #{user_id}
+   </select>
+   
+   <update id="dhQnaUpdate" parameterType="Qna">
+   UPDATE 	qna	
+   SET		question_title = #{question_title}, question_content = #{question_content}
+   WHERE	id = #{id}	
+   AND		user_id = #{user_id}	 
+   </update>
+   
+   <delete id="dhQnaDelete" parameterType="Qna" >
+   DELETE	qna WHERE id = #{id} AND user_id = #{user_id}
+   </delete>
+   
+   <update id="dhAdminUpdate" parameterType="Qna">
+   UPDATE	qna
+   SET		answer_title =#{answer_title}, answer_content = #{answer_content}, status = 1, updated_at =sysdate
+   WHERE	id = #{id}
+   AND		user_id = #{user_id}
+   </update>
 </mapper>   
 

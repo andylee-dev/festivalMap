@@ -6,64 +6,130 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			// 행별로 데이터 삭제
+			function tagDelete(pIndex) {
+				var deleteId = $('#id'+pIndex).val();
+				if(confirm("정말 삭제하시겠습니까?")) {
+					$.ajax({
+								method:"POST",
+								url:"<%=request.getContextPath()%>/admin/tag/deleteTags",
+								data:{id : deleteId},
+								dataType:'text',
+								success:
+									function(result) {
+											if(result == '1') {
+												$('#tag'+pIndex).remove();
+												alert("성공적으로 삭제되었습니다.");
+												location.reload();
+											} else {
+												alert("삭제에 실패하였습니다.");
+											}		
+									}
+							})
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="col-10 overflow-auto p-0">
 			
-				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">태그 관리</h1>
+				<!-- Section1: 타이틀 -->
+				<div class="admin-header-container">
+					<div class="container m-4">
+						<i class="title-bi bi bi-grid-fill "></i>
+					<label  class="admin-header-title ">태그리스트</label>
+					</div>
 				</div>
 		
-				<!-- Section2: Search Form -->		
-				<div class="border p-3 m-3">
-					<h1 class="border">검색폼</h1>
-					<button type="button" class="btn btn-outline-secondary">검색</button>
-					<button type="button" class="btn btn-outline-secondary">초기화</button>
-				</div>		
-				
-				<!-- Section3: Table -->		
-				<div class="border p-3 m-3">
-					<button type="button" class="btn btn-outline-secondary">등록</button>
-					<table class="table table-striped table-sm">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">태그명</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="tag" items="${listTags}">
-								<tr>
-									<td>${num}</td>
-									<td>${tag.name}</td>
-									<td><input type="button" value="수정"></td>
-									<td><input type="button" value="삭제"></td>
-								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
-					</table>
-					<p>총 건수 : ${totalTags}</p>
+				<!-- Section2: 검색폼 -->		
+				<div class="container col-9 justify-content-center mt-5">
+					<form action="list" method="GET" class="container justify-content-center">
+						
+						<!-- 검색어 -->
+						<div class="col-12 my-4 d-flex align-items-center">
+							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+							<div class="col-6 mx-1">
+								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요.">
+							</div>
+							<!-- 버튼 -->
+							<div class="col-5 mx-1 d-flex justify-content-center">
+								<button type="submit" class="btn btn-primary col-2 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
+							</div>
+						</div>
+					</form>	
+				</div>
 					
-					<div align="center">
+				<!-- Section3: 테이블 -->	
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container d-flex justify-content-end p-0">
+						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4" 
+						 onclick="location.href='insertTagsForm'">등록</button>
+					</div>	
+					<div class="container table-container p-4">
+					<div class="table-responsive">
+						<table id="userTable" class="table table-md text-center p-3">
+							<thead>
+								<tr>
+									<th scope="col">순번</th>
+									<th scope="col">태그명</th>
+									<th scope="col">회원태그</th>
+									<th scope="col">게시판태그</th>
+									<th scope="col">컨텐츠태그</th>
+									<th scope="col">코스태그</th>
+									<th scope="col">수정</th>
+									<th scope="col">삭제</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:set var="num" value="${page.start}"/>
+								<c:forEach var="tag" items="${listTags}" varStatus="st">
+									<tr id="tag${st.index}">
+										<td><input type="hidden" value="${tag.id}" id="id${st.index}">${num}</td>
+										<td>${tag.name}</td>
+										<td>${tag.userCnt}</td>
+										<td>${tag.boardCnt}</td>
+										<td>${tag.contentCnt}</td>
+										<td>${tag.courseCnt}</td>
+										<td><input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
+										<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="tagDelete(${st.index})"></td>
+									</tr>
+									<c:set var="num" value="${num + 1}"/>
+								</c:forEach>
+							</tbody>
+						</table>
+						<p>총 건수 : ${totalTags}</p>
+					</div>	
+					</div>
+				</div>	
+				
+				<!-- 페이지 번호 -->
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
-							<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
+							<li class="page-item">
+								<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+							</li>
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<a href="list?currentPage=${i}" class="pageblock">[${i}]</a>
+							<li class="page-item">
+								<a href="list?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							</li>
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
-							<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
+							<li class="page-item">
+								<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+							</li>
 						</c:if>
-					</div>	
-				</div>	
+					</ul>
+				</nav>
+				
 			</main>
 		</div>
 		</div>

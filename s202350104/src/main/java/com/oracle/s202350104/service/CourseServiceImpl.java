@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.CourseDao;
+import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 
@@ -22,9 +23,9 @@ public class CourseServiceImpl implements CourseService {
 	private final CourseDao cd;
 
 	@Override
-	public int courseCount(Course course) {
+	public int courseCount() {
 		int courseCount = 0;
-		courseCount = cd.courseCount(course);
+		courseCount = cd.courseCount();
 		log.info("CourseServiceImpl courseCount courseCount ->" + courseCount);
 		
 		return courseCount;
@@ -42,24 +43,98 @@ public class CourseServiceImpl implements CourseService {
 		return courseList;
 	}
 
-//	@Override
-//	public List<Course> courseDetail(Course course) {
-//		List<Course> courseDetail = null;
-//		courseDetail = cd.courseDetail(course);
-//		
-//		if(courseDetail == null) {
-//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 아디가 없습니다.");
-//		}
-//		
-//		return courseDetail;
-//	}
+	@Override
+	public List<Course> courseDetail(int course_id) {
+		log.info("course_id ->" + course_id);
+		List<Course> courseDetailList = cd.courseDetail(course_id);
+		
+		if(courseDetailList == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 상세 리스트가 없습니다.");
+		}
+		
+		return courseDetailList;
+	}
 
 	@Override
-	public CourseContent detailList(int course_id) {
-		System.out.println("course_id ->" + course_id);
-		CourseContent detailList = null;
-		detailList = cd.detailList(course_id);
+	public int courseInsert(Course course) {
+		int courseInsert = cd.courseInsert(course);
+		log.info("CourseServiceImpl courseCount courseInsert ->" + courseInsert);
 		
-		return detailList;
+		
+		return courseInsert;
 	}
+
+
+	@Override
+	public int courseContentInsert(List<CourseContent> courseContentList) {
+		log.info("courseContentInsert ->" + courseContentList);
+		int courseContentInsert = cd.courseContentInsert(courseContentList);
+		log.info("CourseServiceImpl courseCount courseInsert ->" + courseContentInsert);	
+		
+		return courseContentInsert;
+	}
+	
+	@Override
+	public int courseContentDelete(int id) {
+		log.info("CourseServiceImpl courseContentDelete start...");
+		int courseContentDelete = cd.courseContentDelete(id);
+		log.info("CourseServiceImpl courseContentDelete courseDelete ->" + courseContentDelete);
+		
+		return courseContentDelete;
+	}
+
+	@Override
+	public int courseDelete(int id) {
+		log.info("CourseServiceImpl courseDelete start...");
+		int courseDelete = cd.courseDelete(id);
+		log.info("CourseServiceImpl courseDelete courseDelete ->" + courseDelete);
+		
+		return courseDelete;
+	}
+
+	@Override
+	public Course courseUpdateDetail(int id) {
+		log.info("CourseServiceImpl courseContent start...");
+		Course courseUpdateDetail = cd.courseUpdateDetail(id);
+		
+		return courseUpdateDetail;
+	}
+
+	@Override
+	public int courseUpdate(Course course) {
+		log.info("CourseServiceImpl courseUpdate start...");
+		int courseUpdate = cd.courseUpdate(course);
+		
+		return courseUpdate;
+	}
+
+	@Override
+	public List<CourseContent> courseContentList(int id) {
+		List<CourseContent> courseContentList = cd.courseContentList(id);
+		
+		return courseContentList;
+	}
+
+
+	@Override
+	public int deleteCourseContent(CourseContent courseContent) {
+		int deleteCourseContent = cd.deleteCourseContent(courseContent);
+		
+		return deleteCourseContent;
+	}
+
+	@Override
+	public int deleteToContent(List<CourseContent> deleteContent) {
+		int deleteToContent = cd.deleteToContent(deleteContent);
+		
+		return deleteToContent;
+	}
+
+	@Override
+	public int maxOrderNum(int id) {
+		int maxOrderNum = cd.maxOrderNum(id);
+		
+		return maxOrderNum;
+	}
+
 }

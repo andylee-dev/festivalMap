@@ -3,6 +3,7 @@ package com.oracle.s202350104.dao;
 import java.util.List;
 
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.FestivalsContent;
 
 public interface BoardDao {
 	
@@ -17,6 +18,8 @@ public interface BoardDao {
 	List<Board> getPhotoAllList(Board board);
 	
 	List<Board> getEventAllList(Board board);
+	
+	List<Board> getReviewAllList(Board board);
 
 	Board boardDetail(int boardId);
 
@@ -26,9 +29,9 @@ public interface BoardDao {
 
 	int boardInsert(Board board);
 
+	Board boardRead(int id);
 
-
-
+	int boardCount2(Board festival);
 
 
 }

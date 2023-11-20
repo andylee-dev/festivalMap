@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.FavoriteMapper">
+	
+	<select id="joFavoriteListAll" resultType="Favorite" parameterType="Favorite">
+		SELECT *
+		FROM   
+			   (
+			   	SELECT ROWNUM rn, f.*, u.name
+			 	FROM   favorite f, users u
+			 	WHERE  f.user_id = u.id
+				) 
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+		
+		
+	<select id="joFavoriteTotal" resultType="int">
+		SELECT count(*)
+		FROM   favorite
+	</select>
+	
+	
+	<select id="joCondTotalFavorite" resultType="int" parameterType="Favorite">
+		SELECT count(*) FROM favorite
+		
+		<choose>
+			<when test="search == 's_id'">
+				WHERE user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				WHERE name like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				WHERE user_id like '%'
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="joListSearchFavorite" parameterType="Favorite" resultType="Favorite">
+		
+		SELECT *
+		FROM
+		(
+			SELECT rownum rn, f.*, u.name
+			FROM   favorite f, users u
+			WHERE  f.user_id = u.id		
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+		
+		<choose>
+			<when test="search == 's_id'">
+				AND user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				AND name like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				AND user_id like '%'
+			</otherwise>
+		</choose>
+			
+	</select>
+	
+	<select id="joGetMyLikeList" parameterType="Favorite" resultType="Favorite">
+		SELECT *
+		FROM
+		(
+			SELECT rownum rn, f.id, c.title, f.create_at
+			FROM   contents c, favorite f
+			WHERE  f.user_id = '1003'
+			AND    f.id = c.id
+		)
+		WHERE rn between #{start} and #{end}
+		
+	</select>
+
+	<select id="joTotalMyLikeList" parameterType="Favorite" resultType="int">
+		SELECT COUNT(*)
+		FROM   favorite f  
+		WHERE  f.user_id = 1003
+    </select>
+    
+    <delete id="joDeleteMyLike" parameterType="int">
+		DELETE FROM favorite 
+		WHERE  user_id = '1003' 
+		AND    id = #{id}
+    </delete>
+    
+</mapper>

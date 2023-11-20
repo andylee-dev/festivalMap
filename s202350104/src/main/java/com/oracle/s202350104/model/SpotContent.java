@@ -42,14 +42,21 @@ public class SpotContent {
 	private String	is_stroller;
 	private String	is_pet;
 	private String	is_parking;
+	private String	is_elevator;
 	
 	// 조회용
-	private String search;
-	private String keyWord;
+	private String searchType;
+	private String keyword;
 	private String pageNum;
 	private int	   start;
 	private int	   end;
 	
+	
 	//분류
 	private String cc_content;
+	private String bcode_content;
+	private String scode_content;
+	private String area_content;
+	private String sigungu_content;
+	
 }

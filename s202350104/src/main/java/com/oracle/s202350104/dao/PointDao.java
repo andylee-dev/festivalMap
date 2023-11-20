@@ -7,6 +7,11 @@ import com.oracle.s202350104.model.Point;
 public interface PointDao {
 	
 	List<Point>			listPoint();
-	
+
+	void                updatePoint(Point point);
+
+	void                writePoint(Point point);
+
+	int 				getPointScoreById(int id);
 
 }

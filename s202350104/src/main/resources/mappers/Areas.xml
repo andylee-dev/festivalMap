@@ -6,4 +6,82 @@
 	<select id="AreasListAll" resultType="Areas">
 		SELECT * FROM areas
 	</select>
+	
+	<select id="joAreasListAll" resultType="Areas" parameterType="Areas">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, areas.*
+     		FROM areas
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+
+	<select id="getAreaList" resultType="Areas" >
+		SELECT *
+		FROM areas
+		WHERE sigungu = '999'	
+		AND content IS NOT NULL
+	</select>
+
+	<select id="getSigunguList" resultType="Areas" parameterType="int">
+		SELECT *
+		FROM areas
+		WHERE area = #{area}
+		AND not sigungu in ('999')	
+		AND content IS NOT NULL
+	</select>	
+
+	<select id="getAreaNameByCode" parameterType="int" resultType ="string" >
+		SELECT content
+		FROM areas
+		WHERE sigungu ='999'
+		AND area = #{area}
+	</select>
+
+	<select id="getSigunguNameByCode" parameterType="Areas" resultType ="string">
+		SELECT content
+		FROM areas
+		WHERE area = #{area}
+		AND sigungu = #{sigungu}
+	</select>
+	
+	<select id="joTotalAreaCode" resultType="int">
+		SELECT count(*)
+		FROM   areas
+	</select>	
+	
+	<select id="joConTotalAreaCode" resultType="int">
+		SELECT count(*)
+		FROM   areas
+        WHERE  area = #{area}
+     	AND    not sigungu in ('999')	
+    </select>
+	
+	<select id="joListSearchAreaCode" resultType="Areas" parameterType="Areas">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, areas.*
+     		 FROM areas
+     		 WHERE area = #{area}
+     		 AND not sigungu in ('999')
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+	
+	<insert id="joInsertAreaCode" parameterType="Areas">
+		INSERT INTO areas(area, sigungu, content)
+		VALUES           (#{area}, #{sigungu}, #{content})
+	</insert>	
+	
+	<delete id="joDeleteAreaCode" parameterType="Areas">
+		DELETE FROM areas
+		WHERE area = #{area} AND sigungu = #{sigungu}
+	</delete>
+	
+	<select id="joDetailAreaCode" parameterType="Areas" resultType="Areas">
+		SELECT *
+		FROM   areas
+		WHERE  area = #{area} AND sigungu = #{sigungu}
+	</select>
+	
 </mapper>

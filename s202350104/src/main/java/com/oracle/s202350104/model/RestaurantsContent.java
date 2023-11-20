@@ -42,6 +42,9 @@ public class RestaurantsContent {
 	private String is_packing;
 	private String is_parking;
 	
+	// commoncodes 컬럼
+	private String theme;
+	
 	// 페이지 처리용
 	private String pageNum;
 	private int    start;

@@ -2,6 +2,9 @@ package com.oracle.s202350104.model;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class CourseContent {
 	private int 	content_id;
 	private int 	course_id;
@@ -43,4 +46,7 @@ public class CourseContent {
 	private String pageNum;
 	private int    start;
 	private int    end;
+	
+	// commonCode
+	private String cd_content;
 }

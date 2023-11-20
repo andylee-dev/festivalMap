@@ -3,6 +3,7 @@ package com.oracle.s202350104.service;
 import java.util.List;
 
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.FestivalsContent;
 
 public interface BoardService {
 	
@@ -17,6 +18,8 @@ public interface BoardService {
 	List<Board> getPhotoAllList(Board board);
 	
 	List<Board> getEventAllList(Board board);
+	
+	List<Board> getReviewAllList(Board board);
 
 	Board boardDetail(int boardId);
 
@@ -26,7 +29,8 @@ public interface BoardService {
 
 	int boardInsert(Board board);
 
+	Board boardRead(int id);
 
-
+	int boardCount2(Board board);
 
 }

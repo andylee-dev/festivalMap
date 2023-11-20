@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class PointDaoImpl implements PointDao {
-	
+
 	private final SqlSession session;
 
 	@Override
@@ -22,13 +22,28 @@ public class PointDaoImpl implements PointDao {
 		List<Point> listPoint = null;
 		try {
 			listPoint = session.selectList("pointAll");
-			
-		} catch(Exception e) {
-			
+
+		} catch (Exception e) {
+
 		}
-		
+
 		return listPoint;
 	}
+
+	@Override
+	public void updatePoint(Point point) {
+		session.update("updatePoint", point);
+	}
+
+	@Override
+	public void writePoint(Point point) {
+		session.insert("writePoint", point);
+
+	}
+
+	@Override
+	public int getPointScoreById(int id) {
+		return session.selectOne("getPointScore", id);
+	}
+
 }
-
-

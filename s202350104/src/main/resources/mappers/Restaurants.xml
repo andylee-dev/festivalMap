@@ -4,7 +4,7 @@
 
 <mapper namespace="com.oracle.s202350104.RestaurantMapper">
 	<select id="joRestaurantListAll" resultType="RestaurantsContent" parameterType="RestaurantsContent">
-		SELECT * 
+		SELECT x.*, y.content AS theme
 		FROM   
 		(
 			SELECT ROWNUM rn, t.*,
@@ -17,16 +17,22 @@
 			 FROM restaurants r, contents c
 			 WHERE r.content_id = c.id
 			 ORDER BY content_id) t
-		)
+		) x, commoncodes y
 		WHERE rn BETWEEN #{start} and #{end}
+		AND   x.big_code = y.big_code AND x.small_code = y.small_code
 	</select>
 	
+	
 	<select id="joRestaurantDetail" resultType="RestaurantsContent" parameterType="int">
-		SELECT 	*
+		SELECT 	c.*, r.*, 
+						(SELECT content FROM commoncodes co WHERE  c.big_code = co.big_code AND c.small_code = co.small_code) AS theme,
+						(SELECT content FROM areas a WHERE c.area = a.area AND a.sigungu = 999) AS area_content,	
+						(SELECT content FROM areas a WHERE c.area = a.area AND c.sigungu = a.sigungu) AS sigungu_content
 		FROM 	contents c, restaurants r
 		WHERE 	c.id = r.content_id
-		AND 	r.content_id = #{content_id}
+		AND 	r.content_id = #{contentId}
 	</select>
+	
 	
 	<select id="joRestaurantTotal" resultType="int">
 		SELECT count(*)
@@ -34,5 +40,157 @@
 		WHERE  r.content_id = c.id
 	</select>
 	
+	
+	<select id="joConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
+		SELECT count(*)
+		FROM   restaurants r, (SELECT id
+							   FROM   contents
+							   WHERE  area = #{area} AND sigungu = #{sigungu}) c	
+		WHERE   r.content_id = c.id  
+	</select>
+	
+	
+	<select id="RestaurantListAll" resultType="Restaurants">
+		SELECT * FROM restaurants
+	</select>
+	
+	
+	<select id="joListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
+		SELECT *
+		FROM   
+		(		
+				SELECT ROWNUM rn, t.*,
+									  (SELECT content FROM areas a
+				 					   WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
+									  (SELECT content FROM areas a
+				 					   WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
+				
+				 FROM
+			    		(SELECT  *
+						 FROM    restaurants r, (SELECT *
+							   		   			 FROM   contents
+							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu} AND small_code = #{small_code}) c	
+				 		 WHERE    r.content_id = c.id
+				 		 ORDER BY content_id) t
+		  )		 		 
+		WHERE   rn between #{start} and #{end}  		  
+	</select>
+	
+	
+	<select id="joAdminConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
+		SELECT COUNT(*)
+		FROM	
+				(
+					SELECT c.*
+	 				FROM   restaurants r, contents c
+	 				WHERE  r.content_id = c.id
+	 				<if test="status != null">
+	 					<choose>
+	 						<when test="status != 2">	 					
+	 							AND c.status = #{status} 
+	 						</when>
+	 						<when test="status = 2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="small_code != null">
+	 					<choose>
+	 						<when test="small_code != 999">
+				 				AND c.small_code = #{small_code} 
+	 						</when>
+	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="is_deleted != null">
+	 					<choose>
+	 						<when test="is_deleted != 2">
+				 				AND c.is_deleted = #{is_deleted} 
+	 						</when>
+	 						<when test="is_deleted = 2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 			)
+	</select>	
+	
+		
+	<select id="joAdminListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
+		SELECT  x.*, y.content AS theme, y.small_code, x.id AS content_id
+		FROM	
+				(
+					SELECT ROWNUM rn, c.*
+	 				FROM   restaurants r, contents c
+	 				WHERE  r.content_id = c.id
+	 				<if test="status != null">
+	 					<choose>
+	 						<when test="status != 2">	 					
+	 							AND c.status = #{status} 
+	 						</when>
+	 						<when test="status =2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="small_code != null">
+	 					<choose>
+	 						<when test="small_code != 999">
+				 				AND c.small_code = #{small_code} 
+	 						</when>
+	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 				<if test="is_deleted != null">
+	 					<choose>
+	 						<when test="is_deleted != 2">
+				 				AND c.is_deleted = #{is_deleted} 
+	 						</when>
+	 						<when test="is_deleted = 2">
+	 						</when>
+	 					</choose>
+	 				</if>
+	 			 ) x, commoncodes y
+		WHERE rn BETWEEN #{start} and #{end}
+		AND   x.big_code = y.big_code AND x.small_code = y.small_code
+	</select>	
+	
+	
+	<insert id="joInsertRestaurant" parameterType="RestaurantsContent">
+		INSERT INTO restaurants(content_id, first_menu, menu, open_time, rest_date, is_smoking, is_packing, is_parking)
+		VALUES				   (contents_id_seq.currval, #{first_menu}, #{menu}, #{open_time}, #{rest_date}, #{is_smoking}, #{is_packing}, #{is_parking})
+	</insert>
+	
+	
+	<update id="joUpdateRestaurant" parameterType="RestaurantsContent">
+		UPDATE	restaurants 
+		SET    	first_menu=#{first_menu}, menu=#{menu}, open_time=#{open_time}, rest_date=#{rest_date}, is_smoking=#{is_smoking}, is_packing=#{is_packing}, is_parking=#{is_parking} 
+		WHERE  	content_id=#{content_id}
+	</update>
+		
+	
+	<!-- contents 테이블 -->
+	<insert id="joInsertContent" parameterType="RestaurantsContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status, img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage, readcount, user_id, created_at, is_deleted)
+		VALUES		(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0', #{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 0, #{user_id}, sysdate, '0')
+	</insert>
+		
+	<update id="joUpdateContent" parameterType="RestaurantsContent">
+		UPDATE	contents
+		SET		small_code=#{small_code}, area=#{area}, sigungu=#{sigungu}, title=#{title}, address=#{address}, postcode=#{postcode}, phone=#{phone}, content=#{content}, img1=#{img1}, img2=#{img2}, img3=#{img3}  
+		WHERE  	id=#{content_id}
+	</update>
+	
+	
+	<update id="joDeleteContent" parameterType="int">
+		UPDATE contents 
+		SET    is_deleted=1
+		WHERE  id=#{contentId}
+	</update>
+	
+	<update id="joApproveRestaurant" parameterType="int">
+		UPDATE contents
+		SET    status = 1
+		WHERE  id=#{contentId}
+	</update>
 	
 </mapper>

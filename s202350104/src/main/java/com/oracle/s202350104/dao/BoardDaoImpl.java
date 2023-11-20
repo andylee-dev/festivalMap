@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.FestivalsContent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,15 @@ public class BoardDaoImpl implements BoardDao {
 			log.error("BoardDao readCountUp Exception : {}", e.getMessage());
 		}
 	}
+	
+	@Override
+	public int boardCount2(Board board) {
+		int countBoardResult = session.selectOne("boardCount2", board);
+		log.info("BoardDao boardCount2 countBoardResult : {}", countBoardResult);
+		return countBoardResult;
+	}
 
-	// Paging logic 일부분
+	// Paging 처리용
 	@Override
 	public int boardCount(int smallCode) {
 
@@ -44,6 +52,7 @@ public class BoardDaoImpl implements BoardDao {
 		return countBoard;
 	}
 
+	// 공지사항, DB연동
 	@Override
 	public List<Board> getNoticAllList(Board board) {
 
@@ -60,6 +69,7 @@ public class BoardDaoImpl implements BoardDao {
 		return noticAllList;
 	}
 
+	// 이달의 소식, DB연동
 	@Override
 	public List<Board> getMagazinAllList(Board board) {
 
@@ -76,22 +86,18 @@ public class BoardDaoImpl implements BoardDao {
 		return magazinAllList;
 	}
 
+	// 자유게시판, DB연동
 	@Override
 	public List<Board> getFreeAllList(Board board) {
 
-		List<Board> freeAllList = null;
+		List<Board> freeAllList = session.selectList("freeAllList", board);
 
-		try {
-			freeAllList = session.selectList("freeAllList", board);
-			log.info("BoardDao getFreeAllList size : {}", freeAllList.size());
-
-		} catch (Exception e) {
-			log.error("BoardDao getFreeAllList Exception : {}", e.getMessage());
-		}
+		log.info("BoardDao getFreeAllList size : {}", freeAllList.size());
 
 		return freeAllList;
 	}
 
+	// 포토게시판, DB연동
 	@Override
 	public List<Board> getPhotoAllList(Board board) {
 
@@ -108,6 +114,7 @@ public class BoardDaoImpl implements BoardDao {
 		return photoAllList;
 	}
 
+	// 이벤트게시판, DB연동
 	@Override
 	public List<Board> getEventAllList(Board board) {
 
@@ -124,6 +131,42 @@ public class BoardDaoImpl implements BoardDao {
 		return eventAllList;
 	}
 
+	// review, DB연동
+	@Override
+	public List<Board> getReviewAllList(Board board) {
+		log.info("BoardDao getReviewAllList Start!!");
+		log.info("boardService reviewBoardList board.getContentId : {} ", board.getContent_id());
+		log.info("boardService reviewBoardList board.getUser_id : {} ", board.getUser_id());
+
+		int userId = board.getUser_id();
+		int contentId = board.getContent_id();
+		List<Board> reviewAllList = null;
+
+		try {
+			// contentId or userId로 출력 할 review handling
+			if (contentId > 1 || userId > 1) {
+				reviewAllList = session.selectList("reviewAllList", board);
+
+				log.info("BoardDao reviewAllList size : {}", reviewAllList.size());
+				log.info("BoardDao reviewAllList content : {}", reviewAllList.get(0).getContent());
+
+			} else {
+				reviewAllList = session.selectList("reviewAllList2", board);
+
+				log.info("BoardDao reviewAllList2 size : {}", reviewAllList.size());
+				log.info("BoardDao reviewAllList2 content : {}", reviewAllList.get(0).getContent());
+			}
+
+		} catch (Exception e) {
+			log.error("BoardDao getReviewAllList Exception : {}", e.getMessage());
+		}
+
+		log.info("BoardDao getReviewAllList End..");
+
+		return reviewAllList;
+	}
+
+	// 통합게시판 상세정보, DB연동
 	@Override
 	public Board boardDetail(int boardId) {
 
@@ -141,14 +184,47 @@ public class BoardDaoImpl implements BoardDao {
 
 		return boards;
 	}
+	
+	// 통합게시판 생성, DB연동
+	@Override
+	public int boardInsert(Board board) {
 
+		int insertBoard = 0;
+		int insertHandling = board.getContent_id();
+
+		log.info("BoardDao boardInsert getContent_id : {}", insertHandling);
+		try {
+			// contentId 값이 있으면 review query 실행 
+			if(insertHandling > 0) {
+				insertBoard = session.insert("reviewBoardInsert", board);
+			} else {
+				insertBoard = session.insert("boardInsert", board);
+			}
+
+		} catch (Exception e) {
+			log.error("BoardDao boardInsert Exception : {}", e.getMessage());
+		}
+
+		return insertBoard;
+
+	}		
+
+	// 통합게시판 수정, DB연동
 	@Override
 	public int boardUpdate(Board board) {
 
 		int updateBoard = 0;
-
+		log.info("BoardDao boardUpdate getFile_name : {}", board.getFile_name());
+		
 		try {
-			updateBoard = session.update("boardUpdate", board);
+			if(board.getFile_name() == null) {
+				log.info("BoardDao noboardUpdate normal Start!!");				
+				updateBoard = session.update("boardUpdate2", board);
+			} else {
+				log.info("BoardDao noboardUpdate image Start!!");				
+				updateBoard = session.update("boardUpdate", board);
+			}	
+
 		} catch (Exception e) {
 			log.error("BoardDao boardUpdate Exception : {}", e.getMessage());
 		}
@@ -156,33 +232,44 @@ public class BoardDaoImpl implements BoardDao {
 		return updateBoard;
 	}
 
+	// 통합게시판 삭제, DB연동
 	@Override
 	public int boardDelete(int boardId) {
 
 		int deleteBoard = 0;
 
 		try {
+			log.info("BoardDao boardDelete Start!!");
+			
 			deleteBoard = session.delete("boardDelete", boardId);
 		} catch (Exception e) {
 			log.error("BoardDao boardDelete Exception : {}", e.getMessage());
+		} finally {
+			log.info("BoardDao boardDelete End..");			
 		}
 
 		return deleteBoard;
 	}
 	
+	// 통합게시판 첨부파일 삭제, DB연동
 	@Override
-	public int boardInsert(Board board) {
+	public Board boardRead(int id) {
 		
-		int insertBoard = 0;
-
+		Board board = null;
+		
 		try {
-			insertBoard = session.delete("boardInsert", board);
+			log.info("BoardDao boardRead Start!!");
+			
+			board = session.selectOne("boardImageRead", id);
+			log.info("BoardDao boardRead getTitle : {}", board.getTitle());
+			
 		} catch (Exception e) {
-			log.error("BoardDao boardInsert Exception : {}", e.getMessage());
+			log.error("BoardDao boardRead Exception : {}", e.getMessage());
+		} finally {
+			log.info("BoardDao boardRead End..");			
 		}
-
-		return insertBoard;
-
+		
+		return board;
 	}
-
+	
 }

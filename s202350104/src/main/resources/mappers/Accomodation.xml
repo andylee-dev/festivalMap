@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.AccomodationMapper">
+	
+	<select id="accomodationAll" resultType="AccomodationContent" parameterType="AccomodationContent">
+    SELECT * 
+    FROM   
+   	 (
+        SELECT ROWNUM rn, b.*
+        FROM
+        (
+            SELECT *
+            FROM accomodations a, contents c
+            WHERE a.content_id = c.id
+            ORDER BY content_id
+       	 ) b
+ 	   )
+   	 WHERE rn BETWEEN #{start} and #{end}
+	</select>
+
+	
+	<select id="AccomodationDetail" resultType="AccomodationContent" parameterType="int">
+		SELECT 	*
+		FROM 	contents c, accomodations a
+		WHERE 	c.id = a.content_id
+		AND 	a.content_id = #{content_id}
+	</select>
+	
+	<select id="AccomodationTotal" resultType="int">
+		SELECT count(*)
+		FROM   accomodations a, contents c
+		WHERE  a.content_id = c.id
+		
+	</select>
+
+	<delete id="accomodationDelete" parameterType="int">
+		delete from accomodations where content_id=#{content_id}
+	</delete>
+	
+	<insert id="ContentsInsert" parameterType="AccomodationContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
+				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
+				readcount, user_id, created_at, is_deleted)
+		VALUES(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0',
+				#{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 
+				0, #{user_id}, sysdate, '0')
+	</insert>
+	
+	<insert id="AccomodationInsert" parameterType="AccomodationContent">
+		INSERT INTO accomodations(content_id, room_count, reservation_url, refund, check_in, check_out, 
+				is_pickup, is_cook, is_parking) 
+		VALUES(contents_id_seq.currval, #{room_count}, #{reservation_url}, #{refund}, #{check_in}, #{check_out}, 
+				#{is_pickup}, #{is_cook}, #{is_parking})
+	</insert>
+	
+	<update id="AccomodationUpdate" parameterType="AccomodationContent" >
+	 
+        UPDATE accomodations
+        SET room_count = #{room_count},	reservation_url = #{reservation_url}, refund = #{refund}, check_in = #{check_in}, check_out = #{check_out},
+        	is_pickup = #{is_pickup}, is_cook = #{is_cook}, is_parking = #{is_parking}
+        WHERE content_id = #{content_id}
+	</update>
+	
+	<update id="ContentsUpdate" parameterType="AccomodationContent">
+		UPDATE contents 
+		SET area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{content_id}
+	</update>
+	
+	<update id="AccomodationApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
+	
+	<select id="syAccomodationSearchListAll" parameterType="AccomodationContent"  resultType="AccomodationContent">
+		SELECT id content_id , area, sigungu, big_code, small_code, title, status, is_deleted, address, created_at
+		FROM
+		(
+			SELECT ROWNUM rn, b.*
+			FROM
+			(SELECT * FROM contents 
+				<if test="big_code != null">
+				WHERE big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="is_deleted != null">
+					<choose>
+ 	 					<when test="is_deleted != 2">
+	    					AND is_deleted = #{is_deleted}  
+	   	 				</when>
+	 	 				<when test="is_deleted = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+            </if>) b
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+
+	</select>
+	
+	<select id="syAccomodationSearchTotal" parameterType="AccomodationContent" resultType="int">
+		SELECT count(*)
+		FROM   accomodations a, contents c
+		WHERE  a.content_id = c.id
+		<if test="keyword != null">
+			AND title like '%' || #{keyword} || '%'
+		</if>
+		<if test="big_code != null and big_code != 0">
+			And c.big_code = #{big_code}
+		</if>
+		<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+		<if test="is_deleted != null">
+			<choose>
+ 	 			<when test="is_deleted != 2">
+	    			AND c.is_deleted = #{is_deleted}  
+	   	 		</when>
+	 	 		<when test="is_deleted = 2">
+	    		</when>    
+  			</choose>
+		</if>
+		<if test="small_code != null and small_code != 0 and small_code != 999">
+				AND c.small_code = #{small_code}  
+	   	</if>
+	</select>	
+	
+	<select id="syListSmallCodeAll" resultType="AccomodationContent">
+        <![CDATA[
+        select small_code, content	
+		from commoncodes 
+		where big_code = 13
+		and small_code <999
+       ]]>	        
+	</select>
+	
+	<select id="ConTotalAccomodation" resultType="int" parameterType="AccomodationContent">
+		SELECT count(*)
+		FROM   accomodations a, (SELECT id
+							   FROM   contents
+							   WHERE  area = #{area} AND sigungu = #{sigungu}) c
+							   
+		WHERE   a.content_id = c.id
+	</select>
+	
+	<select id="indexlistSearchAccomodation" resultType="AccomodationContent" parameterType="AccomodationContent">
+		SELECT *
+		FROM   
+		(		
+				SELECT ROWNUM rn, t.*,
+									  (SELECT content FROM areas a
+				 					   WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
+									  (SELECT content FROM areas a
+				 					   WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
+				
+				 FROM
+			    		(SELECT  *
+						 FROM    accomodations ac, (SELECT *
+							   		   			 FROM   contents
+							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu}) c	
+				 		 WHERE    ac.content_id = c.id
+				 		 ORDER BY content_id) t
+		  )		 		 
+		WHERE   rn between #{start} and #{end}  		  
+	</select>
+
+</mapper>

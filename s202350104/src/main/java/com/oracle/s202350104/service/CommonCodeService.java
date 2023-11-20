@@ -6,4 +6,11 @@ import com.oracle.s202350104.model.CommonCodes;
 
 public interface CommonCodeService {
 	List<CommonCodes> listCommonCode();
+	List<CommonCodes> listCommonCode(CommonCodes commonCode);
+	int 			  totalCommonCode();
+	int 			  conTotalCommonCode(CommonCodes commonCode);
+	List<CommonCodes> listSearchCommonCode(CommonCodes commonCode);
+	int               insertCommonCode(CommonCodes commonCode);
+	int               deleteCommonCode(CommonCodes commonCode);
+	CommonCodes       detailCommonCode(CommonCodes commonCode);
 }

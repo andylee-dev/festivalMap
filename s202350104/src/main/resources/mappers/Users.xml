@@ -3,7 +3,168 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.UsersMapper">
-	<select id="userListAll" resultType="Users">
-		SELECT * FROM users
+ 	<select id="getUserList" resultType="Users">
+		SELECT *
+		FROM(
+	    		SELECT ROWNUM rn, users.*
+				FROM users
+				WHERE small_code = #{small_code}
+     		) 
+		WHERE rn between #{start} and #{end}
 	</select>
+
+	<select id="getSearchUserList" resultType="Users">
+		SELECT * 
+		FROM(
+	    		SELECT ROWNUM rn, users.*
+				FROM users
+				WHERE 1=1
+		        <if test="small_code != null and small_code != '' and small_code != 0">
+					AND small_code = #{small_code}
+				</if>
+				<if test="keyword != null and keyword != ''">
+			        <choose>
+			            <!-- "searchType"이 "name"일 때 -->
+			            <when test="searchType == 'name'">
+							AND name like '%' || #{keyword}|| '%'
+			            </when>
+			            <!-- "searchType"이 "email"일 때 -->
+			            <when test="searchType == 'email'">
+							AND email like '%' || #{keyword}|| '%'
+			            </when>
+			            <!-- "searchType"이 "nickname"일 때 -->
+			            <when test="searchType == 'nickname'">
+							AND nickname like '%' || #{keyword}|| '%'
+			            </when>
+			        </choose>
+		        <if test="email != null and email != ''">
+		            AND email = #{email}
+		        </if>
+		
+		        <if test="nickname != null and nickname != ''">
+		            AND nickname = #{nickname}
+		        </if>
+		        </if>
+		        <!-- "startDate"와 "endDate"로 가입일을 조회 -->
+    	        <if test="startDate != null and endDate != null">
+		            AND created_at BETWEEN #{startDate} AND #{endDate}
+		        </if>
+				<if test="is_deleted != '' and is_deleted!=null">
+		            AND is_deleted = #{is_deleted}
+		        </if>		        
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+	<select id="totalUsers" resultType="int">
+   		SELECT count(*)
+		FROM users
+		WHERE 1=1
+        <if test="small_code != null and small_code != '' and small_code != 0">
+			AND small_code = #{small_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+	        <choose>
+	            <!-- "searchType"이 "name"일 때 -->
+	            <when test="searchType == 'name'">
+					AND name like '%' || #{keyword}|| '%'
+	            </when>
+	            <!-- "searchType"이 "email"일 때 -->
+	            <when test="searchType == 'email'">
+					AND email like '%' || #{keyword}|| '%'
+	            </when>
+	            <!-- "searchType"이 "nickname"일 때 -->
+	            <when test="searchType == 'nickname'">
+					AND nickname like '%' || #{keyword}|| '%'
+	            </when>
+	        </choose>
+        </if>
+        
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+
+        <if test="nickname != null and nickname != ''">
+            AND nickname = #{nickname}
+        </if>
+        
+        <!-- "startDate"와 "endDate"로 가입일을 조회 -->
+        <if test="startDate != null and endDate != null">
+            AND created_at BETWEEN #{startDate} AND #{endDate}
+        </if>
+		<if test="is_deleted != '' and is_deleted!=null">
+            AND is_deleted = #{is_deleted}
+        </if>
+        
+	</select>
+	
+	<insert id="insertUser"  parameterType="Users" >
+		INSERT INTO 
+		users(
+			id,big_code,small_code,
+			name,password,nickname,birthday,
+			phone_num,email,address,status,
+			point,gender,created_at,updated_at,
+			file_name,is_deleted	
+		) 
+		VALUES (
+			users_id_seq.NEXTVAL, #{big_code}, #{small_code}, 
+			#{name}, #{password}, #{nickname}, #{birthday}, 
+			#{phone_num}, #{email}, #{address}, #{status}, 
+			#{point}, #{gender}, sysdate, sysdate, 
+			#{file_name}, 0
+		)
+	</insert>
+	<update id="deleteUser" parameterType="int">
+		UPDATE users SET is_deleted = 1 WHERE id = #{id}
+	</update>
+	
+	<update id="updateUser" parameterType="Users" >
+		UPDATE users SET 
+			name=#{name},
+			password=#{password},
+			nickname=#{nickname},
+			birthday=#{birthday},
+			phone_num=#{phone_num},
+			email=#{email},
+			address=#{address},
+			status=#{status},
+			point=#{point},
+			gender=#{gender},
+			updated_at=sysdate,
+			file_name=#{file_name},
+			is_deleted=#{is_deleted}	
+		WHERE id = #{id}
+	</update>
+	
+	
+    <select id="getUserByEmail" resultType="Users">
+        SELECT *
+        FROM Users
+        WHERE email = #{email}
+    </select>
+    <select id="getUserById" resultType="Users">
+        SELECT *
+        FROM Users
+        WHERE id = #{id}
+    </select>
+	<select id="joAdminListTotal" resultType="int">
+		SELECT count(*)
+		FROM   users
+		WHERE  small_code = 1
+	</select>
+		
+	<select id="joAdminListList" resultType="Users" parameterType="Users">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM rn, users.*
+     		 FROM 	users
+     		 WHERE  small_code = 1
+     		) 
+		WHERE rn between #{start} and #{end}
+	</select>
+
+	<update id="updateUserPoint" parameterType="Users">
+		UPDATE users SET point = point + #{point} WHERE id = #{id}
+	</update>
+	
 </mapper>

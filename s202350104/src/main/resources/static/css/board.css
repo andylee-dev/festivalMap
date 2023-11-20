@@ -1,0 +1,383 @@
+@charset "UTF-8";
+/* @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+ */
+/* 공통 css*/
+a {
+	text-decoration: none;
+	color: black;
+}
+
+.general_board_custom {
+
+}
+/* 상단 title css */
+.header_title_custom {
+	margin-bottom: 60px;
+}
+
+.header_title_custom h1 {
+	font-size: 60px;
+}
+
+/* 중간네비게이션 css */
+.md_nav_custom {
+	text-align: center;
+	font-size: 34px;
+	font-weight: bolder;
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.md_nav_custom .md_nav_col_active {
+	position: relative;
+}
+
+.md_nav_custom .md_nav_col_active .md_nav_bar_active {
+	width: 100px;
+	height: 12px;
+	left: 419px;
+	top: 318px;
+	background: #FF4379;
+	border-radius: 20px;
+	position: absolute;
+	top: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* 키워드, 검색창 css */
+.keyword_custom {
+	margin-top: -5px;
+	margin-bottom: -25px;
+}
+
+.keyword_custom .keyword_div_custom {
+	width: 800px;
+	height: 50px;
+	position: relative;
+}
+
+.keyword_custom .keyword_div_custom .keyword_custom {
+	width: 250px;
+	height: 40px;
+	background: #F7FBF4;
+	border-radius: 23.50px;
+	border: 2px black solid;
+	position: absolute;
+	right: 110px;
+	top: 58%;
+	transform: translateY(-50%);
+}
+
+.keyword_custom .keyword_div_custom img {
+	width: 20px;
+	height: 19px;
+	position: absolute;
+	right: 120px;
+	top: 48%;
+	transform: translateY(-50%);
+}
+
+.btn_custom {
+	width: 100px;
+	height: 40px;
+	border-radius: 23.50px;
+	position: absolute;
+	right: 1px;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: #FF4379;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 26px;
+}
+
+/* 목록 출력 css */
+.list_container_custom {
+	margin-top: -30px;
+}
+
+.division_custom {
+	height: 50px;
+	background-color: #FF4379;
+	text-align: center;
+	color: white;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.list_custom {
+	text-align: center;
+	font-size: 26px;
+	font-weight: bold;
+	border-bottom: 3px solid #747474;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+/* 포토게시판, 이벤트 */
+
+/* 목록 출력 css */
+.cardList_custom .card_custom {
+	width: 400px;
+	height: 480px;
+	border: 0px;
+	border-radius: 0px;
+	border-bottom: 2px solid black;
+	margin-bottom: 20px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.cardList_custom .card_custom p {
+	font-size: 22px;
+	font-weight: bolder;
+}
+
+.cardList_custom .card_custom .img_custom {
+	width: 397px;
+	height: 280px;
+}
+
+.cardList_custom .card_custom .card_body_custom {
+	padding-top: 0px;
+}
+
+.cardList_custom .card_custom .card_body_custom img {
+	width: 120px;
+	height: 100px;
+}
+
+.cardList_custom .card_custom .card_p_custom {
+	color: #FF4379;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+.cardList_custom .card_custom .card_p_custom span {
+	color: black;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.division_photo_custom {
+	width: 100%;
+	height: 55px;
+	margin-left: 1px;
+	background-color: #FF4379;
+	text-align: center;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	background-color: #FF4379;
+}
+
+.list_photo_custom {
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	border-bottom: 3px solid #747474;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-left: 1px;
+	margin-top: -35px;
+}
+
+/* photo, event detail css */
+
+.detail_custom p {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 40px;
+}
+
+.tags_detail_custom {
+	width: 99%;
+	margin-top: -30px;
+	border-bottom: 3px solid black;
+}
+
+.tags_detail_custom .tags_row_custom {
+	margin-left: -12px;
+}
+
+.tags_detail_custom span {
+	font-size: 20px;
+	font-weight: bold;
+	font-style: italic;
+	border-bottom: 2px solid black;
+
+}
+
+.btn_border_custom{
+	margin-left: -12px;
+	margin-right: 24px;
+ 
+}
+
+.btn_detail_custom {
+	width: 100px;
+	height: 36px;
+	border-radius: 23.50px;
+	background-color: #FF4379;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 20px;
+}
+
+.img_detail_custom {
+	text-align: center;
+}
+
+.img_detail_custom img{
+	width: 700px;
+	height: 460px;
+}
+
+
+/* 페이징 처리 css */
+
+.page-link .pagig_a_custom {
+	font-size: 12px;
+}
+
+/* 게시물 생성 Form css */
+
+.insert_title_custom {
+	width: 100%;
+	text-align: left;
+	border-bottom: 3px solid black;
+	padding-bottom: 10px;
+	margin-bottom: 60px;
+}
+
+.insert_title_custom col {
+	margin-left: 0px;
+}
+
+.insert_row_custom .insert_row2_custom{
+	width: 95%;
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+
+.insert_row_custom .insert_row2_custom col{
+	margin-bottom: 10px;
+}
+
+.insert_row_custom .insert_row2_custom label {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: left;
+	width: 100px;
+	height: 80px;
+	margin-left: 0px;
+	margin-bottom: 20px;
+}
+
+.insert_row_custom .insert_row2_custom .lable2 {
+	width: 180px;
+}
+
+.insert_row_custom .insert_row2_custom .tag_row label {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: left;
+	width: 160px;
+	height: 80px;
+	margin-left: 0px;
+	margin-bottom: 20px;
+
+}
+
+.insert_row_custom .insert_row2_custom .tag_row span {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.insert_row_custom .insert_row2_custom .title_row{
+	width: 200px;
+}
+
+.insert_row_custom .insert_row2_custom .title_input{
+	width: 1000px;
+	height: 60px;
+	margin-left: 10px;
+	margin-top: 8px;
+	border: 3px solid #BDBDBD;
+}
+
+.insert_row_custom .insert_row2_custom .text_row{
+	width: 200px;
+}
+.insert_row_custom .insert_row2_custom .text_input{
+	width: 1000px;
+	height: 400px;
+	margin-left: 10px;
+	margin-top: 8px;
+	border: 3px solid #BDBDBD;
+}
+.insert_row_custom .insert_row2_custom .img_row{
+	width: 200px;
+}
+
+.insert_row_custom .insert_row2_custom p{
+	margin-left: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.insert_row_custom .insert_row2_custom .img_input{
+	width: 460px;
+	margin-left: 10px;
+	margin-top: 8px;
+	border: 3px solid #BDBDBD;
+	font-size: 22px;	
+}
+
+.insert_row_custom .insert_row2_custom .tag_row{
+	width: 200px;
+}
+
+.insert_row_custom .insert_row2_custom .tag_row2{
+	width: 1000px;
+	border: 3px solid #BDBDBD;
+	border-radius: 10px;
+	margin-left: 18px;
+	margin-top: 8px;
+}
+.insert_row_custom .insert_row2_custom .tag_row2 label{
+	font-size: 18px;
+	font-weight: bold;
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	margin-left: 12px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #FF4379;
+}
+
+.insert_row_custom .insert_row2_custom .tag_input{
+	width: 200px;
+	margin-left: 10px;
+	margin-top: 8px;	
+}
+
+.insert_row_custom .insert_row2_custom .btn_row {
+	text-align: right;
+	margin-left: -50px;
+}

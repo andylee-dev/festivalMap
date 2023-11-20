@@ -18,22 +18,22 @@ public class ReportDaoImpl implements ReportDao {
 	private final SqlSession session;
 	
 	@Override
-	public List<Report> listReport() {
+	public List<Report> listReport(Report report) {
 		List<Report> listReport = null;
 		try {
-			listReport = session.selectList("shReportListAll");
+			listReport = session.selectList("shReportListAll",report);
 			log.info("listReport.size()->"+listReport.size());
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.info("ReportDaoImpl exception->"+e.getMessage());
 		}
 		return listReport;
 	}
 
 	@Override
-	public Report detailBoard(int board_id) {
+	public Report detailBoard(int boardId) {
 		Report detailBoard = new Report();
 		try {
-			detailBoard = session.selectOne("shBoardDetail",board_id);
+			detailBoard = session.selectOne("shBoardDetail",boardId);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -41,10 +41,10 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public List<Report> reportDetail(int board_id) {
+	public List<Report> reportDetail(int boardId) {
 		List<Report> reportDetail = null;
 		try {
-			reportDetail = session.selectList("shReportDetail", board_id);
+			reportDetail = session.selectList("shReportDetail", boardId);
 		} catch (Exception e) {
 			
 		}
@@ -73,4 +73,37 @@ public class ReportDaoImpl implements ReportDao {
 		return reportUpdate;
 	}
 
+	@Override
+	public int boardReportUpdate(Report report) {
+		int boardReportUpdate = 0;
+		try {
+			boardReportUpdate = session.update("shBoardReportUpdate",report);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return boardReportUpdate;
+	}
+
+	@Override
+	public int totalReport() {
+		int totalReport = 0;
+		try {
+			totalReport = session.selectOne("shTotalReport");
+			log.info("totalReport->"+totalReport);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalReport;
+	}
+
+	@Override
+	public int totalReportCount() {
+		int totalReportCount = 0;
+		try {
+			totalReportCount = session.selectOne("shtotalReportCount");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalReportCount;
+	}
 }

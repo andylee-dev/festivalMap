@@ -10,33 +10,128 @@
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
 			<!-- select * from courses -->
-		
-			SELECT *
+			
+			SELECT * 
+			FROM
+			(
+				SELECT ROWNUM rn, aa.*
+				FROM
+				    (SELECT *
+				    FROM   courseContents a
+				    JOIN   courses b
+				    ON     a.course_id = b.id
+				    JOIN   contents c
+				    ON     a.content_id = c.id
+				    WHERE  a.order_num = 1
+				    ORDER  by b.id ASC) aa
+			)
+			WHERE rn BETWEEN #{start} and #{end}
+			
+			<!-- SELECT *
 			FROM   courseContents a
 			JOIN   courses b
 			ON     a.course_id = b.id
 			JOIN   contents c
 			ON     a.content_id = c.id
 			WHERE  a.order_num = 1
-			ORDER  by b.id ASC
+			ORDER  by b.id ASC -->
+			
 		</select>
 		
-		<select id="courseDetail" parameterType="Course" resultType="Course">
-			select *
-			from     courseContents a
-			JOIN     courses b 
-			ON       a.course_id = b.id
-			WHERE    a.course_id = #{course_id}
-			ORDER    by b.id ASC
-			
-			<!-- SELECT   *
-			FROM     courseContents a
-			JOIN     courses b 
-			ON       a.course_id = b.id
-			JOIN     contents c
-			ON       a.content_id = c.id
-			WHERE    a.course_id = #{course_id}
-			ORDER    by b.id ASC -->
+		<select id="noCourseContent" parameterType="int" resultType="Course">
+			SELECT * FROM courses WHERE id = #{id}
 		</select>
+		
+		<select id="noCourseDetailList" parameterType="int" resultType="Course">
+			SELECT 	a.*,cd.content cd_content
+			FROM(
+			    		SELECT cc.*, c.*, cs.course_info, cs.course_title, cs.distance, cs.time
+			    		FROM courseContents cc, contents c, courses cs
+			    		WHERE cc.course_id= #{course_id}
+				    	AND cc.content_id = c.id
+				    	AND cc.course_id = cs.id
+			)		a, commonCodes cd
+			WHERE 	a.big_code = cd.big_code
+			AND   	cd.small_code = 999
+			ORDER 	BY a.order_num ASC
+			
+			<!-- SELECT *
+			FROM   courseContents a
+			JOIN   courses b
+			ON     a.course_id = b.id
+			JOIN   contents c
+			ON     a.content_id = c.id
+			WHERE  a.course_id = #{course_id}
+			ORDER  by b.id ASC -->
+			
+		</select>
+		
+		<select id="noCourseContentList" parameterType="CourseContent" resultType="CourseContent">
+			SELECT *
+			FROM   coursecontents a, contents b
+			WHERE  a.content_id = b.id
+			AND    a.course_id = #{id}
+			
+			<!-- SELECT * FROM courseContents WHERE course_id = #{id} -->
+			
+		</select>
+		
+		<insert id="noCourseInsert" parameterType="Course">
+			INSERT into Courses 
+			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
+			<selectKey keyProperty="id" resultType="Integer" order="AFTER">
+				SELECT COURSES_ID_SEQ.currval FROM dual
+			</selectKey>
+		</insert>
+		
+		<insert id="noCourseContentInsert" parameterType="java.util.List">
+		    INSERT ALL
+		    <foreach collection="list" item="CourseContent">
+		        INTO CourseContents (content_id, course_id, order_num)
+		        VALUES (#{CourseContent.content_id}, #{CourseContent.course_id}, #{CourseContent.order_num})
+		    </foreach>
+		    SELECT * FROM dual
+		</insert>
+		
+		
+		<delete id="noCourseContentDelete" parameterType="CourseContent">
+			Delete From CourseContents where course_id = ${id}
+		</delete>
+		
+		<delete id="noCourseDelete" parameterType="Course">
+			Delete From Courses where id = ${id}
+		</delete>
+		
+		<delete id="noDeleteCourseContent" parameterType="CourseContent">
+			DELETE FROM courseContents
+			WHERE course_id = ${course_id}
+			AND content_id = ${content_id}
+		</delete>
+		
+		<update id="noCourseUpdate" parameterType="Course">
+			UPDATE COURSES SET  distance=#{distance}, course_title=#{course_title},
+								time=#{time}, course_info=#{course_info}
+			WHERE id = #{id}
+			
+			<!-- UPDATE COURSES SET  big_code=#{big_code}, small_code=#{small_code},
+								distance=#{distance}, course_info=#{course_info}, time=#{time},
+								course_title=#{course_title}
+			WHERE id = #{id} -->
+		</update>
+	    
+	    <delete id="noDeleteToContent" parameterType="java.util.Map">
+	        	DELETE courseContents WHERE course_id = #{course_id}
+	        	AND content_id IN (
+	        <foreach collection="list" item="list" separator=",">
+	       	 	#{list.content_id}
+	        </foreach>
+	        )
+	    </delete>
+	    
+	    <select id="noMaxOrderNum" parameterType="int" resultType="int">
+	    	SELECT MAX(order_num) 
+			FROM CourseContents
+			WHERE course_id = #{id}
+	    </select>
 		
 	</mapper>

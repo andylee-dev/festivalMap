@@ -15,20 +15,20 @@ public class ReportServiceImpl implements ReportService {
 	private final ReportDao rd;
 
 	@Override
-	public List<Report> listReport() {
-		List<Report> listReport = rd.listReport();
+	public List<Report> listReport(Report report) {
+		List<Report> listReport = rd.listReport(report);
 		return listReport;
 	}
 
 	@Override
-	public Report boardDetail(int board_id) {
-		Report boardDetail = rd.detailBoard(board_id);
+	public Report boardDetail(int boardId) {
+		Report boardDetail = rd.detailBoard(boardId);
 		return boardDetail;
 	}
 
 	@Override
-	public List<Report> reportDetail(int board_id) {
-		List<Report> reportDetail = rd.reportDetail(board_id);
+	public List<Report> reportDetail(int boardId) {
+		List<Report> reportDetail = rd.reportDetail(boardId);
 		return reportDetail;
 	}
 
@@ -44,6 +44,27 @@ public class ReportServiceImpl implements ReportService {
 		int reportUpdate = 0;
 		reportUpdate = rd.reportUpdate(id);
 		return reportUpdate;
+	}
+
+	@Override
+	public int boardReportUpdate(Report report) {
+		int boardReportUpdate = 0;
+		boardReportUpdate = rd.boardReportUpdate(report);
+		return boardReportUpdate;
+	}
+
+	@Override
+	public int totalReport() {
+		int totalReport = 0;
+		totalReport = rd.totalReport();
+		return totalReport;
+	}
+
+	@Override
+	public int totalReportCount() {
+		int totalReportCount = 0;
+		totalReportCount = rd.totalReportCount();
+		return totalReportCount;
 	}
 
 }

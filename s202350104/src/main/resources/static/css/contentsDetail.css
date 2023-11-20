@@ -1,0 +1,118 @@
+.thumbnail {
+	cursor: pointer;
+	width: 70%;
+	height: 70%;
+	display: block;
+	margin: auto;
+}
+
+#largeImage {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 999;
+}
+
+#overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 998;
+}
+
+.custom-ul {
+	list-style: none; /* 목록 기호 제거 */
+	padding: 0;
+	line-height: 2.5;
+	font-family: Noto Sans;
+	display: table;
+    width: 100%;
+}
+
+.custom-ul li {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+.custom-ul li span {
+        display: table-cell;
+        width: 50%;
+    }
+
+.custom-ul li span:first-child {
+        font-weight: bold;
+        text-align: left;
+        width: 20%;
+    }
+
+.custom-ul li:before {
+	content: '\2022'; /* 핑크색 원 모양 기호 */
+	color: hotpink; /* 핑크색 */
+	display: inline-block;
+	width: 11px;
+	margin-left: -1em;
+}
+
+h2 {
+	color: white;
+	font-size: 32px;
+	font-family: Noto Sans;
+	font-weight: 700;
+	word-wrap: break-word
+}
+.title-container {
+	width: 100%; 
+	background: #FF4379; 
+	color: white; 
+	text-align: left; 
+	padding: 10px 0; 
+	margin-top: 100px;
+} 
+ .contentyes-bi {
+	background: hotpink; /* 배경색을 핑크으로 설정 */
+	color: white; /* 아이콘 색상을 흰색으로 설정 */
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 10px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	color: #EEFFC2;
+	}
+	 .contentno-bi {
+	background: #FAD1D9; /* 배경색을 하얀핑크색으로 설정 */
+	color: white; /* 아이콘 색상을 흰색으로 설정 */
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 10px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px;
+	align-items: center;
+	font-weight: 800;
+	font-size: 28px;
+	color: #EEFFC2;
+	}
+	.topbarbi {
+	background: white;
+	color: hotpink;
+	border-radius: 50%; /* 배경을 원형으로 만듦 */
+	padding: 15px; /* 아이콘 주위에 여백 추가 */
+	margin: 20px; /* 아이콘간 간격 설정 */
+	width: 70px;  /* 배경을 원하는 너비로 설정 */
+    height: 70px;  /* 배경을 원하는 높이로 설정 */
+	align-items: center;
+	font-weight: 800;
+	font-size: 25px;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Noto Sans', sans-serif;
+	}
+	
+	.topbarbi span {
+    font-size: 10px;
+	}

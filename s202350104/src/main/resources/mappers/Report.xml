@@ -3,22 +3,37 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.ReportMapper">
-	<select id="shReportListAll" resultType="Report">
-		select r.board_id, b.content ,b.user_id ,count(r.user_id) as count 
-		from  board b  
-		inner join report r on
-		b.id = r.board_id 
-		where b.is_deleted=0 and r.status=1
-		group by b.content, r.board_id, b.user_id
-		order by count desc
+	<select id="shReportListAll" parameterType="report" resultType="Report">
+	<![CDATA[
+	SELECT * FROM (
+	    SELECT inner_query.*, ROWNUM as rnum FROM (
+	        SELECT r.board_id, b.title, b.user_id, u.name, COUNT(r.user_id) AS count 
+	        FROM board b  
+	        INNER JOIN report r ON b.id = r.board_id 
+	        INNER JOIN users u ON b.user_id = u.id
+	        WHERE b.is_deleted = 0 AND r.status = 1
+	        GROUP BY b.title, r.board_id, b.user_id, u.name
+	        ORDER BY count DESC
+	    ) inner_query
+	    WHERE ROWNUM <= #{end}
+	)
+	WHERE rnum >= #{start}
+	]]>
 	</select>
 	
 	<select id="shReportDetail" resultType="Report" parameterType="int">
-		select * from report where board_id= #{board_id} and status=1
+			SELECT *
+			FROM (
+			    SELECT r.*, u.name as name, 
+			           ROWNUM as rn
+			    FROM report r
+			    JOIN users u ON r.user_id = u.id
+			    WHERE r.board_id = #{boardId} AND r.status = 1
+			)
 	</select>
 	
 	<select id="shBoardDetail" resultType="Report" parameterType="int">
-		select id, title, content,user_id from board where id= #{board_id}
+		select id, title, content,user_id from board where id= #{boardId}
 	</select>
 	<update id="shBoardUpdate" parameterType="int">
 		update board b set is_deleted = 1 
@@ -29,6 +44,26 @@
 		where r.board_id = #{id}
 	</update>
 	
+	<insert id="shBoardReportUpdate" parameterType="report">
+		insert into report 
+		VALUES (#{board_id},#{id},#{content},1,sysdate)
+	</insert>
 	
+	<select id="shTotalReport" resultType="int">
+		SELECT COUNT(*) FROM (
+    		SELECT COUNT(*) 
+    		FROM board b  
+    		INNER JOIN report r ON b.id = r.board_id 
+    		WHERE b.is_deleted = 0 AND r.status = 1
+    		GROUP BY b.content, r.board_id, b.user_id
+			)
+	</select>
+	
+	<select id="shtotalReportCount" resultType="int">
+		SELECT COUNT(*) AS row_count
+		FROM report r
+		JOIN board b ON r.board_id = b.id
+		WHERE b.is_deleted = 0 AND r.status = 1
+	</select>
 	
 </mapper>	

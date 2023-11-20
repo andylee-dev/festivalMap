@@ -3,32 +3,281 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.s202350104.ExperienceMapper">
+
+	
+	
+	<select id="shMainTotalExperience" resultType="int">
+		SELECT count(*)
+		FROM   experience e, contents c
+		WHERE  e.content_id = c.id
+		AND 	c.status = 1
+		AND 	is_deleted = 0
+	</select>
+
 	<select id="shExperienceListAll" resultType="ExperienceContent">
 		SELECT *
 		FROM
 		(
 			SELECT ROWNUM rn, a.*
 			FROM
-			(SELECT *
-			 FROM experience e, contents c
-			 WHERE e.content_id = c.id
-			 ORDER BY content_id) a
+			(SELECT * 
+				FROM contents c, experience e
+				WHERE c.id = e.content_id
+				and big_code = 15
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="is_deleted != null">
+					<choose>
+ 	 					<when test="is_deleted != 2">
+	    					AND is_deleted = #{is_deleted}  
+	   	 				</when>
+	 	 				<when test="is_deleted = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="small_code != null and small_code !=0">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>) a
 		)
 		WHERE rn BETWEEN #{start} and #{end}
+		
 	</select>
 	
 	<select id="shExperienceTotal" resultType="int">
 		SELECT count(*)
-		FROM   experience e, contents c
+		FROM   experience e, content c
 		WHERE  e.content_id = c.id
-	</select>	
-	
+		AND 	c.status = 1
+	</select>
 	
 	<select id="shExperienceDetail" resultType="ExperienceContent" parameterType="int">
 		SELECT *
 		FROM contents c, experience e
 		WHERE c.id = e.content_id
-		AND e.content_id = #{content_id}
-	
+		AND e.content_id = #{contentId}
 	</select>
+	
+	<update id="shExperienceDelete" parameterType="int">
+		update contents c 
+		set is_deleted = 1 
+		where c.id = #{content_id}	
+	</update>
+	
+	<update id="shExperienceRestore" parameterType="int">
+		update contents c 
+		set is_deleted = 0 
+		where c.id = #{content_id}
+	</update>
+	
+	<select id="shExperienceSearchListAll" resultType="ExperienceContent">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT * FROM contents 
+				WHERE big_code = 15
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="area != null and area != 0">
+					AND area = #{area}
+				</if>
+				<if test="sigungu != null and sigungu != 0">
+					AND sigungu = #{sigungu}
+				</if>
+				<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="is_deleted != null">
+					<choose>
+ 	 					<when test="is_deleted != 2">
+	    					AND is_deleted = #{is_deleted}  
+	   	 				</when>
+	 	 				<when test="is_deleted = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="small_code != null and small_code !=0">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="shExperienceSearchTotal" parameterType="ExperienceContent" resultType="int">
+		SELECT count(*)
+		FROM   experience e, contents c
+		WHERE  e.content_id = c.id
+		<if test="keyword != null">
+			AND title like '%' || #{keyword} || '%'
+		</if>
+		<if test="big_code != null and big_code != 0">
+			And c.big_code = #{big_code}
+		</if>
+		<if test="area != null and area != 0">
+					AND area = #{area}
+				</if>
+				<if test="sigungu != null and sigungu != 0">
+					AND sigungu = #{sigungu}
+				</if>
+		<if test="status != null">
+				<choose>
+ 	 				<when test="status != 2">
+	    				AND status = #{status}  
+	   	 			</when>
+	 	 			<when test="status = 2">
+	    			</when>    
+  				</choose>
+		</if>
+		<if test="is_deleted != null">
+			<choose>
+ 	 			<when test="is_deleted != 2">
+	    			AND c.is_deleted = #{is_deleted}  
+	   	 		</when>
+	 	 		<when test="is_deleted = 2">
+	    		</when>    
+  			</choose>
+		</if>
+		<if test="small_code != null and small_code != 0 and small_code != 999">
+				AND c.small_code = #{small_code}  
+	   	</if>
+	</select>	
+	
+	
+	
+	<select id="shListSmallCodeAll" resultType="ExperienceContent">
+        <![CDATA[
+        select small_code, content 
+		from commoncodes 
+		where big_code = 15
+		and small_code <999
+       ]]>	        
+	</select>
+	
+	<update id="shContentsUpdate" parameterType="ExperienceContent">
+		UPDATE contents 
+		SET  area=#{area}, sigungu=#{sigungu},small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{id}
+	</update>
+	
+	<update id="shExperienceUpdate" parameterType="ExperienceContent">
+		UPDATE experience 
+		SET capacity=#{capacity}, age=#{age}, inform=#{inform}, open_time=#{open_time}, rest_time=#{rest_time},
+		cost=#{cost}, is_credit=#{is_credit}, is_pet=#{is_pet}, is_parking=#{is_parking}, is_stroller=#{is_stroller}
+		WHERE content_id = #{id}
+	</update>
+	
+	<update id="shExperienceApprove" parameterType="int">
+		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	</update>
+	
+	<insert id="shContentsInsert" parameterType="ExperienceContent">
+		INSERT INTO contents(id, area, sigungu, big_code, small_code, title, content, status,
+				img1, img2, img3, address, postcode, mapx, mapy, email, phone, homepage,
+				readcount, user_id, created_at, is_deleted)
+		VALUES(contents_id_seq.nextval, #{area}, #{sigungu}, #{big_code}, #{small_code}, #{title}, #{content}, '0',
+				#{img1}, #{img2}, #{img3}, #{address}, #{postcode}, #{mapx}, #{mapy}, #{email}, #{phone}, #{homepage}, 
+				0, #{user_id}, sysdate, '0')
+	</insert>
+	
+	<insert id="shExperienceInsert" parameterType="ExperienceContent">
+		INSERT INTO experience(content_id, capacity, age, inform, open_time, rest_time,
+				cost, is_credit, is_pet, is_parking, is_stroller) 
+		VALUES(contents_id_seq.currval, #{capacity}, #{age}, #{inform}, #{open_time}, 
+				#{rest_time}, #{cost}, #{is_credit}, #{is_pet}, #{is_parking}, #{is_stroller})
+	</insert>
+	
+	<select id="shMainExperienceSearchTotal" parameterType="ExperienceContent" resultType="int">
+		SELECT count(*)
+		FROM   experience e, contents c
+		WHERE  e.content_id = c.id
+				<if test="big_code != null">
+				AND big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+					And status = 1
+					And is_deleted = 0
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+             	<if test="area != 0">
+					and area = #{area}
+				</if>
+		</select>
+		
+	<select id="shMainExperienceSearchListAll" resultType="ExperienceContent">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT * FROM contents 
+				<if test="big_code != null">
+				WHERE big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+					And status = 1
+					And is_deleted = 0
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="area != 0">
+					and area = #{area}
+					<if test=" sigungu != 0">
+					and sigungu = #{sigungu}
+					</if>
+				</if>) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	
 </mapper>	

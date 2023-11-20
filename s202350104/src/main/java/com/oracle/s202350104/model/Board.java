@@ -28,11 +28,14 @@ public class Board {
 	
 	// 조회용
 	private String name;
+	private String file_name_custom;
+	private String nickname;
 	private String search;
 	private String keyword;
 	private String pageNum;
 	private int start;
 	private int end;
-
+	private int commBigCode;
+	private int commSmallCode;
 	
 }

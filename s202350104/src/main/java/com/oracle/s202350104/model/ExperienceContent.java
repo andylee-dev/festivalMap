@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ExperienceContent {
+	private int id;
 	private int area;
 	private int sigungu;
 	private int big_code;
@@ -26,7 +27,7 @@ public class ExperienceContent {
 	private int readcount;
 	private String user_id;
 	private Date created_at;
-	private Date deleted_at;
+	private Date updated_at;
 	private String is_deleted;
 	
 	
@@ -45,5 +46,7 @@ public class ExperienceContent {
 	private String pageNum;
 	private int    start;
 	private int    end;
+	
+	private String keyword;
 	
 }
