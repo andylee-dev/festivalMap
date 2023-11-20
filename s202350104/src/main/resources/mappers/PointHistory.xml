@@ -6,10 +6,10 @@
 
 	<select id="pointhistoryAll" resultType="pointhistory">
 
-		SELECT *
-		FROM pointhistory ph, users u, point p
-		WHERE ph.user_id = u.id
-		AND ph.point_id = p.id
+   	 	SELECT u.name as user_name, p.title as point_title, p.point as point_point, ph.user_id, ph.point_id, ph.created_at
+    	FROM pointhistory ph, users u, point p
+    	WHERE ph.user_id = u.id
+    	AND ph.point_id = p.id
 
 	</select>
 

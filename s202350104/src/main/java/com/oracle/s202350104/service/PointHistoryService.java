@@ -13,4 +13,6 @@ public interface PointHistoryService {
 	void                    writePointHistory(PointHistory pointhistory);
 	
     List<PointHistory>		getPointHistoryByUserId(int user_id);
+
+	List<PointHistory>      listPointHistorySortedByDateDesc(List<PointHistory> listPointHistory);
 }

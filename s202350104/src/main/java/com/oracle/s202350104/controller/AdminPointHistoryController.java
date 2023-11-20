@@ -26,8 +26,9 @@ public class AdminPointHistoryController {
 		public String pointhistory(PointHistory pointhistory, Model model) {
 		
 		List<PointHistory> listPointHistory = phs.listPointHistory();
-		
-		model.addAttribute("listPointHistory", listPointHistory);
+		List<PointHistory> sortedList = phs.listPointHistorySortedByDateDesc(listPointHistory);
+
+        model.addAttribute("listPointHistory", sortedList);
 		
 		return "admin/point/pointhistory";
 		

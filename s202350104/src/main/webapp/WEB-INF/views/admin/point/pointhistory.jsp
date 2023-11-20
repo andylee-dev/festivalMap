@@ -27,7 +27,7 @@
 				
 				<!-- Section2: Search Form -->
 				<div class="container col-9 justify-content-center mt-5">
-					<form action="favoriteSearch" method="POST" class="container justify-content-center">	
+					<form action="pointhistorySearch" method="POST" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
@@ -57,7 +57,10 @@
 							<thead>
 								<tr>
 									<th scope="col">회원ID</th>
+									<th scope="col">회원이름</th>
 									<th scope="col">포인트번호</th>
+									<th scope="col">포인트이름</th>
+									<th scope="col">포인트점수</th>
 									<th scope="col">포인트생성일</th>
 									<th scope="col">포인트삭제</th>
 								</tr>
@@ -65,7 +68,10 @@
 								<c:forEach var="pointhistory" items="${listPointHistory}">
 								<tr>
 									<td>${pointhistory.user_id }</td>
+									<td>${pointhistory.user_name}</td>
 									<td>${pointhistory.point_id }</td>
+									<td>${pointhistory.point_title }</td>
+									<td>${pointhistory.point_point }</td>
 									<td><fmt:formatDate value="${pointhistory.created_at}" pattern="yyyy/MM/dd" /></td>
 									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
 								</tr>
