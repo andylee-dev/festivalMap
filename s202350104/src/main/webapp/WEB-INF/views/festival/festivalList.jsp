@@ -172,7 +172,7 @@
 						<div class="card-body">
 					    <p class="card-text title_p">${festival.title}</p>
 					    <p class="card-text period_p">${festival.start_date}&nbsp;~&nbsp;${festival.end_date}</p>
-					    <p class="card-text contet_p">content영역</p>
+					    <p class="card-text contet_p">${festival.content}</p>
 					  </div>
 					</div>			
 				</div>

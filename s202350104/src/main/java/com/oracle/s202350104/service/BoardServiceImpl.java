@@ -141,5 +141,19 @@ public class BoardServiceImpl implements BoardService {
 
 		return board;
 	}
+	
+	// 댓글 기능
+	@Override
+	public void commentInsert(Board board) {
+		
+		boardDao.commentInsert(board);
+		
+	}
+	
+	@Override
+	public List<Board> commentDetail(int id) {
+		List<Board> comments = boardDao.commentDetail(id);
+		return comments; 
+	}
 
 }

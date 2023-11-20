@@ -108,7 +108,7 @@
 		
 		<!-- 상세내용 출력 -->
 		<div class="container p-3 detail_custom">
-			<div class="row row-cols-1 align-items-start">
+			<div class="row row-cols-1">
 				<div class="col">
 					<p>${board.content }</p>
 				</div>			
@@ -128,29 +128,124 @@
 	
 		<!-- 기능버튼 출력 -->		
 		<div class="container p-3" >
-			<div class="row row-cols-4">
+			<div class="row row-cols-4 detail-btn-custom">
 				<c:choose>
 					<c:when test="${board.small_code eq 3 }">
-						<div class="col-md-1 btn_border_custom">			
-							<button class="btn btn_detail_custom" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>				
+						<div class="col-md-1">			
+							<button class="btn" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>				
 						</div>
-						<div class="col-md-1 btn_border_custom">			
-							<button class="btn btn_detail_custom" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>				
+						<div class="col-md-1">			
+							<button class="btn" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>				
 						</div>
-		 				<div class="col-md-1 btn_border_custom">
-							<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">취소</button>			
-						</div>
-						<div class="col-md-1 btn_border_custom">
+		 				<div class="col-md-1">
+							<button class="btn" onclick="closeAndRedirect(${board.small_code })">글&nbsp;목&nbsp;록</button>			
+						</div>					
+						<div class="col-md-1 detail-report-custom">
 							<!-- 게시판 신고기능 -송환 -->
-							<button class="btn btn_detail_custom" onclick="report(${board.id})">신&nbsp;고</button>								
+							<button class="btn" onclick="report(${board.id})">신고하기</button>								
 						</div>			
 					</c:when>
 					<c:otherwise>
-		 				<div class="col-md-1 btn_border_custom">
-							<button class="btn btn_detail_custom" onclick="closeAndRedirect(${board.small_code })">목록</button>			
+		 				<div class="col-md-1 ">
+							<button class="btn" onclick="closeAndRedirect(${board.small_code })">목록</button>			
 						</div>					
 					</c:otherwise>				
 				</c:choose>
+			</div>
+		</div>
+		
+		<!-- 댓글 출력 -->
+		<div class="container p-3 comment-custom border">
+			<div class="row row-cols-1 align-items-start">
+				<div class="col">				
+					<!-- input 영역 -->
+					<div class="container p-0">
+						<form action="commentInsert" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="id" value="${board.id }"> 
+							<input type="hidden" name="name" value="${board.name }"> 
+							<input type="hidden" name="user_id" value="${userId }"> 
+							<input type="hidden" name="big_code" value="${board.big_code }">
+							<input type="hidden" name="small_code" value="${board.small_code }"> 
+							<input type="hidden" name="comment_group_id" value="${board.comment_group_id }">
+							<input type="hidden" name="comment_step" value="${board.comment_step }"> 
+							<input type="hidden" name="comment_indent" value="${board.comment_indent }">
+
+							<div class="row row-cols-3 p-0">
+								<div class="form-group col comment-title">
+									<p>댓글작성자닉네임</p>
+								</div>
+
+								<div class="form-group col comment-input">
+									<input type="text" class="form-control" name="content" required="required" 
+										   placeholder="댓글을 입력하세요.">
+								</div>
+
+								<div class="form-group col comment-btn">
+									<button type="submit" class="btn btn_detail_custom">등록</button>
+								</div>
+							</div>
+						</form>
+
+					<!-- input 영역 END -->
+					</div>
+					
+					<!-- 댓글 출력  -->
+					<div class="container p-3 comments-custom">
+						<c:forEach var="comments" items="${comment }">
+							<div class="row row-cols-2 align-items-start">
+								<div class="col comments-nickname">
+									<p>${comments.name }</p>
+								</div>
+								
+								<div class="col comments-content">								
+									<p class="d-inline-flex gap-1">
+									  <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${comments.id}" aria-expanded="false" aria-controls="collapseExample"
+									  		  style="width: 900px; text-align: left;">
+								   		 ${comments.content }
+								 	 </button>
+									</p>
+								</div>
+																	
+								<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}"
+									 style="">
+									<div class="card card-body comments-body-custom">
+									<!-- input 영역 -->
+										<div class="container p-0">
+											<form action="commentInsert" method="post" enctype="multipart/form-data">
+												<input type="hidden" name="id" value="${board.id }"> 
+												<input type="hidden" name="name" value="${comments.name }"> 
+												<input type="hidden" name="user_id" value="${userId }"> 
+												<input type="hidden" name="big_code" value="${board.big_code }">
+												<input type="hidden" name="small_code" value="${board.small_code }"> 
+												<input type="hidden" name="comment_group_id" value="${comments.comment_group_id }">
+												<input type="hidden" name="comment_step" value="${board.comment_step }"> 
+												<input type="hidden" name="comment_indent" value="${comments.comment_indent }">
+					
+												<div class="row row-cols-3 p-0">
+													<div class="form-group col comment-md-title">
+														<p>대댓글</p>
+													</div>
+					
+													<div class="form-group col comment-md-input">
+														<input type="text" class="form-control" name="content" required="required" 
+															   placeholder="댓글을 입력하세요.">
+													</div>
+					
+													<div class="form-group col comment-md-btn">
+														<button type="submit" class="btn btn_detail_custom">등록</button>
+													</div>
+												</div>
+											</form>
+					
+										<!-- input 영역 END -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					
+				</div>			
 			</div>
 		</div>		
 			

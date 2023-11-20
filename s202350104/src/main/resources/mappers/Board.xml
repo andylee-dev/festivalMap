@@ -38,7 +38,6 @@
 		        where a.user_id = b.id
 		        and a.small_code = 1
 		        and a.is_deleted = 0		        
-		        order by a.id desc
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -54,7 +53,6 @@
 		        where a.user_id = b.id
 		        and a.small_code = 2
 		        and a.is_deleted = 0		        
-		        order by a.id desc
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -65,12 +63,13 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code, a.user_id
+		        select a.id, a.title, b.name, a.created_at, a.read_count, 
+		        	   a.big_code, a.small_code, a.user_id, a.comment_indent
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 3
 		        and a.is_deleted = 0
-		        order by a.id desc
+		        and a.comment_indent = 0
 		    ) c
 		)
 		where rn between #{start} and #{end}		
@@ -87,7 +86,6 @@
 		        where a.user_id = b.id
 		        and a.small_code = 4
 		        and a.is_deleted = 0		        
-		        order by a.id desc
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -103,7 +101,6 @@
 		        where a.user_id = b.id
 		        and a.small_code = 5
 		        and a.is_deleted = 0		        
-		        order by a.id desc
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -149,8 +146,10 @@
 	</select>
 
 	<select id="boardDetail" parameterType="int" resultType="Board">
-		select substr(a.file_name, 38) file_name_custom, a.id, a.title, a.content, b.name, a.created_at, a.read_count, a.file_name, 
-			   a.file_path, a.big_code, a.small_code
+		select substr(a.file_name, 38) file_name_custom, a.id, a.title,  
+			   a.content, b.name, a.created_at, a.read_count, a.file_name, 
+			   a.file_path, a.big_code, a.small_code, a.comment_group_id,
+			   a.comment_step, a.comment_indent
 		from board a, users b
 		where a.user_id = b.id
 		and a.id = #{boardId}
@@ -183,11 +182,12 @@
 		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
 			select board_seq_generator.nextval from dual
 		</selectKey>
-		insert into board (id, user_id, big_code, small_code, 
-						   title, content, read_count, file_name, 
-						   file_path, created_at, is_deleted) 
+		insert into board (id, user_id, big_code, small_code, title, content, 
+						   read_count, file_name, file_path, comment_group_id, 
+						   comment_step, comment_indent, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
-			   #{title}, #{content}, 0, #{file_name}, #{file_path}, sysdate, 0)		
+			   #{title}, #{content}, 0, #{file_name}, #{file_path}, 
+			   #{id}, 0, 0, sysdate, 0)		
 	</insert>
 	
 	<insert id="reviewBoardInsert" parameterType="Board">
@@ -204,6 +204,35 @@
 		select *
 		from board
 		where id = #{id}
+	</select>
+	
+	<insert id="commentInsert" parameterType="Board">
+		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
+			select board_seq_generator.nextval from dual
+		</selectKey>
+		insert into board (id, user_id, big_code, small_code, 
+						   title, content, read_count, comment_group_id, 
+						   comment_step, comment_indent, created_at, is_deleted) 
+		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
+			   #{title}, #{content}, 0, #{comment_group_id}, #{comment_step}, #{comment_indent},
+			   sysdate, 0)		
+	</insert>
+	
+	<update id="commentInsertTest">
+		update board 
+		set comment_step = comment_step + 1 
+		where comment_group_id = #{comment_group_id} 
+		and comment_step > #{comment_step}
+	
+	</update>
+	
+	<select id="commentDetail" parameterType="int" resultType="Board">
+		select a.id, b.name, a.title, a.content, a.comment_group_id, a.comment_step, a.comment_indent
+		from board a, users b
+		where a.user_id = b.id
+		and a.comment_group_id = #{id}
+		and a.comment_indent > 0
+		order by a.comment_step
 	</select>
 	
 </mapper>

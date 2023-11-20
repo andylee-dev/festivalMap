@@ -272,4 +272,59 @@ public class BoardDaoImpl implements BoardDao {
 		return board;
 	}
 	
+	@Override
+	public void commentInsert(Board board) {
+		log.info("BoardDao commentInsert Start!!");
+		
+		int comment_group_id = 0;
+		int comment_step = 0;
+		int comment_indent = 0; 
+		
+		commentShape(board);
+		
+		board.setComment_group_id(board.getComment_group_id());
+		board.setComment_step(board.getComment_step() + 1);
+		board.setComment_indent(board.getComment_indent() + 1);
+		
+
+		comment_group_id = board.getComment_group_id();
+		comment_step = board.getComment_step();
+		comment_indent = board.getComment_indent();
+		
+		log.info("BoardDao commentInsert getId : {}", board.getId());
+		log.info("BoardDao commentInsert getUser_id : {}", board.getUser_id());
+		log.info("BoardDao commentInsert getBig_code : {}", board.getBig_code());
+		log.info("BoardDao commentInsert getSmall_code : {}", board.getSmall_code());
+		log.info("BoardDao commentInsert getComment_group_id : {}", comment_group_id);
+		log.info("BoardDao commentInsert getComment_step : {}", comment_step);
+		log.info("BoardDao commentInsert getComment_indent : {}", comment_indent);
+		
+		session.insert("commentInsert", board);
+
+	}
+
+	private void commentShape(Board board) {
+		log.info("BoardDao commentShape Start!!");	
+		
+		int comment_group_id = 0;
+		int comment_step = 0; 
+		
+		comment_group_id = board.getComment_group_id();
+		comment_step = board.getComment_step();
+		
+		log.info("BoardDao commentInsert comment_group_id : {}", comment_group_id);
+		log.info("BoardDao commentInsert comment_step : {}", comment_step);		
+		
+		session.update("commentInsertTest", board);
+		
+	}
+	
+	@Override
+	public List<Board> commentDetail(int id) {
+		
+		List<Board> comments = session.selectList("commentDetail", id);
+		log.info("BoardDao comments size : {}", comments.size());		
+		return comments;
+	}
+	 
 }

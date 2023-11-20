@@ -309,6 +309,7 @@ font-family: Noto Sans;
 .card_custom {
 	width: 600px;
 	height: 460px;
+	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
 }
 
 .card_custom .title_p{
@@ -330,6 +331,8 @@ font-family: Noto Sans;
 	font-size:16px;
 	font-weight: bold;
 	text-align: left;
+	text-overflow: ellipsis; /* 텍스트가 너무 길 경우 "..."으로 생략 처리 */
+ 	overflow: hidden;
 }
 
 .content_custom {

@@ -144,20 +144,27 @@
 				<div class="row row-cols-5 align-items-center list_custom">
 					<!-- 글번호 Date -->		
 					<div class="col-md-1">${num }</div>
+					<c:set var="num" value="${num -1 }"/>	
+									
 					<!-- 게시판 제목 -->
 					<div class="col-md-6">
-						<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>
+						<c:if test="${boards.comment_indent > 0 }"></c:if>
+						<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
 					</div>
+					
 					<!-- 게시물 작성자 -->
 					<div class="col-md-2">${boards.name }</div>
+					
 					<!-- 게시물 작성일(최초 생성일) -->
 					<div class="col-md-2">		
 						<fmt:formatDate value="${boards.created_at }" type="date"
 										pattern="YYYY/MM/dd"/>
 					</div>
+					
 					<!-- 게시물 조회수 -->
 					<div class="col-md-1">${boards.read_count }</div>				
-				</div>		
+					
+				</div>	
 			</c:forEach>
 		</div>		
 		

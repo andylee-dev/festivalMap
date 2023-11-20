@@ -33,5 +33,9 @@ public interface BoardDao {
 
 	int boardCount2(Board festival);
 
+	void commentInsert(Board board);
+
+	List<Board> commentDetail(int id);
+
 
 }

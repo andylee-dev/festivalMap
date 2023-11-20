@@ -33,4 +33,8 @@ public interface BoardService {
 
 	int boardCount2(Board board);
 
+	void commentInsert(Board board);
+
+	List<Board> commentDetail(int id);
+
 }

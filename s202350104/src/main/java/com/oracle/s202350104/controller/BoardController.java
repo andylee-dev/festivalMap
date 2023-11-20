@@ -336,17 +336,19 @@ public class BoardController {
 
 	// 통합게시판 상세정보 Logic
 	@RequestMapping(value = "/boardDetail")
-	public String boardContent(int id, int userId, Model model) {
+	public String boardContent(int id, Integer userId, Model model) {
 
 		log.info("BoardController boardContent boardId : {} ", id);
 		log.info("BoardController boardContent userId : {} ", userId);
 
 		Board boards = boardService.boardDetail(id);
 		List<Tags> hashTags = tagsService.boardTagDetail(id);
+		List<Board> comments = boardService.commentDetail(id);
 		
 		log.info("BoardController boardContent hashTags.size : {} ", hashTags.size());
 		
 		model.addAttribute("board", boards);
+		model.addAttribute("comment", comments);
 		model.addAttribute("hashTag", hashTags);
 		model.addAttribute("userId", userId);
 
@@ -356,7 +358,7 @@ public class BoardController {
 	
 	// 이벤트,포토게시판 상세정보 Logic
 	@RequestMapping(value = "/photoEventBoardDetail")
-	public String photoBoardDetail(int id, int userId,Model model) {
+	public String photoBoardDetail(int id, int userId, Model model) {
 
 		log.info("BoardController boardContent boardId : {} ", id);
 		log.info("BoardController boardContent userId : {} ", userId);
@@ -763,7 +765,42 @@ public class BoardController {
 
 		return redirectURL;
 	}
+	
+	// 댓글 기능 form Logic
+	@RequestMapping(value = "/commentInsertForm")
+	public String commentInsertForm(int id, int userId, Model model) {
 
+		log.info("BoardController commentInsertForm boardId : {} ", id);
+		log.info("BoardController commentInsertForm userId : {} ", userId);
+
+		Board boards = boardService.boardDetail(id);
+		
+		log.info("BoardController commentInsertForm getComment_group_id : {} ", boards.getComment_group_id());
+		log.info("BoardController commentInsertForm getComment_step : {} ", boards.getComment_step());
+		log.info("BoardController commentInsertForm getComment_indent : {} ", boards.getComment_indent());
+
+		model.addAttribute("board", boards);
+		model.addAttribute("userId", userId);
+
+		return "board/commentInsertForm";
+	}
+	
+	// 댓글 기능 생성 Logic
+	@RequestMapping(value = "/commentInsert")
+	public String commentInser(Board board , Model model) {
+		
+		log.info("BoardController commentInser boardId : {} ", board.getId());
+		log.info("BoardController commentInser userId : {} ", board.getUser_id());
+
+		boardService.commentInsert(board);
+		
+
+		model.addAttribute("id", board.getId());
+		model.addAttribute("userId", board.getUser_id());
+
+		return "forward:/boardDetail";
+	}
+	
 	// 게시판 신고기능 -송환
 	@GetMapping("/reportBoardFoam")
 	public String reportBoard(int boardId, Model model) {
@@ -781,7 +818,7 @@ public class BoardController {
 		}
 
 		return "board/boardReportForm";
-	}
+	}	
 	
 	// 게시판 신고기능 -송환
 	@RequestMapping(value = "boardReportUpdate")
