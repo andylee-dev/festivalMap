@@ -54,7 +54,7 @@ public class AdminTagController {
 	private final FestivalsService fs;
 	private final CourseService crs;
 	
-	// 전체 tag list 페이지로 이동하는 logic
+	// 전체 tag list 페이지로 이동
 	@RequestMapping(value = "list")
 	public String tagList(Tags tags, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -92,7 +92,7 @@ public class AdminTagController {
 		return "admin/tag/tagList";
 	}
 	
-	// 새 태그를 등록하는 폼으로 이동하는 logic
+	// 새 태그를 등록하는 폼으로 이동
 	@RequestMapping(value = "insertTagsForm")
 	public String insertTagsForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -108,7 +108,7 @@ public class AdminTagController {
 		return "admin/tag/insertTagsForm";
 	}
 	
-	// 폼에서 입력한 tag 정보를 insert하기 위한 logic
+	// 폼에서 입력한 tag 정보를 insert
 	@RequestMapping(value = "insertTagsResult")
 	public String insertTagsResult(Tags tags, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -136,7 +136,7 @@ public class AdminTagController {
 		}
 	}
 	
-	// 태그 정보를 수정하는 폼으로 이동하는 logic
+	// 태그 정보를 수정하는 폼으로 이동
 	@RequestMapping(value = "updateTagsForm")
 	public String updateTagsForm(int id, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -155,7 +155,7 @@ public class AdminTagController {
 		return "admin/tag/updateTagsForm";
 	}
 	
-	// 폼에서 입력받은 tag 정보를 update하기 위한 logic
+	// 폼에서 입력받은 tag 정보를 update
 	@PostMapping(value = "updateTagsResult") 
 	public String updateTagsResult(Tags tags, Model model) { 
 		 UUID transactionId = UUID.randomUUID(); 
@@ -183,17 +183,25 @@ public class AdminTagController {
 		 } 
 	}
 	  
-	// 태그 정보를 삭제하고 그 결과를 반환하는 logic(AJAX 연결)
-	@ResponseBody
+	// 태그 정보를 삭제
 	@RequestMapping(value = "deleteTags")
-	public String deleteTags(Tags tags) {
-		int result = ts.deleteTags(tags.getId());
-		// view에서 text로 받을 수 있도록 String형으로 변환
-		String resultStr = Integer.toString(result);
-		return resultStr;
+	public String deleteTags(int tagId) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "deleteTags", "start");
+			// tagId에 해당하는 태그 정보를 찾아 삭제
+			int result = ts.deleteTags(tagId);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "deleteTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "deleteTags", "end");
+		}		
+		
+		return "redirect:list";
 	}
 	
-	// 회원 태그 관리 페이지로 이동하기 위한 logic
+	// 회원 태그 관리 페이지로 이동
 	@RequestMapping(value = "userTag")
 	public String userTagList(Users user, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -224,7 +232,7 @@ public class AdminTagController {
 		return "admin/tag/userTag";
 	}
 	
-	// 회원 태그 리스트를 전부 view로 가져가는 logic(AJAX 연결)
+	// 회원 태그 리스트를 전부 view로 보내줌
 	@ResponseBody
 	@RequestMapping(value = "getUserTags")
 	public List<Tags> getUserTags(Model model) {
@@ -244,7 +252,7 @@ public class AdminTagController {
 		return listTags;
 	}
 	
-	// 게시판 태그 관리 페이지로 이동하기 위한 logic
+	// 게시판 태그 관리 페이지로 이동
 	@RequestMapping(value = "boardTag")
 	public String boardTagList(Board board, String smallCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -292,7 +300,7 @@ public class AdminTagController {
 		return "admin/tag/boardTag";
 	}
 	
-	// 게시판 태그 리스트를 전부 view로 가져가는 logic(AJAX 연결)
+	// 게시판 태그 리스트를 전부 view로 보내줌
 	@ResponseBody
 	@RequestMapping(value = "getBoardTags")
 	public List<Tags> getBoardTags(String smallCodeStr, Model model) {
@@ -313,7 +321,7 @@ public class AdminTagController {
 		return listTags;
 	}
 	
-	// 게시글 태그를 수정하는 폼으로 이동하기 위한 logic
+	// 게시글 태그를 수정하는 폼으로 이동
 	@RequestMapping(value = "boardTagsUpdateForm")
 	public String boardTagsUpdate(String boardIdStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -346,7 +354,7 @@ public class AdminTagController {
 		return "admin/tag/boardTagsUpdateForm";
 	}
 	
-	// tag를 수정하고 그 결과에 따라 메세지를 반환하기 위한 logic(AJAX 연결)
+	// tag를 수정하고 그 결과에 따라 메세지를 반환(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "boardTagsUpdate")
 	public String boardTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int boardId, Model model) {
@@ -373,7 +381,7 @@ public class AdminTagController {
 		return str;
 	}
 	
-	// 컨텐츠 태그 관리 페이지로 이동하기 위한 logic
+	// 컨텐츠 태그 관리 페이지로 이동
 	@RequestMapping(value = "contentTag")
 	public String contentTagList(Contents content, String bigCodeStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -417,7 +425,7 @@ public class AdminTagController {
 		return "admin/tag/contentTag";
 	}
 	
-	// 컨텐츠 태그 수정폼으로 이동하는 logic
+	// 컨텐츠 태그 수정폼으로 이동
 	@RequestMapping(value = "contentTagsUpdateForm")
 	public String contentTagsUpdate(String contentIdStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -453,7 +461,7 @@ public class AdminTagController {
 		return "admin/tag/contentTagsUpdateForm";
 	}
 	
-	// 컨텐츠 태그를 수정하고 결과 메세지를 반환하는 logic(AJAX 연결)
+	// 컨텐츠 태그를 수정하고 결과 메세지를 반환(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "contentTagsUpdate")
 	public String contentTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int contentId, Model model) {
@@ -480,7 +488,7 @@ public class AdminTagController {
 		return str;
 	}
 	
-	// bigCode에 해당하는 컨텐츠 태그 리스트를 전부 가져오기 위한 logic(AJAX 연결)
+	// bigCode에 해당하는 컨텐츠 태그 리스트 전부 가져오기(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "getContentTags")
 	public List<Tags> getContentTags(String bigCodeStr, Model model) {
@@ -501,7 +509,7 @@ public class AdminTagController {
 		return listTags;
 	}
 	
-	// 코스 태그 관리 페이지로 이동하기 위한 logic
+	// 코스 태그 관리 페이지로 이동
 	@RequestMapping(value = "courseTag")
 	public String courseTagList(Course course, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -535,7 +543,7 @@ public class AdminTagController {
 		return "admin/tag/courseTag";
 	}
 	
-	// 코스 태그 리스트를 전부 가져오기 위한 logic(AJAX 연결) => 추후 small_code에 맞게 가져올 수 있도록 수정 예정
+	// 코스 태그 리스트를 전부 가져오기(AJAX 연결) => 추후 small_code에 맞게 가져올 수 있도록 수정 예정
 	@ResponseBody
 	@RequestMapping(value = "getCourseTags")
 	public List<Tags> getCourseTags(Model model) {
@@ -554,7 +562,7 @@ public class AdminTagController {
 		return listTags;
 	}
 	
-	// 코스 태그 수정폼으로 이동하는 logic
+	// 코스 태그 수정폼으로 이동
 	@RequestMapping(value = "courseTagsUpdateForm")
 	public String courseTagsUpdate(String courseIdStr, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -591,7 +599,7 @@ public class AdminTagController {
 		return "admin/tag/courseTagsUpdateForm";
 	}
 		
-	// 코스 태그를 수정하고 결과 메세지를 반환하는 logic(AJAX 연결)
+	// 코스 태그를 수정하고 결과 메세지를 반환(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "courseTagsUpdate")
 	public String courseTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int courseId, Model model) {

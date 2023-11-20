@@ -128,7 +128,7 @@
 								class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판태그</a></li>
 						<li><a href="/admin/tag/contentTag?bigCodeStr=11"
 								class="link-body-emphasis d-inline-flex text-decoration-none rounded">컨텐츠태그</a></li>
-						<li><a href="/admin/tag/courseTag"
+						<li><a href="/admin/tag/courseTag?smallCodeStr=1"
 								class="link-body-emphasis d-inline-flex text-decoration-none rounded">코스태그</a></li>
 					</ul>
 				</div>

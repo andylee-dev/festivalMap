@@ -101,7 +101,6 @@
 								<tr>
 									<th scope="col">순번</th>
 									<th scope="col">코스번호</th>
-									<th scope="col">분류</th>
 									<th scope="col">이름</th>
 									<th scope="col">지역</th>
 									<th scope="col">태그명</th>
@@ -115,10 +114,6 @@
 									<tr>
 										<td>${num}</td>
 										<td><input type="hidden" id="course_id${st.index}" value="${course.id}">${course.id}</td>
-										<td id="small_code_input${st.index}">
-											<input type="hidden" id="small_code${st.index}" value="${course.small_code}">
-											${course.small_code}
-										</td>
 										<td>${course.course_title}</td>
 										<td id="areas_input${st.index}">
 											<%-- <input type="hidden" id="area${st.index}" value="${content.area}">

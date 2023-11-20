@@ -6,6 +6,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>태그 수정</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript">
+			function deleteTag() {
+				if(confirm("정말 삭제하시겠습니까?")) {
+					location.href="deleteTags?tagId=${tags.id}";
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -26,9 +34,10 @@
 					<c:if test="${msg != null}">${msg}</c:if>
 					<form action="updateTagsResult" method="post">
 						<input type="hidden" name="id" value="${tags.id}">
-						태그번호 ${tags.id} <p>
+						번호 ${tags.id} <p>
 						태그명 <input type="text" name="name" value="${tags.name}"><p>
-						<input type="submit" value="수정">
+						<button type="submit" class="btn btn-primary">수정</button>
+						<button type="button" class="btn btn-outline-secondary" onclick="deleteTag()">삭제</button>
 					</form>
 				</div>
 			</main>
