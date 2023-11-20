@@ -31,15 +31,15 @@
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
-								<select name="search" class="form-select">
-									<option value="s_id">회원ID</option>
-									<option value="s_name">회원이름</option>
-									<option value="s_point">포인트번호</option>
-								</select> 
-							</div>	
-							<div class="col-5 mx-2 d-flex justify-content-center">	
-								<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
-								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+    							<select name="search" class="form-select">
+        							<option value="s_id">회원ID</option>
+        							<option value="s_name">회원이름</option>
+        							<option value="s_point">포인트번호</option>
+    							</select> 
+							</div>
+							<div class="col-5 mx-2 d-flex justify-content-center">    
+    							<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
+    							<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
 							</div>
 						</div>	
 					</form>

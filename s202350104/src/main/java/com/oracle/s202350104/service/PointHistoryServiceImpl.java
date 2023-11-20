@@ -3,7 +3,8 @@ package com.oracle.s202350104.service;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-	
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -71,4 +72,28 @@ import lombok.extern.slf4j.Slf4j;
 
 		        return listPointHistory;
 		    }
+
+		@Override
+	    public List<PointHistory> searchPointHistory(String search, String keyword) {
+			
+		    List<PointHistory> listPointHistory = phd.listPointHistory(); // phd를 통해 데이터 조회
+
+		    // 검색 로직 추가
+		    List<PointHistory> searchResult = listPointHistory.stream()
+		            .filter(ph -> {
+		                switch (search) {
+		                    case "s_id":
+		                        return String.valueOf(ph.getUser_id()).contains(keyword);
+		                    case "s_name":
+		                        return ph.getUser_name().contains(keyword);
+		                    case "s_point":
+		                        return String.valueOf(ph.getPoint_id()).contains(keyword);
+		                    default:
+		                        return false;
+		                }
+		            })
+		            .collect(Collectors.toList());
+
+		    return searchResult;
 	}
+}

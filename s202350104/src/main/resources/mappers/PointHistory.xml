@@ -33,5 +33,21 @@
 		AND ph.point_id = p.id	;
 
 	</select>
+	
+	    <select id="searchPointHistory" resultType="pointhistory" parameterType="pointhistory">
+        SELECT *
+        FROM pointhistory ph, users u, point p
+        WHERE ph.user_id = u.id
+        AND ph.point_id = p.id
+        AND (
+            u.name LIKE '%' || #{keyword} || '%'
+            OR u.id LIKE '%' || #{keyword} || '%'
+            OR ph.point_id LIKE '%' || #{keyword} || '%'
+            OR p.title LIKE '%' || #{keyword} || '%'
+            OR ph.point_point LIKE '%' || #{keyword} || '%'
+            OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
+        )
+    </select>
+	
 
 </mapper>

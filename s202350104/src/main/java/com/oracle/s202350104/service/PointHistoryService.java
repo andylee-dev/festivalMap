@@ -15,4 +15,6 @@ public interface PointHistoryService {
     List<PointHistory>		getPointHistoryByUserId(int user_id);
 
 	List<PointHistory>      listPointHistorySortedByDateDesc(List<PointHistory> listPointHistory);
+
+	List<PointHistory>      searchPointHistory(String search, String keyword);
 }

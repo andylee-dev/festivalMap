@@ -18,6 +18,7 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 
 	@Override
 	public List<PointHistory> listPointHistory() {
+		
 		List<PointHistory> listPointHistory = null;
 		try {
 			listPointHistory = session.selectList("pointhistoryAll");

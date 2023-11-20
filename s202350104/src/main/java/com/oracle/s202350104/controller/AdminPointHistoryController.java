@@ -54,7 +54,13 @@ public class AdminPointHistoryController {
 	    phs.writePointHistory(pointhistory);
 	    return "redirect:/admin/point/pointhistory";
 	}
-
+	
+    @PostMapping("/admin/point/pointhistorySearch")
+    public String pointhistorySearch(String search, String keyword, Model model) {
+        List<PointHistory> searchResult = phs.searchPointHistory(search, keyword);
+        model.addAttribute("listPointHistory", searchResult);
+        return "admin/point/pointhistory";
+    }
 	
 
 }
