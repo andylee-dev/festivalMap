@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.s202350104.HistoryMapper">
+	<insert id="nhInsertHistory" parameterType="History">
+		INSERT INTO history(id, big_code, small_code, target_id, title, content, create_at)
+		VALUES(history_id_seq.nextval, #{big_code}, #{small_code}, #{target_id}, #{title}, #{content}, sysdate)
+	</insert>
+</mapper>

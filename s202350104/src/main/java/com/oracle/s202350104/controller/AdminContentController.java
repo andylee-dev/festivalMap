@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 	import com.oracle.s202350104.service.CommonCodeService;
 	import com.oracle.s202350104.service.ExperienceService;
 	import com.oracle.s202350104.model.FestivalsContent;
-	import com.oracle.s202350104.model.Point;
+import com.oracle.s202350104.model.History;
+import com.oracle.s202350104.model.Point;
 	import com.oracle.s202350104.service.FestivalsService;
-	import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.HistoryService;
+import com.oracle.s202350104.service.Paging;
 	import com.oracle.s202350104.service.PagingList;
 	import com.oracle.s202350104.service.RestaurantService;
 	import com.oracle.s202350104.service.SpotService;
@@ -53,9 +55,10 @@ import lombok.RequiredArgsConstructor;
 		private final CommonCodeService cs;
 		private final TagsService ts;
 		private final UserService us;
+		private final HistoryService hs;
 		
 		// festival <나희>
-		// 관리자 지역정보 축제 리스트로 넘어가는 logic
+		// 관리자 지역정보 축제 리스트로 이동
 		@RequestMapping(value = "festival")
 		public String festival(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -86,7 +89,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festival";
 		}
 		
-		// 관리자 축제 상세 페이지로 넘어가는 logic
+		// 관리자 축제 상세 페이지로 이동
 		@RequestMapping(value = "festivalDetail")
 		public String festivalDetail(String contentIdStr, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -117,7 +120,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalDetail";
 		}
 		
-		// 관리자 축제 정보 입력 폼으로 넘어가는 logic
+		// 관리자 축제 정보 입력 폼으로 이동
 		@RequestMapping(value = "festivalInsertForm")
 		public String festivalInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -138,7 +141,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalInsertForm";
 		}
 		
-		// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리하기 위한 logic(AJAX 연결)
+		// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리(AJAX 연결)
 		@ResponseBody
 		@RequestMapping(value = "festival/insert")
 		public String festivalInsert(FestivalsContent festival, Model model) {
@@ -172,7 +175,7 @@ import lombok.RequiredArgsConstructor;
 			return str;
 		}
 		
-		// 관리자 축제 정보 수정 폼으로 넘어가는 logic
+		// 관리자 축제 정보 수정 폼으로 이동
 		@RequestMapping(value = "festivalUpdateForm")
 		public String festivalUpdateForm(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -184,9 +187,23 @@ import lombok.RequiredArgsConstructor;
 				// 중분류를 수정할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
 
+				// 시작일 보여주기 위해 형식 변환
+				String startdate = "";
+				if(festival.getStart_date() != null) {
+					String o_startdate = festival.getStart_date();
+					startdate = o_startdate.substring(0,4)+"-"+o_startdate.substring(4,6)+"-"+o_startdate.substring(6,8);
+					festival.setStart_date(startdate);
+					log.info("startdate=>"+startdate);
+				}
 				
-				/* date 정보를 가져와서 보여주기 위한 방법 생각해서 추가하기 */
-				
+				// 종료일 보여주기 위해 형식 변환
+				String enddate = "";
+				if(festival.getEnd_date() != null) {
+					String o_enddate = festival.getEnd_date();
+					enddate = o_enddate.substring(0,4)+"-"+o_enddate.substring(4,6)+"-"+o_enddate.substring(6,8);
+					festival.setEnd_date(enddate);
+					log.info("enddate=>"+enddate);
+				}
 				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("currentPage", currentPage);
@@ -200,7 +217,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalUpdateForm";
 		}
 		
-		// 축제 정보를 수정한 후 DB(content 및 festivals 테이블)에 update하기 위한 logic(AJAX 연결)
+		// 축제 정보를 수정한 후 DB(content 및 festivals 테이블)에 update(AJAX 연결)
 		@ResponseBody
 		@RequestMapping(value = "festivalUpdate")
 		public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
@@ -228,7 +245,7 @@ import lombok.RequiredArgsConstructor;
 			return str;
 		}
 		
-		// festival을 삭제하기 위한 logic
+		// festival을 삭제
 		@RequestMapping(value = "festivalDelete")
 		public String festivalDelete(int contentId, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -246,7 +263,7 @@ import lombok.RequiredArgsConstructor;
 			return "forward:festival";
 		}
 		
-		// festival 등록을 승인하기 위한 logic
+		// festival 등록을 승인
 		@RequestMapping(value = "festivalApprove")
 		public String festivalApprove(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -271,6 +288,38 @@ import lombok.RequiredArgsConstructor;
 			}	
 			
 			// model은 view단으로 데이터를 가져가는 것이기 때문에 forward로 넘길 때는 return하는 url에 파라미터를 붙여서 넘겨줘야 한다
+			return "forward:festivalDetail?contentIdStr="+contentId;
+		}
+		
+		// 정보 등록 반려사유 띄우기
+		@RequestMapping(value = "rejectionForm")
+		public String rejectionForm(int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "start");
+				FestivalsContent festival = fs.detailFestivals(contentId);
+				model.addAttribute("festival", festival);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin rejectionForm", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "end");
+			}	
+			return "admin/content/rejectionForm";
+		}
+		
+		// 등록 반려 사유 history 테이블에 insert
+		@RequestMapping(value = "insertHistory")
+		public String insertHistory(History history, int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "start");
+				int result = hs.insertHistory(history);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin insertHistory", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "end");
+			}	
+			
 			return "forward:festivalDetail?contentIdStr="+contentId;
 		}
 		

@@ -15,10 +15,17 @@
 			}
 			
 			function approveConfirm() {
-				var contentId = Number(${festival.content_id});
 				if(confirm("승인하시겠습니까?")) {
-					location.href="festivalApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="festivalApprove?contentId=${festival.content_id}&currentPage=${currentPage}";
 				}
+			}
+			
+			// 반려 사유 입력 팝업창 띄우기
+			function openPopup() {
+				var url = "rejectionForm?contentId=${festival.content_id}";
+				var option = "width=1000, height=800";
+				window.name = "festivalDetail";
+				window.open(url, "rejection form popup", option);
 			}
 		</script>
 	</head>
@@ -158,7 +165,7 @@
 					<div align="center">
 						<c:if test="${festival.status == 0}">
 							<button type="button" class="btn btn-outline-secondary" onclick="approveConfirm()">승인</button>
-							<button type="button" class="btn btn-outline-secondary">반려</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="openPopup()">반려</button>
 							<button type="button" class="btn btn-outline-secondary" onclick="location.href='festival'">목록</button>
 						</c:if>
 						<c:if test="${festival.status == 1}">
