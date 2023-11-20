@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 	                return Role.USER.getKey();
 	            }
 	        })
-	        .orElse(null);
+	        .orElse(0);
 		return role;
 	}
 	
@@ -107,11 +107,12 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public void  updateUser(Users user) {
+	public int  updateUser(Users user) {
 		int result = ud.updateUser(user);
 	    if (result == 0) {
 	        throw new UserNotFoundException("해당하는 사용자가 데이터베이스에 존재하지 않습니다.");
 	    }
+	    return result;
 	}
 
 	@Override
