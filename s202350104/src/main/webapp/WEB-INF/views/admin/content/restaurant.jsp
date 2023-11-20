@@ -129,7 +129,7 @@
 							  <!-- 	<td><a href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">${restaurant.title}</a></td> -->
 									<td>${restaurant.title}</td>
 									<td>${restaurant.address}</td>
-									<td>${restaurant.menu}</td>
+									<td>${restaurant.first_menu}</td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
 						 			<!-- <c:if test="${restaurant.status == 0 }">대&emsp;기</c:if>
@@ -160,7 +160,6 @@
 							</c:forEach>
 						</tbody>
 					</table>
-		총 건수: ${totalRestaurant}
 		</div>
 		</div>	
 		
