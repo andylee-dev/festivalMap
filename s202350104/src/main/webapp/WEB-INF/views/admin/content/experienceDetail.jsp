@@ -49,6 +49,80 @@
 				)
 			}
 		</script>
+		<style type="text/css">
+		
+		#detail-top-container {
+			position: absolute;
+			width: 250px;
+			height: 83px;
+			border-radius: 10px;
+			border: 1px solid #000;
+			flex-shrink: 0;
+			top: -35px; /* B의 상단에 A를 위치시키기 위해 top을 0으로 설정 */
+			margin: auto; /* 수평 및 수직 가운데 정렬을 위해 margin을 auto로 설정 */
+			z-index: -1; /* A를 B 뒤로 보내기 위해 z-index를 -1로 설정 */
+			background-color: black;
+		}
+		
+		#detail-top-text {
+			color: white;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+		}
+		
+		#detail-top-id{
+			color: #FF4379;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+			word-wrap: break-word;
+		}	
+		
+		#detail-main-container {
+			position: relative;
+			border: 1px solid #000;
+			border-radius: 10px;
+			background-color: white;
+		}
+		.detail-body-container {
+			justify-content: center;
+			padding-right: 0;
+			padding-left: 0;
+			margin-right: 0;
+			margin-left: 0;
+		}
+		.form-label{
+			color: #000;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+		}
+		h1 {
+			color: black;
+			font-size: 32px;
+			font-family: Noto Sans;
+			font-weight: 600;
+			word-wrap: break-word
+		}
+		h3 {
+			color: #FF4379;
+			font-size: 24px;
+			font-family: Noto Sans;
+			font-weight: 600;
+			word-wrap: break-word
+		}
+		</style>
 					
 	</head>
 	<body>
@@ -59,19 +133,32 @@
 			<div class="admin-header-container">
 				<div class="container m-4">
 					<i class="title-bi bi bi-pencil-square "></i>
-				<label  class="admin-header-title ">축제 상세 정보 </label>					
+				<label  class="admin-header-title ">축제 상세 정보 </label>	
 				</div>
-			</div>	
-			<div class="container my-5">
+			</div>
+				
+				
+			<div class="container my-5" id="detail-body-container">
+				<div>
 				<h1>체험 관리</h1>
 				<hr class="hr" />
+				</div>
+				<div>
 				<h3 style="color: #FF4379 ">체험별 상세 정보</h3>
-					<div class="container border p-5">
-						<div class="mb-3 ">
+				</div>
+				<div class="my-5">
+				<div class="" id="detail-main-container">
+					<div class="container d-flex justify-content-around" id="detail-top-container">
+								<label id="detail-top-text">체험 ㅣ </label>
+								<label id="detail-top-text" >${experience.content_id} ㅣ</label>
+								<label id="detail-top-id" >승인대기</label>
+					</div>
+					<div class="container p-5" id="form-container">
+						<div class="mb-3">
 						  <label for="content_id" class="form-label">컨텐츠 ID</label>
 						  <input type="text" class="form-control" id="content_id" value="${experience.content_id} " readonly>
 						</div>	
-						<div class="mb-3 ">
+						<div class="mb-3" id="detail-content-title">
 						  <label for="small_code" class="form-label">체험 종류</label>
 							<select class="form-select" aria-label="small_code">
 								<c:forEach var="smallCode" items="${listSmallCode}">
@@ -85,12 +172,53 @@
 						  <label for="title" class="form-label">체험 이름</label>
 						  <input type="text" class="form-control" id="title" value="${experience.title} " readonly>
 						</div>
-						<div class="mb-3 ">
-						  <label for="content" class="form-label">개요</label>
-						  <textarea class="form-control" id="content" rows="5" readonly>${experience.content}</textarea>
-						</div>		
 						
+						<div class="mb-3">
+							<label for="email" class="form-label">축제기간</label>
+						 		<div class="row">
+						  			<div class="col-3">
+						  				<input type="date" class="form-control" id="address" value="">
+						  				
+						  			</div>
+						  			<div class="col-3">
+						  				<input type="date" class="form-control" id="address" value="">
+						  				
+						  			</div>
+						  			<div class="col-1 ml-50">
+						  				<input type="text" class="form-control" id="address" value="00일" readonly>
+						  			</div>
+						  		</div>
+						</div>
 						<div class="mb-3 ">
+						  <label for="email" class="form-label">주최</label>
+						  <input type="text" class="form-control" id="address" value="주최자자자자자자자자자" readonly>
+						</div>
+						<div class="mb-3" style="background: #F8FCF4;">
+						  <div class="row">
+						    <div class="col-4 md-4 mb-3">
+						      <label for="validationDefault01" class="form-label">담당 부서</label>
+						      <input type="text" class="form-control" id="validationDefault01" placeholder="First name" value="디자인협력팀" required>
+						    </div>
+						    <div class="col-4 md-4 mb-3">
+						      <label for="validationDefault02" class="form-label">담당자</label>
+						      <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="이규현팀장" required>
+						    </div>
+						    <div class="col-4 md-4 mb-3">
+						      <label for="validationDefaultUsername" class="form-label">연락처</label>
+						      <input type="text" class="form-control" id="validationDefault02" placeholder="010-0000-0000" value="010-1234-5678" required>
+						    </div>
+						  
+						  <div class="col-6 md-4 mb-3">
+						      <label for="validationDefault03" class="form-label">주소</label>
+						      <input type="text" class="form-control" id="validationDefault03" placeholder="City" required>
+						    </div>
+						    <div class="col-6 md-4 mb-3">
+						      <label for="validationDefault04" class="form-label">비고</label>
+						      <input type="text" class="form-control" id="validationDefault04" placeholder="State" required>
+						    </div>
+						  </div>
+						 </div>	
+						 <div class="mb-3 ">
 							<label for="content" class="form-label ">지역</label>
 								<div class="row">
 								    <div class="col-2">
@@ -115,11 +243,15 @@
 								            </c:forEach>
 								        </select>
 								    </div>
-								    <div class="col-6">
+								    <div class="col-8">
 								    <input type="text" class="form-control" id="address" value="${experience.address} " readonly>
 								    </div>
 								</div>
-						</div>			
+						</div>
+						<div class="mb-3 ">
+						  <label for="content" class="form-label">개요</label>
+						  <textarea class="form-control" id="content" rows="5" readonly>${experience.content}</textarea>
+						</div>		
 						<div class="mb-3 ">
 						  <label for="email" class="form-label">email</label>
 						  <input type="text" class="form-control" id="address" value="${experience.email} " readonly>
@@ -187,7 +319,8 @@
 					
 					
 					</div>
-				
+				</div>
+				</div>
 			</div>
 		</main>
 		</div>
