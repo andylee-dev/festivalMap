@@ -23,11 +23,12 @@
 						<form action="insertQnaResult" method="post">
 						<div class="mb-3 ">
 							<label for="content_id" class="form-label">제목:</label>
-							<input type="text" class="form-control" name="question_title">
-						</div>
+							<input type="text" class="form-control" name="question_title" required >
+							
+						</div>	
 						<div class="mb-3 ">
 							 <label for="content_id" class="form-label">내용:</label>
-						 	<textarea class="form-control" name="question_content" rows="5" ></textarea>
+						 	<textarea class="form-control" name="question_content" rows="5" required></textarea>
 						</div>
 						<div class="text-center">
 							<input class="btn btn-primary" type="submit" value="등록">

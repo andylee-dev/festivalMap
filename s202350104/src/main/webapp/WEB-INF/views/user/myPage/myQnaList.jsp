@@ -18,35 +18,6 @@ h1 {
 }
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-<script type="text/javascript">
-	function getQnaDelete(pIndex){
-		alert("실행")
-		var seluser_id = $('#user_id'+pIndex).val();
-		var selid	   = $('#id'+pIndex).val();
-		alert(seluser_id);
-		alert(selid);
-		$.ajax(
-				{
-					url:"<%=request.getContextPath()%>/user/deleteQnaPro",
-					data:{	user_id : seluser_id
-						,	id		: selid
-						 },
-					dataType:'text',
-					success:function(data){
-						alert(".ajax getdeletQna data->"+data);
-						if(data == '1'){
-							$('#qna'+pIndex).remove();
-							
-							alert("성공적으로 삭제 되었습니다.")
-						}else{
-							alert("삭제되지않았습니다.다시 시도하세요")
-						}
-					}
-				}		
-		);
-	}	
-</script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
