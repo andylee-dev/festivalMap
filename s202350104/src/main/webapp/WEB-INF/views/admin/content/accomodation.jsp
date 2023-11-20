@@ -121,7 +121,8 @@
 								<th scope="col">주소</th>
 								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
-								<th scope="col">게시</th>								
+								<th scope="col">게시</th>	
+								<th scope="col">관리</th>							
 							</tr>
 						</thead>
 						<tbody>
@@ -138,6 +139,10 @@
 							 				<c:if test="${accomodation.status == 0 }">N</c:if>
 											<c:if test="${accomodation.status == 1 }">Y</c:if>
 										</td>
+										<td><a class="detail-btn" 
+											href='accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}'>관리</a></td>
+									 	
+								</tr>
 									 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>

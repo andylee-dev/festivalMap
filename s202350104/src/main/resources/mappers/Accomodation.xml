@@ -36,11 +36,14 @@
 		SELECT count(*)
 		FROM   accomodations a, contents c
 		WHERE  a.content_id = c.id
-		
+		AND 	c.status = 1
+		AND 	is_deleted = 0
 	</select>
 
 	<delete id="accomodationDelete" parameterType="int">
-		delete from accomodations where content_id=#{content_id}
+		update contents c 
+		set is_deleted = 1 
+		where c.id = #{content_id}
 	</delete>
 	
 	<insert id="ContentsInsert" parameterType="AccomodationContent">
@@ -114,7 +117,6 @@
     						AND is_deleted = #{is_deleted}  
    						</when>
  						<when test="is_deleted = 2">
-    						AND (is_deleted = 0 OR is_deleted = 1)
    						</when>       
   					</choose>
 				</if>
@@ -163,7 +165,6 @@
     				AND is_deleted = #{is_deleted}  
    				</when>
  				<when test="is_deleted = 2">
-    				AND (is_deleted = 0 OR is_deleted = 1)
    				</when>      
   			</choose>
 		</if>
