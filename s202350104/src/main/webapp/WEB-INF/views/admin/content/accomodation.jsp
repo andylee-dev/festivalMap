@@ -8,36 +8,24 @@
 <head>
 <meta charset="UTF-8">
 <title>지역정보 숙박</title>
-<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
-			function accomodationDeleteAjax(pIndex) {
-				var deleteId = Number($('#id'+pIndex).val());
-				var currentPage = ${page.currentPage};
-				if(confirm("정말 삭제하시겠습니까?")) {
-					$.ajax(
-							{
-								method:"POST",
-								url:"<%=request.getContextPath()%>/admin/content/accomodationDeleteAjax",
-								data:{contentId : deleteId},
-								dataType:'text',
-								success:
-									function(result) {
-											if(result == '1') {
-												$('#accomodation'+pIndex).remove();
-												alert("성공적으로 삭제되었습니다.");
-												location.reload();
-											} else {
-												alert("삭제에 실패하였습니다.");
-											}		
-									}
-							}		
-					)
+
+		document.addEventListener("DOMContentLoaded", function() {
+			updateAreaOptions();
+			$(".area-dropdown").change(function() {
+				const selectedArea = $(this).val();
+				if (selectedArea) {
+					updateSigunguOptions(selectedArea);
+				} else {
+					$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 				}
-			}
-			
-			
-		</script>
+			});
+		});
+		
+	</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -68,26 +56,26 @@
 						</div>
 						
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="col-form-label col-1  mx-2">분류</label>
-								<div class="col-2 d-flex align-items-center">
-									<select name="small_code" class="form-select">
-										<option value="999">전체</option>
-										<c:forEach var="small" items="${listSmallCode}">
-										<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
-										</c:forEach>
-									</select>
-								</div>
-								
-								<div class="col-12 my-4 d-flex align-items-center">
-					            	<label for="searchType" class="col-form-label col-1  mx-2">지역</label>
-						            	<div class="col-2 d-flex align-items-center">
-											<select name="area" class="area-dropdown form-select"></select>
-										</div>
-										<div class="col-2 mx-2 d-flex align-items-center">
-											<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
-										</div>
-								</div>				
-						</div>
+				            	<label for="searchType" class="col-form-label col-1  mx-2">분류</label>
+									<div class="col-2 d-flex align-items-center">
+										<select name="small_code" class="form-select">
+											<option value="999">전체</option>
+											<c:forEach var="small" items="${listSmallCode}">
+												<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+											</c:forEach>
+										</select>
+									</div>
+									
+									<div class="col-12 my-4 d-flex align-items-center">	
+				            			<label for="searchType" class="col-form-label col-1  mx-2">지역</label>
+					            			<div class="col-2 mx-2 d-flex align-items-center">
+												<select name="area" class="area-dropdown form-select"></select>
+											</div>
+											<div class="col-2 mx-2 d-flex align-items-center">
+												<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+											</div>		
+									</div>
+							</div>
 						
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-1  mx-2">승인여부</label>
@@ -101,7 +89,6 @@
 						
 							<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
 								<div class="col-2 mx-2 d-flex align-items-center">
-									<input type="hidden" name="big_code" value="13">
 									<select name="is_deleted" class="form-select">
 										<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
 										<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록숙소</option>
@@ -113,6 +100,7 @@
 						<div class="container col-10 d-flex justify-content-center">
 							<button type="submit" class="btn btn-primary col-2 mx-3">검색</button>
 							<button type="reset" name="deleted" class="btn btn-outline-secondary col-2 mx-3">초기화</button><p>	
+							<input type="hidden" name="big_code" value="13">
 						</div>
 					</form>
 			</div>		
@@ -131,10 +119,9 @@
 								<th scope="col">지역</th>
 								<th scope="col">숙박업장이름</th>
 								<th scope="col">주소</th>
+								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
-								<th scope="col">게시</th>
-								<th scope="col"></th>
-								
+								<th scope="col">게시</th>								
 							</tr>
 						</thead>
 						<tbody>
@@ -142,21 +129,15 @@
 							<c:forEach var="accomodation" items="${listAccomodation}" varStatus="st">
 								<tr id="accomodation${st.index}">
 										<td><input type="hidden" value="${accomodation.content_id}" id="id${st.index}">${num}</td>
-										<td>${accomodation.area} ${accomodation.sigungu}</td>
+										<td>${accomodation.area_content} ${accomodation.sigungu_content}</td>
 										<td>${accomodation.title}</td>
 										<td>${accomodation.address}</td>
+										<td>${accomodation.user_id}</td>
 										<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
 										<td>
 							 				<c:if test="${accomodation.status == 0 }">N</c:if>
 											<c:if test="${accomodation.status == 1 }">Y</c:if>
 										</td>
-										<td>
-											<c:if test="${accomodation.is_deleted == 1}">삭제완료</c:if>
-										</td>
-										<td><a class="detail-btn" 
-											href='accomodationDetail?contentIdStr=${accomodation.content_id}&currentPage=${page.currentPage}'>관리</a></td>
-									 	
-								</tr>
 									 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>

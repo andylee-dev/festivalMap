@@ -8,7 +8,11 @@
     SELECT * 
     FROM   
    	 (
-        SELECT ROWNUM rn, b.*
+        SELECT ROWNUM rn, b.*,
+        (SELECT content FROM areas z
+				 WHERE b.area = z.area AND z.sigungu = 999) AS area_content,
+				(SELECT content FROM areas z
+				 WHERE b.area = z.area AND b.sigungu = z.sigungu) AS sigungu_content
         FROM
         (
             SELECT *
@@ -89,6 +93,12 @@
 				<if test="keyword != null">
 					AND title like '%' || #{keyword} || '%'
 				</if>
+				<if test="area != null and area != 0">
+					AND area = #{area}
+				</if>
+				<if test="sigungu != null and sigungu != 0">
+					AND sigungu = #{sigungu}
+				</if>
 				<if test="status != null">
 					<choose>
  	 					<when test="status != 2">
@@ -98,13 +108,14 @@
 	    				</when>    
   					</choose>
 				</if>
-				<if test="is_deleted != null">
+				<if test="is_deleted != null">				
 					<choose>
- 	 					<when test="is_deleted != 2">
-	    					AND is_deleted = #{is_deleted}  
-	   	 				</when>
-	 	 				<when test="is_deleted = 2">
-	    				</when>    
+ 	 					 <when test="is_deleted != 2">
+    						AND is_deleted = #{is_deleted}  
+   						</when>
+ 						<when test="is_deleted = 2">
+    						AND (is_deleted = 0 OR is_deleted = 1)
+   						</when>       
   					</choose>
 				</if>
 				<if test="small_code != null">
@@ -131,6 +142,12 @@
 		<if test="big_code != null and big_code != 0">
 			And c.big_code = #{big_code}
 		</if>
+		<if test="area != null and area != 0">
+					AND area = #{area}
+				</if>
+				<if test="sigungu != null and sigungu != 0">
+					AND sigungu = #{sigungu}
+				</if>
 		<if test="status != null">
 					<choose>
  	 					<when test="status != 2">
@@ -142,11 +159,12 @@
 				</if>
 		<if test="is_deleted != null">
 			<choose>
- 	 			<when test="is_deleted != 2">
-	    			AND c.is_deleted = #{is_deleted}  
-	   	 		</when>
-	 	 		<when test="is_deleted = 2">
-	    		</when>    
+ 	 			 <when test="is_deleted != 2">
+    				AND is_deleted = #{is_deleted}  
+   				</when>
+ 				<when test="is_deleted = 2">
+    				AND (is_deleted = 0 OR is_deleted = 1)
+   				</when>      
   			</choose>
 		</if>
 		<if test="small_code != null and small_code != 0 and small_code != 999">
