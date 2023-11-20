@@ -18,6 +18,7 @@
             SELECT *
             FROM accomodations a, contents c
             WHERE a.content_id = c.id
+			AND 	is_deleted = 0
             ORDER BY content_id
        	 ) b
  	   )
