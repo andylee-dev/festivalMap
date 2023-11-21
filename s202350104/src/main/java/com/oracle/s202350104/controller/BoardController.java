@@ -795,10 +795,10 @@ public class BoardController {
 		boardService.commentInsert(board);
 		
 
-		model.addAttribute("id", board.getId());
+		model.addAttribute("id", board.getComment_group_id());
 		model.addAttribute("userId", board.getUser_id());
 
-		return "forward:/boardDetail";
+		return "redirect:/boardDetail?id=" + board.getComment_group_id() + "&userId=" + board.getUser_id();
 	}
 	
 	// 게시판 신고기능 -송환

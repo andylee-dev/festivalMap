@@ -40,6 +40,29 @@
 	        }
 	    });
 	}
+	
+	function insertAndRedirect(id, userId, smallCode) {
+        event.preventDefault();
+	    $.ajax({
+	        url: 'commentInsert',
+	        method: 'GET',
+	        success: function () {
+	            // 취소 버튼 실행 시 이전페이지 이동 + 새로고침
+	           	if (smallCode == 3) {
+	                // 리뷰게시판으로 리디렉션
+	                location.href = '/boardDetail?id=' + id + '&userId=' + userId;
+	            } else if(smallCode == 5) {
+	            	// 이벤트게시판으로 리디렉션
+	                location.href = '/home';
+	            } else{
+	            	// 기본 & 오류 처리
+	        		window.history.back();
+	            }
+	           	window.close();
+	        }
+	    });
+	}	
+	
 	<!-- 게시판 신고기능 -송환 -->
 	function report(boardId) {
 	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
@@ -191,24 +214,26 @@
 						<!-- input 영역 END -->
 						</div>
 						
-						<!-- 댓글 출력  -->
+						<!-- 대댓글 출력  -->
 						<div class="container p-3 comments-custom">
 							<c:forEach var="comments" items="${comment }">
 								<div class="row row-cols-2 align-items-start">
 									<div class="col comments-nickname">
 										<p>${comments.name }</p>
 									</div>
-									
-									<div class="col comments-content">								
-										<p class="d-inline-flex gap-1">
-										  <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${comments.id}" aria-expanded="false" aria-controls="collapseExample"
-										  		  style="width: 900px; text-align: left;">
-									   		 ${comments.content }
-									 	 </button>
-										</p>
-									</div>
-																		
-									<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}"
+
+										<div class="col comments-content">
+											<p class="d-inline-flex gap-1">
+											<c:forEach begin="2" end="${comments.comment_indent }">└▶</c:forEach>											
+												<button class="btn" type="button" data-bs-toggle="collapse"
+													data-bs-target="#collapseExample${comments.id}"
+													aria-expanded="false" aria-controls="collapseExample"
+													style="width: 900px; text-align: left;">
+													${comments.content }</button>
+											</p>
+										</div>
+
+										<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}"
 										 style="">
 										<div class="card card-body comments-body-custom">
 										<!-- input 영역 -->
@@ -219,8 +244,8 @@
 													<input type="hidden" name="user_id" value="${userId }"> 
 													<input type="hidden" name="big_code" value="${board.big_code }">
 													<input type="hidden" name="small_code" value="${board.small_code }"> 
-													<input type="hidden" name="comment_group_id" value="${comments.comment_group_id }">
-													<input type="hidden" name="comment_step" value="${board.comment_step }"> 
+													<input type="hidden" name="comment_group_id" value="${board.comment_group_id }">
+													<input type="hidden" name="comment_step" value="${comments.comment_step }"> 
 													<input type="hidden" name="comment_indent" value="${comments.comment_indent }">
 						
 													<div class="row row-cols-3 p-0">
