@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Areas;
@@ -197,7 +198,20 @@ public class FestivalController {
 	}
 	
 	@RequestMapping(value = "festival/calendar")
-	public String festivalCalendar() {
+	public String festivalCalendar(FestivalsContent festival , Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}",transactionId, "festival/calendar", "start");
+			
+			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
+			log.info("Festivalcalendar listFestivals size : "+ listFestivals.size());
+			model.addAttribute("listFestivals", listFestivals);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId, "festival/calendar", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}",transactionId, "festival/calendar", "end");
+		}		
 		return "festival/festivalCalendar";
 	}
 }
