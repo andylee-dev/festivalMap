@@ -19,6 +19,9 @@ public class Report {
 	private int id;
 	private String name;
 	private int rn;
+	private int small_code;
+	private int comment_indent;
+	
 	
 	//paging
 	private String pageNum;

@@ -7,12 +7,12 @@
 	<![CDATA[
 	SELECT * FROM (
 	    SELECT inner_query.*, ROWNUM as rnum FROM (
-	        SELECT r.board_id, b.title, b.user_id, u.name, COUNT(r.user_id) AS count 
+	        SELECT r.board_id, b.title, b.user_id, u.name, b.small_code,b.comment_indent, COUNT(r.user_id) AS count 
 	        FROM board b  
 	        INNER JOIN report r ON b.id = r.board_id 
 	        INNER JOIN users u ON b.user_id = u.id
 	        WHERE b.is_deleted = 0 AND r.status = 1
-	        GROUP BY b.title, r.board_id, b.user_id, u.name
+	        GROUP BY b.title, r.board_id, b.user_id, u.name,b.small_code,b.comment_indent
 	        ORDER BY count DESC
 	    ) inner_query
 	    WHERE ROWNUM <= #{end}

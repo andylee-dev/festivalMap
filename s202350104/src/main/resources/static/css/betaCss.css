@@ -332,6 +332,7 @@ font-family: Noto Sans;
 	font-weight: bold;
 	text-align: left;
 	text-overflow: ellipsis; /* 텍스트가 너무 길 경우 "..."으로 생략 처리 */
+	max-height: calc(2 * 1.2em);
  	overflow: hidden;
 }
 

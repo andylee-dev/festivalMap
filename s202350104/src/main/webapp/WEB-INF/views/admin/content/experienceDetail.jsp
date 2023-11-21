@@ -9,11 +9,27 @@
 		 <link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-			function deleteConfirm() {
-				if(confirm("정말 삭제하시겠습니까?")) {
-					location.href="../content/experienceDelete?contentId=${experience.content_id}";
-				}
-			}
+		function confirmDelete(contentId) {
+	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
+	            $.ajax({
+	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+	                url: 'experienceDeleteAjax',
+	                data: { contentId: contentId },
+	                success: function(result) {
+	                    // 성공적으로 삭제된 경우의 처리
+	                    alert('삭제되었습니다.');
+	                    location.reload();
+	                },
+	                error: function(xhr, status, error) {
+	                    // 오류 발생 시의 처리
+	                    alert('삭제에 실패했습니다.');
+	                }
+	            });
+	        } else {
+	            // 취소 버튼을 눌렀을 때의 처리
+	            // 필요한 로직을 추가하세요.
+	        }
+	    }
 			
 			function approveConfirm() {
 				var contentId = Number(${experience.content_id});
@@ -99,6 +115,18 @@
 			word-wrap: break-word;
 		}	
 		
+		#detail-top-id3{
+			color: red;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+			word-wrap: break-word;
+		}
+		
 		#detail-main-container {
 			position: relative;
 			border: 1px solid #000;
@@ -176,6 +204,9 @@
 								<label id="detail-top-text">체험 ㅣ </label>
 								<label id="detail-top-text" >${experience.content_id} ㅣ</label>
 								<c:choose>
+									<c:when test="${experience.is_deleted == 1}">
+									<label id="detail-top-id3" >삭제(게시X)</label>
+									</c:when>
 									<c:when test="${experience.status == 0}">
 									<label id="detail-top-id" >승인대기</label>
 									</c:when>
@@ -310,7 +341,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for="inform" class="form-label">체험안내</label>
-						  <input type="text" class="form-control" id="inform" value="${experience.inform} " readonly>
+						   <textarea class="form-control" id="inform" rows="5" readonly>${experience.inform}</textarea>
 						</div>
 						<div class="mb-3 ">
 						  <label for="open_time" class="form-label">개장시간</label>
@@ -349,22 +380,22 @@
 						  <label for="facilities" class="form-label">부대시설</label><br>
 						<div class="col-12 d-flex justify-content-between">
 						  	<div class="col-3 form-check mx-3">
-								<input class="form-check-input" type="radio" name="is_credit"
+								<input class="form-check-input" type="checkbox" name="is_credit"
 								id="is_credit" value="1" ${experience.is_credit == 1?"checked":""} disabled> 
 								<label class="form-check-label" for="is_credit">카드여부</label>
 							</div>
 							<div class="col-3 form-check mx-3">
-								<input class="form-check-input" type="radio" name="is_pet"
+								<input class="form-check-input" type="checkbox" name="is_pet"
 								id="is_pet" value="1" ${experience.is_pet == 1?"checked":""} disabled> 
 								<label class="form-check-label" for="is_pet">반려동물</label>
 							</div>
 							<div class="col-3 form-check mx-3">
-							<input class="form-check-input" type="radio" name="is_parking"
+							<input class="form-check-input" type="checkbox" name="is_parking"
 								id="is_parking" value="1" ${experience.is_parking == 1?"checked":""} disabled> 
 								<label class="form-check-label" for="is_parking">주차시설</label>
 							</div>
 							<div class="col-3 form-check mx-3">
-							<input class="form-check-input" type="radio" name="is_stroller"
+							<input class="form-check-input" type="checkbox" name="is_stroller"
 								id="is_stroller" value="1" ${experience.is_stroller == 1?"checked":""} disabled> 
 								<label class="form-check-label" for="is_stroller">유모차대여</label>
 							</div>
@@ -375,7 +406,54 @@
 						<hr class="hr" />			
 						
 						 <div class="d-flex justify-content-between">
-						 	<c:if test="${experience.status == 0}">
+						 
+						 <c:choose>
+							 <c:when test="${experience.is_deleted == 1}">
+							 	<div class="col-6 mb-3" >
+		                        	<button type="button" class="form-control btn btn-primary w-100" onclick="">복원</button>
+		                        </div>
+		                        <div class="col-6 mb-3">
+		                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">취소</button>
+		                        </div>
+		                    </c:when>
+							 <c:when test="${experience.status == 0}">
+							 	<div class="col-6 mb-3" >
+		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
+		                          </div>
+		                            <div class="col-2 mb-3">
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">대기(임시저장)</button>
+		                          </div>
+		                          <div class="col-2 mb-3">
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${experience.content_id})">반려(사유선택)</button>
+		                          </div>
+		                          <div class="col-1 mb-3">
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">삭제</button>
+		                          </div>
+							 </c:when>
+							 <c:when test="${experience.status == 1}">
+							 	<div class="col-6 mb-3">
+		                                <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/experienceUpdateForm?contentId=${experience.content_id}&currentPage=${currentPage}'">수정하기</button>
+		                             </div>
+		                             <div class="col-2 mb-3">
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
+		                             </div>
+		                             <div class="col-2 mb-3">
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${experience.content_id})">삭제</button>
+		                             </div>
+		                          <div class="col-1 mb-3">
+		                             <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">목록</button>
+		                          </div>		
+							 </c:when>
+						</c:choose>
+						 
+						 	
+						 	
+						 	
+						 	
+						 	
+						 	
+						 	
+						 	<%-- <c:if test="${experience.status == 0}">
 	                          <div class="col-6 mb-3" >
 	                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 	                          </div>
@@ -388,21 +466,21 @@
 	                          <div class="col-1 mb-3">
 	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">삭제</button>
 	                          </div>
-	                          </c:if>
-	                          <c:if test="${experience.status == 1}">
+	                         </c:if>
+	                         <c:if test="${experience.status == 1}">
 	                             <div class="col-6 mb-3">
 	                                <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/experienceUpdateForm?contentId=${experience.content_id}&currentPage=${currentPage}'">수정하기</button>
 	                             </div>
 	                             <div class="col-2 mb-3">
-	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">승인대기전환</button>
+	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
 	                             </div>
 	                             <div class="col-2 mb-3">
-	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">반려전환</button>
+	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${experience.content_id})">삭제</button>
 	                             </div>
 	                          <div class="col-1 mb-3">
-	                             <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
+	                             <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">목록</button>
 	                          </div>
-	                          </c:if>
+	                         </c:if> --%>
 	                      </div>
 							
 						</form>

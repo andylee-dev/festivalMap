@@ -24,16 +24,16 @@
 			<div class="container col-9 justify-content-center mt-10 my-2 border p-2">
 				<div class="border p-3 m-3">
 				<h3><i class="bi bi-clipboard2-minus"></i>신고 게시글</h3>
-				<table class="table table-striped table-sm mb-3">
-					<tr><th>게시글ID</th><td>${boardDetail.id}</td></tr>
-					<tr><th>작성자ID</th><td>${boardDetail.user_id}</td></tr>
-					<tr><th>제목</th><td>${boardDetail.title}</td></tr>
-					<tr><th>내용</th><td>${boardDetail.content}</td></tr>
+				<table class="table mb-3">
+					<tr><th style="width: 120px;">게시글ID</th><td>${boardDetail.id}</td></tr>
+					<tr><th style="width: 120px;">작성자ID</th><td>${boardDetail.user_id}</td></tr>
+					<tr><th style="width: 120px;">제목</th><td>${boardDetail.title}</td></tr>
+					<tr><th style="width: 120px;">내용</th><td>${boardDetail.content}</td></tr>
 				</table>	
 				</div>
 			<div class="border p-3 m-3">
 				<h4><i class="bi bi-exclamation-triangle-fill ml-10"></i>신고내역</h4>
-				<table class="table table-striped table-sm text-center mb-3">
+				<table class="table text-center mb-3">
 					<thead>
 						<tr>
 							<th scope="col">번호</th>
@@ -64,9 +64,17 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<button class="btn btn-primary" onclick="location.href='reportBoardUpdate?id=${boardDetail.id}'">게시글삭제</button>
-				<button class="btn btn-primary" onclick="location.href='reportUpdate?id=${boardDetail.id}'">신고글반려</button>
-				<button class="btn btn-primary" onclick="location.href='report'">이전</button>
+				<div class="form-row d-flex justify-content-center">
+					<div class="col-6 mb-3 px-2">
+						<button class="form-control btn btn-primary" onclick="location.href='reportBoardUpdate?id=${boardDetail.id}'">게시글삭제</button>
+					</div>
+					<div class="col-2 mb-3 px-2">	
+						<button class="form-control btn btn-primary" onclick="location.href='reportUpdate?id=${boardDetail.id}'">신고글반려</button>
+					</div>
+					<div class="col-2 mb-3 px-2">	
+						<button class="form-control btn btn-primary" onclick="location.href='report'">이전</button>
+					</div>
+				</div>
 			</div>
 			</div>			
 		</main>

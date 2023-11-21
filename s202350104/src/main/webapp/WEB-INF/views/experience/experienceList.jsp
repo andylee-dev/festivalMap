@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/components/header.jsp" %>
 
 <!DOCTYPE html>
@@ -36,17 +34,19 @@
 	
 	 	
 	// 서치이미지를 클릭할 때 폼을 제출하는 함수
-	$(document).ready(function () {
+		$(document).ready(function () {
     	$("#searchIcon").click(function () {
-       		$("#").submit();
+       		$("#experience1").submit();
     	});
 	});
+
 	
 </script>
 <!-- 지역 코드 넣는 코드  End-->
 </head>
 
 <body>
+	
 	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	 <main>
 		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
@@ -63,21 +63,26 @@
 		
 		<!-- 상단 분홍색 영역 -->
 		<div class="container p-0 top_custom"></div>
-
+	<div>
+		<form id="experience1" action="experience1" method="get">
 		<!-- keyword, title 영역 -->	
 		<div class="container p-0 keyword_title_custom">
+			
+			<input type="hidden" name="big_code" value="15">
 			<div class="co1 title_div">
-						F E S T I V A L!</div>
+						EXPERIENCE!</div>
 			<div class="co1 text_div">
 				<h4><strong>어느 체험으로 즐겨볼까요~♫</strong></h4>
 			</div>
 			<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 체험의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
-			<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" />
-		</div>
+			<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 		
+		</div>
 		<!-- 경계선 표현 -->
+		<div>
 		<hr class="container p-0 hr_custom">	
-			
+		</div>	
+		
 		<!-- select 영역 -->
 		<div class="container p-0 select_custom">
 			<div class="row g-2 text-center">
@@ -92,26 +97,21 @@
 					</select>
 				</div>
 				<div class="col d-flex justify-content-center">
-					<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
-						<option selected>진행 기간 선택</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
-					</select>
-				</div>
-				<div class="col d-flex justify-content-center">
-					<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
-						<option selected>진행 여부 선택</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+					<select class="form-select text-center border-3 select_text_custom" 
+							aria-label="Default select example" name="small_code">
+						<option value="999">체험종류</option>
+							<c:forEach var="small" items="${listSmallCode}">
+								<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+							</c:forEach>
 					</select>
 				</div>
 			</div>		
-		</div>	
+		</div>
+		</form>
+	</div>	
 		
 		<!-- 경계선 표현 -->
-		<hr class="container p-0 hr_custom">	
+		<div><hr class="container p-0 hr_custom"></div>	
 			
 		
 		<%-- <div class="border p-3 m-3">
@@ -135,31 +135,28 @@
 						</form>
 				</div> --%>
 				
-		<div class="album py-5 bg-body-tertiary">		
-	 		<div class="container">
-				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-	 				<c:forEach var="experience" items="${listExperience}">
-	 					<div class="col">
-						<div class="card app-card">
-								<div class="app-tag-container" style="position: relative;">
-              					<div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
-                				<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
-             					</div>
-             				<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}">
-  							<img src="${experience.img1}" class="app-card-img-top" alt="${experience.title}이미지"></a>	
-  							</div>
-  							<div class="card-body app-card-body">
-    							<p class="app-card-text">
-			    					체험명 : ${experience.title}<br>
-			    					<span style="color: #FF4379;"> 휴무일 : ${experience.rest_time } </span><br>
-			    					<span style="font-weight: normal;"> 체험정보 :${experience.content}</span>
-    							</p>
-    							<%-- <a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}" class="btn btn-primary">더보기</a> --%>
-			 				 </div>
-						</div>
-					 </div>	
+		<div class="container p-1 list_custom">	
+		<c:if test="${listExperience.size() == 0}">해당하는 체험 정보가 없습니다.</c:if>
+	 		<div class="row row-cols-3 g-2">
+				<c:forEach var="experience" items="${listExperience}">
+	 				<div class="col d-flex justify-content-center">
+						<div class="card card_custom border-0">
+							<div class="tag_custom">
+								<div class="tag_custom2">
+									<p class="tag_p">#지역태그</p>
+								</div>
+								<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}">
+									<img src="${experience.img1}" class="card-img-top" alt="${experience.title}">
+								</a>
+							</div>							
+							<div class="card-body">
+							    <p class="card-text title_p">${experience.title}</p>
+							    <p class="card-text period_p"> 휴무일 : ${experience.rest_time}</p>
+							    <p class="card-text contet_p">${experience.content}</p>
+							</div>
+					 	</div>
+					</div> 	
 				</c:forEach>
-				</div>
 			</div>
 		</div>				
 		<div align="center">

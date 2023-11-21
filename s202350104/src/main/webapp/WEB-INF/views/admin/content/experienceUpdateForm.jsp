@@ -153,7 +153,7 @@
 				<hr class="hr" />
 				</div>
 				<div>
-				<h3 style="color: #FF4379 ">수정하기</h3>
+				<h3 style="color: #FF4379 ">체험정보 수정하기</h3>
 				</div>
 				<div class="my-5">
 				<div class="" id="detail-main-container">
@@ -237,7 +237,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for=created_at class="form-label">작성일</label>
-						  <input type="text" class="form-control" name="created_at" id="created_at" value="<fmt:formatDate value="${experience.created_at}" pattern="YYYY/MM/dd"/>">
+						  <input type="text" class="form-control" name="created_at" id="created_at" value="<fmt:formatDate value="${experience.created_at}" pattern="YYYY/MM/dd"/>" readonly>
 						</div>
 						<div class="mb-3 ">
 						  <label for="capacity" class="form-label">수용인원</label>
@@ -249,7 +249,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for="inform" class="form-label">체험안내</label>
-						  <input type="text" class="form-control" name="inform" id="inform" value="${experience.inform} ">
+						  <textarea class="form-control" name="inform" id="inform" rows="5">${experience.inform}</textarea>
 						</div>
 						<div class="mb-3 ">
 						  <label for="open_time" class="form-label">개장시간</label>
@@ -316,10 +316,25 @@
 							
 						<hr class="hr" />			
 						
-						<div>
+						
+						
+						<div class="d-flex justify-content-between">
+							<div class="col-6 mb-3" >
+	                        	<button type="submit" class="form-control btn btn-primary2 w-100" onclick="return confirm('수정하시겠습니까?')">수정</button>
+	                        </div>
+	                        <div class="col-3 mb-3">
+	                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+	                        </div>
+	                        <div class="col-2 mb-3">
+	                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experienceDetail?contentId=${experience.content_id}&currentPage=${currentPage}'">취소</button>
+	                        </div>
+						</div>
+						
+						<%-- <div>
 							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('수정하시겠습니까?')">수정</button>
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
-						</div>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='../content/experienceDetail?contentId=${experience.content_id}&currentPage=${currentPage}'">취소</button>
+						</div> --%>
 				
 						 
 						 <%-- <div class="d-flex justify-content-between">
