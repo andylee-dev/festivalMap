@@ -103,13 +103,13 @@
 											</c:choose>
 											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
+											<td><a class="detail-btn" href="../../boardUpdateForm?id=${boards.id}&userId=${userId}">수정</a></td>
 											<c:choose>
 												<c:when test="${bigCode eq 3 }">
-													<td><input class="btn btn-outline-secondary" onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										
+													<td><a class="detail-btn" href="../../bannerDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td>										
 												</c:when>
 												<c:otherwise>
-													<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
+													<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td>
 												</c:otherwise>
 											</c:choose>
 										</tr>

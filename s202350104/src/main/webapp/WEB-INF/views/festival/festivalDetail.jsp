@@ -190,7 +190,14 @@
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
 						<p class="text-md-custom">입장료</p>
-						<span>유료</span>						
+						<c:choose>
+							<c:when test="${festival.cost == '무료' || festival.cost == null}">
+								<span>무료</span>
+							</c:when>
+							<c:otherwise>
+								<span>유료</span>			
+							</c:otherwise>						
+						</c:choose>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
@@ -248,11 +255,18 @@
 	
 	<div class="container p-0 content_custom">
 		<div class="content_detail">
-			<p>${festival.cost}</p>
-			<p>${festival.content}</p>
-			<p>${festival.overview}</p>
-			<p>${festival.postcode}</p>
-			<p>${festival.overview}</p>
+			<c:choose>
+				<c:when test="${festival.cost == '무료' || festival.cost == null}">
+					<p>입장료 : 무료</p>
+				</c:when>
+				<c:otherwise>
+					<p>입장료 : ${festival.cost}</p>				
+				</c:otherwise>
+			</c:choose>
+
+			<p>개   요 : ${festival.content}</p>
+			<p>내   용 : ${festival.overview}</p>
+			<p>우편주소 : ${festival.postcode}</p>
 			<ul>
 			<li>주차시설 : 
 				<c:choose>

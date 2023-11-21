@@ -818,9 +818,9 @@ public class BoardController {
 		
 		log.info("BoardController commentInser boardId : {} ", board.getId());
 		log.info("BoardController commentInser userId : {} ", board.getUser_id());
+		log.info("BoardController commentInser userId : {} ", board.getContent());
 
-		boardService.commentInsert(board);
-		
+		boardService.commentInsert(board);		
 
 		model.addAttribute("id", board.getComment_group_id());
 		model.addAttribute("userId", board.getUser_id());

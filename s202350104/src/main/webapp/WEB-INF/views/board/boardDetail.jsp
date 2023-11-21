@@ -9,8 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>BoardDetail</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
+	/* 	취소 버튼 클릭 시 이전 페이지 이동  ==> 미사용 */ 
 	function closeAndRedirect(smallCode) {
 	    $.ajax({
 	        url: '/',
@@ -41,27 +45,31 @@
 	    });
 	}
 	
+	/* 	등록 버튼 클릭 시 로그인 & 비로그인 핸들링  ==> 미사용 */ 	
 	function checkUserIdAndNavigate() {
-	    // userId 값 가져오기
-	    var userId = ${userId};
+		    // userId 값 가져오기
+		    var userId = ${userId};
+		    console.log("userId:", userId);
+		    // userId가 0인 경우 알림창 띄우기
+	    	event.preventDefault();
+		    
+		    if (userId == 0) {
+		        swal({
+		            title: "로그인 후 이용해주세요.",
+		            text: "회원이 아니시면 가입 후 이용해주세요.",
+		            icon: "warning",
+	            }).then((confirmed) => {
+	                // 'OK' 누르면 로그인 화면으로 이동
+	                if (confirmed) {
+	                    location.href = '../login';
+	                }
+	            });
+	        } else {
 	
-	    // userId가 0인 경우 알림창 띄우기
-	    if (userId == 0) {
-	        swal({
-	            title: "로그인 후 이용해주세요.",
-	            text: "회원이 아니시면 가입 후 이용해주세요.",
-	            icon: "warning",
-            }).then((confirmed) => {
-                // 'OK' 누르면 로그인 화면으로 이동
-                if (confirmed) {
-                    location.href = '../login';
-                }
-            });
-        } else {
-            // userId가 0보다 큰 경우 폼 실행
-            document.forms["commentForm"].submit(); // Assuming your form has the id "commentForm"
-        }
-	}	
+	            // userId가 0보다 큰 경우 폼 실행
+	            document.forms["commentForm"].submit(); // Assuming your form has the id "commentForm"
+	        }
+		}
 	
 	<!-- 게시판 신고기능 -송환 -->
 	function report(boardId) {
@@ -129,8 +137,7 @@
 		<div class="container p-3">
 			<div class="row row-cols-1">
 				<div class="col img_detail_custom">
-					<img alt="${board.file_name }"
-						 src="${board.file_path }${board.file_name}">
+					<img alt="${board.file_name }" src="${board.file_path }${board.file_name}">
 				</div>
 			</div>
 		</div>
@@ -162,7 +169,7 @@
 					<c:when test="${userId eq 0 }">
 						<div class="col-md-1">
 							<button class="btn" onclick="closeAndRedirect(${board.small_code })">목록</button>
-						</div>					
+						</div>
 					</c:when>
 					<c:when test="${board.small_code eq 3 }">
 						<div class="col-md-1">
@@ -197,11 +204,11 @@
 							<!-- input 영역 -->
 							<div class="container p-0">
 								<form action="commentInsert" method="post" enctype="multipart/form-data">
-									<input type="hidden" name="id" value="${board.id }">
+									<input type="hidden" name="id" value="${board.id }"> 
 									<input type="hidden" name="name" value="${board.name }"> 
 									<input type="hidden" name="user_id" value="${userId }"> 
 									<input type="hidden" name="big_code" value="${board.big_code }">
-									<input type="hidden" name="small_code"  value="${board.small_code }"> 
+									<input type="hidden" name="small_code" value="${board.small_code }"> 
 									<input type="hidden" name="comment_group_id" value="${board.comment_group_id }">
 									<input type="hidden" name="comment_step" value="${board.comment_step }"> 
 									<input type="hidden" name="comment_indent" value="${board.comment_indent }">
@@ -215,16 +222,19 @@
 												<c:otherwise>
 													<p>로그인 필요</p>
 												</c:otherwise>
-											</c:choose>											
+											</c:choose>
 										</div>
 
 										<div class="form-group col comment-input">
-											<input type="text" class="form-control" name="content"
-												   placeholder="댓글을 입력하세요.">
+											<input type="text" class="form-control" name="content" placeholder="댓글을 입력하세요.">
 										</div>
 
 										<div class="form-group col comment-btn">
-											<button type="submit" class="btn btn_detail_custom" onclick="checkUserIdAndNavigate()">등록</button>
+											<c:choose>
+												<c:when test="${userId != 0 }">
+													<button type="submit" class="btn btn_detail_custom">등록</button>
+												</c:when>
+											</c:choose>
 										</div>
 									</div>
 								</form>
@@ -252,41 +262,53 @@
 											</p>
 											<span class="blink" style="font-size: 16px; font-weight: bold; color: #FF4379; margin-left: -740px; margin-top: 6px;">new</span>
 										</div>
+										<c:choose>
+											<c:when test="${userId != 0 }">
+												<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}">
+													<div class="card card-body comments-body-custom">
+														<!-- input 영역 -->
+														<div class="container p-0 row row-cols-2">
+															<form class="col" action="commentInsert" method="post" enctype="multipart/form-data">
+																<input type="hidden" name="id" value="${board.id }">
+																<input type="hidden" name="name" value="${comments.name }">
+																<input type="hidden" name="user_id" value="${userId }"> 
+																<input type="hidden" name="big_code" value="${board.big_code }"> 
+																<input type="hidden" name="small_code" value="${board.small_code }"> 
+																<input type="hidden" name="comment_group_id" value="${board.comment_group_id }"> 
+																<input type="hidden" name="comment_step" value="${comments.comment_step }"> 
+																<input type="hidden" name="comment_indent" value="${comments.comment_indent }">
 
-										<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}">
-											<div class="card card-body comments-body-custom">
-												<!-- input 영역 -->
-												<div class="container p-0 row row-cols-2">
-													<form class="col" action="commentInsert" method="post" enctype="multipart/form-data">
-														<input type="hidden" name="id" value="${board.id }">
-														<input type="hidden" name="name" value="${comments.name }">
-														<input type="hidden" name="user_id" value="${userId }">
-														<input type="hidden" name="big_code" value="${board.big_code }"> 
-														<input type="hidden" name="small_code" value="${board.small_code }"> 
-														<input type="hidden" name="comment_group_id" value="${board.comment_group_id }"> 
-														<input type="hidden" name="comment_step" value="${comments.comment_step }"> 
-														<input type="hidden" name="comment_indent" value="${comments.comment_indent }">
+																<div class="row row-cols-3 p-0">
+																	<div class="form-group col comment-md-title">
+																		<c:choose>
+																			<c:when test="${loginUser.nickname != null}">
+																				<p>${loginUser.nickname }</p>
+																			</c:when>
+																			<c:otherwise>
+																				<p>로그인 필요</p>
+																			</c:otherwise>
+																		</c:choose>
+																	</div>
 
-														<div class="row row-cols-3 p-0">
-															<div class="form-group col comment-md-title">
-																<p>대댓글</p>
-															</div>
+																	<div class="form-group col comment-md-input">
+																		<input type="text" class="form-control" name="content"
+																		       placeholder="댓글을 입력하세요.">
+																	</div>
 
-															<div class="form-group col comment-md-input">
-																<input type="text" class="form-control" name="content"
-																	   placeholder="댓글을 입력하세요.">
-															</div>
+																	<div class="form-group col comment-md-btn">
+																		<button type="submit" class="btn">등록</button>
+																	</div>
+																</div>
+															</form>
+															<button class="col report-btn" 	onclick="report(${comments.id})">신고</button>
 
-															<div class="form-group col comment-md-btn">
-																<button type="submit" class="btn">등록</button>
-															</div>
+														<!-- input 영역 END -->
 														</div>
-													</form>
-													<button class="col report-btn" onclick="report(${comments.id})">신고</button> 
-													<!-- input 영역 END -->
+														
+													</div>
 												</div>
-											</div>
-										</div>
+											</c:when>
+										</c:choose>
 									</div>
 								</c:forEach>
 							</div>

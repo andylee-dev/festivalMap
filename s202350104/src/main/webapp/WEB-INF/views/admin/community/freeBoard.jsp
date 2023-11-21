@@ -19,17 +19,17 @@
 				<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-file-text-fill "></i>
-					<c:choose>
-						<c:when test="${smallCode == 2}">
-							<label  class="admin-header-title ">이달의 소식 관리</label>
-						</c:when>
-						<c:when test="${smallCode == 3}">
-							<label  class="admin-header-title ">자유게시판 관리</label>
-						</c:when>
-				    	<c:otherwise>
-				        	<label  class="admin-header-title ">리뷰 관리</label>
-				    	</c:otherwise>
-					</c:choose>
+						<c:choose>
+							<c:when test="${smallCode == 2}">
+								<label  class="admin-header-title ">이달의 소식 관리</label>
+							</c:when>
+							<c:when test="${smallCode == 3}">
+								<label  class="admin-header-title ">자유게시판 관리</label>
+							</c:when>
+					    	<c:otherwise>
+					        	<label  class="admin-header-title ">리뷰 관리</label>
+					    	</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				
@@ -63,8 +63,9 @@
 							</c:when>			
 						</c:choose>
 					</div>
+
 				
-					<!-- Section3: Table -->		
+					<!-- Section3: Table -->													
 					<c:set var="num" value="${page.total-page.start+1 }"/>
 					<div class="container table-container p-4">
 						<div class="table-responsive">
@@ -95,8 +96,8 @@
 											<td>${boards.name }</td>
 											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
-											<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
+											<td><a class="detail-btn" href="../../boardUpdateForm?id=${boards.id}&userId=${userId}">수정</a></td>
+											<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td>
 										</tr>
 										<c:set var="num" value="${num - 1 }"/>
 									</c:forEach>
