@@ -230,7 +230,9 @@
 													aria-expanded="false" aria-controls="collapseExample"
 													style="width: 900px; text-align: left;">
 													${comments.content }</button>
+
 											</p>
+											<span class="blink" style="font-size: 16px; font-weight: bold; color: #FF4379; margin-left: -740px; margin-top: 6px;">new</span>
 										</div>
 
 										<div class="collapse comments-collapse-custom" id="collapseExample${comments.id}"
