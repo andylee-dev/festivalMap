@@ -1,7 +1,10 @@
 package com.oracle.s202350104.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -336,15 +339,22 @@ public class AdminUserController {
 	
 	
 	@RequestMapping(value = "favoriteUpdateForm")
-	public String favoriteUpdateForm(Model model, Favorite favorite, String currentPage) {
+	public String favoriteUpdateForm(Model model, Favorite favorite, String currentPage, HttpServletRequest request) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin favoriteUpdateForm", "start" );
-			Favorite favoriteDetail = fas.detailFavorite(favorite);
+			String create_at = request.getParameter("create_at");
 			
+			log.info("user_id -> {}", favorite.getUser_id());
+			log.info("id -> {}", favorite.getId());
+			log.info("create_at -> {}", favorite.getCreate_at());
+			
+			Favorite favoriteDetail = fas.detailFavorite(favorite);
+						
 			model.addAttribute("favoriteDetail", favoriteDetail);
 			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("create_at", create_at);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin favoriteUpdateForm Exception", e.getMessage());

@@ -48,18 +48,18 @@
 		
 			<!-- keyword, title 영역 -->	
 			<form id="restaurantSearch" action="restaurantSearch">
-			<div class="container p-0 keyword_title_custom border">
+			<div class="container p-0 keyword_title_custom">
 			<div class="co1 title_div">
 						F E S T I V A L!</div>
 			<div class="co1 text_div">
 				<h4><strong>어느 맛집에서 먹어볼까요~♫</strong></h4>
 			</div>
-			<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 맛집의 이름이나 키워드를 검색해보세요.">
+			<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 맛집의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
 			<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon"/>
 			</div>
 	
 			<!-- 경계선 표현 -->
-			<hr class="container p-0">	
+			<hr class="container p-0 hr_custom">	
 		
 			<!-- select 영역 -->
 			<div class="container p-0 select_custom">

@@ -36,18 +36,18 @@
 	<div class="container p-0 top_custom"></div>
 	
 	<!-- keyword, title 영역 -->	
-	<div class="container p-0 keyword_title_custom border">
+	<div class="container p-0 keyword_title_custom">
 		<div class="co1 title_div">
 					F E S T I V A L!</div>
 		<div class="co1 text_div">
 			<h4><strong>어느 숙소에서 지내볼까요~♫</strong></h4>
 		</div>
-		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 숙소의 이름이나 키워드를 검색해보세요.">
+		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 숙소의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
 		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png"/>
 	</div>
 	
 	<!-- 경계선 표현 -->
-	<hr class="container p-0">	
+	<hr class="container p-0 hr_custom">	
 	
 	<!-- select 영역 -->
 	<div class="container p-0 select_custom">
@@ -89,7 +89,7 @@
 	<hr class="container p-0 hr_custom">	
 	
 	
-	<div class="border p-3 m-3">
+	<!-- <div class="border p-3 m-3">
 		<form action="indexaccomodationSearch">
 						<h1 class="border">검색폼</h1>
 						<select name="area" id="area">
@@ -100,7 +100,8 @@
 						<button type="submit" class="btn btn-outline-secondary">검색</button>
 						<input type="reset" class="btn btn-outline-secondary" value="초기화">
 					</form>
-				</div>
+				</div> -->
+	
 	<div class="album py-5 bg-body-tertiary">
 		</div>
 			<div class="container">

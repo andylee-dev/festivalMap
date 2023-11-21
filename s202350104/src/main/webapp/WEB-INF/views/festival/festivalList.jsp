@@ -107,7 +107,7 @@
 		<div class="co1 text_div">
 			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
 		</div>
-		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
+		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
 		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" />
 	</div>
 	
