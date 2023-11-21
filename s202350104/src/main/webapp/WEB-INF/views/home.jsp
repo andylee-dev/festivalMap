@@ -332,9 +332,7 @@
 				    'left='+left
 				);
 			}
-		</script>
-<script src="/js/updateArea.js"></script>
-<script type="text/javascript">
+			
 			document.addEventListener("DOMContentLoaded", function () {
 				initKakaoMap();
 				updateAreaOptions();
@@ -348,8 +346,10 @@
 							.append("<option value=''>전체</option>");
 					}
 				});
-			});
+			});			
+			
 		</script>
+<script src="/js/updateArea.js"></script>
 
 <style type="text/css">
 	@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
@@ -367,6 +367,7 @@
 	}
 </style>
 
+<link href="/css/home.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -375,11 +376,12 @@
 <main>
 	<!-- Main Banner 임시 -->
 	<div id="content_title" class="container"></div>
-	<div class="container p-5" style="background-color: #FF4379;">
-		<div
-			style="width: 220px; height: 40px; border-radius: 23.50px; border: 3px white solid; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+	
+	<div class="container p-5" style="width:100%; background-color: #FF4379; height: 80px;">
+		<div style="width: 220px; height: 40px; border-radius: 23.50px; border: 3px white solid; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
 			I N T R O D U C I N G</div>
 	</div>
+	
 	<div class="container" style="width: 100%; height: 380px; padding: 0;">
 		<div id="carouselExampleIndicators" class="carousel slide"
 			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"

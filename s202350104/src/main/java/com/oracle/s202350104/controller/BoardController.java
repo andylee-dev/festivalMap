@@ -1,25 +1,15 @@
 package com.oracle.s202350104.controller;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Banner;
@@ -34,6 +24,7 @@ import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ReportService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
+import com.oracle.s202350104.utils.FileUploadDeleteUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -497,26 +488,19 @@ public class BoardController {
 		
 		// 원본 File 삭제 Logic
 		Board board = null;
-		String path = null;
 		String fileName = null;
-		File deleteFile = null;
+		FileUploadDeleteUtil deleteFile = new FileUploadDeleteUtil();
 		
 		try {
 			log.info("BoardController boardDelete File start!");
 			// DB에 저장 된 파일명 조회
 			board = boardService.boardRead(id);
 			
-			// 실제 경로 
-			path = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
-			
 			// DB에 저장 된 파일명 가져오기
 			fileName = board.getFile_name();
 			
-			// 구현체 생성(실  경로 + 파일명)
-			deleteFile = new File(path, fileName);
-			
-			// 원본 File 삭제
-			deleteFile.delete();
+			deleteFile.deleteFile(fileName);
+
 		} catch (Exception e) {
 			log.error("BoardController boardDelete File : {}", e.getMessage());
 		} finally {
@@ -677,33 +661,26 @@ public class BoardController {
 		log.info("BoardController integratedboardInsert smallCode : {}", board.getSmall_code());
 		log.info("BoardController integratedboardInsert tagsList : {}", tagsList.length);
 		
-		// File upload Logic
-        UUID uuid = UUID.randomUUID();
-		String pathDB = null;
+		// File upload Logic	
+        String pathDB = null;
 		String fileName = null;
-		String realPath = null;
 		String realFileSize = null;
-		File savaFile = null;
+		
+		FileUploadDeleteUtil fileUpload = new FileUploadDeleteUtil();
 
 		try {
 			log.info("BoardController integratedboardInsert File Start!!");
-			fileName = uuid + "_" + file.getOriginalFilename();
-
-			pathDB = "..\\photos\\";
-
-			realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
-
-			savaFile = new File(realPath, fileName);
+			String[] uploadResult = fileUpload.uploadFile(file);
 			
-			realFileSize = (file.getSize() / 1024) + "KB";
-			
-			log.info("BannerController getSize : {}", realFileSize);
+			fileName = uploadResult[0];
+			pathDB = uploadResult[1];
+			realFileSize = uploadResult[2];
+
 			log.info("BannerController fileName : {}", fileName);
 			log.info("BannerController pathDB : {}", pathDB);
-			log.info("BannerController realPath : {}", realPath);
-			log.info("BannerController savaFile : {}", savaFile);
+			log.info("BannerController realFileSize : {}", realFileSize);
+			
 
-			file.transferTo(savaFile);
 		} catch (Exception e) {
 			log.error("BoardController File upload error : {}", e.getMessage());
 		} finally {
