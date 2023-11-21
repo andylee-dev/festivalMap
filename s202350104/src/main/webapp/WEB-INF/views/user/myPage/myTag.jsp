@@ -189,6 +189,20 @@
 				border-radius: 10px;
 				border: 1px solid #000;
 			}
+
+			.col-form-label{
+				color: #000;				
+				font-family: Noto Sans;
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 800;
+				line-height: normal;
+			}
+			
+			button {
+				white-space: nowrap;
+			}
+		</style>
 		</style>
 	</head>
 	<body>
@@ -199,35 +213,58 @@
 				<%@ include file="/WEB-INF/components/MyPageSideBar.jsp"%>
 				<div class="container border p-5">
 					<div class="container my-5">
-						<div>
+						<div class="col-11">
 							<h1>내 관심사(태그)</h1>
 						</div>
-						<div>
+						<div class="col-11 align-items-center">
 							<hr class="hr">
 						</div>
-						<div class="col-12">
-							<div class="col-3 p-1">
-								<h2>기본태그</h2>
-							</div>
-							<div class="col-12 p-1" align="right">
-								<span>페스티맵의 맞춤추천 기능을 위한 기본 관심사를 선택해주세요.</span>
-							</div>
+						<div class="container col-10 justify-content-center mt-5">
+							<form action="list" method="GET" class="container justify-content-center">
+								<!-- 검색어 -->
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-7 mx-1">
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="검색어를 입력해주세요.">
+									</div>
+									<!-- 버튼 -->
+									<div class="col-5 mx-1 d-flex justify-content-start">
+										<button type="submit" class="btn btn-primary col-2 mx-1">검색</button>
+										<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
+									</div>
+								</div>
+							</form>	
+						</div>
+						<div class="col-11">
+							<div class="d-flex justify-content-between align-items-end mt-5">
+								<div class="col-3 p-1">
+									<h2>추천태그</h2>
+								</div>
+								<div class="col-8 p-1" align="right">
+									<span>페스티맵에서 추천하는 태그를 선택해보세요.</span>
+								</div>
+							</div>	
 							<div class="container tags-container p-4 mb-4">
-								<div class="" id="basic_container">
-								
+								<div class="" id="recommend_tags">
+									<button class="btn btn-primary">#선택태그</button>
+									<button class="btn btn-outline-secondary">#미선택태그</button>
 								</div>
 							</div>
 						</div>
-						<div class="col-12">
-							<div class="col-3 p-1">
-								<h2>커스텀태그</h2>
-							</div> 
-							<div class="col-12 p-1" align="right">
-								<span>게시물 등 사용자들이 직접 등록한 관심사 태그를 관리할 수 있습니다.</span>
+						<div class="col-11">
+							<div class="d-flex justify-content-between align-items-end mt-5">
+								<div class="col-3 p-1">
+									<h2>저장한 태그</h2>
+								</div> 
+								<div class="col-8 p-1" align="right">
+									<span>내가 저장한 관심사 태그를 관리할 수 있습니다.</span>
+								</div>
 							</div>
 							<div class="container tags-container p-4">
-								<div class="" id="custom_container">
-								
+								<div class="" id="my_tags">
+									<button class="btn btn-outline-secondary">#저장태그<span class="close-icon" style="margin-left: 5px; cursor: pointer;">&times;</span></button>
+									<button class="btn btn-outline-secondary">#저장태그<span class="close-icon" style="margin-left: 5px; cursor: pointer;">&times;</span></button>
+									<button class="btn btn-outline-secondary">#저장태그<span class="close-icon" style="margin-left: 5px; cursor: pointer;">&times;</span></button>
 								</div>
 							</div>
 						</div>

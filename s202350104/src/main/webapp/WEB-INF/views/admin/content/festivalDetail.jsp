@@ -22,7 +22,7 @@
 			
 			// 반려 사유 입력 팝업창 띄우기
 			function openPopup() {
-				var url = "rejectionForm?contentId=${festival.content_id}";
+				var url = "rejectionForm?contentId=${festival.content_id}&bigCode=${festival.big_code}";
 				var option = "width=1000, height=800";
 				window.name = "festivalDetail";
 				window.open(url, "rejection form popup", option);

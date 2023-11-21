@@ -291,26 +291,52 @@ import lombok.RequiredArgsConstructor;
 			return "forward:festivalDetail?contentIdStr="+contentId;
 		}
 		
-		// 정보 등록 반려사유 띄우기
+		// 등록 반려사유 입력 팝업창 띄우기
 		@RequestMapping(value = "rejectionForm")
-		public String rejectionForm(int contentId, Model model) {
+		public String rejectionForm(int contentId, int bigCode, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "start");
-				FestivalsContent festival = fs.detailFestivals(contentId);
-				model.addAttribute("festival", festival);
+				// bigCode에 맞춰 처리할 로직을 적어주세요~!
+				if(bigCode == 11) {        // festival
+					FestivalsContent festival = fs.detailFestivals(contentId);
+					model.addAttribute("festival", festival);
+				} else if(bigCode == 12) { // restaurant
+					
+				} else if(bigCode == 13) { // accomodation
+					
+				} else if(bigCode == 14) { // spot
+					
+				} else if(bigCode == 15) { // experience
+					
+				}
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin rejectionForm", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "end");
 			}	
-			return "admin/content/rejectionForm";
+			
+			if(bigCode == 11) {        // festival
+				return "admin/content/rejectionFormFestival";
+			} else if(bigCode == 12) { // restaurant
+				return "";
+			} else if(bigCode == 13) { // accomodation
+				return "";
+			} else if(bigCode == 14) { // spot
+				return "";
+			} else if(bigCode == 15) { // experience
+				return "";
+			} else {
+				return "";
+			}
+			
 		}
 		
 		// 등록 반려 사유 history 테이블에 insert
 		@RequestMapping(value = "insertHistory")
 		public String insertHistory(History history, int contentId, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "start");
 				int result = hs.insertHistory(history);
@@ -320,7 +346,21 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "end");
 			}	
 			
-			return "forward:festivalDetail?contentIdStr="+contentId;
+			int bigCode = history.getBig_code();
+			// bigCode에 맞춰서 이동할 페이지를 적어주세요~!
+			if(bigCode == 11) {        // festival
+				return "forward:festivalDetail?contentIdStr="+contentId;
+			} else if(bigCode == 12) { // restaurant
+				return "";
+			} else if(bigCode == 13) { // accomodation
+				return "";
+			} else if(bigCode == 14) { // spot
+				return "";
+			} else if(bigCode == 15) { // experience
+				return "";
+			} else {
+				return "";
+			}
 		}
 		
 	
