@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert Course_contents</title>
+<title>Content List</title>
 <link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/updateArea.js"></script>
@@ -229,7 +229,6 @@
 							        <th class="img1">사진</th>
 							        <th class="title">이름</th>
 							        <th class="address">주소</th>
-							        <!-- <th class="homepage">홈페이지</th> -->
 							        <th class="phone">연락처</th>
 								</tr>
 							</thead>
@@ -241,7 +240,6 @@
 										<td style="white-space: normal;"><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 100px; width: 150px;"></td>
 										<td style="white-space: normal;">${content.title }</td>
 										<td style="white-space: normal;">${content.address }</td>
-										<%-- <td style="white-space: normal;">${content.homepage }</td> --%>
 										<td style="white-space: normal;">${content.phone }</td>
 									</tr>
 								</c:forEach>
@@ -250,6 +248,26 @@
 					</div>
 				</div>
 			</div>
+			
+			<nav aria-label="Page navigation example ">
+				<ul class="pagination">
+					<c:if test="${page.startPage > page.pageBlock}">
+						<li class="page-item">
+							<a href="contentListAll?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+						</li>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<li class="page-item">
+							<a href="contentListAll?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage}">
+						<li class="page-item">
+							<a href="contentListAll?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
 			
 		</main>
 	</div>

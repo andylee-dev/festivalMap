@@ -16,10 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ContentDaoImpl implements ContentsDao {
 	
 	private final SqlSession session;
+	
+	@Override
+	public int contentCount() {
+		int contentCount = session.selectOne("contentCount");
+		
+		return contentCount;
+	}
 
 	@Override
 	public List<Contents> listContent() {
-		log.info("ContentDaoImpl listContent start...");
 		List<Contents> listContent = session.selectList("listContent");
 		log.info("ContentDaoImpl listContent listContent.size() ->" + listContent.size());
 		
@@ -37,4 +43,5 @@ public class ContentDaoImpl implements ContentsDao {
 		int totalCount = session.selectOne("getTotalSearchCount", contents);
 		return totalCount;
 	}
+
 }

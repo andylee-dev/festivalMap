@@ -54,7 +54,8 @@
 				                </select>
 			                </div>
 			                <div class="col-5 mx-2">
-				                <input type="text" name="keyword" class="form-control" value="${keyword}">
+				                <input type="text" name="keyword" class="form-control" value="${keyword}"
+				                placeholder="검색어를 입력하세요.">
 			                </div>
 			            </div>
 			            
@@ -102,8 +103,8 @@
 											<td>${course.distance }</td>
 											<td>${course.time }</td>
 											<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td>-</td>
-											<td><a href="courseUpdateForm?id=${course.course_id}" class="detail-link">관리${course.course_id}</a></td>
+											<td>${course.area_content }</td>
+											<td><a href="courseUpdateForm?id=${course.course_id}" class="detail-link">관리</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>

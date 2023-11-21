@@ -3,6 +3,7 @@ package com.oracle.s202350104.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.CourseService;
+import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 
 import lombok.RequiredArgsConstructor;
@@ -39,25 +41,27 @@ public class AdminCourseController {
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
 	 */ 
-
+	
+	// 관리자 코스정보 리스트 이동
 	@RequestMapping(value = "/list")
 	public String courseList(Course course, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
 		try {
-			log.info("AdminCourseController courseList start");
+			log.info("[{}]{}:{}", transactionId, "admin Course", "start");
 			
-			int courseCount = cs.courseCount();			
-			log.info("AdminCourseController courseList courseCount ->" + courseCount);
-
+			// Course의 총 개수를 가져옴
+			int courseCount = cs.courseCount();
+			
+			// 페이징 처리
 			PagingList page = new PagingList(courseCount, currentPage);
 			course.setStart(page.getStart());
 			course.setEnd(page.getEnd());
-			System.out.println("page.getStart() ->" + page.getStart());
-			System.out.println("page.getEnd() ->" + page.getEnd());
 
 			log.info("AdminCourseController courseList course ->" + course);
 			
+			// Course의 list를 가져옴
 			List<Course> courseList = cs.courseList(course);
-			log.info("AdminCourseController courseList courseList.size() ->" + courseList.size());
 
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
@@ -216,14 +220,24 @@ public class AdminCourseController {
 
 	@RequestMapping(value = "/contentListAll")
 	public String contentListAll(Contents content, String currentPage, Model model) {
-		log.info("AdminCourseController contentListAll start...");
+		UUID transactionId = UUID.randomUUID();
 		
 		try {
+			log.info("[{}]{}:{}",transactionId, "contentListAll", "start");
+			
+			// 컴텐츠의 전체 list의 수를 나타냄.
+			int contentCount = contentService.contentCount();
+			
 			List<Contents> listContents = contentService.listContents();
 			
-			log.info("ContentController contentListAll listContents.size() ->" + listContents.size());
-
+			// 페이징 처리
+			PagingList page = new PagingList(contentCount, currentPage);
+			content.setStart(page.getStart());
+			content.setEnd(page.getEnd());
+			
+			model.addAttribute("contentCount", contentCount);
 			model.addAttribute("listContents", listContents);
+			model.addAttribute("page", page);
 
 		} catch (Exception e) {
 			log.error("ContentController contentListAll e.getMessage() ->" + e.getMessage());

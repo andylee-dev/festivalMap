@@ -20,9 +20,16 @@ public class ContentServiceImpl implements ContentSerivce {
 	private final ContentsDao contentsDao;
 	
 	@Override
+	public int contentCount() {
+		int contentCount = contentsDao.contentCount();
+		
+		return contentCount;
+	}
+	
+	@Override
 	public List<Contents> listContents() {
-		log.info("ContentServiceImpl listContents start...");
 		List<Contents> listContents = contentsDao.listContent();
+		
 		return listContents;
 	}
 
@@ -36,5 +43,6 @@ public class ContentServiceImpl implements ContentSerivce {
 	public int getTotalSearchCount(Contents contents) {
 		return contentsDao.getTotalSearchCount(contents);
 	}
+
 
 }

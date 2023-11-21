@@ -4,8 +4,53 @@
 
 <mapper namespace="com.oracle.s202350104.Contents">
 
+	<select id="contentCount" resultType="int">
+		SELECT Count(*) From contents
+	</select>
+
 	<select id="listContent" resultType="Contents">
-		SELECT * FROM contents
+		select * from contents
+	
+		<!-- SELECT *
+		FROM (
+		    SELECT ROWNUM rn, t.*
+		    FROM (
+		        SELECT *
+		        FROM contents
+		    ) t
+		)
+		WHERE rn BETWEEN #{start} AND #{end} -->
+	
+		<!-- SELECT *
+		FROM
+    		(SELECT ROWNUM rn, contents.*
+			FROM contents
+			WHERE 1=1
+	 		<if test="big_code != null and big_code != 0 ">
+				AND	big_code = #{big_code}	
+			</if>
+	 		<if test="small_code != null and small_code != 0">
+				AND	small_code = #{small_code}	
+			</if>
+			<if test="area != null and area != 0">
+				AND	area = #{area}	
+			</if>
+			<if test="sigungu != null and sigungu != 0">
+				AND	sigungu = #{sigungu}	
+			</if>
+	 		<if test="status != null">
+				AND	status = #{status}	
+			</if>
+     		) 
+	 		<if test="start != 0 and end != 0">     		
+				WHERE rn between #{start} and #{end}
+			</if> -->
+	
+		<!-- SELECT * 
+		FROM 
+			(SELECT ROWNUM rn, contents.*
+			FROM contents)
+		WHERE rn between #{start} and #{end} -->
 	</select>
 
 	<select id="getSearchContentsList" resultType="Contents">
