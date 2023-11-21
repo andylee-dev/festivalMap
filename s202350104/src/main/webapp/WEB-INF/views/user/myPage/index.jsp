@@ -368,13 +368,12 @@ h4 {
 							<!-- 회원 정보 수정 화면 -->
 							<div id="edit" style="display: none;">
 								<form action="/admin/user/updateUser" method="POST">
-									<input type="hidden" name="id" value="${user.id }"> <input
-										type="hidden" name="birthday" value="${user.birthday }">
+									<input type="hidden" name="id" value="${user.id }"> 
+									<input type="hidden" name="birthday" value="${user.birthday }">
 									<input type="hidden" name="status" value="${user.status }">
 									<input type="hidden" name="point" value="${user.point }">
-									<input type="hidden" name="file_name"
-										value="${user.file_name }"> <input type="hidden"
-										name="is_deleted" value="${user.is_deleted }">
+									<input type="hidden" name="file_name"value="${user.file_name }"> 
+									<input type="hidden"name="is_deleted" value="${user.is_deleted }">
 									<div class="mb-2 row align-items-baseline ">
 										<label for="email"
 											class="col-sm-2 col-form-label fw-bold text-end mx-3"
@@ -479,8 +478,6 @@ h4 {
 											<span class="birthday-text">일</span>
 										</div>
 									</div>
-									
-									
 									<div class="mb-2 row align-items-baseline ">
 										<label for="phone_num"
 											class="col-sm-2 col-form-label fw-bold text-end mx-3"
