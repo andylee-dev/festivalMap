@@ -9,9 +9,7 @@
 	</select>
 
 	<select id="listContent" resultType="Contents">
-		select * from contents
-	
-		<!-- SELECT *
+		SELECT *
 		FROM (
 		    SELECT ROWNUM rn, t.*
 		    FROM (
@@ -19,7 +17,7 @@
 		        FROM contents
 		    ) t
 		)
-		WHERE rn BETWEEN #{start} AND #{end} -->
+		WHERE rn BETWEEN #{start} AND #{end}
 	
 		<!-- SELECT *
 		FROM

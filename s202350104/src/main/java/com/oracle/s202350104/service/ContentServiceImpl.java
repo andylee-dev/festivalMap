@@ -44,5 +44,4 @@ public class ContentServiceImpl implements ContentSerivce {
 		return contentsDao.getTotalSearchCount(contents);
 	}
 
-
 }

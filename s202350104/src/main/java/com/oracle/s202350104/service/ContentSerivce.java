@@ -10,4 +10,5 @@ public interface ContentSerivce {
 	int 				contentCount();
 	List<Contents> 		getSearchContentsList(Contents contents);
 	int 				getTotalSearchCount(Contents contents);
-} 
+	
+}  
