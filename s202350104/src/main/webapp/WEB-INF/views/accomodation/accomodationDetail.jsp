@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/components/header.jsp"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +37,25 @@
 	    window.open("../reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
 	}
     function like() {
-        alert("찜하였습니다.");
+ 	    const favorite = {
+			user_id : ${userId},
+			content_id: ${accomodation.content_id},
+		}
+		$.ajax({
+			method:"POST",
+			url:"/toggleFavoriteAjax",
+			data:JSON.stringify(favorite),
+			dataType:'json',
+			contentType: "application/json",
+			success:
+				function(result) {
+					if(result == 1) {
+						alert("찜했습니다.");
+					} else {
+						alert("찜목록에서 제외했습니다.");
+					}		
+				}
+		})
     }
 
     function share() {
