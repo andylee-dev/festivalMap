@@ -81,18 +81,18 @@
 						<div class="table-container p-5" id="report-container">
 						<table class="table table-bordered" style="border-radius: 10px;">
 						<tr class="table">
-							<th scope="col" style="text-align: center;">제목</th>
-							<td style="background-color: white;">
+							<th scope="col" style="text-align: center; width: 10%;">제목</th>
+							<td style="background-color: white; width: 40%;">
 							<input type="hidden" name="board_id" value="${board.id }">${board.title }</td>
 							
-							<th scope="col" style="text-align: center;">작성자</th>
-							<td style="background-color: white;">
+							<th scope="col" style="text-align: center; width: 10%;">작성자</th>
+							<td style="background-color: white; width: 40%;">
 							<input type="hidden" name="user_id" value="${board.user_id }">${board.name }</td>
 						</tr>
 						
 						<tr class="table">
-							<th scope="col" style="text-align: center;">내용</th>
-							<td colspan="3" style="background-color: white;">${board.content }</td>
+							<th scope="col" style="text-align: center; width: 10%;">내용</th>
+							<td colspan="3" style="background-color: white;width: 90%;">${board.content }</td>
 						</tr>
 						
 						<%-- <tr class="table">
