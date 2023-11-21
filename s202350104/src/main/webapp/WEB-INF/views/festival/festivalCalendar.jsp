@@ -9,14 +9,23 @@
 <meta charset="UTF-8">
 <title>FestivalCalendar</title>
 <style type="text/css">
-	h2 {
-	color: black;
-	}
 	
 	h1 {
-	font-size: 30px;
+	font-size: 25px;
+	font: bold;
+	max-width: 900px;
+	margin: 0 auto;
 	}
 	
+	.fc .fc-toolbar-title {
+	font-size: 50px;
+	color: #FF4379;
+	
+	}
+	.fc-event-title-container{
+	background-color: #EEFFC2;
+	color: black;
+	}
 	.fc-day-sun a {
  	 color: red;
   	text-decoration: none;
@@ -26,6 +35,9 @@
   	color: blue;
   	text-decoration: none;
 	}
+	#calendar {
+	max-width: 900px;
+	margin: 0 auto;
 
 </style>
  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
@@ -48,6 +60,8 @@
                 			title : '<%=fs.getTitle()%>',
                     		start : '<%=fs.getStart_date()%>',
                     		end : '<%=fs.getEnd_date()%>',
+                    		color : "#EEFFC2",
+                            textColor : "#000000"
                	 		},
     				<%}
     			}%>
