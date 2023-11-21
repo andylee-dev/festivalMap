@@ -54,6 +54,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	        authorities.add(new SimpleGrantedAuthority("ROLE_"+Role.getValueByKey(user.get().getSmall_code())));	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "AuthenticationProvider", e.getMessage());
+			 throw e;  // 추가된 부분
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "AuthenticationProvider", "end");
 		}	        
