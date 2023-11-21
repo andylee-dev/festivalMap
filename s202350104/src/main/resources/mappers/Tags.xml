@@ -121,9 +121,9 @@
 	
 	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM usertags u, tags t
+		FROM  usertags u, tags t
 		WHERE u.tag_id = t.id
-		AND   u.user_id = #{id}
+		AND   u.user_id = #{userId}
 		ORDER BY t.name
 	</select>
 		
@@ -133,7 +133,7 @@
 	
 	<delete id="nhUserTagsDelete" parameterType="Tags">
 		DELETE UserTags 
-		WHERE tag_id = #{id}
+		WHERE tag_id = #{tag_id}
 		<if test="user_id != null and user_id != 0">
 			AND user_id = #{user_id}
 		</if>

@@ -307,6 +307,24 @@ public class TagsServiceImpl implements TagsService {
 		
 		return listCourse;
 	}
+	
+	@Override
+	public List<Tags> searchUserTagsOne(int userId) {
+		List<Tags> listTags = td.searchUserTagsOne(userId);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listTags;
+	}
+	
+	@Override
+	public int updateUserTags(int userId, int[] finalTags) {
+		int result = td.updateUserTags(userId, finalTags);
+		
+		return result;
+	}
 
 
 	
@@ -338,5 +356,8 @@ public class TagsServiceImpl implements TagsService {
 	 	
 	 	return deleteResult;
 	}
+
+
+
 	
 }

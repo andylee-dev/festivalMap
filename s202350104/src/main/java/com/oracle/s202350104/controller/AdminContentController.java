@@ -184,7 +184,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin festivalUpdateForm", "start");
 				// 수정할 festival의 상세 정보를 가져와서 festival 인스턴스에 저장
 				FestivalsContent festival = fs.detailFestivals(contentId);
-				// 중분류를 수정할 수 있도록 common code의 list를 만들어서 저장
+				// 소분류를 수정할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
 
 				// 시작일 보여주기 위해 형식 변환

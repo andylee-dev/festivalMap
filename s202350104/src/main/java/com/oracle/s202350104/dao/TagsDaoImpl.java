@@ -754,6 +754,107 @@ public class TagsDaoImpl implements TagsDao {
 		return listCourse;
 	}
 
+	@Override
+	public List<Tags> searchUserTagsOne(int userId) {
+		List<Tags> listMyTags = null;
+		
+		try {
+			listMyTags = session.selectList("nhUserTagOne", userId);
+			log.info("TagsDaoImpl searchUserTagsOne() => " + listMyTags.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchUserTagsOne() => " + e.getMessage());
+		}
+		
+		return listMyTags;
+	}
+	
+	@Override
+	public int updateUserTags(int userId, int[] finalTags) {
+		int result = 0;
+		// insert/delete를 여러 번 시행해야 할 수 있으므로 transaction 처리를 해줌 
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		
+		try {
+			// 해당 유저가 이미 저장했던(기존에 DB에 저장되어 있던) tag 정보들을 가져와 list에 저장
+			List<Tags> oldTags = session.selectList("nhUserTagOne", userId);
+			
+			// 기존에 태그 정보 존재, 폼으로 넘어온 태그 정보 존재할 때
+			if(oldTags != null && finalTags != null) {
+				// 폼으로 넘어온 태그가 기존 DB에 이미 존재하는 정보인지 아닌지 확인하는 작업
+				boolean isHere = false;
+			
+				for(Tags tag : oldTags) {
+					for(int i = 0; i < finalTags.length; i++) {
+						if(tag.getId() == finalTags[i]) {
+							isHere = true; // 폼으로 넘어온 태그 정보가 DB에 이미 있던 태그일 때 true로 값 바꿈
+						}
+					}
+					// oldTags에는 존재하지만 finalTags에는 존재하지 않는 tag를 delete
+					if(!isHere) {
+						Tags delTag = new Tags();
+						delTag.setUser_id(userId);
+						delTag.setTag_id(tag.getId());
+						result = session.delete("nhUserTagsDelete", delTag);
+						log.info(delTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				}
+				
+				// finalTags에만 존재하는 tag를 insert
+				for(int tagId : finalTags) {
+					for(int i = 0; i < oldTags.size(); i++) {
+						if(tagId == oldTags.get(i).getTag_id()) {
+							isHere = true; // 폼으로 넘어온 태그가 DB에 없던 새로운 태그일 때 true로 값 변경
+						}
+					}
+					// oldTags에는 존재하지 않지만 finalTags에는 존재하는 tag를 insert
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setUser_id(userId);
+						newTag.setTag_id(tagId);
+						result = session.delete("nhUserTagsInsert", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				} 
+				
+			  // 기존에 태그 정보는 존재하지만 폼으로 넘어온 태그 정보는 null일 때, 즉 태그를 전부 삭제했을 때
+			} else if(oldTags != null && finalTags == null) {
+				for(Tags tag : oldTags) {
+					Tags delTag = new Tags();
+					delTag.setUser_id(userId);
+					delTag.setTag_id(tag.getId());
+					result = session.delete("nhUserTagsDelete", delTag);
+					log.info(delTag.getTag_id()+"result=>"+result);
+				}
+			  
+			  // 기존에 태그 정보는 null이지만 폼으로 넘어온 태그 정보는 존재할 때, 즉 해당 게시글에 태그를 새롭게 입력했을 때
+			} else if(oldTags == null && finalTags != null) {
+				for(int i = 0; i < finalTags.length; i++) {
+					Tags newTag = new Tags();
+					newTag.setUser_id(userId);
+					newTag.setTag_id(finalTags[i]);
+					result = session.delete("nhUserTagsInsert", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
+				}
+				
+			  // DB에 저장되어있던 태그 정보도 없고, 새로 폼으로 들어온 태그 정보도 없을 때	
+			} else result = 0;
+			// 모든 작업 하나하나가 정상적으로 실행되면 commit
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			// 하나의 작업이라도 실패하면 rollback
+			transactionManager.rollback(txStatus);
+			log.info("TagsDaoImpl updateUserTags => " + e.getMessage());
+			result = -1;
+		}	
+		
+		return result;
+	}
+
+
 	
 	
 	
@@ -782,6 +883,8 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return deleteResult;
 	}
+
+
 
 
 }

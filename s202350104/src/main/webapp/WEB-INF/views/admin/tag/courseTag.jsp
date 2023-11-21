@@ -7,6 +7,12 @@
 		<meta charset="UTF-8">
 		<title>코스 태그</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			/* .badge {
+				background-color: #FF4379;
+			} */
+		</style>
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">

@@ -140,9 +140,54 @@ public class UserController {
 		return "redirect:/user/myPage/myLike";
 	}
 	
+	// 나의 태그 관리 페이지로 이동
 	@RequestMapping(value = "myPage/myTag")
-	public String myTag() {
+	public String myTag(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "UserController myTag", "Start");
+			int userId = us.getLoggedInId();
+			log.info("userId:{}/ userRole:{}",userId,us.getLoggedInUserRole());
+			List<Tags> listMyTags = ts.searchUserTagsOne(userId);
+			String[] arrMyTags = new String[listMyTags.size()];
+			
+			model.addAttribute("arrMyTags", arrMyTags);
+			model.addAttribute("listMyTags", listMyTags);
+			model.addAttribute("userId", userId);
+		} catch (Exception e) {
+			log.error("UserController myTag Exception ->" + e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "UserController myTag", "End");
+		}
 		return "user/myPage/myTag";
+	}
+	
+	// 태그를 수정하고 그 결과에 따라 메세지를 반환(AJAX 연결)
+	@ResponseBody
+	@RequestMapping(value = "myPage/userTagsUpdate")
+	public String userTagsUpdate(@RequestParam(value = "tagId[]", required = false) int[] finalTags, int userId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		String str = "";
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "UserController userTagsUpdate", "Start");
+			int result = ts.updateUserTags(userId, finalTags); 
+			// update결과에 따라 다른 메세지 반환
+			if(result == 1) { 
+				str = "태그 수정이 성공적으로 완료되었습니다."; 
+			} else { 
+				str = "태그 수정에 실패하였습니다."; 
+			}
+			log.info("finalTags"+finalTags.toString());
+			log.info("userId"+userId);
+		} catch (Exception e) {
+			log.error("UserController userTagsUpdate Exception ->" + e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "UserController userTagsUpdate", "End");
+		}
+		
+		return str;
 	}
 
 	@RequestMapping(value="bizPage")
