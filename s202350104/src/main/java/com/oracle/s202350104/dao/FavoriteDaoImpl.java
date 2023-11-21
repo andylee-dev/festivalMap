@@ -179,4 +179,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		return result;
 	}
 
+	@Override
+	public Favorite getMyFavoriteOne(Favorite favorite) {
+		return session.selectOne("getMyFavoriteOne", favorite);
+	}
+
 }

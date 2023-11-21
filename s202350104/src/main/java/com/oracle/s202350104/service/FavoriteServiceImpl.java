@@ -104,7 +104,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		result = fad.deleteFavorite(favorite);
 		
 		if(result <= 0) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록 업데이트 삭제를 실패하였습니다.");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록  삭제를 실패하였습니다.");
 		}
 		return result;
 	}
@@ -130,6 +130,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록의 정보수정을 실패하였습니다");
 		}
 		return result;
+	}
+
+	@Override
+	public Favorite getMyFavoriteOne(Favorite favorite) {
+		return fad.getMyFavoriteOne(favorite);
 	}
 
 	

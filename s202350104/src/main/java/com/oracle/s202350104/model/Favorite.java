@@ -10,7 +10,7 @@ import lombok.Data;
 public class Favorite {
 	
 	private int  user_id;
-	private int  id;
+	private int  content_id;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date create_at;
 	

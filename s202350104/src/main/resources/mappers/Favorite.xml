@@ -86,13 +86,13 @@
     <delete id="joDeleteMyLike" parameterType="int">
 		DELETE FROM favorite 
 		WHERE  user_id = '1003' 
-		AND    id = #{id}
+		AND    content_id = #{content_id}
     </delete>
     
     <delete id="joDeleteFavorite" parameterType="favorite">
 		DELETE FROM favorite 
 		WHERE  user_id = #{user_id} 
-		AND    id = #{id}
+		AND    content_id = #{content_id}
     </delete>
     
     <select id="joDetailFavorite" parameterType="Favorite" resultType="Favorite">
@@ -104,10 +104,22 @@
 		WHERE u.id = f.user_id		
     </select>
     
+    <select id="getMyFavoriteOne" parameterType="Favorite" resultType="Favorite">
+		SELECT *
+		FROM   favorite f  
+		WHERE  f.user_id = #{user_id} 
+		AND f.content_id = #{content_id} 
+    </select>
+    
     <update id="joUpdateFavorite" parameterType="Favorite">
 		UPDATE favorite
 		SET    create_at = #{create_at)
-		WHERE  user_id = #{user_id} AND id = #{id}
+		WHERE  user_id = #{user_id} AND content_id = #{content_id}
 	</update>
     
+    
+    <insert id="joInsertFavorite" parameterType="Favorite" >
+    	INSERT INTO favorite(user_id, content_id ,create_at) 
+    	VALUES(#{user_id}, #{content_id}, sysdate)
+    </insert>
 </mapper>

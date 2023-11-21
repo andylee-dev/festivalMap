@@ -17,4 +17,6 @@ public interface FavoriteService {
 	int                  deleteFavorite(Favorite favorite);
 	Favorite             detailFavorite(Favorite favorite);
 	int                  updateFavorite(Favorite favorite);
+	Favorite             getMyFavoriteOne(Favorite favorite);
+	
 }

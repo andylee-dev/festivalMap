@@ -347,7 +347,7 @@ public class AdminUserController {
 			String create_at = request.getParameter("create_at");
 			
 			log.info("user_id -> {}", favorite.getUser_id());
-			log.info("id -> {}", favorite.getId());
+			log.info("id -> {}", favorite.getContent_id());
 			log.info("create_at -> {}", favorite.getCreate_at());
 			
 			Favorite favoriteDetail = fas.detailFavorite(favorite);
