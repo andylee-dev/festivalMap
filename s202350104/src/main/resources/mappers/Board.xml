@@ -10,6 +10,7 @@
 		where a.user_id = b.id
 		and a.small_code = #{smallCode}
 		and a.comment_indent = 0
+		and a.is_deleted = 0
 	</select>
 	
 	<select id="reviewBoardCount" parameterType="Board" resultType="int">
@@ -184,10 +185,10 @@
 			select board_seq_generator.nextval from dual
 		</selectKey>
 		insert into board (id, user_id, big_code, small_code, title, content, 
-						   read_count, file_name, file_path, comment_group_id, 
+						   read_count, file_name, file_size, file_path, comment_group_id, 
 						   comment_step, comment_indent, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
-			   #{title}, #{content}, 0, #{file_name}, #{file_path}, 
+			   #{title}, #{content}, 0, #{file_name}, #{file_size}, #{file_path}, 
 			   #{id}, 0, 0, sysdate, 0)		
 	</insert>
 	

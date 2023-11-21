@@ -660,6 +660,7 @@ public class BoardController {
 		String pathDB = null;
 		String fileName = null;
 		String realPath = null;
+		String realFileSize = null;
 		File savaFile = null;
 
 		try {
@@ -671,7 +672,10 @@ public class BoardController {
 			realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
 
 			savaFile = new File(realPath, fileName);
-
+			
+			realFileSize = (file.getSize() / 1024) + "KB";
+			
+			log.info("BannerController getSize : {}", realFileSize);
 			log.info("BannerController fileName : {}", fileName);
 			log.info("BannerController pathDB : {}", pathDB);
 			log.info("BannerController realPath : {}", realPath);
@@ -693,6 +697,7 @@ public class BoardController {
 			// File명, 경로 setting
 			board.setFile_name(fileName);
 			board.setFile_path(pathDB);
+			board.setFile_size(realFileSize);
 
 			int insertBoard = boardService.boardInsert(board);
 			
