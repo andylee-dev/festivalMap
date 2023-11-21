@@ -37,5 +37,7 @@ public interface BoardDao {
 
 	List<Board> commentDetail(int id);
 
+	List<Board> getBoardOneList(Board board);
+
 
 }

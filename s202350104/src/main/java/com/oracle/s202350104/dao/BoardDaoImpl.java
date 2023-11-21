@@ -326,5 +326,14 @@ public class BoardDaoImpl implements BoardDao {
 		log.info("BoardDao comments size : {}", comments.size());		
 		return comments;
 	}
+	
+	@Override
+	public List<Board> getBoardOneList(Board board) {
+		
+		List<Board> boardOneList = session.selectList("getBoardOneList", board);
+		log.info("BoardDao getBoardOneList size : {}", boardOneList.size());		
+		
+		return boardOneList;
+	}
 	 
 }

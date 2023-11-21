@@ -37,4 +37,6 @@ public interface BoardService {
 
 	List<Board> commentDetail(int id);
 
+	List<Board> getBoardOneList(Board board);
+
 }

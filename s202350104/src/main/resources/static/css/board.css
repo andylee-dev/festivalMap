@@ -137,7 +137,7 @@ a {
 	width: 90%;
 	margin-left: 90px;
 	margin-top: 6px;
-	margin-bottom: 100px;
+	margin-bottom: 0px;
 }
 
 .list-content-custom p{
@@ -327,7 +327,7 @@ a {
 	font-size: 30px;
 	font-weight: bold;
 	text-align: left;
-	width: 100px;
+	width: 120px;
 	height: 80px;
 	margin-left: 0px;
 	margin-bottom: 20px;
@@ -391,6 +391,11 @@ a {
 	margin-top: 8px;
 	border: 3px solid #BDBDBD;
 	font-size: 22px;	
+}
+
+.insert_row_custom .insert_row2_custom .radio-custom{
+	font-size: 26px;
+	font-weight: bold;	
 }
 
 .insert_row_custom .insert_row2_custom .tag_row{

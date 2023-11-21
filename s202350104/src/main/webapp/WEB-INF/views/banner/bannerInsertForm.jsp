@@ -99,7 +99,7 @@
 						<div class="form-group col title_row">
 		               		<label for="title">분류코드</label>				
 						</div>
-						<div class="form-group col">
+						<div class="form-group col radio-custom">
 		                	<input type="radio" name="smallCode" value="1"
 						   		   onchange="updateSmallCode(1)"> 'Home' 					
 							<input type="radio" name="smallCode" value="2" 

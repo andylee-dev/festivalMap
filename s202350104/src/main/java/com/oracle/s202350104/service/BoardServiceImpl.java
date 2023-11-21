@@ -155,5 +155,13 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> comments = boardDao.commentDetail(id);
 		return comments; 
 	}
-
+	
+	@Override
+	public List<Board> getBoardOneList(Board board) {
+		
+		List<Board> boardOneList = boardDao.getBoardOneList(board);
+		
+		return boardOneList;
+	}
+	
 }

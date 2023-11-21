@@ -192,12 +192,12 @@ public class UserController {
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
 		
-		List<Board> freeAllList = boardService.getFreeAllList(board);
+		List<Board> oneBoardList = boardService.getBoardOneList(board);
 		
 		model.addAttribute("searchOption",board);
 		model.addAttribute("smallCode",smallCode);
 		model.addAttribute("countBoard",countBoard);
-		model.addAttribute("freeAllList",freeAllList);
+		model.addAttribute("oneBoardList",oneBoardList);
 		model.addAttribute("page",page);		
 		
 		return "user/myPage/myPost";
