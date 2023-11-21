@@ -317,6 +317,21 @@
 					console.log("Geolocation을 지원하지 않는 브라우저입니다.");
 				}
 			}
+			function openPopup() {
+				const width = 600;
+				const height = 600;
+				
+				// 화면 가운데 띄우기 위한 계산
+				const top = (window.screen.height - height) / 2;
+				const left = (window.screen.width - width) / 2;
+				
+				window.open('/festival/test', 'PopupWindow', 
+				    'width='+width,
+				    'height='+height,
+				    'top='+top,
+				    'left='+left
+				);
+			}
 		</script>
 <script src="/js/updateArea.js"></script>
 <script type="text/javascript">
@@ -474,7 +489,6 @@
 			        <h5 class="card-title">카드 제목</h5>
 			        <p class="card-text">카드 상세 내용...</p>
 					<a class="dropdown-item" href="/festival/recommend">축제맞춤추천</a>
-			        
 			      </div>
 			    </div>
 			  </div>
@@ -488,7 +502,9 @@
 			      <div class="card-body">
 			        <h5 class="card-title">카드 제목</h5>
 			        <p class="card-text">카드 상세 내용...</p>
-					<a class="dropdown-item" href="/festival/test">축제추천테스트</a>
+					<button type="button" id="btn-festival-test" class="btn btn-primary" onclick="openPopup()">
+					  축제추천테스트
+					</button>		
 			      </div>
 			    </div>
 			  </div>
