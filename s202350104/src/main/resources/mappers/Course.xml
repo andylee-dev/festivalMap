@@ -9,32 +9,27 @@
 		</select>
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
-			<!-- select * from courses -->
-			
 			SELECT * 
 			FROM
 			(
-				SELECT ROWNUM rn, aa.*
+				SELECT ROWNUM rn, aa.*,
+					(SELECT content FROM areas ar
+					 WHERE aa.area = ar.area AND ar.sigungu = 999) AS area_content,
+					(SELECT content FROM areas ar
+					 WHERE aa.area = ar.area AND aa.sigungu = ar.sigungu) AS sigungu_content
 				FROM
-				    (SELECT *
+				    (SELECT a.course_id, a.content_id, a.order_num, b.id, b.area, b.sigungu, 
+			                b.distance, b.course_info, b.time, b.schedule, b.course_title, 
+			                c.big_code, c.small_code, c.title, c.content, c.img1, c.img2, 
+			                c.img3, c.address, c.mapx, c.mapy, c.email, c.homepage, 
+			                c.phone, c.readcount, c.created_at, c.updated_at
 				    FROM   courseContents a
-				    JOIN   courses b
-				    ON     a.course_id = b.id
-				    JOIN   contents c
-				    ON     a.content_id = c.id
+				    JOIN   courses b ON a.course_id = b.id
+				    JOIN   contents c ON a.content_id = c.id
 				    WHERE  a.order_num = 1
 				    ORDER  by b.id ASC) aa
 			)
 			WHERE rn BETWEEN #{start} and #{end}
-			
-			<!-- SELECT *
-			FROM   courseContents a
-			JOIN   courses b
-			ON     a.course_id = b.id
-			JOIN   contents c
-			ON     a.content_id = c.id
-			WHERE  a.order_num = 1
-			ORDER  by b.id ASC -->
 			
 		</select>
 		
@@ -43,14 +38,36 @@
 		</select>
 		
 		<select id="noCourseDetailList" parameterType="int" resultType="Course">
+			<!-- SELECT aa.*,
+		        (SELECT content FROM areas ar
+		         WHERE aa.area = ar.area AND ar.sigungu = 999) AS area_content,
+		        (SELECT content FROM areas ar
+		         WHERE aa.area = ar.area AND aa.sigungu = ar.sigungu) AS sigungu_content,
+		        (SELECT content FROM CommonCodes cc
+		         WHERE aa.big_code = cc.big_code AND cc.small_code = 999) AS bcode_content,
+		        (SELECT content FROM CommonCodes cc
+		         WHERE aa.big_code = cc.big_code AND aa.small_code = cc.small_code) AS scode_content
+		    FROM
+		         (SELECT a.course_id, a.content_id, a.order_num, b.id, b.area, b.sigungu, 
+		                b.distance, b.course_info, b.time, b.schedule, b.course_title, 
+		                c.big_code, c.small_code, c.title, c.content, c.img1, c.img2, 
+		                c.img3, c.address, c.mapx, c.mapy, c.email, c.homepage, 
+		                c.phone, c.readcount, c.created_at, c.updated_at
+		         FROM   courseContents a
+		         JOIN   courses b ON a.course_id = b.id
+		         JOIN   contents c ON a.content_id = c.id
+		         WHERE  a.course_id = #{course_id}
+		         ORDER  by b.id ASC) aa  -->
+			
+		
 			SELECT 	a.*,cd.content cd_content
 			FROM(
 			    		SELECT cc.*, c.*, cs.course_info, cs.course_title, cs.distance, cs.time
 			    		FROM courseContents cc, contents c, courses cs
-			    		WHERE cc.course_id= #{course_id}
+			    		WHERE cc.course_id = #{course_id}
 				    	AND cc.content_id = c.id
 				    	AND cc.course_id = cs.id
-			)		a, commonCodes cd
+				)		a, commonCodes cd
 			WHERE 	a.big_code = cd.big_code
 			AND   	cd.small_code = 999
 			ORDER 	BY a.order_num ASC
@@ -63,7 +80,6 @@
 			ON     a.content_id = c.id
 			WHERE  a.course_id = #{course_id}
 			ORDER  by b.id ASC -->
-			
 		</select>
 		
 		<select id="noCourseContentList" parameterType="CourseContent" resultType="CourseContent">

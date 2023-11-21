@@ -24,17 +24,14 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public int courseCount() {
-		int courseCount = 0;
-		courseCount = cd.courseCount();
-		log.info("CourseServiceImpl courseCount courseCount ->" + courseCount);
+		int courseCount = cd.courseCount();
 		
 		return courseCount;
 	}
 
 	@Override
 	public List<Course> courseList(Course course) {
-		List<Course> courseList = null;
-		courseList = cd.courseList(course);
+		 List<Course> courseList = cd.courseList(course);
 		
 		if(courseList == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 리스트가 없습니다.");

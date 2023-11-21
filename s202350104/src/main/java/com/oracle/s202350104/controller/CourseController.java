@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,19 +30,26 @@ public class CourseController {
 	 * by.엄민용
 	 */ 
 	
+	// Course 유저 리스트 페이지로 넘어가는 logic
 	@RequestMapping(value = "course")
 	public String courses(Course course, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
 		try {
-			log.info("CourseController courses start...");
-			int courseCount = cs.courseCount();
-			log.info("CourseController courses courseCount ->" + courseCount);
+			log.info("[{}]{}:{}",transactionId, "Course", "start");
 			
+			// 코스의 전체 list의 수를 나타냄.
+			int courseCount = cs.courseCount();
+			
+			// 페이징 처리
 			Paging page = new Paging(courseCount, currentPage);
 			course.setStart(page.getStart());
 			course.setEnd(page.getEnd());
 			
+			// Course의 리스트를 출력
+			log.info("CourseController courseList start...");
 			List<Course> courseList = cs.courseList(course);
-			log.info("CourseController courses courseList.size() ->" + courseList.size());
+			log.info("courseList : " + courseList);
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
@@ -70,10 +78,12 @@ public class CourseController {
 	@RequestMapping(value = "course/detail")
 	public String courseDetail(Course course, Model model) {
 		try {
+			log.info("course" + course);
 			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
 			
 			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
+			log.info("courseDetailList : " + courseDetailList);
 			
 			model.addAttribute("courseDetail", courseDetailList);
 		} catch (Exception e) {

@@ -24,7 +24,7 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public int courseCount() {
 		int courseCount = 0;
-		log.info("CourseDaoImpl courseCount start...");
+		
 		try {
 			courseCount = session.selectOne("courseCount");
 			log.info("CourseDaoImpl courseCount courseCount ->" + courseCount);
@@ -38,7 +38,7 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public List<Course> courseList(Course course) {
 		List<Course> courseList = null;
-		log.info("CourseDaoImpl courseList start...");
+		
 		try {
 			courseList = session.selectList("courseListAll", course);
 			log.info("CourseDaoImpl courseList courseList.size() ->" + courseList.size());

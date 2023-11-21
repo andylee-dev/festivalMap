@@ -10,6 +10,8 @@ public class Course {
 	private int		id;
 	private int		big_code;
 	private int		small_code;
+	private int		area;
+	private int		sigungu;
 	private String  distance;
 	private String  course_info;
 	private String  time;
@@ -22,8 +24,6 @@ public class Course {
 	private int 	order_num;
 	
 	// contents
-	private int 	area;
-	private int 	sigungu;
 	private String  title;
 	private String  content;
 	private String  status;
@@ -47,6 +47,10 @@ public class Course {
 	private String pageNum;
 	private int    start;
 	private int    end;
+	
+	// join용
+	private String area_content;	// 시도
+	private String sigungu_content;	// 시군구
 	
 	// courseContent
 	private String cd_content;

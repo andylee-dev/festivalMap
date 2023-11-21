@@ -2,16 +2,39 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/components/header.jsp" %>
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>courseDetail</title>
+<title>CourseDetail</title>
+
+<!-- 지역 코드 넣는 코드  -->
+<script src="/js/updateArea.js"></script>
+
+<!-- script 영역 -->
+<script>
+
+	/* 대분류, 소분류 기능 js */
+	document.addEventListener("DOMContentLoaded", function() {
+		updateAreaOptions();
+		$(".area-dropdown").change(
+				function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append(
+								"<option value='0'>전체</option>");
+					}
+				});
+	});
+</script>
+
 </head>
 <body>
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	
 	<div>
 		<c:forEach var="courseDetail" items="${courseDetail }">
 			<c:if test="${courseDetail.order_num == 1}">
