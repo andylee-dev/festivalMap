@@ -201,4 +201,18 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		return result;
 	}
 
+	@Override
+	public List<RestaurantsContent> listSmallCode(int big_code) {
+		List<RestaurantsContent> listSmallCode = null;
+		
+		try {
+			log.info("RestaurantDaoImpl listSmallCode Start");
+			listSmallCode = session.selectList("joListSmallCode", big_code);
+			log.info("RestaurantDaoImpl listSmallCode.size() -> " + listSmallCode.size()); 
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl listSmallCode Exception ->" + e.getMessage());
+		}
+		return listSmallCode;
+	}
+	
 }

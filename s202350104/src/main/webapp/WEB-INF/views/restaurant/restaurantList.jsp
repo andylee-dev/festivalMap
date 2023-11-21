@@ -50,7 +50,7 @@
 			<form id="restaurantSearch" action="restaurantSearch">
 			<div class="container p-0 keyword_title_custom">
 			<div class="co1 title_div">
-						F E S T I V A L!</div>
+						R E S T A U R A N T!</div>
 			<div class="co1 text_div">
 				<h4><strong>어느 맛집에서 먹어볼까요~♫</strong></h4>
 			</div>
@@ -78,14 +78,10 @@
 				<div class="col d-flex justify-content-center">
 					<select name="small_code" id="small_code" class="form-select text-center border-3 select_text_custom" 
 							aria-label="Default select example">
-						<option selected>테마 선택</option>
-						<option value="1">한식</option>
-						<option value="2">양식</option>
-						<option value="3">일식</option>
-						<option value="4">중식</option>
-						<option value="5">이색음식점</option>
-						<option value="6">카페</option>
-						<option value="7">클럽</option>
+							<option value="999">테마 선택</option>
+							<c:forEach var="smallCode" items="${listSmallCode}">
+								<option value="${smallCode.small_code}">${smallCode.content}</option>
+							</c:forEach>	 	
 					</select>
 				</div>
 				</div>		
@@ -96,32 +92,32 @@
 			<hr class="container p-0 hr_custom">	
 	
 			<!-- 목록 영역 -->	                           
-	        <div class="album py-5 bg-body-tertiary">
-	            <div class="container">
-	               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+	        <div class="container p-0 list_custom">
+	        	<c:if test="${listRestaurant.size() == 0}">해당하는 식당 정보가 없습니다.</c:if>
+	            <div class="row row-cols-3 g-2">
 	                  <c:forEach var="restaurant" items="${listRestaurant}">
-	                     <div class="col">
-	                        <div class="card app-card">
-	                           <div class="app-tag-container" style="position: relative;">
-	                                <div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
-	                               	<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
-	                               </div>
-	                               <a href="restaurant/detail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">
-	                             <img src="${restaurant.img1}" class="app-card-img-top" alt="${restaurant.title}이미지"></a>
-	                             </div>
-	                             <div class="card-body app-card-body">
-	                               <p class="app-card-text"">
-	                         		     음식점명 : ${restaurant.title} <br>
-	                                  <span style="color: #FF4379;">추천메뉴 : ${restaurant.first_menu}</span><br>
-	                                  <span style="font-weight: normal;">소개  : ${restaurant.content}</span>
-	                               </p>
-	                             </div>   
+	                    <div class="col d-flex justify-content-center">
+	                        <div class="card card_custom border-0">
+	                           <div class="tag_custom">
+									<div class="tag_custom2">
+										<p class="tag_p">#지역태그</p>
+								</div>
+	                          	<a href="restaurant/detail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">
+	                            	<img src="${restaurant.img1}" class="app-card-img-top" alt="${restaurant.title}이미지"></a>
+	                          </div>
+	                          
+	                          
+	                          <div class="card-body">
+	                          <p class="card-text title_p">${restaurant.title}</p>   
+	                          <p class="card-text period_p">${restaurant.first_menu}</p>
+	                          <p class="card-text contet_p">${restaurant.content}</p>
+	                          </div>   
 	                        </div>
 	                     </div>            
 	                  </c:forEach>
 	               </div>
 	            </div>      
-	         </div>
+	         
 	         
 	         <!-- 페이징 처리 -->
 	         <div align="center">

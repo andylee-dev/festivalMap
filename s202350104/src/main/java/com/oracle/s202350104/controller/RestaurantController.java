@@ -48,17 +48,21 @@ public class RestaurantController {
 			log.info("[{}]{}:{}", transactionId, "restaurant", "start");
 			int totalRestaurant = rs.totalRestaurant();
 			int path = 0;
+			int big_code = 12;
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 			List<Areas> listAreas = as.listAreas();
+			
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("path", path);
 			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listSmallCode", listSmallCode);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
 			model.addAttribute("currentPage", currentPage);

@@ -127,4 +127,15 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return result;
 	}
 
+	@Override
+	public List<RestaurantsContent> listSmallCode(int big_code) {
+		List<RestaurantsContent> listSmallCode = null;
+		listSmallCode = rd.listSmallCode(big_code);
+		
+		if(listSmallCode == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "small_code 리스트가 존재하지 않습니다");
+		}
+		return listSmallCode;
+	}
+
 }
