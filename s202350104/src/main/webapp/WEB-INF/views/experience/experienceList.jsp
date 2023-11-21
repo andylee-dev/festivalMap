@@ -10,7 +10,42 @@
 <meta charset="UTF-8">
 <title>체험정보2211</title>
 
+<style type="text/css">
+	.pageblock {
+		text-align: center;
+	}
+</style>
+
+<!-- 지역 코드 넣는 코드  Start-->
+<script src="/js/updateArea.js"></script>
+
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		updateAreaOptions();
+		$(".area-dropdown").change(
+				function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append(
+								"<option value='0'>전체</option>");
+					}
+				});
+	});
+	
+	 	
+	// 서치이미지를 클릭할 때 폼을 제출하는 함수
+	$(document).ready(function () {
+    	$("#searchIcon").click(function () {
+       		$("#").submit();
+    	});
+	});
+	
+</script>
+<!-- 지역 코드 넣는 코드  End-->
 </head>
+
 <body>
 	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	 <main>
@@ -25,7 +60,61 @@
 			</c:forEach>
 			<!-- HeaderBanner end -->
 		</div>
-		<div class="border p-3 m-3">
+		
+		<!-- 상단 분홍색 영역 -->
+		<div class="container p-0 top_custom"></div>
+
+		<!-- keyword, title 영역 -->	
+		<div class="container p-0 keyword_title_custom">
+			<div class="co1 title_div">
+						F E S T I V A L!</div>
+			<div class="co1 text_div">
+				<h4><strong>어느 체험으로 즐겨볼까요~♫</strong></h4>
+			</div>
+			<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 체험의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
+			<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" />
+		</div>
+		
+		<!-- 경계선 표현 -->
+		<hr class="container p-0 hr_custom">	
+			
+		<!-- select 영역 -->
+		<div class="container p-0 select_custom">
+			<div class="row g-2 text-center">
+				<div class="col d-flex justify-content-center">
+					<select class="form-select text-center border-3 select_text_custom area-dropdown" 
+							aria-label="Default select example" name="area">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
+							aria-label="Default select example" name="sigungu">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
+						<option selected>진행 기간 선택</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select text-center border-3 select_text_custom" aria-label="Default select example">
+						<option selected>진행 여부 선택</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
+			</div>		
+		</div>	
+		
+		<!-- 경계선 표현 -->
+		<hr class="container p-0 hr_custom">	
+			
+		
+		<%-- <div class="border p-3 m-3">
 						<form action="experience1" method="get">
 							<input type="text" name="keyword" placeholder="체험이름을 입력하세요">
 							<button type="submit" class="btn btn-outline-secondary">체험이름검색</button>
@@ -44,7 +133,8 @@
 								</c:forEach>
 							</select>
 						</form>
-				</div>
+				</div> --%>
+				
 		<div class="album py-5 bg-body-tertiary">		
 	 		<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
