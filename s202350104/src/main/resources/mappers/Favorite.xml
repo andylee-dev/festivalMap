@@ -106,8 +106,8 @@
     
     <update id="joUpdateFavorite" parameterType="Favorite">
 		UPDATE favorite
-		SET    create_at = #{create_at}
-		WHERE  user_id = #{user_id}
+		SET    create_at = #{create_at)
+		WHERE  user_id = #{user_id} AND id = #{id}
 	</update>
     
 </mapper>

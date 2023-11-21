@@ -168,17 +168,17 @@ h2 {
 							        <div class="form-row d-flex justify-content-between">
 							            <div class="col-md-6 mb-3 px-2">
 							                <label for="name" class="form-label">이름</label>
-							                 <input type="text" class="form-control form-control-lg form-input" id="name" value="${favoriteDetail.name}" disabled>
+							                 <input type="text" class="form-control form-control-lg form-input" id="name" name="name" value="${favoriteDetail.name}" disabled>
 							            </div>								
 							            <div class="col-md-6 mb-3 px-2">
 							                <label for="id" class="form-label">콘텐츠ID</label>
-							                <input type="text" class="form-control form-control-lg form-input" id="id" value="${favoriteDetail.id}" disabled>
+							                <input type="text" class="form-control form-control-lg form-input" id="id" name="id" value="${favoriteDetail.id}" disabled>
 							            </div>								
 							        </div>
 							        <div class="form-row">
 							            <div class="mb-3 px-2">
 							                <label for="create_at" class="form-label">찜한날짜</label>
-							                <input type="date" class="form-control form-control-lg form-input" id="date" value="${favoriteDetail.create_at}" disabled>
+							                <input type="date" class="form-control form-control-lg form-input" id="date" name="create_at" value="${favoriteDetail.create_at}" disabled>
 							            </div>								
 							        </div>		
 							        <div class="form-row d-flex justify-content-between">

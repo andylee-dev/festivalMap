@@ -10,6 +10,23 @@
 		<title>Restaurant content</title>
 		<%-- <%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%> --%>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
+		<script type="text/javascript">
+
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value='0'>시군구</option>");
+					}
+				});
+			});
+			
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -32,7 +49,7 @@
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 								<div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
-						              <option value="s_title" selected>전체</option>
+						              <option value="s_title" selected>음식점명</option>
 					              </select>
 				                </div>
 				                <div class="col-5 mx-2">
@@ -113,11 +130,12 @@
 								<th scope="col">분류</th>
 								<th scope="col">음식점명</th>
 								<th scope="col">주소</th>
-								<th scope="col">메뉴</th>
+								<th scope="col">대표메뉴</th>
+								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
-								<th scope="col">진행상황</th>
+								<th scope="col">승인여부</th>
 								<th scope="col">관리</th>
-								<th scope="col">삭제여부</th>
+								<th scope="col">게시여부</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -129,13 +147,14 @@
 							  <!-- 	<td><a href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">${restaurant.title}</a></td> -->
 									<td>${restaurant.title}</td>
 									<td>${restaurant.address}</td>
-									<td>${restaurant.first_menu}</td>
+									<td>${restaurant.first_menu.split(',')[0]}</td>
+									<td></td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
 						 			<!-- <c:if test="${restaurant.status == 0 }">대&emsp;기</c:if>
 										<c:if test="${restaurant.status == 1 }">완&emsp;료</c:if> -->
-										<c:if test="${restaurant.status == 0 }">대기</c:if>
-										<c:if test="${restaurant.status == 1 }">완료</c:if> 
+										<c:if test="${restaurant.status == 0 }">승인대기</c:if>
+										<c:if test="${restaurant.status == 1 }">승인완료</c:if> 
 									</td>
 									<td><a class="detail-btn" 
 									href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">관리</a></td>
@@ -154,7 +173,10 @@
 										</c:choose>
 										</c:if></td> -->
 										
-									<td><c:if test="${restaurant.is_deleted ==1 }">Y</c:if></td>			
+									<td>
+										<c:if test="${restaurant.is_deleted ==0 }">N</c:if>								 	
+										<c:if test="${restaurant.is_deleted ==1 }">Y</c:if>
+									</td>			
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

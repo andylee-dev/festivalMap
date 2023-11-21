@@ -54,4 +54,8 @@ public class RestaurantsContent {
 	private String area_content;
 	private String sigungu_content;
 	
+	// 검색용
+	private String searchType;
+	private String keyword;
+	
 }
