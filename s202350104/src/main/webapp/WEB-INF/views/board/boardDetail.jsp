@@ -41,6 +41,28 @@
 	    });
 	}
 	
+	function checkUserIdAndNavigate() {
+	    // userId 값 가져오기
+	    var userId = ${userId};
+	
+	    // userId가 0인 경우 알림창 띄우기
+	    if (userId == 0) {
+	        swal({
+	            title: "로그인 후 이용해주세요.",
+	            text: "회원이 아니시면 가입 후 이용해주세요.",
+	            icon: "warning",
+            }).then((confirmed) => {
+                // 'OK' 누르면 로그인 화면으로 이동
+                if (confirmed) {
+                    location.href = '../login';
+                }
+            });
+        } else {
+            // userId가 0보다 큰 경우 폼 실행
+            document.forms["commentForm"].submit(); // Assuming your form has the id "commentForm"
+        }
+	}	
+	
 	<!-- 게시판 신고기능 -송환 -->
 	function report(boardId) {
 	    window.open("reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
@@ -137,6 +159,11 @@
 		<div class="container p-3">
 			<div class="row row-cols-4 detail-btn-custom">
 				<c:choose>
+					<c:when test="${userId eq 0 }">
+						<div class="col-md-1">
+							<button class="btn" onclick="closeAndRedirect(${board.small_code })">목록</button>
+						</div>					
+					</c:when>
 					<c:when test="${board.small_code eq 3 }">
 						<div class="col-md-1">
 							<button class="btn" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>
@@ -153,7 +180,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="col-md-1 ">
+						<div class="col-md-1">
 							<button class="btn" onclick="closeAndRedirect(${board.small_code })">목록</button>
 						</div>
 					</c:otherwise>
@@ -164,7 +191,7 @@
 		<c:choose>
 			<c:when test="${board.small_code eq 3 }">
 				<!-- 댓글 출력 -->
-				<div class="container p-3 comment-custom border">
+				<div class="container p-3 comment-custom">
 					<div class="row row-cols-1 align-items-start">
 						<div class="col">
 							<!-- input 영역 -->
@@ -181,16 +208,23 @@
 
 									<div class="row row-cols-3 p-0">
 										<div class="form-group col comment-title">
-											<p>댓글작성자닉네임</p>
+											<c:choose>
+												<c:when test="${loginUser.nickname != null}">
+													<p>${loginUser.nickname }</p>
+												</c:when>
+												<c:otherwise>
+													<p>로그인 필요</p>
+												</c:otherwise>
+											</c:choose>											
 										</div>
 
 										<div class="form-group col comment-input">
 											<input type="text" class="form-control" name="content"
-												   required="required" placeholder="댓글을 입력하세요.">
+												   placeholder="댓글을 입력하세요.">
 										</div>
 
 										<div class="form-group col comment-btn">
-											<button type="submit" class="btn btn_detail_custom">등록</button>
+											<button type="submit" class="btn btn_detail_custom" onclick="checkUserIdAndNavigate()">등록</button>
 										</div>
 									</div>
 								</form>
@@ -203,7 +237,7 @@
 								<c:forEach var="comments" items="${comment }">
 									<div class="row row-cols-2 align-items-start">
 										<div class="col comments-nickname">
-											<p>${comments.name }</p>
+											<p>${comments.nickname }</p>
 										</div>
 
 										<div class="col comments-content">

@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>PhotoBoard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 	function showPopUp(id, userId) {
@@ -29,6 +31,28 @@
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "hello popup", windowStatus);
 	}
+	
+	function checkUserIdAndNavigate() {
+	    // userId 값 가져오기
+	    var userId = ${userId};
+	
+	    // userId가 0인 경우 알림창 띄우기
+	    if (userId == 0) {
+	        swal({
+	            title: "로그인 후 이용해주세요.",
+	            text: "회원이 아니시면 가입 후 이용해주세요.",
+	            icon: "warning",
+	        }).then((confirmed) => {
+	            // 'OK' 누르면 로그인 화면으로 이동
+	            if (confirmed) {
+	                location.href = '../login';
+	            }
+	        });
+	    } else {
+	        // userId가 0보다 큰 경우 페이지 이동
+	        location.href = 'integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode}&smallCode=${smallCode}';
+	    }
+	}	
 </script>
 </head>
 <body>
@@ -116,7 +140,7 @@
 						<div class="col keyword_div_custom">
 							<input class="form-control keyword_custom" type="text" placeholder="&nbsp;키워드를 검색해보세요."> 
 								<img src="../image/icon_search1.png" alt="test" />
-							<button class="btn btn_custom" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>
+							<button class="btn btn_custom" onclick="checkUserIdAndNavigate()">글쓰기</button>
 						</div>
 					</c:when>
 				</c:choose>

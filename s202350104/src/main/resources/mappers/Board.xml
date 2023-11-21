@@ -229,7 +229,7 @@
 	</update>
 	
 	<select id="commentDetail" parameterType="int" resultType="Board">
-		select a.id, b.name, a.title, a.content, a.comment_group_id, a.comment_step, a.comment_indent
+		select a.id, b.name, b.nickname, a.title, a.content, a.comment_group_id, a.comment_step, a.comment_indent
 		from board a, users b
 		where a.user_id = b.id
 		and a.comment_group_id = #{id}

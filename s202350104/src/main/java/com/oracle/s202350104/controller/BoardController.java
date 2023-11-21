@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ import com.oracle.s202350104.model.Paging;
 import com.oracle.s202350104.model.PhotoPaging;
 import com.oracle.s202350104.model.Report;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ReportService;
@@ -47,8 +49,7 @@ public class BoardController {
 	
 	//게시판 신고기능 위해 service 추가
 	private final ReportService res;
-	private final UserService us;
-	
+	private final UserService us;	
 	
 	/*
 	 *  smallCode 초기값 강제 고정, 향후 리팩토링 예정
@@ -62,7 +63,9 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 1;
-		int userId = 1001;
+		
+		int userId = us.getLoggedInId();
+		log.info("BoardController noticBoardList userId : {} ", userId);
 		
 		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -118,7 +121,9 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 2;
-		int userId = 1001;
+		
+		int userId = us.getLoggedInId();
+		log.info("BoardController magazinBoardList userId : {} ", userId);
 		
 		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -164,8 +169,10 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 3;
-		int userId = 1001;
 		
+		int userId = us.getLoggedInId();		
+		log.info("BoardController freeBoardList userId : {} ", userId);
+
 		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(smallCode);
 		
@@ -210,7 +217,9 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 4;
-		int userId = 1001;
+		
+		int userId = us.getLoggedInId();
+		log.info("BoardController freeBoardList userId : {} ", userId);
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -256,7 +265,9 @@ public class BoardController {
 		int bigCode = 0;
 		// 분류 code 강제 지정
 		int smallCode = 5;
-		int userId = 1001;
+
+		int userId = us.getLoggedInId();
+		log.info("BoardController freeBoardList userId : {} ", userId);
 		
 		// smallCode를 이용해 countBoard를 설정
 		int countBoard = boardService.boardCount(smallCode);
@@ -340,6 +351,17 @@ public class BoardController {
 
 		log.info("BoardController boardContent boardId : {} ", id);
 		log.info("BoardController boardContent userId : {} ", userId);
+		
+		Optional<Users> loginUser = null;
+		
+		if(userId > 0) {
+			loginUser = us.getUserById(userId);
+			log.info("BoardController boardContent loginUser : {} ", loginUser);
+			
+			if(loginUser.isPresent()) {
+				model.addAttribute("loginUser", loginUser.get());				
+			}
+		} 		
 
 		Board boards = boardService.boardDetail(id);
 		List<Tags> hashTags = tagsService.boardTagDetail(id);
