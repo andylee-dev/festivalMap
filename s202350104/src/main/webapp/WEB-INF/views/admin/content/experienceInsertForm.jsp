@@ -9,31 +9,22 @@
 		<meta charset="UTF-8">
 		<title>experience updateForm</title>
 		<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
+		<script src="/js/updateArea.js"></script>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-			function getSigungu(pArea){
-				var pSigungu = ${experience.sigungu}
-				$.ajax(
-						{
-							url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
-							dataType:'json',
-							success:function(areas) {
-								$('#sigungu_select option').remove();
-								str = "<option value='999'>전체</option>";
-								$(areas).each(
-									function() {
-										if(this.sigungu != 999 && this.content != null) {
-											strOption = "<option value='"+this.sigungu+"' ${"+this.sigungu+" == "+pSigungu+"? 'selected':''}>"+this.content+"</option>";
-											str += strOption;
-										}
-									}		
-								)
-								$('#sigungu_select').append(str);
-							}
-						}		
-				)
-			}
+		document.addEventListener("DOMContentLoaded", (event) => {
 			
+			<!-- 지역 코드 넣는 코드  Start-->	
+			updateAreaOptions();
+			$(".area-dropdown").change(function() {
+				const selectedArea = $(this).val();
+				if (selectedArea) {
+					updateSigunguOptions(selectedArea);
+				} else {
+					$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+				}
+			});
+		});	
 		</script>
 		<style type="text/css">
 		
@@ -135,9 +126,11 @@
 		</style>
 	</head>
 	<body>
-<div class="container-fluid">
+	<div class="container-fluid">
 		<div class="row">
-			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+			<c:if test="${role == 1 }">
+				<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
+			</c:if>
 		<main class="col-10 p-0">
 			<div class="admin-header-container">
 				<div class="container m-4">
@@ -179,24 +172,10 @@
 							<label for="content" class="form-label ">지역(필수 선택)</label>
 								<div class="row">
 								    <div class="col-2">
-								        <select class="form-select" id="area" name="area" onchange="getSigungu(this.value)" required="required">
-								            <option value="">전체</option>
-								            <c:forEach var="areas" items="${listAreas}">
-								                <c:if test="${areas.sigungu == 999}">
-								                    <option value="${areas.area}" ${areas.area == experience.area? 'selected':''}>${areas.content}</option>
-								                </c:if>
-								            </c:forEach>
-								        </select>
+								        <select name="area" class="form-select area-dropdown"></select>
 								    </div>
 								    <div class="col-2">
-								        <select class="form-select" id="sigungu_select" name="sigungu" required="required">
-								            <option value="999">전체</option>
-								            <c:forEach var="areas" items="${listSigungu}">
-								                <c:if test="${areas.sigungu != 999 && areas.sigungu != null}">
-								                    <option value="${areas.sigungu}" ${areas.sigungu == experience.sigungu? 'selected':''}>${areas.content}</option>
-								                </c:if>
-								            </c:forEach>
-								        </select>
+								       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
 								    </div>
 								    <div class="col-8">
 								    <input type="text" class="form-control" name="address" id="address" value="${experience.address}" placeholder="상세주소 입력해주세요">

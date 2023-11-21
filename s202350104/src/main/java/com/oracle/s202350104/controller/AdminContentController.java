@@ -1144,12 +1144,13 @@ import lombok.RequiredArgsConstructor;
 		@RequestMapping(value = "experienceInsertForm")
 		public String experienceInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();
+			int role = us.getLoggedInUserRole();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsertForm", "start");
 				List<CommonCodes> listCodes = cs.listCommonCode();
-				List<Areas> listAreas = ars.listAreas();
+				
 				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("role", role);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin experienceInsertForm", e.getMessage());
 			} finally {
