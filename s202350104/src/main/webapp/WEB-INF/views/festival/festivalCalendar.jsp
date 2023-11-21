@@ -26,7 +26,7 @@
 	background-color: #EEFFC2;
 	color: black;
 	}
-	.fc-day-sun a {
+	.fc-day-sun a { 
  	 color: red;
   	text-decoration: none;
 	}
@@ -48,20 +48,32 @@
         initialView: 'dayGridMonth',
         navLinks: true,
         selectable: true, // 달력 일자 드래그 설정가능
-        editable: true,  // 수정 가능
-        droppable: true,
         dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
         locale: 'ko', // 한국어 설정
+        dayCellContent: function(info) { //일 삭제
+        	var number = document.createElement("a");
+        	number.classList.add("fc-daygrid-day-number");
+        	number.innerHTML = info.dayNumberText.replace("일","");
+        	if(info.view.type ==="dayGridMonth") {
+        		return {
+        			html: number.outerHTML
+        		};
+        	}
+        	return {
+        		domNodes: []
+        	};
+        },
         events: [
-        				<%List<FestivalsContent> listFestivals = (List<FestivalsContent>)request.getAttribute("listFestivals");%>
-                		<%if (listFestivals != null) {%>
-                		<%for (FestivalsContent fs : listFestivals) {%>
+        			<%List<FestivalsContent> listFestivals = (List<FestivalsContent>)request.getAttribute("listFestivals");%>
+                	<%if (listFestivals != null) {%>
+                	<%for (FestivalsContent fs : listFestivals) {%>
                	 		{
                 			title : '<%=fs.getTitle()%>',
                     		start : '<%=fs.getStart_date()%>',
                     		end : '<%=fs.getEnd_date()%>',
                     		color : "#EEFFC2",
-                            textColor : "#000000"
+                            textColor : "#000000",
+                            url: "${pageContext.request.contextPath}/festival/detail?contentId="+<%=fs.getContent_id()%> // 축제명 클릭시 상세페이지 이동
                	 		},
     				<%}
     			}%>
