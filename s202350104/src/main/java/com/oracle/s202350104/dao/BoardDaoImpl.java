@@ -32,8 +32,11 @@ public class BoardDaoImpl implements BoardDao {
 	
 	@Override
 	public int boardCount2(Board board) {
-		int countBoardResult = session.selectOne("boardCount2", board);
+		
+		int countBoardResult = session.selectOne("reviewBoardCount", board);
+		
 		log.info("BoardDao boardCount2 countBoardResult : {}", countBoardResult);
+		
 		return countBoardResult;
 	}
 
@@ -241,7 +244,9 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 			log.info("BoardDao boardDelete Start!!");
 			
-			deleteBoard = session.delete("boardDelete", boardId);
+			//deleteBoard = session.delete("boardDelete", boardId);
+			
+			deleteBoard = session.update("boardDeleteNew", boardId);
 		} catch (Exception e) {
 			log.error("BoardDao boardDelete Exception : {}", e.getMessage());
 		} finally {

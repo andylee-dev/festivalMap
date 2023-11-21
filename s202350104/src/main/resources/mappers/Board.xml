@@ -9,9 +9,10 @@
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = #{smallCode}
+		and a.comment_indent = 0
 	</select>
 	
-	<select id="boardCount2" parameterType="Board" resultType="int">
+	<select id="reviewBoardCount" parameterType="Board" resultType="int">
 		select count(*)
 		from board a 
 		join users b
@@ -252,5 +253,11 @@
 		)
 		where rn between #{start} and #{end}		
 	</select>	
+	
+	<update id="boardDeleteNew" parameterType="int">
+		update board 
+		set is_deleted = 1
+		where id = #{id} 
+	</update>
 	
 </mapper>
