@@ -84,7 +84,8 @@
           	},
           	eventClick: function(info) {
               	// 출석체크 이벤트를 클릭했을 때 도장을 찍었다는 메시지를 표시합니다.
-              	alert('체크: ' + info.event.title + ', 날짜: ' + info.event.start);
+              	/* alert('체크: ' + info.event.title + ', 날짜: ' + info.event.start); */
+          		alert(info.event.title + ' 상세페이지로 이동 합니다.'); 
           	}
        		});
        	
