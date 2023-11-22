@@ -152,8 +152,8 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
 				
 				// 폼에 입력된 date 정보를 DB에 저장된 형식으로 변환
-				festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
-				festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
+				// festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
+			    // festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
 				
 				// festival을 insert한 결과를 result에 저장
 				int result = fs.insertFestival(festival);
@@ -187,23 +187,23 @@ import lombok.RequiredArgsConstructor;
 				// 소분류를 수정할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
 
-				// 시작일 보여주기 위해 형식 변환
-				String startdate = "";
-				if(festival.getStart_date() != null) {
-					String o_startdate = festival.getStart_date();
-					startdate = o_startdate.substring(0,4)+"-"+o_startdate.substring(4,6)+"-"+o_startdate.substring(6,8);
-					festival.setStart_date(startdate);
-					log.info("startdate=>"+startdate);
-				}
-				
-				// 종료일 보여주기 위해 형식 변환
-				String enddate = "";
-				if(festival.getEnd_date() != null) {
-					String o_enddate = festival.getEnd_date();
-					enddate = o_enddate.substring(0,4)+"-"+o_enddate.substring(4,6)+"-"+o_enddate.substring(6,8);
-					festival.setEnd_date(enddate);
-					log.info("enddate=>"+enddate);
-				}
+//				// 시작일 보여주기 위해 형식 변환
+//				String startdate = "";
+//				if(festival.getStart_date() != null) {
+//					String o_startdate = festival.getStart_date();
+//					startdate = o_startdate.substring(0,4)+"-"+o_startdate.substring(4,6)+"-"+o_startdate.substring(6,8);
+//					festival.setStart_date(startdate);
+//					log.info("startdate=>"+startdate);
+//				}
+//				
+//				// 종료일 보여주기 위해 형식 변환
+//				String enddate = "";
+//				if(festival.getEnd_date() != null) {
+//					String o_enddate = festival.getEnd_date();
+//					enddate = o_enddate.substring(0,4)+"-"+o_enddate.substring(4,6)+"-"+o_enddate.substring(6,8);
+//					festival.setEnd_date(enddate);
+//					log.info("enddate=>"+enddate);
+//				}
 				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("currentPage", currentPage);

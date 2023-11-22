@@ -33,8 +33,8 @@ public class FestivalsContent {
 	// Festivals 컬럼
 	private int    content_id;
 	private String hours;
-	private String start_date;
-	private String end_date;
+	private Date   start_date;
+	private Date   end_date;
 	private String sponsor;
 	private String eventplace;
 	private String cost;

@@ -74,7 +74,7 @@
 						<input type="hidden" name="target_id" value="${festival.content_id}">
 						<input type="hidden" name="big_code" value="${festival.big_code}">
 						<input type="hidden" name="small_code" value="${festival.small_code}">
-						
+						<input type="text"   name="title" placeholder="제목을 입력해주세요.">
 						<textarea rows="20" cols="100" id="content" name="content" placeholder="반려 사유를 입력해주세요."></textarea>
 						<div>
 							<button type="button" onclick="submitForm();">반려사유 등록 완료</button>
