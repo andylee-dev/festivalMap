@@ -265,8 +265,8 @@
 }
 
 .homeDetail-basic-img-custom {
-	width: 420px;
-	height: 660px;
+	width: 510px;
+	height: 640px;
 	background-color: #EAEAEA;
 	display: flex;
 	align-items: center;
@@ -277,13 +277,13 @@
 }
 
 .homeDetail-basic-img-custom img {
-	width: 420px;
-	height: 660px;
+	width: 510px;
+	height: 640px;
 }
 
 .homeDetail-basic-sideImg-custom {
 	width: 220px;
-	height: 660px;
+	height: 640px;
 /* 	background-color: #EAEAEA; */
 	display: flex;
 	align-items: center;
