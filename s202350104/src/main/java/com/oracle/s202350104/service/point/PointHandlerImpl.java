@@ -1,7 +1,9 @@
 package com.oracle.s202350104.service.point;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
@@ -20,14 +22,16 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class PointHandlerImpl implements PointHandler {
-	private final PointService pointService;
-	private Map<Integer, BiConsumer<Integer, Integer>> handlerMap;
+    private final PointService pointService;
+    private Map<Integer, BiConsumer<Integer, Integer>> handlerMap;
+    private LocalDateTime lastLoginTime; // 마지막 로그인 시간 추적
 
     @PostConstruct
     public void init() {
         handlerMap = new HashMap<>();
         handlerMap.put(9, this::handleLogin);
         handlerMap.put(2, this::handleReview);
+        lastLoginTime = LocalDateTime.now().minusDays(1); // 초기값으로 어제 시간 설정
     }
 
     private void handleLogin(int userId, int pointId) {
@@ -40,24 +44,36 @@ public class PointHandlerImpl implements PointHandler {
             log.error("로그인 처리 중 오류 발생: {}", e.getMessage());
         }
     }
+
     private void handleReview(int userId, int pointId) {
-        // 리뷰 이벤트에 대한 로직
         pointService.addPointAndHistory(userId, pointId);
     }
+
     @Override
     public void handle(int userId, int pointId) {
-		UUID transactionId = UUID.randomUUID();
-		try {
-			log.info("[{}]{}:{}",transactionId, "PointHandlerImpl", "start");        
-			if (handlerMap.containsKey(pointId)) {
-	            handlerMap.get(pointId).accept(userId, pointId);
-	        } else {
-	            throw new IllegalArgumentException("Invalid pointId: " + pointId);
-	        }
-		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "PointHandlerImpl", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}",transactionId, "PointHandlerImpl", "end");
-		}		
+        UUID transactionId = UUID.randomUUID();
+        try {
+            log.info("[{}]{}:{}", transactionId, "PointHandlerImpl", "start");
+            
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDate currentDate = currentDateTime.toLocalDate();
+            LocalTime currentTime = currentDateTime.toLocalTime();
+            
+            // 오늘 첫 로그인 시간인 경우에만 handleLogin 호출
+            if (currentDate.isAfter(lastLoginTime.toLocalDate()) || currentTime.isBefore(LocalTime.NOON)) {
+                if (handlerMap.containsKey(pointId)) {
+                    handlerMap.get(pointId).accept(userId, pointId);
+                    
+                    // 마지막 로그인 시간 갱신
+                    lastLoginTime = currentDateTime;
+                } else {
+                    throw new IllegalArgumentException("Invalid pointId: " + pointId);
+                }
+            }
+        } catch (Exception e) {
+            log.error("[{}]{}:{}", transactionId, "PointHandlerImpl", e.getMessage());
+        } finally {
+            log.info("[{}]{}:{}", transactionId, "PointHandlerImpl", "end");
+        }
     }
 }
