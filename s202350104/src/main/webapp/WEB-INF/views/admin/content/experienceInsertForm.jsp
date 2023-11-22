@@ -246,22 +246,22 @@
 						  
 						  <label for="facilities" class="form-label">부대시설</label><br>
 						<div class="col-12 d-flex justify-content-between">
-						  	<div class="col-3 form-check mx-3">
+						  	<div class="col-3 form-check">
 								<input class="form-check-input" type="checkbox" name="is_credit"
 								id="is_credit" value="1" ${experience.is_credit == 1?"checked":""}> 
 								<label class="form-check-label" for="is_credit">카드여부</label>
 							</div>
-							<div class="col-3 form-check mx-3">
+							<div class="col-3 form-check">
 								<input class="form-check-input" type="checkbox" name="is_pet"
 								id="is_pet" value="1" ${experience.is_pet == 1?"checked":""}> 
 								<label class="form-check-label" for="is_pet">반려동물</label>
 							</div>
-							<div class="col-3 form-check mx-3">
+							<div class="col-3 form-check">
 							<input class="form-check-input" type="checkbox" name="is_parking"
 								id="is_parking" value="1" ${experience.is_parking == 1?"checked":""}> 
 								<label class="form-check-label" for="is_parking">주차시설</label>
 							</div>
-							<div class="col-3 form-check mx-3">
+							<div class="col-3 form-check">
 							<input class="form-check-input" type="checkbox" name="is_stroller"
 								id="is_stroller" value="1" ${experience.is_stroller == 1?"checked":""}> 
 								<label class="form-check-label" for="is_stroller">유모차대여</label>

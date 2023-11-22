@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/components/header.jsp" %>
-
+<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,8 +47,8 @@
 
 <body>
 	
-	 <%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	 <main>
+
+
 		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
 			<!-- HeaderBanner by.엄민용 -->
 			<c:forEach var="headers" items="${bannerHeader }">
@@ -62,46 +62,44 @@
 		</div>
 		
 		<!-- 상단 분홍색 영역 -->
-		<div class="container p-0 top_custom"></div>
+		<div class="container homeList-top-custom"></div>
 		
 		<div>
 			<form id="experience1" action="experience1" method="get">
-				
+				<input type="hidden" name="big_code" value="15">
 				<!-- keyword, title 영역 -->	
-				<div class="container p-0 keyword_title_custom">
+				<div class="container homeCommon-keyword-title-custom">
 					
-					<input type="hidden" name="big_code" value="15">
-					<div class="co1 title_div">
+					<div class="co1 title-div">
 								EXPERIENCE!</div>
-					<div class="co1 text_div">
+					<div class="co1 text-div">
 						<h4><strong>어느 체험으로 즐겨볼까요~♫</strong></h4>
 					</div>
-					<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 체험의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
-					<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
+					<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 체험의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
+					<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 				
 				</div>
 			
 				<!-- 경계선 표현 -->
 				<div>
-				<hr class="container p-0 hr_custom">	
+				<hr class="container homeCommon-top-custom">	
 				</div>	
 			
 				<!-- select 영역 -->
-				<div class="container p-0 select_custom">
+				<div class="container homeCommon-select-custom">
 					<div class="row g-2 text-center">
 						<div class="col d-flex justify-content-center">
-							<select class="form-select text-center border-3 select_text_custom area-dropdown" 
+							<select class="form-select area-dropdown"" 
 									aria-label="Default select example" name="area">
 							</select>
 						</div>
 						<div class="col d-flex justify-content-center">
-							<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
+							<select class="form-select sigungu-dropdown" 
 									aria-label="Default select example" name="sigungu">
 							</select>
 						</div>
 						<div class="col d-flex justify-content-center">
-							<select class="form-select text-center border-3 select_text_custom" 
-									aria-label="Default select example" name="small_code">
+							<select class="form-select" aria-label="Default select example" name="small_code">
 								<option value="999">체험종류</option>
 									<c:forEach var="small" items="${listSmallCode}">
 										<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
@@ -114,7 +112,7 @@
 		</div>	
 		
 		<!-- 경계선 표현 -->
-		<div><hr class="container p-0 hr_custom"></div>	
+		<div><hr class="container homeCommon-top-custom"></div>	
 			
 		
 		<%-- <div class="border p-3 m-3">
@@ -138,14 +136,14 @@
 						</form>
 				</div> --%>
 				
-		<div class="container p-1 list_custom">	
+		<div class="container homeList-menu-custom">
 		<c:if test="${listExperience.size() == 0}">해당하는 체험 정보가 없습니다.</c:if>
-	 		<div class="row row-cols-3 g-2">
+	 		<div class="row row-cols-3 g-6 homeList-mdMenu-custom">
 				<c:forEach var="experience" items="${listExperience}">
 	 				<div class="col d-flex justify-content-center">
-						<div class="card card_custom border-0">
-							<div class="tag_custom">
-								<div class="tag_custom2">
+						<div class="card homeList-card-custom">
+							<div class="homeList-tag-custom">
+								<div class="homeList-tag-custom2">
 									<p class="tag_p">#지역태그</p>
 								</div>
 								<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}">
@@ -153,16 +151,68 @@
 								</a>
 							</div>							
 							<div class="card-body">
-							    <p class="card-text title_p">${experience.title}</p>
-							    <p class="card-text period_p"> 휴무일 : ${experience.rest_time}</p>
-							    <p class="card-text contet_p">${experience.content}</p>
+							    <p class="card-text title-p">${experience.title}</p>
+							    <p class="card-text period-p"> 휴무일 : ${experience.rest_time}</p>
+							    <p class="card-text contet-p">${experience.content}</p>
 							</div>
 					 	</div>
 					</div> 	
 				</c:forEach>
 			</div>
-		</div>				
-		<div align="center">
+		</div>		
+		
+	<nav aria-label="Page navigation example">		
+		<ul class="pagination">	
+			<c:choose>
+				<c:when test="${path ==0}">
+					<c:if test="${page.startPage > page.pageBlock}">
+						<li class="page-item">
+							<a href="experience?currentPage=${page.startPage-page.pageBlock}"
+					  			 class="pageblock page-link">[이전]</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<li class="page-item">
+							<a href="experience?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage}">
+						<li class="page-item">
+							<a href="experience?currentPage=${page.startPage+page.pageBlock}"
+							   class="pageblock page-link">[다음]</a></li>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${page.startPage > page.pageBlock}">
+						<li class="page-item">
+							<a href="experience1?currentPage=${page.startPage-page.pageBlock}"
+					  			 class="pageblock page-link">[이전]</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<li class="page-item">
+							<a href="experience1?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&area=${area}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage}">
+						<li class="page-item">
+							<a href="experience1?currentPage=${page.startPage+page.pageBlock}"
+							   class="pageblock page-link">[다음]</a></li>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</nav>	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<%-- <div align="center">
 					<c:if test="${page.startPage > page.pageBlock}">
 							<c:choose>
 								<c:when test="${path ==0}">
@@ -193,8 +243,11 @@
 								</c:when>
 							</c:choose>
 						</c:if>
-					</div>		
-	</main>
+					</div>	 --%>
+					
+					
+				
+
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </body>
 </html>
