@@ -26,16 +26,20 @@ public class PointHandlerImpl implements PointHandler {
     @PostConstruct
     public void init() {
         handlerMap = new HashMap<>();
-        handlerMap.put(1, this::handleLogin);
+        handlerMap.put(9, this::handleLogin);
         handlerMap.put(2, this::handleReview);
     }
 
     private void handleLogin(int userId, int pointId) {
-        // 로그인 이벤트에 대한 로직
-    	
-        pointService.addPointAndHistory(userId, pointId);
-    }
+        try {
+            log.info("사용자 ID {}가 로그인하여 포인트 ID {}에 대한 포인트를 추가했습니다.", userId, pointId);
 
+            // 포인트 추가 및 이력 기록
+            pointService.addPointAndHistory(userId, pointId);
+        } catch (Exception e) {
+            log.error("로그인 처리 중 오류 발생: {}", e.getMessage());
+        }
+    }
     private void handleReview(int userId, int pointId) {
         // 리뷰 이벤트에 대한 로직
         pointService.addPointAndHistory(userId, pointId);

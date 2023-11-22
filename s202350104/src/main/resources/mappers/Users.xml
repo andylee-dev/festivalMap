@@ -167,4 +167,5 @@
 		UPDATE users SET point = point + #{point} WHERE id = #{id}
 	</update>
 	
+	
 </mapper>

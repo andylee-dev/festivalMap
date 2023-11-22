@@ -53,18 +53,34 @@ public class PointServiceImpl implements PointService {
 		int score = pd.getPointScoreById(id);
 		return score;
 	}
+	
+	@Override
+	public Point getPointById(int id) {
+		Point point = pd.getPointById(id);
+	    if (point == null) {
+	        throw new RuntimeException("Point not found");
+	    }
+	    return point;
+	}
+	
 	@Override
     @Transactional
     public void addPointAndHistory(int userId, int pointId) {
     	log.info("addPointAndHistory");
-    	/*
+    
         // 사용자 정보를 가져오고
         Users user = ud.getUserById(userId);
+        if (user == null) {
+            log.info("User not found with ID: {}", userId);
+            throw new RuntimeException("User not found");
+        }
         // 포인트 정보를 가져옵니다.
-        Point point = pd.getPointById(pointId)
-        if(!point)
-        	throw new RuntimeException("Point not found");
-
+        Point point = pd.getPointById(pointId);
+        
+        if (point == null) {
+        log.info("Point not found with ID: {}", pointId);
+        throw new RuntimeException("Point not found");
+    	}
         // 사용자의 포인트를 증가시키고
         user.setPoint(user.getPoint() + point.getPoint());
         ud.updateUser(user);
@@ -74,8 +90,8 @@ public class PointServiceImpl implements PointService {
         pointHistory.setUser_id(userId);
         pointHistory.setPoint_id(pointId);
         phd.writePointHistory(pointHistory);
-        */
-    }	
-	
+      
+    }
+
 	
 }

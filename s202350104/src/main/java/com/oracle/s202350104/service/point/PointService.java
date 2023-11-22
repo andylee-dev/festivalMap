@@ -14,5 +14,7 @@ public interface PointService {
 	
 	int 				getPointScoreById(int id);
 
-	void addPointAndHistory(int userId, int pointId);
+	void 				addPointAndHistory(int userId, int pointId);
+
+	Point  				getPointById(int id);
 }

@@ -46,4 +46,9 @@ public class PointDaoImpl implements PointDao {
 		return session.selectOne("getPointScore", id);
 	}
 
+	@Override
+	public Point getPointById(int id) {
+		return session.selectOne("getPoint", id);
+	}
+
 }

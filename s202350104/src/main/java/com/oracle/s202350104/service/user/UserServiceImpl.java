@@ -93,9 +93,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<Users> getUserByEmail(String email) {
-		Users user = null;
-		user = ud.getUserByEmail(email);
-		return Optional.of(user);
+	    Users user = ud.getUserByEmail(email);
+	    return Optional.ofNullable(user);
 	}
 
 	@Override

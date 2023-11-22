@@ -33,5 +33,9 @@
 	<select id="getPointScore" resultType="int" parameterType="int">
 		SELECT	point FROM point WHERE id = #{id}
 	</select>
+	
+	<select id="getPoint" resultType="point" parameterType="int">
+		SELECT	point FROM point WHERE id = #{id}
+	</select>
 
 </mapper>
