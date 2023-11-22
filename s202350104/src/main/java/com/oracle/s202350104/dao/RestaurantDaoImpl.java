@@ -83,6 +83,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		List<RestaurantsContent> listSearchRestaurant = null;
 		try {
 			listSearchRestaurant = session.selectList("joListSearchRestaurant", restaurant);
+			log.info("RestaurantDaoImpl listSearchRestaurant.size() -> " + listSearchRestaurant.size());
 		} catch (Exception e) {
 			 log.info("RestaurantDaoImpl joListSearchRestaurant() Exception ->" + e.getMessage());
 		}

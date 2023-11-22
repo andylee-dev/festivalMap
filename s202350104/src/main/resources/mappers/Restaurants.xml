@@ -57,12 +57,36 @@
 	
 	<select id="joListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
 		SELECT *
-		FROM contents c, restaurants r
-		WHERE c.id = r.content_id
-		<if test = "keyword != null">
-		AND c.title like '%' || #{keyword} || '%'
-		</if> 
-		
+		FROM
+		(
+			SELECT ROWNUM rn, c.*
+			FROM 
+			(
+				SELECT *
+				FROM   contents
+				WHERE big_code = #{big_code}
+				AND   status = 1
+				AND   is_deleted = 0
+				<if test = "keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="area != 0">
+					and area = #{area}
+					<if test=" sigungu != 0">
+					and sigungu = #{sigungu}
+					</if>
+				</if>) c
+			)
+			WHERE rn BETWEEN #{start} and #{end}					
 	</select>	
 		
 		

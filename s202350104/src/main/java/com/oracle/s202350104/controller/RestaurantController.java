@@ -209,25 +209,32 @@ public class RestaurantController {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
 			int totalRestaurant = rs.conTotalRestaurant(restaurant);
 			int path 			= 1;
-			String area 		= request.getParameter("area");
-			String sigungu 		= request.getParameter("sigungu");
+			
 			String small_code   = request.getParameter("small_code");
+  			int big_code     	= restaurant.getBig_code();
+  			String keyword 		= request.getParameter("keyword");
+  			String area 		= request.getParameter("area");
+			
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
 			restaurant.setEnd(page.getEnd());
 			
+			List<Areas> listAreas = as.listAreas();
+			List<RestaurantsContent> listSmallCode        = rs.listSmallCode(big_code);
 			List<RestaurantsContent> listSearchRestaurant = rs.listSearchRestaurant(restaurant);
-			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
+			
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
-			model.addAttribute("path", path);
-			model.addAttribute("area", area);
-			model.addAttribute("sigungu", path);
-			model.addAttribute("small_code", small_code);
-			model.addAttribute("page", page);
 			model.addAttribute("listRestaurant", listSearchRestaurant);
-			// model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area", area);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
