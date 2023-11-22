@@ -129,11 +129,10 @@ public class CourseDaoImpl implements CourseDao {
 
 	@Override
 	public Course courseUpdateDetail(int id) {
-		log.info("CourseDaoImpl courseContent start...");
 		Course courseUpdateDetail = null;
 		try {
 			courseUpdateDetail = session.selectOne("noCourseContent", id);
-			log.info("CourseDaoImpl courseContent courseUpdateDetail ->" + courseUpdateDetail);
+			log.info("CourseDaoImpl courseContent courseUpdateDetail : " + courseUpdateDetail);
 			
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseContent e.getMessage() ->" + e.getMessage());

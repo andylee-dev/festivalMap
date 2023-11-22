@@ -55,7 +55,7 @@
 		//연결하고싶은url
 		const url = 'contentListAll?course_id=${course.course_id}';
 	 	
-		 //등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
 		window.open(url, "contentList popup", windowStatus);
 	}
 	
@@ -137,6 +137,7 @@
 	function makeCard(content) {
 	    // 카드를 위한 div 요소 생성
 	    const cardEl = document.createElement("div");
+	    cardEl.id = 'card'+content.id;
 	    cardEl.className = "card course-card";
 	    cardEl.style = "width: 208px; height: 340px; margin: 20px; padding: 18px;";
 
@@ -154,7 +155,14 @@
 
 	    deleteIconContainerEl.appendChild(deleteIconEl);
 	    cardEl.appendChild(deleteIconContainerEl);
-
+		
+	 	// <input> 요소 추가
+	    const contentIdInputEl = document.createElement("input");
+	    contentIdInputEl.type = "hidden";
+	    contentIdInputEl.id = "content_id";
+	    contentIdInputEl.value = content.id;
+	    cardEl.appendChild(contentIdInputEl);
+	    
 	    // 카드 콘텐츠를 위한 요소 생성
 	    const titleEl = document.createElement("h5");
 	    titleEl.className = "card-title card-font-title";
@@ -562,24 +570,6 @@
 										</div>
 									</c:forEach>
 								</div>
-									
-									
-								 <%-- <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-                                     <li  class="pagination justify-content-center">
-                                        <c:choose>
-                                        <c:when test="${oldBook.ob_status  eq '0' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=0" >${i}</a></c:when>
-                                        <c:when test="${oldBook.ob_status  eq '1' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=1" >${i}</a></c:when>
-                                        <c:when test="${oldBook.ob_status  eq '2' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=2" >${i}</a></c:when>
-                                        <c:when test="${oldBook.ob_status  eq '3' }"><a class="page-link" id="chk(${i })"  href="BolistOb?currentPage=${i}&ob_status=3" >${i}</a></c:when>
-                                        <c:otherwise><c:out value=""></c:out>
-                                        </c:otherwise>
-                                        </c:choose>
-                                    </li>
-                                 </c:forEach> --%>
-									
-									
-									
-								
 								
 								<%-- <c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
 									<div class="card course-card" style="width: 18rem;">

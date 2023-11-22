@@ -89,7 +89,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course courseUpdateDetail(int id) {
-		log.info("CourseServiceImpl courseContent start...");
 		Course courseUpdateDetail = cd.courseUpdateDetail(id);
 		
 		return courseUpdateDetail;

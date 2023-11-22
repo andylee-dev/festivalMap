@@ -48,8 +48,7 @@
 		            };
 
 		            contentList.push(contentData);
-		            console.log(contentData);
-		            console.log("contentList", contentList);
+		            console.log("contentList-popup", contentList);
 		            
 		        }
 		    }			

@@ -78,13 +78,12 @@ public class AdminCourseController {
 	public String courseUpdateForm(int id, String currentPage, Model model) {
 		log.info("AdminCourseController courseUpdateForm start...");
 		try {
-			log.info("AdminCourseController courseUpdateForm id ->" + id);
+			log.info("AdminCourseController courseUpdateForm id : " + id);
 		
 			Course course = cs.courseUpdateDetail(id);
-			log.info("AdminCourseController courseUpdateForm courseContent ->" + course);
 
 			List<CourseContent> courseContentList = cs.courseContentList(id);
-			log.info("AdminCourseController courseUpdateForm courseContentList.size() ->" + courseContentList.size());
+			log.info("AdminCourseController courseUpdateForm courseContentList.size() : " + courseContentList.size());
 
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
@@ -94,7 +93,7 @@ public class AdminCourseController {
 //			model.addAttribute("courseContent", courseContent);
 
 		} catch (Exception e) {
-			log.error("AdminCourseController courseUpdateForm e.getMessage() ->" + e.getMessage());
+			log.error("AdminCourseController courseUpdateForm e.getMessage() : " + e.getMessage());
 		} finally {
 			log.info("AdminCourseController courseUpdateForm end...");
 		}
