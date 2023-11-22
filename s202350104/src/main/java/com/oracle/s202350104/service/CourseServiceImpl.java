@@ -57,10 +57,8 @@ public class CourseServiceImpl implements CourseService {
 		int courseInsert = cd.courseInsert(course);
 		log.info("CourseServiceImpl courseCount courseInsert ->" + courseInsert);
 		
-		
 		return courseInsert;
 	}
-
 
 	@Override
 	public int courseContentInsert(List<CourseContent> courseContentList) {

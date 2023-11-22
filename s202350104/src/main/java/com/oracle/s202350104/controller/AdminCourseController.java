@@ -57,8 +57,6 @@ public class AdminCourseController {
 			PagingList page = new PagingList(courseCount, currentPage);
 			course.setStart(page.getStart());
 			course.setEnd(page.getEnd());
-
-			log.info("AdminCourseController courseList course ->" + course);
 			
 			// 조건에 맞는 Course의 list를 가져옴
 			List<Course> courseList = cs.courseList(course);
@@ -198,11 +196,11 @@ public class AdminCourseController {
 			for (int i = 0; i < contents.size(); i++) {
 				CourseContent cc = new CourseContent();
 				cc.setContent_id(Integer.parseInt(contents.get(i)));
-				log.info("setContent_id newCourseId ->" + (contents.get(i)));
+				log.info("setContent_id newContent_id ->" + (contents.get(i)));
 				cc.setCourse_id(newCourseId);
-				log.info("setCourse_id newCourseId ->" + newCourseId);
+				log.info("setCourse_id newCourse_id ->" + newCourseId);
 				cc.setOrder_num(i + 1);
-				log.info("setCourse_id newCourseId ->" + i + 1);
+				log.info("setCourse_id newOrder_num ->" + i);
 				courseContentList.add(cc);
 			}
 			

@@ -131,7 +131,7 @@
 		
 		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
-			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
+			values (COURSES_ID_SEQ.nextval, 16, 2, #{area}, #{sigungu}, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
 			<selectKey keyProperty="id" resultType="Integer" order="AFTER">
 				SELECT COURSES_ID_SEQ.currval FROM dual
 			</selectKey>

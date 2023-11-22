@@ -102,7 +102,7 @@
 											<td>${course.distance }</td>
 											<td>${course.time }</td>
 											<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td>${course.area_content }</td>
+											<td>${course.area_content } ${course.sigungu_content }</td>
 											<td><a href="courseUpdateForm?id=${course.course_id}" class="detail-link">관리</a></td>
 										</tr>
 									</c:forEach>
