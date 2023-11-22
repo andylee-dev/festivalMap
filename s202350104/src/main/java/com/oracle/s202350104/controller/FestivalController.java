@@ -15,11 +15,13 @@ import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
+import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.TagsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class FestivalController {
 
 	private final FestivalsService fs;
 	private final AreaService as;
+	private final TagsService ts;
 	private final BoardService boardService;
 	private final BannerService bannerService;
 
@@ -96,10 +99,12 @@ public class FestivalController {
 			
 			// 상세정보 Logic 구간
 			festival = fs.detailFestivals(contentId);
+			List<Tags> listTags = fs.festivalsTagsOne(contentId);
 			
 			int result = fs.readcountUp(contentId);
 			
 			model.addAttribute("festival", festival);
+			model.addAttribute("listTags", listTags);
 			
 			/*
 			 * review page handling용

@@ -1,6 +1,7 @@
 package com.oracle.s202350104.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -60,7 +61,8 @@ public class FestivalsContent {
 	private String keyword;
 	private String ordering; // 정렬
 	
-	// 태그 입력용
-	private String[] finalTags;
-	private int      tag_id;
+	// 태그용
+	private String[]   finalTags;
+	private int        tag_id;
+	private List<Tags> myTags;
 }

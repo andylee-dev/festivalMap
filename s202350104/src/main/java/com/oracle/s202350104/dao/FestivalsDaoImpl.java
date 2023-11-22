@@ -29,9 +29,15 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	public List<FestivalsContent> listFestivals(FestivalsContent festival) {
 		List<FestivalsContent> listFestivals = null;
 		
-		try {
-			
+		try {		
 			listFestivals = session.selectList("nhFestivalsListAll", festival);
+			// 각 festival의 tags 리스트를 저장
+			for(FestivalsContent festi : listFestivals) {
+				List<Tags> listTags = session.selectOne("nhFestivalTagOne", festi.getContent_id());
+				if(listTags != null) {
+					festi.setMyTags(listTags);
+				}
+			}
 			log.info("FestivalsDaoImpl listFestivals() => " + listFestivals.size());
 		
 		} catch(Exception e) {
@@ -280,6 +286,21 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		}
 		
 		return contents;
+	}
+
+	// contentId에 해당하는 festival의 tags 리스트를 가져옴
+	@Override
+	public List<Tags> festivalsTagsOne(int contentId) {
+		List<Tags> listTags = null;
+		
+		try {
+			listTags = session.selectList("nhFestivalTagOne", contentId);
+			log.info("FestivalsDaoImpl festivalsTagsOne => " + listTags.size());
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl festivalsTagsOne => " + e.getMessage());
+		}
+		
+		return listTags;
 	}
 	
 }
