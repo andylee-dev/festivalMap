@@ -193,9 +193,9 @@
 /* ==== 상단 분홍색, 제목 css ==== */
 .homeDetail-topTitle-custom {
 	width: 100%;
-	height: 60px;
+	height: 80px;
 	background-color: #FF4379;
-	margin-top: 80px;
+	margin-top: 50px;
 }
 
 .homeDetail-topTitle-custom
@@ -204,6 +204,7 @@
 	align-items: flex-start;
 	justify-content: flex-start;
 	margin-left: 10px;
+	margin-right: 660px;
 }
 
 .homeDetail-topTitle-custom
@@ -211,8 +212,25 @@
 	color: white;
 	font-size: 30px;
 	font-weight: bold;
-	margin-top: 6px;
+	margin-top: 18px;
 }
+
+.homeDetail-topTitle-custom
+.image-custom {
+	width: 100px;
+	height: 40px;
+	text-align: center;
+
+}
+
+.homeDetail-topTitle-custom
+.image-custom img{
+	width: 60px;
+	height: 60px;
+	display: block; 
+	margin-top: 10px;
+}
+
 
 .homeDetail-topTags-custom {
 	padding: 0px;

@@ -611,7 +611,8 @@ public class BoardController {
 		log.info("BoardController reviewBoardInsert score : {}", board.getScore());
 
 		int insertBoard = boardService.boardInsert(board);
-
+			
+		// 결과 값에 따른 page 이동 handling
 		if (insertBoard > 0 && board.getSmall_code() == 1) {
 			return "redirect:/noticBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 2) {
@@ -623,8 +624,10 @@ public class BoardController {
 		} else if (insertBoard > 0 && board.getSmall_code() == 5) {
 			return "redirect:/eventBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
-			// 리뷰 작성 성공 시 포인트 추가 - 상엽
+		
+			// 리뷰 작성 성공 시 포인트 추가 - 상엽		
 			pointHandler.handle(board.getUser_id(), 5);
+			
 			return "redirect:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");

@@ -124,12 +124,20 @@
 		</div>		
 	</div>
 	</form>
-
+	
 	<!-- 상단 분홍색 title 출력-->
-	<div class="container homeDetail-topTitle-custom">
-		<div class="row row-cols-1">
-			<div class="col title-custom">
-				<p>${festival.title}</p>
+	<div class="homeDetail-topTitle-custom">
+		<div class="container homeDetail-topTitle-custom">
+			<div class="row row-cols-3">
+				<div class="col title-custom">
+					<p>${festival.title}</p>
+				</div>
+				<div class="col image-custom">
+					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
+				</div>
+				<div class="col image-custom">
+					<img alt="share_icon.png" src="../image/share_icon.png">
+				</div>
 			</div>
 		</div>
 	</div>
