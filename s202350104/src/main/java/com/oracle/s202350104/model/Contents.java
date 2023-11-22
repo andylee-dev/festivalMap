@@ -38,4 +38,6 @@ public class Contents {
 	private int    end;
 	
 	private PagingList pageList;
+	
+	private String keyword;
 }

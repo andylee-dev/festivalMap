@@ -62,7 +62,7 @@
 	</script>
 	<style type="text/css">
 	
-	/* .parent-container {
+	.parent-container {
         width: 100%;
         height: 100%;
         padding: 8px;
@@ -190,8 +190,7 @@
 			                <label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 			                <div class="col-3 d-flex align-items-center">
 				                <select id="searchType" name="searchType" class="form-select">
-				                    <option selected value="">코스이름</option>
-				                    <option selected value="">지역</option>
+				                    <option value="" selected>코스이름</option>
 				                </select>
 			                </div>
 			                <div class="col-5 mx-2">

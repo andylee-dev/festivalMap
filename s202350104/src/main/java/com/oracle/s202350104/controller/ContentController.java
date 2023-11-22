@@ -50,12 +50,12 @@ public class ContentController {
 
 	@ResponseBody
     @RequestMapping(value = "/api/content", method = RequestMethod.GET)
-    public List<Contents> getContentsList() {
+    public List<Contents> getContentsList(Contents content) {
 		UUID transactionId = UUID.randomUUID();
 		List<Contents> contentList =null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "getContentsList", "start");
-	        contentList = contentService.listContents();
+	        contentList = contentService.listContents(content);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "getContentsList", e.getMessage());
 		} finally {

@@ -8,22 +8,15 @@
 		SELECT Count(*) From contents
 	</select>
 
-	<select id="listContent" resultType="Contents">
+	<select id="listContent" parameterType="Contents" resultType="Contents">
 		SELECT *
-		FROM (
-		    SELECT ROWNUM rn, t.*
-		    FROM (
-		        SELECT *
-		        FROM contents
-		    ) t
-		)
-		WHERE rn BETWEEN #{start} AND #{end}
-	
-		<!-- SELECT *
 		FROM
     		(SELECT ROWNUM rn, contents.*
 			FROM contents
-			WHERE 1=1
+			WHERE is_deleted = '0'
+			<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+			</if>
 	 		<if test="big_code != null and big_code != 0 ">
 				AND	big_code = #{big_code}	
 			</if>
@@ -42,8 +35,8 @@
      		) 
 	 		<if test="start != 0 and end != 0">     		
 				WHERE rn between #{start} and #{end}
-			</if> -->
-	
+			</if>
+			
 		<!-- SELECT * 
 		FROM 
 			(SELECT ROWNUM rn, contents.*

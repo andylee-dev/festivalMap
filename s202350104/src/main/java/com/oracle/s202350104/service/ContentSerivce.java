@@ -6,9 +6,10 @@ import com.oracle.s202350104.model.Contents;
 
 
 public interface ContentSerivce {
-	List<Contents> 		listContents();
+	List<Contents> 		listContents(Contents content);
 	int 				contentCount();
 	List<Contents> 		getSearchContentsList(Contents contents);
 	int 				getTotalSearchCount(Contents contents);
+	
 	
 }  

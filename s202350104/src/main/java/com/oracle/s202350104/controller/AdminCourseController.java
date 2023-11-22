@@ -228,12 +228,12 @@ public class AdminCourseController {
 			// 컴텐츠의 전체 list의 수를 나타냄.
 			int contentCount = contentService.contentCount();
 			
-			List<Contents> listContents = contentService.listContents();
-			
 			// 페이징 처리
 			PagingList page = new PagingList(contentCount, currentPage);
 			content.setStart(page.getStart());
 			content.setEnd(page.getEnd());
+			
+			List<Contents> listContents = contentService.listContents(content);
 			
 			model.addAttribute("contentCount", contentCount);
 			model.addAttribute("listContents", listContents);

@@ -25,8 +25,9 @@ public class ContentDaoImpl implements ContentsDao {
 	}
 
 	@Override
-	public List<Contents> listContent() {
-		List<Contents> listContent = session.selectList("listContent");
+	public List<Contents> listContent(Contents content) {
+		
+		List<Contents> listContent = session.selectList("listContent", content);
 		log.info("ContentDaoImpl listContent listContent.size() ->" + listContent.size());
 		
 		return listContent;
