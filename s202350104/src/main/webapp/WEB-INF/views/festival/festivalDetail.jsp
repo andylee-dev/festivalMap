@@ -187,7 +187,11 @@
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
 						<p class="text-sm-custom">기간</p>
-						<span>${festival.start_date} ~ ${festival.end_date}</span>						
+						<span>
+							<fmt:formatDate value="${festival.start_date}" pattern="yyyy.MM.dd"/>
+							~
+							<fmt:formatDate value="${festival.end_date}" pattern="MM.dd"/>
+						</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
@@ -241,10 +245,51 @@
 					</div>
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
-							<div class="col icon-custom">1</div>
-							<div class="col icon-custom">2</div>
-							<div class="col icon-custom">3</div>
-							<div class="col icon-custom">4</div>
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${festival.is_parking eq 1 }">
+										<img alt="packing_icon.png" src="../image/packing_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
+									</c:otherwise>					
+								</c:choose>	
+								<span>주차시설</span>	
+						
+							</div>
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${festival.is_stroller eq 1 }">
+										<img alt="restroom_icon.png" src="../image/restroom_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_restroom_icon.png" src="../image/disabled_restroom_icon.png">									
+									</c:otherwise>					
+								</c:choose>	
+								<span>장애인화장실</span>								
+							</div>
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${festival.is_wheelchair eq 1 }">
+										<img alt="activate_icon.png" src="../image/activate_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
+									</c:otherwise>					
+								</c:choose>
+								<span>휠체어 대여</span>							
+							</div>
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${festival.is_stroller eq 1 }">
+										<img alt="activate_icon.png" src="../image/activate_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
+									</c:otherwise>					
+								</c:choose>	
+								<span>유모차 대여</span>							
+							</div>
 						</div>
 					</div>
 				</div>
@@ -262,40 +307,15 @@
 	
 	<div class="container homeDetail-overView_custom">
 		<div class="homeDetail-overView-detail">
-			<c:choose>
-				<c:when test="${festival.cost == '무료' || festival.cost == null}">
-					<p>입장료 : 무료</p>
-				</c:when>
-				<c:otherwise>
-					<p>입장료 : ${festival.cost}</p>				
-				</c:otherwise>
-			</c:choose>
-
 			<p>개   요 : ${festival.content}</p>
 			<p>내   용 : ${festival.overview}</p>
-			<p>우편주소 : ${festival.postcode}</p>
-			<ul>
-			<li>주차시설 : 
-				<c:choose>
-					<c:when test="${festival.is_parking == 0}">N</c:when>
-					<c:when test="${festival.is_parking == 1}">Y</c:when>
-				</c:choose>
-			<li>유모차대여 : 
-				<c:choose>
-					<c:when test="${festival.is_stroller == 0}">N</c:when>
-					<c:when test="${festival.is_stroller == 1}">Y</c:when>
-				</c:choose>
-			<li>휠체어대여 : 
-				<c:choose>
-					<c:when test="${festival.is_wheelchair == 0}">N</c:when>
-					<c:when test="${festival.is_wheelchair == 1}">Y</c:when>
-				</c:choose>
-			<li>장애인화장실 : 
-				<c:choose>
-					<c:when test="${festival.is_restroom == 0}">N</c:when>
-					<c:when test="${festival.is_restroom == 1}">Y</c:when>
-				</c:choose>
-			</ul>
+			<c:choose>
+				<c:when test="${festival.cost == '무료' || festival.cost == null}">
+				</c:when>
+				<c:otherwise>
+					<p>입장료 상세정보 : ${festival.cost}</p>				
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	

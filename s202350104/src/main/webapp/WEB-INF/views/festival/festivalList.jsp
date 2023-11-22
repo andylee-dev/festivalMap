@@ -103,51 +103,54 @@
 	
 	<!-- keyword, title 영역 -->	
 	<form id="festival" action="festival" method="get">
-	<div class="container homeCommon-keyword-title-custom">
-		<div class="co1 title-div">
-					F E S T I V A L!</div>
-		<div class="co1 text-div">
-			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
-		</div>
-		<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
-		<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
-	</div>
+		<div class="container homeCommon-keyword-title-custom">
 	
-	<!-- 경계선 표현 -->
-	<hr class="container homeCommon-top-custom">	
+			<div class="co1 title-div">
+						F E S T I V A L!</div>
+			<div class="co1 text-div">
+				<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
+			</div>
+			<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
+			<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
+		</div>
 		
-	<!-- select 영역 -->
-	<div class="container homeCommon-select-custom">
-		<div class="row g-2 text-center">
-			<div class="col d-flex justify-content-center">
-				<select class="form-select area-dropdown" 
-						aria-label="Default select example" name="area">
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select sigungu-dropdown" 
-						aria-label="Default select example" name="sigungu">
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select" aria-label="Default select example">
-					<option selected>진행 기간 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select" aria-label="Default select example">
-					<option selected>진행 여부 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
-			</div>
-		</div>		
-	</div>
-	</form>
+		<!-- 경계선 표현 -->
+		<hr class="container homeCommon-top-custom">	
+			
+		<!-- select 영역 -->
+		<div class="container homeCommon-select-custom">
+			<div class="row g-2 text-center">
+				<div class="col d-flex justify-content-center">
+					<select class="form-select area-dropdown" name="area"
+							aria-label="Default select example">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select aigungu-dropdown" name="sigungu"
+							aria-label="Default select example">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select" name=""
+							aria-label="Default select example">
+						<option selected>진행 기간 선택</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select" name=""
+							aria-label="Default select example">
+						<option selected>진행 여부 선택</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
+			</div>		
+		</div>
+	</form>	
 	
 	<!-- 경계선 표현 -->
 	<hr class="container homeCommon-top-custom">	
@@ -156,10 +159,7 @@
 	<div class="container homeList-menu-custom">
 		<c:if test="${listFestivals.size() == 0}">해당하는 축제 정보가 없습니다.</c:if>
 		<div class="row row-cols-3 g-6 homeList-mdMenu-custom">
-			<c:forEach var="festival" items="${listFestivals}">
-<%-- 			<fmt:formatDate var="startDate" value="${festival.start_date}" type="date" pattern="yyyy.MM.dd"/>
-			<fmt:formatDate var="endDate" value="${festival.end_date}" type="date" pattern="yyyy.MM.dd"/>
-	 --%>											
+			<c:forEach var="festival" items="${listFestivals}">							
 				<div class="col d-flex justify-content-center">
 					<div class="card homeList-card-custom">
 					
@@ -174,7 +174,11 @@
 
 						<div class="card-body">
 					    <p class="card-text title-p">${festival.title}</p>
-					    <p class="card-text period-p">${festival.start_date}&nbsp;~&nbsp;${festival.end_date}</p>
+					    <p class="card-text period-p">
+					    	<fmt:formatDate value="${festival.start_date}" pattern="yyyy.MM.dd"/>
+							&nbsp;~&nbsp;
+							<fmt:formatDate value="${festival.end_date}" pattern="MM.dd"/>
+					    </p>
 					    <p class="card-text contet-p">${festival.content}</p>
 					  </div>
 					</div>			
