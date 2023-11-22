@@ -37,7 +37,7 @@
 	// 서치이미지를 클릭할 때 폼을 제출하는 함수
 	$(document).ready(function () {
     	$("#searchIcon").click(function () {
-       		$("#").submit();
+       		$("#festival").submit();
     	});
 	});
 	
@@ -99,7 +99,8 @@
 	</div>
 	<!-- 상단 분홍색 영역 -->
 	<div class="container p-0 top_custom"></div>
-
+	<div>
+	<form id="festival" action="festival" method="get">
 	<!-- keyword, title 영역 -->	
 	<div class="container p-0 keyword_title_custom">
 		<div class="co1 title_div">
@@ -108,7 +109,7 @@
 			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
 		</div>
 		<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
-		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" />
+		<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 	</div>
 	
 	<!-- 경계선 표현 -->
@@ -144,7 +145,9 @@
 				</select>
 			</div>
 		</div>		
-	</div>	
+	</div>
+	</form>
+	</div>		
 	
 	<!-- 경계선 표현 -->
 	<hr class="container p-0 hr_custom">	

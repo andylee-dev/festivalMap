@@ -63,52 +63,55 @@
 		
 		<!-- 상단 분홍색 영역 -->
 		<div class="container p-0 top_custom"></div>
-	<div>
-		<form id="experience1" action="experience1" method="get">
-		<!-- keyword, title 영역 -->	
-		<div class="container p-0 keyword_title_custom">
-			
-			<input type="hidden" name="big_code" value="15">
-			<div class="co1 title_div">
-						EXPERIENCE!</div>
-			<div class="co1 text_div">
-				<h4><strong>어느 체험으로 즐겨볼까요~♫</strong></h4>
-			</div>
-			<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 체험의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
-			<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 		
-		</div>
-		<!-- 경계선 표현 -->
 		<div>
-		<hr class="container p-0 hr_custom">	
+			<form id="experience1" action="experience1" method="get">
+				
+				<!-- keyword, title 영역 -->	
+				<div class="container p-0 keyword_title_custom">
+					
+					<input type="hidden" name="big_code" value="15">
+					<div class="co1 title_div">
+								EXPERIENCE!</div>
+					<div class="co1 text_div">
+						<h4><strong>어느 체험으로 즐겨볼까요~♫</strong></h4>
+					</div>
+					<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 체험의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
+					<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
+				
+				</div>
+			
+				<!-- 경계선 표현 -->
+				<div>
+				<hr class="container p-0 hr_custom">	
+				</div>	
+			
+				<!-- select 영역 -->
+				<div class="container p-0 select_custom">
+					<div class="row g-2 text-center">
+						<div class="col d-flex justify-content-center">
+							<select class="form-select text-center border-3 select_text_custom area-dropdown" 
+									aria-label="Default select example" name="area">
+							</select>
+						</div>
+						<div class="col d-flex justify-content-center">
+							<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
+									aria-label="Default select example" name="sigungu">
+							</select>
+						</div>
+						<div class="col d-flex justify-content-center">
+							<select class="form-select text-center border-3 select_text_custom" 
+									aria-label="Default select example" name="small_code">
+								<option value="999">체험종류</option>
+									<c:forEach var="small" items="${listSmallCode}">
+										<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+									</c:forEach>
+							</select>
+						</div>
+					</div>		
+				</div>
+			</form>
 		</div>	
-		
-		<!-- select 영역 -->
-		<div class="container p-0 select_custom">
-			<div class="row g-2 text-center">
-				<div class="col d-flex justify-content-center">
-					<select class="form-select text-center border-3 select_text_custom area-dropdown" 
-							aria-label="Default select example" name="area">
-					</select>
-				</div>
-				<div class="col d-flex justify-content-center">
-					<select class="form-select text-center border-3 select_text_custom sigungu-dropdown" 
-							aria-label="Default select example" name="sigungu">
-					</select>
-				</div>
-				<div class="col d-flex justify-content-center">
-					<select class="form-select text-center border-3 select_text_custom" 
-							aria-label="Default select example" name="small_code">
-						<option value="999">체험종류</option>
-							<c:forEach var="small" items="${listSmallCode}">
-								<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
-							</c:forEach>
-					</select>
-				</div>
-			</div>		
-		</div>
-		</form>
-	</div>	
 		
 		<!-- 경계선 표현 -->
 		<div><hr class="container p-0 hr_custom"></div>	

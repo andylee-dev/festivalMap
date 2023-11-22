@@ -9,8 +9,8 @@ footer {
 }
 </style>
 
-<footer class="py-5">
-	<div class="container p-5" style="background-color: #EEFFC2;">
+<footer class="py-5" style="background-color: #EEFFC2;">
+	<div class="container p-5">
 		<h1>Footer</h1>
 		
 		<!-- Banner test -->
