@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Festival</title>
+		<title>내 관심사</title>
 		<style type="text/css">
 			h1 {
 				color: black;
@@ -42,16 +42,89 @@
 			button {
 				white-space: nowrap;
 			}
+			
+			/* 현재 선택된 검색어 */
+			.autocomplete > div.active {
+				background: #EEFFC2;
+				color: black;
+			}
+			
+			/* 전체 검색어 */
+			.autocomplete > div {
+				background: #f1f3f499;
+				padding: .2rem .6rem;
+			}
 		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-			var initialTags = []; // 원래 DB에 저장되어 있던 태그 모두 저장
-			var selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+			let initialTags = []; // 원래 DB에 저장되어 있던 태그 모두 저장
+			let selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+			let allTags = []; // 태그 자동완성을 위해 모든 태그들의 id와 name을 저장한 배열 
 			let myTagsArea;
 			
 			document.addEventListener("DOMContentLoaded", (event) => {
+				
+				<!-- 자동완성 관련 코드 Start -->
+				let searchForm = document.getElementById(searchForm);
+				let autocomplete = document.getElementById(autocomplete);
+				
+				allTagOptions();
+				
+				const value = searchForm.value.trim(); // 검색어
+				const matchDataList = allTags.filter((label) => label.includes(value)); // 자동완성 필터링(리스트)
+				
+				var nowIndex = 0;
+				
+				searchForm.input(function(event) {
+					
+					switch(event.keyCode) {
+						// 방향키 up					
+						case 38:
+							nowIndex = Math.max(nowIndex-1, 0); // -1 했을 때 0보다 작다면 0으로 지정
+							break;
+							
+						// 방향키 down
+						case 40:
+							nowIndex = Math.min(nowIndex+1, matchDataList.length-1); // +1 했을 때 리스트 개수보다 커지지 않도록 지정
+							break;
+							
+						// 엔터키
+						case 13:
+							// 엔터키를 눌렀을 때 선택한 검색어로 대체
+							$('#searchForm').value = matchDataList[nowIndex] || "";
+							 
+							// 기존 데이터 초기화
+							nowIndex = 0;
+							matchDataList.length = 0;
+							break;
+							 
+						// 그외 입력 초기화
+						default:
+							nowIndex = 0;
+					}
+					
+					showList(matchDataList, value, nowIndex);
+				});
+				
+				const showList = (data, value, nowIndex) => {
+					// 정규식 변환
+					const regex = new RegExp('(${value})','g');
+					
+					autoComplete.innerHTML = data
+						.map(
+								(label, index) => '
+									<div class='${nowIndex === index? "active" : ""}'>
+										${label.replace(regex, "<mark>$1</mark>")}
+									</div>
+								'
+						)
+						.join("");
+					
+				}
+					
+				<!-- 자동완성 관련 코드 End -->
 	
-				<!-- 태그 관련 코드 Start -->	
+				<!-- 태그 관리 관련 코드 Start -->	
 				myTagsArea = document.querySelector('#my_tags');
 				initialSelectedTags(); // DB에 이미 저장되어 있던 tags만 selectedTags에 저장
 				
@@ -81,6 +154,24 @@
 					
 				});
 			});
+			
+			function allTagOptions() {
+				$.ajax({
+					url: "<%=request.getContextPath()%>/getAllTags",
+					method: "GET",
+					dataType: "json",
+					success: function(tags) {
+						tags.forEach(function(tag) {
+							allTags.push({id:tag.id, name:tag.name});
+						});
+						console.log("getAllTags success");
+					},
+					error: function() {
+						console.log("전체 태그 정보를 가져오지 못했습니다.");
+					}
+				})
+			}; 
+			
 			
 			function initialSelectedTags() {
 				var userId = '${userId}';
@@ -164,7 +255,7 @@
 					}
 				})
 			}
-			<!-- 태그 관련 코드 end -->
+			<!-- 태그 관리 관련 코드 end -->
 		</script>
 	</head>
 	<body>
@@ -187,7 +278,9 @@
 								<div class="col-12 my-4 d-flex align-items-center">
 									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 									<div class="col-7 mx-1">
-										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="검색어를 입력해주세요.">
+										<input type="text" name="keyword" class="form-control" id="searchForm" 
+										 value="${keyword}" placeholder="검색어를 입력해주세요.">
+										<div id="autocomplete" class="selectArea"></div>
 									</div>
 									<!-- 버튼 -->
 									<div class="col-5 mx-1 d-flex justify-content-start">

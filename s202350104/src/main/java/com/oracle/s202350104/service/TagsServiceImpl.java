@@ -49,7 +49,7 @@ public class TagsServiceImpl implements TagsService {
 		List<Tags> listTags = td.listTags(tag);
 		
 		int result = 0;
-		int searchResult = -1;
+		int searchResult = 1;
 		
 		// 이미 존재하는 tag인 경우 insert되지 않도록 DB에 저장된 tag(searchTag)와 tags의 name을 비교
 		for(Tags searchTag : listTags) {
@@ -59,7 +59,7 @@ public class TagsServiceImpl implements TagsService {
 		}
 		
 		// searchResult의 값에 따라 tag를 insert하고 그 결과값 반환
-		if(searchResult > 0) {
+		if(searchResult == 1) {
 			result = td.insertTags(tags);
 		} else {
 			result = -1;
@@ -83,7 +83,7 @@ public class TagsServiceImpl implements TagsService {
 		List<Tags> listTags = td.listTags(tag);
 		
 		int result = 0;
-		int searchResult = -1;
+		int searchResult = 1;
 		
 		// 이미 존재하는 tag name인 경우 update되지 않도록
 		for(Tags searchTag : listTags) {
@@ -93,7 +93,7 @@ public class TagsServiceImpl implements TagsService {
 		}
 		
 		// searchResult에 따라 update하고 그 결과값 반환
-		if(searchResult > 0) {
+		if(searchResult == 1) {
 			result = td.updateTags(tags);
 		} else {
 			result = -1;
