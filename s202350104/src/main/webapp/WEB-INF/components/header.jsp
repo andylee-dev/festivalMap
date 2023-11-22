@@ -27,7 +27,7 @@
 
 <!-- 기능별 List, detail css 임시용 by. 엄민용 -->
 <link href="/css/board.css" rel="stylesheet" type="text/css">
-<link href="/css/betaCss.css" rel="stylesheet" type="text/css">
+<link href="/css/homeList.css" rel="stylesheet" type="text/css">
 <!-- 리뷰 슬라이딩 라이브러리  owl.carousel -->
 <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
