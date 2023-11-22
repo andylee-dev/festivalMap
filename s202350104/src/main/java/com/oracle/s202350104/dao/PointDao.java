@@ -13,5 +13,6 @@ public interface PointDao {
 	void                writePoint(Point point);
 
 	int 				getPointScoreById(int id);
-
+					
+	Point				getPointById(int id);
 }

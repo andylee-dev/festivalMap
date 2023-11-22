@@ -11,7 +11,20 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/css/contentsDetail.css">
-
+<style type="text/css">
+#overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
 <script>
 	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
 	    console.log("showPopUp 함수가 호출되었습니다.");			
@@ -63,10 +76,14 @@
         alert("링크를 복사하였습니다.");
     }
 </script>
+
 </head>
 <body>
 
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+	 <div id="overlay" style="display: none;">
+      <img id="largeImage" style="max-width: 80%; max-height: 80%;" alt="큰 이미지">
+    </div>
 	<div class="title-container">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
         <h2>${accomodation.title}</h2>
@@ -108,24 +125,27 @@
 	<div class="container border-bottem p-5"
 		style="justify-content: space-between; height: 700px; border-bottom: 3px solid black;">
 		<table>
-			<tr>
-				<td
-					style="width: 10%; height: 100%; text-align: left; margin-left: -40px;">
-					<img class="thumbnail" alt="${accomodation.title}이미지1"
-					src="${accomodation.img1}"
-					style="width: 313px; height: 525px; object-fit: cover; margin-left: 0px;"
-					align="absmiddle">
-				</td>
-				<td
-					style="width: 10%; text-align: center; vertical-align: middle; margin: 16px 0px 16px 0px;">
-					<img class="thumbnail" alt="${accomodation.title}이미지2"
-					src="${accomodation.img2}"
-					style="object-fit: cover; margin-left: -40px;" align="absmiddle">
-					<br>
-				<img class="thumbnail" alt="${accomodation.title}이미지3"
-					src="${accomodation.img3}"
-					style="object-fit: cover; margin-left: -40px;" align="absmiddle">
-				</td>
+        <tr>
+      <td style="width: 10%; height: 100%; text-align: left; margin-left: -40px;">
+        <img id="mainImage" class="thumbnail" alt="${accomodation.title}이미지1"
+             src="${accomodation.img1}"
+             style="width: 313px; height: 525px; object-fit: cover; margin-left: 0px;"
+             align="absmiddle" onclick="openModal(); currentSlide(1)">
+      </td>
+      <td style="width: 10%; text-align: left; vertical-align: top;">
+        <img class="thumbnail" alt="${accomodation.title}이미지1"
+             src="${accomodation.img1}"
+             style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px;" align="absmiddle"
+             onclick="document.getElementById('mainImage').src=this.src">
+        <img class="thumbnail" alt="${accomodation.title}이미지2"
+             src="${accomodation.img2}"
+             style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px;" align="absmiddle"
+             onclick="document.getElementById('mainImage').src=this.src">
+        <img class="thumbnail" alt="${accomodation.title}이미지3"
+             src="${accomodation.img3}"
+             style="width: 100px; height: 100px; object-fit: cover;" align="absmiddle"
+             onclick="document.getElementById('mainImage').src=this.src">
+      </td>
 				<td style="width: 20%; text-align: left;">
 					<ul class="custom-ul">
 						<li><span>상호명</span><span>${accomodation.title}</span></li>
@@ -189,29 +209,33 @@
 			</tr>
 		</table>
 	</div>
+	 <script>
+	 document.addEventListener('DOMContentLoaded', function () {
+		    var mainImage = document.getElementById('mainImage');
+		    var largeImage = document.getElementById('largeImage');
+		    var overlay = document.getElementById('overlay');
 
-	<div id="overlay"></div>
-	<div id="largeImageContainer">
-		<img id="largeImage" src="" alt="Large Image">
-	</div>
-	<script>
-    const thumbnails = document.querySelectorAll('.thumbnail');
-    const largeImage = document.getElementById('largeImage');
-    const overlay = document.getElementById('overlay');
+		    mainImage.addEventListener('click', function () {
 
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function () {
-            largeImage.src = this.src;
-            largeImage.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-    });
+		        // 이미지 소스 및 디스플레이 스타일 설정
+		        largeImage.src = this.src;
+		        largeImage.style.display = 'block'; // 추가된 코드
+		        overlay.style.display = 'flex';
+		    });
 
-    overlay.addEventListener('click', function () {
-        largeImage.style.display = 'none';
-        overlay.style.display = 'none';
-    });
+		    overlay.addEventListener('click', function () {
+
+		        // 오버레이 및 큰 이미지 감추기
+		        this.style.display = 'none';
+		        largeImage.style.display = 'none'; // 추가된 코드
+		    });
+		});
 	</script>
+
+
+	
+
+	
 	<div class="container border-bottem p-5" style="border-bottom: 3px solid black;">
 		<h2 style="color: hotpink;">개요</h2>
 		<p>${accomodation.content}

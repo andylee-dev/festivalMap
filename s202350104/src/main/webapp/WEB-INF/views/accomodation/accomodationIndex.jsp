@@ -38,7 +38,7 @@
 	<!-- keyword, title 영역 -->	
 	<div class="container p-0 keyword_title_custom">
 		<div class="co1 title_div">
-					F E S T I V A L!</div>
+					ACCOMODATION!</div>
 		<div class="co1 text_div">
 			<h4><strong>어느 숙소에서 지내볼까요~♫</strong></h4>
 		</div>

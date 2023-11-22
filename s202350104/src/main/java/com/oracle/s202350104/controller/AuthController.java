@@ -157,4 +157,10 @@ public class AuthController {
 		return "redirect:/login";
 	}
 
+	
+	private void LoginPointcheck(int userId ) {
+		// 1. 현재일자를 가지고 Users TBL id조건의 LASTLOGINDATE 비교 다르면 point 증가
+		// 2. 현재일자를 가지고 Users TBL id조건의 현재일자 Update
+		
+	}
 }
