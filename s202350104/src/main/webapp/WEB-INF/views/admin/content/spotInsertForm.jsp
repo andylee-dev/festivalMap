@@ -244,12 +244,12 @@
 								<div class="col-12 d-flex justify-content-between">
 						  			<div class="col-2 form-check mx-3">
 										<input class="form-check-input" type="checkbox" name="is_wheelchair"
-										  	   id="is_wheelchair" value="1" ${experience.is_credit == 1?"checked":""}> 
+										  	   id="is_wheelchair" value="1" ${spot.is_wheelchair == 1?"checked":""}> 
 										<label class="form-check-label" for="is_wheelchair">휠체어대여</label>
 									</div>
 									<div class="col-2 form-check mx-3">
 										<input class="form-check-input" type="checkbox" name="is_restroom"
-										  	   id="is_restroom" value="1" ${experience.is_credit == 1?"checked":""}> 
+										  	   id="is_restroom" value="1" ${spot.is_restroom == 1?"checked":""}> 
 										<label class="form-check-label" for="is_restroom">장애인화장실</label>
 									</div>
 									<div class="col-2 form-check mx-3">

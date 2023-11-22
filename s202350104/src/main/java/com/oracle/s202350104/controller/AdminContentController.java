@@ -657,7 +657,13 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "start");
 				SpotContent spot = ss.detailSpot(contentId);
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(spot.getArea());
 				
+				model.addAttribute("listSigungu",listSigungu);
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("spot", spot);
