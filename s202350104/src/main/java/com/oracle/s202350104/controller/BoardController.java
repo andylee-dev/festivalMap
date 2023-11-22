@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ReportService;
 import com.oracle.s202350104.service.TagsService;
+import com.oracle.s202350104.service.point.PointEvent;
 import com.oracle.s202350104.service.point.PointHandler;
 import com.oracle.s202350104.service.user.UserService;
 import com.oracle.s202350104.utils.FileUploadDeleteUtil;
@@ -42,7 +44,7 @@ public class BoardController {
 	//게시판 신고기능 위해 service 추가
 	private final ReportService res;
 	private final UserService us;	
-	private final PointHandler pointHandler;
+	private final ApplicationEventPublisher eventPublisher;
 	
 	/*
 	 *  smallCode 초기값 강제 고정, 향후 리팩토링 예정
@@ -626,7 +628,7 @@ public class BoardController {
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
 		
 			// 리뷰 작성 성공 시 포인트 추가 - 상엽		
-			pointHandler.handle(board.getUser_id(), 5);
+			eventPublisher.publishEvent(new PointEvent(board.getUser_id(), 5));
 			
 			return "redirect:/";
 		} else {

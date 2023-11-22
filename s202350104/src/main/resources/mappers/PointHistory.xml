@@ -18,10 +18,10 @@
 	</delete>
 
 	<insert id="writePointHistory" parameterType="pointhistory">
-	<selectKey keyProperty="PH_id" resultType="int" order="AFTER">
+	<selectKey keyProperty="id" resultType="int" order="AFTER">
 		SELECT PH_ID_SEQ.NEXTVAL FROM dual
 	</selectKey>
-	INSERT INTO pointhistory (user_id, point_id, created_at, PH_id)
+	INSERT INTO pointhistory (user_id, point_id, created_at, id)
 	SELECT #{user_id}, #{point_id}, SYSDATE, PH_ID_seq.NEXTVAL
 	FROM dual
 	WHERE EXISTS (SELECT 1 FROM users WHERE id = #{user_id})

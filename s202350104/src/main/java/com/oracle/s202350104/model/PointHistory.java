@@ -10,7 +10,7 @@ public class PointHistory {
 	private int 	user_id;
 	private int 	point_id;
 	private Date 	created_at;
-	private int		PH_id;
+	private int		id;
 	
 	//조회용
 	private String	title;
