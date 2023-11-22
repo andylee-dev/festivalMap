@@ -59,100 +59,15 @@
 		<script type="text/javascript">
 			let initialTags = []; // 원래 DB에 저장되어 있던 태그 모두 저장
 			let selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
-			let allTags = []; // 태그 자동완성을 위해 모든 태그들의 id와 name을 저장한 배열 
+			let allTags = []; // 전체 태그 정보를 모두 가져와 저장
 			let myTagsArea;
+
 			
 			document.addEventListener("DOMContentLoaded", (event) => {
 				
-				<!-- 자동완성 관련 코드 Start -->
-				let searchForm = document.getElementById(searchForm);
-				let autocomplete = document.getElementById(autocomplete);
-				
-				allTagOptions();
-				
-				const value = searchForm.value.trim(); // 검색어
-				const matchDataList = allTags.filter((label) => label.includes(value)); // 자동완성 필터링(리스트)
-				
-				var nowIndex = 0;
-				
-				searchForm.input(function(event) {
-					
-					switch(event.keyCode) {
-						// 방향키 up					
-						case 38:
-							nowIndex = Math.max(nowIndex-1, 0); // -1 했을 때 0보다 작다면 0으로 지정
-							break;
-							
-						// 방향키 down
-						case 40:
-							nowIndex = Math.min(nowIndex+1, matchDataList.length-1); // +1 했을 때 리스트 개수보다 커지지 않도록 지정
-							break;
-							
-						// 엔터키
-						case 13:
-							// 엔터키를 눌렀을 때 선택한 검색어로 대체
-							$('#searchForm').value = matchDataList[nowIndex] || "";
-							 
-							// 기존 데이터 초기화
-							nowIndex = 0;
-							matchDataList.length = 0;
-							break;
-							 
-						// 그외 입력 초기화
-						default:
-							nowIndex = 0;
-					}
-					
-					showList(matchDataList, value, nowIndex);
-				});
-				
-				const showList = (data, value, nowIndex) => {
-					// 정규식 변환
-					const regex = new RegExp('(${value})','g');
-					
-					autoComplete.innerHTML = data
-						.map(
-								(label, index) => '
-									<div class='${nowIndex === index? "active" : ""}'>
-										${label.replace(regex, "<mark>$1</mark>")}
-									</div>
-								'
-						)
-						.join("");
-					
-				}
-					
-				<!-- 자동완성 관련 코드 End -->
-	
-				<!-- 태그 관리 관련 코드 Start -->	
-				myTagsArea = document.querySelector('#my_tags');
+				myTagsArea = document.querySelector('#my_tags'); // 저장한 태그 버튼을 보여줄 박스
+				allTagOptions();	
 				initialSelectedTags(); // DB에 이미 저장되어 있던 tags만 selectedTags에 저장
-				
-				$('#tagSelectBox').change(function() {		
-					var selectedTagId = $(this).val(); // 선택된 tag의 id를 가져옴
-					var selectedTagName = $(this).find('option:selected').text(); // 선택된 tag의 name을 가져옴
-					
-					var selectedTag = {
-						id: selectedTagId,
-						name: selectedTagName 
-					};
-					
-					// 이미 배열에 있는 태그인지 체크
-					var isDuplicate = false;
-					for(var i = 0; i < selectedTags.length; i++) {
-						if(selectedTags[i].id == selectedTag.id) {
-							isDuplicate = true;
-							alert("이미 추가한 태그입니다.");
-						}
-					}
-					
-					// 배열에 없었던 태그일 경우에만 추가
-					if(!isDuplicate) {
-						selectedTags.push(selectedTag); 
-						newTagBadge(selectedTag);
-					}
-					
-				});
 			});
 			
 			function allTagOptions() {
@@ -171,7 +86,6 @@
 					}
 				})
 			}; 
-			
 			
 			function initialSelectedTags() {
 				var userId = '${userId}';
@@ -255,7 +169,40 @@
 					}
 				})
 			}
-			<!-- 태그 관리 관련 코드 end -->
+			
+			function addTag() {
+				var newTagName = $('#searchForm').val(); // 선택된 tag의 name을 가져옴
+				
+				// 선택된 tag의 id를 가져옴
+				for(var i = 0; i < allTags.length; i++) {
+					if(allTags[i].name == newTagName) {
+						newTagId = allTags[i].id;
+					}
+				}
+
+				var selectedTag = {
+					id: newTagId,
+					name: newTagName
+				};
+				
+				// 이미 배열에 있는 태그인지 체크
+				var isDuplicate = false;
+				for(var i = 0; i < selectedTags.length; i++) {
+					if(selectedTags[i].id == selectedTag.id) {
+						isDuplicate = true;
+						alert("이미 추가한 태그입니다.");
+					}
+				}
+				
+				// 배열에 없었던 태그일 경우에만 추가
+				if(!isDuplicate) {
+					selectedTags.push(selectedTag); 
+					newTagBadge(selectedTag);
+				}
+				
+				$('#searchForm').value = "";
+			}
+
 		</script>
 	</head>
 	<body>
@@ -274,18 +221,21 @@
 						</div>
 						<div class="container col-10 justify-content-center mt-5">
 							<form action="list" method="GET" class="container justify-content-center">
-								<!-- 검색어 -->
+								<!-- 검색 -->
 								<div class="col-12 my-4 d-flex align-items-center">
-									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
-									<div class="col-7 mx-1">
+									<label for="searchType" class="col-form-label col-1  mx-2">태그찾기</label>
+									<div class="col-8 mx-1">
 										<input type="text" name="keyword" class="form-control" id="searchForm" 
-										 value="${keyword}" placeholder="검색어를 입력해주세요.">
-										<div id="autocomplete" class="selectArea"></div>
+										 placeholder="키워드를 입력해주세요." autocomplete="off" list="autoTags">
+										<datalist id="autoTags">
+											<c:forEach var="tag" items="${listAllTags}">
+												<option id="${tag.id}" value="${tag.name}">
+											</c:forEach>
+										</datalist>
 									</div>
 									<!-- 버튼 -->
 									<div class="col-5 mx-1 d-flex justify-content-start">
-										<button type="submit" class="btn btn-primary col-2 mx-1">검색</button>
-										<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
+										<button type="button" class="btn btn-primary col-2 mx-1" onclick="addTag()">저장</button>
 									</div>
 								</div>
 							</form>	

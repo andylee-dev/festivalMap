@@ -150,10 +150,11 @@ public class UserController {
 			int userId = us.getLoggedInId();
 			log.info("userId:{}/ userRole:{}",userId,us.getLoggedInUserRole());
 			List<Tags> listMyTags = ts.searchUserTagsOne(userId);
-			String[] arrMyTags = new String[listMyTags.size()];
-			
-			model.addAttribute("arrMyTags", arrMyTags);
+			Tags tags = new Tags();
+			List<Tags> listAllTags = ts.listTags(tags);
+
 			model.addAttribute("listMyTags", listMyTags);
+			model.addAttribute("listAllTags", listAllTags);
 			model.addAttribute("userId", userId);
 		} catch (Exception e) {
 			log.error("UserController myTag Exception ->" + e.getMessage());
