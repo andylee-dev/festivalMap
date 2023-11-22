@@ -41,16 +41,15 @@
 		
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-				    <form action="" method="POST" class="container justify-content-center">
+				    <form action="" method="get" class="container justify-content-center">
 				    
 				    <!-- 검색어 -->
 			            <div class="col-12 my-4 d-flex align-items-center">
 			                <label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 			                <div class="col-4">
 				                <select id="searchType" name="searchType" class="form-select">
-				                    <option selected value="">코스명</option>
-				                    <option selected value="">지역</option>
-				                    <option selected value="">코스내용</option>
+				                    <option selected value="s_title">코스명</option>
+				                    <option value="s_content">코스내용</option>
 				                </select>
 			                </div>
 			                <div class="col-5 mx-2">
@@ -60,7 +59,7 @@
 			            </div>
 			            
 			            <div class="col-12 my-4 d-flex align-items-center">
-					    	<label for="searchType" class="col-form-label col-2  mx-2">지역</label>
+					    	<label for="searchType" class="col-form-label col-2 mx-2">지역</label>
 						        <div class="col-3 d-flex align-items-center">
 									<select name="area" class="area-dropdown form-select"></select>
 								</div>

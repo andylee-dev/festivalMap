@@ -8,7 +8,7 @@ import com.oracle.s202350104.model.CourseContent;
 
 public interface CourseDao {
 
-	int               		courseCount();
+	int 					courseCount(Course course);
 	List<Course>      		courseList(Course course);
 	List<Course> 			courseDetail(int course_id);
 	int 					courseInsert(Course course);
@@ -21,4 +21,6 @@ public interface CourseDao {
 	int 					deleteCourseContent(CourseContent courseContent);
 	int 					deleteToContent(List<CourseContent> deleteContent);
 	int 					maxOrderNum(int id);
+	
 }      
+	

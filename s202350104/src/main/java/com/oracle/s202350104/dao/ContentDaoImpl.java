@@ -18,8 +18,8 @@ public class ContentDaoImpl implements ContentsDao {
 	private final SqlSession session;
 	
 	@Override
-	public int contentCount() {
-		int contentCount = session.selectOne("contentCount");
+	public int contentCount(Contents content) {
+		int contentCount = session.selectOne("contentCount", content);
 		
 		return contentCount;
 	}
@@ -44,5 +44,4 @@ public class ContentDaoImpl implements ContentsDao {
 		int totalCount = session.selectOne("getTotalSearchCount", contents);
 		return totalCount;
 	}
-
 }

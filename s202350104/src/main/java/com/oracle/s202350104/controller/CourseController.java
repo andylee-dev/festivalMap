@@ -39,7 +39,7 @@ public class CourseController {
 			log.info("[{}]{}:{}",transactionId, "Course", "start");
 			
 			// 코스의 전체 list의 수를 나타냄.
-			int courseCount = cs.courseCount();
+			int courseCount = cs.courseCount(course);
 			
 			// 페이징 처리
 			Paging page = new Paging(courseCount, currentPage);

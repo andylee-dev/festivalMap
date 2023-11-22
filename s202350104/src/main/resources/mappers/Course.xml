@@ -4,32 +4,69 @@
 
 	<mapper namespace="com.oracle.s202350104.CourseMapper">
 	
-		<select id="courseCount" resultType="int">
-			select Count(*) from courses
+		<select id="courseCount" parameterType="Course" resultType="int">
+			SELECT COUNT(*) 
+			FROM courses
+			WHERE 1=1
+			<if test="keyword != null and keyword != ''">
+			    <choose>
+			        <when test="searchType == null or searchType == 's_title'">
+			            AND course_title LIKE '%' || #{keyword} || '%'
+			        </when>
+			        <when test="searchType == 's_content'">
+			            AND course_info LIKE '%' || #{keyword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			<if test="area != 0 and area != null">
+			    AND area = #{area}
+			    <if test="sigungu != 0 and sigungu != null">
+			        AND sigungu = #{sigungu}
+			    </if>
+			</if>
 		</select>
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
-			SELECT * 
-			FROM
-			(
-				SELECT ROWNUM rn, aa.*,
-					(SELECT content FROM areas ar
-					 WHERE aa.area = ar.area AND ar.sigungu = 999) AS area_content,
-					(SELECT content FROM areas ar
-					 WHERE aa.area = ar.area AND aa.sigungu = ar.sigungu) AS sigungu_content
-				FROM
-				    (SELECT a.course_id, a.content_id, a.order_num, b.id, b.area, b.sigungu, 
-			                b.distance, b.course_info, b.time, b.schedule, b.course_title, 
-			                c.big_code, c.small_code, c.title, c.content, c.img1, c.img2, 
-			                c.img3, c.address, c.mapx, c.mapy, c.email, c.homepage, 
-			                c.phone, c.readcount, c.created_at, c.updated_at
-				    FROM   courseContents a
-				    JOIN   courses b ON a.course_id = b.id
-				    JOIN   contents c ON a.content_id = c.id
-				    WHERE  a.order_num = 1
-				    ORDER  by b.id ASC) aa
+			SELECT *
+			FROM (
+			    SELECT ROWNUM rn, aa.course_id, aa.content_id, aa.order_num, aa.id, 
+			    	aa.area, aa.sigungu, aa.distance, aa.course_info, aa.time, aa.schedule, 
+			    	aa.course_title, aa.big_code, aa.small_code, aa.title, aa.content, 
+			    	aa.img1, aa.img2, aa.img3, aa.address, aa.mapx, aa.mapy, aa.email, 
+			    	aa.homepage, aa.phone, aa.readcount, aa.created_at, aa.updated_at,
+			        (SELECT content FROM areas ar WHERE aa.area = ar.area AND ar.sigungu = 999) AS area_content,
+			        (SELECT content FROM areas ar WHERE aa.area = ar.area AND aa.sigungu = ar.sigungu) AS sigungu_content
+			    FROM (
+			        SELECT a.course_id, a.content_id, a.order_num, b.id, b.area, b.sigungu, 
+			        b.distance, b.course_info, b.time, b.schedule, b.course_title, c.big_code, 
+			        c.small_code, c.title, c.content, c.img1, c.img2, c.img3, c.address, c.mapx, 
+			        c.mapy, c.email, c.homepage, c.phone, c.readcount, c.created_at, c.updated_at
+			        FROM courseContents a
+			        JOIN courses b ON a.course_id = b.id
+			        JOIN contents c ON a.content_id = c.id
+			        WHERE a.order_num = 1
+			        <if test="keyword != null and keyword != ''">
+			            <choose>
+			                <when test="searchType == null or searchType == 's_title'">
+			                    AND b.course_title LIKE '%' || #{keyword} || '%'
+			                </when>
+			                <when test="searchType == 's_content'">
+			                    AND b.course_info LIKE '%' || #{keyword} || '%'
+			                </when>
+			            </choose>
+			        </if>
+			        <if test="area != 0 and area != null">
+			            AND b.area = #{area}
+			            <if test="sigungu != 0 and sigungu != null">
+			                AND b.sigungu = #{sigungu}
+			            </if>
+			        </if>
+			        ORDER BY b.id ASC
+			    ) aa
 			)
-			WHERE rn BETWEEN #{start} and #{end}
+			<if test="start != 0 and end != 0">     
+			    WHERE rn BETWEEN #{start} AND #{end}
+			</if>
 			
 		</select>
 		

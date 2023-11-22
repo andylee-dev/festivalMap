@@ -22,11 +22,11 @@ public class CourseDaoImpl implements CourseDao {
 	private final SqlSession session;
 
 	@Override
-	public int courseCount() {
+	public int courseCount(Course course) {
 		int courseCount = 0;
 		
 		try {
-			courseCount = session.selectOne("courseCount");
+			courseCount = session.selectOne("courseCount", course);
 			log.info("CourseDaoImpl courseCount courseCount ->" + courseCount);
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseCount e.getMessage() ->" + e.getMessage());
@@ -239,6 +239,7 @@ public class CourseDaoImpl implements CourseDao {
 		
 		return maxOrderNum;
 	}
+
 
 	
 //	@Override

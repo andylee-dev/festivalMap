@@ -42,6 +42,8 @@ public class Course {
 	private Date 	created_at;
 	private Date 	deleted_at;
 	private String  is_deleted;
+	private int		contArea;
+	private int		contSigungu;
 	
 	// 페이징 처리용
 	private String pageNum;
@@ -54,5 +56,9 @@ public class Course {
 	
 	// courseContent
 	private String cd_content;
+	
+	// 검색용
+	private String searchType;
+	private String keyword;
 	
 }

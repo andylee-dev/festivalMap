@@ -20,8 +20,8 @@ public class ContentServiceImpl implements ContentSerivce {
 	private final ContentsDao contentsDao;
 	
 	@Override
-	public int contentCount() {
-		int contentCount = contentsDao.contentCount();
+	public int contentCount(Contents content) {
+		int contentCount = contentsDao.contentCount(content);
 		
 		return contentCount;
 	}

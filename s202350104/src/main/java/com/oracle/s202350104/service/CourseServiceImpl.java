@@ -23,8 +23,8 @@ public class CourseServiceImpl implements CourseService {
 	private final CourseDao cd;
 
 	@Override
-	public int courseCount() {
-		int courseCount = cd.courseCount();
+	public int courseCount(Course course) {
+		int courseCount = cd.courseCount(course);
 		
 		return courseCount;
 	}
@@ -133,5 +133,4 @@ public class CourseServiceImpl implements CourseService {
 		
 		return maxOrderNum;
 	}
-
 }

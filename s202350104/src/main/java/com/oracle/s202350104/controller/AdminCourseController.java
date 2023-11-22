@@ -50,8 +50,8 @@ public class AdminCourseController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin Course", "start");
 			
-			// Course의 총 개수를 가져옴
-			int courseCount = cs.courseCount();
+			// 조건에 맞는 Course의 총 개수를 가져옴
+			int courseCount = cs.courseCount(course);
 			
 			// 페이징 처리
 			PagingList page = new PagingList(courseCount, currentPage);
@@ -60,7 +60,7 @@ public class AdminCourseController {
 
 			log.info("AdminCourseController courseList course ->" + course);
 			
-			// Course의 list를 가져옴
+			// 조건에 맞는 Course의 list를 가져옴
 			List<Course> courseList = cs.courseList(course);
 
 			model.addAttribute("courseCount", courseCount);
@@ -225,14 +225,15 @@ public class AdminCourseController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "contentListAll", "start");
 			
-			// 컴텐츠의 전체 list의 수를 나타냄.
-			int contentCount = contentService.contentCount();
+			// 조건에 맞는 컨텐츠의 전체 list의 수를 나타냄.
+			int contentCount = contentService.contentCount(content);
 			
 			// 페이징 처리
 			PagingList page = new PagingList(contentCount, currentPage);
 			content.setStart(page.getStart());
 			content.setEnd(page.getEnd());
 			
+			// 조건에 맞는 컨텐츠의 list를 나타냄
 			List<Contents> listContents = contentService.listContents(content);
 			
 			model.addAttribute("contentCount", contentCount);
