@@ -42,7 +42,7 @@
 			// 서치이미지를 클릭할 때 폼을 제출하는 함수
 			$(document).ready(function () {
     			$("#searchIcon").click(function () {
-       				$("#").submit();
+       				$("#spot").submit();
     			});
 			});
 	
