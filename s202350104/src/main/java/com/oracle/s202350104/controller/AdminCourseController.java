@@ -179,7 +179,7 @@ public class AdminCourseController {
 	}
 
 	@RequestMapping(value = "/courseInsert")
-	public String courseInsert(Course course, List<String> contents, Model model) {
+	public String courseInsert(Course course, @RequestParam(value = "contents") List<String> contents, Model model) {
 		
 		try {
 			log.info("AdminCourseController courseInsert start...");

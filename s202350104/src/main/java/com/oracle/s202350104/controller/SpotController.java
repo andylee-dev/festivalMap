@@ -188,8 +188,11 @@ public class SpotController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}", transactionId, "spot", "start");
+			
+			spotContent.setIs_deleted("0");
+			spotContent.setStatus("1");
+			
 			int totalSearchSpot = ss.totalSearchSpot(spotContent);
-
 			int small_code = spotContent.getSmall_code();
 			int big_code = spotContent.getBig_code();
 			String keyword = spotContent.getKeyword();

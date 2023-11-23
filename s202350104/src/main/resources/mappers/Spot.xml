@@ -62,6 +62,12 @@
              	  and c.big_code = #{big_code}
              	  and c.small_code = #{small_code}
              	 </if>
+             	 <if test="is_deleted != null and is_deleted != ''">
+			 		and c.is_deleted = #{is_deleted}
+			 	</if>
+			 	<if test="status != null and status != ''">
+			 		and c.status = #{status}
+			 	</if>
              	 and c.big_code = cc.big_code
              	 and c.small_code = cc.small_code
              	 <if test="keyword != null">
