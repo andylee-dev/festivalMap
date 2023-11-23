@@ -179,7 +179,7 @@
         select small_code, content 
 		from commoncodes 
 		where big_code = 15
-		and small_code <999
+		and small_code < 999
        ]]>	        
 	</select>
 	

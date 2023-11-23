@@ -102,7 +102,7 @@
 			<div class="co1 title-div">
 						C O U R S E!</div>
 			<div class="co1 text-div">
-				<h4><strong>어떤 여행코스를 가볼까요~♫</strong></h4>
+				<h4><strong>어떤 여행코스로 떠나볼까요~♫</strong></h4>
 			</div>
 			<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 코스의 이름이나 키워드를 검색해보세요.">
 			<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
@@ -127,9 +127,12 @@
 				<div class="col d-flex justify-content-center">
 					<select class="form-select" aria-label="Default select example">
 						<option selected>코스&nbsp;테마</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+						<option value="1">가족코스</option>
+						<option value="2">나홀로코스</option>
+						<option value="3">힐링코스</option>
+						<option value="4">도보코스</option>
+						<option value="5">캠핑코스</option>
+						<option value="6">맛코스</option>
 					</select>
 				</div>				
 			</div>		

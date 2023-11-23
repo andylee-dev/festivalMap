@@ -239,6 +239,7 @@
     function showPopUp() {
         console.log("showPopUp 함수 호출됨");
         console.log("course_id value:", "${course.course_id}");
+        event.preventDefault();
 
         var width = 800;
         var height = 600;
@@ -360,6 +361,7 @@
 	
  	// 최종적으로 submit 눌렀을때, delList, addList 요소 추가.
     function submitHandler() {
+
         const finalList = getCurrentContentList(); // 현재 목록 가져오기
         console.log("getCurrentContentList() ->", getCurrentContentList());
         let delList = [];
