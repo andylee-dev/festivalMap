@@ -46,20 +46,57 @@
 </head>
 
 <body>
-	
+		<!-- 임시, 여백용-->
+		<div id="content_title" class="container"></div>
 
 
-		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-			<!-- HeaderBanner by.엄민용 -->
-			<c:forEach var="headers" items="${bannerHeader }">
-				<c:choose>
-					<c:when test="${headers.title == '체험' }">
-						<img alt="체험_headerBanner" src="${headers.image }">
-					</c:when>
-				</c:choose> 
-			</c:forEach>
-			<!-- HeaderBanner end -->
+		<div class="container p-0 homeList-banner-custom">
+			<div id="carouselExampleIndicators" class="carousel slide"
+			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
+			 data-bs-wrap="true">
+
+			<!-- 중앙 하단 버튼용 -->
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="0" class="active" aria-current="true"
+						aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+
+			<!-- 아이템 재료 영역 -->
+			<div class="carousel-inner homeList-banner-img">
+				<div class="carousel-item active">
+					<img src="../image/BANNER1.png" class="d-block w-100" alt="메인배너1" />
+				</div>
+				<div class="carousel-item">
+					<img src="../image/BANNER2.png" class="d-block w-100" alt="메인배너2" />
+				</div>
+				<div class="carousel-item">
+					<img src="../image/BANNER3.png" class="d-block w-100" alt="메인배너3" />
+				</div>
+			</div>
+
+			<!-- 좌,우 버튼 영역 -->
+			<button class="carousel-control-prev" type="button"
+					data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true">
+					<img src="../image/arrowLeft.png" alt="Previous">
+				</span> 
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+					data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true">
+					<img src="../image/arrowRight.png" alt="Next">
+				</span>
+				<span class="visually-hidden">Next</span>
+			</button>
+
 		</div>
+	</div>
 		
 		<!-- 상단 분홍색 영역 -->
 		<div class="container homeList-top-custom"></div>
