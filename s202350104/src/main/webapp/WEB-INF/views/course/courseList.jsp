@@ -69,16 +69,52 @@
 	<!-- 임시, 여백용-->
 	<div id="content_title" class="container"></div>
 	
-	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-		<!-- HeaderBanner by.엄민용 -->				
-		<c:forEach var="headers" items="${bannerHeader }">
-			<c:choose>
-				<c:when test="${headers.title == '코스' }">
-					<img alt="코스_headerBanner" src="${headers.image }">
-				</c:when>
-			</c:choose> 
-		</c:forEach>
-		<!-- HeaderBanner end -->
+	<!-- 상단 banner 영역 -->
+	<div class="container p-0 homeList-banner-custom">
+		<div id="carouselExampleIndicators" class="carousel slide"
+			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
+			 data-bs-wrap="true">
+			 
+			 <!-- 중앙 하단 버튼용 -->
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="0" class="active" aria-current="true"
+						aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+			
+			<!-- 아이템 재료 영역 -->
+			<div class="carousel-inner homeList-banner-img">
+				<div class="carousel-item active">
+					<img src="../image/BANNER1.png" class="d-block w-100" alt="메인배너1"/>
+				</div>
+				<div class="carousel-item">
+					<img src="../image/BANNER2.png" class="d-block w-100" alt="메인배너2"/>
+				</div>
+				<div class="carousel-item">
+					<img src="../image/BANNER3.png" class="d-block w-100" alt="메인배너3"/>
+				</div>
+			</div>
+			
+			<!-- 좌,우 버튼 영역 -->
+			<button class="carousel-control-prev" type="button"
+					data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true">
+					<img src="../image/arrowLeft.png" alt="Previous">
+				</span> 
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+					data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true">
+					<img src="../image/arrowRight.png" alt="Next">
+				</span> 
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
 	</div>
 	
 	<!-- 상단 분홍색 영역 -->
@@ -86,34 +122,42 @@
 	
 	<!-- keyword, title 영역 -->	
 	<form id="course" action="course" method="get">
-	<div class="container homeCommon-keyword-title-custom">
-		<div class="co1 title-div"">
-					C O U R S E!</div>
-		<div class="co1 text-div">
-			<h4><strong>어떤 여행코스를 가볼까요~♫</strong></h4>
+		<div class="container homeCommon-keyword-title-custom">
+			<div class="co1 title-div">
+						C O U R S E!</div>
+			<div class="co1 text-div">
+				<h4><strong>어떤 여행코스를 가볼까요~♫</strong></h4>
+			</div>
+			<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 코스의 이름이나 키워드를 검색해보세요.">
+			<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 		</div>
-		<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 코스의 이름이나 키워드를 검색해보세요.">
-		<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
-	</div>
 
-	<!-- 경계선 표현 -->
-	<hr class="container homeCommon-top-custom">
+		<!-- 경계선 표현 -->
+		<hr class="container homeCommon-top-custom">
 
-	<!-- select 영역 -->
-	<div class="container homeCommon-select-custom">
-		<div class="row g-2 text-center">
-			<div class="col d-flex justify-content-center">
-				<select class="form-select area-dropdown" 
-						aria-label="Default select example" name="area">
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select sigungu-dropdown" 
-						aria-label="Default select example" name="sigungu">
-				</select>
-			</div>
-		</div>		
-	</div>
+		<!-- select 영역 -->
+		<div class="container homeCommon-select-custom">
+			<div class="row g-2 text-center">
+				<div class="col d-flex justify-content-center">
+					<select class="form-select area-dropdown" 
+							aria-label="Default select example" name="area">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select sigungu-dropdown" 
+							aria-label="Default select example" name="sigungu">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select" aria-label="Default select example">
+						<option selected>코스&nbsp;테마</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>				
+			</div>		
+		</div>
 	</form>
 
 	<!-- 경계선 표현 -->

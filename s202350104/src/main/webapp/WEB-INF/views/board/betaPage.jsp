@@ -286,23 +286,8 @@
 		</script>
 <script src="/js/updateArea.js"></script>
 
-<style type="text/css">
-	@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
-	
-	.form-label {
-		font-size: 20px;
-		font-family: 'Nanum+Pen+Script', sans-serif;
-		font-weight: bold;
-	}
-	
-	.form-select, .form-control {
-		border: 2px black solid;
-		border-radius: 23.50px;
-		margin-bottom: 5px;
-	}
-</style>
-
 <link href="/css/home.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
@@ -314,6 +299,47 @@
 			<div id="map" class="col-8" style="width:800px; height: 500px;"></div>
 		</div>
 	</div>
+	
+	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+		<!-- HeaderBanner by.엄민용 -->
+		<c:forEach var="headers" items="${bannerHeader }">
+			<c:choose>
+				<c:when test="${headers.title == '숙박' }">
+					<img alt="숙박_headerBanner" src="${headers.image }">
+				</c:when>
+			</c:choose> 
+		</c:forEach>
+		<!-- HeaderBanner end -->
+	</div>
+	
+			<div class="album py-5 bg-body-tertiary">
+			<div class="container">
+				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+					<c:forEach var="spot" items="${listSpot}">
+						<div class="col">
+							<div class="card app-card">
+								<div class="app-tag-container" style="position: relative;">
+              					<div class="app-tag" style="position: absolute; left: 12px; top: 12px;">
+                				<div class="app-tag-text" style="font-size: 14">#지역해시태그</div>
+             					</div>
+								<a href="spot/detail?contentId=${spot.content_id}&currentPage=${page.currentPage}">
+								<img src="${spot.img1}" class="app-card-img-top"
+									alt="${spot.title}이미지"></a>
+								</div>	
+								<div class="card-body app-card-body">
+									<p class="app-card-text">
+										명소명 : ${spot.title} <br> 
+										<span style="color: #FF4379;">휴무일 : ${spot.rest_date}</span> <br>
+										<span style="font-weight: normal;">${spot.content}</span>
+									</p>
+									<c:set var="card" value="${card - 1}"></c:set>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
 
 </body>
 </html>

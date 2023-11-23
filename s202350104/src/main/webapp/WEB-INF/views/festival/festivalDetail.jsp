@@ -325,7 +325,6 @@ function getLocation() {
             $(this).toggleClass("card");
         }); */
     }); 
-    
 
 </script>
 
@@ -403,15 +402,18 @@ function getLocation() {
 	<!-- content tag 출력-->
 	<div class="container homeDetail-topTags-custom">
 		<div class="row row-cols-6">
-			<div class="col-sm-1 hashTag-custom">
-				<button value="">#해시태그</button>
-			</div>
-			<div class="col-sm-1 hashTag-custom">
-				<button value="">#해시태그</button>
-			</div>
-			<div class="col-sm-1 hashTag-custom">
-				<button value="">#해시태그</button>
-			</div>			
+			<c:forEach var="tags" items="${listTags }">
+				<div class="col-sm-1 hashTag-custom">
+					<c:choose>
+						<c:when test="${tags.tag_id > 0}">
+							<button value="&{tags.tag_id }">#${tags.name }</button>		
+						</c:when>
+						<c:otherwise>
+							<button>#해시태그</button>	
+						</c:otherwise>
+					</c:choose>	
+				</div>		
+			</c:forEach>
 		</div>
 	</div>
 

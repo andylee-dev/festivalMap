@@ -118,37 +118,37 @@
 		<!-- 경계선 표현 -->
 		<hr class="container homeCommon-top-custom">	
 			
-	<!-- select 영역 -->
-	<div class="container homeCommon-select-custom">
-		<div class="row g-2 text-center">
-			<div class="col d-flex justify-content-center">
-				<select class="form-select area-dropdown" 
-						aria-label="Default select example" name="area">
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select sigungu-dropdown" 
-						aria-label="Default select example" name="sigungu">
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select" aria-label="Default select example">
-					<option selected>진행 기간 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
-			</div>
-			<div class="col d-flex justify-content-center">
-				<select class="form-select" aria-label="Default select example">
-					<option selected>진행 여부 선택</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
-			</div>
-		</div>		
-	</div>
+		<!-- select 영역 -->
+		<div class="container homeCommon-select-custom">
+			<div class="row g-2 text-center">
+				<div class="col d-flex justify-content-center">
+					<select class="form-select area-dropdown" 
+							aria-label="Default select example" name="area">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select sigungu-dropdown" 
+							aria-label="Default select example" name="sigungu">
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select" aria-label="Default select example">
+						<option selected>진행 기간 선택</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
+				<div class="col d-flex justify-content-center">
+					<select class="form-select" aria-label="Default select example">
+						<option selected>진행 여부 선택</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
+			</div>		
+		</div>
 	</form>
 	
 	<!-- 경계선 표현 -->
