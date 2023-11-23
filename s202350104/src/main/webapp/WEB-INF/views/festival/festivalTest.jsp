@@ -21,7 +21,7 @@
 	});
 	
 	let currentQuestionIndex = 0;
-	const mbtiResult = {};
+	const mbtiResult = {"E":0,"I":0,"N":0,"S":0,"T":0,"F":0,"J":0,"S":0};
 	
 	function startTest() {
 	  showQuestion();
@@ -50,7 +50,6 @@
 			    val: parseInt(event.target.dataset.optionVal)
 			  };	  
 	  const { key, val } = option;
-
 	  if (mbtiResult[key]) {
 	    mbtiResult[key] += val;
 	  } else {
@@ -68,9 +67,9 @@
 	}
 	
 	function updateProgressBar() {
-	  const progress = ((currentQuestionIndex + 1) / mbtiSet.question_set.length) * 100;
+	  const progress = ((currentQuestionIndex ) / mbtiSet.question_set.length) * 100;
 	  document.querySelector('.progress-bar').style.width = progress+"%";
-	  document.querySelector('.progress-bar').innerHTML = (currentQuestionIndex + 1) +"/"+( mbtiSet.question_set.length);
+	  document.querySelector('.progress-bar').innerHTML = (currentQuestionIndex ) +"/"+( mbtiSet.question_set.length);
 	}
 	
 	function showResult() {
@@ -80,7 +79,6 @@
 	
 	function calculateMBTI() {
 	  let result = "";
-	  
 	  result += mbtiResult.E > mbtiResult.I ? "E" : "I";
 	  result += mbtiResult.S > mbtiResult.N ? "S" : "N";
 	  result += mbtiResult.T > mbtiResult.F ? "T" : "F";
