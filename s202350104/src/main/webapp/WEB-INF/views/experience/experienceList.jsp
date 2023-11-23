@@ -89,7 +89,7 @@
 				<div class="container homeCommon-select-custom">
 					<div class="row g-2 text-center">
 						<div class="col d-flex justify-content-center">
-							<select class="form-select area-dropdown"" 
+							<select class="form-select area-dropdown" 
 									aria-label="Default select example" name="area">
 							</select>
 						</div>
