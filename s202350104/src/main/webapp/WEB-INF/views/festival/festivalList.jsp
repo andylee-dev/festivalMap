@@ -151,7 +151,7 @@
 	</div>
 	</form>
 	
-	<!-- 경계선 표현 -->
+	<!-- 경계선 표현 -->	
 	<hr class="container homeCommon-top-custom">	
 
 	<!-- 목록 영역 -->
