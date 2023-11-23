@@ -32,7 +32,7 @@
 	// 서치이미지를 클릭할 때 폼을 제출하는 함수
 	$(document).ready(function () {
     	$("#searchIcon").click(function () {
-       		$("#accomodation").submit();
+       		$("#indexaccomodationSearch").submit();
     	});
 	});
 	
@@ -97,7 +97,8 @@
 	<div class="container homeList-top-custom"></div>
 	
 	<!-- keyword, title 영역 -->	
-	<form id="accomodation" action="festival" method="get">
+	<form id="indexaccomodationSearch" action="indexaccomodationSearch" method="get">
+	<input type="hidden" name="big_code" value="13">
 		<div class="container homeCommon-keyword-title-custom">
 	
 			<div class="co1 title-div">
@@ -126,11 +127,11 @@
 					</select>
 				</div>
 				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
-						<option selected>객실&nbsp;종류</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+					<select class="form-select" aria-label="Default select example" name="small_code">
+						<option value="999">객실&nbsp;종류</option>
+						<c:forEach var="small" items="${listSmallCode}">
+							<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
+						</c:forEach>
 					</select>
 				</div>
 			</div>		

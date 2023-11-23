@@ -33,7 +33,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		
 		try {
 			listAccomodation = session.selectList("accomodationAll", accomodation);
-			log.info("AccomodationDaoImpl listRestaurant AccomodationsList.size()->" + listAccomodation.size());
+			log.info("AccomodationDaoImpl listAccomodation AccomodationsList.size()->" + listAccomodation.size());
 		} catch (Exception e) {
 			log.info("AccomodationDaoImpl listAccomodation e.getMessage()->" + e.getMessage());
 		}
@@ -143,7 +143,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 			listSmallCode = session.selectList("syListSmallCodeAll",accomodationContent);
 			log.info("AccomodationDaoImpl listSmallCode() => " + listSmallCode.size());
 		} catch (Exception e) {
-			// TODO: handle exception
+			 log.error("Exception in listSmallCode method: " + e.getMessage());
 		}
 		return listSmallCode;
 	}

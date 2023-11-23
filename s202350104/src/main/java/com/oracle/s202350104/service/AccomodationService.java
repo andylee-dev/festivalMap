@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.Areas;
 
 
 public interface AccomodationService {
@@ -20,6 +21,7 @@ public interface AccomodationService {
 	int                        totalSearchAccomodation(AccomodationContent accomodationContent);
 	int                        conTotalAccomodation(AccomodationContent accomodation);
 	List<AccomodationContent>  indexlistSearchAccomodation(AccomodationContent accomodation);
+
 
 
 	

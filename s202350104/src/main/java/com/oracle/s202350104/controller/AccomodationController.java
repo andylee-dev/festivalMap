@@ -14,6 +14,7 @@ import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.RestaurantsContent;
 import com.oracle.s202350104.service.AccomodationService;
 import com.oracle.s202350104.service.AreaService;
@@ -45,6 +46,8 @@ public class AccomodationController {
 
 		try {
 			log.info("[{}]{}:{}", transactionId, "accomodation", "start");
+			
+			int path = 0;
 
 			int totalAccomodation = as.totalAccomodation();
 			
@@ -53,13 +56,15 @@ public class AccomodationController {
 			accomodation.setEnd(page.getEnd());
 
 			List<AccomodationContent> listAccomodation = as.listAccomodation(accomodation);
+			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodation);
 			List<Areas> listAreas = ars.listAreas();
 
 			model.addAttribute("totalAccomodation", totalAccomodation);
 			model.addAttribute("listAccomodation", listAccomodation);
+			model.addAttribute("listSmallCode" , listSmallCode);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
-
+			model.addAttribute("path", path);
 			/*
 			 * Banner Logic 구간 --> bannerHeader, bannerFooter by 엄민용
 			 */
@@ -164,24 +169,36 @@ public class AccomodationController {
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "Start");
+			
 			int totalAccomodation = as.conTotalAccomodation(accomodation);
+			
 			int path 			= 1;
+			String small_code 	= request.getParameter("small_code");
+			String big_code 	= request.getParameter("big_code");
 			String area 		= request.getParameter("area");
 			String sigungu 		= request.getParameter("sigungu");
+			String keyword		= request.getParameter("keyword");
 			
 			Paging page = new Paging(totalAccomodation, currentPage);
 			accomodation.setStart(page.getStart());
 			accomodation.setEnd(page.getEnd());
 			
+			List<Areas> listAreas = ars.listAreas();
 			List<AccomodationContent> listSearchAccomodation = as.indexlistSearchAccomodation(accomodation);
+			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodation);
 			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
 			
 			model.addAttribute("totalAccomodation", totalAccomodation);
+			model.addAttribute("listAccomodation", listSearchAccomodation);
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
 			model.addAttribute("path", path);
 			model.addAttribute("area", area);
 			model.addAttribute("sigungu", sigungu);
 			model.addAttribute("page", page);
-			model.addAttribute("listAccomodation", listSearchAccomodation);
+			model.addAttribute("keyword", keyword);			
 			// model.addAttribute("listRestaurant", listRestaurant);
 			
 		} catch (Exception e) {

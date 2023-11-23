@@ -121,7 +121,7 @@
    						</when>       
   					</choose>
 				</if>
-				<if test="small_code != null">
+				<if test="small_code != null and small_code !=0">
 					<choose>
  	 					<when test="small_code != 999">
 	    					AND small_code = #{small_code}  
