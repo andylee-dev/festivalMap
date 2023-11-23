@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html><%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="com.oracle.s202350104.service.map.MapService"%>
@@ -11,268 +22,299 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FestivalDetail</title>
+<title>숙박 상세</title>
 <!-- 카카오 MAP -->
 <% ApplicationContext context=WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
    MapService map=context.getBean("kakaoMapSerivce", MapService.class); String apiKey=map.getApiKey(); %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>&libraries=clusterer"></script>
 
-<!-- 지역 코드 넣는 코드  -->
-<script src="/js/updateArea.js"></script>
+<style type="text/css">
+#overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
 
-<!-- script 영역 -->
 <script>
-let markers = [];
-let map = null;
-let clusterer = null;
-
-function initKakaoMap() {
-	if ("geolocation" in navigator) {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			const latitude = ${festival.mapy };
-			const longitude = ${festival.mapx };
-			map = getKakaoMap(latitude, longitude);
-			clusterer = new kakao.maps.MarkerClusterer({
-				map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-				averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-				minLevel: 10,
-				// 클러스터 할 최소 지도 레벨
+	let markers = [];
+	let map = null;
+	let clusterer = null;
+	
+	function initKakaoMap() {
+		if ("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				const latitude = ${accomodation.mapy };
+				const longitude = ${accomodation.mapx };
+				map = getKakaoMap(latitude, longitude);
+				clusterer = new kakao.maps.MarkerClusterer({
+					map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+					minLevel: 10,
+					// 클러스터 할 최소 지도 레벨
+				});
+				
+				setCenter(latitude, longitude);
+				
+				const placePosition = new kakao.maps.LatLng(latitude, longitude);
+				
+				addMarker(placePosition, 0);
 			});
-			
-			setCenter(latitude, longitude);
-			
-			const placePosition = new kakao.maps.LatLng(latitude, longitude);
-			
-			addMarker(placePosition, 0);
-		});
-	} else {
-		console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+		} else {
+			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+		}
 	}
-}
-
-function setCenter(lat, lng) {
-	// 이동할 위도 경도 위치를 생성합니다
-	var moveLatLon = new kakao.maps.LatLng(lat, lng);
-
-	// 지도 중심을 이동 시킵니다
-	map.setCenter(moveLatLon);
-}
-
-function getKakaoMap(latitude, longitude) {
-	const container = document.getElementById("map");
-	const options = {
-		center: new kakao.maps.LatLng(latitude, longitude),
-		level: 3,
-	};
-
-	return new kakao.maps.Map(container, options);
-}
-
-
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-const infowindow = new kakao.maps.InfoWindow({
-	zIndex: 1,
-});
-
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
-	const listEl = document.getElementById("placesList"),
-		menuEl = document.getElementById("menu_wrap"),
-		fragment = document.createDocumentFragment(),
-		bounds = new kakao.maps.LatLngBounds(),
-		listStr = "";
-
-	// 검색 결과 목록에 추가된 항목들을 제거합니다
-	removeAllChildNods(listEl);
-
-	// 지도에 표시되고 있는 마커를 제거합니다
-	clusterer.removeMarkers(markers);
-
-	// 지도에 표시되고 있는 마커를 제거합니다
-	removeMarker();
-
-	for (var i = 0; i < places.length; i++) {
-		// 마커를 생성하고 지도에 표시합니다
-		if (!places[i].mapy || !places[i].mapx) continue;
-		const placePosition = new kakao.maps.LatLng(
-			places[i].mapy,
-			places[i].mapx
-		);
-		console.log(
-			"placePosition" +
-			placePosition.getLat() +
-			"/" +
-			placePosition.getLng()
-		);
-
-		(marker = addMarker(placePosition, i)),
-			console.log("marker:" + marker);
-
-		itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-		// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-		// LatLngBounds 객체에 좌표를 추가합니다
-		bounds.extend(placePosition);
-
-		// 마커와 검색결과 항목에 mouseover 했을때
-		// 해당 장소에 인포윈도우에 장소명을 표시합니다
-		// mouseout 했을 때는 인포윈도우를 닫습니다
-		(function (marker, title) {
-			kakao.maps.event.addListener(marker, "mouseover", function () {
-				displayInfowindow(marker, title);
+	
+	function setCenter(lat, lng) {
+		// 이동할 위도 경도 위치를 생성합니다
+		var moveLatLon = new kakao.maps.LatLng(lat, lng);
+	
+		// 지도 중심을 이동 시킵니다
+		map.setCenter(moveLatLon);
+	}
+	
+	function getKakaoMap(latitude, longitude) {
+		const container = document.getElementById("map");
+		const options = {
+			center: new kakao.maps.LatLng(latitude, longitude),
+			level: 3,
+		};
+	
+		return new kakao.maps.Map(container, options);
+	}
+	
+	
+	// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+	const infowindow = new kakao.maps.InfoWindow({
+		zIndex: 1,
+	});
+	
+	// 검색 결과 목록과 마커를 표출하는 함수입니다
+	function displayPlaces(places) {
+		const listEl = document.getElementById("placesList"),
+			menuEl = document.getElementById("menu_wrap"),
+			fragment = document.createDocumentFragment(),
+			bounds = new kakao.maps.LatLngBounds(),
+			listStr = "";
+	
+		// 검색 결과 목록에 추가된 항목들을 제거합니다
+		removeAllChildNods(listEl);
+	
+		// 지도에 표시되고 있는 마커를 제거합니다
+		clusterer.removeMarkers(markers);
+	
+		// 지도에 표시되고 있는 마커를 제거합니다
+		removeMarker();
+	
+		for (var i = 0; i < places.length; i++) {
+			// 마커를 생성하고 지도에 표시합니다
+			if (!places[i].mapy || !places[i].mapx) continue;
+			const placePosition = new kakao.maps.LatLng(
+				places[i].mapy,
+				places[i].mapx
+			);
+			console.log(
+				"placePosition" +
+				placePosition.getLat() +
+				"/" +
+				placePosition.getLng()
+			);
+	
+			(marker = addMarker(placePosition, i)),
+				console.log("marker:" + marker);
+	
+			itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+	
+			// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			// LatLngBounds 객체에 좌표를 추가합니다
+			bounds.extend(placePosition);
+	
+			// 마커와 검색결과 항목에 mouseover 했을때
+			// 해당 장소에 인포윈도우에 장소명을 표시합니다
+			// mouseout 했을 때는 인포윈도우를 닫습니다
+			(function (marker, title) {
+				kakao.maps.event.addListener(marker, "mouseover", function () {
+					displayInfowindow(marker, title);
+				});
+	
+				kakao.maps.event.addListener(marker, "mouseout", function () {
+					infowindow.close();
+				});
+				// 마커 클릭 이벤트 처리
+				kakao.maps.event.addListener(marker, "click", function () {
+					// 클릭한 마커의 위치로 지도 확대
+					/* map.setLevel(5); */
+					bound = new kakao.maps.LatLngBounds();
+					bound.extend(marker.getPosition());
+					map.setBounds(bound);
+					map.setCenter(marker.getPosition());
+				});
+	
+				itemEl.onmouseover = function () {
+					displayInfowindow(marker, title);
+					map.setCenter(marker.getPosition());
+				};
+	
+				itemEl.onmouseout = function () {
+					infowindow.close();
+				};
+	
+				itemEl.onclick = function () {
+					bound = new kakao.maps.LatLngBounds();
+					bound.extend(marker.getPosition());
+					map.setBounds(bound);
+					map.setCenter(marker.getPosition());
+				};
+			})(marker, places[i].title);
+	
+			fragment.appendChild(itemEl);
+		}
+		clusterer.addMarkers(markers);
+	
+		// 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+		listEl.appendChild(fragment);
+		menuEl.scrollTop = 0;
+	
+		// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+		map.setBounds(bounds);
+	}
+	// 검색결과 항목을 Element로 반환하는 함수입니다
+	function getListItem(index, place) {
+		// 카드 요소 생성
+		const cardEl = document.createElement("div");
+		cardEl.className = "card mb-4";
+	
+		// 카드 이미지 생성
+		const imageEl = document.createElement("img");
+		imageEl.src = place.img1;
+		imageEl.className = "card-img-top";
+		imageEl.style.height = "200px"; // 이미지의 세로 높이를 150px로 설정
+		cardEl.appendChild(imageEl);
+	
+		// 카드 내용 생성
+		const cardBodyEl = document.createElement("div");
+		cardBodyEl.className = "card-body";
+	
+		const titleEl = document.createElement("h5");
+		titleEl.className = "card-title";
+		titleEl.textContent = place.title;
+		cardBodyEl.appendChild(titleEl);
+	
+		const descEl = document.createElement("p");
+		descEl.className = "card-text";
+		const truncatedDesc = truncateText(place.content, 50); // 50자로 제한
+		descEl.innerHTML = truncatedDesc;
+		cardBodyEl.appendChild(descEl);
+	
+		const linkEl = document.createElement("a");
+		linkEl.href = place.link;
+		linkEl.className = "btn btn-primary";
+		linkEl.textContent = "자세히 보기";
+		cardBodyEl.appendChild(linkEl);
+		cardEl.appendChild(cardBodyEl);
+	
+		return cardEl;
+	}
+	
+	function truncateText(text, maxLength) {
+		if (text.length > maxLength) {
+			return ( text.slice(0, maxLength) + "...");
+		}
+		return text;
+	}
+	
+	// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+	function addMarker(position, idx, title) {
+		var imageSrc =
+			"https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+			imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+			imgOptions = {
+				spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+				spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+				offset: new kakao.maps.Point(13, 37),
+				// 마커 좌표에 일치시킬 이미지 내에서의 좌표
+			},
+			markerImage = new kakao.maps.MarkerImage(
+				imageSrc,
+				imageSize,
+				imgOptions
+			),
+			marker = new kakao.maps.Marker({
+				position: position, // 마커의 위치
+				image: markerImage,
 			});
-
-			kakao.maps.event.addListener(marker, "mouseout", function () {
-				infowindow.close();
+		marker.setMap(map); // 지도 위에 마커를 표출합니다
+	
+		markers.push(marker); // 배열에 생성된 마커를 추가합니다
+	
+		return marker;
+	}
+	
+	// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+	function removeMarker() {
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null);
+		}
+		markers = [];
+	}
+	
+	
+	// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+	// 인포윈도우에 장소명을 표시합니다
+	function displayInfowindow(marker, title) {
+		var content = '<div style="padding:5px;z-index:1;">' + title + "</div>";
+	
+		infowindow.setContent(content);
+		infowindow.open(map, marker);
+	}
+	
+	// 검색결과 목록의 자식 Element를 제거하는 함수입니다
+	function removeAllChildNods(el) {
+		while (el.hasChildNodes()) {
+			el.removeChild(el.lastChild);
+		}
+	}
+	
+	function getLocation() {
+		if ("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				const latitude = position.coords.latitude;
+				const longitude = position.coords.longitude;
+				setCenter(latitude, longitude);
 			});
-			// 마커 클릭 이벤트 처리
-			kakao.maps.event.addListener(marker, "click", function () {
-				// 클릭한 마커의 위치로 지도 확대
-				/* map.setLevel(5); */
-				bound = new kakao.maps.LatLngBounds();
-				bound.extend(marker.getPosition());
-				map.setBounds(bound);
-				map.setCenter(marker.getPosition());
-			});
-
-			itemEl.onmouseover = function () {
-				displayInfowindow(marker, title);
-				map.setCenter(marker.getPosition());
-			};
-
-			itemEl.onmouseout = function () {
-				infowindow.close();
-			};
-
-			itemEl.onclick = function () {
-				bound = new kakao.maps.LatLngBounds();
-				bound.extend(marker.getPosition());
-				map.setBounds(bound);
-				map.setCenter(marker.getPosition());
-			};
-		})(marker, places[i].title);
-
-		fragment.appendChild(itemEl);
+		} else {
+			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+		}
 	}
-	clusterer.addMarkers(markers);
 
-	// 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-	listEl.appendChild(fragment);
-	menuEl.scrollTop = 0;
-
-	// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-	map.setBounds(bounds);
-}
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, place) {
-	// 카드 요소 생성
-	const cardEl = document.createElement("div");
-	cardEl.className = "card mb-4";
-
-	// 카드 이미지 생성
-	const imageEl = document.createElement("img");
-	imageEl.src = place.img1;
-	imageEl.className = "card-img-top";
-	imageEl.style.height = "200px"; // 이미지의 세로 높이를 150px로 설정
-	cardEl.appendChild(imageEl);
-
-	// 카드 내용 생성
-	const cardBodyEl = document.createElement("div");
-	cardBodyEl.className = "card-body";
-
-	const titleEl = document.createElement("h5");
-	titleEl.className = "card-title";
-	titleEl.textContent = place.title;
-	cardBodyEl.appendChild(titleEl);
-
-	const descEl = document.createElement("p");
-	descEl.className = "card-text";
-	const truncatedDesc = truncateText(place.content, 50); // 50자로 제한
-	descEl.innerHTML = truncatedDesc;
-	cardBodyEl.appendChild(descEl);
-
-	const linkEl = document.createElement("a");
-	linkEl.href = place.link;
-	linkEl.className = "btn btn-primary";
-	linkEl.textContent = "자세히 보기";
-	cardBodyEl.appendChild(linkEl);
-	cardEl.appendChild(cardBodyEl);
-
-	return cardEl;
-}
-
-function truncateText(text, maxLength) {
-	if (text.length > maxLength) {
-		return ( text.slice(0, maxLength) + "...");
+	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
+	    console.log("showPopUp 함수가 호출되었습니다.");			
+		//창 크기 지정
+		var width = 550;
+		var height = 600;
+		
+		//pc화면기준 가운데 정렬
+		var left = (window.screen.width / 2) - (width/2);
+		var top = (window.screen.height / 4);
+		
+	    //윈도우 속성 지정
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+		
+	    //연결하고싶은url
+	    const url = "../reviewBoardInsertForm?userId="+ userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
+	
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		window.open(url, "hello popup", windowStatus);
 	}
-	return text;
-}
-
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-	var imageSrc =
-		"https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-		imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
-		imgOptions = {
-			spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-			spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-			offset: new kakao.maps.Point(13, 37),
-			// 마커 좌표에 일치시킬 이미지 내에서의 좌표
-		},
-		markerImage = new kakao.maps.MarkerImage(
-			imageSrc,
-			imageSize,
-			imgOptions
-		),
-		marker = new kakao.maps.Marker({
-			position: position, // 마커의 위치
-			image: markerImage,
-		});
-	marker.setMap(map); // 지도 위에 마커를 표출합니다
-
-	markers.push(marker); // 배열에 생성된 마커를 추가합니다
-
-	return marker;
-}
-
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
-	for (var i = 0; i < markers.length; i++) {
-		markers[i].setMap(null);
-	}
-	markers = [];
-}
-
-
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-	var content = '<div style="padding:5px;z-index:1;">' + title + "</div>";
-
-	infowindow.setContent(content);
-	infowindow.open(map, marker);
-}
-
-// 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {
-	while (el.hasChildNodes()) {
-		el.removeChild(el.lastChild);
-	}
-}
-
-function getLocation() {
-	if ("geolocation" in navigator) {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			const latitude = position.coords.latitude;
-			const longitude = position.coords.longitude;
-			setCenter(latitude, longitude);
-		});
-	} else {
-		console.log("Geolocation을 지원하지 않는 브라우저입니다.");
-	}
-}	
-
-
+	
+	
 	/* 대분류, 소분류 기능 js */
 	document.addEventListener("DOMContentLoaded", function() {
 		initKakaoMap();
@@ -294,43 +336,35 @@ function getLocation() {
 	    window.open("../reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
 	}
 	
-	/* review 생성 기능 js */
-	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
-	    console.log("showPopUp 함수가 호출되었습니다.");		
-		//창 크기 지정
-		var width = 700;
-		var height = 600;
-		
-		//pc화면기준 가운데 정렬
-		var left = (window.screen.width / 2) - (width/2);
-		var top = (window.screen.height / 4);
-		
-	    //윈도우 속성 지정
-		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
-		
-	    //연결하고싶은url
-	    const url = "../reviewBoardInsertForm?userId="+ userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
-	
-		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
-		window.open(url, "hello popup", windowStatus);
-	}
-	
-	/* review card carousel js */
-    $(document).ready(function () {
-        $(".custom-carousel").owlCarousel({
-            autoWidth: true,
-            loop: true
-        });
-/*         $(".custom-carousel .card").click(function () {
-            $(".custom-carousel .card").not($(this)).removeClass("card");
-            $(this).toggleClass("card");
-        }); */
-    }); 
+    function like() {
+ 	    const favorite = {
+			user_id : ${userId},
+			content_id: ${accomodation.content_id},
+		}
+		$.ajax({
+			method:"POST",
+			url:"/toggleFavoriteAjax",
+			data:JSON.stringify(favorite),
+			dataType:'json',
+			contentType: "application/json",
+			success:
+				function(result) {
+					if(result == 1) {
+						alert("찜했습니다.");
+					} else {
+						alert("찜목록에서 제외했습니다.");
+					}		
+				}
+		})
+    }
 
+    function share() {
+        navigator.clipboard.writeText(window.location.href);
+        alert("링크를 복사하였습니다.");
+    }
 </script>
 
 </head>
-
 <body>
 	<!-- 임시, 여백용-->
 	<div id="content_title" class="container homeDetail-whiteSpace-custom"></div>
@@ -339,9 +373,9 @@ function getLocation() {
 	<form id="festival" action="festival" method="get">
 	<div class="container homeCommon-keyword-title-custom">
 		<div class="co1 title-div">
-					F E S T I V A L!</div>
+					accomodation!</div>
 		<div class="co1 text-div">
-			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
+			<h4><strong>좋은 숙박을 알아볼까요~♫</strong></h4>
 		</div>
 		<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
 		<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
@@ -382,13 +416,13 @@ function getLocation() {
 		</div>		
 	</div>
 	</form>
-	
+
 	<!-- 상단 분홍색 title 출력-->
 	<div class="homeDetail-topTitle-custom">
 		<div class="container homeDetail-topTitle-custom">
 			<div class="row row-cols-3">
 				<div class="col title-custom">
-					<p>${festival.title}</p>
+					<p>${accomodation.title}</p>
 				</div>
 				<div class="col image-custom">
 					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
@@ -399,47 +433,44 @@ function getLocation() {
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- content tag 출력-->
 	<div class="container homeDetail-topTags-custom">
 		<div class="row row-cols-6">
-			<c:forEach var="tags" items="${listTags }">
-				<div class="col-sm-1 hashTag-custom">
-					<c:choose>
-						<c:when test="${tags.tag_id > 0}">
-							<button value="&{tags.tag_id }">#${tags.name }</button>		
-						</c:when>
-						<c:otherwise>
-							<button>#해시태그</button>	
-						</c:otherwise>
-					</c:choose>	
-				</div>		
-			</c:forEach>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>			
 		</div>
-	</div>
+	</div>	
 
 	<!-- 이미지, 기본 정보 출력 -->
 	<div class="container homeDetail-basic-custom">
 		<div class="row row-cols-3">
 			<!-- 첫번째 큰 이미지 -->
 			<div class="col homeDetail-basic-img-custom">
-				<img alt="${festival.img1}" src="${festival.img1}">
+				<img alt="${accomodation.img1}" src="${accomodation.img1}">
 			</div>
 			
 			<!-- 두번째 작은 이미지 -->
 			<div class="col homeDetail-basic-sideImg-custom">
 				<div class="row row-cols-1">
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">	
+						<img alt="${accomodation.img2}" src="${accomodation.img2}">	
 					</div>
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">					
+						<img alt="${accomodation.img2}" src="${accomodation.img2}">					
 					</div>
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">					
+						<img alt="${accomodation.img2}" src="${accomodation.img2}">					
 					</div>
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">					
+						<img alt="${accomodation.img2}" src="${accomodation.img2}">					
 					</div>
 					<div class="col sideImg-custom">+5</div>
 				</div>
@@ -450,121 +481,98 @@ function getLocation() {
 				<div class="row row-cols-1">
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">축제명</p>
-						<p>${festival.title}</p>
+						<p class="text-md-custom">상호명</p>
+						<span>${accomodation.title}</span>
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">기간</p>
-						<span>
-							<fmt:formatDate value="${festival.start_date}" pattern="yyyy.MM.dd"/>
-							~
-							<fmt:formatDate value="${festival.end_date}" pattern="MM.dd"/>
-						</span>						
+						<p class="text-sm-custom">주소</p>
+						<span>${accomodation.address}</span>											
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">시간</p>
-						<span>${festival.hours}</span>						
+						<p class="text-sm-custom">우편번호</p>
+						<span>${accomodation.postcode}</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">입장료</p>
-						<c:choose>
-							<c:when test="${festival.cost == '무료' || festival.cost == null}">
-								<span>무료</span>
-							</c:when>
-							<c:otherwise>
-								<span>유료</span>			
-							</c:otherwise>						
-						</c:choose>					
+						<p class="text-md-custom">전화번호</p>
+						<span>${accomodation.phone}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">장소</p>
-						<span>${festival.eventplace}</span>
+						<p class="text-sm-custom">홈페이지</p>
+						<a href="${accomodation.homepage}"><span>${festival.homepage}</span></a>
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">위치</p>
-						<span>${festival.address}</span>
+						<p class="text-sm-custom">객실수</p>
+						<span>${accomodation.room_count}</span>
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">주최</p>
-						<span>${festival.sponsor}</span>
+						<p class="text-sm-custom">예약처</p>
+						<span>${accomodation.reservation_url}</span>
 					</div>
 	
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>문의전화</p>
-						<span>${festival.phone}</span>					
+						<p>환불규정</p>
+						<span>${accomodation.refund}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>문의메일</p>
-						<span>꿈나라꿈나라</span>											
+						<p>입실시간</p>
+						<span>${accomodation.check_in}</span>											
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>홈페이지</p>	
-						<span>
-							<a href="${festival.homepage}">${festival.homepage}</a>
-						</span>										
+						<p>퇴실시간</p>	
+						<span>${accomodation.check_out}</span>										
 					</div>
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
-									<c:when test="${festival.is_parking eq 1 }">
+									<c:when test="${accomodation.is_parking eq 1 }">
 										<img alt="packing_icon.png" src="../image/packing_icon.png">									
 									</c:when>
 									<c:otherwise>
 										<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>주차시설</span>	
-						
+								<span>주차가능</span>							
 							</div>
+							
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
 									<c:when test="${festival.is_stroller eq 1 }">
-										<img alt="restroom_icon.png" src="../image/restroom_icon.png">									
-									</c:when>
-									<c:otherwise>
-										<img alt="disabled_restroom_icon.png" src="../image/disabled_restroom_icon.png">									
-									</c:otherwise>					
-								</c:choose>	
-								<span>장애인화장실</span>								
-							</div>
-							<div class="row row-cols-2 icon-custom">
-								<c:choose>
-									<c:when test="${festival.is_wheelchair eq 1 }">
 										<img alt="activate_icon.png" src="../image/activate_icon.png">									
 									</c:when>
 									<c:otherwise>
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>
-								<span>휠체어 대여</span>							
+								<span>조리가능</span>								
 							</div>
+							
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
-									<c:when test="${festival.is_stroller eq 1 }">
+									<c:when test="${accomodation.is_pickup eq 1 }">
 										<img alt="activate_icon.png" src="../image/activate_icon.png">									
 									</c:when>
 									<c:otherwise>
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
-								</c:choose>	
-								<span>유모차 대여</span>							
+								</c:choose>
+								<span>픽업가능</span>							
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 	
 	<!-- 경계선 표현 -->
 	<hr class="container homeCommon-top-custom">
@@ -576,18 +584,10 @@ function getLocation() {
 	
 	<div class="container homeDetail-overView_custom">
 		<div class="homeDetail-overView-detail">
-			<p>개   요 : ${festival.content}</p>
-			<p>내   용 : ${festival.overview}</p>
-			<c:choose>
-				<c:when test="${festival.cost == '무료' || festival.cost == null}">
-				</c:when>
-				<c:otherwise>
-					<p>입장료 상세정보 : ${festival.cost}</p>				
-				</c:otherwise>
-			</c:choose>
+			<p>개   요 : ${accomodation.content}</p>
 		</div>
 	</div>
-	
+
 	<!-- 경계선 표현 -->
 	<hr class="container homeCommon-top-custom">
 	
@@ -595,7 +595,7 @@ function getLocation() {
 	<div class="container homeDetail-mdTitle-custom">
 		<h2><strong>REVIEW</strong></h2>
 			<div class="homeDetail-reviewInsert-btn-box">
-				<button class="btn" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${festival.content_id},${festival.big_code})">리뷰&nbsp;등록</button>
+				<button class="btn" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${accomodation.content_id},${accomodation.big_code})">리뷰&nbsp;등록</button>
 			</div>
 	</div>
 	
@@ -618,8 +618,8 @@ function getLocation() {
 						<span>"아주 좋았어요!"</span>
 					</div>
 				</div>										  
-			</div>
-					
+			</div>			
+			
 			<!-- 전체 리뷰 현황 -->
 			<div class="col dashboardBox-custom">
 				<div class="row first-box" style="">
@@ -786,8 +786,11 @@ function getLocation() {
 			</div>						
 		</div>
 	</div>
-
+	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
+
 </body>
 </html>
+
+

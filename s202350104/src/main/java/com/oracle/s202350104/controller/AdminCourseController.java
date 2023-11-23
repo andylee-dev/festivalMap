@@ -179,11 +179,12 @@ public class AdminCourseController {
 	}
 
 	@RequestMapping(value = "/courseInsert")
-	public String courseInsert(Course course, @RequestParam List<String> contents, Model model) {
+	public String courseInsert(Course course, List<String> contents, Model model) {
 		
 		try {
 			log.info("AdminCourseController courseInsert start...");
 			log.info("AdminCourseController courseInsert course ->" + course);
+			log.info("AdminCourseController courseInsert course ->" + contents);
 
 			/* TODO: Course정보를 INSERT. */
 			int newCourseId = cs.courseInsert(course);

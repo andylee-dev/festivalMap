@@ -149,7 +149,7 @@
 	function submitForm() {
 		event.preventDefault();
 		
-		var insertFormData = $('#insertForm').serializeArray();
+		var insertFormData = $('#myForm').serializeArray();
 		var finalTags = [];
 		for(var i = 0; i < selectedTags.length; i++) {
 			finalTags.push(Number(selectedTags[i].id));
@@ -158,13 +158,13 @@
 		
 		if(confirm("등록하시겠습니까?")) {
 			$.ajax({
-				url: "<%=request.getContextPath()%>/admin/content/festival/insert",
+				url: "<%=request.getContextPath()%>/admin/course/courseInsertForm",
 				method: "POST",
 				data: insertFormData,
 				dataType: "text",
 				success: function(str) {
 					alert(str);
-					location.href="<%=request.getContextPath()%>/admin/content/festival";
+					location.href="<%=request.getContextPath()%>/admin/course/list";
 				}
 			})
 		}
@@ -654,7 +654,7 @@
 						</div>
 						
 						<div class="text-center">
-							<button type="submit" class="btn btn-primary button-submit-font button-submit-design">등록</button>
+							<button type="submit" class="btn btn-primary button-submit-font button-submit-design" onclick="submitForm()">등록</button>
 							<button class="btn btn-secondary button-cancle-font button-cancle-design" onclick="closeAndRedirect()">취소</button>
 						</div>
 						
