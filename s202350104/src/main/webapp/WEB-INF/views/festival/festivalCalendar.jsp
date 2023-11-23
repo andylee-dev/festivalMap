@@ -1,7 +1,8 @@
-<%@page import="com.oracle.s202350104.model.FestivalsContent"%>
+<%@page import="java.util.Date"%>
+<%@ page import="com.oracle.s202350104.model.FestivalsContent"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
+<%@ page import="java.util.List"%>
 <%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -63,20 +64,20 @@
         		domNodes: []
         	};
         },
-        events: [
-        			<%List<FestivalsContent> listFestivals = (List<FestivalsContent>)request.getAttribute("listFestivals");%>
-                	<%if (listFestivals != null) {%>
-                	<%for (FestivalsContent fs : listFestivals) {%>
-               	 		{
-                			title : '<%=fs.getTitle()%>',
-                    		start : '<%=fs.getStart_date()%>',
-                    		end : '<%=fs.getEnd_date()%>',
-                    		color : "#EEFFC2",
-                            textColor : "#000000",
-                            url: "${pageContext.request.contextPath}/festival/detail?contentId="+<%=fs.getContent_id()%> // 축제명 클릭시 상세페이지 이동
-               	 		},
-    				<%}
-    			}%>
+        events: [	
+		        	<%List<FestivalsContent> listFestivals = (List<FestivalsContent>)request.getAttribute("listFestivals");
+		        		if (listFestivals != null) {
+		        		for (FestivalsContent fs : listFestivals) {%>
+	               	 		{ 
+	                			title : "<%=fs.getTitle()%>",
+	                    		start : "<%=fs.getStartdateStr()%>",
+	                    		end   : "<%=fs.getEnddateStr()%>",
+	                    		color : "#EEFFC2",
+	                            textColor : "#000000",
+	                            url: "${pageContext.request.contextPath}/festival/detail?contentId="+<%=fs.getContent_id()%> // 축제명 클릭시 상세페이지 이동
+	               	 		},
+	               	 	<%}
+		    		}%>
         		],
           	dateClick: function(info) {
              	 // 날짜를 클릭했을 때 출석체크 이벤트를 추가합니다.

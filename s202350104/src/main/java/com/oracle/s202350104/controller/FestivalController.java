@@ -1,5 +1,7 @@
 package com.oracle.s202350104.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,7 +45,7 @@ public class FestivalController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "festival", "start");
+			log.info("[{}]{}:{}", transactionId, "festival", "start");
 			
 			festival.setIs_deleted("0");	// 삭제X 상태 지정
 			festival.setStatus("1");		// 승인완료 상태 지정
@@ -80,9 +82,9 @@ public class FestivalController {
 			model.addAttribute("bannerFooter", bannerFooter); 
 			
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "festival", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "festival", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "festival", "end");
+			log.info("[{}]{}:{}", transactionId, "festival", "end");
 		}		
 		return "festival/festivalList";
 	}
@@ -95,7 +97,7 @@ public class FestivalController {
 		FestivalsContent festival = null;
 		
 		try {
-			log.info("[{}]{}:{}",transactionId, "festival/detail", "start");
+			log.info("[{}]{}:{}", transactionId, "festival/detail", "start");
 			
 			// 상세정보 Logic 구간
 			festival = fs.detailFestivals(contentId);
@@ -117,9 +119,9 @@ public class FestivalController {
 			model.addAttribute("contentId", contentId);
 
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "festival/detail", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "festival/detail", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "festival/detail", "end");
+			log.info("[{}]{}:{}", transactionId, "festival/detail", "end");
 		}
 		
 		/*
@@ -206,16 +208,16 @@ public class FestivalController {
 	public String festivalCalendar(FestivalsContent festival , Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
-			log.info("[{}]{}:{}",transactionId, "festival/calendar", "start");
+			log.info("[{}]{}:{}", transactionId, "festival/calendar", "start");
 			
-			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
+			List<FestivalsContent> listFestivals = fs.listFestivalsCal();
 			log.info("Festivalcalendar listFestivals size : "+ listFestivals.size());
 			model.addAttribute("listFestivals", listFestivals);
 			
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId, "festival/calendar", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "festival/calendar", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}",transactionId, "festival/calendar", "end");
+			log.info("[{}]{}:{}", transactionId, "festival/calendar", "end");
 		}		
 		return "festival/festivalCalendar";
 	}

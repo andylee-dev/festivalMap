@@ -178,7 +178,7 @@
 	
 	<select id="nhFestivalTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM ContentTags ct, Tags t
+		FROM  ContentTags ct, Tags t
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = #{festivalKey}
 		ORDER BY t.name
@@ -189,5 +189,12 @@
 		WHERE tag_id = #{tag_id}
 		AND content_id = #{content_id}
 	</delete>
+	
+	<!-- festival calendar용 쿼리 -->
+	<select id="nhFestivalDateSelect" resultType="FestivalsContent">
+		SELECT content_id, title, TO_CHAR(start_date, 'YYYY-MM-DD') as startdateStr, TO_CHAR(end_date, 'YYYY-MM-DD') as enddateStr
+		FROM   festivals f, contents c
+		WHERE  f.content_id = c.id
+	</select>
 	
 </mapper>

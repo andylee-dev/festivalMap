@@ -65,4 +65,8 @@ public class FestivalsContent {
 	private String[]   finalTags;
 	private int        tag_id;
 	private List<Tags> myTags;
+	
+	// 캘린더용
+	private String startdateStr;
+	private String enddateStr;
 }

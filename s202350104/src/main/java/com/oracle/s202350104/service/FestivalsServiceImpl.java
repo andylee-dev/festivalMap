@@ -132,4 +132,15 @@ public class FestivalsServiceImpl implements FestivalsService {
 		return listTags;
 	}
 
+	@Override
+	public List<FestivalsContent> listFestivalsCal() {
+		List<FestivalsContent> listFestivals = fd.listFestivalsCal();
+		
+		if(listFestivals == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 축제 정보가 존재하지 않습니다.");
+		}
+		
+		return listFestivals;
+	}
+
 }
