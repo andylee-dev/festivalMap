@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class RestaurantsContent {
 	// Contents 컬럼
+	private int    id;
 	private int    area;
 	private int    sigungu;
 	private int    big_code;
