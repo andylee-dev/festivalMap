@@ -42,11 +42,29 @@
 	
 	
 	<select id="joConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
-		SELECT count(*)
-		FROM   restaurants r, (SELECT id
-							   FROM   contents
-							   WHERE  area = #{area} AND sigungu = #{sigungu}) c	
-		WHERE   r.content_id = c.id  
+		SELECT 	COUNT(*)
+		FROM   	contents
+		WHERE 	big_code = #{big_code}
+		AND   	status = 1
+		AND   	is_deleted = 0
+		<if test = "keyword != null">
+			AND title like '%' || #{keyword} || '%'
+		</if>
+		<if test="small_code != null">
+			<choose>
+ 	 			<when test="small_code != 999">
+	    			AND small_code = #{small_code}  
+	   			</when>
+	 			<when test="small_code = 999">
+	    		</when>    
+  			</choose>
+		</if>
+		<if test="area != 0">
+			and area = #{area}
+				<if test=" sigungu != 0">
+					and sigungu = #{sigungu}
+				</if>
+		</if>
 	</select>
 	
 	

@@ -71,6 +71,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		int conTotalRestaurant = 0;
 		try {
 			conTotalRestaurant = session.selectOne("joConTotalRestaurant", restaurant);
+			log.info("RestaurantDaoImpl joConTotalRestaurant ->" + conTotalRestaurant);
 		} catch (Exception e) {
 			log.info("RestaurantDaoImpl joConTotalRestaurant() Exception ->" + e.getMessage());
 		}

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/components/header.jsp" %>
+<%@ include file="/WEB-INF/components/header.jsp"%>
 <%@ include file="/WEB-INF/components/TobBar.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -76,9 +76,8 @@
 			</div>
 		
 			<!-- 경계선 표현 -->
-			<div>
 			<hr class="container homeCommon-top-custom">		
-			</div>
+			
 			
 			<!-- select 영역 -->
 			<div class="container homeCommon-select-custom">
@@ -102,10 +101,11 @@
 								</c:forEach>	 	
 						</select>
 					</div>
+					<input type="hidden" name="currentPage" value="${page.currentPage}">
 				</div>		
 			</div>	
 			</form>
-		</div>	
+			
 			
 		<!-- 경계선 표현 -->
 		<hr class="container homeCommon-top-custom">	
@@ -121,8 +121,8 @@
 								<div class="homeList-tag-custom2">
 									<p class="tag-p">#지역태그</p>
 								</div>
-                          	<a href="restaurant/detail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">
-                            	<img src="${restaurant.img1}" class="app-card-img-top" alt="${restaurant.title}이미지">
+                          	<a href="restaurant/detail?contentId=${restaurant.id}&currentPage=${page.currentPage}">
+                            	<img src="${restaurant.img1}" class="card-img-top" alt="${restaurant.title}이미지">
                          	</a>
                          </div>
                          <div class="card-body">
@@ -135,43 +135,53 @@
                   </c:forEach>
                </div>
             </div>      
-                  
+               
          <!-- 페이징 처리 -->
          <nav aria-label="Page navigation example">
 			<ul class="pagination">
-         
-         <c:if test="${page.startPage > page.pageBlock}">
-            <c:choose>
-               <c:when test="${path==0}">
-                  <a href="restaurant?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>
-               </c:when>
-               <c:when test="${path==1}">
-                  <a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage-page.pageBlock}" class="pageblock">[이전]</a>   
-               </c:when>
-            </c:choose>   
-         </c:if>
-         <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-            <c:choose>
-               <c:when test="${path==0}">
-                  <a href="restaurant?currentPage=${i}" class="pageblock">[${i}]</a>
-               </c:when>
-               <c:when test="${path==1}">
-                  <a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${i}" class="pageblock">[${i}]</a>
-               </c:when>
-            </c:choose>   
-         </c:forEach>
-         <c:if test="${page.endPage < page.totalPage}">
-            <c:choose>
-               <c:when test="${path==0}">
-                  <a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-               </c:when>
-               <c:when test="${path==1}">
-                  <a href="restaurantSearch?area=${area}?sigungu=${sigungu}?currentPage=${page.startPage+page.pageBlock}" class="pageblock">[다음]</a>
-               </c:when>
-            </c:choose>   
-         </c:if>
-         
-         	 </ul>
+         	<c:if test="${page.startPage > page.pageBlock}">
+	            <c:choose>
+	               <c:when test="${path==0}">
+	 	            <li class="page-item">
+	                  <a href="restaurant?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
+		            </li>   
+	               </c:when>
+	               <c:when test="${path==1}">
+					<li class="page-item">
+	                  <a href="restaurantSearch?big_code=${big_code}&keyword=${keyword}&area=${area}&sigungu=${sigungu}&small_code=${small_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>   
+	               </li> 
+	               </c:when>
+	            </c:choose>
+	         </c:if>
+	         <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+	            <c:choose>
+	               <c:when test="${path==0}">
+	               <li class="page-item">
+	                  <a href="restaurant?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':''}">${i}</a>
+	               </li>
+	               </c:when>
+	               <c:when test="${path==1}">
+	               <li class="page-item">
+	                  <a href="restaurantSearch?big_code=${big_code}&keyword=${keyword}&area=${area}&sigungu=${sigungu}&small_code=${small_code}&currentPage=${i}" class="pageblock page-link  ${page.currentPage == i ? 'active':''}">${i}</a>
+	               </li>
+	               </c:when>
+ 	            </c:choose> 
+	         </c:forEach>
+	         <c:if test="${page.endPage < page.totalPage}">
+	            <c:choose>
+ 	          	   <c:when test="${path==0}">
+ 	          	   <li class="page-item">
+	                  <a href="restaurant?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+	               </li>
+	               </c:when>
+	               <c:when test="${path==1}">
+	               <li class="page-item">
+	                  <a href="restaurantSearch?big_code=${big_code}&keyword=${keyword}&area=${area}&sigungu=${sigungu}&small_code=${small_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+	               </li>
+	               </c:when>
+	         	</c:choose>
+	         </c:if>
+	         </ul>
 		 </nav>
          
      

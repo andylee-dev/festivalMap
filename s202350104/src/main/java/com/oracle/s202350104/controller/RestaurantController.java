@@ -214,7 +214,7 @@ public class RestaurantController {
   			int big_code     	= restaurant.getBig_code();
   			String keyword 		= request.getParameter("keyword");
   			String area 		= request.getParameter("area");
-			
+			String sigungu      = request.getParameter("sigungu");
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
@@ -235,6 +235,8 @@ public class RestaurantController {
 			model.addAttribute("big_code", big_code);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
+			model.addAttribute("currentPage", currentPage);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());
