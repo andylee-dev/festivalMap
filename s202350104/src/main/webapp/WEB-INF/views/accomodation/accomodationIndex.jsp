@@ -4,6 +4,7 @@
 <!-- Top bar -->
 <%@ include file="/WEB-INF/components/TobBar.jsp"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,9 +96,9 @@
 	
 	<!-- 상단 분홍색 영역 -->
 	<div class="container homeList-top-custom"></div>
-	
+<div>
 	<!-- keyword, title 영역 -->	
-	<form id="indexaccomodationSearch" action="indexaccomodationSearch" method="get">
+	<form id="indexaccomodationSearch" action="indexaccomodationSearch">
 	<input type="hidden" name="big_code" value="13">
 		<div class="container homeCommon-keyword-title-custom">
 	
@@ -128,16 +129,16 @@
 				</div>
 				<div class="col d-flex justify-content-center">
 					<select class="form-select" aria-label="Default select example" name="small_code">
-						<option value="999">객실&nbsp;종류</option>
-						<c:forEach var="small" items="${listSmallCode}">
-							<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.content}</option>									
-						</c:forEach>
+    				<option value="999">객실&nbsp;종류</option>
+    				<c:forEach var="small" items="${listSmallCode}">
+        			<option value="${small.small_code}" ${small.small_code eq param.small_code ? 'selected' : ''}>${small.content}</option>
+    				</c:forEach>
 					</select>
 				</div>
 			</div>		
 		</div>
 		</form>
-		
+	</div>
 		<!-- 경계선 표현 -->
 		<hr class="container homeCommon-top-custom">	
 

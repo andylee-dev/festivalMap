@@ -194,23 +194,50 @@
 	
 	<select id="indexlistSearchAccomodation" resultType="AccomodationContent" parameterType="AccomodationContent">
 		SELECT *
-		FROM   
-		(		
-				SELECT ROWNUM rn, t.*,
-									  (SELECT content FROM areas a
-				 					   WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
-									  (SELECT content FROM areas a
-				 					   WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
-				
-				 FROM
-			    		(SELECT  *
-						 FROM    accomodations ac, (SELECT *
-							   		   			 FROM   contents
-							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu}) c	
-				 		 WHERE    ac.content_id = c.id
-				 		 ORDER BY content_id) t
-		  )		 		 
-		WHERE   rn between #{start} and #{end}  		  
+		FROM
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT * FROM contents 
+				WHERE big_code = 13
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="area != null and area != 0">
+					AND area = #{area}
+				</if>
+				<if test="sigungu != null and sigungu != 0">
+					AND sigungu = #{sigungu}
+				</if>
+				<if test="status != null">
+					<choose>
+ 	 					<when test="status != 2">
+	    					AND status = #{status}  
+	   	 				</when>
+	 	 				<when test="status = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="is_deleted != null">
+					<choose>
+ 	 					<when test="is_deleted != 2">
+	    					AND is_deleted = #{is_deleted}  
+	   	 				</when>
+	 	 				<when test="is_deleted = 2">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="small_code != null and small_code !=0">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>) a
+		)
+		WHERE rn BETWEEN #{start} and #{end}
 	</select>
 
 </mapper>
