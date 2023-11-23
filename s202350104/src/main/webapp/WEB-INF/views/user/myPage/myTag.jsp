@@ -114,7 +114,7 @@
 			function newTagBadge(selectedTag) {
 				// 태그 버튼 생성 
 				const newTag = document.createElement('button');
-				newTag.className = "btn btn-outline-secondary align-items-center no-hover";
+				newTag.className = "btn btn-outline-secondary align-items-center";
 				newTag.value = selectedTag.name;
 				newTag.innerHTML = "#" +selectedTag.name;
 				newTag.id = selectedTag.id;

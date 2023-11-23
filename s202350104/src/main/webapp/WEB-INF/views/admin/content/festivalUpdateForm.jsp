@@ -123,20 +123,23 @@
 			
 			function newTagBadge(selectedTag) {
 				// 태그 뱃지 생성 
-				const newTag = document.createElement('span');
-				newTag.className = "badge bg-primary";
-				newTag.textContent = "#"+selectedTag.name;
+				const newTag = document.createElement('button');
+				newTag.className = "btn btn-primary align-items-center";
+				newTag.value = selectedTag.name;
+				newTag.innerHTML = "#" +selectedTag.name;
 				newTag.id = selectedTag.id;
 					
 				// x버튼 및 클릭시의 이벤트 생성
-				const closeButton = document.createElement('button');
-				closeButton.className = "btn-close";
-				closeButton.setAttribute('aria-label', 'Close');
+				const closeButton = document.createElement('span');
+				closeButton.innerHTML = "&times";
+				closeButton.className = "close-icon";
+				closeButton.style.marginLeft = "5px";
+				closeButton.style.cursor = "pointer";
 				closeButton.addEventListener('click', (event) => {
 					event.preventDefault();
 					var deletedTag = {
 						id: event.target.parentElement.id,
-						name: event.target.parentElement.textContent.substr(1) // #를 제외한 텍스트를 name으로
+						name: event.target.parentElement.value.substr(1) // #를 제외한 텍스트를 name으로
 					}
 					tagOptions.push(deletedTag); // select box의 option 목록에 삭제된 태그 다시 추가
 						
