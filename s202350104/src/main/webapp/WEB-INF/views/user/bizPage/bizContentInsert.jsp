@@ -277,9 +277,6 @@
 			 <div class="tab-pane fade" id="nav-spot" role="tabpanel" aria-labelledby="nav-spot-tab" tabindex="0">
 			  	<div class="container-fluid">
 					<div class="row">
-						<c:if test="${role == 1 }">
-						<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-						</c:if>
 					<div class="container my-5" id="detail-body-container">
 					<div>
 						<h1>명소 등록</h1>
@@ -659,11 +656,7 @@
 			  <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab" tabindex="0">
 			  	<div class="container-fluid">
 		<div class="row">
-			<c:if test="${role == 1 }">
-				<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			</c:if>
-		<main class="col-10 p-0">
-			<div class="container my-5" id="detail-body-container">
+<div class="container my-5" id="detail-body-container">
 				<div>
 				<h1>체험 등록</h1>
 				<hr class="hr" />
@@ -814,7 +807,7 @@
 				</div>
 				</div>
 			</div>
-		</main>
+
 		</div>
 	</div>
 				

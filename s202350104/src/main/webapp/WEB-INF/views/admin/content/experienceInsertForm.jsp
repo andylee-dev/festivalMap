@@ -128,9 +128,7 @@
 	<body>
 	<div class="container-fluid">
 		<div class="row">
-			<c:if test="${role == 1 }">
-				<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			</c:if>
+			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 		<main class="col-10 p-0">
 			<div class="admin-header-container">
 				<div class="container m-4">
