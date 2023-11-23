@@ -165,7 +165,7 @@
 							</a>
 						</div>
 
-						<div class="card-body">
+						<div class="card-body ">
 					    <p class="card-text title-p">${festival.title}</p>
 					    <p class="card-text period-p">
 					    	<fmt:formatDate value="${festival.start_date}" pattern="yyyy.MM.dd"/>

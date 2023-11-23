@@ -361,7 +361,7 @@
 	<!-- 임시, 여백용-->
 	<div id="content_title" class="container homeDetail-whiteSpace-custom"></div>
 	
-	<!-- keyword, title 영역 -->	
+<!-- 	keyword, title 영역 	
 	<form id="spot" action="spot" method="get">
 	<div class="container homeCommon-keyword-title-custom">
 		<div class="co1 title-div">
@@ -373,10 +373,10 @@
 		<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 	</div>
 	
-	<!-- 경계선 표현 -->
+	경계선 표현
 	<hr class="container homeCommon-top-custom">
 	
-	<!-- select 영역 -->
+	select 영역
 	<div class="container homeCommon-select-custom">
 		<div class="row g-2 text-center">
 			<div class="col d-flex justify-content-center">
@@ -407,7 +407,7 @@
 			</div>
 		</div>		
 	</div>
-	</form>
+	</form> -->
 	
 	<!-- 상단 분홍색 title 출력-->
 	<div class="homeDetail-topTitle-custom">
