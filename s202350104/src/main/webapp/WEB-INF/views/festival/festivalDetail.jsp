@@ -619,11 +619,7 @@ function getLocation() {
 					</div>
 				</div>										  
 			</div>
-			
-<!-- 			<div class="col-2" style="width: 60px; height:180px;">
-			
-			</div> -->
-			
+					
 			<!-- 전체 리뷰 현황 -->
 			<div class="col dashboardBox-custom">
 				<div class="row first-box" style="">
@@ -790,9 +786,6 @@ function getLocation() {
 			</div>						
 		</div>
 	</div>
-
-
-
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>

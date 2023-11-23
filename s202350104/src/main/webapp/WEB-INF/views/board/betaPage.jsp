@@ -333,6 +333,139 @@
 				</c:if>
 			</div>
 			</form>
+			
+			
+			
+				
+	<div class="container" style="display: flex;">
+	  <div class="hashtag-container">
+	    <div class="app-tag-container" style="position: relative;  margin-right: 10px; margin-top: 10px">
+	      <div class="app-tag" style="position: absolute;">
+	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그</div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	  <div class="hashtag-container">
+	    <div class="app-tag-container" style="position: relative; margin-top: 10px">
+	      <div class="app-tag" style="position: absolute;">
+	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그2</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="container border-bottem p-5"
+		style="justify-content: space-between; height: 700px; border-bottom: 3px solid black;">
+		<table>
+        <tr>
+      <td style="width: 10%; height: 100%; text-align: left; margin-left: -40px;">
+        <img id="mainImage" class="thumbnail" alt="${accomodation.title}이미지1"
+             src="${accomodation.img1}"
+             style="width: 313px; height: 525px; object-fit: cover; margin-left: 0px;"
+             align="absmiddle" onclick="openModal(); currentSlide(1)">
+      </td>
+      <td style="width: 10%; text-align: left; vertical-align: top;">
+        <img class="thumbnail" alt="${accomodation.title}이미지1"
+             src="${accomodation.img1}"
+             style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px;" align="absmiddle"
+             onclick="document.getElementById('mainImage').src=this.src">
+        <img class="thumbnail" alt="${accomodation.title}이미지2"
+             src="${accomodation.img2}"
+             style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px;" align="absmiddle"
+             onclick="document.getElementById('mainImage').src=this.src">
+        <img class="thumbnail" alt="${accomodation.title}이미지3"
+             src="${accomodation.img3}"
+             style="width: 100px; height: 100px; object-fit: cover;" align="absmiddle"
+             onclick="document.getElementById('mainImage').src=this.src">
+      </td>
+      
+      
+				<td style="width: 20%; text-align: left;">
+					<ul class="custom-ul">
+						<li><span>상호명</span><span>${accomodation.title}</span></li>
+						<li><span>주소</span><span>${accomodation.address}</span></li>
+						<li><span><b>우편번호</b></span><span>${accomodation.postcode}</span></li>
+						<li><span><b>전화번호</b></span><span>${accomodation.phone}</span></li>
+						<li><span><b>홈페이지</b></span><a href="${accomodation.homepage}"><span>${accomodation.homepage}</span></a></li>
+						<li><span><b>객실수</b></span><span>${accomodation.room_count}</span></li>
+						<li><span><b>예약처</b></span><a href="${accomodation.reservation_url}"><span>${accomodation.reservation_url}</span></a></li>
+						<li><span><b>환불규정</b></span><span>${accomodation.refund}</span></li>
+						<li><span><b>입실시간</b></span><span>${accomodation.check_in}</span></li>
+						<li><span><b>퇴실시간</b></span><span>${accomodation.check_out}</span></li>
+					</ul>
+					<div style="display: flex; justify-content: flex-start; text-align: left; padding-top: 30px">
+						<c:choose>
+							<c:when test="${accomodation.is_pickup == 0}">
+								<div style="text-align: center; margin-right: 5px;">
+								<i class="contentyes-bi bi-car-front"></i>
+								<div style="margin-top: 10px;"><b>픽업가능</b></div>
+								</div>
+								</c:when>
+							<c:when test="${accomodation.is_pickup == 1}">
+							<div style="text-align: center; margin-right: 5px;">
+							<i class="contentno-bi bi-car-front"></i>
+							<div style="margin-top: 10px;"><b>픽업불가</b></div>
+							</div>
+							</c:when>
+						</c:choose>
+						<c:choose>
+							<c:when test="${accomodation.is_cook == 0}">
+							<div style="text-align: center; margin-right: 5px;">
+							<i class="contentyes-bi bi-egg-fried"></i>
+							<div style="margin-top: 10px;"><b>조리가능</b></div>
+							</div>
+							</c:when>
+							<c:when test="${accomodation.is_cook == 1}">
+							<div style="text-align: center; margin-right: 5px;">
+							<i class="contentno-bi bi-egg-fried"></i>
+							<div style="margin-top: 10px;"><b>조리불가</b></div>
+							</div>
+							</c:when>
+						</c:choose>
+						<c:choose>
+							<c:when test="${accomodation.is_parking == 0}">
+							<div style="text-align: center; margin-right: 0px;">
+							<i class="contentyes-bi bi-p-circle"></i>
+							<div style="margin-top: 10px;"><b>주차가능</b></div>
+							</div>
+							</c:when>
+							<c:when test="${accomodation.is_parking == 1}">
+							<div style="text-align: center; margin-right: 0px;">
+							<i class="contentno-bi bi-sign-no-parking"></i>
+							<div style="margin-top: 10px;"><b>주차불가</b></div>
+							</div>
+							</c:when>
+						</c:choose>
+					</div>
+
+
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+		 <script>
+	 document.addEventListener('DOMContentLoaded', function () {
+		    var mainImage = document.getElementById('mainImage');
+		    var largeImage = document.getElementById('largeImage');
+		    var overlay = document.getElementById('overlay');
+
+		    mainImage.addEventListener('click', function () {
+
+		        // 이미지 소스 및 디스플레이 스타일 설정
+		        largeImage.src = this.src;
+		        largeImage.style.display = 'block'; // 추가된 코드
+		        overlay.style.display = 'flex';
+		    });
+
+		    overlay.addEventListener('click', function () {
+
+		        // 오버레이 및 큰 이미지 감추기
+		        this.style.display = 'none';
+		        largeImage.style.display = 'none'; // 추가된 코드
+		    });
+		});
+	</script>
 
 </body>
 </html>
