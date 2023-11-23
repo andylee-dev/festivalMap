@@ -29,8 +29,8 @@ let clusterer = null;
 function initKakaoMap() {
 	if ("geolocation" in navigator) {
 		navigator.geolocation.getCurrentPosition(function (position) {
-			const latitude = ${festival.mapy };
-			const longitude = ${festival.mapx };
+			const latitude = ${accomodation.mapy };
+			const longitude = ${accomodation.mapx };
 			map = getKakaoMap(latitude, longitude);
 			clusterer = new kakao.maps.MarkerClusterer({
 				map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -338,10 +338,9 @@ function getLocation() {
 	<!-- keyword, title 영역 -->	
 	<form id="festival" action="festival" method="get">
 	<div class="container homeCommon-keyword-title-custom">
-		<div class="co1 title-div">
-					F E S T I V A L!</div>
+		<div class="co1 title-div">accomodation!</div>
 		<div class="co1 text-div">
-			<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
+			<h4><strong>좋은 숙박을 알아볼까요~♫</strong></h4>
 		</div>
 		<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
 		<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
@@ -388,7 +387,7 @@ function getLocation() {
 		<div class="container homeDetail-topTitle-custom">
 			<div class="row row-cols-3">
 				<div class="col title-custom">
-					<p>${festival.title}</p>
+					<p>${accomodation.title}</p>
 				</div>
 				<div class="col image-custom">
 					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
@@ -403,18 +402,15 @@ function getLocation() {
 	<!-- content tag 출력-->
 	<div class="container homeDetail-topTags-custom">
 		<div class="row row-cols-6">
-			<c:forEach var="tags" items="${listTags }">
-				<div class="col-sm-1 hashTag-custom">
-					<c:choose>
-						<c:when test="${tags.tag_id > 0}">
-							<button value="&{tags.tag_id }">#${tags.name }</button>		
-						</c:when>
-						<c:otherwise>
-							<button>#해시태그</button>	
-						</c:otherwise>
-					</c:choose>	
-				</div>		
-			</c:forEach>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>			
 		</div>
 	</div>
 
@@ -423,23 +419,23 @@ function getLocation() {
 		<div class="row row-cols-3">
 			<!-- 첫번째 큰 이미지 -->
 			<div class="col homeDetail-basic-img-custom">
-				<img alt="${festival.img1}" src="${festival.img1}">
+				<img alt="${accomodation.img1}" src="${accomodation.img1}">
 			</div>
 			
 			<!-- 두번째 작은 이미지 -->
 			<div class="col homeDetail-basic-sideImg-custom">
 				<div class="row row-cols-1">
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">	
+						<img alt="${accomodation.img1}" src="${accomodation.img1}">	
 					</div>
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">					
+						<img alt="${accomodation.img1}" src="${accomodation.img1}">					
 					</div>
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">					
+						<img alt="${accomodation.img1}" src="${accomodation.img1}">					
 					</div>
 					<div class="col sideImg-custom">
-						<img alt="${festival.img2}" src="${festival.img2}">					
+						<img alt="${accomodation.img1}" src="${accomodation.img1}">					
 					</div>
 					<div class="col sideImg-custom">+5</div>
 				</div>
@@ -450,114 +446,92 @@ function getLocation() {
 				<div class="row row-cols-1">
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">축제명</p>
-						<p>${festival.title}</p>
+						<p class="text-md-custom">상호명</p>
+						<span>${accomodation.title}</span>
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">기간</p>
-						<span>
-							<fmt:formatDate value="${festival.start_date}" pattern="yyyy.MM.dd"/>
-							~
-							<fmt:formatDate value="${festival.end_date}" pattern="MM.dd"/>
-						</span>						
+						<p class="text-sm-custom">주소</p>
+						<span>${accomodation.address}</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">시간</p>
-						<span>${festival.hours}</span>						
+						<p>우편번호</p>
+						<span>${accomodation.postcode}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">입장료</p>
-						<c:choose>
-							<c:when test="${festival.cost == '무료' || festival.cost == null}">
-								<span>무료</span>
-							</c:when>
-							<c:otherwise>
-								<span>유료</span>			
-							</c:otherwise>						
-						</c:choose>					
-					</div>
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">장소</p>
-						<span>${festival.eventplace}</span>
-					</div>
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">위치</p>
-						<span>${festival.address}</span>
-					</div>
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">주최</p>
-						<span>${festival.sponsor}</span>
-					</div>
-	
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>문의전화</p>
-						<span>${festival.phone}</span>					
-					</div>
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>문의메일</p>
-						<span>꿈나라꿈나라</span>											
+						<p>전화번호</p>
+						<span>${accomodation.phone}</span>			
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
 						<p>홈페이지</p>	
 						<span>
-							<a href="${festival.homepage}">${festival.homepage}</a>
-						</span>										
+							<a href="${accomodation.homepage}">${accomodation.homepage}</a>
+						</span>	
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">객실수</p>
+						<span>${accomodation.room_count}</span>
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">예약처</p>
+						<span>${accomodation.reservation_url}</span>
+					</div>
+	
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>환불규정</p>
+						<span>${accomodation.refund}</span>					
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>입실시간</p>
+						<span>${accomodation.check_in}</span>										
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>퇴실시간</p>	
+						<span>${accomodation.check_out}</span>									
 					</div>
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
-									<c:when test="${festival.is_parking eq 1 }">
+									<c:when test="${accomodation.is_parking eq 1 }">
 										<img alt="packing_icon.png" src="../image/packing_icon.png">									
 									</c:when>
 									<c:otherwise>
 										<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>주차시설</span>	
+								<span>주차가능</span>	
 						
 							</div>
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
-									<c:when test="${festival.is_stroller eq 1 }">
+									<c:when test="${accomodation.is_cook eq 1 }">
 										<img alt="restroom_icon.png" src="../image/restroom_icon.png">									
 									</c:when>
 									<c:otherwise>
 										<img alt="disabled_restroom_icon.png" src="../image/disabled_restroom_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>장애인화장실</span>								
+								<span>조리가능</span>								
 							</div>
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
-									<c:when test="${festival.is_wheelchair eq 1 }">
+									<c:when test="${accomodation.is_pickup eq 1 }">
 										<img alt="activate_icon.png" src="../image/activate_icon.png">									
 									</c:when>
 									<c:otherwise>
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>
-								<span>휠체어 대여</span>							
-							</div>
-							<div class="row row-cols-2 icon-custom">
-								<c:choose>
-									<c:when test="${festival.is_stroller eq 1 }">
-										<img alt="activate_icon.png" src="../image/activate_icon.png">									
-									</c:when>
-									<c:otherwise>
-										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
-									</c:otherwise>					
-								</c:choose>	
-								<span>유모차 대여</span>							
+								<span>픽업가능</span>							
 							</div>
 						</div>
 					</div>
@@ -576,15 +550,7 @@ function getLocation() {
 	
 	<div class="container homeDetail-overView_custom">
 		<div class="homeDetail-overView-detail">
-			<p>개   요 : ${festival.content}</p>
-			<p>내   용 : ${festival.overview}</p>
-			<c:choose>
-				<c:when test="${festival.cost == '무료' || festival.cost == null}">
-				</c:when>
-				<c:otherwise>
-					<p>입장료 상세정보 : ${festival.cost}</p>				
-				</c:otherwise>
-			</c:choose>
+			<p>개   요 : ${accomodation.content}</p>
 		</div>
 	</div>
 	
@@ -595,7 +561,7 @@ function getLocation() {
 	<div class="container homeDetail-mdTitle-custom">
 		<h2><strong>REVIEW</strong></h2>
 			<div class="homeDetail-reviewInsert-btn-box">
-				<button class="btn" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${festival.content_id},${festival.big_code})">리뷰&nbsp;등록</button>
+				<button class="btn" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${accomodation.content_id},${accomodation.big_code})">리뷰&nbsp;등록</button>
 			</div>
 	</div>
 	
