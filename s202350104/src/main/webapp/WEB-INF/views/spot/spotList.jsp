@@ -138,7 +138,7 @@
 	</form>
 
 	<!-- keyword, title 영역 -->
-	<form id="spot" action="festival" method="get">
+	<form id="spot" action="spot" method="get">
 		<div class="container homeCommon-keyword-title-custom">
 
 			<div class="co1 title-div">S&nbsp;P&nbsp;O&nbsp;T&nbsp;!</div>
@@ -148,7 +148,7 @@
 				</h4>
 			</div>
 			<input class="form-control keyword-input" type="text" name="keyword"
-					placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요."> 
+					placeholder="가고 싶은 명소의 이름이나 키워드를 검색해보세요."> 
 			<img class="keyword-img" src="../image/icon_search1.png"
 				 alt="icon_search1.png" id="searchIcon" onclick="submitForm()" />
 		</div>
