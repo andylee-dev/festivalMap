@@ -130,4 +130,11 @@ public class CourseServiceImpl implements CourseService {
 		
 		return maxOrderNum;
 	}
+
+	@Override
+	public List<Course> courseListSmallCode(Course course) {
+		List<Course> courseListSmallCode = cd.courseListSmallCode(course);
+		
+		return courseListSmallCode;
+	}
 }

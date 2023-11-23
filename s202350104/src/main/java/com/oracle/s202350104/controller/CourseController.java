@@ -51,8 +51,13 @@ public class CourseController {
 			List<Course> courseList = cs.courseList(course);
 			log.info("courseList : " + courseList);
 			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("CourseListSmallCode : " + courseListSmallCode);
+			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
+			model.addAttribute("CourseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
 			
 			/*
@@ -78,8 +83,8 @@ public class CourseController {
 	@RequestMapping(value = "course/detail")
 	public String courseDetail(Course course, Model model) {
 		try {
-			log.info("course" + course);
-			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
+			log.info("course : " + course);
+			log.info("CourseController courseDetail course.getCourse_id() : " + course.getCourse_id());
 			
 			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());

@@ -240,6 +240,20 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 
+	@Override
+	public List<Course> courseListSmallCode(Course course) {
+		List<Course> courseListSmallCode = null;
+		try {
+			courseListSmallCode = session.selectList("noCourseListSmallCodeAll", course);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl CourseDaoImpl e.getMessage() : " + e.getMessage());
+		}
+		
+		return courseListSmallCode;
+	}
+
+
 	
 //	@Override
 //	public Course courseDetailContent(int id) {

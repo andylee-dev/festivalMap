@@ -61,6 +61,15 @@
 			                AND b.sigungu = #{sigungu}
 			            </if>
 			        </if>
+			        <if test="small_code != null and small_code !=0">
+						<choose>
+	 	 					<when test="big_code = 16 and small_code != 999">
+		    					AND c.small_code = #{small_code}  
+		   	 				</when>
+		 	 				<when test="big_code = 16 and small_code = 999">
+		    				</when>    
+	  					</choose>
+					</if>
 			        ORDER BY b.id ASC
 			    ) aa
 			)
@@ -131,7 +140,7 @@
 		
 		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
-			values (COURSES_ID_SEQ.nextval, 16, 2, #{area}, #{sigungu}, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
+			values (COURSES_ID_SEQ.nextval, #{big_code}, #{small_code}, #{area}, #{sigungu}, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
 			<selectKey keyProperty="id" resultType="Integer" order="AFTER">
 				SELECT COURSES_ID_SEQ.currval FROM dual
 			</selectKey>
@@ -185,6 +194,15 @@
 	    	SELECT MAX(order_num) 
 			FROM CourseContents
 			WHERE course_id = #{id}
+	    </select>
+	    
+	    <select id="noCourseListSmallCodeAll" parameterType="Course" resultType="Course">
+	    	<![CDATA[
+	        select small_code, content cd_content
+			from commoncodes 
+			where big_code = 16
+			and small_code < 999
+	       ]]>
 	    </select>
 		
 	</mapper>

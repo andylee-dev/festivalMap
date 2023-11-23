@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.ContentDaoImpl;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
+import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.Paging;
@@ -37,6 +39,7 @@ public class AdminCourseController {
 
 	private final CourseService cs;
 	private final ContentSerivce contentService;
+	private final CommonCodeService ccs;
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
@@ -60,9 +63,16 @@ public class AdminCourseController {
 			
 			// 조건에 맞는 Course의 list를 가져옴
 			List<Course> courseList = cs.courseList(course);
+			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("CourseListSmallCode : " + courseListSmallCode);
+			
+			log.info("course : " +courseList);
 
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
+			model.addAttribute("CourseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
 			
 		} catch (Exception e) {
@@ -174,7 +184,11 @@ public class AdminCourseController {
 	public String courseInsertForm(Course Course, Contents contents, Model model) {
 		log.info("AdminCourseController courseInsertForm start...");
 		log.info("AdminCourseController courseInsertForm contents.getId() -> {}", contents.getId());
-
+		
+		List<CommonCodes> listCodes = ccs.listCommonCode();
+		
+		model.addAttribute("listCodes", listCodes);
+		
 		return "course/courseInsertForm";
 	}
 

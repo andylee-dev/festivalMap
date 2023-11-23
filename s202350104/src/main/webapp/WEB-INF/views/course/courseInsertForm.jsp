@@ -578,11 +578,30 @@
 							<input type="text" class="form-control input-text" id="course_title" name="course_title" required="required">
 						</div>
 						
-						<div class="form-group d-flex course-body-text col-12"
-							 style="margin-bottom: 24px;">
-							<label class="form-label col-2">지역</label>
-							<select name="area" class="area-dropdown"></select>
-							<select name="sigungu"  class="sigungu-dropdown"></select>
+						<div class="form-group d-flex course-body-text col-12" id="detail-content-title" style="margin-bottom: 24px;">
+						  <label for="small_code" class="form-label col-2">코스타입(필수 선택)</label>
+						  	<div class="col-12">
+						  	<input type="hidden" name="big_code" value="16">
+							<select class="form-select col-2" aria-label="small_code" name="small_code" required="required">
+								<c:forEach var="smallCode" items="${listCodes }">
+									<c:if test="${smallCode.big_code == 16 && smallCode.small_code != 999}">
+										<option value="${smallCode.small_code}"${smallCode.small_code == small_code? 'selected':''} >${smallCode.content}</option>		
+									</c:if>
+								</c:forEach>
+							</select>
+							</div>
+						</div>
+						
+						<div class="form-group d-flex course-body-text col-12" style="margin-bottom: 24px;">
+							<label for="content" class="form-label col-2">지역(필수 선택)</label>
+							<div class="row col-12">
+							    <div class="col-2">
+							        <select name="area" class="form-select area-dropdown"></select>
+							    </div>
+							    <div class="col-2">
+							       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+							    </div>
+							</div>
 						</div>
 							
 						<div class="form-group course-body-text"

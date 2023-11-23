@@ -99,6 +99,8 @@
 	<!-- keyword, title 영역 -->	
 	<form id="course" action="course" method="get">
 		<div class="container homeCommon-keyword-title-custom">
+			<input type="hidden" name="big_code" value="15">
+			
 			<div class="co1 title-div">
 						C O U R S E!</div>
 			<div class="co1 text-div">
@@ -125,14 +127,11 @@
 					</select>
 				</div>
 				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
-						<option selected>코스&nbsp;테마</option>
-						<option value="1">가족코스</option>
-						<option value="2">나홀로코스</option>
-						<option value="3">힐링코스</option>
-						<option value="4">도보코스</option>
-						<option value="5">캠핑코스</option>
-						<option value="6">맛코스</option>
+					<select class="form-select" aria-label="Default select example" name="small_code">
+						<option value="999">코스&nbsp;테마</option>
+							<c:forEach var="small" items="${CourseListSmallCode }">
+								<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.cd_content}</option>		
+							</c:forEach>
 					</select>
 				</div>				
 			</div>		
