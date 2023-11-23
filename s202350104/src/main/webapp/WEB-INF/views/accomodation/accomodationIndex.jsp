@@ -10,12 +10,6 @@
 <meta charset="UTF-8">
 <title>AccomodationList</title>
 
-<style type="text/css">
-	.pageblock {
-		text-align: center;
-	}
-</style>
-
 <!-- 지역 코드 넣는 코드  Start-->
 <script src="/js/updateArea.js"></script>
 
@@ -133,15 +127,7 @@
 				</div>
 				<div class="col d-flex justify-content-center">
 					<select class="form-select" aria-label="Default select example">
-						<option selected>진행 기간 선택</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
-					</select>
-				</div>
-				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
-						<option selected>진행 여부 선택</option>
+						<option selected>객실&nbsp;종류</option>
 						<option value="1">One</option>
 						<option value="2">Two</option>
 						<option value="3">Three</option>

@@ -10,12 +10,6 @@
 <meta charset="UTF-8">
 <title>FestivalList</title>
 
-<style type="text/css">
-	.pageblock {
-		text-align: center;
-	}
-</style>
-
 <!-- 지역 코드 넣는 코드  Start-->
 <script src="/js/updateArea.js"></script>
 

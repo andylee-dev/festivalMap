@@ -11,30 +11,6 @@
 <meta charset="UTF-8">
 <title>CourseList</title>
 
-<style type="text/css">
-	.pageblock {
-		text-align: center;
-	}
-	.card-text {
-		overflow: hidden;
-		text-overflow: ellipsis; /* 말줄임표 */
-		display: -webkit-box;
-		-webkit-line-clamp: 10;  /* 박스 안 텍스트가 10줄 넘어가면 말줄임표 */
-		-webkit-box-orient: vertical;
-	}
-	.type {
-		    	display: flex;
-          	justify-content: center;
-         	 	align-items: center;
-	}
-	.theme_type {
-			height: 100px;
-			width: 100px;
-		border-radius: 100px;
-		margin: 20px;
-	}
-</style>
-
 <!-- 지역 코드 넣는 코드  Start-->
 <script src="/js/updateArea.js"></script>
 
