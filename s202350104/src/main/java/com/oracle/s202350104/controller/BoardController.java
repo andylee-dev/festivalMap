@@ -1,5 +1,6 @@
 package com.oracle.s202350104.controller;
 
+
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
@@ -478,6 +479,7 @@ public class BoardController {
 		log.info("BoardController boardUpdate userId : {}", userId);
 		
 		model.addAttribute("userId", userId);
+		
 
 		return "forward:/boardDetail"; 
 	}
@@ -627,9 +629,6 @@ public class BoardController {
 			return "redirect:/eventBoardList";
 		} else if (insertBoard > 0 && board.getSmall_code() == 6) {
 		
-			// 리뷰 작성 성공 시 포인트 추가 - 상엽		
-			eventPublisher.publishEvent(new PointEvent(board.getUser_id(), 5));
-			
 			return "redirect:/";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패!, 다시 입력해주세요.");
