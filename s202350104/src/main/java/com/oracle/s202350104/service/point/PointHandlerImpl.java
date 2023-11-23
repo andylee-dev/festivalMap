@@ -11,12 +11,18 @@ import java.util.function.BiConsumer;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.oracle.s202350104.model.Contents;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+
+/*eventPublisher.publishEvent(new PointEvent(user.get().getId(), 9));
+private final ApplicationEventPublisher eventPublisher;
+*/
 
 @Slf4j
 @Service
