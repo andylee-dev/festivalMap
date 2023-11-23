@@ -193,7 +193,7 @@
 	</select>
 	
 	<select id="indexlistSearchAccomodation" resultType="AccomodationContent" parameterType="AccomodationContent">
-		SELECT *
+		SELECT id content_id , content, area, sigungu, big_code, small_code, title, status, is_deleted, address, created_at, img1
 		FROM
 		(
 			SELECT ROWNUM rn, a.*

@@ -161,7 +161,7 @@
 	
 							<div class="card-body">
 						    <p class="card-text title-p">${accomodation.title}</p>
-						    <p class="card-text period-p">총&nbsp;객실&nbsp;수&nbsp;:&nbsp;${accomodation.room_count }</p>
+						    <p class="card-text period-p">총&nbsp;객실&nbsp;수&nbsp;:&nbsp;${accomodation.room_count}</p>
 						    <p class="card-text contet-p">${accomodation.content}</p>
 						  </div>
 						</div>			
