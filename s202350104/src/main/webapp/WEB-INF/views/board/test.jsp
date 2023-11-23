@@ -778,6 +778,25 @@
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
 
+
+
+
+		<button type="button" class="theme_type" 
+				onclick="location.href='spot1?big_code=14&small_code=1'">자연</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=2'">역사</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=5'">건축</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=3'">휴양</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=4'">산업</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=6'">문화</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=7'">N개의&nbsp;경</button>
+		<button type="button" class="theme_type"
+				onclick="location.href='spot1?big_code=14&small_code=8'">기타</button>
 </body>
 </html>
 

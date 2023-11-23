@@ -107,23 +107,42 @@
 	<div class="container homeList-top-custom"></div>
 
 	<!-- 테마버튼 검색 -->
-	<div class="type">
-		<button type="button" class="theme_type" 
-				onclick="location.href='spot1?big_code=14&small_code=1'">자연</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=2'">역사</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=5'">건축</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=3'">휴양</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=4'">산업</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=6'">문화</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=7'">N개의&nbsp;경</button>
-		<button type="button" class="theme_type"
-				onclick="location.href='spot1?big_code=14&small_code=8'">기타</button>
+	<div class="container homeList-md-nav-custom">
+		<div class="row row-cols-8">
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=1">
+				<img alt="test" src="../image/nature_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=2">
+				<img alt="test" src="../image/history_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=5">
+				<img alt="test" src="../image/construct_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=3">
+				<img alt="test" src="../image/vacation_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=4">
+				<img alt="test" src="../image/industry_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=6">
+				<img alt="test" src="../image/culture_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=7">
+				<img alt="test" src="../image/sight_icon.png"></a>
+			</div>
+			<div class="col nav-img-box">
+				<a href="spot1?big_code=14&small_code=8">
+				<img alt="test" src="../image/etc_icon.png"></a>
+			</div>
+	
+		</div>
 	</div>
 	
 	<form action="spot1" method="get">
@@ -171,15 +190,7 @@
 				</div>
 				<div class="col d-flex justify-content-center">
 					<select class="form-select" aria-label="Default select example">
-						<option selected>진행 기간 선택</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
-					</select>
-				</div>
-				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
-						<option selected>진행 여부 선택</option>
+						<option selected>명소 테마</option>
 						<option value="1">One</option>
 						<option value="2">Two</option>
 						<option value="3">Three</option>

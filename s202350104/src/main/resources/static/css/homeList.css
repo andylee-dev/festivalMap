@@ -106,6 +106,32 @@
 	padding: 0px;
 }
 
+.homeList-md-nav-custom{
+/* 	border: 1px solid red; */
+	margin-top: 10px;
+}
+
+.homeList-md-nav-custom
+.nav-img-box{
+/* 	border: 1px solid #0000ff; */
+	width: 120px;
+	height: 120px;
+	text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeList-md-nav-custom
+.nav-img-box img{
+/* 	border: 1px solid #000000; */
+	width: 120px;
+	height: 110px;
+	border-radius: 50.50px;
+
+}
+
+
 /* homeList content css */
 .homeList-menu-custom {
 	margin-bottom: 10px;
