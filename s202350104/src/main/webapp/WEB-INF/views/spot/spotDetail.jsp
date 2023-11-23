@@ -478,13 +478,20 @@
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>영업시간 :</p>
-						<span>${spot.opening_hours}</span>						
+						<p>휴무일 :</p>
+						<span>${spot.rest_date}</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">휴무일 :</p>
-						<span>${spot.rest_date}</span>						
+						<p class="text-md-custom">영업시간 :</p>
+						<c:choose>
+							<c:when test="${spot.opening_hours == '24시간 개방' || spot.opening_hours == null}">
+								<span>24시간 개방</span>
+							</c:when>
+							<c:otherwise>
+								<span>상세설명 참조</span>			
+							</c:otherwise>						
+						</c:choose>
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
@@ -596,6 +603,20 @@
 	<div class="container homeDetail-overView_custom">
 		<div class="homeDetail-overView-detail">
 			<p>개   요 : ${spot.content}</p>
+			<c:choose>
+				<c:when test="${spot.entrance_fee == '무료' || spot.entrance_fee == null}">
+				</c:when>
+				<c:otherwise>
+					<p>입장료 상세정보 : ${spot.entrance_fee}</p>				
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${spot.opening_hours == '24시간 개방' || spot.opening_hours == null}">
+				</c:when>
+				<c:otherwise>
+					<p>영업시간 상세정보 : ${spot.opening_hours}</p>				
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	
