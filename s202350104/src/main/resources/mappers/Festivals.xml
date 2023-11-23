@@ -48,7 +48,7 @@
 				(SELECT content FROM areas a
 				 WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
 			FROM
-			(SELECT *
+			(SELECT f.*, c.*, TO_CHAR(start_date, 'YYYY-MM-DD') as startdateStr, TO_CHAR(end_date, 'YYYY-MM-DD') as enddateStr
 			 FROM festivals f, contents c
 			 WHERE f.content_id = c.id
 			 <if test="is_deleted != null and is_deleted != ''">
@@ -189,12 +189,5 @@
 		WHERE tag_id = #{tag_id}
 		AND content_id = #{content_id}
 	</delete>
-	
-	<!-- festival calendar용 쿼리 -->
-	<select id="nhFestivalDateSelect" resultType="FestivalsContent">
-		SELECT content_id, title, TO_CHAR(start_date, 'YYYY-MM-DD') as startdateStr, TO_CHAR(end_date, 'YYYY-MM-DD') as enddateStr
-		FROM   festivals f, contents c
-		WHERE  f.content_id = c.id
-	</select>
 	
 </mapper>

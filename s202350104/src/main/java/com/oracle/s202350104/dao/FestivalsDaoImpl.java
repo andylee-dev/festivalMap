@@ -302,20 +302,5 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		
 		return listTags;
 	}
-
-	// calendard용으로 startdate와 enddate를 string형으로 반환하는 메소드
-	@Override
-	public List<FestivalsContent> listFestivalsCal() {
-		List<FestivalsContent> listFestivals = null;
-		
-		try {
-			listFestivals = session.selectList("nhFestivalDateSelect");
-			log.info("FestivalsDaoImpl listFestivalsCal => " + listFestivals.size());
-		} catch(Exception e) {
-			log.info("FestivalsDaoImpl listFestivalsCal => " + e.getMessage());
-		}
-		
-		return listFestivals;
-	}
 	
 }

@@ -18,5 +18,4 @@ public interface FestivalsDao {
 	int              readcountUp(int contentId);
 	Contents         detailContents(int contentId);
 	List<Tags>       festivalsTagsOne(int contentId);
-	List<FestivalsContent> listFestivalsCal();
 }

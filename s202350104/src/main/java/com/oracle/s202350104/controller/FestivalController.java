@@ -210,7 +210,7 @@ public class FestivalController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "festival/calendar", "start");
 			
-			List<FestivalsContent> listFestivals = fs.listFestivalsCal();
+			List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 			log.info("Festivalcalendar listFestivals size : "+ listFestivals.size());
 			model.addAttribute("listFestivals", listFestivals);
 			
