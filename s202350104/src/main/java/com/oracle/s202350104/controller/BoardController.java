@@ -721,7 +721,9 @@ public class BoardController {
 	                }
 	            }
 	        }	    
-
+	        
+	        eventPublisher.publishEvent(new PointEvent(board.getUser_id(), 2));
+	        
 			// 게시물 생성 후 Page Handling
 			if (insertBoard > 0 && board.getSmall_code() == 1) {
 				if (board.getUser_id() == 1) {

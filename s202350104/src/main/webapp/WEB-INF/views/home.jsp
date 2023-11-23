@@ -5,6 +5,8 @@
 <%@page import="com.oracle.s202350104.service.map.MapService"%>
 <%@page import="com.oracle.s202350104.service.map.KakaoMapSerivce"%>
 <%@ include file="/WEB-INF/components/header.jsp"%>
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 <!DOCTYPE html>
 <html>
 
@@ -352,7 +354,6 @@
 <script src="/js/updateArea.js"></script>
 
 <style type="text/css">
-	@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
 	
 	.form-label {
 		font-size: 20px;
@@ -371,10 +372,9 @@
 </head>
 
 <body>
-	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
+
 <main>
-	<!-- Main Banner 임시 -->
+	<!-- Top 분홍색 영역  -->
 	<div id="content_title" class="container"></div>
 	<div class="home-topTitle-box-custom">	
 		<div class="container p-5 home-topTitle-box-custom">
@@ -382,7 +382,9 @@
 				I N T R O D U C I N G</div>
 		</div>
 	</div>	
-	<div class="container" style="width: 100%; height: 380px; padding: 0;">
+	
+	<!-- Main banner 영역 -->
+	<div class="container home-mainBanner-box-custom" style="">
 		<div id="carouselExampleIndicators" class="carousel slide"
 			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
 			 data-bs-wrap="true">
@@ -394,19 +396,26 @@
 						data-bs-slide-to="1" aria-label="Slide 2"></button>
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 						data-bs-slide-to="2" aria-label="Slide 3"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="3" aria-label="Slide 4"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide-to="4" aria-label="Slide 5"></button>
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="../image/BANNER1.png" class="d-block w-100" alt="메인배너1"
-						 style="width: 100%; height: 400px" />
+					<img src="../image/BANNER1.png" class="d-block w-100 item-img" alt="메인배너1">
 				</div>
 				<div class="carousel-item">
-					<img src="../image/BANNER2.png" class="d-block w-100" alt="메인배너2"
-						 style="width: 100%; height: 400px" />
+					<img src="../image/mainBanner1.png" class="d-block w-100 item-img" alt="메인배너2">
 				</div>
 				<div class="carousel-item">
-					<img src="../image/BANNER3.png" class="d-block w-100" alt="메인배너3"
-						 style="width: 100%; height: 400px" />
+					<img src="../image/mainBanner2.png" class="d-block w-100 item-img" alt="메인배너3">
+				</div>
+				<div class="carousel-item">
+					<img src="../image/mainBanner3.png" class="d-block w-100 item-img" alt="메인배너4">
+				</div>
+				<div class="carousel-item">
+					<img src="../image/mainBanner4.png" class="d-block w-100 item-img" alt="메인배너5">
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
@@ -426,129 +435,102 @@
 
 
 	<!-- Section1 -->
-	<div class="container col-12 border p-0" >
-		<div style="width: 150px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
-					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
-					color: white; font-weight: bold; margin-left: 10px;">
-					MD's Pick 영역</div>
-	<div style="padding: 15px;">
-		<h4><strong>나 가을타나봐~♫</strong></h4>
-		<h4><strong>신선한 가을 축제의 바람이 불어요~♬</strong></h4>
-	</div>
-    <div class="row">					
-		<div class="card col-md-6 mx-auto border-0" style="width: 45%;">
-			<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-			<div class="card-body">
-				<p class="card-text" style="font-size: 20px; font-weight: bolder;">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-				<p class="card-text" style="font-weight: bold;">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
-									  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
-									  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-			</div>			
+	<div class="container home-pick-box-custom">
+		<div class="home-pick-batch">MD's&nbsp;Pick</div>
+		<div class="home-pick-title">
+			<h4><strong>나&nbsp;가을타나봐~♫</strong></h4>
+			<h4><strong>신선한&nbsp;가을&nbsp;축제의&nbsp;바람이&nbsp;불어요~♬</strong></h4>
 		</div>
-		<div class="card col-md-6 mx-auto border-0" style="width: 45%;">
-			<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-			<div class="card-body">
-				<p class="card-text" style="font-size: 20px; font-weight: bolder;">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-				<p class="card-text" style="font-weight: bold;">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
-									  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
-									  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-			</div>			
-		</div>
-	</div>
-    <div class="row">					
-		<div class="card col-md-6 mx-auto border-0" style="width: 45%;">
-			<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-			<div class="card-body">
-				<p class="card-text" style="font-size: 20px; font-weight: bolder;">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-				<p class="card-text" style="font-weight: bold;">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
-									  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
-									  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-			</div>			
-		</div>
-		<div class="card col-md-6 mx-auto border-0" style="width: 45%;">
-			<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-			<div class="card-body">
-				<p class="card-text" style="font-size: 20px; font-weight: bolder;">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-				<p class="card-text" style="font-weight: bold;">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
-									  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
-									  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-			</div>			
-		</div>
-	</div>	
+	
+	    <div class="row row-cols-2  home-pickMd-box-custom">					
+			<div class="card col home-pick-card">
+				<img class="card-img-top" src="../image/mdpick.png" alt="PickImage">
+				<div class="card-body">
+					<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
+					<p class="card-text text-custom" style="">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
+										  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
+										  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
+				</div>			
+			</div>
+			<div class="card col home-pick-card">
+				<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
+				<div class="card-body">
+					<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
+					<p class="card-text text-custom">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
+										  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
+										  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
+				</div>			
+			</div>				
+			<div class="card col home-pick-card">
+				<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
+				<div class="card-body">
+					<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
+					<p class="card-text text-custom">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
+										  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
+										  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
+				</div>			
+			</div>
+			<div class="card col home-pick-card">
+				<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
+				<div class="card-body">
+					<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
+					<p class="card-text text-custom">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해
+										  에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만, 인기몰이
+										  덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
+				</div>			
+			</div>
+		</div>	
 	</div>
 	
 	<!-- Section2 -->
-	<div class="container border">
-		<img alt="고민노노" src="/asset/gominNono.svg">
-		<div class="card-group">
-			<div class="card m-3 p-3">
-			  <div class="row g-0">
-			    <div class="col-md-4">
-			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
-			    </div>
-			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title">카드 제목</h5>
-			        <p class="card-text">카드 상세 내용...</p>
-					<a class="dropdown-item" href="/festival/recommend">축제맞춤추천</a>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<div class="card m-3 p-3">
-			  <div class="row g-0">
-			    <div class="col-md-4">
-			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
-			    </div>
-			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title">카드 제목</h5>
-			        <p class="card-text">카드 상세 내용...</p>
-					<button type="button" id="btn-festival-test" class="btn btn-primary" onclick="openPopup()">
-					  축제추천테스트
-					</button>		
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<div class="card m-3 p-3">
-			  <div class="row g-0">
-			    <div class="col-md-4">
-			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
-			    </div>
-			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title">카드 제목</h5>
-			        <p class="card-text">카드 상세 내용...</p>
-					<a class="dropdown-item" href="/festival/calendar">축제캘린더</a>
-			        
-			      </div>
-			    </div>
-			  </div>
-			</div>
+	<div class="container home-chucheon-box-custom">
+		<div class="home-chucheon-batch">고민은&nbsp;NO&nbsp;!</div>
+		<div class="home-chucheon-title">
+			<h4><strong>어떤&nbsp;축제를&nbsp;가야하지?&nbsp;어떤&nbsp;코스로&nbsp;가야하지?</strong></h4>
+			<h4><strong>고민하지&nbsp;마세요.&nbsp;페스티맵이&nbsp;있잖아요!</strong></h4>
 		</div>
-
-
-
-		<div style="width: 300px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
-					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
-					color: white; font-weight: bold;">
-					랜덤축제 취향테스트 캘린더 영역</div>
+		<div class="row row-cols-3 home-chucheon-card-box">
+			<div class="row row-cols-2 chucheon-card">
+				<div class="col chucheon-card-se">
+					<p>내&nbsp;M.B.T.I는&nbsp;뭘까?</p>
+					<span>나의&nbsp;축제&nbsp;취향&nbsp;?!</span>
+				</div>
+				<div class="col chucheon-card-se">
+					<a class="dropdown-item" href="/festival/recommend">
+					<img alt="..." src="../image/chucheon_icon.png"></a>
+				</div>
+			</div>
+			<div class="row row-cols-2 chucheon-card">
+				<div class="col chucheon-card-se">
+					<p>랜덤으로&nbsp;골라!!</p>
+					<span>페맵&nbsp;랜덤&nbsp;축제!</span>
+				</div>
+				<div class="col chucheon-card-se">
+					<img alt="..." src="../image/chucheon_icon.png" onclick="openPopup()">
+				</div>
+			</div>
+			<div class="row row-cols-2 chucheon-card">
+				<div class="col chucheon-card-se">
+					<p>한눈에&nbsp;보는&nbsp;축제!!</p>
+					<span>전국&nbsp;축제&nbsp;달력</span>
+				</div>
+				<div class="col chucheon-card-se">
+					<a class="dropdown-item" href="/festival/calendar">			
+					<img alt="..." src="../image/chucheon_icon.png"></a>
+				</div>
+			</div>			
+		</div>	
 	</div>
-	
 
 	<!-- Section3 -->
-	<div class="container border p-0">
-		<div style="width: 80px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
-					display: flex; align-items: center; justify-content: center; background-color: #FF4379;
-					color: white; font-weight: bold; margin-left: 10px;">
-					<h1>·</h1> LIVE</div>
-		<div style="padding: 15px;">
-			<h4>
-				<strong>지금 축제중인 지역</strong>
-			</h4>
+	<div class="container home-map-box-custom">
+		<div class="home-map-batch"><h1>·</h1>&nbsp;LIVE</div>
+		<div class="home-map-title">
+			<h4><strong>지금 축제중인 지역</strong></h4>
 		</div>
-		<div class="container p-5"  style="height: 80px; background-color: #B7E24D; position: relative;">
+		
+		<!-- Map icon 영역 -->
+		<div class="container p-5" style="height: 80px; background-color: #B7E24D; position: relative;">
 			<img alt="mapIcon1" src="../image/mapicon5.png" width="60px;"
 				 height="60px;" style="position: absolute; left: 10; top: 18;">
 			<img alt="mapIcon1" src="../image/mapicon1.png" width="60px;"
@@ -560,6 +542,61 @@
 			<img alt="mapIcon1" src="../image/mapicon4.png" width="60px;"
 				 height="60px;" style="position: absolute; right: 10; top: 18;">
 		</div>
+		
+		<!-- Map Menu 영역 -->
+		<div class="container home-map-menu-custom">	
+			<div id="menu_wrap" class="row row-cols-2 home-map-nav-box-custom">
+				<div class="col home-menu-detail">
+						<div class="row row-col-1">
+							<div class="col home-menu-sm">
+								<label for="area" class="form-label">지역별_구분</label>							
+								<select name="area" id="area" class="form-select col-auto area-dropdown"></select>							
+							</div>
+						</div>
+						<div class="row row-col-1">
+							<div class="col home-menu-sm">
+								<label for="sigungu" class="form-label"><strong>상세지역</strong></label>
+								<select name="sigungu" id="sigungu" class="form-select col-auto sigungu-dropdown"></select>							
+							</div>
+						</div>
+						<div class="row row-col-1">
+							<div class="col home-menu-ssm ">
+					    		<label for="tag" class="form-label"><strong>테마별</strong></label>					
+							</div>
+						</div>
+						<div class="row row-col-3">
+							<div class="col home-menu-md hashTag-custom">
+								<button>#다이나믹한</button>
+								<button>#포토스팟</button>
+								<button>#내일로</button>
+								<button>#향토적인</button>
+								<button>#트랜디</button>
+								<button>#7080</button>
+								<button>#MZ추천</button>
+								<button>#매년주최</button>
+								<button>#이번에만</button>
+							</div>		
+						</div>
+						<div class="row row-col-1">
+							<div class="col home-menu-sm">
+					      	 	<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" />				
+								<img src="../image/icon_search1.png" alt="test" />							
+							</div>
+						</div>
+						<div class="row row-col-1">
+							<div class="col home-menu-lg">4</div>
+						</div>
+			
+					</div>
+					<div class="col home-map-detail">
+					<div id="map" class="col-8"></div>
+				</div>				
+			</div>			
+		</div>
+		
+		
+		
+		
 		
 		<div class="border d-flex">
 			<div id="menu_wrap" class="container col-4">
@@ -581,11 +618,6 @@
 					        </a>
 					    </div>
 					</div>
-
-
-					<div class="text-center">
-
-					</div>
 				</div>
 				
 				<div class="container-fluid overflow-auto" style="height: 400px">
@@ -593,20 +625,15 @@
 					<ul id="placesList"></ul>
 				</div>
 			</div>
-			<div id="map" class="col-8"></div>
+	
 		</div>
 	</div>
 
 	<!-- Section4 -->
-	<div class="container border p-0">
-		<div style="width: 60px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
-					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
-					color: white; font-weight: bold; margin-left: 10px;">
-					AD</div>
-		<div style="padding: 15px;">
-			<h4>
-				<strong>이런 곳도 있어요!</strong>
-			</h4>
+	<div class="container home-ad-box-custom">
+		<div class="home-ad-batch">AD</div>
+		<div class="home-ad-title">
+			<h4><strong>이런 곳도 있어요!</strong></h4>
 		</div>
 		<div>
 			<img alt="AD_Bannder" src="../image/ADBanner.png" width="100%" height="auto">

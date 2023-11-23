@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
-/*eventPublisher.publishEvent(new PointEvent(user.get().getId(), 9));
+/*eventPublisher.publishEvent(new PointEvent(userid, 2));
 private final ApplicationEventPublisher eventPublisher;
 */
 
@@ -101,21 +101,21 @@ public class PointHandlerImpl implements PointHandler {
         try {
             log.info("[{}]{}:{}", transactionId, "PointHandlerImpl", "start");
             
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            LocalDate currentDate = currentDateTime.toLocalDate();
-            LocalTime currentTime = currentDateTime.toLocalTime();
-            
+//            LocalDateTime currentDateTime = LocalDateTime.now();
+//            LocalDate currentDate = currentDateTime.toLocalDate();
+//            LocalTime currentTime = currentDateTime.toLocalTime();
+//            
             // 오늘 첫 로그인 시간인 경우에만 handleLogin 호출
-            if (currentDate.isAfter(lastLoginTime.toLocalDate()) || currentTime.isBefore(LocalTime.NOON)) {
+//            if (currentDate.isAfter(lastLoginTime.toLocalDate()) || currentTime.isBefore(LocalTime.NOON)) {
                 if (handlerMap.containsKey(pointId)) {
                     handlerMap.get(pointId).accept(userId, pointId);
                     
                     // 마지막 로그인 시간 갱신
-                    lastLoginTime = currentDateTime;
+//                    lastLoginTime = currentDateTime;
                 } else {
                     throw new IllegalArgumentException("Invalid pointId: " + pointId);
                 }
-            }
+//            }
         } catch (Exception e) {
             log.error("[{}]{}:{}", transactionId, "PointHandlerImpl", e.getMessage());
         } finally {

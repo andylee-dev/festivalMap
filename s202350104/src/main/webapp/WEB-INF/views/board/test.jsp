@@ -797,6 +797,78 @@
 				onclick="location.href='spot1?big_code=14&small_code=7'">N개의&nbsp;경</button>
 		<button type="button" class="theme_type"
 				onclick="location.href='spot1?big_code=14&small_code=8'">기타</button>
+
+	<div class="container ">
+	
+		<img alt="고민노노" src="/asset/gominNono.svg">
+		<div class="card-group">
+			<div class="card m-3 p-3">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">카드 제목</h5>
+			        <p class="card-text">카드 상세 내용...</p>
+					<a class="dropdown-item" href="/festival/recommend">축제맞춤추천</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="card m-3 p-3">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">카드 제목</h5>
+			        <p class="card-text">카드 상세 내용...</p>
+					<button type="button" id="btn-festival-test" class="btn btn-primary" onclick="openPopup()">
+					  축제추천테스트
+					</button>		
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="card m-3 p-3">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img src="/asset/registerUser.svg" class="img-fluid rounded-start m-2" alt="카드 이미지">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">카드 제목</h5>
+			        <p class="card-text">카드 상세 내용...</p>
+					<a class="dropdown-item" href="/festival/calendar">축제캘린더</a>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+
+
+
+		<div style="width: 300px; height: 30px; border-radius: 23.50px; border: 3px white solid; 
+					display: flex; align-items: center; justify-content: center; background-color: #FF4379; 
+					color: white; font-weight: bold;">
+					랜덤축제 취향테스트 캘린더 영역</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
 
