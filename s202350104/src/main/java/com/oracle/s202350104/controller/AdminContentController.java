@@ -400,6 +400,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
 				int totalRestaurant = rs.totalRestaurant();
 				int path = 0;
+				int big_code = 12;
 				
 				Paging page = new Paging(totalRestaurant, currentPage);
 				restaurant.setStart(page.getStart());
@@ -407,10 +408,12 @@ import lombok.RequiredArgsConstructor;
 				
 				List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
 				List<Areas> listAreas = ars.listAreas();
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 				
 				model.addAttribute("totalRestaurant", totalRestaurant);
 				model.addAttribute("listRestaurant", listRestaurant);
 				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("page",page);
 				model.addAttribute("path", path);
 				model.addAttribute("currentPage", currentPage);
@@ -479,8 +482,11 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transaction, "admin restaurantDetail", "Start");
 				log.info("admin restaurantDetail -> ", contentId);
 				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
-								
+				int big_code = restaurant.getBig_code();
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
 				model.addAttribute("restaurant", restaurant);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("currentPage", currentPage);
 				
 			} catch (Exception e) {
@@ -502,8 +508,12 @@ import lombok.RequiredArgsConstructor;
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				List<Areas> listAreas = ars.listAreas();
 				
+				int big_code     	= 12;				
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSmallCode", listSmallCode);
 								
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm Exception", e.getMessage());
@@ -516,11 +526,11 @@ import lombok.RequiredArgsConstructor;
 		}		
 		
 			
-		@RequestMapping(value = "restaurant/insert")
+		@RequestMapping(value = "restaurantInsert")
 		public String restaurantInsert(Model model, RestaurantsContent restaurant) {
 			UUID transactionId = UUID.randomUUID();
 				
-			log.info("[{}]{}:{}", transactionId, "admin restaurant/insert", "start");
+			log.info("[{}]{}:{}", transactionId, "admin restaurantInsert", "start");
 			
 			int result = rs.insertRestaurant(restaurant);
 			
@@ -542,11 +552,14 @@ import lombok.RequiredArgsConstructor;
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				List<Areas> listAreas = ars.listAreas();
 				List<Areas> listSigungu = ars.listSigungu(restaurant.getArea());
+				int big_code = restaurant.getBig_code();			
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 				
 				model.addAttribute("restaurant", restaurant);
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("listSigungu", listSigungu);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("currentPage", currentPage);
 				
 			} catch (Exception e) {
@@ -568,6 +581,11 @@ import lombok.RequiredArgsConstructor;
 				int result = rs.updateRestaurant(restaurant);
 				log.info("admin restaurantUpdate updateCount ->" + result);
 				id = restaurant.getContent_id();
+				
+				int big_code = restaurant.getBig_code();
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
+				model.addAttribute("listSmallCode", listSmallCode);
 			
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );

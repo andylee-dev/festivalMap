@@ -63,13 +63,11 @@
 									<div class="col-2 d-flex align-items-center">
 										<select name="small_code" id="small_code" class="form-select">
 											<option value="999">전체</option>
-											<option value="1" ${small_code == 1? 'selected':''}>한식</option>
-											<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
-											<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
-											<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
-											<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
-											<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
-											<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
+											<c:forEach var="smallCode" items="${listSmallCode}">
+												<c:if test="${smallCode.small_code != 999 }">
+													<option value="${smallCode.small_code}" ${smallCode.small_code == restaurant.small_code? 'selected' : '' } disabled>${smallCode.content}</option>
+												</c:if>
+											</c:forEach>
 										</select>
 									</div>
 								
@@ -94,12 +92,12 @@
 										</select> 
 									</div>
 										
-								<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="is_deleted" id="is_deleted" class="form-select">
 											<option value="2">전체</option>
-											<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
-											<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
+											<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>N</option>
+											<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>Y</option>
 										</select>
 									</div>
 							</div>
@@ -134,8 +132,8 @@
 								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
 								<th scope="col">승인여부</th>
-								<th scope="col">관리</th>
 								<th scope="col">게시여부</th>
+								<th scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -156,6 +154,10 @@
 										<c:if test="${restaurant.status == 0 }">승인대기</c:if>
 										<c:if test="${restaurant.status == 1 }">승인완료</c:if> 
 									</td>
+									<td>
+										<c:if test="${restaurant.is_deleted ==0 }">Y</c:if>								 	
+										<c:if test="${restaurant.is_deleted ==1 }">N</c:if>
+									</td>			
 									<td><a class="detail-btn" 
 									href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">관리</a></td>
 							  <!-- <td><c:if test="${restaurant.status == 1 }">
@@ -172,11 +174,6 @@
 											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
 										</c:choose>
 										</c:if></td> -->
-										
-									<td>
-										<c:if test="${restaurant.is_deleted ==0 }">N</c:if>								 	
-										<c:if test="${restaurant.is_deleted ==1 }">Y</c:if>
-									</td>			
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

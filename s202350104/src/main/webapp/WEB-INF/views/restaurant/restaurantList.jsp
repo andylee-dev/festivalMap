@@ -66,13 +66,13 @@
 			
 			<!-- keyword, title 영역 -->	
 			<div class="container homeCommon-keyword-title-custom">
-			<div class="co1 title_div">
-						R E S T A U R A N T!</div>
-			<div class="co1 text_div">
+			<div class="co1 title-div">
+						RESTAURANT!</div>
+			<div class="co1 text-div">
 				<h4><strong>어느 맛집에서 먹어볼까요~♫</strong></h4>
 			</div>
-			<input class="form-control keyword_input" type="text" name="keyword" placeholder="가고 싶은 맛집의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
-			<img class="keyword_img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon"/>
+			<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 맛집의 이름이나 키워드를 검색해보세요." style="margin-right: 15px;">
+			<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon"/>
 			</div>
 		
 			<!-- 경계선 표현 -->
@@ -119,16 +119,16 @@
                         <div class="card homeList-card-custom">
 							<div class="homeList-tag-custom">
 								<div class="homeList-tag-custom2">
-									<p class="tag_p">#지역태그</p>
+									<p class="tag-p">#지역태그</p>
 								</div>
                           	<a href="restaurant/detail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">
                             	<img src="${restaurant.img1}" class="app-card-img-top" alt="${restaurant.title}이미지">
                          	</a>
                          </div>
                          <div class="card-body">
-	                          <p class="card-text title_p">${restaurant.title}</p>   
-	                          <p class="card-text period_p">${restaurant.first_menu}</p>
-	                          <p class="card-text contet_p">${restaurant.content}</p>
+	                          <p class="card-text title-p">${restaurant.title}</p>   
+	                          <p class="card-text period-p">${restaurant.first_menu}</p>
+	                          <p class="card-text contet-p">${restaurant.content}</p>
                           </div>   
                         </div>
                      </div>            
