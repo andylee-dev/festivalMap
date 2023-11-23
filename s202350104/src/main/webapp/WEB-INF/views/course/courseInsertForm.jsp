@@ -178,7 +178,7 @@
 	}
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function showPopUp() {
 	
 		//창 크기 지정
@@ -253,7 +253,192 @@
 	    	form.appendChild(hiddenInput);
 	    }
 	}
+</script> -->
+
+
+<script type="text/javascript">
+    let oldList = []; // 이전 목록을 저장하기 위한 배열
+    let newList = []; // 새로운 목록을 저장하기 위한 배열
+
+    function showPopUp() {
+        console.log("showPopUp 함수 호출됨");
+        console.log("course_id value:", "${course.course_id}");
+
+        var width = 800;
+        var height = 600;
+
+        var left = (window.screen.width / 2) - (width/2);
+        var top = (window.screen.height / 4);
+
+        var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+
+        const url = 'contentListAll?course_id=${course.course_id}';
+
+        window.open(url, "contentList popup", windowStatus);
+    }
+
+    function receiveContentList(contentList) {
+        console.log("contentList", contentList);
+
+        for (var i = 0; i < contentList.length; i++) {
+            if (getCurrentContentList().includes(contentList[i].id)) continue; // 이미 목록에 있는 경우 스킵
+
+            const rowEl = makeCard(contentList[i]); // 카드 요소 생성
+
+         	// 수정: cardContainer에 생성한 카드 추가
+            const cardContainer = document.getElementById("cardContainer");
+            cardContainer.appendChild(rowEl);
+
+            console.log("rowEl : ", rowEl);
+            
+            /* document.body.appendChild(rowEl); // 생성한 카드 요소를 body에 추가
+            console.log("rowEl : ", rowEl); */
+        }
+    }
+
+    function makeCard(content) {
+        const cardEl = document.createElement("div"); // 카드 요소 생성
+        cardEl.id = 'card'+content.id; // 고유한 id 부여
+        cardEl.className = "card course-card"; // 클래스 추가
+        cardEl.style = "width: 208px; height: 340px; margin: 20px; padding: 18px;"; // 스타일 지정
+
+        const deleteIconContainerEl = document.createElement("div"); // 삭제 아이콘 컨테이너 요소 생성
+        deleteIconContainerEl.className = "d-flex justify-content-end"; // 클래스 추가
+
+        const deleteIconEl = document.createElement("i"); // 삭제 아이콘 요소 생성
+        deleteIconEl.className = "bi bi-x-square-fill"; // 클래스 추가
+        deleteIconEl.style = "color: #FF4379"; // 스타일 지정
+        deleteIconEl.onclick = function(event) { // 삭제 아이콘 클릭 이벤트 핸들러
+            deleteContent(event); // 삭제 함수 호출
+            event.preventDefault();
+        };
+
+        deleteIconContainerEl.appendChild(deleteIconEl); // 삭제 아이콘 요소를 컨테이너에 추가
+        cardEl.appendChild(deleteIconContainerEl); // 컨테이너를 카드 요소에 추가
+
+        const contentIdInputEl = document.createElement("input"); // 숨겨진 input 요소 생성
+        contentIdInputEl.type = "hidden"; // 타입 설정
+        contentIdInputEl.id = "content_id"; // id 설정
+        contentIdInputEl.value = content.id; // 값 설정
+        cardEl.appendChild(contentIdInputEl); // input 요소를 카드 요소에 추가
+
+        const titleEl = document.createElement("h5"); // 제목 요소 생성
+        titleEl.className = "card-title card-font-title"; // 클래스 추가
+        titleEl.textContent = "컨텐츠 타입"; // 텍스트 설정
+        cardEl.appendChild(titleEl); // 제목 요소를 카드 요소에 추가
+
+        const imgEl = document.createElement("img"); // 이미지 요소 생성
+        imgEl.src = content.img; // 이미지 소스 설정
+        imgEl.className = "card-image-size"; // 클래스 추가
+        imgEl.alt = content.title; // 대체 텍스트 설정
+        cardEl.appendChild(imgEl); // 이미지 요소를 카드 요소에 추가
+
+        const bodyEl = document.createElement("div"); // 본문 요소 생성
+        bodyEl.className = "card-body"; // 클래스 추가
+        bodyEl.style = "padding: 0px; padding-top: 16px;"; // 스타일 지정
+
+        const cardTitleEl = document.createElement("h5"); // 카드 제목 요소 생성
+        cardTitleEl.className = "card-title card-font-title"; // 클래스 추가
+        cardTitleEl.textContent = content.title; // 텍스트 설정
+        bodyEl.appendChild(cardTitleEl); // 카드 제목 요소를 본문 요소에 추가
+
+        const addressEl = document.createElement("p"); // 주소 요소 생성
+        addressEl.className = "card-text card-font-content"; // 클래스 추가
+        addressEl.textContent = content.address; // 텍스트 설정
+        bodyEl.appendChild(addressEl); // 주소 요소를 본문 요소에 추가
+
+        const phoneEl = document.createElement("p"); // 전화번호 요소 생성
+        phoneEl.className = "card-text card-font-content"; // 클래스 추가
+        phoneEl.textContent = content.phone; // 텍스트 설정
+        bodyEl.appendChild(phoneEl); // 전화번호 요소를 본문 요소에 추가
+
+        cardEl.appendChild(bodyEl); // 본문 요소를 카드 요소에 추가
+
+        const linkEl = document.createElement("div"); // 링크 요소 생성
+        linkEl.className = "d-flex justify-content-end mt-auto"; // 클래스 추가
+
+        const detailLink = document.createElement("a"); // 상세 정보 링크 요소 생성
+        detailLink.href = ""; // 링크 설정
+        detailLink.className = "btn btn-primary card-button-style card-button-text"; // 클래스 추가
+        detailLink.textContent = "상세정보보기"; // 텍스트 설정
+        linkEl.appendChild(detailLink); // 상세 정보 링크 요소를 링크 요소에 추가
+
+        cardEl.appendChild(linkEl); // 링크 요소를 카드 요소에 추가
+
+        return cardEl; // 생성한 카드 요소 반환
+    }
+
+    function getCurrentContentList() {
+        var idList = [];
+
+        var cards = document.getElementsByClassName("card"); // 클래스명이 "card"인 요소들을 가져옴
+
+        for (var i = 0; i < cards.length; i++) {
+            var cardId = cards[i].id.replace("card", ""); // "card" 부분을 제거하여 id 추출
+            idList.push(cardId); // id를 배열에 추가
+        }
+
+        return idList; // id 목록 반환
+        console.log("idList : ", idList)
+    }
+	
+ 	// 최종적으로 submit 눌렀을때, delList, addList 요소 추가.
+    function submitHandler() {
+        const finalList = getCurrentContentList(); // 현재 목록 가져오기
+        console.log("getCurrentContentList() ->", getCurrentContentList());
+        let delList = [];
+        for (var i = 0; i < oldList.length; i++) {
+            if (!finalList.includes(oldList[i])) {
+                delList.push(oldList[i]);
+            }
+        }
+        const addList = difference(finalList, oldList); // 추가 목록과 삭제 목록 구하기
+
+        console.log("finalList :", finalList);
+        console.log("oldList :", oldList);
+
+        console.log("delList ->", delList);
+        console.log("addList ->", addList);
+		
+     	// form input에 hidden 요소를 넣는다. 
+        for (var i = 0; i < addList.length; i++) {
+            const form = document.getElementById("myForm"); // 폼 요소 가져오기
+            const hiddenInput = document.createElement("input"); // 숨겨진 input 요소 생성
+            hiddenInput.type = "hidden"; // 타입 설정
+            hiddenInput.name = "addList"; // 이름 설정
+            hiddenInput.value = addList[i]; // 값 설정
+            form.appendChild(hiddenInput); // input 요소를 폼에 추가
+        }
+		
+     	// form input에 hidden 요소를 넣는다.
+        for (var i = 0; i < delList.length; i++) {
+            const form = document.getElementById("myForm"); // 폼 요소 가져오기
+            const hiddenInput = document.createElement("input"); // 숨겨진 input 요소 생성
+            hiddenInput.type = "hidden"; // 타입 설정
+            hiddenInput.name = "delList"; // 이름 설정
+            hiddenInput.value = delList[i]; // 값 설정
+            form.appendChild(hiddenInput); // input 요소를 폼에 추가
+        }
+
+        alert('submitHandler');
+    }
+
+    function difference(list1, list2) {
+        return list1.filter(item => !list2.includes(item)); // list1에는 포함되고 list2에는 포함되지 않는 요소들을 반환
+    }
+
+    function deleteContent(event) {
+        event.target.parentElement.parentElement.remove(); // 클릭한 요소의 부모 요소 제거
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        oldList = getCurrentContentList(); // 초기 목록 가져오기
+
+        console.log("oldList : ", oldList);
+    });
 </script>
+
+
 <style type="text/css">
 .course-card {
 	width: 100%; 
