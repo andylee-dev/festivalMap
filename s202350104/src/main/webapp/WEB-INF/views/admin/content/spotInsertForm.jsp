@@ -215,7 +215,8 @@
 							</div>
 							<div class="mb-3 ">
 						 	 	<label for="img1" class="form-label">이미지</label>
-						  		<input type="text" class="form-control" name="img1" id="img1 value="${spot.img1} ">
+						  		<input type="file" class="form-control img_input" name="file">
+								<p>기존&nbsp;파일&nbsp;:&nbsp;<span>${board.file_name_custom }</span></p>
 							</div>
 							<div class="mb-3 ">
 							 <label for="rest_time" class="form-label">태그</label>

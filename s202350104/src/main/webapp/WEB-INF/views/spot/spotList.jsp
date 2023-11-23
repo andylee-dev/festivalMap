@@ -104,7 +104,7 @@
 	</div>
 
 	<!-- 상단 분홍색 영역 -->
-	<div class="container homeList-top-custom"></div>
+	<div class="container homeList-top-custom mb-4"></div> 
 
 	<!-- 테마버튼 검색 -->
 	<div class="container homeList-md-nav-custom">
