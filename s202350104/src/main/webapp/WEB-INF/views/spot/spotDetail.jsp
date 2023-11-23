@@ -478,12 +478,12 @@
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>휴무일 :</p>
+						<p class="text-md-custom">휴무일 :</p>
 						<span>${spot.rest_date}</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">영업시간 :</p>
+						<p>영업시간 :</p>
 						<c:choose>
 							<c:when test="${spot.opening_hours == '24시간 개방' || spot.opening_hours == null}">
 								<span>24시간 개방</span>
