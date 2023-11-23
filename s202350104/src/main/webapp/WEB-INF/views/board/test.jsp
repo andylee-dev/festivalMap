@@ -1,16 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html><%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="com.oracle.s202350104.service.map.MapService"%>
@@ -372,8 +361,7 @@
 	<!-- keyword, title 영역 -->	
 	<form id="festival" action="festival" method="get">
 	<div class="container homeCommon-keyword-title-custom">
-		<div class="co1 title-div">
-					accomodation!</div>
+		<div class="co1 title-div">accomodation!</div>
 		<div class="co1 text-div">
 			<h4><strong>좋은 숙박을 알아볼까요~♫</strong></h4>
 		</div>

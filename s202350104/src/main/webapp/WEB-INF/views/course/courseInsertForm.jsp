@@ -145,30 +145,6 @@
 		tagsArea.appendChild(newTag);
 	}
 	<!-- 태그 관련 코드 end -->
-	
-	function submitForm() {
-		event.preventDefault();
-		
-		var insertFormData = $('#myForm').serializeArray();
-		var finalTags = [];
-		for(var i = 0; i < selectedTags.length; i++) {
-			finalTags.push(Number(selectedTags[i].id));
-		}
-		insertFormData.push({name: 'finalTags', value: finalTags});
-		
-		if(confirm("등록하시겠습니까?")) {
-			$.ajax({
-				url: "<%=request.getContextPath()%>/admin/course/courseInsertForm",
-				method: "POST",
-				data: insertFormData,
-				dataType: "text",
-				success: function(str) {
-					alert(str);
-					location.href="<%=request.getContextPath()%>/admin/course/list";
-				}
-			})
-		}
-	}
 </script>
 
 <script type="text/javascript">
@@ -396,16 +372,13 @@
 
         console.log("finalList :", finalList);
         console.log("oldList :", oldList);
-
-        console.log("delList ->", delList);
-        console.log("addList ->", addList);
 		
      	// form input에 hidden 요소를 넣는다. 
         for (var i = 0; i < addList.length; i++) {
             const form = document.getElementById("myForm"); // 폼 요소 가져오기
             const hiddenInput = document.createElement("input"); // 숨겨진 input 요소 생성
             hiddenInput.type = "hidden"; // 타입 설정
-            hiddenInput.name = "addList"; // 이름 설정
+            hiddenInput.name = "contents"; // 이름 설정
             hiddenInput.value = addList[i]; // 값 설정
             form.appendChild(hiddenInput); // input 요소를 폼에 추가
         }
@@ -415,7 +388,7 @@
             const form = document.getElementById("myForm"); // 폼 요소 가져오기
             const hiddenInput = document.createElement("input"); // 숨겨진 input 요소 생성
             hiddenInput.type = "hidden"; // 타입 설정
-            hiddenInput.name = "delList"; // 이름 설정
+            hiddenInput.name = "contents"; // 이름 설정
             hiddenInput.value = delList[i]; // 값 설정
             form.appendChild(hiddenInput); // input 요소를 폼에 추가
         }
@@ -654,7 +627,7 @@
 						</div>
 						
 						<div class="text-center">
-							<button type="submit" class="btn btn-primary button-submit-font button-submit-design" onclick="submitForm()">등록</button>
+							<button type="submit" class="btn btn-primary button-submit-font button-submit-design" onclick="submitHandler()">등록</button>
 							<button class="btn btn-secondary button-cancle-font button-cancle-design" onclick="closeAndRedirect()">취소</button>
 						</div>
 						
