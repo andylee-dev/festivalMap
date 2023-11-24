@@ -887,15 +887,6 @@
 			</div>
 			<div id="map" class="col-8"></div>
 		</div>
-	</div>
-
-
-
-
-
-
-
-
 
 
 </body>

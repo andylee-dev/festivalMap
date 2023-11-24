@@ -302,11 +302,11 @@
 .homeDetail-basic-img-custom {
 	width: 510px;
 	height: 640px;
-	background-color: #EAEAEA;
+/* 	background-color: #EAEAEA; */
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid black;
+/* 	border: 1px solid black; */
 	margin-left: 10px;
 	margin-right: 200px;
 }
@@ -332,7 +332,7 @@
 .sideImg-custom {
 	width: 120px;
 	height: 120px;
-	background-color: #ff80c0;
+	background-color: transparent;
 	display: flex;
 	align-items: center;
 	justify-content: center;
