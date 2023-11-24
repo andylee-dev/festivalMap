@@ -278,7 +278,7 @@
 	                        			<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 	                        		</div>
 	                        		<div class="col-2 mb-3">
-	                        			<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spotList'">취소</button>
+	                        			<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot'">취소</button>
 	                        		</div>
 								</div>
 						</form>

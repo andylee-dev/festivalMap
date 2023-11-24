@@ -771,58 +771,46 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "spotDelete")
-		public String spotDelete(int contentId, Model model) {
+		public String spotDelete(int contentId,String is_deleted, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "start");
-				ss.deletespot(contentId);
+				SpotContent spot = new SpotContent();
+				spot.setContent_id(contentId);
 				
+				if(is_deleted.equals("0")) {
+					spot.setIs_deleted("1");
+				} else if(is_deleted.equals("1")) {
+					spot.setIs_deleted("0");
+					log.info(spot.getIs_deleted());
+				}
+				log.info(spot.getIs_deleted());
+				ss.deletespot(spot);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin spotDelete", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "end");
 			}		
-			return "forward:spot";
-		}
-		
-		@RequestMapping(value = "spotRestore")
-		public String spotRestore(int contentId, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}",transactionId, "admin spotRestore", "start");
-				
-				ss.restorespot(contentId);
-				
-			} catch (Exception e) {
-				log.error("[{}]{}:{}",transactionId, "admin spotRestore", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}",transactionId, "admin spotRestore", "end");
-			}		
-			return "forward:spot";
-		}
-		
-		@ResponseBody
-		@RequestMapping(value = "spotDeleteAjax")
-		public String spotDeleteAjax(int contentId, Model model) {
-			int result = ss.deletespot(contentId);
-			String resultStr = Integer.toString(result);
-			return resultStr;
-		}
-		
-		@ResponseBody
-		@RequestMapping(value = "spotRestoreAjax")
-		public String spotRestoreAjax(int contentId, Model model) {
-			int result = ss.restorespot(contentId);
-			String resultStr = Integer.toString(result);
-			return resultStr;
+			return "redirect:spot";
 		}
 		
 		@RequestMapping(value = "spotApprove")
-		public String spotApprove(int contentId, String currentPage, Model model) {
+		public String spotApprove(int contentId,String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "start");
-				int result = ss.approveSpot(contentId);
+				SpotContent spot = new SpotContent();
+				spot.setContent_id(contentId);
+				
+				if(status.equals("0")) {
+					spot.setStatus("1");
+				} else if(status.equals("1")) {
+					spot.setStatus("0");
+					log.info(spot.getStatus());
+				}
+				log.info(spot.getStatus());
+					
+				int result = ss.approveSpot(spot);
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 				} else {

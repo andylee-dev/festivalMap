@@ -9,53 +9,34 @@
 		<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-		function confirmDelete(contentId) {
-	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
-	            $.ajax({
-	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'spotDeleteAjax',
-	                data: { contentId: contentId },
-	                success: function(result) {
-	                    // 성공적으로 삭제된 경우의 처리
-	                    alert('삭제되었습니다.');
-	                    location.reload();
-	                },
-	                error: function(xhr, status, error) {
-	                    // 오류 발생 시의 처리
-	                    alert('삭제에 실패했습니다.');
-	                }
-	            });
-	        } else {
-	            // 취소 버튼을 눌렀을 때의 처리
-	            // 필요한 로직을 추가하세요.
-	        }
-	    }
-		
-		function confirmRestore(contentId) {
-	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
-	            $.ajax({
-	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'spotRestoreAjax',
-	                data: { contentId: contentId },
-	                success: function(result) {
-	                    // 성공적으로 삭제된 경우의 처리
-	                    alert('복원되었습니다.');
-	                    location.reload();
-	                },
-	                error: function(xhr, status, error) {
-	                    // 오류 발생 시의 처리
-	                    alert('복원에 실패했습니다.');
-	                }
-	            });
-	        } else {
-	            // 취소 버튼을 눌렀을 때의 처리
-	            // 필요한 로직을 추가하세요.
-	        }
-	    }
+			
 			function approveConfirm() {
-				var contentId = Number(${spot.content_id});
+				var contentId = Number(${spot.content_id}); 
+				var status = "${spot.status}";
 				if(confirm("승인하시겠습니까?")) {
-					location.href="../content/spotApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="../content/spotApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
+				}
+			}
+			function approveConfirm1() {
+				var contentId = Number(${spot.content_id}); 
+				var status = "${spot.status}";
+				if(confirm("승인대기로 변경하시겠습니까?")) {
+					location.href="../content/spotApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
+				}
+			}
+			
+			function deleteConfirm() {
+				var contentId = Number(${spot.content_id}); 
+				var is_deleted = "${spot.is_deleted}";
+				if(confirm("삭제하시겠습니까?")) {
+					location.href="../content/spotDelete?contentId="+contentId+"&currentPage=${currentPage}&is_deleted="+is_deleted;
+				}
+			}
+			function deleteConfirm1() {
+				var contentId = Number(${spot.content_id}); 
+				var is_deleted = "${spot.is_deleted}";
+				if(confirm("복원하시겠습니까?")) {
+					location.href="../content/spotDelete?contentId="+contentId+"&currentPage=${currentPage}&is_deleted="+is_deleted;
 				}
 			}
 			
@@ -393,14 +374,14 @@
 						 		<c:choose>
 									 <c:when test="${spot.is_deleted == 1}">
 							 			<div class="col-6 mb-3" >
-		                        			<button type="button" class="form-control btn btn-primary w-100" onclick="confirmRestore(${spot.content_id})">복원</button>
+		                        			<button type="button" class="form-control btn btn-primary w-100" onclick="deleteConfirm1()">복원</button>
 		                        		</div>
 		                       		 <div class="col-6 mb-3">
 		                        			<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">취소</button>
 		                        		</div>
 		                   		 </c:when>
 							 		<c:when test="${spot.status == 0}">
-							 			<div class="col-6 mb-3" >
+							 			<div class="col-6 mb-3 mx-1" >
 		                             		 <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                          		</div>
 		                            		<div class="col-2 mb-3">
@@ -409,19 +390,19 @@
 		                          		<div class="col-2 mb-3">
 		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="openPopup()">반려(사유선택)</button>
 		                         		 </div>
-		                          		<div class="col-1 mb-3">
-		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">삭제</button>
-		                         		 </div>
+		                         		 <div class="col-1 mb-3">
+		                             		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">목록</button>
+		                          		</div>
 									 </c:when>
 									 <c:when test="${spot.status == 1}">
 							 			<div class="col-6 mb-3">
 		                               		 <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/spotUpdateForm?contentId=${spot.content_id}&currentPage=${currentPage}'">수정하기</button>
 		                            		 </div>
 		                            		 <div class="col-2 mb-3">
-		                              		  <button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
+		                              		  <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
 		                            		 </div>
 		                            		 <div class="col-2 mb-3">
-		                             		 <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${spot.content_id})">삭제</button>
+		                             		 <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
 		                          		   </div>
 		                        		  <div class="col-1 mb-3">
 		                             		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">목록</button>

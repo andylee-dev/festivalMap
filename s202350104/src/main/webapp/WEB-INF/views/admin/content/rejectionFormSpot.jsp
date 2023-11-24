@@ -58,7 +58,7 @@
 					영업시간<div>${spot.opening_hours}</div>
 					휴무일<div>${spot.rest_date}</div>
 					입장료<div>${spot.entrance_fee}</div>
-					축제장소<div>${spot.area_content}</div>
+					명소장소<div>${spot.area_content}</div>
 					<div>${spot.sigungu_content}</div>
 					<div>${spot.address}</div>
 					홈페이지<div>${spot.homepage}</div>
