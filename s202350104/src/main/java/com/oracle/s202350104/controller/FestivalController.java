@@ -196,6 +196,14 @@ public class FestivalController {
 	
 	@RequestMapping(value = "festival/recommend")
 	public String festivalRecommendation() {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "festival/recommend", "start");
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "festival/recommend", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "festival/recommend", "end");
+		}		
 		return "festival/festivalRecommend";
 	}
 	

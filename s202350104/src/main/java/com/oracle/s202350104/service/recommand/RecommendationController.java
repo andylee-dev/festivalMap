@@ -1,6 +1,7 @@
 package com.oracle.s202350104.service.recommand;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,10 +17,12 @@ import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/recommendations")
 @RequiredArgsConstructor
+@Slf4j
 public class RecommendationController {
     private final RecommendationService recService;
     private final ContentSerivce contentService;
@@ -27,7 +30,9 @@ public class RecommendationController {
 
     @GetMapping
     public ResponseEntity<List<Contents>> getRecommendations() {
+    	UUID transactionId = UUID.randomUUID();
         try {
+        	log.info("[{}]{}:{}", transactionId, "getRecommendations()", "start");
             Optional<Users> user = null;
             int userId = userService.getLoggedInId();
             if (userId == 0) {
@@ -55,8 +60,11 @@ public class RecommendationController {
             List<Contents> content = contentService.getSearchContentsList(contents);
             return ResponseEntity.ok(content);
         } catch (Exception e) {
+        	log.error("[{}]{}:{}", transactionId, "getRecommendations()", e.getMessage());
             // 적절한 예외 처리
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } finally {
+        	log.info("[{}]{}:{}", transactionId, "getRecommendations()", "end");
         }
     }
 }
