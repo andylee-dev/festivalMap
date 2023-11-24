@@ -18,6 +18,7 @@
 			dataType: "json",
 			success: function(contentList) {
 				console.log("getRecommendations() success->"+contentList.length)
+				$('#rec_contentBox').empty()
 				contentList.forEach(function(content) {
 					$('#rec_contentBox').append("아이디:"+content.id+"<br>")
 				})
