@@ -523,7 +523,8 @@
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
 						<p>홈페이지</p>
 						<a href="${experience.homepage}"><span>${festival.homepage}</span></a>
-					</div>		
+					</div>
+					<div class="col text-custom"></div>			
 					
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
@@ -536,7 +537,7 @@
 										<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>주차가능</span>	
+								<span>주차시설</span>	
 						
 							</div>
 							<div class="row row-cols-2 icon-custom">

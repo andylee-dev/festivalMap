@@ -367,7 +367,7 @@ function getLocation() {
 	<!-- 임시, 여백용-->
 	<div id="content_title" class="container homeDetail-whiteSpace-custom"></div>
 	
-	<!-- keyword, title 영역 -->	
+<%-- 	<!-- keyword, title 영역 -->	
 	<form id="restaurant" action="restaurant" method="get">
 	<div class="container homeCommon-keyword-title-custom">
 		<div class="co1 title-div">
@@ -406,7 +406,7 @@ function getLocation() {
 			</div>
 		</div>		
 	</div>
-	</form>
+	</form> --%>
 	
 	<!-- 상단 분홍색 title 출력-->
 	<div class="homeDetail-topTitle-custom">
@@ -507,7 +507,7 @@ function getLocation() {
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">메뉴</p>
+						<p class="text-sm-custom">메인&nbsp;메뉴</p>
 						<span>${restaurant.menu}</span>					
 					</div>
 					<div class="col text-custom">
@@ -532,41 +532,48 @@ function getLocation() {
 							<a href="${restaurant.homepage}">${restaurant.homepage}</a>
 						</span>										
 					</div>
+					<div class="col text-custom"></div>						
+					<div class="col text-custom"></div>						
+					
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
-							<div class="row row-cols-2 icon-custom">
-								<c:choose>
-									<c:when test="${restaurant.is_smoking eq 1 }">
-										<img alt="activate_icon.png" src="../image/activate_icon.png">									
-									</c:when>
-									<c:otherwise>
-										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
-									</c:otherwise>					
-								</c:choose>
-								<span>흡연 </span>							
-							</div>
-							<div class="row row-cols-2 icon-custom">
-								<c:choose>
-									<c:when test="${restaurant.is_packing eq 1 }">
-										<img alt="restroom_icon.png" src="../image/restroom_icon.png">									
-									</c:when>
-									<c:otherwise>
-										<img alt="disabled_restroom_icon.png" src="../image/disabled_restroom_icon.png">									
-									</c:otherwise>					
-								</c:choose>	
-								<span>포장</span>								
-							</div>
-							<div class="row row-cols-2 icon-custom">
-								<c:choose>
-									<c:when test="${restaurant.is_parking eq 1 }">
-										<img alt="packing_icon.png" src="../image/packing_icon.png">									
-									</c:when>
-									<c:otherwise>
-										<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
-									</c:otherwise>					
-								</c:choose>	
-								<span>주차</span>	
-							</div>
+								<div class="row row-cols-2 icon-custom">
+									<c:choose>
+										<c:when test="${restaurant.is_parking eq 1 }">
+											<img alt="packing_icon.png" src="../image/packing_icon.png">									
+										</c:when>
+										<c:otherwise>
+											<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
+										</c:otherwise>					
+									</c:choose>	
+									<span>주차시설</span>	
+								</div>
+														
+								<div class="row row-cols-2 icon-custom">
+									<c:choose>
+										<c:when test="${restaurant.is_smoking eq 1 }">
+											<img alt="activate_icon.png" src="../image/activate_icon.png">									
+										</c:when>
+										<c:otherwise>
+											<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
+										</c:otherwise>					
+									</c:choose>
+									<span>흡연시설</span>							
+								</div>
+								
+								<div class="row row-cols-2 icon-custom">
+									<c:choose>
+										<c:when test="${restaurant.is_packing eq 1 }">
+											<img alt="restroom_icon.png" src="../image/restroom_icon.png">									
+										</c:when>
+										<c:otherwise>
+											<img alt="disabled_restroom_icon.png" src="../image/disabled_restroom_icon.png">									
+										</c:otherwise>					
+									</c:choose>	
+									<span>포장여부</span>								
+								</div>
+							
+							<div class="row row-cols-2 icon-custom"></div>
 						</div>
 					</div>
 				</div>

@@ -579,6 +579,9 @@
 							<a href="${spot.homepage}">${spot.homepage}</a>
 						</span>										
 					</div>
+					<div class="col text-custom"></div>	
+					<div class="col text-custom"></div>	
+					
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
 							<div class="row row-cols-2 icon-custom">
@@ -613,7 +616,7 @@
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>
-								<span>휠체어 대여</span>							
+								<span>휠체어&nbsp;대여</span>							
 							</div>
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
@@ -624,7 +627,7 @@
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>유모차 대여</span>							
+								<span>유모차&nbsp;대여</span>							
 							</div>
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
@@ -635,7 +638,7 @@
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>반려동물 동반</span>							
+								<span>반려동물&nbsp;동반</span>							
 							</div>
 						</div>
 					</div>

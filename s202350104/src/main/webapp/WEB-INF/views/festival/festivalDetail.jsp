@@ -598,7 +598,7 @@ function getLocation() {
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>
-								<span>휠체어 대여</span>							
+								<span>휠체어&nbsp;대여</span>							
 							</div>
 							<div class="row row-cols-2 icon-custom">
 								<c:choose>
@@ -609,7 +609,7 @@ function getLocation() {
 										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
 									</c:otherwise>					
 								</c:choose>	
-								<span>유모차 대여</span>							
+								<span>유모차&nbsp;대여</span>							
 							</div>
 						</div>
 					</div>

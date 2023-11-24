@@ -60,7 +60,6 @@
 		<!-- 상단 분홍색 영역 -->
 		<div class="container homeList-top-custom"></div>
 		
-		<div>
 			<form id="restaurantSearch" action="restaurantSearch">
 			<input type="hidden" name="big_code" value="12">
 			
@@ -127,7 +126,7 @@
                          </div>
                          <div class="card-body">
 	                          <p class="card-text title-p">${restaurant.title}</p>   
-	                          <p class="card-text period-p">${restaurant.first_menu}</p>
+	                          <p class="card-text period-p">추천&nbsp;메뉴:&nbsp;${restaurant.first_menu}</p>
 	                          <p class="card-text contet-p">${restaurant.content}</p>
                           </div>   
                         </div>
