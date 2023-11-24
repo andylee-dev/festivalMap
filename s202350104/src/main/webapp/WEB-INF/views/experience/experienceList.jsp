@@ -49,11 +49,10 @@
 		<!-- 임시, 여백용-->
 		<div id="content_title" class="container"></div>
 
-
 		<div class="container p-0 homeList-banner-custom">
 			<div id="carouselExampleIndicators" class="carousel slide"
-			 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
-			 data-bs-wrap="true">
+				 data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover"
+			 	 data-bs-wrap="true">
 
 			<!-- 중앙 하단 버튼용 -->
 			<div class="carousel-indicators">
