@@ -86,6 +86,7 @@ public class CourseController {
 			log.info("course : " + course);
 			log.info("CourseController courseDetail course.getCourse_id() : " + course.getCourse_id());
 			
+			// 상세정보 Logic 구간
 			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
 			log.info("courseDetailList : " + courseDetailList);

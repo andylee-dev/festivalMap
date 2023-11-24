@@ -31,8 +31,8 @@
 	function initKakaoMap() {
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(function (position) {
-				const latitude = ${festival.mapy };
-				const longitude = ${festival.mapx };
+				const latitude = ${course.mapy };
+				const longitude = ${course.mapx };
 				map = getKakaoMap(latitude, longitude);
 				clusterer = new kakao.maps.MarkerClusterer({
 					map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -51,6 +51,8 @@
 			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
 		}
 	}
+
+
 	
 	function setCenter(lat, lng) {
 		// 이동할 위도 경도 위치를 생성합니다
@@ -277,6 +279,7 @@
 
 	/* 대분류, 소분류 기능 js */
 	document.addEventListener("DOMContentLoaded", function() {
+		initKakaoMap();
 		updateAreaOptions();
 		$(".area-dropdown").change(
 				function() {
@@ -477,7 +480,9 @@
 								<ul>
 									<li>코스이름 : ${courseDetail.title }
 									<li>개요 : ${courseDetail.content }
-									<li>홈페이지 : ${courseDetail.homepage }
+									<li>주소 : ${courseDetail.address }
+									<li>홈페이지 : <a href="${courseDetail.homepage }">${courseDetail.homepage }</a>
+									<li>전화번호 : ${courseDetail.phone }
 								</ul>
 							</div>
 						</div>
@@ -490,41 +495,6 @@
 	
 	<!-- 경계선 표현 -->
 	<hr class="container homeCommon-top-custom">
-
-	<%-- <div>
-		<c:forEach var="courseDetail" items="${courseDetail }">
-			<c:if test="${courseDetail.order_num == 1}">
-				<h1>${courseDetail.course_title }</h1>
-				<div class="container border p-5">
-					<img alt="${courseDetail.course_title }" src="${courseDetail.img1 }">
-				</div>
-				<div class="container border p-5">
-					<ul>
-						<li>코스 이름 : ${courseDetail.course_title }
-						<li>코스 내용 : ${courseDetail.course_info }
-						<li>코스 거리 : ${courseDetail.distance }
-						<li>주 소 :	${courseDetail.address }
-						<li>전화번호 :	${courseDetail.phone }
-					</ul>
-				</div>
-			</c:if>
-		</c:forEach>
-	</div>
-	
-	<div>
-		<c:forEach var="courseDetail" items="${courseDetail }">
-		<div class="container border p-5">
-			<a href='../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}'>
-				<img alt="${courseDetail.course_title }" src="${courseDetail.img1 }">
-			</a>
-			<ul>
-				<li>코스이름 : ${courseDetail.title }
-				<li>개요 : ${courseDetail.content }
-				<li>홈페이지 : ${courseDetail.homepage }
-			</ul>
-		</div>
-		</c:forEach>
-	</div> --%>
 	
 	<!-- 리뷰 영역 -->
 	<div class="container homeDetail-mdTitle-custom">

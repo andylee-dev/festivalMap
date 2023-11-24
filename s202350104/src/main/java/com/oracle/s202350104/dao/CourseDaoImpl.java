@@ -53,11 +53,10 @@ public class CourseDaoImpl implements CourseDao {
 	
 	@Override
 	public List<Course> courseDetail(int course_id) {
-		log.info("course_id ->" + course_id);
 		List<Course> courseDetailList = null;
 		try {
 			courseDetailList = session.selectList("noCourseDetailList", course_id);
-			log.info("CourseDaoImpl courseDetail courseDetailList.size() ->" + courseDetailList.size());
+			log.info("CourseDaoImpl courseDetail courseDetailList.size() : " + courseDetailList.size());
 			
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseDetail e.getMessage() ->" + e.getMessage());

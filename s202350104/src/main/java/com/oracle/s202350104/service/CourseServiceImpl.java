@@ -42,7 +42,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Course> courseDetail(int course_id) {
-		log.info("course_id ->" + course_id);
 		List<Course> courseDetailList = cd.courseDetail(course_id);
 		
 		if(courseDetailList == null) {
