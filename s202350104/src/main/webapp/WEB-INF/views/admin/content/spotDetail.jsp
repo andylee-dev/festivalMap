@@ -381,16 +381,13 @@
 		                        		</div>
 		                   		 </c:when>
 							 		<c:when test="${spot.status == 0}">
-							 			<div class="col-6 mb-3 mx-1" >
+							 			<div class="col-6 mb-3" >
 		                             		 <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                          		</div>
-		                            		<div class="col-2 mb-3">
-		                                		<button type="button" class="btn btn-outline-secondary w-100" onclick="">대기(임시저장)</button>
-		                         		 </div>
-		                          		<div class="col-2 mb-3">
+		                          		<div class="col-3 mb-3">
 		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="openPopup()">반려(사유선택)</button>
 		                         		 </div>
-		                         		 <div class="col-1 mb-3">
+		                         		 <div class="col-3 mb-3">
 		                             		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">목록</button>
 		                          		</div>
 									 </c:when>

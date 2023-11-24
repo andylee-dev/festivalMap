@@ -75,7 +75,6 @@
 						<textarea rows="20" cols="100" id="content" name="content" placeholder="반려 사유를 입력해주세요."></textarea>
 						<div>
 							<button type="button" onclick="submitForm();">반려사유 등록 완료</button>
-							<button type="button">대기(임시저장)</button>
 							<button type="button">승인전환</button>
 							<button type="button">삭제</button>
 						</div>
