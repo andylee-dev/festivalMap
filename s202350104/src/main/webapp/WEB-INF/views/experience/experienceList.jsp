@@ -181,7 +181,7 @@
 						<div class="card homeList-card-custom">
 							<div class="homeList-tag-custom">
 								<div class="homeList-tag-custom2">
-									<p class="tag_p">#지역태그</p>
+									<p class="tag-p">#지역태그</p>
 								</div>
 								<a href="experience/detail?contentId=${experience.id}&currentPage=${page.currentPage}">
 									<img src="${experience.img1}" class="card-img-top" alt="${experience.title}">
