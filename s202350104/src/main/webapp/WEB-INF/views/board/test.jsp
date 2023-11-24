@@ -858,7 +858,36 @@
 	</div>
 
 
-
+		<div class="border d-flex">
+			<div id="menu_wrap" class="container col-4">
+				<div class="container-fluid">
+					<div class="m-3">
+						<label for="area" class="form-label"><strong>지역별_구분</strong></label>
+						<select name="area" id="area" class="form-select col-auto area-dropdown"></select>
+					</div>
+					<div class="m-3">
+						<label for="sigungu" class="form-label"><strong>상세지역</strong></label>
+						<select name="sigungu" id="sigungu" class="form-select col-auto sigungu-dropdown"></select>
+					</div>
+					<div class="m-3" style="display: flex; align-items: center;">
+					    <label for="tag" class="form-label"><strong>테마별</strong></label>					    
+					    <div style="position: relative; margin-top: 20px">
+					        <input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" />
+					        <a href="javascript:search()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);">
+					            <img style="width: 20px; height: 19px;" src="../image/icon_search1.png" alt="test" />
+					        </a>
+					    </div>
+					</div>
+				</div>
+				
+				<div class="container-fluid overflow-auto" style="height: 400px">
+					<label for="area" class="form-label">목록 보기</label>
+					<ul id="placesList"></ul>
+				</div>
+			</div>
+			<div id="map" class="col-8"></div>
+		</div>
+	</div>
 
 
 

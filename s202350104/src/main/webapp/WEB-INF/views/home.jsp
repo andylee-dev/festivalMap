@@ -182,10 +182,10 @@
 				map.setBounds(bounds);
 			}
 			// 검색결과 항목을 Element로 반환하는 함수입니다
-			function getListItem(index, place) {
+			function getListItem(index, place) {				
 				// 카드 요소 생성
 				const cardEl = document.createElement("div");
-				cardEl.className = "card mb-4";
+				cardEl.className = "card mb-4 home-card-custom";
 
 				// 카드 이미지 생성
 				const imageEl = document.createElement("img");
@@ -211,7 +211,7 @@
 
 				const linkEl = document.createElement("a");
 				linkEl.href = place.link;
-				linkEl.className = "btn btn-primary";
+				linkEl.className = "btn home-card-btn";
 				linkEl.textContent = "자세히 보기";
 				cardBodyEl.appendChild(linkEl);
 				cardEl.appendChild(cardBodyEl);
@@ -523,45 +523,53 @@
 	</div>
 
 	<!-- Section3 -->
-	<div class="container home-map-box-custom">
-		<div class="home-map-batch"><h1>·</h1>&nbsp;LIVE</div>
-		<div class="home-map-title">
-			<h4><strong>지금 축제중인 지역</strong></h4>
-		</div>
-		
-		<!-- Map icon 영역 -->
-		<div class="container p-5" style="height: 80px; background-color: #B7E24D; position: relative;">
-			<img alt="mapIcon1" src="../image/mapicon5.png" width="60px;"
-				 height="60px;" style="position: absolute; left: 10; top: 18;">
-			<img alt="mapIcon1" src="../image/mapicon1.png" width="60px;"
-				 height="60px;" style="position: absolute; right: 167; top: 18;">
-			<img alt="mapIcon1" src="../image/mapicon2.png" width="60px;"
-				 height="60px;" style="position: absolute; right: 114; top: 18;">
-			<img alt="mapIcon1" src="../image/mapicon3.png" width="60px;"
-				 height="60px;" style="position: absolute; right: 62; top: 18;">
-			<img alt="mapIcon1" src="../image/mapicon4.png" width="60px;"
-				 height="60px;" style="position: absolute; right: 10; top: 18;">
-		</div>
-		
-		<!-- Map Menu 영역 -->
-		<div class="container home-map-menu-custom">	
-			<div id="menu_wrap" class="row row-cols-2 home-map-nav-box-custom">
-				<div class="col home-menu-detail">
+		<div class="container home-map-box-custom">
+			<div class="home-map-batch">
+				<h1>·</h1>
+				&nbsp;LIVE
+			</div>
+			<div class="home-map-title">
+				<h4>
+					<strong>지금 축제중인 지역</strong>
+				</h4>
+			</div>
+
+			<!-- Map icon 영역 -->
+			<div class="container p-5"
+				style="height: 80px; background-color: #B7E24D; position: relative;">
+				<img alt="mapIcon1" src="../image/mapicon5.png" width="60px;"
+					height="60px;" style="position: absolute; left: 10; top: 18;">
+				<img alt="mapIcon1" src="../image/mapicon1.png" width="60px;"
+					height="60px;" style="position: absolute; right: 167; top: 18;">
+				<img alt="mapIcon1" src="../image/mapicon2.png" width="60px;"
+					height="60px;" style="position: absolute; right: 114; top: 18;">
+				<img alt="mapIcon1" src="../image/mapicon3.png" width="60px;"
+					height="60px;" style="position: absolute; right: 62; top: 18;">
+				<img alt="mapIcon1" src="../image/mapicon4.png" width="60px;"
+					height="60px;" style="position: absolute; right: 10; top: 18;">
+			</div>
+
+			<!-- Map Menu 영역 -->
+			<div class="container home-map-menu-custom">
+				<div id="menu_wrap" class="row row-cols-2 home-map-nav-box-custom">
+					<div class="col home-menu-detail">
 						<div class="row row-col-1">
 							<div class="col home-menu-sm">
-								<label for="area" class="form-label">지역별_구분</label>							
-								<select name="area" id="area" class="form-select col-auto area-dropdown"></select>							
+								<label for="area" class="form-label">지역별_구분</label> 
+								<select name="area" id="area"
+									    class="form-select col-auto area-dropdown"></select>
 							</div>
 						</div>
 						<div class="row row-col-1">
 							<div class="col home-menu-sm">
 								<label for="sigungu" class="form-label"><strong>상세지역</strong></label>
-								<select name="sigungu" id="sigungu" class="form-select col-auto sigungu-dropdown"></select>							
+								<select name="sigungu" id="sigungu"
+										class="form-select col-auto sigungu-dropdown"></select>
 							</div>
 						</div>
 						<div class="row row-col-1">
-							<div class="col home-menu-ssm ">
-					    		<label for="tag" class="form-label"><strong>테마별</strong></label>					
+							<div class="col home-menu-ssm">
+								<label for="tag" class="form-label"><strong>테마별</strong></label>
 							</div>
 						</div>
 						<div class="row row-col-3">
@@ -575,59 +583,28 @@
 								<button>#MZ추천</button>
 								<button>#매년주최</button>
 								<button>#이번에만</button>
-							</div>		
-						</div>
-						<div class="row row-col-1">
-							<div class="col home-menu-sm">
-					      	 	<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" />				
-								<img src="../image/icon_search1.png" alt="test" />							
 							</div>
 						</div>
 						<div class="row row-col-1">
-							<div class="col home-menu-lg">4</div>
+							<div class="col home-menu-sm">
+								<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" /> 
+								<img src="../image/icon_search1.png" alt="icon_search1.png" />
+							</div>
 						</div>
-			
+						<div class="row row-col-1">
+							<div class="col home-menu-lg overflow-auto">
+								<label for="area" class="form-label">목록 보기</label>
+								<div id="placesList"></div>
+							</div>
+						</div>
+
 					</div>
-					<div class="col home-map-detail">
-					<div id="map" class="col-8"></div>
-				</div>				
-			</div>			
-		</div>
-		
-		
-		
-		
-		
-		<div class="border d-flex">
-			<div id="menu_wrap" class="container col-4">
-				<div class="container-fluid">
-					<div class="m-3">
-						<label for="area" class="form-label"><strong>지역별_구분</strong></label>
-						<select name="area" id="area" class="form-select col-auto area-dropdown"></select>
+					<div class="col home-map-custom">
+						<div id="map" class="home-map-img-detail"></div>
 					</div>
-					<div class="m-3">
-						<label for="sigungu" class="form-label"><strong>상세지역</strong></label>
-						<select name="sigungu" id="sigungu" class="form-select col-auto sigungu-dropdown"></select>
-					</div>
-					<div class="m-3" style="display: flex; align-items: center;">
-					    <label for="tag" class="form-label"><strong>테마별</strong></label>					    
-					    <div style="position: relative; margin-top: 20px">
-					        <input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" />
-					        <a href="javascript:search()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);">
-					            <img style="width: 20px; height: 19px;" src="../image/icon_search1.png" alt="test" />
-					        </a>
-					    </div>
-					</div>
-				</div>
-				
-				<div class="container-fluid overflow-auto" style="height: 400px">
-					<label for="area" class="form-label">목록 보기</label>
-					<ul id="placesList"></ul>
 				</div>
 			</div>
-	
 		</div>
-	</div>
 
 	<!-- Section4 -->
 	<div class="container home-ad-box-custom">
