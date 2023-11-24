@@ -19,8 +19,10 @@
 <% ApplicationContext context=WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
    MapService map=context.getBean("kakaoMapSerivce", MapService.class); String apiKey=map.getApiKey(); %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>&libraries=clusterer"></script>
+
 <!-- 지역 코드 넣는 코드  -->
 <script src="/js/updateArea.js"></script>
+
 <!-- script 영역 -->
 <script>
 	let markers = [];
@@ -41,9 +43,7 @@
 					addMarker(placePosition,0,'haha')
 					bounds.extend(placePosition);
 				}
-
 				map = getKakaoMap(latitude, longitude);
-				
 				
 				clusterer = new kakao.maps.MarkerClusterer({
 					map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -53,10 +53,7 @@
 				});
 				clusterer.addMarkers(markers);
 				map.setBounds(bounds);
-
 			});
-				
-
 		}
 		else {
 			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
@@ -80,7 +77,6 @@
 	
 		return new kakao.maps.Map(container, options);
 	}
-	
 
 	// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 	function addMarker(position, idx, title) {
@@ -109,7 +105,7 @@
 		return marker;
 	}
 
-	function getLocation() {
+	/* function getLocation() {
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(function (position) {
 				const latitude = position.coords.latitude;
@@ -119,7 +115,7 @@
 		} else {
 			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
 		}
-	}	
+	}	 */
 
 
 	/* 대분류, 소분류 기능 js */
@@ -174,7 +170,37 @@
             $(".custom-carousel .card").not($(this)).removeClass("card");
             $(this).toggleClass("card");
         }); */
-    }); 
+    });
+	
+    /* 클릭한 사진 보여주기 */
+	function clickPhoto(event){
+		console.log("실행");
+		
+		var clickedImg = event.target;
+		
+		var chooseImg = document.getElementById("photo");
+		chooseImg.setAttribute("src", clickedImg.getAttribute("src"));
+	}
+	
+	/* URL Link Share */
+	function clip() {
+	    var textarea = document.createElement("textarea");
+	    document.body.appendChild(textarea);
+	    
+	    var url = window.document.location.href;
+	    textarea.value = url;
+	    textarea.select();
+	    
+	    document.execCommand("copy");
+	    document.body.removeChild(textarea);
+	    
+	    swal({
+	        title: "URL이 복사되었습니다!!",
+	        text: url,
+	        icon: "success",
+	    })
+	}
+	
 </script>
 <style type="text/css">
 .course-card {
@@ -228,6 +254,24 @@
 	<!-- content tag 출력-->
 	<div class="container homeDetail-topTags-custom">
 		<div class="row row-cols-6">
+			<c:if test="${listTags != null }">
+				<c:forEach var="tags" items="${listTags }">
+					<div class="col-sm-1 hashTag-custom">
+						<button value="&{tags.tag_id }">#${tags.name }</button>
+					</div>
+				</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(listTags) == 0}">
+				<div class="col-sm-1 hashTag-custom">
+					<button>#해시태그</button>
+				</div>
+			</c:if>
+		</div>
+	</div>
+	
+	<!-- content tag 출력-->
+	<%-- <div class="container homeDetail-topTags-custom">
+		<div class="row row-cols-6">
 			<c:forEach var="tags" items="${listTags }">
 				<div class="col-sm-1 hashTag-custom">
 					<c:choose>
@@ -241,7 +285,7 @@
 				</div>		
 			</c:forEach>
 		</div>
-	</div>
+	</div> --%>
 	
 	<!-- 이미지, 기본 정보 출력 -->
 	<div class="container homeDetail-basic-custom">
@@ -250,25 +294,45 @@
 			<c:forEach var="courseDetail" items="${courseDetail }">
 				<c:if test="${courseDetail.order_num == 1}">
 					<div class="col homeDetail-basic-img-custom">
-						<img alt="${courseDetail.img1}" src="${courseDetail.img1}">
+						<img id="photo" alt="${courseDetail.img1}" src="${courseDetail.img1}">
 					</div>
 					
 					<!-- 두번째 작은 이미지 -->
 					<div class="col homeDetail-basic-sideImg-custom">
 						<div class="row row-cols-1">
-							<div class="col sideImg-custom">
-								<img alt="${courseDetail.img2}" src="${courseDetail.img2}">	
-							</div>
-							<div class="col sideImg-custom">
-								<img alt="${courseDetail.img2}" src="${courseDetail.img2}">					
-							</div>
-							<div class="col sideImg-custom">
-								<img alt="${courseDetail.img2}" src="${courseDetail.img2}">					
-							</div>
-							<div class="col sideImg-custom">
-								<img alt="${courseDetail.img2}" src="${courseDetail.img2}">					
-							</div>
-							<div class="col sideImg-custom">+5</div>
+							<c:choose>
+								<c:when test="${courseDetail.img1 != null}">
+									<div class="col sideImg-custom">
+										<img alt="${courseDetail.img1}" src="${courseDetail.img1}" onclick="clickPhoto(event)">		
+									</div>			
+								</c:when>
+								<c:otherwise>
+									<div class="col sideImg-custom"></div>							
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${courseDetail.img2 != null}">
+									<div class="col sideImg-custom">
+										<img alt="${courseDetail.img2}" src="${courseDetail.img2}" onclick="clickPhoto(event)">	
+									</div>			
+								</c:when>
+								<c:otherwise>
+									<div class="col sideImg-custom"></div>							
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${courseDetail.img3 != null}">
+									<div class="col sideImg-custom">
+										<img alt="${courseDetail.img3}" src="${courseDetail.img3}" onclick="clickPhoto(event)">		
+									</div>			
+								</c:when>
+								<c:otherwise>
+									<div class="col sideImg-custom"></div>							
+								</c:otherwise>
+							</c:choose>
+							<!-- 추가 이미지 확장용 -->
+							<div class="col sideImg-custom"></div>
+							<div class="col sideImg-custom"></div>
 						</div>
 					</div>
 					
@@ -300,6 +364,12 @@
 								<p class="text-md-custom">코스내용</p>
 								<p>${courseDetail.course_info }</p>
 							</div>
+							<div class="col text-custom"></div>
+							<div class="col text-custom"></div>
+							<div class="col text-custom"></div>
+							<div class="col text-custom"></div>
+							<div class="col text-custom"></div>
+							<div class="col text-icon-custom"></div>
 						</div>
 					</div>
 				</c:if>
