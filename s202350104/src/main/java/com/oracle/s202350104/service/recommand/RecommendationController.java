@@ -2,8 +2,12 @@ package com.oracle.s202350104.service.recommand;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.annotation.Resource;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,19 +31,25 @@ public class RecommendationController {
     private final RecommendationService recService;
     private final ContentSerivce contentService;
     private final UserService userService;
+    @Resource
+    private Map<String, RecommendationStrategy> strategies;
 
     @GetMapping
     public ResponseEntity<List<Contents>> getRecommendations() {
     	UUID transactionId = UUID.randomUUID();
+    	Optional<Users> user = null;
         try {
         	log.info("[{}]{}:{}", transactionId, "getRecommendations()", "start");
-            Optional<Users> user = null;
-            int userId = userService.getLoggedInId();
+//            int userId = userService.getLoggedInId();
+            int userId = 1;
+            Contents content = new Contents();
+            content.setBig_code(11);
+            log.info("USER_ID:{}",userId);
             if (userId == 0) {
                 // 비회원일 경우의 추천 로직
                 recService.setStrategies(Arrays.asList(
-                    new SimilarContentRecommendation(),
-                    new PopularContentRecommendation()
+//                    new SimilarContentRecommendation(),
+                		strategies.get("popularContentRecommendation")
                 ));
             } else {
                 user = userService.getUserById(userId);
@@ -47,20 +57,16 @@ public class RecommendationController {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
                 }
                 recService.setStrategies(Arrays.asList(
-                    new SimilarContentRecommendation(),
-                    new FavoriteBasedRecommendation(),
-                    new ReviewBasedRecommendation(),
-                    new PopularContentRecommendation(),
-                    new SimilarUserRecommendation()
+//                    new SimilarContentRecommendation(),
+//                    new FavoriteBasedRecommendation(),
+//                    new ReviewBasedRecommendation(),
+//                    new SimilarUserRecommendation(),
+                		strategies.get("popularContentRecommendation")
                 ));
             }
-            // List<Contents> recommendations = recService.recommend(user.get());
-            // log.info("recommendations->"+recommendations.size());
-            /* TODO: (nh)컨텐츠의 리스트를 ajax로 호출해서 페이지에 띄우기 */
-            Contents contents= new Contents();
-            List<Contents> contentList = contentService.getSearchContentsList(contents);
-            log.info("contentList->"+contentList.size());
-            return ResponseEntity.ok(contentList);
+            
+             List<Contents> recommendations = recService.recommend(user.get(),content);
+            return ResponseEntity.ok(recommendations);
         } catch (Exception e) {
         	log.error("[{}]{}:{}", transactionId, "getRecommendations()", e.getMessage());
             // 적절한 예외 처리

@@ -24,18 +24,21 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
 	@Override
-	public List<Contents> recommend(Users user) {
+	public List<Contents> recommend(Users user, Contents content) {
 		// 각 컨텐츠의 ID를 키로, 점수가 매겨진 컨텐츠를 값으로 하는 맵
 		Map<Integer, ScoredContent> scoredContentMap = new HashMap<>();
 
 		// 모든 추천 전략에 대해
 		for (RecommendationStrategy strategy : strategies) {
 			// 사용자가 null이고 전략이 사용자 기반 추천 전략이라면 건너뛰기
+			
 			if (user == null && strategy instanceof UserBasedRecommendationStrategy) {
+				log.info("사용자가 null이고 전략이 사용자 기반 추천 전략이라면 건너뛰기");
 				continue;
 			}
+			
 			// 해당 전략을 사용하여 추천 받기
-			List<ScoredContent> recommendations = strategy.recommend(user);
+			List<ScoredContent> recommendations = strategy.recommend(user,content);
 			// 모든 추천 결과에 대해
 			for (ScoredContent recommendation : recommendations) {
 				int contentId = recommendation.getContent().getId();
@@ -50,7 +53,6 @@ public class RecommendationServiceImpl implements RecommendationService {
 				}
 			}
 		}
-
 		// 맵의 값들을 리스트로 변환
 		List<ScoredContent> scoredRecommendations = new ArrayList<>(scoredContentMap.values());
 		// 점수를 기준으로 내림차순 정렬
