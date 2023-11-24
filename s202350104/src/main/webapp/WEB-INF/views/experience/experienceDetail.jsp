@@ -450,7 +450,7 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 				</div>				
 				<div class="row row-cols-3 second-box">
 					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png"> 볼거리가 많아요</div>
+						<img alt="test" src="../image/reviewIcon2.png">볼거리가 많아요</div>
 					<div class="col col-sm-4">
 						<img alt="test" src="../image/reviewIcon2.png">편의시설이 훌륭해요</div>
 					<div class="col col-sm-4">

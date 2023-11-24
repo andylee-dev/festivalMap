@@ -488,11 +488,16 @@
 
 .homeDetail-overView-detail {
 	width: 98%;
-	height: 600px;
-	border : 1px solid black;
+	height: 400px;
+/* 	border : 1px solid black; */
 	border-radius: 23.50px;
-	background-color: #EAEAEA;
+/* 	background-color: #EAEAEA; */
 	margin-top: 10px;
+}
+
+.homeDetail-overView-detail p{
+	font-size: 20px;
+	font-weight: bolder;
 }
 
 /* ==== review btn css ==== */
