@@ -30,7 +30,28 @@
 	            // 필요한 로직을 추가하세요.
 	        }
 	    }
-			
+		
+		function confirmRestore(contentId) {
+	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
+	            $.ajax({
+	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+	                url: 'spotRestoreAjax',
+	                data: { contentId: contentId },
+	                success: function(result) {
+	                    // 성공적으로 삭제된 경우의 처리
+	                    alert('복원되었습니다.');
+	                    location.reload();
+	                },
+	                error: function(xhr, status, error) {
+	                    // 오류 발생 시의 처리
+	                    alert('복원에 실패했습니다.');
+	                }
+	            });
+	        } else {
+	            // 취소 버튼을 눌렀을 때의 처리
+	            // 필요한 로직을 추가하세요.
+	        }
+	    }
 			function approveConfirm() {
 				var contentId = Number(${spot.content_id});
 				if(confirm("승인하시겠습니까?")) {
@@ -38,8 +59,12 @@
 				}
 			}
 			
-			function openRejectionPopup(contentId) {
-			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
+			// 반려 사유 입력 팝업창 띄우기
+			function openPopup() {
+				var url = "rejectionForm?contentId=${spot.content_id}&bigCode=${spot.big_code}";
+				var option = "width=1000, height=800";
+				window.name = "spotDetail";
+				window.open(url, "rejection form popup", option);
 			}
 			
 			function getSigungu(pArea){
@@ -368,7 +393,7 @@
 						 		<c:choose>
 									 <c:when test="${spot.is_deleted == 1}">
 							 			<div class="col-6 mb-3" >
-		                        			<button type="button" class="form-control btn btn-primary w-100" onclick="">복원</button>
+		                        			<button type="button" class="form-control btn btn-primary w-100" onclick="confirmRestore(${spot.content_id})">복원</button>
 		                        		</div>
 		                       		 <div class="col-6 mb-3">
 		                        			<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">취소</button>
@@ -382,7 +407,7 @@
 		                                		<button type="button" class="btn btn-outline-secondary w-100" onclick="">대기(임시저장)</button>
 		                         		 </div>
 		                          		<div class="col-2 mb-3">
-		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${spot.content_id})">반려(사유선택)</button>
+		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="openPopup()">반려(사유선택)</button>
 		                         		 </div>
 		                          		<div class="col-1 mb-3">
 		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">삭제</button>

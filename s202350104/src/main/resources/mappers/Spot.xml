@@ -140,6 +140,9 @@
 	<update id="dhContentsDelete" parameterType="int">
 		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
 	</update>
+	<update id="dhContentsRestore" parameterType="int">
+		UPDATE contents SET is_deleted = 0 WHERE id = #{contentId}
+	</update>
 	<update id="dhSpotApprove" parameterType="int">
 		UPDATE contents SET status = 1 WHERE id = #{contentId}
 	</update>

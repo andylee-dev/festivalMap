@@ -142,4 +142,16 @@ public class SpotDaoImpl implements SpotDao {
 		}
 		return totalSearchSpot;
 	}
+
+	@Override
+	public int restoreSpot(int contentId) {
+		int result = 0;
+		try {
+			result = session.update("dhContentsRestore", contentId);
+		} catch(Exception e) {
+			log.info("QnaListDaoImpl restoreSpot Exception => " + e.getMessage());
+		}
+		
+		return result;
+	}
 }

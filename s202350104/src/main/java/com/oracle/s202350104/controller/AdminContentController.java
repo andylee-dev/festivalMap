@@ -292,76 +292,77 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		// 등록 반려사유 입력 팝업창 띄우기
-		@RequestMapping(value = "rejectionForm")
-		public String rejectionForm(int contentId, int bigCode, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			try {
-				log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "start");
-				// bigCode에 맞춰 처리할 로직을 적어주세요~!
-				if(bigCode == 11) {        // festival
-					FestivalsContent festival = fs.detailFestivals(contentId);
-					model.addAttribute("festival", festival);
-				} else if(bigCode == 12) { // restaurant
+				@RequestMapping(value = "rejectionForm")
+				public String rejectionForm(int contentId, int bigCode, Model model) {
+					UUID transactionId = UUID.randomUUID();
+					try {
+						log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "start");
+						// bigCode에 맞춰 처리할 로직을 적어주세요~!
+						if(bigCode == 11) {        // festival
+							FestivalsContent festival = fs.detailFestivals(contentId);
+							model.addAttribute("festival", festival);
+						} else if(bigCode == 12) { // restaurant
+							
+						} else if(bigCode == 13) { // accomodation
+							
+						} else if(bigCode == 14) { // spot
+							SpotContent spot = ss.detailSpot(contentId);
+							model.addAttribute("spot", spot);
+						} else if(bigCode == 15) { // experience
+							
+						}
+					} catch (Exception e) {
+						log.error("[{}]{}:{}", transactionId, "admin rejectionForm", e.getMessage());
+					} finally {
+						log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "end");
+					}	
 					
-				} else if(bigCode == 13) { // accomodation
-					
-				} else if(bigCode == 14) { // spot
-					
-				} else if(bigCode == 15) { // experience
+					if(bigCode == 11) {        // festival
+						return "admin/content/rejectionFormFestival";
+					} else if(bigCode == 12) { // restaurant
+						return "";
+					} else if(bigCode == 13) { // accomodation
+						return "";
+					} else if(bigCode == 14) { // spot
+						return "admin/content/rejectionFormSpot";
+					} else if(bigCode == 15) { // experience
+						return "";
+					} else {
+						return "";
+					}
 					
 				}
-			} catch (Exception e) {
-				log.error("[{}]{}:{}", transactionId, "admin rejectionForm", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}", transactionId, "admin rejectionForm", "end");
-			}	
-			
-			if(bigCode == 11) {        // festival
-				return "admin/content/rejectionFormFestival";
-			} else if(bigCode == 12) { // restaurant
-				return "";
-			} else if(bigCode == 13) { // accomodation
-				return "";
-			} else if(bigCode == 14) { // spot
-				return "";
-			} else if(bigCode == 15) { // experience
-				return "";
-			} else {
-				return "";
-			}
-			
-		}
-		
-		// 등록 반려 사유 history 테이블에 insert
-		@RequestMapping(value = "insertHistory")
-		public String insertHistory(History history, int contentId, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			
-			try {
-				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "start");
-				int result = hs.insertHistory(history);
-			} catch (Exception e) {
-				log.error("[{}]{}:{}", transactionId, "admin insertHistory", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "end");
-			}	
-			
-			int bigCode = history.getBig_code();
-			// bigCode에 맞춰서 이동할 페이지를 적어주세요~!
-			if(bigCode == 11) {        // festival
-				return "forward:festivalDetail?contentIdStr="+contentId;
-			} else if(bigCode == 12) { // restaurant
-				return "";
-			} else if(bigCode == 13) { // accomodation
-				return "";
-			} else if(bigCode == 14) { // spot
-				return "";
-			} else if(bigCode == 15) { // experience
-				return "";
-			} else {
-				return "";
-			}
-		}
+				
+				// 등록 반려 사유 history 테이블에 insert
+				@RequestMapping(value = "insertHistory")
+				public String insertHistory(History history, int contentId, Model model) {
+					UUID transactionId = UUID.randomUUID();
+					
+					try {
+						log.info("[{}]{}:{}", transactionId, "admin insertHistory", "start");
+						int result = hs.insertHistory(history);
+					} catch (Exception e) {
+						log.error("[{}]{}:{}", transactionId, "admin insertHistory", e.getMessage());
+					} finally {
+						log.info("[{}]{}:{}", transactionId, "admin insertHistory", "end");
+					}	
+					
+					int bigCode = history.getBig_code();
+					// bigCode에 맞춰서 이동할 페이지를 적어주세요~!
+					if(bigCode == 11) {        // festival
+						return "forward:festivalDetail?contentIdStr="+contentId;
+					} else if(bigCode == 12) { // restaurant
+						return "";
+					} else if(bigCode == 13) { // accomodation
+						return "";
+					} else if(bigCode == 14) { // spot
+						return "forward:spotDetail?contentIdStr="+contentId;
+					} else if(bigCode == 15) { // experience
+						return "";
+					} else {
+						return "";
+					}
+				}
 		
 	
 		@RequestMapping(value = "experience")
@@ -774,7 +775,8 @@ import lombok.RequiredArgsConstructor;
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "start");
-				fs.deleteFestivals(contentId);
+				ss.deletespot(contentId);
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin spotDelete", e.getMessage());
 			} finally {
@@ -783,10 +785,34 @@ import lombok.RequiredArgsConstructor;
 			return "forward:spot";
 		}
 		
+		@RequestMapping(value = "spotRestore")
+		public String spotRestore(int contentId, Model model) {
+			UUID transactionId = UUID.randomUUID();
+			try {
+				log.info("[{}]{}:{}",transactionId, "admin spotRestore", "start");
+				
+				ss.restorespot(contentId);
+				
+			} catch (Exception e) {
+				log.error("[{}]{}:{}",transactionId, "admin spotRestore", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}",transactionId, "admin spotRestore", "end");
+			}		
+			return "forward:spot";
+		}
+		
 		@ResponseBody
 		@RequestMapping(value = "spotDeleteAjax")
 		public String spotDeleteAjax(int contentId, Model model) {
 			int result = ss.deletespot(contentId);
+			String resultStr = Integer.toString(result);
+			return resultStr;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "spotRestoreAjax")
+		public String spotRestoreAjax(int contentId, Model model) {
+			int result = ss.restorespot(contentId);
 			String resultStr = Integer.toString(result);
 			return resultStr;
 		}
