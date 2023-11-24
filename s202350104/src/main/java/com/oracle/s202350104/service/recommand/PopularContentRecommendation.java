@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class PopularContentRecommendation implements RecommendationStrategy {
-
+	/* (nh)TODO: ㅇㅇ.. */
 	private final RecommendationDao recommendationDao;
 
 	/**
