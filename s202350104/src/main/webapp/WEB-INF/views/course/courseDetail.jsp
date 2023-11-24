@@ -462,30 +462,29 @@
 	
 	<div class="container homeDetail-basic-custom">
 		<div class="row row-cols-12">
-			
 			<div>
 				<c:forEach var="courseDetail" items="${courseDetail }">
-				<div class="card course-card" style="height: 306px; margin: 20px; padding: 18px;">
+				<div class="card course-card col-md-6" style="height: 306px; margin: 20px; padding: 18px;">
 					<div class="container homeDetail-basic-custom">
-						<div class="row row-col">
-							<a href='../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}' style="padding: 0px;">
-								<img class="card-image-size" alt="${courseDetail.course_title }" src="${courseDetail.img1 }">
-							</a>
-						</div>
+						<div class="row">
+							<div class="col-md-5">
+								<a href='../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}' style="padding: 0px;">
+									<img class="card-image-size" alt="${courseDetail.course_title }" src="${courseDetail.img1 }">
+								</a>
+							</div>
 						
-						<div class="row row-col">
-							<ul>
-								<li>코스이름 : ${courseDetail.title }
-								<li>개요 : ${courseDetail.content }
-								<li>홈페이지 : ${courseDetail.homepage }
-							</ul>
+							<div class="col-md-6">
+								<ul>
+									<li>코스이름 : ${courseDetail.title }
+									<li>개요 : ${courseDetail.content }
+									<li>홈페이지 : ${courseDetail.homepage }
+								</ul>
+							</div>
 						</div>
-						
 					</div>
 				</div>
 				</c:forEach>
 			</div>
-		
 		</div>
 	</div>
 	
