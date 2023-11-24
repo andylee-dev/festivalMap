@@ -201,61 +201,6 @@
 		}
 	}
 	
-	// 5. 테이블의 row하나 생성.
-	/* function makeTableRow(content){
-        const tableEl = document.createElement("tr");
-		
-		const idEl = document.createElement("td");
-		idEl.className = "td-id";
-		idEl.textContent = content.id;
-		tableEl.appendChild(idEl);
-		
-		const imgEl = document.createElement("td");
-		imgEl.className = "td-img";
-		
-		// 이미지 URL을 사용하여 img 요소를 생성하고 src 속성을 설정합니다.
-        const imgTag = document.createElement("img");
-        imgTag.src = content.img;
-        // 이미지의 높이를 150px로 설정합니다.
-        imgTag.style.height = "150px";
-        imgEl.appendChild(imgTag);
-        tableEl.appendChild(imgEl);
-		
-		const titleEl = document.createElement("td");
-		titleEl.className = "td-title";
-		titleEl.textContent = content.title;
-		tableEl.appendChild(titleEl);
-		
-		const addressEl = document.createElement("td");
-		addressEl.className = "td-address";
-		addressEl.textContent = content.address;
-		tableEl.appendChild(addressEl);
-		
-		const homepageEl = document.createElement("td");
-		homepageEl.className = "td-homepage";
-		homepageEl.textContent = content.homepage;
-		tableEl.appendChild(homepageEl);
-		
-		const phoneEl = document.createElement("td");
-		phoneEl.className = "td-phone";
-		phoneEl.textContent = content.phone;
-		tableEl.appendChild(phoneEl);
-		
-		// 새로운 td 요소를 만들어 버튼을 추가합니다.
-        const deleteButtonTd = document.createElement("td");
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = `삭제${content.id}`;
-        deleteButton.onclick = function() {
-        	deleteContent(event);
-            event.preventDefault();
-        };
-        deleteButton.className = "btn btn-primary";
-        deleteButtonTd.appendChild(deleteButton);
-        tableEl.appendChild(deleteButtonTd);		
-
-        return tableEl;
-	} */
-	
 	function makeCard(content) {
 	    // 카드를 위한 div 요소 생성
 	    const cardEl = document.createElement("div");
@@ -344,29 +289,6 @@
 		
 		// contentsTable의 모든 card 요소를 가져옵니다.
 	    var cards = contentsTable.getElementsByClassName("card");
-		
-	 	// 각 card의 ID를 idList 배열에 추가합니다.
-	    /* for (var i = 0; i < cards.length; i++) { */
-	    	/* // 현재 행에서 td 요소를 찾습니다.
-		    var cells = rows[i].getElementsByTagName("contentId"); */
-	    	
-			// ID가 있는 첫 번째 셀을 가져와서 idList 배열에 추가합니다.
-	        /* var cardId = cards[i].id;
-	        idList.push(cardId);
-	    } */
-	
-		/* // contentsTable의 모든 tr 요소를 가져옵니다.
-		var rows = contentsTable.getElementsByTagName("tr");
-	
-		// 첫 번째 행은 헤더이므로 1부터 시작합니다.
-		for (var i = 1; i < rows.length; i++) {
-		    // 현재 행에서 td 요소를 찾습니다.
-		    var cells = rows[i].getElementsByTagName("td");
-	
-		    // ID가 있는 첫 번째 셀을 가져와서 idList 배열에 추가합니다.
-		    var id = cells[0].textContent;
-		    idList.push(id);
-		} */ 
 		
 		// 각 card의 ID를 idList 배열에 추가합니다.
 	    for (var i = 0; i < cards.length; i++) {
@@ -718,36 +640,6 @@
 										</div>
 									</c:forEach>
 								</div>
-								
-								<%-- <c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
-									<div class="card course-card" style="width: 18rem;">
-									  <h5 class="card-title">컨텐츠 타입</h5>
-									  <img src="${courseContentList.img1 }" class="card-img-top" alt="${courseContentList.title }">
-									  <div class="card-body">
-									    <h5 class="card-title">${courseContentList.title }</h5>
-									    <p class="card-text">${courseContentList.address }</p>
-									    <p class="card-text">${courseContentList.address }</p>
-									    <a href="" class="btn btn-primary">삭제${courseContentList.content_id}</a>
-									  </div>
-									</div>
-								</c:forEach> --%>
-							
-								<%-- <table border="1" id="contentsTable">
-									<tr>
-										<th>ID</th><th>이미지</th><th>이름</th><th>주소</th><th>홈페이지</th><th>연락처</th>
-									</tr>
-									<c:forEach var="courseContentList" items="${courseContentList }" varStatus="status">
-										<tr>
-											<td>${courseContentList.content_id }</td>
-											<td><img alt="${courseContentList.title }" src="${courseContentList.img1 }" style="height: 150px;"></td>
-											<td>${courseContentList.title }</td>
-											<td>${courseContentList.address }</td>
-											<td>${courseContentList.homepage }</td>
-											<td>${courseContentList.phone }</td>
-											<td><button onclick="deleteContent(event); event.preventDefault();" class="btn btn-primary">삭제${courseContentList.content_id}</button></td>
-										</tr>
-									</c:forEach>
-								</table> --%>
 							</div>
 						</div>
 						

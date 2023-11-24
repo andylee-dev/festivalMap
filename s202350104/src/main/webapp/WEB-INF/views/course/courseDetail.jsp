@@ -28,11 +28,12 @@
 	let map = null;
 	let clusterer = null;
 	
+	
 	function initKakaoMap() {
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(function (position) {
-				const latitude = ${course.mapy };
-				const longitude = ${course.mapx };
+				const latitude = ${courseDetail[0].mapy };
+				const longitude = ${courseDetail[0].mapx };
 				map = getKakaoMap(latitude, longitude);
 				clusterer = new kakao.maps.MarkerClusterer({
 					map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -51,8 +52,6 @@
 			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
 		}
 	}
-
-
 	
 	function setCenter(lat, lng) {
 		// 이동할 위도 경도 위치를 생성합니다
@@ -343,6 +342,13 @@
 	height: 270px; 
 	background: #D9D9D9;
 }
+.ellipsis-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* 표시할 줄 수 */
+    -webkit-box-orient: vertical;
+}
 
 </style>
 
@@ -479,7 +485,9 @@
 							<div class="col-md-6">
 								<ul>
 									<li>코스이름 : ${courseDetail.title }
-									<li>개요 : ${courseDetail.content }
+									<li>개요 : <div class="ellipsis-text">
+												 ${courseDetail.content }
+											 </div>
 									<li>주소 : ${courseDetail.address }
 									<li>홈페이지 : <a href="${courseDetail.homepage }">${courseDetail.homepage }</a>
 									<li>전화번호 : ${courseDetail.phone }

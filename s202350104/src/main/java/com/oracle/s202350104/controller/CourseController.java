@@ -95,7 +95,7 @@ public class CourseController {
 		} catch (Exception e) {
 			log.error("CourseController courseDetail e.getMessage() ->" + e.getMessage());
 		} finally {
-			log.info("CourseController courseDetai end");
+			log.info("CourseController courseDetail end");
 		}
 		
 		return "course/courseDetail";
