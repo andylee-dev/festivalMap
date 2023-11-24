@@ -8,7 +8,9 @@ public class SimilarContentRecommendation implements RecommendationStrategy {
 
 	@Override
 	public List<ScoredContent> recommend(Users user) {
-		// TODO Auto-generated method stub
+		/**
+		 * 컨텐츠간의 유사도를 측정해서 추천 
+		 */
 		return null;
 	}
 

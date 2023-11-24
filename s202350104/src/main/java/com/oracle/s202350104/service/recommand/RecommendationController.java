@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Users;
+import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecommendationController {
     private final RecommendationService recService;
+    private final ContentSerivce contentService;
     private final UserService userService;
 
     @GetMapping
@@ -48,7 +50,10 @@ public class RecommendationController {
                 ));
             }
             List<Contents> recommendations = recService.recommend(user.get());
-            return ResponseEntity.ok(recommendations);
+            /* TODO: (nh)컨텐츠의 리스트를 ajax로 호출해서 페이지에 띄우기 */
+            Contents contents= new Contents();
+            List<Contents> content = contentService.getSearchContentsList(contents);
+            return ResponseEntity.ok(content);
         } catch (Exception e) {
             // 적절한 예외 처리
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
