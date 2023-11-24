@@ -950,10 +950,13 @@ import lombok.RequiredArgsConstructor;
 			
 			List<CommonCodes> listCodes = cs.listCommonCode();
 			List<Areas> listAreas = ars.listAreas();
+			List<Areas> listSigungu = ars.listSigungu(accomodation.getArea());
+			
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
+			model.addAttribute("listSigungu", listSigungu);
 			model.addAttribute("accomodation", accomodation);
 			
 		} catch (Exception e) {
@@ -967,11 +970,14 @@ import lombok.RequiredArgsConstructor;
 	@RequestMapping(value = "accomodation/update")
 	public String accomodationUpdate(AccomodationContent accomodation, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
-		int id = 0;
+		int contentId = accomodation.getContent_id();
+		
+		log.info("contentId->"+contentId);
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
 			int result = as.updateAccomodation(accomodation);
-			id = accomodation.getContent_id();
+			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", accomodation.getContent_id());
 		} catch (Exception e) {
@@ -979,7 +985,7 @@ import lombok.RequiredArgsConstructor;
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
 		}		
-		return "forward:/admin/content/accomodationDetail?contentIdStr="+id;
+		return "redirect:/admin/content/accomodationDetail?contentId="+contentId;
 	}
 	
 	

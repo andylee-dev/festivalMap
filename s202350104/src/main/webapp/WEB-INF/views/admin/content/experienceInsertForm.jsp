@@ -275,7 +275,7 @@
 	                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
 	                        </div>
 	                        <div class="col-3 mb-3">
-	                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+	       	                 	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 	                        </div>
 	                        <div class="col-2 mb-3">
 	                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience'">취소</button>
