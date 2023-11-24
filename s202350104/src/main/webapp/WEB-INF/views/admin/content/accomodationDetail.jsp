@@ -184,7 +184,7 @@
 								</c:choose>
 					</div>
 					<div class="container p-5" id="form-container">
-					<form action="accomodationUpdate" method="post">
+					<form action="accomodation/update" method="post">
 						<div class="mb-3">
 						  <label for="content_id" class="form-label">컨텐츠 ID</label>
 						  <input type="text" class="form-control" id="content_id" value="${accomodation.content_id} " readonly>

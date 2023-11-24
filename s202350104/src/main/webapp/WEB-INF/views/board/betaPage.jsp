@@ -283,6 +283,21 @@
 				});
 			});			
 			
+			
+			if(place.big_code == 11){
+				linkEl.href = "../festival/detail?contentId=" + place.id;
+			} else if(place.big_code == 12){
+				linkEl.href = "../restaurant/detail?contentId=" + place.id;
+			}
+			} else if(place.big_code == 13){
+				linkEl.href = "../accomodation/detail?contentId=" + place.id;
+			}
+			} else if(place.big_code == 14){
+				linkEl.href = "../spot/detail?contentId=" + place.id;
+			}
+			} else if(place.big_code == 15){
+				linkEl.href = "../experience/detail?contentId=" + place.id;
+			} 
 		</script>
 <script src="/js/updateArea.js"></script>
 
