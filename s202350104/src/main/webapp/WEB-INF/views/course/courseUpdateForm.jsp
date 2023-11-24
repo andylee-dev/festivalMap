@@ -24,6 +24,128 @@
 
 <!-- jQuery 라이브러리 불러오기 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/updateArea.js"></script>
+<script type="text/javascript">
+	var selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+	var tagOptions = []; // 선택할 수 있는 옵션을 저장할 배열 선언 --> existingTags에 있는 요소 제외하고 모두 저장
+	
+	document.addEventListener("DOMContentLoaded", (event) => {
+		
+		<!-- 지역 코드 넣는 코드  Start-->	
+		updateAreaOptions();
+		$(".area-dropdown").change(function() {
+			const selectedArea = $(this).val();
+			if (selectedArea) {
+				updateSigunguOptions(selectedArea);
+			} else {
+				$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+			}
+		});
+		<!-- 지역 코드 넣는 코드  End-->
+	
+		
+		<!-- 태그 관련 코드 Start -->
+		const tagsArea = document.querySelector('#tagsArea');
+		
+		// content insert시에는 초기에 모든 tags 리스트를 가져와서 tagOptions에 저장
+		initialTagOptions();
+		
+		$('#tagSelectBox').change(function() {
+			
+			var selectedTagId = $(this).val(); // 선택된 tag의 id를 가져옴
+			var selectedTagName = $(this).find('option:selected').text(); // 선택된 tag의 name을 가져옴
+			
+			var selectedTag = {
+				id: selectedTagId,
+				name: selectedTagName 
+			};
+			
+			// 이미 배열에 있는 태그인지 체크
+			var isDuplicate = false;
+			for(var i = 0; i < selectedTags.length; i++) {
+				if(selectedTags[i].id == selectedTag.id) {
+					isDuplicate = true;
+				}
+			}
+			
+			// 배열에 없었던 태그일 경우에만 추가
+			if(!isDuplicate) {
+				selectedTags.push(selectedTag); 
+				
+				for(var i = 0; i < tagOptions.length; i++) {
+					if(tagOptions[i].id == selectedTag.id) {
+						tagOptions.splice(i,1); // 선택한 태그를 select box option에서 삭제
+						i--;
+					}
+				}	
+				updateTagOptions(); // select box의 option을 업데이트하는 method	
+				newTagBadge(selectedTag);
+			}
+			
+		});
+	
+	});
+	
+		function initialTagOptions() {
+		$.ajax({
+			url: "<%=request.getContextPath()%>/getAllTags",
+			method: "GET",
+			dataType: "json",
+			success: function(tags) {
+				tags.forEach(function(tag) {
+					tagOptions.push({id:tag.id, name:tag.name});
+				});
+				console.log("getAllTags success");
+				updateTagOptions();
+			},
+			error: function() {
+				console.log("태그 정보를 가져오지 못했습니다.");
+			}
+		})
+	}; 
+	
+	function updateTagOptions() {
+		$("#tagSelectBox").empty().append("<option value='0'>태그를 선택해주세요.</option>");
+		tagOptions.forEach(function(tag) {
+			$("#tagSelectBox").append("<option value='"+tag.id+"'>"+tag.name+"</option>");
+		});
+		console.log("updateTagOptions() success");
+	};		
+	
+	function newTagBadge(selectedTag) {
+		// 태그 뱃지 생성 
+		const newTag = document.createElement('span');
+		newTag.className = "badge bg-primary";
+		newTag.textContent = "#"+selectedTag.name;
+		newTag.id = selectedTag.id;
+			
+		// x버튼 및 클릭시의 이벤트 생성
+		const closeButton = document.createElement('button');
+		closeButton.className = "btn-close";
+		closeButton.setAttribute('aria-label', 'Close');
+		closeButton.addEventListener('click', (event) => {
+			event.preventDefault();
+			var deletedTag = {
+				id: event.target.parentElement.id,
+				name: event.target.parentElement.textContent.substr(1) // #를 제외한 텍스트를 name으로
+			}
+			tagOptions.push(deletedTag); // select box의 option 목록에 삭제된 태그 다시 추가
+				
+			// 삭제할 옵션의 인덱스 찾기 -> selectedTags를 돌면서 deletedTag의 id와 같은 요소가 있으면 삭제하고 badge도 삭제
+			for(var i = 0; i < selectedTags.length; i++) {
+				if(selectedTags[i].id == deletedTag.id) {
+					selectedTags.splice(i, 1);
+					event.target.parentElement.remove();
+					i--; // splice() 사용하면 바로 요소가 제거되고 배열의 길이가 변경되기 때문에 i--를 해준다
+				}
+			}
+			updateTagOptions(); // 수정된 tagOptions로 update
+		});	
+		newTag.appendChild(closeButton);
+		tagsArea.appendChild(newTag);
+	}
+	<!-- 태그 관련 코드 end -->
+</script>
 
 <script type="text/javascript">
 	function closeAndRedirect() {
@@ -537,6 +659,32 @@
 							 style="margin-bottom: 26px;">
 							<label class="form-label col-2" for="course_title">코스명</label>
 							<input type="text" id="course_title" name="course_title" class="form-control input-text" required="required" value="${course.course_title }">
+						</div>
+						
+						<div class="form-group d-flex course-body-text col-12" id="detail-content-title" style="margin-bottom: 24px;">
+						  <label for="small_code" class="form-label col-2">코스타입(필수 선택)</label>
+						  	<input type="hidden" name="big_code" value="16">
+						  	<div class="col-4" style="padding-right: 24px;">
+							<select class="form-select" aria-label="small_code" name="small_code" required="required">
+								<c:forEach var="smallCode" items="${listCodes }">
+									<c:if test="${smallCode.big_code == 16 && smallCode.small_code != 999}">
+										<option value="${smallCode.small_code}"${smallCode.small_code == small_code? 'selected':''} >${smallCode.content}</option>		
+									</c:if>
+								</c:forEach>
+							</select>
+							</div>
+						</div>
+						
+						<div class="form-group d-flex course-body-text col-12" style="margin-bottom: 24px;">
+							<label for="content" class="form-label col-2">지역(필수 선택)</label>
+							<div class="row col-12">
+							    <div class="col-2">
+							        <select name="area" class="form-select area-dropdown"></select>
+							    </div>
+							    <div class="col-2">
+							       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+							    </div>
+							</div>
 						</div>
 						
 						<div class="form-group course-body-text"

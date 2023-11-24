@@ -19,7 +19,7 @@
 	<select id="getAreaList" resultType="Areas" >
 		SELECT *
 		FROM areas
-		WHERE sigungu = '999'	
+		WHERE sigungu = '999'
 		AND content IS NOT NULL
 	</select>
 

@@ -94,12 +94,16 @@ public class AdminCourseController {
 
 			List<CourseContent> courseContentList = cs.courseContentList(id);
 			log.info("AdminCourseController courseUpdateForm courseContentList.size() : " + courseContentList.size());
-
+			
+			List<CommonCodes> listCodes = ccs.listCommonCode();
+			
+			
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
 
 			model.addAttribute("course", course);
 			model.addAttribute("courseContentList", courseContentList);
+			model.addAttribute("listCodes", listCodes);
 //			model.addAttribute("courseContent", courseContent);
 
 		} catch (Exception e) {

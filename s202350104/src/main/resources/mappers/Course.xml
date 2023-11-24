@@ -113,7 +113,7 @@
 			    		WHERE cc.course_id = #{course_id}
 				    	AND cc.content_id = c.id
 				    	AND cc.course_id = cs.id
-				)		a, commonCodes cd
+				)a, commonCodes cd
 			WHERE 	a.big_code = cd.big_code
 			AND   	cd.small_code = 999
 			ORDER 	BY a.order_num ASC

@@ -580,9 +580,9 @@
 						
 						<div class="form-group d-flex course-body-text col-12" id="detail-content-title" style="margin-bottom: 24px;">
 						  <label for="small_code" class="form-label col-2">코스타입(필수 선택)</label>
-						  	<div class="col-12">
 						  	<input type="hidden" name="big_code" value="16">
-							<select class="form-select col-2" aria-label="small_code" name="small_code" required="required">
+						  	<div class="col-4" style="padding-right: 24px;">
+							<select class="form-select" aria-label="small_code" name="small_code" required="required">
 								<c:forEach var="smallCode" items="${listCodes }">
 									<c:if test="${smallCode.big_code == 16 && smallCode.small_code != 999}">
 										<option value="${smallCode.small_code}"${smallCode.small_code == small_code? 'selected':''} >${smallCode.content}</option>		
