@@ -30,7 +30,7 @@
 	function initKakaoMap() {
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(function (position) {
-				const courseDetail = JSON.parse('${courseDetailJson}')
+				const courseDetail = JSON.parse('${courseDetailJson}'.replace(/\n/g, ''))
 				console.log("courseDetail",courseDetail);
 				let latitude = 0;
 				let longitude = 0;
@@ -331,12 +331,12 @@
 							<div class="col-md-6">
 								<ul>
 									<li>코스이름 : ${courseDetail.title }
+									<li>주소 : ${courseDetail.address }
 									<li>개요 : <div class="ellipsis-text">
 												 ${courseDetail.content }
 											 </div>
-									<li>주소 : ${courseDetail.address }
-									<li>홈페이지 : <a href="${courseDetail.homepage }">${courseDetail.homepage }</a>
 									<li>전화번호 : ${courseDetail.phone }
+									<li>홈페이지 : <a href="${courseDetail.homepage }" style="color: blue;">${courseDetail.homepage }</a>
 								</ul>
 							</div>
 						</div>
