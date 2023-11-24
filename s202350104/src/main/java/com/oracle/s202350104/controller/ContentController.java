@@ -65,7 +65,7 @@ public class ContentController {
     }
 
 	@ResponseBody
-	@RequestMapping(value = "/api/searchContents", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/searchContents", method = RequestMethod.POST)
     public List<Contents> searchContentsList(@RequestBody Contents contents, String currentPage) {
 		UUID transactionId = UUID.randomUUID();
 		List<Contents> contentList =null;

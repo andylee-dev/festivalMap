@@ -72,7 +72,7 @@
 				};
 
 				$.ajax({
-					url: "/api/searchContents",
+					url: "/content/searchContents",
 					method: "POST",
 					contentType: "application/json",
 					data: JSON.stringify(contents), // Contents 객체를 data에 할당
