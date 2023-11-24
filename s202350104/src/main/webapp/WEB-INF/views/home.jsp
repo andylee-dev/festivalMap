@@ -348,24 +348,20 @@
 							.append("<option value=''>전체</option>");
 					}
 				});
-			});			
+			});		
 			
+			// 서치이미지를 클릭할 때 폼을 제출하는 함수
+			$(document).ready(function () {
+    			$("#searchIcon").click(function () {
+       				$("#allList").submit();
+    			});
+			});
+				
 		</script>
 <script src="/js/updateArea.js"></script>
 
 <style type="text/css">
-	
-	.form-label {
-		font-size: 20px;
-		font-family: 'Nanum+Pen+Script', sans-serif;
-		font-weight: bold;
-	}
-	
-	.form-select, .form-control {
-		border: 2px black solid;
-		border-radius: 23.50px;
-		margin-bottom: 5px;
-	}
+
 </style>
 
 <link href="/css/home.css" rel="stylesheet" type="text/css">
@@ -550,12 +546,13 @@
 			</div>
 
 			<!-- Map Menu 영역 -->
+			<form id="allList" action="#" method="get" onclick="search()">
 			<div class="container home-map-menu-custom">
 				<div id="menu_wrap" class="row row-cols-2 home-map-nav-box-custom">
 					<div class="col home-menu-detail">
 						<div class="row row-col-1">
 							<div class="col home-menu-sm">
-								<label for="area" class="form-label">지역별_구분</label> 
+								<label for="area" class="form-label"><strong>지역별_구분</strong></label> 
 								<select name="area" id="area"
 									    class="form-select col-auto area-dropdown"></select>
 							</div>
@@ -588,12 +585,12 @@
 						<div class="row row-col-1">
 							<div class="col home-menu-sm">
 								<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" /> 
-								<img src="../image/icon_search1.png" alt="icon_search1.png" />
+								<img id="searchIcon" src="../image/icon_search1.png" alt="icon_search1.png" onclick="submitForm()"/>
 							</div>
 						</div>
 						<div class="row row-col-1">
 							<div class="col home-menu-lg overflow-auto">
-								<label for="area" class="form-label">목록 보기</label>
+								<label for="area" class="form-label"><strong>목록 보기</strong></label>
 								<div id="placesList"></div>
 							</div>
 						</div>
@@ -604,6 +601,7 @@
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 
 	<!-- Section4 -->
