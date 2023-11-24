@@ -722,6 +722,7 @@ public class BoardController {
 	            }
 	        }	    
 	        
+	        // board pointEvent - 상엽	
 	        eventPublisher.publishEvent(new PointEvent(board.getUser_id(), 2));
 	        
 			// 게시물 생성 후 Page Handling
@@ -795,6 +796,8 @@ public class BoardController {
 
 		model.addAttribute("board", boards);
 		model.addAttribute("userId", userId);
+		
+		
 
 		return "board/commentInsertForm";
 	}
@@ -811,6 +814,9 @@ public class BoardController {
 
 		model.addAttribute("id", board.getComment_group_id());
 		model.addAttribute("userId", board.getUser_id());
+		
+		//comment pointEvent - 상엽 
+		eventPublisher.publishEvent(new PointEvent(board.getUser_id(), 3));
 
 		return "redirect:/boardDetail?id=" + board.getComment_group_id() + "&userId=" + board.getUser_id();
 	}
