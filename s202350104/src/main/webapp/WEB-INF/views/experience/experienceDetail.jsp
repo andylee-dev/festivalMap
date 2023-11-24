@@ -119,16 +119,14 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 	});
 	
 	
-	 $(document).ready(function () {
-	        $(".custom-carousel").owlCarousel({
-	            autoWidth: true,
-	            loop: true
-	        });
-	/*         $(".custom-carousel .card").click(function () {
-	            $(".custom-carousel .card").not($(this)).removeClass("card");
-	            $(this).toggleClass("card");
-	        }); */
-	    }); 
+	/* review card carousel js */
+    $(document).ready(function () {
+        $(".custom-carousel").owlCarousel({
+        	items: 1,
+            autoWidth: true,
+        });
+
+    }); 
 	 
 	/* 신고 기능 js */
 	function report(boardId) {

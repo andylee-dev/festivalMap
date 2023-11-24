@@ -114,13 +114,10 @@ function initKakaoMap() {
 	/* review card carousel js */
     $(document).ready(function () {
         $(".custom-carousel").owlCarousel({
+        	items: 1,
             autoWidth: true,
-            loop: true
         });
-/*         $(".custom-carousel .card").click(function () {
-            $(".custom-carousel .card").not($(this)).removeClass("card");
-            $(this).toggleClass("card");
-        }); */
+
     }); 
 
 	/* 클릭한 사진 보여주기 */
