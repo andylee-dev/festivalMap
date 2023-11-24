@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Course;
@@ -92,6 +93,11 @@ public class CourseController {
 			log.info("courseDetailList : " + courseDetailList);
 			
 			model.addAttribute("courseDetail", courseDetailList);
+
+			Gson gson = new Gson();
+			String json = gson.toJson(courseDetailList);
+			model.addAttribute("courseDetailJson", json);
+			log.info("json:{}",json);
 		} catch (Exception e) {
 			log.error("CourseController courseDetail e.getMessage() ->" + e.getMessage());
 		} finally {
