@@ -12,6 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <title>restaurantDetail</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <% ApplicationContext context=WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
    MapService map=context.getBean("kakaoMapSerivce", MapService.class); String apiKey=map.getApiKey(); %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>&libraries=clusterer"></script>
@@ -326,6 +329,36 @@ function getLocation() {
         }); */
     }); 
 
+	/* 클릭한 사진 보여주기 */
+	function clickPhoto(event){
+		console.log("실행");
+		
+		var clickedImg = event.target;
+		
+		var chooseImg = document.getElementById("photo");
+		chooseImg.setAttribute("src", clickedImg.getAttribute("src"));
+	}
+	
+	/* URL Link Share */
+	function clip() {
+	    var textarea = document.createElement("textarea");
+	    document.body.appendChild(textarea);
+	    
+	    var url = window.document.location.href;
+	    textarea.value = url;
+	    textarea.select();
+	    
+	    document.execCommand("copy");
+	    document.body.removeChild(textarea);
+	    
+	    swal({
+	        title: "URL이 복사되었습니다!!",
+	        text: url,
+	        icon: "success",
+	    })
+	}	
+	
+	
 </script>
 
 </head>
@@ -386,7 +419,7 @@ function getLocation() {
 					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
 				</div>
 				<div class="col image-custom">
-					<img alt="share_icon.png" src="../image/share_icon.png">
+					<img alt="share_icon.png" src="../image/share_icon.png" onclick="clip(); return false;">
 				</div>
 			</div>
 		</div>
@@ -395,18 +428,15 @@ function getLocation() {
 	<!-- content tag 출력-->
 	<div class="container homeDetail-topTags-custom">
 		<div class="row row-cols-6">
-			<c:forEach var="tags" items="${listTags }">
-				<div class="col-sm-1 hashTag-custom">
-					<c:choose>
-						<c:when test="${tags.tag_id > 0}">
-							<button value="&{tags.tag_id }">#${tags.name }</button>		
-						</c:when>
-						<c:otherwise>
-							<button>#해시태그</button>	
-						</c:otherwise>
-					</c:choose>	
-				</div>		
-			</c:forEach>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>			
 		</div>
 	</div>
 
@@ -415,25 +445,45 @@ function getLocation() {
 		<div class="row row-cols-3">
 			<!-- 첫번째 큰 이미지 -->
 			<div class="col homeDetail-basic-img-custom">
-				<img alt="${restaurant.img1}" src="${restaurant.img1}">
+				<img id="photo" alt="${restaurant.img1}" src="${restaurant.img1}">
 			</div>
 			
 			<!-- 두번째 작은 이미지 -->
 			<div class="col homeDetail-basic-sideImg-custom">
 				<div class="row row-cols-1">
-					<div class="col sideImg-custom">
-						<img alt="${restaurant.img2}" src="${restaurant.img2}">	
-					</div>
-					<div class="col sideImg-custom">
-						<img alt="${restaurant.img2}" src="${restaurant.img2}">					
-					</div>
-					<div class="col sideImg-custom">
-						<img alt="${restaurant.img2}" src="${restaurant.img2}">					
-					</div>
-					<div class="col sideImg-custom">
-						<img alt="${restaurant.img2}" src="${restaurant.img2}">					
-					</div>
-					<div class="col sideImg-custom">+5</div>
+					<c:choose>
+						<c:when test="${restaurant.img1 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${restaurant.img1}" src="${restaurant.img1}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${restaurant.img2 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${restaurant.img2}" src="${restaurant.img2}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${restaurant.img3 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${restaurant.img3}" src="${restaurant.img3}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>					
+					<!-- 추가 이미지 확장용 -->
+					<div class="col sideImg-custom"></div>
+					<div class="col sideImg-custom"></div>
 				</div>
 			</div>
 			
@@ -442,7 +492,7 @@ function getLocation() {
 				<div class="row row-cols-1">
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">음식점명</p>
+						<p class="text-md-custom">상호명</p>
 						<p>${restaurant.title}</p>
 					</div>
 					<div class="col text-custom">
@@ -452,22 +502,22 @@ function getLocation() {
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">전화번호</p>
+						<p>전화번호</p>
 						<span>${restaurant.phone}</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">메뉴</p>
+						<p class="text-sm-custom">메뉴</p>
 						<span>${restaurant.menu}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">운영시간</p>
+						<p>운영시간</p>
 						<span>${restaurant.open_time}</span>
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">휴무일</p>
+						<p class="text-md-custom">휴무일</p>
 						<span>${restaurant.rest_date}</span>
 					</div>
 					<div class="col text-custom">

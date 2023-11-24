@@ -12,6 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <title>숙박 상세</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <!-- 카카오 MAP -->
 <% ApplicationContext context=WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
    MapService map=context.getBean("kakaoMapSerivce", MapService.class); String apiKey=map.getApiKey(); %>
@@ -358,11 +361,35 @@
 				}
 		})
     }
+    
+	/* 클릭한 사진 보여주기 */
+	function clickPhoto(event){
+		console.log("실행");
+		
+		var clickedImg = event.target;
+		
+		var chooseImg = document.getElementById("photo");
+		chooseImg.setAttribute("src", clickedImg.getAttribute("src"));
+	}
 
-    function share() {
-        navigator.clipboard.writeText(window.location.href);
-        alert("링크를 복사하였습니다.");
-    }
+	/* URL Link Share */
+	function clip() {
+	    var textarea = document.createElement("textarea");
+	    document.body.appendChild(textarea);
+	    
+	    var url = window.document.location.href;
+	    textarea.value = url;
+	    textarea.select();
+	    
+	    document.execCommand("copy");
+	    document.body.removeChild(textarea);
+	    
+	    swal({
+	        title: "URL이 복사되었습니다!!",
+	        text: url,
+	        icon: "success",
+	    })
+	}
 </script>
 
 </head>
@@ -381,7 +408,7 @@
 					<img alt="favorite_icon.png" src="../image/favorite_icon.png" onClick="like()">
 				</div>
 				<div class="col image-custom">
-					<img alt="share_icon.png" src="../image/share_icon.png" onClick="share()">
+					<img alt="share_icon.png" src="../image/share_icon.png" onclick="clip(); return false;">
 				</div>
 			</div>
 		</div>
@@ -407,25 +434,45 @@
 		<div class="row row-cols-3">
 			<!-- 첫번째 큰 이미지 -->
 			<div class="col homeDetail-basic-img-custom">
-				<img alt="${experience.img1}" src="${experience.img1}">
+				<img id="photo" alt="${experience.img1}" src="${experience.img1}">
 			</div>
 			
 			<!-- 두번째 작은 이미지 -->
 			<div class="col homeDetail-basic-sideImg-custom">
 				<div class="row row-cols-1">
-					<div class="col sideImg-custom">
-						<img alt="${experience.img2}" src="${experience.img2}">	
-					</div>
-					<div class="col sideImg-custom">
-						<img alt="${experience.img2}" src="${experience.img2}">					
-					</div>
-					<div class="col sideImg-custom">
-						<img alt="${experience.img2}" src="${experience.img2}">					
-					</div>
-					<div class="col sideImg-custom">
-						<img alt="${experience.img2}" src="${experience.img2}">					
-					</div>
-					<div class="col sideImg-custom">+5</div>
+					<c:choose>
+						<c:when test="${experience.img1 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${experience.img1}" src="${experience.img1}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${experience.img2 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${experience.img2}" src="${experience.img2}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${experience.img3 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${experience.img3}" src="${experience.img3}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>					
+					<!-- 추가 이미지 확장용 -->
+					<div class="col sideImg-custom"></div>
+					<div class="col sideImg-custom"></div>
 				</div>
 			</div>
 			
@@ -444,17 +491,17 @@
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">우편번호</p>
+						<p>우편번호</p>
 						<span>${experience.postcode}</span>						
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">체험연령</p>
+						<p>체험연령</p>
 						<span>${experience.age}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">개장시간</p>
+						<p>개장시간</p>
 						<span>${experience.open_time}</span>					
 					</div>
 					<div class="col text-custom">
@@ -464,21 +511,19 @@
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">수용인원</p>
+						<p>수용인원</p>
 						<span>${experience.capacity}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-md-custom">전화번호</p>
+						<p>전화번호</p>
 						<span>${experience.phone}</span>					
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">홈페이지</p>
+						<p>홈페이지</p>
 						<a href="${experience.homepage}"><span>${festival.homepage}</span></a>
-					</div>
-					
-					
+					</div>		
 					
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
