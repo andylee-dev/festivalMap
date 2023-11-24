@@ -16,8 +16,12 @@
 			url: "<%=request.getContextPath()%>/recommendations",
 			method: "GET",
 			dataType: "json",
-			success: function(recommendations) {
-				console.log("getRecommendations() success ->"+recommendations)
+			success: function(contentList) {
+				console.log("getRecommendations() success->"+contentList.length)
+				contentList.forEach(function(content) {
+					$('#rec_contentBox').append("이름:"+content.title+"<br>")
+				})
+				
 			},
 			error: function() {
 				console.log("getRecommendations() failed")
@@ -33,6 +37,8 @@
 	<h1>Festival Recommend</h1>
 			
 	<button type="button" class="btn btn-primary" onclick="getRecommendations()">추천</button>
+	
+	<div class="" id="rec_contentBox"></div>
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp" %>	

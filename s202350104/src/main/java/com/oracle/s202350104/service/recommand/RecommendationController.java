@@ -54,11 +54,13 @@ public class RecommendationController {
                     new SimilarUserRecommendation()
                 ));
             }
-            List<Contents> recommendations = recService.recommend(user.get());
+            // List<Contents> recommendations = recService.recommend(user.get());
+            // log.info("recommendations->"+recommendations.size());
             /* TODO: (nh)컨텐츠의 리스트를 ajax로 호출해서 페이지에 띄우기 */
             Contents contents= new Contents();
-            List<Contents> content = contentService.getSearchContentsList(contents);
-            return ResponseEntity.ok(content);
+            List<Contents> contentList = contentService.getSearchContentsList(contents);
+            log.info("contentList->"+contentList.size());
+            return ResponseEntity.ok(contentList);
         } catch (Exception e) {
         	log.error("[{}]{}:{}", transactionId, "getRecommendations()", e.getMessage());
             // 적절한 예외 처리
