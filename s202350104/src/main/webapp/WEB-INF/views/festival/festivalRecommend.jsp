@@ -19,7 +19,7 @@
 			success: function(contentList) {
 				console.log("getRecommendations() success->"+contentList.length)
 				contentList.forEach(function(content) {
-					$('#rec_contentBox').append("이름:"+content.title+"<br>")
+					$('#rec_contentBox').append("아이디:"+content.id+"<br>")
 				})
 				
 			},

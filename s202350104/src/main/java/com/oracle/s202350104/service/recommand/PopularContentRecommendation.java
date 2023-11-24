@@ -1,6 +1,7 @@
 package com.oracle.s202350104.service.recommand;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,11 +32,30 @@ public class PopularContentRecommendation implements RecommendationStrategy {
 	public List<ScoredContent> recommend(Users user, Contents content) {
 		UUID transactionId = UUID.randomUUID();
     	log.info("[{}]{}:{}", transactionId, "PopularContentRecommendation()", "start");
-    	List<Contents> contentList = recommendationDao.getSearchContentsList(content);
+    	List<Contents> contentList = recommendationDao.getPopularContentsList(content);
     	List<ScoredContent> scoredContentList = new ArrayList<>();
-        for (Contents c : contentList) {
-            scoredContentList.add(new ScoredContent(c, 1.0));
+    	
+        for(Contents c : contentList) {
+        	double scoreReadcount = c.getReadcount() * 0.5;
+        	double scoreAvg_score = c.getAvg_score() * 0.3;
+        	double scoreReview_count = c.getReview_count() * 0.2;
+        	double score = scoreReadcount + scoreAvg_score + scoreReview_count;
+            scoredContentList.add(new ScoredContent(c, score));
         }
+        
+        for(int i=0; i<contentList.size(); i++) {
+        	for(int j=0; j<contentList.size()-(i+1); j++) {
+        		if(scoredContentList.get(j).getScore() < scoredContentList.get(j+1).getScore()) {
+        			ScoredContent lower_sc = null;
+        			ScoredContent higer_sc = null;
+        			lower_sc = scoredContentList.get(j);
+        			higer_sc = scoredContentList.get(j+1);
+        			scoredContentList.set(j, lower_sc);
+        			scoredContentList.set(j+1, higer_sc);
+        		}
+        	}
+        }
+        
     	log.info("[{}]{}:{}", transactionId, "PopularContentRecommendation()", "end");
 
 		return scoredContentList;

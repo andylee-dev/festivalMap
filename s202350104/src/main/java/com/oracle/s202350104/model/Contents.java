@@ -40,4 +40,7 @@ public class Contents {
 	private PagingList pageList;
 	
 	private String keyword;
+	
+	private int review_count; // 리뷰 수
+	private double avg_score; // 리뷰 평점평균
 }

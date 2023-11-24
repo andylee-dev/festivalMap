@@ -35,6 +35,7 @@
 		<typeAlias alias="Contents"		 	 type="com.oracle.s202350104.model.Contents"/>
 		<typeAlias alias="Favorite"          type="com.oracle.s202350104.model.Favorite"/>
 		<typeAlias alias="History"           type="com.oracle.s202350104.model.History"/>
+		<typeAlias alias="ScoredContent"     type="com.oracle.s202350104.service.recommand.ScoredContent"/>
 	</typeAliases>
 	
 	

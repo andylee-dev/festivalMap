@@ -22,4 +22,12 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		log.info("getSearchContentsList f/{}",listContent);
 		return listContent;
 	}
+
+	@Override
+	public List<Contents> getPopularContentsList(Contents content) {
+		log.info("getSearchContentsList s/{}",content);
+		List<Contents> listContent = session.selectList("getPopularContentsList", content);
+		log.info("getSearchContentsList f/{}",listContent);
+		return listContent;
+	}
 }

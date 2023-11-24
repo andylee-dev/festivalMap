@@ -65,7 +65,7 @@ public class RecommendationController {
                 ));
             }
             
-             List<Contents> recommendations = recService.recommend(user.get(),content);
+            List<Contents> recommendations = recService.recommend(user.get(),content);
             return ResponseEntity.ok(recommendations);
         } catch (Exception e) {
         	log.error("[{}]{}:{}", transactionId, "getRecommendations()", e.getMessage());
