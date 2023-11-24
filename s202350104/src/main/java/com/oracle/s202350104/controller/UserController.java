@@ -93,24 +93,18 @@ public class UserController {
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "myLike", "Start");
-			int totalMyLikeList = fs.totalMyLikeList();
+			int totalMyLikeList = fs.totalFavorite();
 			
 			Paging page = new Paging(totalMyLikeList, currentPage);
 			favorite.setStart(page.getStart());
 			favorite.setEnd(page.getEnd());        
 			
 			log.info("page.getStart -> {}", page.getStart());
-			List<Favorite> myLikeList = fs.getMyLikeList(favorite);
-						
-			/*
-			 * int userId = us.getLoggedInId(); Optional<Users> user =
-			 * us.getUserById(userId);
-			 */
-						
+			List<Favorite> myLikeList = fs.listFavorite(favorite);;		
+									
 			model.addAttribute("totalMyLikeList", totalMyLikeList);
 			model.addAttribute("page", page);
 			model.addAttribute("myLikeList", myLikeList);
-			// model.addAttribute("user",user);
 			model.addAttribute("currentPage", currentPage);
 			
 		} catch (Exception e) {
@@ -124,12 +118,13 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "myPage/myLikeDelete")
-	public String deleteCofirm(int id) {
+	public String deleteCofirm(Integer content_id, Favorite favorite) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "UserController deleteConfirm", "Start");
-			int result = fs.deleteMyLikeList(id);
+			log.info("content_id ->" + content_id);
+			int result = fs.deleteFavorite(favorite);
 						
 		} catch (Exception e) {
 			log.error("UserController myLike deleteConfirm Exception ->" + e.getMessage());

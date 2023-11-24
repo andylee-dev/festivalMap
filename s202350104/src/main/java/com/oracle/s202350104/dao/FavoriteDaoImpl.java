@@ -74,64 +74,6 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		return listSearchFavorite;
 	}
 
-	@Override
-	public List<Favorite> getMyLikeList(Favorite favorite) {
-		List<Favorite> getMyLikeList = null;
-		
-		try {
-			log.info("FavoriteDaoImpl getMyLikeList Start");
-			getMyLikeList = session.selectList("joGetMyLikeList", favorite);
-			log.info("FavoriteDaoImpl getMyLikeList.size() -> " + getMyLikeList.size());
-		} catch (Exception e) {
-			log.info("FavoriteDaoImpl getMyLikeList Exception ->" + e.getMessage());
-		}
-		
-		return getMyLikeList;
-	}
-
-	@Override
-	public int totalMyLikeList() {
-		int totalMyLikeList = 0;
-		
-		try {
-			log.info("FavoriteDaoImpl totalMyLikeList Start");
-			totalMyLikeList = session.selectOne("joTotalMyLikeList");
-			log.info("FavoriteDaoImpl totalMyLikeList ->" + totalMyLikeList);
-		
-		} catch (Exception e) {
-			log.error("FavoriteDaoImpl totalMyLikeList Exception ->" + e.getMessage());
-		}
-		
-		return totalMyLikeList;
-	}
-
-	@Override
-	public int deleteMyLikeList(int id) {
-		int result = 0;
-		
-		try {
-			log.info("FavoriteDaoImpl deleteConfirm Start");
-			result = session.delete("joDeleteMyLike", id);
-			log.info("FavoriteDaoImpl deleteConfirm -> {}", result);
-		} catch (Exception e) {
-			log.error("FavoriteDaoImpl deleteConfirm Exception ->" + e.getMessage());
-		}
-		return result;
-	}
-
-	@Override
-	public int insertFavorite(Favorite favorite) {
-		int result = 0;
-		
-		try {
-			log.info("FavaoriteDaoImpl insertFavorite Start");
-			result = session.insert("joInsertFavorite", favorite);
-			log.info("FavaoriteDaoImpl insertFavorite -> {}", result);
-		} catch (Exception e) {
-			log.info("FavaoriteDaoImpl insertFavorite Exception ->" + e.getMessage());
-		}
-		return result;
-	}
 
 	@Override
 	public int deleteFavorite(Favorite favorite) {
@@ -149,39 +91,24 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	
 	
 	@Override
-	public Favorite detailFavorite(Favorite favorite) {
-		Favorite detailFavorite = null;
-		
-		try {
-			log.info("FavaoriteDaoImpl detailFavorite Start");
-			detailFavorite = session.selectOne("joDetailFavorite", favorite);
-			
-		} catch (Exception e) {
-			log.info("FavaoriteDaoImpl detailFavorite Exception ->" + e.getMessage());
-		}
-		return detailFavorite;
-	}
-
-	
-	@Override
-	public int updateFavortie(Favorite favorite) {
-		int result = 0;
-		
-		try {
-			log.info("FavoriteDaoImpl updateFavorite Start");
-			result = session.update("joUpdateFavorite", favorite);
-			log.info("FavoriteDaoImpl updateFavorite result -> {}", result);
-			
-		} catch (Exception e) {
-			log.error("FavoriteDaoImpl updateFavorite Exception ->", e.getMessage());
-		}
-		
-		return result;
-	}
-
-	@Override
 	public Favorite getMyFavoriteOne(Favorite favorite) {
 		return session.selectOne("getMyFavoriteOne", favorite);
 	}
 
+	
+	@Override
+	public int insertFavorite(Favorite favorite) {
+		int result = 0;
+		
+		try {
+			log.info("FavaoriteDaoImpl insertFavorite Start");
+			result = session.insert("joInsertFavorite", favorite);
+			log.info("FavaoriteDaoImpl insertFavorite -> {}", result);
+		} catch (Exception e) {
+			log.info("FavaoriteDaoImpl insertFavorite Exception ->" + e.getMessage());
+		}
+		return result;	
+	}
+	
+	
 }

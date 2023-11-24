@@ -12,7 +12,7 @@
 				console.log(id);
 				if(confirm("정말 삭제하시겠습니까?")){
 					var id = Number(id);
-					location.href="myLikeDelete?id="+id;
+					location.href="myLikeDelete?content_id="+id;
 				}
 			}
 		</script>
@@ -46,10 +46,10 @@
 									<c:forEach var="myLikeList" items="${myLikeList}">
 										<tr>
 											<td>${num}</td>
-											<td>${myLikeList.id}</td>
+											<td>${myLikeList.content_id}</td>
 											<td>${myLikeList.title}</td>
 											<td><fmt:formatDate value="${myLikeList.create_at}" type="date" pattern="YY/MM/dd" /></td>
-											<td><button type="button" onclick="deleteConfirm(${myLikeList.id})">취소</button></td>
+											<td><button type="button" onclick="deleteConfirm(${myLikeList.content_id})">취소</button></td>
 										</tr>
 									<c:set var="num" value="${num + 1 }"/>	
 									</c:forEach>
@@ -58,18 +58,18 @@
 							<ul class="pagination justify-content-center">
 								<c:if test="${page.startPage > page.pageBlock}">
 									<li class="page-item"><a class="page-link"
-										href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage-page.pageBlock}"
+										href="myLike?currentPage=${page.startPage-page.pageBlock}"
 										class="pageblock">[이전]</a></li>
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}"
 									end="${page.endPage}">
 									<li class="page-item"><a class="page-link"
-										href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${i}"
+										href="myLike?&currentPage=${i}"
 										class="pageblock">${i}</a></li>
 								</c:forEach>
 								<c:if test="${page.endPage < page.totalPage}">
 									<li class="page-item"><a class="page-link"
-										href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage+page.pageBlock}"
+										href="myLike?&currentPage=${page.startPage+page.pageBlock}"
 										class="pageblock">[다음]</a></li>
 								</c:if>
 							</ul>

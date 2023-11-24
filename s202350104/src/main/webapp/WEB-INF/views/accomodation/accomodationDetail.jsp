@@ -153,6 +153,28 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 	    })
 	}	
 	
+	
+   	function like() {
+ 	    const favorite = {
+			user_id : ${userId},
+			content_id: ${accomodation.content_id},
+		}
+		$.ajax({
+			method:"POST",
+			url:"/toggleFavoriteAjax",
+			data:JSON.stringify(favorite),
+			dataType:'json',
+			contentType: "application/json",
+			success:
+				function(result) {
+					if(result == 1) {
+						alert("찜했습니다.");
+					} else {
+						alert("찜목록에서 제외했습니다.");
+					}		
+				}
+		})
+    }
 
 </script>
 

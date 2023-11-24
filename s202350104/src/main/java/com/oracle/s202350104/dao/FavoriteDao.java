@@ -10,13 +10,8 @@ public interface FavoriteDao {
 	int 				   totalFavorite();
 	int                    condTotalFavorite(Favorite favorite);
 	List<Favorite>         listSearchFavorite(Favorite favorite);
-	List<Favorite>         getMyLikeList(Favorite favorite);
-	int                    totalMyLikeList();
-	int                    deleteMyLikeList(int id);
-	int                    insertFavorite(Favorite favorite);
 	int                    deleteFavorite(Favorite favorite);
-	Favorite               detailFavorite(Favorite favorite);
-	int                    updateFavortie(Favorite favorite);
 	Favorite               getMyFavoriteOne(Favorite favorite);
+	int                    insertFavorite(Favorite favorite);
 
 }

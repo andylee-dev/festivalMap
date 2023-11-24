@@ -236,6 +236,7 @@ public class AdminUserController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin favorite", "start");
 			int totalFavorite = fas.totalFavorite();
+			int path = 0;
 			
 			Paging page = new Paging(totalFavorite, currentPage);
 			favorite.setStart(page.getStart());
@@ -244,6 +245,7 @@ public class AdminUserController {
 			List<Favorite> listFavorite = fas.listFavorite(favorite);
 						
 			model.addAttribute("totalFavorite", totalFavorite);
+			model.addAttribute("path", path);
 			model.addAttribute("page",page);
 			model.addAttribute("listFavorite", listFavorite);
 			model.addAttribute("currentPage", currentPage);
@@ -265,6 +267,9 @@ public class AdminUserController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin favoriteSearch", "start");
 			int totalFavorite = fas.condTotalFavorite(favorite);
+			int path = 1;
+			String search = favorite.getSearch();
+			String keyword = favorite.getKeyword();
 			
 			Paging page = new Paging(totalFavorite, currentPage);
 			favorite.setStart(page.getStart());
@@ -273,8 +278,13 @@ public class AdminUserController {
 			List<Favorite> listSearchFavorite = fas.listSearchFavorite(favorite);
 						
 			model.addAttribute("totalFavorite", totalFavorite);
+			model.addAttribute("path", path);
+			model.addAttribute("search",search);
+			model.addAttribute("keyword",keyword);
 			model.addAttribute("page",page);
 			model.addAttribute("listFavorite", listSearchFavorite);
+			model.addAttribute("currentPage", currentPage);
+			
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin favoriteSearch", e.getMessage());
@@ -283,24 +293,6 @@ public class AdminUserController {
 		}
 				
 		return "admin/user/favoriteList";
-	}
-	
-	
-	@RequestMapping(value = "favoriteInsertForm")
-	public String favoriteInsertForm() {
-		UUID transactionId = UUID.randomUUID();
-		
-		try {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteInsertForm", "Start");
-			
-		} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "admin favoriteInsertForm Exception", e.getMessage());
-		
-		} finally {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteInsertForm", "End");
-		}
-			
-		return "admin/user/favoriteInsertForm";
 	}
 	
 	
@@ -324,7 +316,9 @@ public class AdminUserController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteDelete", "start");;
+			log.info("[{}]{}:{}", transactionId, "admin favoriteDelete", "start");
+			log.info("user_id ->" + favorite.getUser_id());
+			log.info("content_id ->" + favorite.getContent_id());
 			int result = fas.deleteFavorite(favorite);
 		
 		} catch (Exception e) {
@@ -336,51 +330,6 @@ public class AdminUserController {
 		
 		return "redirect:favoriteList";	
 	} 
-	
-	
-	@RequestMapping(value = "favoriteUpdateForm")
-	public String favoriteUpdateForm(Model model, Favorite favorite, String currentPage, HttpServletRequest request) {
-		UUID transactionId = UUID.randomUUID();
-		
-		try {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteUpdateForm", "start" );
-			String create_at = request.getParameter("create_at");
-			
-			log.info("user_id -> {}", favorite.getUser_id());
-			log.info("id -> {}", favorite.getContent_id());
-			log.info("create_at -> {}", favorite.getCreate_at());
-			
-			Favorite favoriteDetail = fas.detailFavorite(favorite);
-						
-			model.addAttribute("favoriteDetail", favoriteDetail);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("create_at", create_at);
-			
-		} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "admin favoriteUpdateForm Exception", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteUpdateForm", "end");
-		}
-		return "admin/user/favoriteUpdateForm";
-	}
-	
-	
-	@RequestMapping(value = "favoriteUpdate")
-	public String favoriteUpdaete(Model model, Favorite favorite, String currentPage) {
-		UUID transactionId = UUID.randomUUID();
-		
-		try {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteUpdate", "start" );
-			int result = fas.updateFavorite(favorite);
-			log.info("admin favoriteUpdate result ->" + result);
-			
-		} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "admin favoriteUpdate Exception", e.getMessage());
-		} finally {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteUpdate", "end");
-		}
-		return "redirect:/admin/user/favoriteList";
-	}
-		
+
 	
 }

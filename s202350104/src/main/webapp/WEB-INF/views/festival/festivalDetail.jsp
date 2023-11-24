@@ -152,6 +152,29 @@
 	    })
 	}
 
+	
+	   function like() {
+	 	    const favorite = {
+				user_id : ${userId},
+				content_id: ${festival.content_id},
+			}
+			$.ajax({
+				method:"POST",
+				url:"/toggleFavoriteAjax",
+				data:JSON.stringify(favorite),
+				dataType:'json',
+				contentType: "application/json",
+				success:
+					function(result) {
+						if(result == 1) {
+							alert("찜했습니다.");
+						} else {
+							alert("찜목록에서 제외했습니다.");
+						}		
+					}
+			})
+	    }
+	   
 </script>
 
 </head>
@@ -216,7 +239,7 @@
 					<p>${festival.title}</p>
 				</div>
 				<div class="col image-custom">
-					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
+					<img alt="favorite_icon.png" src="../image/favorite_icon.png" onclick="like()">
 				</div>
 				<div class="col image-custom">
 					<img alt="share_icon.png" src="../image/share_icon.png" onclick="clip(); return false;">

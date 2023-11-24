@@ -20,6 +20,7 @@ public class Favorite {
 	private int    end;
 	
 	// 조회용
+	private int id;
 	private String name;
 	private String title;
 	private String search;

@@ -36,7 +36,7 @@
 							<li><a class="dropdown-item" href="/user/myPage/qnaList">1:1문의</a></li>
 							<li><hr class="dropdown-divider"></li>
 							<li><a class="dropdown-item" href="/user/myPage">내정보</a></li>
-							<li><a class="dropdown-item" href="/user/myPage/myLike">찜 목록</a></li>
+							<li><a class="dropdown-item" href="/user/myPage/myLike">내 찜 목록</a></li>
 							<li><a class="dropdown-item" href="/user/myPage/myTag">내 관심사</a></li>
 							<li><a class="dropdown-item" href="/user/myPage/myPost">내 게시글</a></li>
 							<li><a class="dropdown-item" href="/user/myPage/qnaList">1:1문의</a></li>
