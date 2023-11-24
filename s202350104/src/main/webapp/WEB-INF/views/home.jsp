@@ -585,11 +585,11 @@
 						<div class="row row-col-1">
 							<div class="col home-menu-sm">
 								<input type="text" class="form-control" id="searchTag" placeholder="태그 검색하기" /> 
-								<img id="searchIcon" src="../image/icon_search1.png" alt="icon_search1.png" onclick="submitForm()"/>
+								<img id="searchIcon" src="../image/icon_search1.png" alt="icon_search1.png" onclick="search()"/>
 							</div>
 						</div>
 						<div class="row row-col-1">
-							<div class="col home-menu-lg overflow-auto">
+							<div class="col home-menu-lg" id="scroll-container">
 								<label for="area" class="form-label"><strong>목록 보기</strong></label>
 								<div id="placesList"></div>
 							</div>

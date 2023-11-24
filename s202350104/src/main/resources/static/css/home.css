@@ -183,7 +183,7 @@
 
 /* MAP css */
 .home-map-box-custom {
-/* 	border: 1px solid red; */
+	/* 	border: 1px solid red; */
 	padding: 0px;
 	margin-top: 80px;
 	height: 1100px;
@@ -209,29 +209,28 @@
 	margin-top: -10px;
 }
 
-.home-map-menu-custom{
-
+.home-map-menu-custom {
+	
 }
 
-.home-map-nav-box-custom{
+.home-map-nav-box-custom {
 	height: 800px;
 }
 
-.home-menu-detail{
+.home-menu-detail {
 	width: 500px;
-/* 	border: 1px solid #0000ff; */
+	/* 	border: 1px solid #0000ff; */
 }
 
 .home-menu-detail
-.home-menu-sm{
+.home-menu-sm {
 	width: 500px;
 	height: 100px;
-/* 	border: 1px solid #008000; */
+	/* 	border: 1px solid #008000; */
 	position: relative;
-
 }
 
-.home-menu-sm input{
+.home-menu-sm input {
 	width: 380px;
 	height: 48px;
 	background: white;
@@ -241,7 +240,7 @@
 	margin-top: -26px;
 }
 
-.home-menu-sm img{
+.home-menu-sm img {
 	width: 20px;
 	height: 19px;
 	position: absolute;
@@ -251,7 +250,7 @@
 	z-index: 1;
 }
 
-.home-menu-sm label{
+.home-menu-sm label {
 	margin-left: 40px;
 	font-size: 20px;
 }
@@ -274,11 +273,10 @@
 .home-menu-ssm {
 	width: 500px;
 	height: 40px;
-/* 	border: 1px solid #008000; */
-
+	/* 	border: 1px solid #008000; */
 }
 
-.home-menu-ssm label{
+.home-menu-ssm label {
 	margin-left: 40px;
 	font-size: 20px;
 }
@@ -295,31 +293,36 @@
 	border-radius: 23.50px;
 	margin-top: 10px;
 	margin-right: 10px;
-	
 }
 
 .home-menu-detail
-.home-menu-md{
+.home-menu-md {
 	width: 500px;
 	height: 200px;
-/* 	border: 1px solid #008000; */
+	/* 	border: 1px solid #008000; */
 	text-align: center;
 }
 
 .home-menu-detail
-.home-menu-lg{
+.home-menu-lg {
 	width: 500px;
 	height: 460px;
-/* 	border: 1px solid #008000; */
-	margin-top: -60px;	
+	/* 	border: 1px solid #008000; */
+	margin-top: -60px;
+	overflow: scroll;
 }
 
-.home-menu-lg label{
+.home-menu-detail
+.home-menu-lg::-webkit-scrollbar {
+	display: none
+}
+
+.home-menu-lg label {
 	margin-left: 40px;
-	font-size: 20px;	
+	font-size: 20px;
 }
 
-.home-menu-lg #placesList{
+.home-menu-lg #placesList {
 	border: 3px solid black;
 	border-radius: 23px;
 	margin-left: 40px;
@@ -327,57 +330,55 @@
 	background-color: white;
 }
 
-.home-card-custom{
+.home-card-custom {
 	width: 360px;
 	margin-left: 0px;
 	background-color: transparent;
 	border: 0px;
-	border-bottom: 4px solid #c0c0c0;		
+	border-bottom: 4px solid #c0c0c0;
 }
 
-.home-card-custom img{
+.home-card-custom img {
 	width: 360px;
 	height: 200px;
 	margin-left: 10px;
 	margin-top: 10px;
 	border: 3px solid black;
-	border-radius: 23px;		
+	border-radius: 23px;
 }
 
-.home-card-custom h5{
+.home-card-custom h5 {
 	font-size: 26px;
-	font-weight: bolder;		
+	font-weight: bolder;
 }
 
 .home-card-custom
-.home-card-btn{
+.home-card-btn {
 	background-color: #B7E24D;
 	color: black;
 	font-weight: bolder;
 	border: 2px solid black;
-	margin-left: 210px;		
+	margin-left: 210px;
 	border-radius: 23px;
 }
 
-.home-map-custom{
+.home-map-custom {
 	width: 800px;
-/* 	border: 1px solid #0000ff; */
+	/* 	border: 1px solid #0000ff; */
 	margin-left: 18px;
 }
 
 .home-map-custom
-.home-map-img-detail{
+.home-map-img-detail {
 	width: 800px;
 	height: 100%;
 	background-color: #c0c0c0;
 	margin-left: -10px;
 }
 
-
-
 /* AD banner css */
 .home-ad-box-custom {
-/* 	border: 1px solid red; */
+	/* 	border: 1px solid red; */
 	padding: 0px;
 	margin-top: 80px;
 	margin-bottom: 80px;
