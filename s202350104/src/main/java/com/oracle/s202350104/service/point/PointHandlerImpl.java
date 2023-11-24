@@ -39,7 +39,7 @@ public class PointHandlerImpl implements PointHandler {
         handlerMap.put(1, this::handleJoin);
         handlerMap.put(2, this::handleInsertBoard);
         handlerMap.put(3, this::handleInsertComment);
-        handlerMap.put(5, this::handleEventPoint);
+        handlerMap.put(10, this::handleEventPoint);
         lastLoginTime = LocalDateTime.now().minusDays(1); // 초기값으로 어제 시간 설정
     }
 
