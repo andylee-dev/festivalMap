@@ -35,14 +35,16 @@ public class PopularContentRecommendation implements RecommendationStrategy {
     	List<Contents> contentList = recommendationDao.getPopularContentsList(content);
     	List<ScoredContent> scoredContentList = new ArrayList<>();
     	
+    	// 점수 가중치
         for(Contents c : contentList) {
-        	double scoreReadcount = c.getReadcount() * 0.5;
-        	double scoreAvg_score = c.getAvg_score() * 0.3;
-        	double scoreReview_count = c.getReview_count() * 0.2;
+        	double scoreReadcount = c.getReadcount() * 0.5; 		// 조회수
+        	double scoreAvg_score = c.getAvg_score() * 0.3;			// 리뷰평점평균
+        	double scoreReview_count = c.getReview_count() * 0.2;	// 리뷰수
         	double score = scoreReadcount + scoreAvg_score + scoreReview_count;
             scoredContentList.add(new ScoredContent(c, score));
         }
         
+        // 버블 정렬로 점수 높은 순으로 정렬
         for(int i=0; i<contentList.size(); i++) {
         	for(int j=0; j<contentList.size()-(i+1); j++) {
         		if(scoredContentList.get(j).getScore() < scoredContentList.get(j+1).getScore()) {
