@@ -129,6 +129,7 @@ public class ExperienceController {
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			double reviewCount = boardService.getReviewCount(board); 
 			
 			log.info("ExperienceController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("ExperienceController reviewBoardList before board.getEnd : {} ", board.getEnd());
@@ -148,6 +149,7 @@ public class ExperienceController {
 			log.info("ExperienceController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
+			model.addAttribute("reviewCount", reviewCount);			
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);

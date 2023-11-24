@@ -161,13 +161,13 @@ public class FestivalController {
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			double reviewCount = boardService.getReviewCount(board); 
 			
 			log.info("FestivalController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getEnd());
-			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getContent_id());
+			log.info("FestivalController reviewBoardList before board.getContent_id : {} ", board.getContent_id());
 			log.info("FestivalController revicewAllList size : {}", reviewAllList.size());
-			log.info("FestivalController reviewBoardList after board.getStart : {} ", board.getStart());
-			log.info("FestivalController reviewBoardList after board.getEnd : {} ", board.getEnd());
+			log.info("FestivalController reviewCount : {}", reviewCount);
 
 			if(reviewAllList.size() != 0) {
 				bigCode = reviewAllList.get(0).getBig_code();
@@ -180,6 +180,7 @@ public class FestivalController {
 			log.info("FestivalController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
+			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);

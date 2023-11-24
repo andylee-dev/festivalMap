@@ -39,4 +39,6 @@ public interface BoardService {
 
 	List<Board> getBoardOneList(Board board);
 
+	double getReviewCount(Board board);
+
 }

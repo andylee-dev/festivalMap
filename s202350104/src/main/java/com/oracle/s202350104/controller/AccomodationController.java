@@ -129,7 +129,8 @@ public class AccomodationController {
 			board.setContent_id(contentId);
 
 			List<Board> reviewAllList = boardService.getReviewAllList(board);
-
+			double reviewCount = boardService.getReviewCount(board); 
+			
 			log.info("AccomodationController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("AccomodationController reviewBoardList before board.getEnd : {} ", board.getEnd());
 			log.info("AccomodationController reviewBoardList before board.getEnd : {} ", board.getContent_id());
@@ -148,6 +149,7 @@ public class AccomodationController {
 			log.info("AccomodationController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
+			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);

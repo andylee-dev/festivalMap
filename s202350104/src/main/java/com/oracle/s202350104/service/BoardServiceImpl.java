@@ -164,4 +164,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardOneList;
 	}
 	
+	@Override
+	public double getReviewCount(Board board) {
+		double reviewCount = boardDao.getReviewCount(board); 
+		return reviewCount;
+	}
+	
 }

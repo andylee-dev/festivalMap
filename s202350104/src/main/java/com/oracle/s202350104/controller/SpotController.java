@@ -150,6 +150,7 @@ public class SpotController {
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board);
+			double reviewCount = boardService.getReviewCount(board); 
 			
 			log.info("SpotController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("SpotController reviewBoardList before board.getEnd : {} ", board.getEnd());
@@ -169,6 +170,7 @@ public class SpotController {
 			log.info("SpotController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
+			model.addAttribute("reviewCount", reviewCount);			
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);

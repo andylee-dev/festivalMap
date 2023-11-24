@@ -324,7 +324,7 @@ function initKakaoMap() {
 					</div>
 					<div class="col text-custom">
 						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p class="text-sm-custom">메인&nbsp;메뉴</p>
+						<p>메인&nbsp;메뉴</p>
 						<span>${restaurant.menu}</span>					
 					</div>
 					<div class="col text-custom">
@@ -429,17 +429,33 @@ function initKakaoMap() {
 			<div class="col-2 box-custom">			
 				<div class="row row-cols-1">
 					<div class="col box-col-custom">
-						<span class="cost-span" style="">4.8 </span>
+						<span class="cost-span">${reviewCount }&nbsp;</span>
 						<span>/ 5.0</span>
 					</div>
 					<div class="col box-col-custom">
-						<span>⭐⭐⭐⭐⭐</span>
+						<c:forEach begin="1" end="${reviewCount }">⭐</c:forEach>
 					</div>
 					<div class="col box-col-custom">
     					<hr/>
 					</div>
 					<div class="col box-col-custom">
-						<span>"아주 좋았어요!"</span>
+						<c:choose>
+							<c:when test="${reviewCount < 1.0 && reviewCount >= 0.0}">
+								<span>"비추천해요.."</span>
+							</c:when>
+							<c:when test="${reviewCount < 2.0 && reviewCount >= 1.0}">
+								<span>"조금 괜찮아요.."</span>
+							</c:when>
+							<c:when test="${reviewCount < 3.0 && reviewCount >= 2.0}">
+								<span>"보통이에요!"</span>
+							</c:when>
+							<c:when test="${reviewCount < 4.0 && reviewCount >= 3.0}">
+								<span>"즐거웠어요!"</span>
+							</c:when>
+							<c:otherwise>
+								<span>"적극 추천해요!"</span>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>										  
 			</div>

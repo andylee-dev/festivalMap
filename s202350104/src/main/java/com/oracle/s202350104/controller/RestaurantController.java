@@ -167,6 +167,7 @@ public class RestaurantController {
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			double reviewCount = boardService.getReviewCount(board); 
 			
 			log.info("RestaurantController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("RestaurantController reviewBoardList before board.getEnd : {} ", board.getEnd());
@@ -186,6 +187,7 @@ public class RestaurantController {
 			log.info("RestaurantController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
+			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);

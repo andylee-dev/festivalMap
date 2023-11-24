@@ -39,5 +39,7 @@ public interface BoardDao {
 
 	List<Board> getBoardOneList(Board board);
 
+	double getReviewCount(Board board);
+
 
 }

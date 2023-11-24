@@ -261,4 +261,12 @@
 		where id = #{id} 
 	</update>
 	
+	<select id="test" parameterType="Board" resultType="double">
+		select round(avg(a.score), 1) as score
+		from board a
+		join users b on a.user_id = b.id
+		join contents c on a.content_id = c.id
+		where c.id = #{content_id} and a.is_deleted = 0	
+	</select>
+	
 </mapper>
