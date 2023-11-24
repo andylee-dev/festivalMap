@@ -239,7 +239,7 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 					<p>${accomodation.title}</p>
 				</div>
 				<div class="col image-custom">
-					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
+					<img alt="favorite_icon.png" src="../image/favorite_icon.png" onclick="like()">
 				</div>
 				<div class="col image-custom">
 					<img alt="share_icon.png" src="../image/share_icon.png" onclick="clip(); return false;">
