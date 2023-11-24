@@ -475,10 +475,14 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 					<div class="col col-sm-8">
 						<span class="common-span-font">·</span>
 						<span> 전체 리뷰 작성자 중 
-						<span class="common-span">000</span>명이 
-						<span class="common-span">★★★★★</span>으로 평가한 축제에요.</span>
+						<span class="common-span">${fn:length(reviewBoard) }</span>명이 
+							<c:forEach begin="1" end="${reviewCount }">
+								<span class="common-span">★</span>
+							</c:forEach>
+						으로 평가한 축제에요.</span>
 					</div>
-				</div>				
+				</div>	
+							
 				<div class="row row-cols-3 second-box">
 					<div class="col col-sm-4">
 						<img alt="test" src="../image/reviewIcon2.png"> 볼거리가 많아요</div>
@@ -499,7 +503,7 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 		</div>
 	</div>
 	
-	<c:set var="num" value="${page.total-page.start+1 }" />
+<%-- 	<c:set var="num" value="${page.total-page.start+1 }" /> --%>
 	
 	<!-- 리뷰 카드 영역 -->
  	<div class="container reviewBox-custom"> 

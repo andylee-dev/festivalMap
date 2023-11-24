@@ -36,6 +36,5 @@ public class Board {
 	private int start;
 	private int end;
 	private int commBigCode;
-	private int commSmallCode;
-	
+	private int commSmallCode;	
 }

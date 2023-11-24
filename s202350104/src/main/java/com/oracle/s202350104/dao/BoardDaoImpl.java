@@ -341,7 +341,7 @@ public class BoardDaoImpl implements BoardDao {
 		return boardOneList;
 	}
 	 
-@Override
+	@Override
 	public double getReviewCount(Board board) {
 		double reviewCount = session.selectOne("test",board); 
 		log.info("BoardDao reviewCount : {}", reviewCount);
