@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.ContentDaoImpl;
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.CourseService;
@@ -40,6 +42,7 @@ public class AdminCourseController {
 	private final CourseService cs;
 	private final ContentSerivce contentService;
 	private final CommonCodeService ccs;
+	private final AreaService ars;
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
@@ -96,7 +99,12 @@ public class AdminCourseController {
 			log.info("AdminCourseController courseUpdateForm courseContentList.size() : " + courseContentList.size());
 			
 			List<CommonCodes> listCodes = ccs.listCommonCode();
+			log.info("listCodes : " + listCodes);
 			
+			List<Areas> listAreas = ars.listAreas();
+			log.info("listAreas : " + listAreas);
+			List<Areas> listSigungu = ars.listSigungu(course.getArea());
+			log.info("listSigungu : " + listSigungu);
 			
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
@@ -104,6 +112,8 @@ public class AdminCourseController {
 			model.addAttribute("course", course);
 			model.addAttribute("courseContentList", courseContentList);
 			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("listSigungu", listSigungu);
 //			model.addAttribute("courseContent", courseContent);
 
 		} catch (Exception e) {
@@ -251,6 +261,7 @@ public class AdminCourseController {
 			
 			// 조건에 맞는 컨텐츠의 list를 나타냄
 			List<Contents> listContents = contentService.listContents(content);
+			log.info("listContents : " + listContents);
 			
 			model.addAttribute("contentCount", contentCount);
 			model.addAttribute("listContents", listContents);

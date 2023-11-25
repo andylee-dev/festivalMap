@@ -171,7 +171,9 @@
 		</delete>
 		
 		<update id="noCourseUpdate" parameterType="Course">
-			UPDATE COURSES SET  distance=#{distance}, course_title=#{course_title},
+			UPDATE COURSES SET  big_code=#{big_code}, small_code=#{small_code},
+								area=#{area}, sigungu=#{sigungu},
+								distance=#{distance}, course_title=#{course_title},
 								time=#{time}, course_info=#{course_info}
 			WHERE id = #{id}
 			

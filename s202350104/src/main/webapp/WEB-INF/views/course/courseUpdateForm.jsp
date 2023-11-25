@@ -29,29 +29,26 @@
 	var selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
 	var tagOptions = []; // 선택할 수 있는 옵션을 저장할 배열 선언 --> existingTags에 있는 요소 제외하고 모두 저장
 	
-	document.addEventListener("DOMContentLoaded", (event) => {
-		
+	document.addEventListener("DOMContentLoaded", function() {
 		<!-- 지역 코드 넣는 코드  Start-->	
-		updateAreaOptions();
-		$(".area-dropdown").change(function() {
-			const selectedArea = $(this).val();
-			if (selectedArea) {
-				updateSigunguOptions(selectedArea);
-			} else {
-				$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
-			}
-		});
+			updateAreaOptions();
+			$(".area-dropdown").change(function() {
+				const selectedArea = $(this).val();
+				if (selectedArea) {
+					updateSigunguOptions(selectedArea);
+				} else {
+					$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
+				}
+			});
 		<!-- 지역 코드 넣는 코드  End-->
-	
 		
 		<!-- 태그 관련 코드 Start -->
 		const tagsArea = document.querySelector('#tagsArea');
 		
-		// content insert시에는 초기에 모든 tags 리스트를 가져와서 tagOptions에 저장
-		initialTagOptions();
+		initialTagOptions(); // 모든 tags 가져오기
+		initialSelectedTags(); // DB에 이미 저장되어 있던 tags만 selectedTags에 저장
 		
-		$('#tagSelectBox').change(function() {
-			
+		$('#tagSelectBox').change(function() {		
 			var selectedTagId = $(this).val(); // 선택된 tag의 id를 가져옴
 			var selectedTagName = $(this).find('option:selected').text(); // 선택된 tag의 name을 가져옴
 			
@@ -78,7 +75,7 @@
 						i--;
 					}
 				}	
-				updateTagOptions(); // select box의 option을 업데이트하는 method	
+				updateTagOptions(); // select box의 option을 업데이트하는 method
 				newTagBadge(selectedTag);
 			}
 			
@@ -86,7 +83,7 @@
 	
 	});
 	
-		function initialTagOptions() {
+	function initialTagOptions() {
 		$.ajax({
 			url: "<%=request.getContextPath()%>/getAllTags",
 			method: "GET",
@@ -96,13 +93,41 @@
 					tagOptions.push({id:tag.id, name:tag.name});
 				});
 				console.log("getAllTags success");
-				updateTagOptions();
 			},
 			error: function() {
-				console.log("태그 정보를 가져오지 못했습니다.");
+				console.log("전체 태그 정보를 가져오지 못했습니다.");
 			}
 		})
 	}; 
+	
+	function initialSelectedTags() {
+		var contentId = Number($('#content_id').val());
+		$.ajax({
+			url: "<%=request.getContextPath()%>/getMyContentTags",
+			method: "GET",
+			data: {contentId: contentId},
+			dataType: "json",
+			success: function(tags) {
+				if(tags != null) {
+					tags.forEach(function(tag) {
+						for(var i = 0; i < tagOptions.length; i++) {
+							if(tagOptions[i].id == tag.id) {
+								tagOptions.splice(i, 1);
+								selectedTags.push(tag);
+								newTagBadge(tag);
+							}
+						}
+					});
+				};
+				
+				updateTagOptions();
+				console.log("getMyContentTags success");
+			},
+			error: function() {
+				console.log("컨텐츠 태그 정보를 가져오지 못했습니다.");
+			}
+		})
+	};
 	
 	function updateTagOptions() {
 		$("#tagSelectBox").empty().append("<option value='0'>태그를 선택해주세요.</option>");
@@ -110,24 +135,27 @@
 			$("#tagSelectBox").append("<option value='"+tag.id+"'>"+tag.name+"</option>");
 		});
 		console.log("updateTagOptions() success");
-	};		
+	};
 	
 	function newTagBadge(selectedTag) {
 		// 태그 뱃지 생성 
-		const newTag = document.createElement('span');
-		newTag.className = "badge bg-primary";
-		newTag.textContent = "#"+selectedTag.name;
+		const newTag = document.createElement('button');
+		newTag.className = "btn btn-primary align-items-center";
+		newTag.value = selectedTag.name;
+		newTag.innerHTML = "#" +selectedTag.name;
 		newTag.id = selectedTag.id;
 			
 		// x버튼 및 클릭시의 이벤트 생성
-		const closeButton = document.createElement('button');
-		closeButton.className = "btn-close";
-		closeButton.setAttribute('aria-label', 'Close');
+		const closeButton = document.createElement('span');
+		closeButton.innerHTML = "&times";
+		closeButton.className = "close-icon";
+		closeButton.style.marginLeft = "5px";
+		closeButton.style.cursor = "pointer";
 		closeButton.addEventListener('click', (event) => {
 			event.preventDefault();
 			var deletedTag = {
 				id: event.target.parentElement.id,
-				name: event.target.parentElement.textContent.substr(1) // #를 제외한 텍스트를 name으로
+				name: event.target.parentElement.value.substr(1) // #를 제외한 텍스트를 name으로
 			}
 			tagOptions.push(deletedTag); // select box의 option 목록에 삭제된 태그 다시 추가
 				
@@ -141,10 +169,34 @@
 			}
 			updateTagOptions(); // 수정된 tagOptions로 update
 		});	
+		
 		newTag.appendChild(closeButton);
 		tagsArea.appendChild(newTag);
-	}
+	};
 	<!-- 태그 관련 코드 end -->
+	
+	function getSigungu(pArea){
+		var pSigungu = ${experience.sigungu}
+		$.ajax(
+				{
+					url:"<%=request.getContextPath()%>/getSigungu/"+pArea,
+					dataType:'json',
+					success:function(areas) {
+						$('#sigungu_select option').remove();
+						str = "<option value='999'>전체</option>";
+						$(areas).each(
+							function() {
+								if(this.sigungu != 999 && this.content != null) {
+									strOption = "<option value='"+this.sigungu+"' ${"+this.sigungu+" == "+pSigungu+"? 'selected':''}>"+this.content+"</option>";
+									str += strOption;
+								}
+							}		
+						)
+						$('#sigungu_select').append(str);
+					}
+				}		
+		)
+	}
 </script>
 
 <script type="text/javascript">
@@ -157,7 +209,30 @@
 <script type="text/javascript">
 	let oldList = [];
 	let newList = [];
+	
+	// 컨텐츠 디테일 조회창을 열었을 때.
+	function ContentPopUp() {
+		console.log("ContentPopUp 함수 호출됨");
+		
+		//창 크기 지정
+		var width = 800;
+		var height = 600;
+		
+		//pc화면기준 가운데 정렬
+		var left = (window.screen.width / 2) - (width/2);
+		var top = (window.screen.height / 4);
+		
+		//윈도우 속성 지정
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+		
+		//연결하고싶은url
+		const url = '../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}';
+	 	
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		window.open(url, "contentList popup", windowStatus);
+	}
 
+	
 	// 3. 컨텐츠 등록 창을 열었을 때.
 	function showPopUp() {
 		 console.log("showPopUp 함수 호출됨");
@@ -590,7 +665,7 @@
 							<select class="form-select" aria-label="small_code" name="small_code" required="required">
 								<c:forEach var="smallCode" items="${listCodes }">
 									<c:if test="${smallCode.big_code == 16 && smallCode.small_code != 999}">
-										<option value="${smallCode.small_code}"${smallCode.small_code == small_code? 'selected':''} >${smallCode.content}</option>		
+										<option value="${smallCode.small_code}"${smallCode.small_code == course.small_code? 'selected':''} >${smallCode.content}</option>		
 									</c:if>
 								</c:forEach>
 							</select>
@@ -599,14 +674,39 @@
 						
 						<div class="form-group d-flex course-body-text col-12" style="margin-bottom: 24px;">
 							<label for="content" class="form-label col-2">지역(필수 선택)</label>
+								
 							<div class="row col-12">
+							    <div class="col-2">
+							        <select class="form-select" id="area" name="area" onchange="getSigungu(this.value)">
+							            <option value="">전체</option>
+							            <c:forEach var="areas" items="${listAreas}">
+							                <c:if test="${areas.sigungu == 999}">
+							                    <option value="${areas.area}" ${areas.area == course.area? 'selected':''}>${areas.content}</option>
+							                </c:if>
+							            </c:forEach>
+							        </select>
+							    </div>
+							    <div class="col-2">
+							        <select class="form-select" id="sigungu_select" name="sigungu">
+							            <option value="999">전체</option>
+							            <c:forEach var="areas" items="${listSigungu}">
+							                <c:if test="${areas.sigungu != 999 && areas.sigungu != null}">
+							                    <option value="${areas.sigungu}" ${areas.sigungu == course.sigungu? 'selected':''}>${areas.content}</option>
+							                </c:if>
+							            </c:forEach>
+							        </select>
+							    </div>
+							</div>
+							
+							<!-- <div class="row col-12">
 							    <div class="col-2">
 							        <select name="area" class="form-select area-dropdown"></select>
 							    </div>
 							    <div class="col-2">
 							       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
 							    </div>
-							</div>
+							</div> -->
+							
 						</div>
 						
 						<div class="form-group course-body-text"
@@ -632,10 +732,9 @@
 											<div class="card-body" style="padding: 0px; padding-top: 16px;">
 												<h5 class="card-title card-font-title">${courseContentList.title }</h5>
 												<p class="card-text card-font-content">${courseContentList.address }</p>
-												<p class="card-text card-font-content">${courseContentList.address }</p>
 											</div>
 											<div class="d-flex justify-content-end mt-auto">
-												<a id="contentId${courseContentList.content_id}" href="" class="btn btn-primary card-button-style card-button-text">상세정보보기</a>
+												<a id="contentId${courseContentList.content_id}" class="btn btn-primary card-button-style card-button-text" onclick="ContentPopUp()">상세정보보기</a>
 											</div>
 										</div>
 									</c:forEach>
