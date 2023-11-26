@@ -31,12 +31,18 @@
 						
 						<!-- 검색어 -->
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
+							<div class="col-2">
+								<select name="searchType" class="form-select">
+									<option value="s_tagname">태그명</option>
+									<option value="s_groupname">그룹명</option>
+								</select>
+							</div>
 							<div class="col-6 mx-1">
 								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요.">
 							</div>
 							<!-- 버튼 -->
-							<div class="col-5 mx-1 d-flex justify-content-center">
+							<div class="col-5 mx-1 d-flex justify-content-start">
 								<button type="submit" class="btn btn-primary col-2 mx-1">검색</button>
 								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
 							</div>
@@ -56,6 +62,7 @@
 							<thead>
 								<tr>
 									<th scope="col">순번</th>
+									<th scope="col">그룹명</th>
 									<th scope="col">태그명</th>
 									<th scope="col">회원태그</th>
 									<th scope="col">게시판태그</th>
@@ -70,6 +77,10 @@
 								<c:forEach var="tag" items="${listTags}">
 									<tr>
 										<td>${num}</td>
+										<td>
+											<c:if test="${tag.group_name == null || tag.group_name == ''}">-</c:if>
+											<c:if test="${tag.group_name != null && tag.group_name != ''}">${tag.group_name}</c:if>
+										</td>
 										<td>${tag.name}</td>
 										<td>${tag.userCnt}</td>
 										<td>${tag.boardCnt}</td>

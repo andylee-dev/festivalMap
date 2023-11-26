@@ -149,9 +149,9 @@ public class TagsDaoImpl implements TagsDao {
 		int result = 0;
 		
 		try {
-			
+			int groupId = session.selectOne("nhTagsSearchId", tags.getGroup_name());
+			tags.setGroup_id(groupId);
 			result = session.update("nhTagsUpdate", tags);
-			
 		} catch(Exception e) {
 			log.info("TagsDaoImpl insertTags() => " + e.getMessage());
 		}

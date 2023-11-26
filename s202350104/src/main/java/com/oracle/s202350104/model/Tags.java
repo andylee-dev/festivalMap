@@ -13,6 +13,8 @@ public class Tags {
 	private int content_id;
 	private int user_id;
 	private int course_id;
+	private int group_id;
+	private String group_name;
 	
 	// 페이징 처리용
 	private String pageNum;

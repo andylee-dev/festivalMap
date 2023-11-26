@@ -143,7 +143,12 @@ public class AdminTagController {
 			log.info("[{}]{}:{}", transactionId, "updateTagsForm", "start");
 			// id에 해당하는 태그 정보를 찾아 저장
 			Tags tags = ts.selectTags(id);
+			
+			Tags tag = new Tags();
+			List<Tags> listAllTags = ts.listTags(tags);
+			
 			model.addAttribute("tags", tags);
+			model.addAttribute("listAllTags", listAllTags);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "updateTagsForm", e.getMessage());
 		} finally {

@@ -10,7 +10,16 @@
 		SELECT count(*) FROM Tags
 		WHERE 1=1
 		<if test="keyword != null and keyword != ''">
-			AND name like '%' || #{keyword} || '%'
+			<choose>
+				<when test="searchType == 's_tagname'">
+					AND name like '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 's_groupname'">
+					AND group_id 
+					IN (SELECT id FROM tags 
+						WHERE name like '%' || #{keyword} || '%')
+				</when>
+			</choose>
 		</if>
 	</select>
 	
@@ -18,13 +27,22 @@
 		SELECT * 
 		FROM 
 		(
-			SELECT ROWNUM rn, a.*
+			SELECT ROWNUM rn, a.*, (SELECT name FROM tags t WHERE a.group_id = t.id) AS group_name
 			FROM
 			(SELECT * FROM tags 
 			 WHERE 1=1
 			 <if test="keyword != null and keyword != ''">
-				AND name like '%' || #{keyword} || '%'
-			 </if>
+				<choose>
+					<when test="searchType == 's_tagname'">
+						AND name like '%' || #{keyword} || '%'
+					</when>
+					<when test="searchType == 's_groupname'">
+						AND group_id 
+						IN (SELECT id FROM tags 
+							WHERE name like '%' || #{keyword} || '%')
+					</when>
+				</choose>
+			</if>
 			 ORDER BY id) a
 		)
 		<if test="start != 0 and end != 0">
@@ -33,15 +51,30 @@
 	</select>
 	
 	<insert id="nhTagsInsert" parameterType="Tags">
-		INSERT INTO Tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+		INSERT INTO Tags(id, name, group_id) 
+		VALUES(tags_id_seq.NEXTVAL, #{name}, #{group_id})
 	</insert>
 	
 	<select id="nhTagsSelect" parameterType="int" resultType="Tags">
-		SELECT * FROM Tags WHERE id = #{id}
+		SELECT a.*, (SELECT name FROM tags t WHERE t.id = a.group_id) AS group_name 
+		FROM   Tags a 
+		WHERE  a.id = #{id}
+	</select>
+	
+	<select id="nhTagsSearchId" parameterType="String" resultType="int">
+		SELECT id FROM tags 
+		WHERE  name = #{name} 
+	</select>
+	
+	<select id="nhTagsSearchGroup" parameterType="Tags" resultType="Tags">
+		SELECT id, name FROM tags
+		WHERE  group_id = #{group_id}
 	</select>
 	
 	<update id="nhTagsUpdate" parameterType="Tags">
-		UPDATE Tags SET name = #{name} WHERE id = #{id}
+		UPDATE Tags 
+		SET    name = #{name}, group_id = #{group_id} 
+		WHERE  id = #{id}
 	</update>
 	
 	<delete id="nhTagsDelete" parameterType="Tags">
@@ -52,8 +85,8 @@
 	
 	<select id="nhUserTagsTotal" parameterType="Tags" resultType="int">
 		SELECT count(*)
-		FROM  users u
-		WHERE u.small_code = 2
+		FROM   users u
+		WHERE  u.small_code = 2
 		<if test="keyword != null and keyword != ''">
 			<choose>
 			 	<when test="searchType == 'tag_name'">
@@ -108,7 +141,7 @@
 	
 	<select id="nhUserTagsAll" resultType="Tags">
 		SELECT *
-		FROM usertags u, tags t
+		FROM  usertags u, tags t
 		WHERE u.tag_id = t.id
 		ORDER BY t.name
 	</select>
@@ -133,7 +166,7 @@
 	
 	<delete id="nhUserTagsDelete" parameterType="Tags">
 		DELETE UserTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="user_id != null and user_id != 0">
 			AND user_id = #{user_id}
 		</if>
@@ -143,8 +176,8 @@
 	
 	<select id="nhBoardTagsTotal" parameterType="Tags" resultType="int">
 		SELECT count(*)
-		FROM  board b
-		WHERE 1=1
+		FROM   board b
+		WHERE  1=1
 		<if test="small_code != null and small_code != 0">
 			AND b.small_code = #{small_code}
 		</if>
@@ -228,7 +261,7 @@
 		
 	<delete id="nhBoardTagsDelete" parameterType="Tags">
 		DELETE BoardTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="board_id != null and board_id != 0">
 			AND board_id = #{board_id}
 		</if>
@@ -303,7 +336,7 @@
 	
 	<select id="nhContentTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
-		FROM　ContentTags ct, Tags t, Contents c
+		FROM　  ContentTags ct, Tags t, Contents c
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = c.id
 		AND   c.big_code = #{bigCode}
@@ -312,7 +345,7 @@
 	
 	<select id="nhContentTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM ContentTags ct, Tags t
+		FROM  ContentTags ct, Tags t
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = #{contentId}
 		ORDER BY t.name
@@ -325,12 +358,13 @@
 	</select>
 	
 	<insert id="nhContentTagsInsert" parameterType="Tags">
-		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
+		INSERT INTO ContentTags(tag_id, content_id) 
+		VALUES(#{tag_id}, #{content_id})
 	</insert>
 	
 	<delete id="nhContentTagsDelete" parameterType="Tags">
 		DELETE ContentTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="content_id != null and content_id != 0">
 			AND content_id = #{content_id}
 		</if>
@@ -424,12 +458,13 @@
 	</select>
 	
 	<insert id="nhCourseTagsInsert" parameterType="Tags">
-		INSERT INTO CourseTags(tag_id, course_id) VALUES(#{tag_id}, #{course_id})
+		INSERT INTO CourseTags(tag_id, course_id) 
+		VALUES(#{tag_id}, #{course_id})
 	</insert>
 	
 	<delete id="nhCourseTagsDelete" parameterType="Tags">
 		DELETE CourseTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="course_id != null and course_id != 0">
 			AND course_id = #{course_id}
 		</if>
