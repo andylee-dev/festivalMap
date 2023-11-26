@@ -82,8 +82,8 @@
 								<div class="col-2 d-flex align-items-center">
 									<select name="status" class="form-select">
 										<option value="2" ${status == 2 ? 'selected' : ''}>전체</option>
-										<option value="1" ${status == 1 ? 'selected' : ''}>활성화</option>
-										<option value="0" ${status == 0 ? 'selected' : ''}>비활성화</option>
+										<option value="1" ${status == 1 ? 'selected' : ''}>승인완료</option>
+										<option value="0" ${status == 0 ? 'selected' : ''}>승인대기</option>
 									</select>
 								</div>
 						
