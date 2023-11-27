@@ -178,9 +178,10 @@
         SELECT ROWNUM rn, b.*, (SELECT content FROM areas z WHERE b.area = z.area AND z.sigungu = 999) AS area_content, (SELECT content FROM areas z WHERE b.area = z.area AND b.sigungu = z.sigungu) AS sigungu_content
         FROM
         (
-            SELECT a.content_id, c.area, c.sigungu, c.title, c.big_code, COUNT(*) over () as count
-            FROM accomodations a, contents c
-            WHERE a.content_id = c.id
+        SELECT c.id AS content_id, c.area, c.sigungu, c.big_code, c.small_code, c.title, c.status, c.is_deleted, c.address, c.created_at, c.img1, c.content, a.room_count, ROW_NUMBER() OVER (ORDER BY c.id) AS row_num
+        FROM contents c
+        INNER JOIN accomodations a ON c.id = a.content_id
+        WHERE c.big_code = 13
 		<if test="keyword != null">
 			AND title like '%' || #{keyword} || '%'
 		</if>

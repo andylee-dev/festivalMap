@@ -182,7 +182,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for="content" class="form-label">개요</label>
-						  <textarea class="form-control" name="content" id="content" rows="5" placeholder="체험에 대한 설명을 4000자 이내로 입력해주세요 ">${accomodaiton.content}</textarea>
+						  <textarea class="form-control" name="content" id="content" rows="5" placeholder="숙소에 대한 설명을 4000자 이내로 입력해주세요 ">${accomodaiton.content}</textarea>
 						</div>		
 						<div class="mb-3 ">
 						  <label for="email" class="form-label">email</label>

@@ -157,7 +157,7 @@
 				<div class="my-5">
 				<div class="" id="detail-main-container">
 					<div class="container d-flex justify-content-around" id="detail-top-container">
-								<label id="detail-top-text">체험 ㅣ </label>
+								<label id="detail-top-text">숙박 ㅣ </label>
 								<label id="detail-top-text" >${accomodation.content_id} ㅣ</label>
 								<c:choose>
 									<c:when test="${accomodation.is_deleted == 1}">
