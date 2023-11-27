@@ -3,6 +3,8 @@
 <style>
 .my-page-sidebar {
 	background-color: #FF4379;
+		height: 100vh; /* 사이드바의 높이를 화면의 높이와 동일하게 설정 */
+	
 }
 
 .my-page-nav-link {
