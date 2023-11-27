@@ -13,5 +13,6 @@ public interface FavoriteService {
 	int                  deleteFavorite(Favorite favorite);
 	Favorite             getMyFavoriteOne(Favorite favorite);
 	int                  insertFavorite(Favorite favorite);
+	int 				totalFavorite1(Favorite favorite);
 	
 }

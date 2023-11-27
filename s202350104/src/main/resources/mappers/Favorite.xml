@@ -11,10 +11,13 @@
 			   	SELECT ROWNUM rn, a.*
 			   	FROM
 			   	(
-			   		SELECT f.*, c.title
-			 		FROM   favorite f, contents c
-			 		WHERE  f.user_id = 1
-			 		AND    f.content_id = c.id
+			   		SELECT f.*, c.title, u.name
+			 		FROM   favorite f, contents c, users u
+			 		WHERE  f.content_id = c.id
+			 		AND    f.user_id = u.id	
+			 		<if test="user_id != null and user_id != 0">
+			 			AND	f.user_id = #{user_id}
+			 		</if>
 			 		ORDER BY create_at desc
 		 		) a
 		 ) 
@@ -26,6 +29,14 @@
 		SELECT count(*)
 		FROM   favorite
 	</select>
+	
+	
+	<select id="shFavoriteTotal" parameterType="Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE user_id = #{user_id}
+	</select>
+	
 	
 	
 	<select id="joCondTotalFavorite" resultType="int" parameterType="Favorite">
@@ -52,9 +63,10 @@
 		SELECT *
 		FROM
 		(
-			SELECT rownum rn, f.*, u.name
-			FROM   favorite f, users u
-			WHERE  f.user_id = u.id		
+			SELECT rownum rn, f.*, u.name, c.title
+			FROM   favorite f, users u, contents c
+			WHERE  f.user_id = u.id	
+			AND    f.content_id = c.id	
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 		

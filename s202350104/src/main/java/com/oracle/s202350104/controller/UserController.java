@@ -93,11 +93,16 @@ public class UserController {
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "myLike", "Start");
-			int totalMyLikeList = fs.totalFavorite();
+			int user_id = us.getLoggedInId();
+			favorite.setUser_id(user_id);
+			
+			int totalMyLikeList = fs.totalFavorite1(favorite);
 			
 			Paging page = new Paging(totalMyLikeList, currentPage);
 			favorite.setStart(page.getStart());
-			favorite.setEnd(page.getEnd());        
+			favorite.setEnd(page.getEnd());      
+			
+			
 			
 			log.info("page.getStart -> {}", page.getStart());
 			List<Favorite> myLikeList = fs.listFavorite(favorite);;		
@@ -122,8 +127,10 @@ public class UserController {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
+			int user_id = us.getLoggedInId();
 			log.info("[{}]{}:{}", transactionId, "UserController deleteConfirm", "Start");
 			log.info("content_id ->" + content_id);
+			favorite.setUser_id(user_id);
 			int result = fs.deleteFavorite(favorite);
 						
 		} catch (Exception e) {

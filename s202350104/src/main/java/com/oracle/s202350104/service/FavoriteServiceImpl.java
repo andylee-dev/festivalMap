@@ -84,5 +84,12 @@ public class FavoriteServiceImpl implements FavoriteService {
 		}
 		return result;
 	}
+
+	@Override
+	public int totalFavorite1(Favorite favorit) {
+		int totalFavorite1 = 0;
+		totalFavorite1 = fad.totalFavorite1(favorit);
+		return totalFavorite1;
+	}
 	
-}
+	}	

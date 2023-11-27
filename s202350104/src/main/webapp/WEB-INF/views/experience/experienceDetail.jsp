@@ -135,25 +135,31 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 	}
 	
     function like() {
- 	    const favorite = {
+    	
+    	const user_id = ${userId};
+
+        if (user_id === 0) {
+            alert("로그인이 필요합니다.");
+		} else {
+ 	   		const favorite = {
 			user_id : ${userId},
 			content_id: ${experience.content_id},
-		}
-		$.ajax({
-			method:"POST",
-			url:"/toggleFavoriteAjax",
-			data:JSON.stringify(favorite),
-			dataType:'json',
-			contentType: "application/json",
-			success:
-				function(result) {
-					if(result == 1) {
-						alert("찜했습니다.");
-					} else {
-						alert("찜목록에서 제외했습니다.");
-					}		
-				}
-		})
+		};
+        	$.ajax({
+                method: "POST",
+                url: "/toggleFavoriteAjax",
+                data: JSON.stringify(favorite),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (result) {
+                    if (result == 1) {
+                        alert("찜했습니다.");
+                    } else {
+                        alert("찜목록에서 제외했습니다.");
+                    }
+                }
+            });
+        }
     }
     
 	/* 클릭한 사진 보여주기 */

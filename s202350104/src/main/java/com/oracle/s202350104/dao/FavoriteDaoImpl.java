@@ -109,6 +109,19 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		}
 		return result;	
 	}
+
+	@Override
+	public int totalFavorite1(Favorite favorite) {
+		int totalFavorite1 = 0;
+		try {
+			log.info("FavoriteDaoImpl totalFavorite1 Start");
+			totalFavorite1 = session.selectOne("shFavoriteTotal", favorite);
+			log.info("FavoriteDaoImpl totalFavorite1 -> " + totalFavorite1);
+		} catch (Exception e) {
+			log.info("FavoriteDaoImpl totalFavorite1 Exception -> " + e.getMessage());
+		}
+		return totalFavorite1;
+	}
 	
 	
 }
