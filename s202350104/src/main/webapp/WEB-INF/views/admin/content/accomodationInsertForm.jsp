@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -150,7 +148,7 @@
 				<div class="" id="detail-main-container">
 				
 					<div class="container p-5" id="form-container">
-					<form action="<%=request.getContextPath()%>/admin/content/accomodaitonInsert" method="post">
+					<form action="accomodationInsert" method="post">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">숙소 이름(필수 입력)</label>
 						  <input type="text" class="form-control" name="title" id="title" value="${accomodaiton.title}" required="required">
@@ -256,8 +254,6 @@
 								<label class="form-check-label" for="is_parking">주차가능</label>
 							</div>
 						</div>
-						</form>
-						</div>
 						
 						<hr class="hr" />			
 						
@@ -265,8 +261,8 @@
 						
 						<div class="d-flex justify-content-between">
 							<div class="col-6 mb-3" >
-	                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
-	                        </div>
+    							<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+							</div>
 	                        <div class="col-3 mb-3">
 	                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 	                        </div>
@@ -275,6 +271,11 @@
 	                        </div>
 	                    
 						</div>
+						
+						</form>
+						</div>
+						
+						
 						
 						
 							

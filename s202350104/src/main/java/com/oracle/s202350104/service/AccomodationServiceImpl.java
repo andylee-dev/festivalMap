@@ -45,8 +45,7 @@ public class AccomodationServiceImpl implements AccomodationService {
 
 	@Override
 	public int totalAccomodation() {
-		int totalAccomodation = 0;
-		totalAccomodation = ad.totalAccomodation();
+		int	totalAccomodation = ad.totalAccomodation();
 		return totalAccomodation;
 	}
 

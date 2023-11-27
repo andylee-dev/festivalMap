@@ -832,8 +832,10 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
 				int totalaccomodation = as.totalAccomodation();
+
 			
 				Paging page = new Paging(totalaccomodation, currentPage);
+
 				accomodationContent.setStart(page.getStart());
 				accomodationContent.setEnd(page.getEnd());
 			

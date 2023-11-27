@@ -121,6 +121,7 @@
 								<th scope="col">주소</th>
 								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
+								<th scope="col">승인여부</th>
 								<th scope="col">게시</th>	
 								<th scope="col">관리</th>							
 							</tr>
@@ -136,8 +137,12 @@
 										<td>${accomodation.user_id}</td>
 										<td><fmt:formatDate value="${accomodation.created_at}" type="date" pattern="YY/MM/dd"/></td>
 										<td>
-							 				<c:if test="${accomodation.status == 0 }">N</c:if>
-											<c:if test="${accomodation.status == 1 }">Y</c:if>
+							 				<c:if test="${accomodation.status == 0 }">승인대기</c:if>
+											<c:if test="${accomodation.status == 1 }">승인완료</c:if>
+										</td>
+										<td>
+											<c:if test="${accomodation.is_deleted == 0}">Y</c:if>
+											<c:if test="${accomodation.is_deleted == 1}">N</c:if>
 										</td>
 										<td><a class="detail-btn" 
 											href='accomodationDetail?contentId=${accomodation.content_id}&currentPage=${page.currentPage}'>관리</a></td>
