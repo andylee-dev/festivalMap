@@ -132,6 +132,13 @@ public class AccomodationServiceImpl implements AccomodationService {
 		int	totalAccomodation = ad.admintotalAccomodation();
 		return totalAccomodation;
 	}
+
+	@Override
+	public int accomodationRestore(int contentId) {
+		int accomodationRestore = 0;
+		accomodationRestore = ad.accomodationRestore(contentId);
+		return accomodationRestore;
+	}
 		
 
 }

@@ -22,6 +22,7 @@ public interface AccomodationService {
 	int                        conTotalAccomodation(AccomodationContent accomodation);
 	List<AccomodationContent>  indexlistSearchAccomodation(AccomodationContent accomodation);
 	int                        admintotalAccomodation();
+	int                        accomodationRestore(int contentId);
 
 
 

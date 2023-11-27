@@ -43,6 +43,7 @@ public class AccomodationController {
 	public String accomodation(AccomodationContent accomodation, String currentPage, Model model) {
 
 		UUID transactionId = UUID.randomUUID();
+		
 
 		try {
 			log.info("[{}]{}:{}", transactionId, "accomodation", "start");

@@ -172,25 +172,44 @@
 	
 		<!-- 페이징 처리 -->
 		<nav aria-label="Page navigation example">
-			<ul class="pagination">
-	
-				<c:if test="${page.startPage > page.pageBlock}">
-					<li class="page-item">
-						<a href="accomodation?currentPage=${page.startPage-page.pageBlock}"
-						   class="pageblock page-link">[이전]</a></li>
-				</c:if>
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<li class="page-item">
-						<a href="accomodation?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
-					</li>
-				</c:forEach>
-				<c:if test="${page.endPage < page.totalPage}">
-					<li class="page-item">
-						<a href="accomodation?currentPage=${page.startPage+page.pageBlock}"
-						   class="pageblock page-link">[다음]</a></li>
-				</c:if>
-	
-			</ul>
+			<ul class="pagination">	
+			<c:choose>
+				<c:when test="${path ==0}">
+					<c:if test="${page.startPage > page.pageBlock}">
+						<li class="page-item">
+							<a href="accomodation?currentPage=${page.startPage-page.pageBlock}"
+					  			 class="pageblock page-link">[이전]</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<li class="page-item">
+							<a href="accomodation?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage}">
+						<li class="page-item">
+							<a href="accomodation?currentPage=${page.startPage+page.pageBlock}"
+							   class="pageblock page-link">[다음]</a></li>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${page.startPage > page.pageBlock}">
+						<li class="page-item">
+							<a href="indexaccomodationSearch?currentPage=${page.startPage-page.pageBlock}"
+					  			 class="pageblock page-link">[이전]</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<li class="page-item">
+							<a href="indexaccomodationSearch?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&area=${area}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage}">
+						<li class="page-item">
+							<a href="indexaccomodationSearch?currentPage=${page.startPage+page.pageBlock}"
+							   class="pageblock page-link">[다음]</a></li>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</ul>
 		</nav>
 	
 	<!-- Footer -->

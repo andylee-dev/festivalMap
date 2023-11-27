@@ -829,6 +829,9 @@ import lombok.RequiredArgsConstructor;
 		@RequestMapping(value = "accomodation")
 		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
+			int path = 0;
+			
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
 				int totalaccomodation = as.admintotalAccomodation();
@@ -846,6 +849,7 @@ import lombok.RequiredArgsConstructor;
 				model.addAttribute("totalAccomodation",totalaccomodation);
 				model.addAttribute("listAccomodation", listAccomodation);
 				model.addAttribute("page",page);
+				model.addAttribute("path",path);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
 			}finally {
@@ -931,6 +935,14 @@ import lombok.RequiredArgsConstructor;
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
 		}			
 		return "admin/content/accomodationDetail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "accomodationRestoreAjax")
+	public String accomodationRestoreAjax(int contentId, Model model) {
+		int result = as.accomodationRestore(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;	
 	}
 	
 	@RequestMapping(value = "accomodationInsertForm")

@@ -209,4 +209,15 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		}
 		return totAccomodationCount;
 	}
+
+	@Override
+	public int accomodationRestore(int contentId) {
+		int accomodationRestore = 0;
+		try {
+			accomodationRestore = session.update("syAccomodaitonRestore",contentId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return accomodationRestore;
+	}
 }

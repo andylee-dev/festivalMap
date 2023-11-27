@@ -16,6 +16,27 @@
 					location.href="../content/accomodationDelete?contentId=${accomodation.content_id}";
 				}
 			}
+		function confirmRestore(contentId) {
+	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
+	            $.ajax({
+	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+	                url: 'accomodationRestoreAjax',
+	                data: { contentId: contentId },
+	                success: function(result) {
+	                    // 성공적으로 복원된 경우의 처리
+	                    alert('복원되었습니다.');
+	                    location.reload();
+	                },
+	                error: function(xhr, status, error) {
+	                    // 오류 발생 시의 처리
+	                    alert('복원에 실패했습니다.');
+	                }
+	            });
+	        } else {
+	            // 취소 버튼을 눌렀을 때의 처리
+	            // 필요한 로직을 추가하세요.
+	        }
+	    }
 			
 			function approveConfirm() {
 				var contentId = Number(${accomodation.content_id});
@@ -24,8 +45,19 @@
 				}
 			}
 			
-			function openRejectionPopup(contentId) {
-			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
+			function approveConfirm1() {
+				var contentId = Number(${accomodation.content_id}); 
+				var status = "${spot.status}";
+				if(confirm("승인대기로 변경하시겠습니까?")) {
+					location.href="../content/accomodationApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
+				}
+			}
+			
+			function openPopup() {
+				var url = "rejectionForm?contentId=${spot.content_id}&bigCode=${spot.big_code}";
+				var option = "width=1000, height=800";
+				window.name = "spotDetail";
+				window.open(url, "rejection form popup", option);
 			}
 			
 			function getSigungu(pArea){
@@ -100,6 +132,18 @@
 			padding-top: 5px;
 			word-wrap: break-word;
 		}	
+		
+		#detail-top-id3{
+			color: red;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+			word-wrap: break-word;
+		}
 		
 		#detail-main-container {
 			position: relative;
@@ -177,6 +221,9 @@
 								<label id="detail-top-text">숙박 ㅣ </label>
 								<label id="detail-top-text" >${accomodation.content_id} ㅣ</label>
 								<c:choose>
+									<c:when test="${accomodation.is_deleted == 1}">
+									<label id="detail-top-id3" >삭제(게시X)</label>
+									</c:when>
 									<c:when test="${accomodation.status == 0}">
 									<label id="detail-top-id" >승인대기</label>
 									</c:when>
@@ -321,32 +368,48 @@
 						<hr class="hr" />			
 						
 						 <div class="d-flex justify-content-between">
-						 	<c:if test="${accomodation.status == 0}">
-	                          <div class="col-6 mb-3" >
-	                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
-	                          </div>
-	                          <div class="col-2 mb-3">
-	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${accomodation.content_id})">반려(사유선택)</button>
-	                          </div>
-	                          <div class="col-1 mb-3">
-	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
-	                          </div>
-	                          </c:if>
-	                          <c:if test="${accomodation.status == 1}">
-	                             <div class="col-6 mb-3">
-		                               		 <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${currentPage}'">수정하기</button>
-		                            		 </div>
-		                            		 <div class="col-2 mb-3">
-		                              		  <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
-		                            		 </div>
-		                            		 <div class="col-2 mb-3">
-		                             		 <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
-		                          		   </div>
-		                        		  <div class="col-1 mb-3">
-		                             		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
-	                          </div>
-	                          </c:if>
-	                      </div>
+						 
+
+						 	<c:choose>
+							 <c:when test="${accomodation.is_deleted == 1}">
+							 	<div class="col-6 mb-3" >
+		                        	<button type="button" class="form-control btn btn-primary w-100" onclick="confirmRestore(${accomodation.content_id})">복원</button>
+		                        </div>
+		                        <div class="col-6 mb-3">
+		                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">취소</button>
+		                        </div>
+		                    </c:when>
+							 <c:when test="${accomodation.status == 0}">
+							 	<div class="col-6 mb-3" >
+		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
+		                          </div>
+		                            <div class="col-2 mb-3">
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${accomodation.content_id})">반려(사유선택)</button>
+		                          </div>
+		                          <div class="col-2 mb-3">
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${accomodation.content_id})">삭제</button>
+		                          </div>
+		                          <div class="col-1 mb-3">
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
+		                          </div>
+							 </c:when>
+							 <c:when test="${accomodation.status == 1}">
+							 	<div class="col-6 mb-3">
+		                                <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${currentPage}'">수정하기</button>
+		                             </div>
+		                             <div class="col-2 mb-3">
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
+		                             </div>
+		                             <div class="col-2 mb-3">
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${accomodation.content_id})">삭제</button>
+		                             </div>
+		                          <div class="col-1 mb-3">
+		                             <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
+		                          </div>		
+							 </c:when>
+						</c:choose>
+	                        </div>
+	                     
 							
 						</form>
 					</div>

@@ -172,10 +172,9 @@
 	 	 			<when test="small_code = 999">
 	    			</when>    
   				</choose>
-            </if>
-		) b
-		WHERE ROWNUM BETWEEN #{start} and #{end}
-	)
+            </if>) b
+		)
+		WHERE rn BETWEEN #{start} and #{end}
 </select>
 	
 	<select id="syAccomodationSearchTotal" parameterType="AccomodationContent" resultType="int">
@@ -280,6 +279,13 @@
         </if>
     ) sub
     WHERE sub.row_num BETWEEN #{start} AND #{end}
-</select>
+	</select>
 
+	<update id="syAccomodaitonRestore" parameterType="int">
+	
+		update contents c 
+		set is_deleted = 0 
+		where c.id = #{content_id}
+
+	</update>
 </mapper>
