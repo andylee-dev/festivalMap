@@ -2,7 +2,8 @@ package com.oracle.s202350104.service;
 
 import lombok.Getter;
 import lombok.Setter;
-
+import lombok.ToString;
+@ToString
 @Getter
 @Setter
 public class Paging {
