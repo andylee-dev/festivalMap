@@ -18,12 +18,18 @@
 			        </when>
 			    </choose>
 			</if>
+			<if test="big_code != null and big_code != 0">
+				And c.big_code = #{big_code}
+			</if>
 			<if test="area != 0 and area != null">
-			    AND area = #{area}
+				    AND area = #{area}
 			    <if test="sigungu != 0 and sigungu != null">
 			        AND sigungu = #{sigungu}
 			    </if>
 			</if>
+			<if test="small_code != null and small_code != 0 and small_code != 999">
+				AND c.small_code = #{small_code}  
+	   		</if>
 		</select>
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
@@ -67,7 +73,7 @@
 		    					AND c.small_code = #{small_code}  
 		   	 				</when>
 		 	 				<when test="big_code = 16 and small_code = 999">
-		    				</when>    
+		    				</when>
 	  					</choose>
 					</if>
 			        ORDER BY b.id ASC

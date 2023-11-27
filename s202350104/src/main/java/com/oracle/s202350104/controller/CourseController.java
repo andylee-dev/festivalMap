@@ -3,6 +3,8 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,8 @@ public class CourseController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "Course", "start");
 			
+			int path = 0;
+			
 			// 코스의 전체 list의 수를 나타냄.
 			int courseCount = cs.courseCount(course);
 			
@@ -60,6 +64,7 @@ public class CourseController {
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("CourseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
 			
 			/*
 			 * Banner Logic 구간 
@@ -72,9 +77,9 @@ public class CourseController {
 			model.addAttribute("bannerFooter", bannerFooter);
 			
 		} catch (Exception e) {
-			log.error("CourseController courses e.getMessage() ->" + e.getMessage());
+			log.error("CourseController course e.getMessage() ->" + e.getMessage());
 		} finally {
-			log.info("CourseController courses end");
+			log.info("CourseController course end");
 		}
 		
 		return "course/courseList";
@@ -105,5 +110,54 @@ public class CourseController {
 		}
 		
 		return "course/courseDetail";
+	}
+	
+	@RequestMapping(value = "course1")
+	public String ListSearch(Course course, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "course", "start");
+			
+			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");
+			
+			// 코스의 전체 list의 수를 나타냄.
+			int courseCount = cs.courseCount(course);
+			
+			// 페이징 처리
+			Paging page = new Paging(courseCount, currentPage);
+			course.setStart(page.getStart());
+			course.setEnd(page.getEnd());
+			
+			// Course의 리스트를 출력
+			log.info("CourseController courseList start...");
+			List<Course> courseList = cs.courseList(course);
+			log.info("courseList : " + courseList);
+			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("CourseListSmallCode : " + courseListSmallCode);
+			
+			model.addAttribute("courseCount", courseCount);
+			model.addAttribute("courseList", courseList);
+			model.addAttribute("CourseListSmallCode", courseListSmallCode);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area", area);
+			
+		} catch (Exception e) {
+			log.error("CourseController courses1 e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("CourseController course1 end");
+		}
+		
+		return "course/courseList";
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -56,6 +58,8 @@ public class AdminCourseController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin Course", "start");
 			
+			int path = 0;
+			
 			// 조건에 맞는 Course의 총 개수를 가져옴
 			int courseCount = cs.courseCount(course);
 			
@@ -77,6 +81,58 @@ public class AdminCourseController {
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("CourseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			
+		} catch (Exception e) {
+			log.error("AdminCourseController courseList e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("AdminCourseController courseList end");
+		}
+
+		return "admin/course/list";
+	}
+	
+	@RequestMapping(value = "/list1")
+	public String courseList(Course course, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "CourseList1", "start");
+			
+			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
+			
+			// 조건에 맞는 Course의 총 개수를 가져옴
+			int courseCount = cs.courseCount(course);
+			
+			// 페이징 처리
+			PagingList page = new PagingList(courseCount, currentPage);
+			course.setStart(page.getStart());
+			course.setEnd(page.getEnd());
+			
+			// 조건에 맞는 Course의 list를 가져옴
+			List<Course> courseList = cs.courseList(course);
+			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("CourseListSmallCode : " + courseListSmallCode);
+			
+			log.info("course : " +courseList);
+
+			model.addAttribute("courseCount", courseCount);
+			model.addAttribute("courseList", courseList);
+			model.addAttribute("CourseListSmallCode", courseListSmallCode);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area" , area);
+			model.addAttribute("sigungu", sigungu);
 			
 		} catch (Exception e) {
 			log.error("AdminCourseController courseList e.getMessage() ->" + e.getMessage());

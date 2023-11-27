@@ -35,13 +35,13 @@
 				<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-image-fill "></i>
-						<label  class="admin-header-title ">코스리스트 </label>					
+						<label  class="admin-header-title ">코스 정보 관리 </label>					
 					</div>
 				</div>
 		
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-				    <form action="" method="get" class="container justify-content-center">
+				    <form action="list1" method="get" class="container justify-content-center">
 				    
 				    <!-- 검색어 -->
 			            <div class="col-12 my-4 d-flex align-items-center">
@@ -115,19 +115,49 @@
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
-							<li class="page-item">
-								<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
-							</li>
+							<c:choose>
+								<c:when test="${path == 0}">
+									<li class="page-item">
+										<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+									</li>
+								</c:when>
+								<c:when test="${path == 1}">
+									<li class="page-item">
+										<a href="list1?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+									</li>
+								</c:when>
+							</c:choose>
+							
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a href="list?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
-							</li>
+							<c:choose>
+								<c:when test="${path == 0}">
+									<li class="page-item">
+										<a href="list?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</li>
+								</c:when>
+								<c:when test="${path == 1}">
+									<li class="page-item">
+										<a href="list1?currentPage=${i}&keyword=${keyword}&area=${area}&sigungu=${sigungu}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</li>
+								</c:when>
+							</c:choose>
+							
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
-							<li class="page-item">
-								<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
-							</li>
+							<c:choose>
+								<c:when test="${path == 0}">
+									<li class="page-item">
+										<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+									</li>
+								</c:when>
+								<c:when test="${path == 1}">
+									<li class="page-item">
+										<a href="list1?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+									</li>
+								</c:when>
+							</c:choose>
+							
 						</c:if>
 					</ul>
 				</nav>
