@@ -155,15 +155,20 @@ public class ExperienceController {
 			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("reviewCount", reviewCount);			
 			//model.addAttribute("page", page);
-			model.addAttribute("bigCode", bigCode);
-			model.addAttribute("smallCode", smallCode);
-			model.addAttribute("userId", userId);
 			
 		} catch (Exception e) {
 			log.error("ExperienceController reviewBoard error : {}", e.getMessage());
 		} finally {
 			log.info("ExperienceController reviewBoard end..");
 		}
+		
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
+		log.info("SpotController reviewBoardList bigCode : {} ", bigCode);
+		log.info("SpotController reviewBoardList smallCode : {} ", smallCode);
+		log.info("SpotController reviewBoardList userId : {} ", userId);
 		
 		return "experience/experienceDetail";
 	}

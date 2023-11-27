@@ -184,6 +184,7 @@ public class SpotController {
 		model.addAttribute("bigCode", bigCode);
 		model.addAttribute("smallCode", smallCode);
 		model.addAttribute("userId", userId);
+		
 		log.info("SpotController reviewBoardList bigCode : {} ", bigCode);
 		log.info("SpotController reviewBoardList smallCode : {} ", smallCode);
 		log.info("SpotController reviewBoardList userId : {} ", userId);

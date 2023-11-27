@@ -21,6 +21,7 @@ import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class AccomodationController {
 	private final AreaService ars;
 	private final BoardService boardService;
 	private final BannerService bannerService;
+	private final UserService us;	
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
@@ -112,7 +114,7 @@ public class AccomodationController {
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
-		int userId = 1;
+		int userId = us.getLoggedInId();
 		int countBoard = 0;
 
 		// review별 count용
@@ -154,15 +156,20 @@ public class AccomodationController {
 			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("reviewCount", reviewCount);
 			//model.addAttribute("page", page);
-			model.addAttribute("bigCode", bigCode);
-			model.addAttribute("smallCode", smallCode);
-			model.addAttribute("userId", userId);
 
 		} catch (Exception e) {
 			log.error("AccomodationController reviewBoard error : {}", e.getMessage());
 		} finally {
 			log.info("AccomodationController reviewBoard end..");
 		}
+		
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
+		log.info("SpotController reviewBoardList bigCode : {} ", bigCode);
+		log.info("SpotController reviewBoardList smallCode : {} ", smallCode);
+		log.info("SpotController reviewBoardList userId : {} ", userId);
 
 		return "accomodation/accomodationDetail";
 

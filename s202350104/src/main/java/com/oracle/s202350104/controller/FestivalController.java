@@ -184,15 +184,20 @@ public class FestivalController {
 			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("reviewCount", reviewCount);
 			//model.addAttribute("page", page);
-			model.addAttribute("bigCode", bigCode);
-			model.addAttribute("smallCode", smallCode);
-			model.addAttribute("userId", userId);
-			
+
 		} catch (Exception e) {
 			log.error("FestivalController reviewBoard error : {}", e.getMessage());
 		} finally {
 			log.info("FestivalController reviewBoard end..");
 		}
+		
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
+		log.info("SpotController reviewBoardList bigCode : {} ", bigCode);
+		log.info("SpotController reviewBoardList smallCode : {} ", smallCode);
+		log.info("SpotController reviewBoardList userId : {} ", userId);
 		
 		return "festival/festivalDetail";
 	}
