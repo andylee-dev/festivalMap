@@ -171,6 +171,9 @@ public class AccomodationController {
 	public String indexaccomodationSearch(AccomodationContent accomodation, String currentPage, Model model, HttpServletRequest request) {
 		UUID transactionId = UUID.randomUUID();
 		
+		accomodation.setStatus("1");
+		accomodation.setIs_deleted("0");
+		
 		try {
 			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "Start");
 			

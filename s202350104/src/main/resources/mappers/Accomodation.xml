@@ -236,9 +236,6 @@
 	
 	<select id="indexlistSearchAccomodation" resultType="AccomodationContent" parameterType="AccomodationContent">
     SELECT *
-    		FROM
-		(
-		SELECT ROWNUM rn, sub.*, (SELECT content FROM areas z WHERE sub.area = z.area AND z.sigungu = 999) AS area_content
     FROM (
         SELECT c.id AS content_id, c.area, c.sigungu, c.big_code, c.small_code, c.title, c.status, c.is_deleted, c.address, c.created_at, c.img1, c.content, a.room_count, ROW_NUMBER() OVER (ORDER BY c.id) AS row_num
         FROM contents c
