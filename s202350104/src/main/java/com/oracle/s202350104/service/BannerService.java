@@ -21,4 +21,8 @@ public interface BannerService {
 
 	Banner bannerRead(int id);
 
+	int bannerUpdate(Banner banner);
+
+
+
 }

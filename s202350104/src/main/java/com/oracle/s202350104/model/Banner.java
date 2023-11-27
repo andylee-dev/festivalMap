@@ -22,5 +22,5 @@ public class Banner {
 	private int start;
 	private int end;
 	private String pageNum;
-	
+	private String type;
 }

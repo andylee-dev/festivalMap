@@ -217,7 +217,7 @@
 			<div class="admin-header-container">
 				<div class="container m-4">
 					<i class="title-bi bi bi-pencil-square "></i>
-				<label  class="admin-header-title ">축제 상세 정보 </label>	
+				<label  class="admin-header-title ">체험 상세 정보 </label>	
 				</div>
 			</div>
 				

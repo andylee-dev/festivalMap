@@ -21,4 +21,6 @@ public interface BannerDao {
 
 	Banner bannerRead(int id);
 
+	int bannerUpdate(Banner banner);
+
 }

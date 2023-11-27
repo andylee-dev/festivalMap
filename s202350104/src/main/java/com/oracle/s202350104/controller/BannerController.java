@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -121,6 +122,50 @@ public class BannerController {
 		return resultUrl;		
 	}
 
+	// Banner 상세페이지 Logic
+	@RequestMapping(value = "/bannerDetail")
+	public String bannerDetail(int id, Model model) {
+
+		log.info("BannerController bannerUpdateForm bannerId : {} ", id);
+		//log.info("BannerController bannerUpdateForm userId : {} ", userId);
+
+		Banner banners = bannerService.bannerRead(id);
+
+		model.addAttribute("banner", banners);
+		//model.addAttribute("userId", userId);
+
+		return "banner/bannerDetail";
+	}		
+	
+	
+	// Banner 수정 form Logic
+	@RequestMapping(value = "/bannerUpdateForm")
+	public String bannerUpdateForm(int id, Model model) {
+
+		log.info("BannerController bannerUpdateForm bannerId : {} ", id);
+
+		Banner banners = bannerService.bannerRead(id);
+
+		model.addAttribute("banner", banners);
+
+		return "banner/bannerUpdateForm";
+	}	
+	
+	// Banner 수정 Logic
+	@PostMapping(value = "/bannerUpdate")
+	public String bannerUpdate(Banner banner, Model model) {
+		
+		log.info("BannerController bannerUpdate getTitle : {}", banner.getTitle());
+		log.info("BannerController bannerUpdate getTitle : {}", banner.getTitle());
+		
+		int updateBanner = bannerService.bannerUpdate(banner);
+		
+		model.addAttribute("banner", updateBanner);
+		
+		return "forward:/bannerDetail";
+	}
+	
+	
 	// Banner 삭제 Logic
 	@RequestMapping(value = "/bannerDelete")
 	public String bannerDelete(int id, Model model) {

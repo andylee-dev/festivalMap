@@ -118,7 +118,7 @@ public class BoardServiceImpl implements BoardService {
 	// 통합게시판 수정
 	@Override
 	public int boardUpdate(Board board) {
-
+		log.info("boardService boardUpdate getTitle : {}", board.getTitle());
 		int updateBoard = boardDao.boardUpdate(board);
 
 		return updateBoard;

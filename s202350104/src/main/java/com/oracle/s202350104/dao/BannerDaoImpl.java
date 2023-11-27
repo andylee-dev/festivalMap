@@ -44,7 +44,7 @@ public class BannerDaoImpl implements BannerDao {
 
 		try {
 			bannerFooter = session.selectList("footerBanner");
-			
+
 			log.info("BannerDao bannerFooter URL : {}", bannerFooter.get(0).getUrl());
 		} catch (Exception e) {
 			log.error("BannerDao getFooterBanner Exception : {}", e.getMessage());
@@ -64,7 +64,7 @@ public class BannerDaoImpl implements BannerDao {
 
 		try {
 			bannerHeader = session.selectList("headerBanner");
-			
+
 			log.info("BannerDao bannerFooter URL : {}", bannerHeader.get(0).getUrl());
 		} catch (Exception e) {
 			log.error("BannerDao getHeaderBanner Exception : {}", e.getMessage());
@@ -84,7 +84,7 @@ public class BannerDaoImpl implements BannerDao {
 
 		try {
 			bannerAllList = session.selectList("bannerAllList", board);
-			
+
 			log.info("BannerDao bannerAllList size : {}", bannerAllList.size());
 		} catch (Exception e) {
 			log.error("BannerDao getBannerAllList Exception : {}", e.getMessage());
@@ -99,19 +99,19 @@ public class BannerDaoImpl implements BannerDao {
 	@Override
 	public int bannerInsert(Banner banner) {
 		log.info("BannerDao bannerInsert Start!!");
-		
+
 		log.info("BannerDao bannerInsert bigCode : {}", banner.getBig_code());
-		log.info("BannerDao bannerInsert smallCode : {}", banner.getSmall_code());	
+		log.info("BannerDao bannerInsert smallCode : {}", banner.getSmall_code());
 		log.info("BannerDao bannerInsert getImage : {}", banner.getImage());
 
 		int insertBanner = 0;
 		String insertHandling = banner.getImage();
 
 		log.info("BannerDao bannerInsert insertHandling : {}", insertHandling);
-		
+
 		try {
-			
-			if (insertHandling != null) {				
+
+			if (insertHandling != null) {
 				log.info("BannerDao bannerInsert imageInsert Start!!");
 				insertBanner = session.insert("bannerImageInsert", banner);
 
@@ -137,7 +137,7 @@ public class BannerDaoImpl implements BannerDao {
 
 		try {
 			deleteBanner = session.delete("bannerDelete", id);
-			
+
 		} catch (Exception e) {
 			log.error("BannerDao bannerDelete Exception : {}", e.getMessage());
 		} finally {
@@ -145,24 +145,30 @@ public class BannerDaoImpl implements BannerDao {
 		}
 		return deleteBanner;
 	}
-	
+
 	@Override
 	public Banner bannerRead(int id) {
-		
+
 		Banner banner = null;
-		
+
 		try {
 			log.info("BannerDao bannerRead Start!!");
-			
-			banner = session.selectOne("bannerImageRead",id);
+
+			banner = session.selectOne("bannerRead", id);
 			log.info("BannerDao bannerRead getTitle : {}", banner.getTitle());
-		
+
 		} catch (Exception e) {
 			log.error("BannerDao bannerRead Exception : {}", e.getMessage());
 		} finally {
-			log.info("BannerDao bannerRead End..");			
+			log.info("BannerDao bannerRead End..");
 		}
-		
+
 		return banner;
+	}
+	
+	@Override
+	public int bannerUpdate(Banner banner) {
+		int updateBanner = session.update("bannerUpdate",banner);
+		return updateBanner;
 	}
 }

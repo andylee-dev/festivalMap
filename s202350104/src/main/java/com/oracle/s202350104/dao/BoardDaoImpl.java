@@ -221,10 +221,10 @@ public class BoardDaoImpl implements BoardDao {
 		
 		try {
 			if(board.getFile_name() == null) {
-				log.info("BoardDao noboardUpdate normal Start!!");				
+				log.info("BoardDao boardUpdate normal Start!!");				
 				updateBoard = session.update("boardUpdate2", board);
 			} else {
-				log.info("BoardDao noboardUpdate image Start!!");				
+				log.info("BoardDao boardUpdate image Start!!");				
 				updateBoard = session.update("boardUpdate", board);
 			}	
 

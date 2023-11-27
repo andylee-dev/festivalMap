@@ -35,7 +35,8 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, a.content, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        select a.id, a.title, a.content, b.name, a.created_at, a.updated_at, 
+		        	   a.read_count, a.big_code, a.small_code
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 1
@@ -50,7 +51,8 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, a.content, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        select a.id, a.title, a.content, b.name, a.created_at, a.updated_at, 
+		       		   a.read_count, a.big_code, a.small_code
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 2
@@ -65,8 +67,9 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, b.name, a.created_at, a.read_count, 
+		        select a.id, a.title, b.name, a.created_at, a.updated_at, a.read_count, 
 		        	   a.big_code, a.small_code, a.user_id, a.comment_indent
+		       
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 3
@@ -114,7 +117,7 @@
 				select rownum rn, e.*
 				from (
 		               select a.id, c.title, a.content_id, a.content, b.name, a.score,
-		               		  a.created_at, a.big_code, a.small_code
+		               		  a.created_at, a.updated_at, a.big_code, a.small_code
 		               from 
 		                    board a
 		               join 
@@ -151,7 +154,7 @@
 		select substr(a.file_name, 38) file_name_custom, a.id, a.title,  
 			   a.content, b.name, a.created_at, a.read_count, a.file_name, 
 			   a.file_path, a.big_code, a.small_code, a.comment_group_id,
-			   a.comment_step, a.comment_indent
+			   a.comment_step, a.comment_indent, a.status
 		from board a, users b
 		where a.user_id = b.id
 		and a.id = #{boardId}
@@ -184,11 +187,11 @@
 		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
 			select board_seq_generator.nextval from dual
 		</selectKey>
-		insert into board (id, user_id, big_code, small_code, title, content, 
+		insert into board (id, user_id, big_code, small_code, title, content, status, 
 						   read_count, file_name, file_size, file_path, comment_group_id, 
 						   comment_step, comment_indent, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
-			   #{title}, #{content}, 0, #{file_name}, #{file_size}, #{file_path}, 
+			   #{title}, #{content}, 1, 0, #{file_name}, #{file_size}, #{file_path}, 
 			   #{id}, 0, 0, sysdate, 0)		
 	</insert>
 	
@@ -197,9 +200,9 @@
 			select board_seq_generator.nextval from dual
 		</selectKey>
 		insert into board (id, content_id, user_id, big_code, small_code, 
-						   title, content, score, created_at, is_deleted) 
+						   title, content, status, score, created_at, is_deleted) 
 		values(#{id}, #{content_id}, #{user_id}, #{big_code},
-			   #{small_code}, #{title}, #{content}, #{score}, sysdate, 0)		
+			   #{small_code}, #{title}, #{content}, 1, #{score}, sysdate, 0)		
 	</insert>
 	
 	<select id="boardImageRead" parameterType="int" resultType="Board">
@@ -213,10 +216,10 @@
 			select board_seq_generator.nextval from dual
 		</selectKey>
 		insert into board (id, user_id, big_code, small_code, 
-						   title, content, read_count, comment_group_id, 
+						   title, content, status, read_count, comment_group_id, 
 						   comment_step, comment_indent, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
-			   #{title}, #{content}, 0, #{comment_group_id}, #{comment_step}, #{comment_indent},
+			   #{title}, #{content}, 1, 0, #{comment_group_id}, #{comment_step}, #{comment_indent},
 			   sysdate, 0)		
 	</insert>
 	

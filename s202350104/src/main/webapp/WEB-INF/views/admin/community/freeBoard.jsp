@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>free Board</title>
+<title>Community Board</title>
 <link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -77,8 +77,7 @@
 										<th scope="col">작성자</th>
 										<th scope="col">등록일</th>
 										<th scope="col">수정일</th>
-										<th scope="col">수정</th>
-										<th scope="col">삭제</th>
+										<th scope="col">관리</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -96,8 +95,9 @@
 											<td>${boards.name }</td>
 											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td><a class="detail-btn" href="../../boardUpdateForm?id=${boards.id}&userId=${userId}">수정</a></td>
-											<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td>
+											<td><a class="detail-btn" href="communityDetail?id=${boards.id}&userId=${userId}">관리</a></td>
+<%-- 											<td><a class="detail-btn" href="../../boardUpdateForm?id=${boards.id}&userId=${userId}">관리</a></td> --%>
+<%-- 											<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td> --%>
 										</tr>
 										<c:set var="num" value="${num - 1 }"/>
 									</c:forEach>

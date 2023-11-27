@@ -150,5 +150,11 @@ public class BannerServiceImpl implements BannerService {
 		
 		return banner;
 	}
+	
+	@Override
+	public int bannerUpdate(Banner banner) {
+		int updateBanner = bannerdao.bannerUpdate(banner);
+		return updateBanner;
+	}
 
 }
