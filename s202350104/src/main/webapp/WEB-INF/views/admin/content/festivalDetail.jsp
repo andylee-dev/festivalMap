@@ -134,12 +134,8 @@
 				}
 			}
 			
-			// 반려 사유 입력 팝업창 띄우기
-			function openPopup() {
-				var url = "rejectionForm?contentId=${festival.content_id}&bigCode=${festival.big_code}";
-				var option = "width=1000, height=800";
-				window.name = "festivalDetail";
-				window.open(url, "rejection form popup", option);
+			function submitRejectForm() {
+				
 			}
 		</script>
 	</head>
@@ -346,7 +342,7 @@
 											<button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 										</div>
 										<div class="col-2 mb-3">
-											<button type="button" class="btn btn-outline-secondary w-100" onclick="openPopup()">반려(사유선택)</button>
+											<button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">반려(사유선택)</button>
 										</div>
 										<div class="col-2 mb-3">
 											<button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
@@ -378,6 +374,28 @@
 				</div>		
 			</main>
 		</div>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="modal-title">반려 전환</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label class="col-form-label">반려사유</label>
+							<textarea class="form-control" id="message-text"></textarea>
+						</div>
+					</div>
+					<div class="form-row d-flex justify-content-around modal-footer">
+						<button type="button" onclick="submitRejectForm()" class="btn btn-primary col-4">반려</button>
+						<button type="button" class="btn btn-outline-secondary col-4" data-bs-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
