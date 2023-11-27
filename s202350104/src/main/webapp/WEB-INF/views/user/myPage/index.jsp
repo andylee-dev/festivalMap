@@ -20,7 +20,7 @@ h2 {
 	color: #FF4379;
 	font-size: 24px;
 	font-family: Noto Sans;
-	font-weight: 600;
+	font-weight: 800;
 	word-wrap: break-word
 }
 
@@ -65,13 +65,44 @@ h4 {
 	word-wrap: break-word
 }
 
-.birthday-text{
+.birthday-text {
 	font-size: 16px;
 	font-family: Noto Sans;
 	font-weight: 600;
-	margin-right: 20px;	
-	margin-left:  10px;
+	margin-right: 20px;
+	margin-left: 10px;
 	text-align: center;
+}
+
+#history-table td{
+    white-space: nowrap; /* 줄바꿈을 방지 */
+}
+
+table td {
+    text-align: center; 
+    vertical-align: middle;
+}
+table {
+  border-collapse: collapse;
+}
+table td {
+  border: 1px solid #D9D9D9; 
+}
+table th {
+  border: 1px solid #D9D9D9; 
+}
+
+
+.table-container{
+border-radius: 10px;
+border: 1px solid #000;
+}
+#history-table {
+    width: 90%; /* 테이블의 너비를 컨테이너의 너비에 맞게 조정 */
+}
+.modal-body {
+  max-height: 600px; /* 모달 본문의 최대 높이를 설정. 필요에 따라 조정하세요 */
+  overflow-y: auto; /* 내용이 높이를 넘어갈 경우 스크롤바를 표시 */
 }
 
 </style>
@@ -360,7 +391,7 @@ h4 {
 									</div>
 								</div>
 								<div class="container  justify-content-start my-5">
-									<button class="btn btn-primary col-sm-4 mx-3"
+									<button class="btn btn-primary col-sm-4 mx-3" style="background-color: #171717; border-color: #171717"
 										onclick="editBtnHandler()">수정하기</button>
 								</div>
 							</div>
@@ -368,12 +399,13 @@ h4 {
 							<!-- 회원 정보 수정 화면 -->
 							<div id="edit" style="display: none;">
 								<form action="/admin/user/updateUser" method="POST">
-									<input type="hidden" name="id" value="${user.id }"> 
-									<input type="hidden" name="birthday" value="${user.birthday }">
+									<input type="hidden" name="id" value="${user.id }"> <input
+										type="hidden" name="birthday" value="${user.birthday }">
 									<input type="hidden" name="status" value="${user.status }">
 									<input type="hidden" name="point" value="${user.point }">
-									<input type="hidden" name="file_name"value="${user.file_name }"> 
-									<input type="hidden"name="is_deleted" value="${user.is_deleted }">
+									<input type="hidden" name="file_name"
+										value="${user.file_name }"> <input type="hidden"
+										name="is_deleted" value="${user.is_deleted }">
 									<div class="mb-2 row align-items-baseline ">
 										<label for="email"
 											class="col-sm-2 col-form-label fw-bold text-end mx-3"
@@ -429,7 +461,8 @@ h4 {
 										<div class="col-sm-6 mx-3">
 											<input type="text" class="form-control " id="nickname"
 												value="${user.nickname}" name="nickname">
-											<p id="nicknameValidationFeedback" class="helptext text-start"></p>
+											<p id="nicknameValidationFeedback"
+												class="helptext text-start"></p>
 										</div>
 										<button class="btn btn-primary col-sm-1 mx-3"
 											onclick="checkDuplicateNickname();event.preventDefault();">중복확인</button>
@@ -456,24 +489,24 @@ h4 {
 									<div class="mb-2 row align-items-center ">
 										<label class="col-sm-2 col-form-label fw-bold text-end mx-3"
 											style="font-size: 20px;">생일<SUP
-												style="color: #FF4379; font-size: 18px;">*</SUP></label>
+											style="color: #FF4379; font-size: 18px;">*</SUP></label>
 										<div class="col-sm-6 mx-3 d-flex">
-											<div class="col-4"	>
-											    <select class="form-select text-center" id="year">
-											        <option value=""></option>
-											    </select>
+											<div class="col-4">
+												<select class="form-select text-center" id="year">
+													<option value=""></option>
+												</select>
 											</div>
 											<span class="birthday-text">년</span>
-											<div class="col-3"	>
-											    <select class="form-select text-center" id="month">
-											        <option value=""></option>
-											    </select>
+											<div class="col-3">
+												<select class="form-select text-center" id="month">
+													<option value=""></option>
+												</select>
 											</div>
 											<span class="birthday-text">월</span>
-											<div class="col-3 "	>
-											    <select class="form-select text-center" id="day">
-											        <option value=""></option>
-											    </select>
+											<div class="col-3 ">
+												<select class="form-select text-center" id="day">
+													<option value=""></option>
+												</select>
 											</div>
 											<span class="birthday-text">일</span>
 										</div>
@@ -518,62 +551,69 @@ h4 {
 					<div class="container  p-2 my-5">
 						<hr class="hr" />
 						<h2>포인트 내역</h2>
-						<div class="mb-2 row align-items-baseline ">
+						<div
+							class="container m-3 p-5 row align-items-center justify-content-center ">
 							<label for="point"
-								class="col-sm-2 col-form-label fw-bold text-end mx-3"
+								class="col-3 col-lg-2 col-form-label fw-bold text-end"
 								style="font-size: 20px;">잔여포인트</label>
-							<div class="col-sm-6 mx-3">
-								<input type="text" class="form-control-plaintext " id="point"
-									value="${user.point}" name="point">
-								<p class="helptext text-start"></p>
+							<div class="col-6 col-lg-5 d-flex align-items-center">
+								<input type="text" class="form-control" id="point"
+									value="${user.point}" name="point"> <label
+									class="col-form-label fw-bold mx-2" style="font-size: 20px;">P</label>
 							</div>
-							<button class="btn btn-primary col-sm-2 mx-3">포인트 사용 내역</button>
+							<div class="col-3 col-lg-2">
+								<button type="button" class="btn btn-primary w-100"
+									data-bs-toggle="modal" data-bs-target="#pointHistoryModal" style="background-color: #171717; border-color: #171717">
+									포인트 내역</button>
+
+							</div>
+							<!-- 모달 -->
+							<div class="modal fade" id="pointHistoryModal" tabindex="-1"
+								aria-labelledby="pointHistoryModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+
+											<h5 class="modal-title" id="pointHistoryModalLabel">포인트
+												사용 내역</h5>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<div class="table-container" align="center">
+												<table class="table history-table">
+													<thead>
+														<tr>
+															<th scope="col">생성일</th>
+															<th scope="col">내용</th>
+															<th scope="col">포인트</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach var="pointHistory" items="${pointHistoryList}"
+															varStatus="st">
+															<tr id="user${st.index}">
+																<td><fmt:formatDate
+																		value="${pointHistory.created_at}" type="date"
+																		pattern="YY/MM/dd" /></td>
+																<td>${pointHistory.point_title}</td>
+																<td>${pointHistory.point_point}</td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 
-						<div class="container w-50 my-5" align="center">
-							<table class="table table-striped table-sm">
-								<thead>
-									<tr>
-										<th scope="col">title</th>
-										<th scope="col">content</th>
-										<th scope="col">created_at</th>
-										<th scope="col">point</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:set var="num" value="${page.start}" />
-									<c:forEach var="pointHistory" items="${pointHistoryList}"
-										varStatus="st">
-										<tr id="user${st.index}">
-											<td>${pointHistory.title}</td>
-											<td>${pointHistory.content}</td>
-											<td><fmt:formatDate value="${pointHistory.created_at}"
-													type="date" pattern="YY/MM/dd" /></td>
-											<td>${pointHistory.point}</td>
-										</tr>
-										<c:set var="num" value="${num + 1}" />
-									</c:forEach>
-								</tbody>
-							</table>
-							<ul class="pagination justify-content-center">
-								<c:if test="${page.startPage > page.pageBlock}">
-									<li class="page-item"><a class="page-link"
-										href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage-page.pageBlock}"
-										class="pageblock">[이전]</a></li>
-								</c:if>
-								<c:forEach var="i" begin="${page.startPage}"
-									end="${page.endPage}">
-									<li class="page-item"><a class="page-link"
-										href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${i}"
-										class="pageblock">${i}</a></li>
-								</c:forEach>
-								<c:if test="${page.endPage < page.totalPage}">
-									<li class="page-item"><a class="page-link"
-										href="userList?small_code=2&keyword=${searchOption.keyword}&is_deleted=${searchOption.is_deleted}&startDate=${searchOption.startDate}&endDate=${searchOption.endDate}&currentPage=${page.startPage+page.pageBlock}"
-										class="pageblock">[다음]</a></li>
-								</c:if>
-							</ul>
-						</div>
+
 					</div>
 				</div>
 			</div>

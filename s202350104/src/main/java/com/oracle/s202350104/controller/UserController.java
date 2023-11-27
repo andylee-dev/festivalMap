@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.FestivalsContent;
+import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.model.Qna;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
@@ -39,6 +40,7 @@ import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
+import com.oracle.s202350104.service.PointHistoryService;
 import com.oracle.s202350104.service.QnaListService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
@@ -61,6 +63,7 @@ public class UserController {
 	private final TagsService ts;
 	private final FavoriteService fs;
 	private final BoardService boardService;
+	private final PointHistoryService pointHistoryService;
 	
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -77,6 +80,10 @@ public class UserController {
 			Optional<Users> user = us.getUserById(userId);
 			if (user.isPresent()) {
 			    model.addAttribute("user", user.get());
+			    List<PointHistory> pointHistoryList = pointHistoryService.getPointHistoryByUserId(userId);
+			    log.info("pointHistoryList:{}",pointHistoryList);
+			    model.addAttribute("pointHistoryList", pointHistoryList);
+			    
 		    }
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "myPage", e.getMessage());

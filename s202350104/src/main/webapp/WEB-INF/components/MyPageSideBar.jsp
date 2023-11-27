@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style>
-.my-page-sidebar {
-	background-color: #FF4379;
-		height: 100vh; /* 사이드바의 높이를 화면의 높이와 동일하게 설정 */
-	
+body {
+  position: relative; /* 부모 요소에 position: relative; 설정 */
 }
 
+.my-page-sidebar {
+	background-color: #FF4379;
+	position: absolute; /* 사이드바에 position: absolute; 설정 */
+	height: 100%; /* 사이드바의 높이를 부모 요소의 높이와 동일하게 설정 */
+	overflow-y: auto; /* 사이드바의 내용이 화면을 넘어갈 경우 스크롤바를 표시 */
+}
 .my-page-nav-link {
 	color: white;
 	font-size: 16px;
