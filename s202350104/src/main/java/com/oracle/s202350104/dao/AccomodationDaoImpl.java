@@ -191,7 +191,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 	public List<AccomodationContent> indexlistSearchAccomodation(AccomodationContent accomodation) {
 		List<AccomodationContent> indexlistSearchAccomodation = null;
 		try {
-			indexlistSearchAccomodation = session.selectList("indexlistSearchAccomodation", accomodation);
+			indexlistSearchAccomodation = session.selectList("IndexlistSearchAccomodation", accomodation);
 		} catch (Exception e) {
 			 log.info("AccomodationDaoImpl indexlistSearchAccomodation() Exception ->" + e.getMessage());
 		}

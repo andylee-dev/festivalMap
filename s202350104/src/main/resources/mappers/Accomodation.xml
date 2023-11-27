@@ -227,14 +227,31 @@
 	
 	<select id="ConTotalAccomodation" resultType="int" parameterType="AccomodationContent">
 		SELECT count(*)
-		FROM   accomodations a, (SELECT id
-							   FROM   contents
-							   WHERE  area = #{area} AND sigungu = #{sigungu}) c
-							   
-		WHERE   a.content_id = c.id
-	</select>
+		FROM   accomodations a, contents c
+		WHERE  a.content_id = c.id
+				<if test="big_code != null">
+				AND big_code = #{big_code}
+				</if>
+				<if test="keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+					And status = 1
+					And is_deleted = 0
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+             	<if test="area != 0">
+					and area = #{area}
+				</if>
+		</select>
 	
-	<select id="indexlistSearchAccomodation" resultType="AccomodationContent" parameterType="AccomodationContent">
+	<select id="IndexlistSearchAccomodation" resultType="AccomodationContent" parameterType="AccomodationContent">
     SELECT *
     FROM (
         SELECT c.id AS content_id, c.area, c.sigungu, c.big_code, c.small_code, c.title, c.status, c.is_deleted, c.address, c.created_at, c.img1, c.content, a.room_count, ROW_NUMBER() OVER (ORDER BY c.id) AS row_num

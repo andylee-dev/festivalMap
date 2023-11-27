@@ -866,7 +866,6 @@ import lombok.RequiredArgsConstructor;
 			log.info("[{}]{}:{}",transactionId, "admin accomodationSearch", "start");
 			int totalSearchaccomodation = as.totalSearchAccomodation(accomodationContent);
 			
-			System.out.println("totalSearchaccomodation"+totalSearchaccomodation);
 						
 			int path = 1;
 			String small_code = request.getParameter("small_code");
@@ -879,9 +878,6 @@ import lombok.RequiredArgsConstructor;
 			
 			Paging page = new Paging(totalSearchaccomodation, currentPage);
 			
-			System.out.println("Paging"+page);
-			System.out.println("totalSearchaccomodation"+totalSearchaccomodation);
-			
 			accomodationContent.setStart(page.getStart());
 			accomodationContent.setEnd(page.getEnd());
 						
@@ -889,7 +885,6 @@ import lombok.RequiredArgsConstructor;
 			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
 			List<AccomodationContent> listSearchAccomodation = as.listSearchAccomodation(accomodationContent);
 			
-			System.out.println("listSearchAccomodation"+listSearchAccomodation.size());
 			
 			model.addAttribute("totalAccomodation", totalSearchaccomodation);
 			model.addAttribute("listAccomodation", listSearchAccomodation);

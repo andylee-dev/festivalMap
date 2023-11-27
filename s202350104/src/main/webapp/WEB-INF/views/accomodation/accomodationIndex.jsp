@@ -98,7 +98,7 @@
 	<div class="container homeList-top-custom"></div>
 <div>
 	<!-- keyword, title 영역 -->	
-	<form id="indexaccomodationSearch" action="indexaccomodationSearch">
+	<form id="IndexaccomodationSearch" action="IndexaccomodationSearch" method="get">
 	<input type="hidden" name="big_code" value="13">
 		<div class="container homeCommon-keyword-title-custom">
 	
@@ -194,17 +194,17 @@
 				<c:otherwise>
 					<c:if test="${page.startPage > page.pageBlock}">
 						<li class="page-item">
-							<a href="indexaccomodationSearch?currentPage=${page.startPage-page.pageBlock}"
+							<a href="IndexaccomodationSearch?currentPage=${page.startPage-page.pageBlock}"
 					  			 class="pageblock page-link">[이전]</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 						<li class="page-item">
-							<a href="indexaccomodationSearch?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&area=${area}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+							<a href="IndexaccomodationSearch?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&area=${area}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 						</li>
 					</c:forEach>
 					<c:if test="${page.endPage < page.totalPage}">
 						<li class="page-item">
-							<a href="indexaccomodationSearch?currentPage=${page.startPage+page.pageBlock}"
+							<a href="IndexaccomodationSearch?currentPage=${page.startPage+page.pageBlock}"
 							   class="pageblock page-link">[다음]</a></li>
 					</c:if>
 				</c:otherwise>

@@ -168,19 +168,21 @@ public class AccomodationController {
 
 	}
 	//accomodationIndex 페이지 서치
-	@RequestMapping(value = "indexaccomodationSearch")
+	@RequestMapping(value = "IndexaccomodationSearch")
 	public String indexaccomodationSearch(AccomodationContent accomodation, String currentPage, Model model, HttpServletRequest request) {
 		UUID transactionId = UUID.randomUUID();
 		
-		accomodation.setStatus("1");
-		accomodation.setIs_deleted("0");
+		
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "Start");
+						
+			int path 			= 1;
+			accomodation.setStatus("1");
+			accomodation.setIs_deleted("0");
 			
 			int totalAccomodation = as.conTotalAccomodation(accomodation);
-			
-			int path 			= 1;
+			log.info("totalAccomodation {}",totalAccomodation);
 			String small_code 	= request.getParameter("small_code");
 			String big_code 	= request.getParameter("big_code");
 			String area 		= request.getParameter("area");
@@ -194,7 +196,6 @@ public class AccomodationController {
 			List<Areas> listAreas = ars.listAreas();
 			List<AccomodationContent> listSearchAccomodation = as.indexlistSearchAccomodation(accomodation);
 			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodation);
-			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
 			
 			model.addAttribute("totalAccomodation", totalAccomodation);
 			model.addAttribute("listAccomodation", listSearchAccomodation);
@@ -203,11 +204,12 @@ public class AccomodationController {
 			model.addAttribute("small_code", small_code);
 			model.addAttribute("big_code", big_code);
 			model.addAttribute("path", path);
+			log.info("path {}",path);
 			model.addAttribute("area", area);
 			model.addAttribute("sigungu", sigungu);
 			model.addAttribute("page", page);
+			log.info("page {}",page);
 			model.addAttribute("keyword", keyword);			
-			// model.addAttribute("listRestaurant", listRestaurant);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", e.getMessage());
