@@ -13,4 +13,34 @@
 		GROUP BY c.id, c.big_code, c.readcount
 		ORDER BY c.readcount DESC, review_count DESC, avg_score DESC
 	</select>
+	
+	<select id="getUserReviews" parameterType="int" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE user_id = #{user_id}
+		AND small_code = 6
+	
+	</select>
+
+	<select id="getAllReviews" resultType="Board" parameterType="Contents">
+		SELECT *
+		FROM board b, contents c
+		WHERE b.small_code = 6
+		AND b.content_id = c.id
+		AND c.big_code = #{big_code}
+	</select>
+
+
+	<select id="getUserReviewForContent" parameterType="Contents" resultType="Board" >
+		SELECT *
+		FROM
+			(SELECT ROWNUM rn, b.*
+			FROM board b
+			WHERE b.user_id = #{user_id} 
+			AND b.content_id = #{id}
+			AND small_code = 6
+		    ORDER BY created_at DESC
+			)
+		WHERE rn between 0 and 1
+	</select>
 </mapper>

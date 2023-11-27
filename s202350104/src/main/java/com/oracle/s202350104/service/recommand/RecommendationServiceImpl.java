@@ -65,5 +65,6 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Override
     public void setStrategies(List<RecommendationStrategy> strategies) {
         this.strategies = strategies;
+        log.info("setStrategies:{}",strategies.toString());
     }
 }

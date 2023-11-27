@@ -40,12 +40,12 @@ public class RecommendationController {
     	Optional<Users> user = null;
         try {
         	log.info("[{}]{}:{}", transactionId, "getRecommendations()", "start");
-//            int userId = userService.getLoggedInId();
-            int userId = 1;
+            int userId = userService.getLoggedInId();
+//            int userId = 1;
             Contents content = new Contents();
             content.setBig_code(11);
-            log.info("USER_ID:{}",userId);
             if (userId == 0) {
+            	log.info("비회원 로직");
                 // 비회원일 경우의 추천 로직
                 recService.setStrategies(Arrays.asList(
 //                    new SimilarContentRecommendation(),
@@ -56,12 +56,14 @@ public class RecommendationController {
                 if (!user.isPresent()) {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
                 }
+            	log.info("회원 로직");
                 recService.setStrategies(Arrays.asList(
 //                    new SimilarContentRecommendation(),
 //                    new FavoriteBasedRecommendation(),
 //                    new ReviewBasedRecommendation(),
 //                    new SimilarUserRecommendation(),
-                		strategies.get("popularContentRecommendation")
+                		strategies.get("ReviewBasedRecommendation")
+//                		strategies.get("popularContentRecommendation")
                 ));
             }
             

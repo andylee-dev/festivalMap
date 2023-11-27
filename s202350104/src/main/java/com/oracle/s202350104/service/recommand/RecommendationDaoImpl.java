@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Contents;
 
 import lombok.RequiredArgsConstructor;
@@ -29,5 +31,32 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		List<Contents> listContent = session.selectList("getPopularContentsList", content);
 		log.info("getSearchContentsList f/{}",listContent);
 		return listContent;
+	}
+
+	@Override
+	public List<Board> getUserReviews(int user_id) {
+		log.info("getUserReviews s/{}",user_id);
+		List<Board> userReviews = session.selectList("getUserReviews", user_id);
+		log.info("getUserReviews f/{}",userReviews);
+		return userReviews;
+	}
+
+	@Override
+	public List<Board> getAllReviews(Contents content) {
+		log.info("getAllReviews s/{}",content);
+		List<Board> listReviews = session.selectList("getAllReviews",content);
+		log.info("getAllReviews f/{}",listReviews);
+		return listReviews;
+	}
+
+	@Override
+	public Board getUserReviewForContent(Integer userId, int contentId) {
+		Contents content =new Contents();
+		content.setUser_id(userId.toString());
+		content.setId(contentId);
+		log.info("getUserReviewForContent s/ userId:{},contentId:{}",userId, contentId);
+		Board review = session.selectOne("getUserReviewForContent", content);
+		log.info("getUserReviewForContent f/{}",review);
+		return review;
 	}
 }
