@@ -9,8 +9,10 @@
 		<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-			function deleteConfirm() {
-				if(confirm("정말 삭제하시겠습니까?")) {
+		function deleteConfirm() {
+			var contentId = Number(${accomodation.content_id}); 
+			var is_deleted = "${accomodation.is_deleted}";
+			if(confirm("삭제하시겠습니까?")) {
 					location.href="../content/accomodationDelete?contentId=${accomodation.content_id}";
 				}
 			}
@@ -330,7 +332,7 @@
 	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${accomodation.content_id})">반려(사유선택)</button>
 	                          </div>
 	                          <div class="col-1 mb-3">
-	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">삭제</button>
+	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
 	                          </div>
 	                          </c:if>
 	                          <c:if test="${accomodation.status == 1}">

@@ -48,6 +48,8 @@ public class AccomodationController {
 			log.info("[{}]{}:{}", transactionId, "accomodation", "start");
 			
 			int path = 0;
+			accomodation.setStatus("1");
+			accomodation.setIs_deleted("0");
 
 			int totalAccomodation = as.totalAccomodation();
 			
