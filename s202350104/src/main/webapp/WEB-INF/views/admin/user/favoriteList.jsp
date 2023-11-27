@@ -57,6 +57,7 @@
 					<table class="table table-striped table-sm text-center mb-2">
 						<thead>
 							<tr>
+								<th scope="col">순번</th>
 								<th scope="col">회원ID</th>
 								<th scope="col">이름</th>
 								<th scope="col">컨텐츠이름</th>
@@ -65,14 +66,17 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:set var="num" value="${page.start}"/>
 							<c:forEach var="favorite" items="${listFavorite}">
 								<tr>
+									<td>${num}</td>
 									<td>${favorite.user_id}</td>
 									<td>${favorite.name}</td>
 									<td>${favorite.title}</td>
 									<td><fmt:formatDate value="${favorite.create_at}" type="date" pattern="YY/MM/dd"/></td>
 									<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="confirmDelete(${favorite.user_id}, ${favorite.content_id})"></td>
 								</tr>
+							<c:set var="num" value="${num + 1}"/>	
 							</c:forEach>
 						</tbody>
 					</table>

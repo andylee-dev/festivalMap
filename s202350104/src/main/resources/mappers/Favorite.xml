@@ -66,21 +66,23 @@
 			SELECT rownum rn, f.*, u.name, c.title
 			FROM   favorite f, users u, contents c
 			WHERE  f.user_id = u.id	
-			AND    f.content_id = c.id	
+			AND    f.content_id = c.id
+		<choose>
+			<when test="search == 's_id'">
+				AND f.user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				AND u.name like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				AND f.user_id like '%'
+			</otherwise>
+		</choose>	
+				
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 		
-		<choose>
-			<when test="search == 's_id'">
-				AND user_id like '%' || #{keyword} || '%'
-			</when>
-			<when test="search == 's_name'">
-				AND name like '%' || #{keyword} || '%'
-			</when>
-			<otherwise>
-				AND user_id like '%'
-			</otherwise>
-		</choose>
+		
 			
 	</select>
 	    
