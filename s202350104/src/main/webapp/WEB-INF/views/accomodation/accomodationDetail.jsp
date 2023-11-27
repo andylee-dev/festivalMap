@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Calendar" %>   
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="com.oracle.s202350104.service.map.MapService"%>
@@ -483,21 +484,23 @@ function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCod
 					</div>
 				</div>	
 							
+				<!-- 평점 높은 리뷰 생성 갯수 제한 -->
+				<c:set var="counter" value="0" />
+
+				<c:set var="currentDate" value="<%= Calendar.getInstance().getTime() %>" />					
+
 				<div class="row row-cols-3 second-box">
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">볼거리가 많아요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">편의시설이 훌륭해요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">접근성이 좋아요</div>
-				</div>
-				<div class="row row-cols-3 third-box">
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">컨텐츠가 신선해요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">남녀노소 즐길 수 있어요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">주변 인프라가 좋아요</div>
+
+					<c:forEach var="dashboardReview" items="${reviewBoard}" varStatus="loop">
+					    <c:choose>					    	
+					        <c:when test="${dashboardReview.score >= 4 && currentDate.time - dashboardReview.created_at.time < (30 * 24 * 60 * 60 * 1000) && counter < 7}">
+					            <div class="col col-sm-4 third-box">
+					                <img alt="test" src="../image/reviewIcon2.png">${dashboardReview.content}
+					            </div>
+					            <c:set var="counter" value="${counter + 1}" />
+					        </c:when>
+					    </c:choose>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

@@ -568,14 +568,14 @@
 
 .dashboardBox-custom
 .first-box {
-	margin-left: 20px;
-	margin-top: 15px;
+	margin: 15 0 20 20px;
 }
 
 .dashboardBox-custom
 .first-box
 .common-span {
 	color: #FF4379;
+	font-size: 30px;
 }
 
 .dashboardBox-custom
@@ -599,7 +599,7 @@
 
 .dashboardBox-custom
 .third-box {
-	margin-top: -30px;
+	margin-top: -20px;
 }
 
 .dashboardBox-custom

@@ -154,7 +154,7 @@ public class ExperienceController {
 
 			model.addAttribute("reviewBoard", reviewAllList);
 			model.addAttribute("reviewCount", reviewCount);			
-			model.addAttribute("page", page);
+			//model.addAttribute("page", page);
 			model.addAttribute("bigCode", bigCode);
 			model.addAttribute("smallCode", smallCode);
 			model.addAttribute("userId", userId);
