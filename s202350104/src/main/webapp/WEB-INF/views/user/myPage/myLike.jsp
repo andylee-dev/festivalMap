@@ -46,8 +46,10 @@ button {
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<main>
 		<div class="d-flex">
+			<div class="col-2">
 			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp"%>
-			<div class="container border p-5">
+			</div>
+			<div class="container p-5 col-10">
 				<div class="container my-5">
 					<h1>내 찜 관리</h1>
 					<p>내 찜 목록을 관리할 수 있습니다.</p>

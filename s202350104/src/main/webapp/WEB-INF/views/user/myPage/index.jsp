@@ -312,8 +312,10 @@ border: 1px solid #000;
 	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 	<main>
 		<div class="d-flex">
+			<div class="col-2">
 			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp"%>
-			<div class="container border p-5">
+			</div>
+			<div class="container p-5 col-10">
 				<div class="container my-5">
 					<h1>계정 관리</h1>
 					<hr class="hr" />
@@ -572,12 +574,13 @@ border: 1px solid #000;
 								aria-labelledby="pointHistoryModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
-										<div class="modal-header">
-
-											<h5 class="modal-title" id="pointHistoryModalLabel">포인트
-												사용 내역</h5>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
+										<div class="modal-header text-center d-flex align-items-center">
+										  <div class="col text-center">
+										    <h2 class="modal-title" id="pointHistoryModalLabel">포인트 사용 내역</h2>
+										  </div>
+										  <div class="col-auto">
+										    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										  </div>
 										</div>
 										<div class="modal-body">
 											<div class="table-container" align="center">

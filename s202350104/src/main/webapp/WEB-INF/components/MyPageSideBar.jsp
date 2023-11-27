@@ -7,7 +7,7 @@ body {
 
 .my-page-sidebar {
 	background-color: #FF4379;
-	position: absolute; /* 사이드바에 position: absolute; 설정 */
+	position: absolute; /* 사이드바에 position: static; 설정 */
 	height: 100%; /* 사이드바의 높이를 부모 요소의 높이와 동일하게 설정 */
 	overflow-y: auto; /* 사이드바의 내용이 화면을 넘어갈 경우 스크롤바를 표시 */
 }
