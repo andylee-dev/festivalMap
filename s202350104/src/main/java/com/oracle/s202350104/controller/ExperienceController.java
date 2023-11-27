@@ -20,6 +20,7 @@ import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class ExperienceController {
 	private final AreaService as;
 	private final BoardService boardService;
 	private final BannerService bannerService;
+	private final UserService us;
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
@@ -47,6 +49,8 @@ public class ExperienceController {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
 			
 			int path = 0;
+			experience.setStatus("1");
+			experience.setIs_deleted("0");
 			
 			int totalExperience = es.mainTotalExperience();
 			
@@ -110,7 +114,7 @@ public class ExperienceController {
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
-		int userId = 1;
+		int userId = us.getLoggedInId();
 		int countBoard = 0;
 		
 		// review별 count용

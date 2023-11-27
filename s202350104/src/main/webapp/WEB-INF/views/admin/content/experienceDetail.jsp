@@ -421,13 +421,13 @@
 		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                          </div>
 		                            <div class="col-2 mb-3">
-		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">대기(임시저장)</button>
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${experience.content_id})">반려(사유선택)</button>
 		                          </div>
 		                          <div class="col-2 mb-3">
-		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${experience.content_id})">반려(사유선택)</button>
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${experience.content_id})">삭제</button>
 		                          </div>
 		                          <div class="col-1 mb-3">
-		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">삭제</button>
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">목록</button>
 		                          </div>
 							 </c:when>
 							 <c:when test="${experience.status == 1}">

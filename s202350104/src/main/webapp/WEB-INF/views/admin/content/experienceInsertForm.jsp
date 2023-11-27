@@ -153,7 +153,7 @@
 					<form action="experienceInsert" method="post">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">체험 이름(필수 입력)</label>
-						  <input type="text" class="form-control" name="title" id="title" value="${experience.title}" required="required">
+						  <input type="text" class="form-control" name="title" id="title" required="required">
 						</div>
 						<div class="mb-3" id="detail-content-title">
 						  <label for="small_code" class="form-label">체험 종류(필수 선택)</label>
@@ -161,7 +161,7 @@
 							<select class="form-select" aria-label="small_code" name="small_code" required="required">
 								<c:forEach var="smallCode" items="${listCodes}">
 									<c:if test="${smallCode.big_code == 15 && smallCode.small_code != 999}">
-										<option value="${smallCode.small_code}" ${smallCode.small_code == experience.small_code? 'selected' : '' }>${smallCode.content}</option>
+										<option value="${smallCode.small_code}">${smallCode.content}</option>
 									</c:if>
 							 	</c:forEach>
 							</select>
@@ -170,13 +170,13 @@
 							<label for="content" class="form-label ">지역(필수 선택)</label>
 								<div class="row">
 								    <div class="col-2">
-								        <select name="area" class="form-select area-dropdown"></select>
+								        <select name="area" class="form-select area-dropdown" required="required"></select>
 								    </div>
 								    <div class="col-2">
-								       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+								       <select name="sigungu"  class="form-select sigungu-dropdown" required="required"></select>
 								    </div>
 								    <div class="col-8">
-								    <input type="text" class="form-control" name="address" id="address" value="${experience.address}" placeholder="상세주소 입력해주세요">
+								    <input type="text" class="form-control" name="address" id="address" value="${experience.address}" placeholder="상세주소 입력해주세요" required="required">
 								    </div>
 								</div>
 						</div>

@@ -173,7 +173,7 @@
 					<form action="experienceUpdate" method="post">
 						<div class="mb-3">
 						  <label for="content_id" class="form-label">컨텐츠 ID</label>
-						  <input type="hidden" class="form-control" name="id" id="content_id" value="${experience.content_id} ">
+						  <input type="text" class="form-control" name="id" id="content_id" value="${experience.content_id}" readonly>
 						  <input type="hidden" name="status" value="${experience.status }">
 						  <input type="hidden" name="is_deleted" value="${experience.is_deleted }">
 						</div>	
