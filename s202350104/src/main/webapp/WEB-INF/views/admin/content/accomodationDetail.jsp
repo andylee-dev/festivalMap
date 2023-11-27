@@ -334,7 +334,7 @@
 	                          </c:if>
 	                          <c:if test="${accomodation.status == 1}">
 	                             <div class="col-6 mb-3">
-		                               		 <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/accomodationUpdateForm?contentId=${spot.content_id}&currentPage=${currentPage}'">수정하기</button>
+		                               		 <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/accomodationUpdateForm?contentId=${accomodation.content_id}&currentPage=${currentPage}'">수정하기</button>
 		                            		 </div>
 		                            		 <div class="col-2 mb-3">
 		                              		  <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>

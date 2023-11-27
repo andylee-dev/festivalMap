@@ -60,7 +60,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		int totAccomodationCount = 0;
 		
 		try {
-			totAccomodationCount = session.selectOne("AccomodationTotal");
+			totAccomodationCount = session.selectOne("AccomodationTotalIndex");
 		} catch (Exception e) {
 			log.info("AccomodationDaoImpl totalAccomodations Exception => " + e.getMessage());
 		}
