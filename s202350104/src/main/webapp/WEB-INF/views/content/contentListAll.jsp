@@ -44,7 +44,8 @@
 		                title: columns[3].textContent,
 		                address: columns[4].textContent,
 		                /* homepage: columns[5].textContent, */
-		                phone: columns[5].textContent
+		                phone: columns[5].textContent,
+		                cd_content: checkboxes[i].dataset.cdContent 
 		            };
 
 		            contentList.push(contentData);
@@ -233,7 +234,7 @@
 							<tbody>
 								<c:forEach var="content" items="${listContents }" varStatus="status">
 									<tr>
-										<td style="white-space: normal;"><input class="parent-container child-container outer-circle inner-circle" style="padding: 0px; width: 40px;" type="checkbox" name="content" value="${content.id}"></td>
+										<td style="white-space: normal;"><input class="parent-container child-container outer-circle inner-circle" style="padding: 0px; width: 40px;" type="checkbox" name="content" value="${content.id}" data-cd-content="${content.cd_content}"></td>
 										<td style="white-space: normal;">${content.id }</td>
 										<td style="white-space: normal;"><img src="${content.img1 }" alt="${content.title }" class="card-img-top" style="height: 100px; width: 150px;"></td>
 										<td style="white-space: normal;">${content.title }</td>

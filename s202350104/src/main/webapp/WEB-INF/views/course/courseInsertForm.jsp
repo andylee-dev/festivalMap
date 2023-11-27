@@ -235,7 +235,29 @@
 <script type="text/javascript">
     let oldList = []; // 이전 목록을 저장하기 위한 배열
     let newList = []; // 새로운 목록을 저장하기 위한 배열
-
+	
+ 	// 컨텐츠 디테일 조회창을 열었을 때.
+	function ContentPopUp(cdContent, contentId) {
+		console.log("ContentPopUp 함수 호출됨");
+		
+		//창 크기 지정
+		var width = 1600;
+		var height = 800;
+		
+		//pc화면기준 가운데 정렬
+		var left = (window.screen.width / 2) - (width/2);
+		var top = (window.screen.height / 4);
+		
+		//윈도우 속성 지정
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+		
+		//연결하고싶은url
+		const url = '../../' + cdContent.toLowerCase() + '/detail?contentId=' + contentId;
+	 	
+		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+		window.open(url, "contentDetail popup", windowStatus);
+	}
+    
     function showPopUp() {
         console.log("showPopUp 함수 호출됨");
         console.log("course_id value:", "${course.course_id}");
@@ -301,7 +323,7 @@
 
         const titleEl = document.createElement("h5"); // 제목 요소 생성
         titleEl.className = "card-title card-font-title"; // 클래스 추가
-        titleEl.textContent = "컨텐츠 타입"; // 텍스트 설정
+        titleEl.textContent = content.cd_content; // 텍스트 설정
         cardEl.appendChild(titleEl); // 제목 요소를 카드 요소에 추가
 
         const imgEl = document.createElement("img"); // 이미지 요소 생성
@@ -335,9 +357,12 @@
         linkEl.className = "d-flex justify-content-end mt-auto"; // 클래스 추가
 
         const detailLink = document.createElement("a"); // 상세 정보 링크 요소 생성
-        detailLink.href = ""; // 링크 설정
+        detailLink.href = "javascript:void(0);"; // 링크 설정
         detailLink.className = "btn btn-primary card-button-style card-button-text"; // 클래스 추가
         detailLink.textContent = "상세정보보기"; // 텍스트 설정
+        detailLink.onclick = function() {
+	        ContentPopUp(content.cd_content, content.id);
+	    };
         linkEl.appendChild(detailLink); // 상세 정보 링크 요소를 링크 요소에 추가
 
         cardEl.appendChild(linkEl); // 링크 요소를 카드 요소에 추가

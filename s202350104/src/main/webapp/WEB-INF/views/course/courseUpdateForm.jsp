@@ -211,12 +211,12 @@
 	let newList = [];
 	
 	// 컨텐츠 디테일 조회창을 열었을 때.
-	function ContentPopUp() {
+	function ContentPopUp(cdContent, contentId) {
 		console.log("ContentPopUp 함수 호출됨");
 		
 		//창 크기 지정
-		var width = 800;
-		var height = 600;
+		var width = 1600;
+		var height = 800;
 		
 		//pc화면기준 가운데 정렬
 		var left = (window.screen.width / 2) - (width/2);
@@ -226,12 +226,11 @@
 		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
 		
 		//연결하고싶은url
-		const url = '../../${cd_content.toLowerCase() }/detail?contentId=${content_id}';
+		const url = '../../' + cdContent.toLowerCase() + '/detail?contentId=' + contentId;
 	 	
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
-		window.open(url, "content popup", windowStatus);
+		window.open(url, "contentDetail popup", windowStatus);
 	}
-
 	
 	// 3. 컨텐츠 등록 창을 열었을 때.
 	function showPopUp() {
@@ -308,7 +307,7 @@
 	    // 카드 콘텐츠를 위한 요소 생성
 	    const titleEl = document.createElement("h5");
 	    titleEl.className = "card-title card-font-title";
-	    titleEl.textContent = "컨텐츠 타입";
+	    titleEl.textContent = content.cd_content;
 	    cardEl.appendChild(titleEl);
 
 	    const imgEl = document.createElement("img");
@@ -340,19 +339,21 @@
 
 	    const linkEl = document.createElement("div");
 	    linkEl.className = "d-flex justify-content-end mt-auto";
-
+		
+	 	// 상세정보보기 버튼 생성 부분
 	    const detailLink = document.createElement("a");
-	    detailLink.href = "";
+	    detailLink.href = "javascript:void(0);";
 	    detailLink.className = "btn btn-primary card-button-style card-button-text";
 	    detailLink.textContent = "상세정보보기";
+	    detailLink.onclick = function() {
+	        ContentPopUp(content.cd_content, content.id);
+	    };
 	    linkEl.appendChild(detailLink);
 
 	    cardEl.appendChild(linkEl);
 
 	    return cardEl;
 	}
-	
-	
 	
 	function getCurrentContentList() {
 	
@@ -732,9 +733,10 @@
 											<div class="card-body" style="padding: 0px; padding-top: 16px;">
 												<h5 class="card-title card-font-title">${courseContentList.title }</h5>
 												<p class="card-text card-font-content">${courseContentList.address }</p>
+												<p class="card-text card-font-content">${courseContentList.phone }</p>
 											</div>
 											<div class="d-flex justify-content-end mt-auto">
-												<a id="contentId${courseContentList.content_id}" class="btn btn-primary card-button-style card-button-text" onclick="ContentPopUp()">상세정보보기</a>
+												<a id="contentId${courseContentList.content_id}" class="btn btn-primary card-button-style card-button-text" onclick="ContentPopUp('${courseContentList.cd_content}', ${courseContentList.content_id})">상세정보보기</a>
 											</div>
 										</div>
 									</c:forEach>
