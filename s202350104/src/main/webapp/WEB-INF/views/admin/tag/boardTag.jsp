@@ -61,13 +61,13 @@
 									<option value="user_id">작성자</option>
 								</select>
 							</div>
-							<div class="col-5 mx-2">
+							<div class="col-6 mx-1">
 					     		<input type="text" name="keyword" class="form-control" value="${keyword}"
 					         	 placeholder="검색어를 입력하세요.">
 				            </div>
-							<div class="col-4 mx-1 d-flex justify-content-center">					
-								<button type="submit" class="btn btn-primary  col-3 mx-1">검색</button>
-								<button type="reset" class="btn btn-outline-secondary col-3 mx-1">초기화</button>
+							<div class="col-5 mx-1 d-flex justify-content-start">					
+								<button type="submit" class="btn btn-primary  col-2 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
 							</div>
 						</div>
 					</form>
@@ -93,6 +93,7 @@
 									<th scope="col">작성자</th>
 									<th scope="col">작성일</th>
 									<th scope="col">태그명</th>
+									<th scope="col">상세</th>
 									<th scope="col"></th>
 								</tr>
 							</thead>
@@ -107,6 +108,7 @@
 										<td>${board.name}</td>
 										<td><fmt:formatDate value="${board.created_at}" type="date" pattern="YY/MM/dd"/></td>
 										<td id="tag_name${st.index}"></td>
+										<td><a class="detail-link">이동</a></td>
 										<td><a href='boardTagsUpdateForm?boardIdStr=${board.board_id}&currentPage=${page.currentPage}' class="detail-link">관리</a></td>
 									</tr>
 									<c:set var="num" value="${num + 1}"/>

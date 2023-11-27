@@ -149,15 +149,11 @@
 			<div class="tab-content" id="nav-tabContent">
 			  
 			  
-			  <div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
+			<div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
 			  	<div class="border p-3 m-3">
 					<form action="<%=request.getContextPath()%>/admin/content/festivalInsert" method="post">
 						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
 						<table class="table table-striped table-sm">
-							<%-- <tr>
-								<th>컨텐츠 ID</th>
-								<td>${festival.content_id}</td>
-							</tr> 등록할 때 컨텐츠 번호를 확인할 수 있으면 좋을 것 같다(nextval, 입력할 때는 currval) --%>
 							<tr>
 								<th>분류</th>
 								<td>
@@ -168,7 +164,8 @@
 												<option value="${code.small_code}">${code.content}</option>
 											</c:if>
 										</c:forEach>
-									</select></td> <!-- select box -->
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<th>축제명</th>
@@ -269,9 +266,8 @@
 							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 						</div>
 					</form>
-				</div>
-				
-			   </div>
+				</div>	
+			</div>
 			 
 			<!-- 명소 -->			
 			 <div class="tab-pane fade" id="nav-spot" role="tabpanel" aria-labelledby="nav-spot-tab" tabindex="0">

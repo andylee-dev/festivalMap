@@ -188,7 +188,8 @@
 												<option value="${code.small_code}">${code.content}</option>
 											</c:if>
 										</c:forEach>
-									</select></td>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<th>축제명</th>

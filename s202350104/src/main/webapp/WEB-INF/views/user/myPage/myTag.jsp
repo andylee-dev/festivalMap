@@ -55,6 +55,7 @@
 				padding: .2rem .6rem;
 			}
 		</style>
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			let initialTags = []; // 원래 DB에 저장되어 있던 태그 모두 저장

@@ -81,7 +81,7 @@
 											<c:if test="${tag.group_name == null || tag.group_name == ''}">-</c:if>
 											<c:if test="${tag.group_name != null && tag.group_name != ''}">${tag.group_name}</c:if>
 										</td>
-										<td>${tag.name}</td>
+										<td style="font-weight: bold; color: #FF4379;">${tag.name}</td>
 										<td>${tag.userCnt}</td>
 										<td>${tag.boardCnt}</td>
 										<td>${tag.contentCnt}</td>
