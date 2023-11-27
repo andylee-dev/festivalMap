@@ -24,6 +24,7 @@ import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.TagsService;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class FestivalController {
 	private final TagsService ts;
 	private final BoardService boardService;
 	private final BannerService bannerService;
+	private final UserService us;
 
 	// festival 소개 리스트 페이지로 넘어가는 logic
 	@RequestMapping(value = "festival")
@@ -133,7 +135,7 @@ public class FestivalController {
 		int bigCode = 2;
 		// 분류 code 강제 지정
 		int smallCode = 6;
-		int userId = 1;
+		int userId = us.getLoggedInId();
 		int countBoard = 0;
 		
 		// review별 count용

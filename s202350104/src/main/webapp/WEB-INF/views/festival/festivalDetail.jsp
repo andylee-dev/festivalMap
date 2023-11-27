@@ -91,25 +91,44 @@
 	    window.open("../reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
 	}
 	
+	
+	
 	/* review 생성 기능 js */
 	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
-	    console.log("showPopUp 함수가 호출되었습니다.");		
-		//창 크기 지정
-		var width = 700;
-		var height = 600;
-		
-		//pc화면기준 가운데 정렬
-		var left = (window.screen.width / 2) - (width/2);
-		var top = (window.screen.height / 4);
-		
-	    //윈도우 속성 지정
-		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
-		
-	    //연결하고싶은url
-	    const url = "../reviewBoardInsertForm?userId="+ userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
+	    console.log("showPopUp 함수가 호출되었습니다.");
+	    var width = 700;
+	    var height = 600;
+	    var left = (window.screen.width / 2) - (width / 2);
+	    var top = (window.screen.height / 4);
+	    var windowStatus = 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+	    const url = "../reviewBoardInsertForm?userId=" + userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
 	
-		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
-		window.open(url, "hello popup", windowStatus);
+	    // userId 값이 0이면 checkUserIdAndNavigate 함수 실행
+	    if (userId == 0) {
+	        checkUserIdAndNavigate();
+	    } else {
+	        // userId 값이 0이 아니면 팝업 창 열기
+	        window.open(url, "hello popup", windowStatus);
+	    }
+	}
+	
+	function checkUserIdAndNavigate() {
+	    // userId 값 가져오기
+	    var userId = ${userId};
+	
+	    // userId가 0인 경우 알림창 띄우기
+	    if (userId == 0) {
+	        swal({
+	            title: "로그인 후 이용해주세요.",
+	            text: "회원이 아니시면 가입 후 이용해주세요.",
+	            icon: "warning",
+	        }).then((confirmed) => {
+	            // 'OK' 누르면 로그인 화면으로 이동
+	            if (confirmed) {
+	                location.href = '../login';
+	            }
+	        });
+	    } 
 	}
 	
 	/* review card carousel js */
