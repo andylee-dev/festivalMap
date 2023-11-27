@@ -705,7 +705,7 @@ import lombok.RequiredArgsConstructor;
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "end");
 			}
-				return "forward:spotDetail?contentIdStr="+spotContent.getContent_id();
+				return "forward:spotDetail?contentIdStr="+spotContent.getId();
 		}
 		
 		@RequestMapping(value = "spotUpdateForm")
@@ -729,7 +729,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}",transactionId, "spotUpdateForm", "end");	
 			}
 			return"admin/content/spotUpdateForm";
-			}
+			} 
 		
 		@RequestMapping(value = "spotInsertForm")
 		public String spotInsertForm(Model model) {

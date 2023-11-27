@@ -190,7 +190,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">명소 이름</label>
-						  <input type="text" class="form-control" id="title" value="${spot.title} " >
+						  <input type="text" class="form-control" id="title" name="title" value="${spot.title} " >
 						</div>
 						<div class="mb-3 ">
 							<label for="content" class="form-label ">지역</label>
