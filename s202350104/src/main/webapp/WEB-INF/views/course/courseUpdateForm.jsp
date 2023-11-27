@@ -226,10 +226,10 @@
 		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
 		
 		//연결하고싶은url
-		const url = '../${courseDetail.cd_content.toLowerCase() }/detail?contentId=${courseDetail.content_id}';
+		const url = '../../${cd_content.toLowerCase() }/detail?contentId=${content_id}';
 	 	
 		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
-		window.open(url, "contentList popup", windowStatus);
+		window.open(url, "content popup", windowStatus);
 	}
 
 	
@@ -727,7 +727,7 @@
 											<div class="d-flex justify-content-end">
 										    	<i onclick="deleteContent(event)" class="bi bi-x-square-fill" style="color: #FF4379"></i>
 											</div>
-											<h5 class="card-title card-font-title">컨텐츠 타입</h5>
+											<h5 class="card-title card-font-title">${courseContentList.cd_content }</h5>
 											<img src="${courseContentList.img1 }" class="card-image-size" alt="${courseContentList.title }">
 											<div class="card-body" style="padding: 0px; padding-top: 16px;">
 												<h5 class="card-title card-font-title">${courseContentList.title }</h5>

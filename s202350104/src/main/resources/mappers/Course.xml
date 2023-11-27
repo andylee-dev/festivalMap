@@ -129,10 +129,21 @@
 		</select>
 		
 		<select id="noCourseContentList" parameterType="CourseContent" resultType="CourseContent">
-			SELECT *
+			SELECT a.*, cd.content cd_content
+			FROM
+			    (
+			    SELECT *
+			    FROM   coursecontents cc, contents c
+			    WHERE  cc.content_id = c.id
+			    AND    cc.course_id = #{id}
+			    )a, commonCodes cd
+			WHERE a.big_code = cd.big_code
+			AND   cd.small_code = 999
+			
+			<!-- SELECT *
 			FROM   coursecontents a, contents b
 			WHERE  a.content_id = b.id
-			AND    a.course_id = #{id}
+			AND    a.course_id = #{id} -->
 			
 			<!-- SELECT * FROM courseContents WHERE course_id = #{id} -->
 			
