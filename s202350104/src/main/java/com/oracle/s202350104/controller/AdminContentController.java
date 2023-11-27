@@ -831,7 +831,7 @@ import lombok.RequiredArgsConstructor;
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
-				int totalaccomodation = as.totalAccomodation();
+				int totalaccomodation = as.admintotalAccomodation();
 
 			
 				Paging page = new Paging(totalaccomodation, currentPage);
@@ -861,6 +861,8 @@ import lombok.RequiredArgsConstructor;
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationSearch", "start");
 			int totalSearchaccomodation = as.totalSearchAccomodation(accomodationContent);
+			
+			System.out.println("totalSearchaccomodation"+totalSearchaccomodation);
 						
 			int path = 1;
 			String small_code = request.getParameter("small_code");
@@ -872,11 +874,18 @@ import lombok.RequiredArgsConstructor;
 			String sigungu = request.getParameter("sigungu");
 			
 			Paging page = new Paging(totalSearchaccomodation, currentPage);
+			
+			System.out.println("Paging"+page);
+			System.out.println("totalSearchaccomodation"+totalSearchaccomodation);
+			
 			accomodationContent.setStart(page.getStart());
 			accomodationContent.setEnd(page.getEnd());
+						
 			
 			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
 			List<AccomodationContent> listSearchAccomodation = as.listSearchAccomodation(accomodationContent);
+			
+			System.out.println("listSearchAccomodation"+listSearchAccomodation.size());
 			
 			model.addAttribute("totalAccomodation", totalSearchaccomodation);
 			model.addAttribute("listAccomodation", listSearchAccomodation);

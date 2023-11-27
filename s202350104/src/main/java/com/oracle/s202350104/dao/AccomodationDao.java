@@ -19,6 +19,7 @@ public interface AccomodationDao {
 	int                             totalSearchAccomodation(AccomodationContent accomodationContent);
 	int                             conTotalAccomdation(AccomodationContent accomodation);
 	List<AccomodationContent>       indexlistSearchAccomodation(AccomodationContent accomodation);
+	int                             admintotalAccomodation();
 
 	
 

@@ -197,4 +197,16 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		}
 		return indexlistSearchAccomodation;
 	}
+
+	@Override
+	public int admintotalAccomodation() {
+		int totAccomodationCount = 0;
+		
+		try {
+			totAccomodationCount = session.selectOne("AccomodationTotal");
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl totalAccomodations Exception => " + e.getMessage());
+		}
+		return totAccomodationCount;
+	}
 }

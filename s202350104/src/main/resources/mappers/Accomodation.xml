@@ -57,6 +57,14 @@
 	WHERE rn >= #{start}
 </select>
 
+	<select id="AccomodationTotalIndex" resultType="int">
+		SELECT count(*)
+		FROM   contents c ,  accomodations a
+		WHERE  c.id =  a.content_id 
+		AND 	c.status = 1
+		AND 	is_deleted = 0
+	</select>
+
 
 	
 	<select id="AccomodationDetail" resultType="AccomodationContent" parameterType="int">
@@ -69,7 +77,7 @@
 	<select id="AccomodationTotal" resultType="int">
 		SELECT count(*)
 		FROM   contents c ,  accomodations a
-		WHERE  c.id =  a.content_id 
+		WHERE  c.id =  a.content_id
 	</select>
 
 	<delete id="accomodationDelete" parameterType="int">
@@ -170,17 +178,10 @@
 	)
 </select>
 	
-	<select id="syAccomodationSearchTotal" parameterType="AccomodationContent" resultType="AccomodationContent">
-    SELECT *
-    FROM
-    (
-        SELECT ROWNUM rn, b.*, (SELECT content FROM areas z WHERE b.area = z.area AND z.sigungu = 999) AS area_content, (SELECT content FROM areas z WHERE b.area = z.area AND b.sigungu = z.sigungu) AS sigungu_content
-        FROM
-        (
-        SELECT c.id AS content_id, c.area, c.sigungu, c.big_code, c.small_code, c.title, c.status, c.is_deleted, c.address, c.created_at, c.img1, c.content, a.room_count, ROW_NUMBER() OVER (ORDER BY c.id) AS row_num
-        FROM contents c
-        INNER JOIN accomodations a ON c.id = a.content_id
-        WHERE c.big_code = 13
+	<select id="syAccomodationSearchTotal" parameterType="AccomodationContent" resultType="int">
+    SELECT count(*)
+		FROM   accomodations a, contents c
+		WHERE  a.content_id = c.id
 		<if test="keyword != null">
 			AND title like '%' || #{keyword} || '%'
 		</if>
@@ -194,26 +195,26 @@
 					AND sigungu = #{sigungu}
 				</if>
 		<if test="status != null">
-					<choose>
- 	 					<when test="status != 2">
-	    					AND status = #{status}  
-	   	 				</when>
-	 	 				<when test="status = 2">
-	    				</when>    
-  					</choose>
-				</if>
+				<choose>
+ 	 				<when test="status != 2">
+	    				AND status = #{status}  
+	   	 			</when>
+	 	 			<when test="status = 2">
+	    			</when>    
+  				</choose>
+		</if>
 		<if test="is_deleted != null">
 			<choose>
- 	 			 <when test="is_deleted != 2">
-    				AND is_deleted = #{is_deleted}  
-   				</when>
- 				<when test="is_deleted = 2">
-   				</when>      
+ 	 			<when test="is_deleted != 2">
+	    			AND c.is_deleted = #{is_deleted}  
+	   	 		</when>
+	 	 		<when test="is_deleted = 2">
+	    		</when>    
   			</choose>
 		</if>
 		<if test="small_code != null and small_code != 0 and small_code != 999">
 				AND c.small_code = #{small_code}  
-	   	</if>)b )
+	   	</if>
 	</select>	
 	
 	<select id="syListSmallCodeAll" resultType="AccomodationContent">

@@ -126,6 +126,12 @@ public class AccomodationServiceImpl implements AccomodationService {
 		List<AccomodationContent> indexlistSearchAccomodation = ad.indexlistSearchAccomodation(accomodation);
 		return indexlistSearchAccomodation;
 	}
+
+	@Override
+	public int admintotalAccomodation() {
+		int	totalAccomodation = ad.admintotalAccomodation();
+		return totalAccomodation;
+	}
 		
 
 }
