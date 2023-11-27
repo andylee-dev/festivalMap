@@ -30,11 +30,43 @@
 	            // 필요한 로직을 추가하세요.
 	        }
 	    }
+		
+		function confirmRestore(contentId) {
+	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
+	            $.ajax({
+	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+	                url: 'experienceRestoreAjax',
+	                data: { contentId: contentId },
+	                success: function(result) {
+	                    // 성공적으로 복원된 경우의 처리
+	                    alert('복원되었습니다.');
+	                    location.reload();
+	                },
+	                error: function(xhr, status, error) {
+	                    // 오류 발생 시의 처리
+	                    alert('복원에 실패했습니다.');
+	                }
+	            });
+	        } else {
+	            // 취소 버튼을 눌렀을 때의 처리
+	            // 필요한 로직을 추가하세요.
+	        }
+	    }
 			
 			function approveConfirm() {
 				var contentId = Number(${experience.content_id});
+				var status = "${experience.status}";
 				if(confirm("승인하시겠습니까?")) {
-					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
+				}
+			}
+			
+			
+			function approveConfirm1() {
+				var contentId = Number(${experience.content_id});
+				var status = "${experience.status}";
+				if(confirm("반려전환 하시겠습니까?")) {
+					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
 				}
 			}
 			
@@ -410,7 +442,7 @@
 						 <c:choose>
 							 <c:when test="${experience.is_deleted == 1}">
 							 	<div class="col-6 mb-3" >
-		                        	<button type="button" class="form-control btn btn-primary w-100" onclick="">복원</button>
+		                        	<button type="button" class="form-control btn btn-primary w-100" onclick="confirmRestore(${experience.content_id})">복원</button>
 		                        </div>
 		                        <div class="col-6 mb-3">
 		                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience?currentPage=1'">취소</button>
@@ -435,7 +467,7 @@
 		                                <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/experienceUpdateForm?contentId=${experience.content_id}&currentPage=${currentPage}'">수정하기</button>
 		                             </div>
 		                             <div class="col-2 mb-3">
-		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
 		                             </div>
 		                             <div class="col-2 mb-3">
 		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${experience.content_id})">삭제</button>

@@ -1165,11 +1165,20 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "experienceApprove")
-		public String experienceApprove(int contentId, String currentPage, Model model) {
+		public String experienceApprove(int contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceApprove", "start");
-				int result = es.experienceApprove(contentId);
+				ExperienceContent experience = new ExperienceContent();
+				experience.setContent_id(contentId);
+				
+				if (status.equals("0")) {
+					experience.setStatus("1");
+				} else if(status.equals("1")) {
+					experience.setStatus("0");
+				}
+				log.info(experience.getStatus());
+				int result = es.experienceApprove(experience);
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 				} else {
