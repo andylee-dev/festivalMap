@@ -54,11 +54,20 @@
 				}
 			}
 			
-			function openPopup() {
-				var url = "rejectionForm?contentId=${accomodaiton.content_id}&bigCode=${accomodaiton.big_code}";
-				var option = "width=1000, height=800";
-				window.name = "accomodaitonDetail";
-				window.open(url, "rejection form popup", option);
+			function submitRejectForm(formName) {
+				// $('#statusInput').value = 0;
+				formName.action = "/admin/content/insertHistory";
+				formName.method = "post";
+				$('.form-input, .check-duple').prop("disabled", false);
+				
+				$('#rejectModal').modal('hide');
+				
+				const rejectContent = document.getElementById('message-text').value;
+				const rejectTitle = document.getElementById('modal-title').innerText;		
+				$('#reject-title').val(rejectTitle);
+				$('#reject-content').val(rejectContent);
+				
+				formName.submit();
 			}
 			
 			function getSigungu(pArea){
@@ -216,7 +225,7 @@
 				<div>
 				<h3 style="color: #FF4379 ">숙소별 상세 정보  </h3>
 				<input type="hidden" id="accomo_status" value="${accomodation.status}">
-				</div>_
+				</div>
 				<div class="my-5">
 				<div class="" id="detail-main-container">
 					<div class="container d-flex justify-content-around" id="detail-top-container">
@@ -366,9 +375,7 @@
 								id="is_parking" value="1" ${accomodation.is_parking == 1?"checked":""} disabled> 
 								<label class="form-check-label" for="is_parking">주차가능</label>
 							</div>
-						</div>
-						
-							
+						</div>							
 							
 						<hr class="hr" />			
 						
@@ -389,10 +396,10 @@
 		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                          </div>
 		                            <div class="col-2 mb-3">
-		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${accomodation.content_id})">반려(사유선택)</button>
+		                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">반려(사유선택)</button>
 		                          </div>
 		                          <div class="col-2 mb-3">
-		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${accomodation.content_id})">삭제</button>
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
 		                          </div>
 		                          <div class="col-1 mb-3">
 		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
@@ -417,12 +424,39 @@
 	                     
 							
 						</form>
+						<form name="updateForm">
+								<input type="hidden" name="status" id="statusInput" value="${accomodaiton.status}">
+								<input type="hidden" name="big_code" value="${accomodaiton.big_code}">
+								<input type="hidden" name="small_code" value="${accomodaiton.small_code}">
+								<input type="hidden" name="target_id" value="${accomodaiton.content_id}">
+								<input type="hidden" name="title" id="reject-title">
+								<input type="hidden" name="content" id="reject-content">
+						</form>
 					</div>
 				</div>
 				</div>
 			</div>
 		</main>
 		</div>
+		<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="modal-title">반려 전환</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label class="col-form-label">반려사유</label>
+							<textarea class="form-control" id="message-text"></textarea>
+						</div>
+					</div>
+					<div class="form-row d-flex justify-content-around modal-footer">
+						<button type="button" onclick="submitRejectForm(updateForm)" class="btn btn-primary col-4">반려</button>
+						<button type="button" class="btn btn-outline-secondary col-4" data-bs-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
 	</div>	
 	</body>
 </html>

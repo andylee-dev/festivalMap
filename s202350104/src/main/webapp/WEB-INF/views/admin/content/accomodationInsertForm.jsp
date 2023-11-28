@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>experience updateForm</title>
+		<title>숙박업소등록</title>
 		<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 		<script src="/js/updateArea.js"></script>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -169,11 +169,11 @@
 							<label for="content" class="form-label ">지역(필수 선택)</label>
 								<div class="row">
 								    <div class="col-2">
-								        <select name="area" class="form-select area-dropdown"></select>
+								        <select name="area" class="form-select area-dropdown" required="required"></select>
 								    </div>
-								    	<div class="col-2">
-								    		<input type="text" class="form-control" name="postcode" id="postcode" value="${accomodation.postcode}" >
-								    	</div>
+								    <div class="col-2">
+								       <select name="sigungu"  class="form-select sigungu-dropdown" required="required"></select>
+								    </div>
 								    	<div class="col-6">
 										    <input type="text" class="form-control" name="address" id="address" value="${accomodation.address} " >
 								    	</div>
@@ -275,11 +275,6 @@
 						
 						</form>
 						</div>
-						
-						
-						
-						
-							
 						</div>
 						</div>
 						</div>
