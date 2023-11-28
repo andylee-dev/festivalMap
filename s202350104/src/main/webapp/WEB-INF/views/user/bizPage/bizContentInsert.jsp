@@ -653,6 +653,7 @@
 					<form action="<%=request.getContextPath()%>/admin/content/experienceInsert" method="post">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">체험 이름(필수 입력)</label>
+						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
 						  <input type="text" class="form-control" name="title" id="title" value="${experience.title}" required="required">
 						</div>
 						<div class="mb-3" id="detail-content-title">
