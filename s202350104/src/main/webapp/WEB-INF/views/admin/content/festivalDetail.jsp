@@ -134,8 +134,20 @@
 				}
 			}
 			
-			function submitRejectForm() {
+			function submitRejectForm(formName) {
+				// $('#statusInput').value = 0;
+				formName.action = "/admin/content/insertHistory";
+				formName.method = "post";
+				$('.form-input, .check-duple').prop("disabled", false);
 				
+				$('#rejectModal').modal('hide');
+				
+				const rejectContent = document.getElementById('message-text').value;
+				const rejectTitle = document.getElementById('modal-title').innerText;		
+				$('#reject-title').val(rejectTitle);
+				$('#reject-content').val(rejectContent);
+				
+				formName.submit();
 			}
 		</script>
 	</head>
@@ -322,6 +334,14 @@
 										<input type="text" class="form-control" id="created_at" value="<fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/>">
 									</div>
 								</div>
+							<form name="updateForm">
+								<input type="hidden" name="status" id="statusInput" value="${festival.status}">
+								<input type="hidden" name="big_code" value="${festival.big_code}">
+								<input type="hidden" name="small_code" value="${festival.small_code}">
+								<input type="hidden" name="target_id" value="${festival.content_id}">
+								<input type="hidden" name="title" id="reject-title">
+								<input type="hidden" name="content" id="reject-content">
+							</form>
 							
 							<div>
 								<hr class="hr">
@@ -391,7 +411,7 @@
 						</div>
 					</div>
 					<div class="form-row d-flex justify-content-around modal-footer">
-						<button type="button" onclick="submitRejectForm()" class="btn btn-primary col-4">반려</button>
+						<button type="button" onclick="submitRejectForm(updateForm)" class="btn btn-primary col-4">반려</button>
 						<button type="button" class="btn btn-outline-secondary col-4" data-bs-dismiss="modal">취소</button>
 					</div>
 				</div>
