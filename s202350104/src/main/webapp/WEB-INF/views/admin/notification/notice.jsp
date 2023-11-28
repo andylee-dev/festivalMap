@@ -36,21 +36,58 @@
 				</div>
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center mt-5">
-					<form action="favoriteSearch" method="POST" class="container justify-content-center">	
-						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
-							<div class="col-4">
-								<select name="search" class="form-select">
-									<option value="s_name">제목조회</option>
-								</select> 
-							</div>
-							<div class="col-5 mx-2 d-flex justify-content-center">	
-								<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
-								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
-							</div>
-						</div>	
-					</form>
+					<c:choose>
+						<c:when test="${smallCode eq 1}">
+							<form action="notice" method="POST" class="container justify-content-center">	
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-4">
+										<select name="search" class="form-select">
+											<option value="s_name">제목조회</option>
+										</select> 
+									</div>
+									<div class="col-5 mx-2 d-flex justify-content-center">	
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="keyword를 입력하세요">
+										<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+									</div>
+								</div>	
+							</form>						
+						</c:when>
+						<c:when test="${smallCode eq 5}">
+							<form action="event" method="POST" class="container justify-content-center">	
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-4">
+										<select name="search" class="form-select">
+											<option value="s_name">제목조회</option>
+										</select> 
+									</div>
+									<div class="col-5 mx-2 d-flex justify-content-center">	
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="keyword를 입력하세요">
+										<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+									</div>
+								</div>	
+							</form>						
+						</c:when>
+						<c:when test="${bigCode eq 3}">
+							<form action="banner" method="POST" class="container justify-content-center">	
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-4">
+										<select name="search" class="form-select">
+											<option value="s_name">제목조회</option>
+										</select> 
+									</div>
+									<div class="col-5 mx-2 d-flex justify-content-center">	
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="keyword를 입력하세요">
+										<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+									</div>
+								</div>	
+							</form>						
+						</c:when>
+					</c:choose>
 				</div>
+				
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
 					<div class="container d-flex justify-content-end p-0">
 						<c:choose>

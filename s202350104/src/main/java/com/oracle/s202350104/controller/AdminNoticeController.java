@@ -35,12 +35,11 @@ public class AdminNoticeController {
 	public String noticBoardList(Board board, String currentPage, Model model) {
 		log.info("AdminNoticeController noticBoardList Start!!");
 		int bigCode = 0;
-		// 분류 code 강제 지정
-		int smallCode = 1;
+		board.setSmall_code(1); // 분류 code 강제 지정
 		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
+		int countBoard = boardService.boardCount(board);
 		
 		// Paging 작업
 		// Parameter board page 추가
@@ -59,14 +58,14 @@ public class AdminNoticeController {
 		bigCode = noticAllList.get(0).getBig_code();
 
 		log.info("AdminNoticeController noticBoardList totalBoard : {} ", countBoard);
-		log.info("AdminNoticeController noticBoardList smallCode : {} ", smallCode);
+		log.info("AdminNoticeController noticBoardList smallCode : {} ", board.getSmall_code());
 		log.info("AdminNoticeController noticBoardList page : {} ", page);
 		log.info("AdminNoticeController noticBoardList bigCode : {} ", bigCode);
 
 		model.addAttribute("admin", noticAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("userId", userId);
 		
 		log.info("AdminNoticeController noticBoardList End..");
@@ -79,12 +78,11 @@ public class AdminNoticeController {
 	public String eventBoardList(Board board, String currentPage, Model model) {
 		log.info("AdminNoticeController eventBoardList Start!!");
 		int bigCode = 0;
-		// 분류 code 강제 지정
-		int smallCode = 5;
+		board.setSmall_code(5); // 분류 code 강제 지정
 		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
+		int countBoard = boardService.boardCount(board);
 		
 		// Paging 작업
 		// Parameter board page 추가
@@ -103,14 +101,14 @@ public class AdminNoticeController {
 		bigCode = eventAllList.get(0).getBig_code();
 
 		log.info("AdminNoticeController eventBoardList totalBoard : {} ", countBoard);
-		log.info("AdminNoticeController eventBoardList smallCode : {} ", smallCode);
+		log.info("AdminNoticeController eventBoardList smallCode : {} ", board.getSmall_code());
 		log.info("AdminNoticeController eventBoardList page : {} ", page);
 		log.info("AdminNoticeController eventBoardList bigCode : {} ", bigCode);
 
 		model.addAttribute("admin", eventAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("userId", userId);
 		
 		log.info("AdminNoticeController eventBoardList End..");
@@ -120,7 +118,7 @@ public class AdminNoticeController {
 	
 	// Banner List Logic
 	@RequestMapping(value = "/banner")
-	public String bannerBoardList(Board board, String currentPage, Model model) {
+	public String bannerBoardList(Banner banner, String currentPage, Model model) {
 		log.info("AdminNoticeController bannerBoardList Start!!");
 		int bigCode = 0;
 		// 분류 code 강제 지정
@@ -128,21 +126,21 @@ public class AdminNoticeController {
 		int userId = 1;
 		
 		// smallCode를 이용해 countBoard를 설정
-		int countBanner = bannerService.bannerCount();
+		int countBanner = bannerService.bannerCount(banner);
 		
 		// Paging 작업
 		// Parameter board page 추가
 		Paging page = new Paging(currentPage, countBanner);
-		board.setStart(page.getStart());
-		board.setEnd(page.getEnd());
-		log.info("AdminNoticeController bannerBoardList before board.getStart : {} ", board.getStart());
-		log.info("AdminNoticeController bannerBoardList before board.getEnd : {} ", board.getEnd());
+		banner.setStart(page.getStart());
+		banner.setEnd(page.getEnd());
+		log.info("AdminNoticeController bannerBoardList before board.getStart : {} ", banner.getStart());
+		log.info("AdminNoticeController bannerBoardList before board.getEnd : {} ", banner.getEnd());
 		
-		List<Banner> bannerAllList = bannerService.getBannerAllList(board);
+		List<Banner> bannerAllList = bannerService.getBannerAllList(banner);
 		log.info("AdminNoticeController bannerAllList size : {}", bannerAllList.size());
 
-		log.info("AdminNoticeController bannerBoardList after board.getStart : {} ", board.getStart());
-		log.info("AdminNoticeController bannerBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("AdminNoticeController bannerBoardList after board.getStart : {} ", banner.getStart());
+		log.info("AdminNoticeController bannerBoardList after board.getEnd : {} ", banner.getEnd());
 
 		bigCode = bannerAllList.get(0).getBig_code();
 		smallCode = bannerAllList.get(0).getSmall_code();

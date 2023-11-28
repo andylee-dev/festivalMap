@@ -34,14 +34,12 @@ public class AdminCommunityController {
 	@RequestMapping(value = "/magazin")
 	public String magazinBoardList(Board board, String currentPage, Model model) {
 		log.info("AdminCommunityController magazinBoardList Start!!");
-
 		int bigCode = 0;
-		// 분류 code 강제 지정
-		int smallCode = 2;
+		board.setSmall_code(2); // 분류 code 강제 지정
 		int userId = 1;
 
 		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
+		int countBoard = boardService.boardCount(board);
 
 		// Paging 작업
 		// Parameter board page 추가
@@ -64,14 +62,14 @@ public class AdminCommunityController {
 		}
 
 		log.info("AdminCommunityController magazinBoardList totalBoard : {} ", countBoard);
-		log.info("AdminCommunityController magazinBoardList smallCode : {} ", smallCode);
+		log.info("AdminCommunityController magazinBoardList smallCode : {} ", board.getSmall_code());
 		log.info("AdminCommunityController magazinBoardList page : {} ", page);
 		log.info("AdminCommunityController magazinBoardList bigCode : {} ", bigCode);
 
 		model.addAttribute("admin", magazinAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("userId", userId);
 
 		log.info("AdminCommunityController magazinBoardList End..");
@@ -84,12 +82,11 @@ public class AdminCommunityController {
 	public String freddBoardList(Board board, String currentPage, Model model) {
 		log.info("AdminCommunityController freddBoardList Start!!");
 		int bigCode = 0;
-		// 분류 code 강제 지정
-		int smallCode = 3;
+		board.setSmall_code(3); // 분류 code 강제 지정
 		int userId = 1;
 
 		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
+		int countBoard = boardService.boardCount(board);
 
 		// Paging 작업
 		// Parameter board page 추가
@@ -113,14 +110,14 @@ public class AdminCommunityController {
 		}
 
 		log.info("AdminCommunityController freddBoardList totalBoard : {} ", countBoard);
-		log.info("AdminCommunityController freddBoardList smallCode : {} ", smallCode);
+		log.info("AdminCommunityController freddBoardList smallCode : {} ", board.getSmall_code());
 		log.info("AdminCommunityController freddBoardList page : {} ", page);
 		log.info("AdminCommunityController freddBoardList bigCode : {} ", bigCode);
 
 		model.addAttribute("admin", freeAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("userId", userId);
 
 		log.info("AdminCommunityController freddBoardList End..");
@@ -133,12 +130,11 @@ public class AdminCommunityController {
 	public String reviewBoardList(Board board, String currentPage, Model model) {
 		log.info("AdminCommunityController reviewBoardList Start!!");
 		int bigCode = 0;
-		// 분류 code 강제 지정
-		int smallCode = 6;
+		board.setSmall_code(6); // 분류 code 강제 지정
 		int userId = 1;
 
 		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(smallCode);
+		int countBoard = boardService.boardCount(board);
 
 		// Paging 작업
 		// Parameter board page 추가
@@ -161,14 +157,14 @@ public class AdminCommunityController {
 		}
 
 		log.info("AdminCommunityController reviewBoardList totalBoard : {} ", countBoard);
-		log.info("AdminCommunityController reviewBoardList smallCode : {} ", smallCode);
+		log.info("AdminCommunityController reviewBoardList smallCode : {} ", board.getSmall_code());
 		log.info("AdminCommunityController reviewBoardList page : {} ", page);
 		log.info("AdminCommunityController reviewBoardList bigCode : {} ", bigCode);
 
 		model.addAttribute("admin", reviewAllList);
 		model.addAttribute("page", page);
 		model.addAttribute("bigCode", bigCode);
-		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("userId", userId);
 
 		log.info("AdminCommunityController reviewBoardList End..");

@@ -8,9 +8,12 @@
 		select count(*)
 		from board a, users b
 		where a.user_id = b.id
-		and a.small_code = #{smallCode}
+		and a.small_code = #{small_code}
 		and a.comment_indent = 0
 		and a.is_deleted = 0
+		<if test="keyword != null and keyword != ''">
+		and a.title like '%' || #{keyword} || '%'
+		</if>		
 	</select>
 	
 	<select id="reviewBoardCount" parameterType="Board" resultType="int">
@@ -44,8 +47,11 @@
 				and a.is_deleted = #{is_deleted}
 				</if>
 				<if test="status != null and status != ''">
-				and status = #{status}
-				</if>					        
+				and a.status = #{status}
+				</if>	
+				<if test="keyword != null and keyword != ''">
+				and a.title like '%' || #{keyword} || '%'
+				</if>								        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -65,8 +71,11 @@
 				and a.is_deleted = #{is_deleted}
 				</if>
 				<if test="status != null and status != ''">
-				and status = #{status}
-				</if>								        
+				and a.status = #{status}
+				</if>	
+				<if test="keyword != null and keyword != ''">
+				and a.title like '%' || #{keyword} || '%'
+				</if>											        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -87,8 +96,12 @@
 				and a.is_deleted = #{is_deleted}
 				</if>	
 				<if test="status != null and status != ''">
-				and status = #{status}
-				</if>					
+				and a.status = #{status}
+				</if>
+				<if test="keyword != null and keyword != ''">
+				and a.title like '%' || #{keyword} || '%'
+				</if>
+								
 		        and a.comment_indent = 0
 		    ) c
 		)
@@ -110,8 +123,11 @@
 				and a.is_deleted = #{is_deleted}
 				</if>	
 				<if test="status != null and status != ''">
-				and status = #{status}
-				</if>						        
+				and a.status = #{status}
+				</if>
+				<if test="keyword != null and keyword != ''">
+				and a.title like '%' || #{keyword} || '%'
+				</if>										        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -129,7 +145,13 @@
 		        and a.small_code = 5
 				<if test="is_deleted != null and is_deleted != ''">
 				and a.is_deleted = #{is_deleted}
-				</if>			        
+				</if>
+				<if test="status != null and status != ''">
+				and a.status = #{status}
+				</if>
+				<if test="keyword != null and keyword != ''">
+				and a.title like '%' || #{keyword} || '%'
+				</if>											        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -156,7 +178,13 @@
 		               where c.id = #{content_id}
 					   <if test="is_deleted != null and is_deleted != ''">
 					   and a.is_deleted = #{is_deleted}
-					   </if>	
+					   </if>
+					   <if test="status != null and status != ''">
+					   and a.status = #{status}
+					   </if>
+					   <if test="keyword != null and keyword != ''">
+					   and a.title like '%' || #{keyword} || '%'
+					   </if>					   					   	
 		        ) e
 		)
 		where rn between #{start} and #{end}

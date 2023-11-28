@@ -53,6 +53,13 @@
 	        location.href = 'integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode}&smallCode=${smallCode}';
 	    }
 	}	
+	
+	// 서치이미지를 클릭할 때 폼을 제출하는 함수
+	$(document).ready(function () {
+    	$("#searchIcon").click(function () {
+       		$("#photoBoardList").submit();
+    	});
+	});	
 </script>
 </head>
 <body>
@@ -133,22 +140,25 @@
 
 		<!-- 키워드, 검색창 영역 -->
 		<div class="container p-3 keyword_custom">
+			<form id="photoBoardList" action="photoBoardList" method="get">		
 			<div class="row align-items-start ">
 				<!-- 포토게시판만 검색창 같이 출력 -->
 				<c:choose>
 					<c:when test="${smallCode == 4}">
 						<div class="col keyword_div_custom">
-							<input class="form-control keyword_custom" type="text" placeholder="&nbsp;키워드를 검색해보세요."> 
-								<img src="../image/icon_search1.png" alt="test" />
+							<input class="form-control keyword_custom" type="text" name="keyword" placeholder="&nbsp;키워드를 검색해보세요.">
+							<img src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 							<button class="btn btn_custom" onclick="checkUserIdAndNavigate()">글쓰기</button>
 						</div>
 					</c:when>
 				</c:choose>
 			</div>
+			</form>
 		</div>
 
 		<!-- 목록 출력 영역 -->
-		<div class="container p-3 cardList_custom">
+		<div class="container p-3 cardList_custom">	
+		<c:if test="${board.size() == 0}">해당하는 정보가 없습니다.</c:if>		
 			<div class="row align-items-center">
 				<c:forEach var="boards" items="${board}">
 					<div class="col-6 col-md-4">

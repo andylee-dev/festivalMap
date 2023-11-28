@@ -20,12 +20,12 @@ public class BannerDaoImpl implements BannerDao {
 
 	// Paging 처리용
 	@Override
-	public int bannerCount() {
+	public int bannerCount(Banner banner) {
 
 		int countBanner = 0;
 
 		try {
-			countBanner = session.selectOne("bannerCount");
+			countBanner = session.selectOne("bannerCount", banner);
 		} catch (Exception e) {
 			log.error("BoardDao boardCount Exception : {}", e.getMessage());
 		} finally {
@@ -77,13 +77,13 @@ public class BannerDaoImpl implements BannerDao {
 
 	// 배너 조회(ALL), DB연동
 	@Override
-	public List<Banner> getBannerAllList(Board board) {
+	public List<Banner> getBannerAllList(Banner banner) {
 		log.info("BannerDao getBannerAllList Start!!");
 
 		List<Banner> bannerAllList = null;
 
 		try {
-			bannerAllList = session.selectList("bannerAllList", board);
+			bannerAllList = session.selectList("bannerAllList", banner);
 
 			log.info("BannerDao bannerAllList size : {}", bannerAllList.size());
 		} catch (Exception e) {

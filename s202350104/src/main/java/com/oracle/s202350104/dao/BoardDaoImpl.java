@@ -42,12 +42,12 @@ public class BoardDaoImpl implements BoardDao {
 
 	// Paging 처리용
 	@Override
-	public int boardCount(int smallCode) {
+	public int boardCount(Board board) {
 
 		int countBoard = 0;
 
 		try {
-			countBoard = session.selectOne("boardCount", smallCode);
+			countBoard = session.selectOne("boardCount", board);
 		} catch (Exception e) {
 			log.error("BoardDao boardCount Exception : {}", e.getMessage());
 		}

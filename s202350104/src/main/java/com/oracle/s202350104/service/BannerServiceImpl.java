@@ -22,13 +22,13 @@ public class BannerServiceImpl implements BannerService {
 
 	// paging Logic
 	@Override
-	public int bannerCount() {
+	public int bannerCount(Banner banner) {
 
 		int countbanner = 0;
 
 		try {
 			log.info("BoardService bannerCount Start!!");
-			countbanner = bannerdao.bannerCount();
+			countbanner = bannerdao.bannerCount(banner);
 
 		} catch (Exception e) {
 			log.error("BoardService bannerCount Error : {}", e.getMessage());
@@ -82,14 +82,14 @@ public class BannerServiceImpl implements BannerService {
 
 	// 배너 조회 logic
 	@Override
-	public List<Banner> getBannerAllList(Board board) {
+	public List<Banner> getBannerAllList(Banner banner) {
 
 		List<Banner> bannerAllList = null;
 
 		try {
 			log.info("BoardService getBannerAllList Start!!");
 
-			bannerAllList = bannerdao.getBannerAllList(board);
+			bannerAllList = bannerdao.getBannerAllList(banner);
 
 		} catch (Exception e) {
 			log.error("BoardService getBannerAllList Error : {}", e.getMessage());

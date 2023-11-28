@@ -7,7 +7,7 @@ import com.oracle.s202350104.model.FestivalsContent;
 
 public interface BoardService {
 	
-	int boardCount(int smallCode);	
+	int boardCount(Board board);	
 	
 	List<Board> getFreeAllList(Board board);
 
