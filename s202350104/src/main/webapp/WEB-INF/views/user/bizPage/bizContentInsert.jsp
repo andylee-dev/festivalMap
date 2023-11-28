@@ -501,6 +501,7 @@
 					<form action="<%=request.getContextPath()%>/admin/content/accomodaitonInsert" method="post">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">숙소 이름(필수 입력)</label>
+						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
 						  <input type="text" class="form-control" name="title" id="title" value="${accomodaiton.title}" required="required">
 						</div>
 						<div class="mb-3" id="detail-content-title">
@@ -524,7 +525,7 @@
 								       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
 								    </div>
 								    <div class="col-8">
-								    <input type="text" class="form-control" name="address" id="address" value="${experience.address}" placeholder="상세주소 입력해주세요">
+								    <input type="text" class="form-control" name="address" id="address" value="${accomodation.address}" placeholder="상세주소 입력해주세요">
 								    </div>
 								</div>
 						</div>
