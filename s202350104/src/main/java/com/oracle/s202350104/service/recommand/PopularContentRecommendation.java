@@ -32,15 +32,20 @@ public class PopularContentRecommendation implements RecommendationStrategy {
 	public List<ScoredContent> recommend(Users user, Contents content) {
 		UUID transactionId = UUID.randomUUID();
     	log.info("[{}]{}:{}", transactionId, "PopularContentRecommendation()", "start");
+    	
     	List<Contents> contentList = recommendationDao.getPopularContentsList(content);
     	List<ScoredContent> scoredContentList = new ArrayList<>();
     	
     	// 점수 가중치
+    	double weightReadcount = 0.4;		// 조회수
+    	double weightAvg_score = 0.3;		// 평점평균
+    	double weightReview_count = 0.3;	// 리뷰수
+    	
         for(Contents c : contentList) {
-        	double scoreReadcount = c.getReadcount() * 0.5; 		// 조회수
-        	double scoreAvg_score = c.getAvg_score() * 0.3;			// 리뷰평점평균
-        	double scoreReview_count = c.getReview_count() * 0.2;	// 리뷰수
-        	double score = scoreReadcount + scoreAvg_score + scoreReview_count;
+        	double readcount = c.getReadcount(); 		// 조회수
+        	double avg_score = c.getAvg_score();		// 리뷰평점평균
+        	double review_count = c.getReview_count();	// 리뷰수
+        	double score = (readcount * weightReadcount) + (avg_score * weightAvg_score) + (review_count * weightReview_count);
             scoredContentList.add(new ScoredContent(c, score));
         }
         
