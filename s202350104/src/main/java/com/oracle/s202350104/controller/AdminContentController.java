@@ -151,9 +151,9 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
 				
-				// 폼에 입력된 date 정보를 DB에 저장된 형식으로 변환
-				// festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
-			    // festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
+				int user_id = us.getLoggedInId();
+				String userId = String.valueOf(user_id);
+				festival.setUser_id(userId);
 				
 				// festival을 insert한 결과를 result에 저장
 				int result = fs.insertFestival(festival);
