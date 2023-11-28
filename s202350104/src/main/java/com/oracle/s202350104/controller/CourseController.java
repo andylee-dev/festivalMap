@@ -15,8 +15,10 @@ import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 import com.oracle.s202350104.service.BannerService;
+import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -108,9 +110,10 @@ public class CourseController {
 		} finally {
 			log.info("CourseController courseDetail end");
 		}
-		
+
 		return "course/courseDetail";
 	}
+	
 	
 	@RequestMapping(value = "course1")
 	public String ListSearch(Course course, String currentPage, Model model, HttpServletRequest request) {

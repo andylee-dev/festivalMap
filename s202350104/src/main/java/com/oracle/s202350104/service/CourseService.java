@@ -22,6 +22,7 @@ public interface CourseService {
 	int 					deleteToContent(List<CourseContent> deleteContent);
 	int 					maxOrderNum(int id);
 	List<Course> 			courseListSmallCode(Course course);
+
 	
 }   		  	 		
 	 

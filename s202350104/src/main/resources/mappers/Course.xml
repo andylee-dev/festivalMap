@@ -229,5 +229,4 @@
 			and small_code < 999
 	       ]]>
 	    </select>
-		
 	</mapper>

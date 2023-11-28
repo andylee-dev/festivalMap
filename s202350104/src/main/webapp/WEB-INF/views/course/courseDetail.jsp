@@ -417,121 +417,6 @@
 	<!-- 경계선 표현 -->
 	<hr class="container homeCommon-top-custom">
 	
-	<!-- 리뷰 영역 -->
-	<div class="container homeDetail-mdTitle-custom">
-		<h2><strong>REVIEW</strong></h2>
-			<div class="homeDetail-reviewInsert-btn-box">
-				<button class="btn" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${festival.content_id},${festival.big_code})">리뷰&nbsp;등록</button>
-			</div>
-	</div>
-	
-	<div class="container homeDetail-view-custom">
-		<div class="row g-2">
-			<!-- 평점 현황 -->
-			<div class="col-2 box-custom">			
-				<div class="row row-cols-1">
-					<div class="col box-col-custom">
-						<span class="cost-span" style="">4.8 </span>
-						<span>/ 5.0</span>
-					</div>
-					<div class="col box-col-custom">
-						<span>⭐⭐⭐⭐⭐</span>
-					</div>
-					<div class="col box-col-custom">
-    					<hr/>
-					</div>
-					<div class="col box-col-custom">
-						<span>"아주 좋았어요!"</span>
-					</div>
-				</div>										  
-			</div>
-					
-			<!-- 전체 리뷰 현황 -->
-			<div class="col dashboardBox-custom">
-				<div class="row first-box" style="">
-					<div class="col col-sm-8">
-						<span class="common-span-font">·</span>
-						<span> 전체 리뷰 작성자 중 
-						<span class="common-span">000</span>명이 
-						<span class="common-span">★★★★★</span>으로 평가한 축제에요.</span>
-					</div>
-				</div>				
-				<div class="row row-cols-3 second-box">
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png"> 볼거리가 많아요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">편의시설이 훌륭해요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">접근성이 좋아요</div>
-				</div>
-				<div class="row row-cols-3 third-box">
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">컨텐츠가 신선해요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">남녀노소 즐길 수 있어요</div>
-					<div class="col col-sm-4">
-						<img alt="test" src="../image/reviewIcon2.png">주변 인프라가 좋아요</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<c:set var="num" value="${page.total-page.start+1 }" />
-	
-	<!-- 리뷰 카드 영역 -->
- 	<div class="container reviewBox-custom"> 
-		<div class="owl-carousel custom-carousel owl-theme"> 	
-<!-- 		<div class="row row-cols-1 row-cols-md-1 g-4"> -->
-			<c:forEach var="review" items="${reviewBoard }">
-<!-- 				<div class="col"> -->
-					<div class="card reviewCard-custom">
-						<div class="row row-cols-2 reviewCard-md-custom">
-							
-							<div class="col col-4">
-								<img class="rounded-circle" src="../image/cuteBear.png" alt="이미지영역">
-							</div>
-							
-							<div class="col col-8">
-								<div class="row row-cols-1 reviewCard-content-custom">
-									<div class="col reportBtn-box">
-										<button class="btn" onclick="report(${review.id})">신고</button>
-									</div>
-									
-									<div class="row row-cols-2 first-content-box">
-										<div class="col content-box-first">${review.name }</div>
-										<div class="col content-box-second">${boards.user_id }</div>
-									</div>
-
-									<div class="col first-calendar-box">
-										<fmt:formatDate value="${review.created_at }" type="date"
-														pattern="YYYY.MM.dd, hh:mm:ss" />
-									</div>
-									
-									<div class="col first-cost-box">
-										<c:forEach begin="1" end="${review.score }">⭐</c:forEach>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-
-						<div class="card-body row row-cols-1">
-							<h5 class="card-title col">
-								<strong>${review.content }</strong>
-							</h5>
-							<p class="card-text col"></p>
-						</div>
-						
-					</div>
-			<!-- </div> -->
-			</c:forEach>
-			</div>
-		</div>
-<!-- </div> --> 
-
-	<!-- 경계선 표현 -->
-	<hr class="container homeCommon-top-custom">
-	
 	<!-- 찾아가기 출력 -->
 	<div class="container homeDetail-mdTitle-custom">
 		<h2><strong>찾아가기</strong></h2>
@@ -615,6 +500,6 @@
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
-
+	
 </body>
 </html>
