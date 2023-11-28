@@ -65,13 +65,13 @@ h2 {
 										<tr id="user${st.index}">
 										
 											<td id="contentId">${contents.id}</td>
-											<td>${contents.name}</td>
-											 
 											<td>${contents.title}</td>
 											<td>${contents.big_code}</td>
 											<td>${contents.small_code}</td>
 											<td>${contents.area}</td>
 											<td>${contents.sigungu}</td>
+											<td>${contents.status}</td>
+											<td>${contents.readcount}</td>
 											<td><fmt:formatDate value="${contents.created_at}" type="date" pattern="YY/MM/dd"/></td>
 											<td><a class="detail-btn" href="userDetail/${user.id}?currentPage=${page.currentPage}">관리</a></td>
 										</tr>

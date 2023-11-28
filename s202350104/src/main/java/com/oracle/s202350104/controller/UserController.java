@@ -227,6 +227,7 @@ public class UserController {
 			
 			Contents contents = new Contents();
 			contents.setUser_id(String.valueOf(us.getLoggedInId()));
+			
 			int totalCotnents = contentService.getTotalSearchCount(contents);
 			log.info("totalCotnents:{}",totalCotnents);
 
