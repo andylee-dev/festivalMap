@@ -92,6 +92,7 @@
 </head>
 <body>
 	<div class="container">
+	<div class="container col-9 justify-content-center my-5">
 		<h1 class="title fs-5">나에게 맞는 축제</h1>
 	</div>
 		<div class="card text-bg-dark">
@@ -113,7 +114,7 @@
 		</div>
 				<button type="button" class="optionBtn btn" onclick="selectOption(event)">선택1</button>
 				<button type="button" class="optionBtn btn" onclick="selectOption(event)">선택2</button>
-
+		</div>
 
 
 </body>

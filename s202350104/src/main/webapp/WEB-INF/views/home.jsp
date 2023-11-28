@@ -502,9 +502,10 @@ String apiKey = map.getApiKey();
 						<span>나의&nbsp;축제&nbsp;취향&nbsp;?!</span>
 					</div>
 					<div class="col chucheon-card-se">
-						<a class="dropdown-item" href="/festival/recommend"> <img
-							alt="..." src="../image/chucheon_icon.png"></a>
+						<img alt="..." src="../image/chucheon_icon.png"
+							onclick="openPopup()">
 					</div>
+					
 				</div>
 				<div class="row row-cols-2 chucheon-card">
 					<div class="col chucheon-card-se">
@@ -512,9 +513,10 @@ String apiKey = map.getApiKey();
 						<span>페맵&nbsp;랜덤&nbsp;축제!</span>
 					</div>
 					<div class="col chucheon-card-se">
-						<img alt="..." src="../image/chucheon_icon.png"
-							onclick="openPopup()">
+						<a class="dropdown-item" href="/festival/recommend"> <img
+							alt="..." src="../image/chucheon_icon.png"></a>
 					</div>
+					
 				</div>
 				<div class="row row-cols-2 chucheon-card">
 					<div class="col chucheon-card-se">
