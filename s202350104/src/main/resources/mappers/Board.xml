@@ -138,8 +138,9 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code,
-		        	   a.status, a.is_deleted, a.updated_at
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code,
+		         	   a.small_code, a.file_name, a.file_path, a.status, a.is_deleted,
+		         	   a.updated_at
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 5
@@ -222,6 +223,8 @@
 			title = #{title},
 			content = #{content},
 			file_name = #{file_name},
+			file_path = #{file_path},
+			file_size = #{file_size},
 			updated_at = sysdate
 		where id = #{id}
 	</update>

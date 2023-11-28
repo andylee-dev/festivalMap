@@ -1,12 +1,15 @@
 package com.oracle.s202350104.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
@@ -16,6 +19,7 @@ import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.user.UserService;
+import com.oracle.s202350104.utils.FileUploadDeleteUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -270,16 +274,81 @@ public class AdminNoticeController {
 	
 	// 통합게시판 수정 Logic
 	@PostMapping(value = "/noticeUpdate")
-	public String noticeUpdate(Board board, int userId, Model model) {
-		
+	public String noticeUpdate(Board board, int userId,  MultipartFile file, Model model) {
+		// value 확인용
+		log.info("AdminNoticeController boardUpdate getFile_name : {}", board.getFile_name());
+		log.info("AdminNoticeController boardUpdate getOriginalFilename : {}", file.getOriginalFilename().length());		
 		log.info("AdminNoticeController noticeUpdate getTitle : {}", board.getTitle());
+
+		// File upload Logic
+		String pathDB = null;
+		String fileName = null;
+		String realFileSize = null;
+		FileUploadDeleteUtil fileUploadDeleteUtil = new FileUploadDeleteUtil();
+		int realName = file.getOriginalFilename().length();
 		
-		int updateNotice = boardService.boardUpdate(board);
+		try {
+			log.info("BoardController boardUpdate realName : {}", realName);
+			
+			// DB에 저장 된 파일명 조회
+			board = boardService.boardRead(board.getId());
+
+			// DB에 저장 된 파일명 가져오기
+			fileName = board.getFile_name();
+			
+			// 기존 첨부파일 삭제(로컬)
+			fileUploadDeleteUtil.deleteFile(fileName);				
+			
+			// 파일 값이 있으면 저장
+			if (realName > 0) {
+				log.info("BoardController boardUpdate File Start!!");
+			
+				String[] uploadResult = fileUploadDeleteUtil.uploadFile(file);
+
+				fileName = uploadResult[0];
+				pathDB = uploadResult[1];
+				realFileSize = uploadResult[2];
+
+			} else {
+				log.info("BoardController boardUpdate File Save False! = Null!");
+			}
+
+		} catch (Exception e) {
+			log.error("BoardController File upload error : {}", e.getMessage());
+		} finally {
+			log.info("BoardController boardUpdate File End..");
+		}
 		
-		log.info("AdminNoticeController noticeUpdate updateNotice : {}", updateNotice);
-		
-		model.addAttribute("board", updateNotice);
+		// 게시물 생성 Logic(초기화)
+		int updateNotice = 0;
+		// User ID 값이 있어야만 실행
+		board.setUser_id(userId);
+
+		if (board.getUser_id() > 0) {
+			log.info("BoardController boardUpdate Start!!");
+			log.info("BoardController boardUpdate realName : {}", realName);
+
+			if (realName > 0) {
+				log.info("BoardController boardUpdate image Start!!");
+				// File명, 경로 setting
+				board.setFile_name(fileName);
+				board.setFile_path(pathDB);
+				board.setFile_size(realFileSize);
+
+				updateNotice = boardService.boardUpdate(board);
+
+			} else {
+				log.info("BoardController boardUpdate normal Start!!");
+				updateNotice = boardService.boardUpdate(board);
+			}
+			log.info("AdminNoticeController noticeUpdate updateNotice : {}", updateNotice);
+			model.addAttribute("board", updateNotice);
+		}
+
+		log.info("BoardController boardUpdate userId : {}", userId);
+
 		model.addAttribute("userId", userId);
+
 		
 		return "forward:noticeDetail";
 	}	

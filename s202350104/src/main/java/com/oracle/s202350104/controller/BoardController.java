@@ -483,31 +483,33 @@ public class BoardController {
 		log.info("BoardController boardUpdate getOriginalFilename : {}", file.getOriginalFilename().length());
 
 		// File upload Logic
-		UUID uuid = UUID.randomUUID();
 		String pathDB = null;
 		String fileName = null;
-		String realPath = null;
+		String realFileSize = null;
+		FileUploadDeleteUtil fileUploadDeleteUtil = new FileUploadDeleteUtil();
 		int realName = file.getOriginalFilename().length();
 
 		try {
 			log.info("BoardController boardUpdate realName : {}", realName);
+			
+			// DB에 저장 된 파일명 조회
+			board = boardService.boardRead(board.getId());
+
+			// DB에 저장 된 파일명 가져오기
+			fileName = board.getFile_name();
+			
+			// 기존 첨부파일 삭제(로컬)
+			fileUploadDeleteUtil.deleteFile(fileName);		
+			
 			// 파일 값이 있으면 저장
 			if (realName > 0) {
 				log.info("BoardController boardUpdate File Start!!");
-				fileName = uuid + "_" + file.getOriginalFilename();
+				
+				String[] uploadResult = fileUploadDeleteUtil.uploadFile(file);
 
-				pathDB = "..\\photos\\";
-
-				realPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\photos";
-
-				File savaFile = new File(realPath, fileName);
-
-				log.info("BannerController fileName : {}", fileName);
-				log.info("BannerController pathDB : {}", pathDB);
-				log.info("BannerController realPath : {}", realPath);
-				log.info("BannerController savaFile : {}", savaFile);
-
-				file.transferTo(savaFile);
+				fileName = uploadResult[0];
+				pathDB = uploadResult[1];
+				realFileSize = uploadResult[2];
 
 			} else {
 				log.info("BoardController boardUpdate File Save False! = Null!");
@@ -533,6 +535,7 @@ public class BoardController {
 				// File명, 경로 setting
 				board.setFile_name(fileName);
 				board.setFile_path(pathDB);
+				board.setFile_size(realFileSize);
 
 				updateBoard = boardService.boardUpdate(board);
 			} else {

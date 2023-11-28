@@ -184,7 +184,7 @@ h3 {
 								</c:choose>
 							</div>
 							<div class="container p-5" id="form-container">
-								<form action="noticeUpdate" method="post">
+								<form action="noticeUpdate" method="post" enctype="multipart/form-data">
 									<div class="mb-3">
 										<label for="id" class="form-label">게시판&nbsp;ID</label> 
 										<input type="text" class="form-control" name="id" id="id"
@@ -207,10 +207,11 @@ h3 {
 												  rows="5">${board.content}</textarea>
 									</div>
 
-									<%-- 						<div class="mb-3 ">
-						  <label for="image" class="form-label">이미지</label>
-						  <input type="text" class="form-control" name="phone" id="phone" value="${banner.image} ">
-						</div>	 --%>
+									<div class="mb-3 ">
+										<label for="file" class="form-label">이미지</label>
+										<input type="file" class="form-control" name="file" id="file">
+										<p>기존&nbsp;파일&nbsp;:&nbsp;<span>${board.file_name_custom }</span></p>
+									</div>
 
 									<hr class="hr" />
 
