@@ -62,7 +62,7 @@ public class CourseController {
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
-			model.addAttribute("CourseListSmallCode", courseListSmallCode);
+			model.addAttribute("courseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
 			model.addAttribute("path", path);
 			
@@ -124,6 +124,7 @@ public class CourseController {
 			String big_code = request.getParameter("big_code");
 			String keyword = request.getParameter("keyword");
 			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
 			
 			// 코스의 전체 list의 수를 나타냄.
 			int courseCount = cs.courseCount(course);
@@ -144,7 +145,7 @@ public class CourseController {
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
-			model.addAttribute("CourseListSmallCode", courseListSmallCode);
+			model.addAttribute("courseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
 			model.addAttribute("path", path);
 			model.addAttribute("small_code", small_code);
