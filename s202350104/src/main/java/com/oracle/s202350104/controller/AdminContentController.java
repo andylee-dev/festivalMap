@@ -902,10 +902,15 @@ import lombok.RequiredArgsConstructor;
 	@RequestMapping(value = "accomodationInsertForm")
 	public String accomodationInsertForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "start");
 			List<CommonCodes> listCodes = cs.listCommonCode();
 			List<Areas> listAreas = ars.listAreas();
+			int user_id = us.getLoggedInId();
+			
+			
+			model.addAttribute("userId", user_id);
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 		} catch (Exception e) {
@@ -919,8 +924,13 @@ import lombok.RequiredArgsConstructor;
 	@RequestMapping(value = "accomodationInsert")
 	public String accomodationInsert(AccomodationContent accomodation, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		int role = us.getLoggedInUserRole();
+		String user_id = String.valueOf(us.getLoggedInId());
+		log.info("role->"+role);
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "start");
+			
+			accomodation.setUser_id(user_id);
 			as.insertAccomodation(accomodation);
 			
 		} catch (Exception e) {

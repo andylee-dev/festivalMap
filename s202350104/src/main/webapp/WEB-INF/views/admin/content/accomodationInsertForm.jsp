@@ -152,6 +152,7 @@
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">숙소 이름(필수 입력)</label>
 						  <input type="text" class="form-control" name="title" id="title" value="${accomodaiton.title}" required="required">
+						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
 						</div>
 						<div class="mb-3" id="detail-content-title">
 						  <label for="small_code" class="form-label">숙소 종류(필수 선택)</label>
