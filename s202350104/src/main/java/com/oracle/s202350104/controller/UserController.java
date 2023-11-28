@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,11 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.CommonCodes;
+import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.model.Qna;
@@ -38,6 +41,7 @@ import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.model.Favorite;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CommonCodeService;
+import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.PointHistoryService;
@@ -64,6 +68,7 @@ public class UserController {
 	private final FavoriteService fs;
 	private final BoardService boardService;
 	private final PointHistoryService pointHistoryService;
+	private final ContentSerivce contentService;
 	
 	@RequestMapping(value = "user")
 	public String userList() {
@@ -201,12 +206,48 @@ public class UserController {
 	}
 
 	@RequestMapping(value="bizPage")
-	public String bizPage() {
+	public String bizPage(Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "bizPage", "Start");
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "bizPage", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "bizPage", "End");
+		}		
 		return "user/bizPage/index";
 	}
 
 	@RequestMapping(value="bizPage/content")
-	public String bizContent() {
+	public String bizContent(Model model ,Contents content, String currentPage ) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "bizContent", "Start");
+			
+			Contents contents = new Contents();
+			contents.setUser_id(String.valueOf(us.getLoggedInId()));
+			int totalCotnents = contentService.getTotalSearchCount(contents);
+			log.info("totalCotnents:{}",totalCotnents);
+
+			Paging page = new Paging(totalCotnents, currentPage);
+			content.setStart(page.getStart());
+			content.setEnd(page.getEnd());
+			
+			List<Contents> contentsList = contentService.getSearchContentsList(contents);
+			if(contentsList == null) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "컨텐츠 리스트가 존재하지 않습니다.");
+			}
+			model.addAttribute("page", page);			
+			model.addAttribute("contentsList", contentsList);
+			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "bizContent", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "bizContent", "End");
+		}		
+		
+		
 		return "user/bizPage/bizContentList";
 	}
 

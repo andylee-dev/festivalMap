@@ -153,6 +153,9 @@
 	 		<if test="status != null">
 				AND	status = #{status}	
 			</if>
+	 		<if test="user_id != null">
+				AND	user_id = #{user_id}	
+			</if>
      		) 
 	 		<if test="start != 0 and end != 0">     		
 				WHERE rn between #{start} and #{end}
@@ -177,6 +180,9 @@
 		</if>
  		<if test="status != null">
 			AND	status = #{status}	
+		</if>
+ 		<if test="user_id != null">
+			AND	user_id = #{user_id}	
 		</if>
 	</select>	
 
