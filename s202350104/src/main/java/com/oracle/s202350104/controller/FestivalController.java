@@ -133,8 +133,8 @@ public class FestivalController {
 		log.info("FestivalController review Start!!");
 		
 		int bigCode = 2;
-		// 분류 code 강제 지정
-		int smallCode = 6;
+		int smallCode = 6; // 분류 code 강제 지정
+		String reviewCurrentPage = "1";
 		int userId = us.getLoggedInId();
 		int countBoard = 0;
 		
@@ -154,22 +154,25 @@ public class FestivalController {
 		try {
 			// smallCode를 이용해 countBoard를 설정
 			countBoard = boardService.boardCount2(board);
+			log.info("FestivalController reviewBoardList totalBoard : {} ", countBoard);
 			
 			// Paging 작업
 			// Parameter board page 추가
-			Paging page = new Paging(countBoard, currentPage);			
+			Paging page = new Paging(countBoard, reviewCurrentPage);			
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			log.info("FestivalController revicewAllList size : {}", reviewAllList.size());
 			double reviewCount = boardService.getReviewCount(board); 
+			log.info("FestivalController reviewCount : {}", reviewCount);		
 			
 			log.info("FestivalController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("FestivalController reviewBoardList before board.getEnd : {} ", board.getEnd());
 			log.info("FestivalController reviewBoardList before board.getContent_id : {} ", board.getContent_id());
 			log.info("FestivalController revicewAllList size : {}", reviewAllList.size());
-			log.info("FestivalController reviewCount : {}", reviewCount);
+
 
 			if(reviewAllList.size() != 0) {
 				bigCode = reviewAllList.get(0).getBig_code();
@@ -177,7 +180,7 @@ public class FestivalController {
 				log.error("FestivalController review 값이 없습니다.");
 			}
 
-			log.info("FestivalController reviewBoardList totalBoard : {} ", countBoard);
+
 			log.info("FestivalController reviewBoardList smallCode : {} ", smallCode);
 			log.info("FestivalController reviewBoardList page : {} ", page);
 

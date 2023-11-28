@@ -131,8 +131,8 @@ public class SpotController {
 		log.info("SpotController review Start!!");
 		
 		int bigCode = 2;
-		// 분류 code 강제 지정
-		int smallCode = 6;
+		int smallCode = 6; // 분류 code 강제 지정
+		String reviewCurrentPage = "1";
 		int userId = us.getLoggedInId();
 		int countBoard = 0;
 		
@@ -146,7 +146,7 @@ public class SpotController {
 
 			// Paging 작업
 			// Parameter board page 추가
-			Paging page = new Paging(countBoard, currentPage);
+			Paging page = new Paging(countBoard, reviewCurrentPage);
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
