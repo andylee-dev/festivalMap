@@ -1218,7 +1218,10 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsertForm", "start");
 				List<CommonCodes> listCodes = cs.listCommonCode();
+				int user_id = us.getLoggedInId();
 				
+				
+				model.addAttribute("userId", user_id);
 				model.addAttribute("listCodes", listCodes);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin experienceInsertForm", e.getMessage());

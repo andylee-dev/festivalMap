@@ -242,9 +242,6 @@
 					</c:if>
 				</c:forEach>
 				<div class="col image-custom">
-					<img alt="favorite_icon.png" src="../image/favorite_icon.png">
-				</div>
-				<div class="col image-custom">
 					<img alt="share_icon.png" src="../image/share_icon.png">
 				</div>
 			</div>
