@@ -23,4 +23,9 @@ public class PointHistory {
     //포인트 조회용
     private String point_title;
     private String point_point;
+    
+    //페이징 작업용
+ 	private String pageNum;
+ 	private int    start;
+ 	private int    end;
 }

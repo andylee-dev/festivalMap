@@ -37,8 +37,8 @@ import lombok.extern.slf4j.Slf4j;
 		}
 	
 		@Override
-		public int deletePointHistory(int point_id) {
-			int result = phd.deletePointHistory(point_id);
+		public int deletePointHistory(Integer id) {
+			int result = phd.deletePointHistory(id);
 	        if(result == 0) {
 	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 포인트 내역이 없습니다");
 	        }
@@ -96,4 +96,10 @@ import lombok.extern.slf4j.Slf4j;
 
 		    return searchResult;
 	}
+
+		@Override
+		public int totalpointHistory() {
+			int totalpointHistory = phd.totalpointHistory();
+			return totalpointHistory;
+		}
 }

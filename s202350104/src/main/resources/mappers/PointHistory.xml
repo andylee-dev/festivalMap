@@ -6,7 +6,7 @@
 
 	<select id="pointhistoryAll" resultType="pointhistory">
 
-   	 	SELECT u.name as user_name, p.title as point_title, p.point as point_point, ph.user_id, ph.point_id, ph.created_at
+   	 	SELECT u.name as user_name, p.title as point_title, p.point as point_point, ph.user_id, ph.point_id, ph.created_at, ph.id
     	FROM pointhistory ph, users u, point p
     	WHERE ph.user_id = u.id
     	AND ph.point_id = p.id
@@ -14,7 +14,8 @@
 	</select>
 
 	<delete id="deletePointHistory" parameterType="int">
-		DELETE FROM pointhistory WHERE point_id = #{point_id}
+		DELETE FROM pointhistory
+		WHERE id = #{id}
 	</delete>
 
 	<insert id="writePointHistory" parameterType="pointhistory">
@@ -52,6 +53,12 @@
             OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
         )
     </select>
-	
+    
+   <select id="PointHistoryTotal" resultType="int">
+   	SELECT count(*)
+   	FROM pointhistory ph, users u, point p
+   	WHERE ph.user_id = u.id
+    AND ph.point_id = p.id
+	</select>
 
 </mapper>

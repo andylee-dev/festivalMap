@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Point;
 import com.oracle.s202350104.model.PointHistory;
+import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PointHistoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,20 +25,42 @@ public class AdminPointHistoryController {
 	private final PointHistoryService phs;
 	
 	@GetMapping(value = "/admin/point/pointhistory")
-		public String pointhistory(PointHistory pointhistory, Model model) {
+		public String pointhistory(PointHistory pointhistory, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		int path = 0;
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "pointhistory", "start");
+		int totalpointhistory = phs.totalpointHistory();
+		
+		Paging page = new Paging(totalpointhistory, currentPage);
+
+		pointhistory.setStart(page.getStart());
+		pointhistory.setEnd(page.getEnd());
 		
 		List<PointHistory> listPointHistory = phs.listPointHistory();
 		List<PointHistory> sortedList = phs.listPointHistorySortedByDateDesc(listPointHistory);
 
         model.addAttribute("listPointHistory", sortedList);
+        model.addAttribute("totalpointHistory", totalpointhistory);
+        model.addAttribute("page",page);
+		model.addAttribute("path",path);
+		
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
+		}
 		
 		return "admin/point/pointhistory";
 		
 	}
 	
 	@RequestMapping(value = "/admin/point/deletePointHistory")
-	public String deletePointHistory(int point_id, Model model) {
-		phs.deletePointHistory(point_id);
+	public String deletePointHistory(Integer id, Model model) {
+		
+		phs.deletePointHistory(id);
 	   
 		return "redirect:/admin/point/pointhistory";
 	}

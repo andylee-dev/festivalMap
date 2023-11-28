@@ -8,10 +8,12 @@ public interface PointHistoryDao {
 	
 	List<PointHistory>	listPointHistory();
 
-	int                 deletePointHistory(int point_id);
+	int                 deletePointHistory(Integer id);
 
 	void                writePointHistory(PointHistory pointhistory);
 	
 	List<PointHistory>  getPointHistoryByUserId(int user_id);
+
+	int                 totalpointHistory();
 
 }

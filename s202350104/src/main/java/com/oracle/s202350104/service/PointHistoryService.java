@@ -8,7 +8,7 @@ public interface PointHistoryService {
 	
 	List<PointHistory>		listPointHistory();
 
-	int 					deletePointHistory(int point_id);
+	int 					deletePointHistory(Integer id);
 
 	void                    writePointHistory(PointHistory pointhistory);
 	
@@ -17,4 +17,6 @@ public interface PointHistoryService {
 	List<PointHistory>      listPointHistorySortedByDateDesc(List<PointHistory> listPointHistory);
 
 	List<PointHistory>      searchPointHistory(String search, String keyword);
+
+	int                     totalpointHistory();
 }
