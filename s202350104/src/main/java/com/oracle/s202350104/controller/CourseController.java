@@ -152,6 +152,7 @@ public class CourseController {
 			model.addAttribute("big_code", big_code);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
 			
 		} catch (Exception e) {
 			log.error("CourseController courses1 e.getMessage() ->" + e.getMessage());

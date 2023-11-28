@@ -26,6 +26,9 @@
 			    <if test="sigungu != 0 and sigungu != null">
 			        AND sigungu = #{sigungu}
 			    </if>
+			    <if test="sigungu == null">
+		            AND sigungu = 0
+		        </if>
 			</if>
 			<if test="small_code != null and small_code != 0 and small_code != 999">
 				AND small_code = #{small_code}  
@@ -66,6 +69,9 @@
 			            <if test="sigungu != 0 and sigungu != null">
 			                AND b.sigungu = #{sigungu}
 			            </if>
+			            <if test="sigungu == null">
+				            AND sigungu = 0
+				        </if>
 			        </if>
 			        <if test="small_code != null and small_code !=0">
 						<choose>
