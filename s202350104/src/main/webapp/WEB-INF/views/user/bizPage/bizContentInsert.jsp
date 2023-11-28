@@ -150,11 +150,10 @@
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
 			  
-			  
 			<div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
 			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/festivalInsert" method="post">
-						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
+					<form action="<%=request.getContextPath()%>/bizFestivalInsert" method="post">
+						<input type="hidden" name="user_id" value="${userId}">
 						<table class="table table-striped table-sm">
 							<tr>
 								<th>분류</th>
@@ -238,7 +237,7 @@
 							<tr>
 								<th>태그</th>
 								<td>
-									 <div class="container">
+									 <%-- <div class="container">
 										<div class="row mb-3 g-3">
 						      			  <div class="col-md-4">
 						         			 <select class="form-select" id="validationTagsClear" name="tagsClear[]" multiple data-allow-clear="true">
@@ -250,7 +249,7 @@
 									          <div class="invalid-feedback">유효한 태그를 선택해주세요.</div>
 									        </div>
 									      </div>
-						  			</div>
+						  			</div> --%>
 								</td>
 							</tr>
 							<tr>

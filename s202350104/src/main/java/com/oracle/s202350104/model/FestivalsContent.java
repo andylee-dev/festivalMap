@@ -1,6 +1,6 @@
 package com.oracle.s202350104.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;

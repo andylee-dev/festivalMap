@@ -258,8 +258,12 @@ public class UserController {
 		
 		List<CommonCodes> listCodes = cs.listCommonCode();
 		List<Tags> listTags = ts.listTags(tag);
+		// 로그인한 아이디 저장(신청자 아이디)
+		int userId = us.getLoggedInId(); 
+		
 		model.addAttribute("listTags", listTags);
 		model.addAttribute("listCodes", listCodes);
+		model.addAttribute("userId", userId);
 		
 		return "user/bizPage/bizContentInsert";
 	}

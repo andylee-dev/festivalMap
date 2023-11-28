@@ -202,6 +202,27 @@ public class FestivalController {
 		return "festival/festivalDetail";
 	}
 	
+	// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리
+	@RequestMapping(value = "bizFestivalInsert")
+	public String festivalInsert(FestivalsContent festival, Model model) {
+		UUID transactionId = UUID.randomUUID();
+				
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
+					
+			// festival을 insert한 결과를 result에 저장
+			int result = fs.insertFestival(festival);
+			log.info("Controller festivalInsert result => "+result);
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin festivalInsert", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "end");
+		}		
+				
+		return "redirect:user/bizPage/content";
+	}
+	
 	@RequestMapping(value = "festival/recommend")
 	public String festivalRecommendation() {
 		UUID transactionId = UUID.randomUUID();
