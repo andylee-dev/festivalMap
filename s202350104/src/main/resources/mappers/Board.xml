@@ -141,7 +141,8 @@
 				select rownum rn, e.*
 				from (
 		               select a.id, c.title, a.content_id, a.content, b.name, a.score,
-		               		  a.created_at, a.updated_at, a.big_code, a.small_code
+		               		  a.created_at, a.updated_at, a.big_code, a.small_code,
+		               		  a.status, a.is_deleted
 		               from 
 		                    board a
 		               join 
@@ -166,7 +167,8 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.user_id, a.content, b.name, b.nickname, a.created_at, a.read_count, a.big_code, a.small_code
+		        select a.id, a.user_id, a.content, b.name, b.nickname, a.created_at, a.read_count, 
+		       		   a.big_code, a.small_code, a.status, a.is_deleted
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 6

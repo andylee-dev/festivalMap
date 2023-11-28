@@ -218,10 +218,10 @@ h3 {
 								<label id="detail-top-text" style="margin-right: 4px;">${banner.id}&nbsp;ㅣ</label>
 								<c:choose>
 									<c:when test="${banner.status == 0}">
-										<label id="detail-top-id2" style="color: #FF4379;">미사용중</label>
+										<label id="detail-top-id2" style="color: #FF4379;">미사용</label>
 									</c:when>
 									<c:when test="${banner.status == 1}">
-										<label id="detail-top-id2">사용중</label>
+										<label id="detail-top-id2">사용</label>
 									</c:when>
 								</c:choose>
 							</div>

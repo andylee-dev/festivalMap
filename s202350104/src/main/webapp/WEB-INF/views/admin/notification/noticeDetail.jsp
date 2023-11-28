@@ -58,7 +58,7 @@
 <style type="text/css">
 #detail-top-container {
 	position: absolute;
-	width: 250px;
+	width: 220px;
 	height: 83px;
 	border-radius: 10px;
 	border: 1px solid #000;
@@ -219,7 +219,7 @@ h3 {
 					<div class="my-5">
 						<div class="" id="detail-main-container">
 							<div class="container d-flex justify-content-content"
-								 id="detail-top-container" style="width: 240px;">
+								 id="detail-top-container">
 								 <c:choose>
 								 	<c:when test="${board.small_code eq 1}">
 										<label id="detail-top-text" style="margin-right: 4px;">공지사항&nbsp;ㅣ </label> 								 	
@@ -231,10 +231,10 @@ h3 {
 								<label id="detail-top-text" style="margin-right: 4px;">${board.id}&nbsp;ㅣ</label>
 								<c:choose>
 									<c:when test="${board.status == 0}">
-										<label id="detail-top-id2" style="color: #FF4379;">미사용중</label>
+										<label id="detail-top-id2" style="color: #FF4379;">미사용</label>
 									</c:when>
 									<c:when test="${board.status == 1}">
-										<label id="detail-top-id2">사용중</label>
+										<label id="detail-top-id2">사용</label>
 									</c:when>
 								</c:choose>
 							</div>

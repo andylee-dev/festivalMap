@@ -223,7 +223,7 @@ public class AdminNoticeController {
 		return redirectURL;
 	}
 	
-	// Banner 복원 Logic
+	// notice 복원 Logic
 	@RequestMapping(value = "/noticeRecycle")
 	public String noticeRecycle(int id, Model model) {
 		// value 확인용

@@ -238,6 +238,69 @@ public class AdminCommunityController {
 		
 		return "forward:communityDetail";
 	}
-
+	
+	// notice 삭제 Logic(New, status로 삭제 여부)
+	@RequestMapping(value = "/communityDelete")
+	public String communityDelete(int id, Model model) {
+		// value 확인용
+		log.info("AdminCommunityController communityDelete id : {}", id);
+		
+		// 복원 Logic
+		String redirectURL = "";
+		int deleteDelete = 0;
+		
+		try {
+		 	log.info("AdminCommunityController communityDelete Start!!");
+			
+		 	deleteDelete = boardService.boardDeleteNew(id);
+		 	
+		 	// 결과값에 따라 redirect 경로 지정
+			if (deleteDelete > 0) {
+				redirectURL = "redirect:/admin/community/magazin";
+				
+			} else {
+				model.addAttribute("msg", "복원 실패!!, 관리자에게 문의해주세요.");
+				redirectURL = "redirect:/admin/community/magazin";
+			}
+			
+		} catch (Exception e) {
+			log.error("AdminCommunityController communityDelete errer : {}", e.getMessage());
+		}
+		
+		// 결과값에 따른 경로 이동
+		return redirectURL;
+	}
+	
+	// notice 복원 Logic
+	@RequestMapping(value = "/communityRecycle")
+	public String communityRecycle(int id, Model model) {
+		// value 확인용
+		log.info("AdminCommunityController communityRecycle id : {}", id);
+		
+		// 복원 Logic
+		String redirectURL = "";
+		int recycleNotice = 0;
+		
+		try {
+			log.info("AdminCommunityController communityRecycle Start!!");
+			
+			recycleNotice = boardService.boardRecycle(id);
+			
+			// 결과값에 따라 redirect 경로 지정
+			if (recycleNotice > 0) {
+				redirectURL = "redirect:/admin/community/magazin";
+				
+			} else {
+				model.addAttribute("msg", "복원 실패!!, 관리자에게 문의해주세요.");
+				redirectURL = "redirect:/admin/community/magazin";
+			}
+			
+		} catch (Exception e) {
+			log.error("AdminCommunityController communityRecycle errer : {}", e.getMessage());
+		}
+		
+		// 결과값에 따른 경로 이동
+		return redirectURL;
+	}
 
 }

@@ -20,10 +20,10 @@
 					<div class="container m-4">
 						<i class="title-bi bi bi-file-text-fill "></i>
 						<c:choose>
-							<c:when test="${smallCode == 2}">
+							<c:when test="${smallCode eq 2}">
 								<label  class="admin-header-title ">이달의 소식 관리</label>
 							</c:when>
-							<c:when test="${smallCode == 3}">
+							<c:when test="${smallCode eq 3}">
 								<label  class="admin-header-title ">자유게시판 관리</label>
 							</c:when>
 					    	<c:otherwise>
@@ -76,7 +76,11 @@
 										<th scope="col">제목</th>
 										<th scope="col">작성자</th>
 										<th scope="col">등록일</th>
-										<th scope="col">수정일</th>
+										<c:if test="${smallCode eq 2 || smallCode eq 3}">
+											<th scope="col">수정일</th>
+										</c:if>
+										<th scope="col">게시여부</th>
+										<th scope="col">삭제여부</th>
 										<th scope="col">관리</th>
 									</tr>
 								</thead>
@@ -94,7 +98,26 @@
 											</c:choose>
 											<td>${boards.name }</td>
 											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
+											<c:if test="${smallCode eq 2 || smallCode eq 3}">
 											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
+											</c:if>	
+											<c:choose>
+												<c:when test="${boards.status eq 0}">
+													<td>N</td>
+												</c:when>
+												<c:when test="${boards.status eq 1}">
+													<td>Y</td>
+												</c:when>
+											</c:choose>																				
+											<c:choose>
+												<c:when test="${boards.is_deleted eq 0}">
+													<td>N</td>
+												</c:when>
+												<c:when test="${boards.is_deleted eq 1}">
+													<td>Y</td>
+												</c:when>
+											</c:choose>	
+										
 											<td><a class="detail-btn" href="communityDetail?id=${boards.id}&userId=${userId}">관리</a></td>
 <%-- 											<td><a class="detail-btn" href="../../boardUpdateForm?id=${boards.id}&userId=${userId}">관리</a></td> --%>
 <%-- 											<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td> --%>

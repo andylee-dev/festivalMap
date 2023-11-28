@@ -14,11 +14,12 @@
 	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
 	            $.ajax({
 	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'boardDelete',
+	                url: 'communityDelete',
 	                data: { id: id },
 	                success: function(result) {
 	                    // 성공적으로 삭제된 경우의 처리
 	                    alert('삭제되었습니다.');
+	                    location.reload();
 	                },
 	                error: function(xhr, status, error) {
 	                    // 오류 발생 시의 처리
@@ -35,7 +36,7 @@
 	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
 	            $.ajax({
 	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'bannerRestore',
+	                url: 'communityRecycle',
 	                data: { id: id },
 	                success: function(result) {
 	                    // 성공적으로 복원된 경우의 처리
@@ -52,26 +53,6 @@
 	            // 필요한 로직을 추가하세요.
 	        }
 	    }
-			
-			function approveConfirm() {
-				var contentId = Number(${experience.content_id});
-				var status = "${experience.status}";
-				if(confirm("승인하시겠습니까?")) {
-					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
-				}
-			}			
-			
-			function approveConfirm1() {
-				var contentId = Number(${experience.content_id});
-				var status = "${experience.status}";
-				if(confirm("반려전환 하시겠습니까?")) {
-					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
-				}
-			}
-			
-			function openRejectionPopup(contentId) {
-			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
-			}
 			
 		</script>
 <style type="text/css">
@@ -246,7 +227,7 @@ h3 {
 					<div class="my-5">
 						<div class="" id="detail-main-container">
 							<div class="container d-flex justify-content-content"
-								 id="detail-top-container" style="width: 240px;">
+								 id="detail-top-container">
 								 <c:choose>
 								 	<c:when test="${board.small_code eq 2}">
 										<label id="detail-top-text" style="margin-right: 4px;">이달의매거진&nbsp;ㅣ </label> 								 	
@@ -261,10 +242,10 @@ h3 {
 								<label id="detail-top-text" style="margin-right: 4px;">${board.id}&nbsp;ㅣ</label>
 								<c:choose>
 									<c:when test="${board.status == 0}">
-										<label id="detail-top-id2" style="color: #FF4379;">미사용중</label>
+										<label id="detail-top-id2" style="color: #FF4379;">미사용</label>
 									</c:when>
 									<c:when test="${board.status == 1}">
-										<label id="detail-top-id2">사용중</label>
+										<label id="detail-top-id2">사용</label>
 									</c:when>
 								</c:choose>
 							</div>
@@ -304,15 +285,24 @@ h3 {
 										<c:when test="${board.status == 0}">
 											<div class="col-3 mb-3" style="margin-right: 10px;">
 												<button type="button" class="form-control btn btn-primary w-100"
-														onclick="approveConfirm()">사용&nbsp;전환</button>
+														onclick="confirmRestore(${board.id})">사용&nbsp;전환</button>
 											</div>
-											<div class="col-3 mb-3" style="margin-right: 10px;">
-												<button type="button" class="btn btn-outline-secondary w-100"
-													    onclick="confirmDelete(${board.id})">삭제</button>
-											</div>
+
 											<div class="col-3 mb-3">
+												<c:choose>
+												<c:when test="${board.small_code eq 2 }">
 												<button type="button" class="btn btn-outline-secondary w-100"
-													    onclick="location.href='../community/board?currentPage=1'">목록</button>
+														onclick="location.href='../community/magazin?currentPage=1'">목록</button>												
+												</c:when>
+												<c:when test="${board.small_code eq 3 }">
+												<button type="button" class="btn btn-outline-secondary w-100"
+														onclick="location.href='../community/board?currentPage=1'">목록</button>												
+												</c:when>
+												<c:when test="${board.small_code eq 6 }">
+												<button type="button" class="btn btn-outline-secondary w-100"
+														onclick="location.href='../community/review?currentPage=1'">목록</button>											
+												</c:when>
+												</c:choose>
 											</div>									
 										</c:when>
 
