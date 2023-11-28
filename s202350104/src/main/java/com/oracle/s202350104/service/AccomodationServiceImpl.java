@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.AccomodationDao;
 import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.RestaurantsContent;
 
 import lombok.RequiredArgsConstructor;
@@ -83,8 +84,8 @@ public class AccomodationServiceImpl implements AccomodationService {
 	}
 
 	@Override
-	public int approveAccomodation(int contentId) {
-		int result = ad.approveAccomodation(contentId);
+	public int approveAccomodation(AccomodationContent accomodation) {
+		int result = ad.approveAccomodation(accomodation);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "숙박 정보 승인에 실패하였습니다.");

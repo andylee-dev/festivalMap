@@ -13,7 +13,7 @@ public interface AccomodationDao {
 	int                             insertContent(AccomodationContent accomodation);
 	int                             insertAccomodation(AccomodationContent accomodation);
 	int                             updateAccomodation(AccomodationContent accomodation);
-	int                             approveAccomodation(int contentId);
+	int                             approveAccomodation(AccomodationContent accomodation);
 	List<AccomodationContent>       listSmallCode(AccomodationContent accomodationContent);
 	List<AccomodationContent>       listSearchAccomodation(AccomodationContent accomodationContent);
 	int                             totalSearchAccomodation(AccomodationContent accomodationContent);

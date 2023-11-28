@@ -219,9 +219,12 @@
 								            </c:forEach>
 								        </select>
 								    </div>
-								    <div class="col-8">
-								    <input type="text" name="address" class="form-control" id="address" value="${accomodation.address} " >
-								    </div>
+								    	<div class="col-2">
+								    		<input type="text" class="form-control" name="postcode" id="postcode" value="${accomodation.postcode}" >
+								    	</div>
+								    	<div class="col-6">
+										    <input type="text" class="form-control" name="address" id="address" value="${accomodation.address} " >
+								    	</div>
 								</div>
 						</div>
 						<div class="mb-3 ">

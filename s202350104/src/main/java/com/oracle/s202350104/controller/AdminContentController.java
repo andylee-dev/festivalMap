@@ -1014,11 +1014,30 @@ import lombok.RequiredArgsConstructor;
 	}
 	
 	@RequestMapping(value = "accomodationApprove")
-	public String accomodationApprove(int contentId, String currentPage, Model model) {
+	public String accomodationApprove(int contentId, String status, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "start");
-			int result = as.approveAccomodation(contentId);
+			
+			AccomodationContent accomodation = new AccomodationContent();
+			
+			accomodation.setContent_id(contentId);
+			
+			log.info("contentId: {}",contentId);
+			log.info(accomodation.getStatus());
+			
+			if (status.equals("0")) {
+				accomodation.setStatus("1");
+
+			} else if(status.equals("1")) {
+				accomodation.setStatus("0");
+			
+			}
+			
+			log.info(accomodation.getStatus());
+			
+			int result = as.approveAccomodation(accomodation);
+			
 			if(result > 0) {
 				model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 			} else {

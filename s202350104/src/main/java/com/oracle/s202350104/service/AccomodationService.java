@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.ExperienceContent;
 
 
 public interface AccomodationService {
@@ -15,7 +16,7 @@ public interface AccomodationService {
 	int                        accomodationDelete(int contentId);
 	void                       insertAccomodation(AccomodationContent accomodation);
 	int                        updateAccomodation(AccomodationContent accomodation);
-	int 					   approveAccomodation(int contentId);
+	int 					   approveAccomodation(AccomodationContent accomodation);
 	List<AccomodationContent>  listSmallCode(AccomodationContent accomodationContent);
 	List<AccomodationContent>  listSearchAccomodation(AccomodationContent accomodationContent);
 	int                        totalSearchAccomodation(AccomodationContent accomodationContent);

@@ -40,23 +40,24 @@
 			
 			function approveConfirm() {
 				var contentId = Number(${accomodation.content_id});
+				var status = "${accomodation.status}";
 				if(confirm("승인하시겠습니까?")) {
-					location.href="../content/accomodationApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="../content/accomodationApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
 				}
 			}
 			
 			function approveConfirm1() {
 				var contentId = Number(${accomodation.content_id}); 
-				var status = "${spot.status}";
-				if(confirm("승인대기로 변경하시겠습니까?")) {
+				var status = $("#accomo_status").val();
+				if(confirm("반려전환 변경하시겠습니까?")) {
 					location.href="../content/accomodationApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
 				}
 			}
 			
 			function openPopup() {
-				var url = "rejectionForm?contentId=${spot.content_id}&bigCode=${spot.big_code}";
+				var url = "rejectionForm?contentId=${accomodaiton.content_id}&bigCode=${accomodaiton.big_code}";
 				var option = "width=1000, height=800";
-				window.name = "spotDetail";
+				window.name = "accomodaitonDetail";
 				window.open(url, "rejection form popup", option);
 			}
 			
@@ -203,7 +204,7 @@
 			<div class="admin-header-container">
 				<div class="container m-4">
 					<i class="title-bi bi bi-pencil-square "></i>
-				<label  class="admin-header-title ">축제 상세 정보 </label>	
+				<label  class="admin-header-title ">숙소 상세 정보 </label>	
 				</div>
 			</div>
 				
@@ -213,8 +214,9 @@
 				<hr class="hr" />
 				</div>
 				<div>
-				<h3 style="color: #FF4379 ">숙소별 상세 정보</h3>
-				</div>
+				<h3 style="color: #FF4379 ">숙소별 상세 정보  </h3>
+				<input type="hidden" id="accomo_status" value="${accomodation.status}">
+				</div>_
 				<div class="my-5">
 				<div class="" id="detail-main-container">
 					<div class="container d-flex justify-content-around" id="detail-top-container">
@@ -277,9 +279,12 @@
 								            </c:forEach>
 								        </select>
 								    </div>
-								    <div class="col-8">
-								    <input type="text" class="form-control" id="address" value="${accomodation.address} " readonly>
-								    </div>
+								    	<div class="col-2">
+								    		<input type="text" class="form-control" name="postcode" id="postcode" value="${accomodation.postcode}" readonly>
+								    	</div>
+								    	<div class="col-6">
+										    <input type="text" class="form-control" id="address" value="${accomodation.address} " readonly>
+								    	</div>
 								</div>
 						</div>
 						<div class="mb-3 ">

@@ -123,10 +123,10 @@ public class AccomodationDaoImpl implements AccomodationDao {
 	}
 
 	@Override
-	public int approveAccomodation(int contentId) {
+	public int approveAccomodation(AccomodationContent accomodation) {
 		int result = 0;
 		try {
-			result = session.update("AccomodationApprove", contentId);
+			result = session.update("AccomodationApprove", accomodation);
 		} catch(Exception e) {
 			log.info("AccomodationDaoImpl approveFestival Exception => " + e.getMessage());
 		}

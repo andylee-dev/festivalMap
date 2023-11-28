@@ -119,8 +119,8 @@
 		WHERE id = #{content_id}
 	</update>
 	
-	<update id="AccomodationApprove" parameterType="int">
-		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	<update id="AccomodationApprove" parameterType="AccomodationContent">
+		UPDATE contents SET status = #{status} WHERE id = #{content_id}
 	</update>
 	
 	<select id="syAccomodationSearchListAll" parameterType="AccomodationContent"  resultType="AccomodationContent">
