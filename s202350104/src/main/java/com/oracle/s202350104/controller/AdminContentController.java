@@ -1194,9 +1194,11 @@ import lombok.RequiredArgsConstructor;
 		public String experienceInsert(ExperienceContent experience, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			int role = us.getLoggedInUserRole();
+			String user_id = String.valueOf(us.getLoggedInId());
 			log.info("role->"+role);
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "start");
+				experience.setUser_id(user_id);
 				int result = es.insertExperience(experience);
 				log.info("result"+result);
 			} catch (Exception e) {
