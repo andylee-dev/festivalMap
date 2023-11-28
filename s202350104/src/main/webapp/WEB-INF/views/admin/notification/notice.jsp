@@ -43,7 +43,7 @@
 									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 									<div class="col-4">
 										<select name="search" class="form-select">
-											<option value="s_name">제목조회</option>
+											<option value="s_name">제목</option>
 										</select> 
 									</div>
 									<div class="col-5 mx-2 d-flex justify-content-center">	
@@ -59,7 +59,7 @@
 									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 									<div class="col-4">
 										<select name="search" class="form-select">
-											<option value="s_name">제목조회</option>
+											<option value="s_name">제목</option>
 										</select> 
 									</div>
 									<div class="col-5 mx-2 d-flex justify-content-center">	
@@ -75,7 +75,7 @@
 									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 									<div class="col-4">
 										<select name="search" class="form-select">
-											<option value="s_name">제목조회</option>
+											<option value="s_name">제목</option>
 										</select> 
 									</div>
 									<div class="col-5 mx-2 d-flex justify-content-center">	

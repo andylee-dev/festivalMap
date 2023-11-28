@@ -168,27 +168,42 @@
 				<c:choose>
 					<c:when test="${userId eq 0 }">
 						<div class="col-md-1">
-							<button class="btn" onclick="closeAndRedirect(${board.small_code })">목록</button>
+							<button class="btn" onclick="closeAndRedirect(${board.small_code })">글&nbsp;목&nbsp;록</button>
 						</div>
 					</c:when>
 					<c:when test="${board.small_code eq 3 }">
-						<div class="col-md-1">
-							<button class="btn" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>
-						</div>
-						<div class="col-md-1">
-							<button class="btn" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>
-						</div>
-						<div class="col-md-1">
-							<button class="btn" onclick="closeAndRedirect(${board.small_code })">글&nbsp;목&nbsp;록</button>
-						</div>
-						<div class="col-md-1 detail-report-custom">
-							<!-- 게시판 신고기능 -송환 -->
-							<button class="btn" onclick="report(${board.id})">신고하기</button>
-						</div>
+						<c:choose>
+							<c:when test="${board.user_id == userId }">	
+								<div class="col-md-1">
+									<button class="btn" onclick="location.href='boardUpdateForm?id=${board.id}&userId=${userId }'">수&nbsp;정</button>
+								</div>
+								<div class="col-md-1">
+									<button class="btn" onclick="location.href='boardDelete?id=${board.id}&userId=${userId }&smallCode=${board.small_code }'">삭&nbsp;제</button>
+								</div>
+								<div class="col-md-1">
+									<button class="btn" onclick="closeAndRedirect(${board.small_code })">글&nbsp;목&nbsp;록</button>
+								</div>	
+								<!-- 게시판 신고기능 -송환 -->															
+								<div class="col-md-1 detail-report-custom">
+									<button class="btn" onclick="report(${board.id})">신고하기</button>
+								</div>																			
+							</c:when>
+							<c:otherwise>
+								<div class="col-md-1">
+									<button class="btn" onclick="closeAndRedirect(${board.small_code })">글&nbsp;목&nbsp;록</button>
+								</div>
+								<div class="col-md-1"></div>
+								<div class="col-md-1"></div>	
+								<!-- 게시판 신고기능 -송환 -->															
+								<div class="col-md-1 detail-report-custom">
+									<button class="btn" onclick="report(${board.id})">신고하기</button>
+								</div>							
+							</c:otherwise>						
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 						<div class="col-md-1">
-							<button class="btn" onclick="closeAndRedirect(${board.small_code })">목록</button>
+							<button class="btn" onclick="closeAndRedirect(${board.small_code })">글&nbsp;목&nbsp;록</button>
 						</div>
 					</c:otherwise>
 				</c:choose>

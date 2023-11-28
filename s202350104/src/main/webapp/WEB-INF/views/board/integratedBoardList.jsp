@@ -143,20 +143,20 @@
 		
 		<!-- 키워드, 검색창 영역 -->
 		<div class="container p-3 keyword_custom">
-			<form id="freeBoardList" action="freeBoardList" method="get">
 			<div class="row align-items-start ">
 				<!-- 자유게시판만 검색창 같이 출력 -->
 				<c:choose>
 					<c:when test="${smallCode == 3}">
 						<div class="col keyword_div_custom">
-							<input class="form-control keyword_custom" type="text" name="keyword" placeholder="&nbsp;키워드를 검색해보세요.">
-							<img src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>																						
+							<form id="freeBoardList" action="freeBoardList" method="get">
+								<input class="form-control keyword_custom" type="text" name="keyword" placeholder="&nbsp;키워드를 검색해보세요.">
+								<img src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>																						
+							</form>
 							<button class="btn btn_custom" onclick="checkUserIdAndNavigate()">글쓰기</button>		
 						</div>
 					</c:when>
 				</c:choose>			
 			</div>
-			</form>
 		</div>
 		
 		<!-- 구분 메뉴 영역 -->

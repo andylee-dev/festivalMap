@@ -207,7 +207,7 @@
 	</select>
 
 	<select id="boardDetail" parameterType="int" resultType="Board">
-		select substr(a.file_name, 38) file_name_custom, a.id, a.title,  
+		select substr(a.file_name, 38) file_name_custom, a.id, a.user_id, a.title,  
 			   a.content, b.name, a.created_at, a.read_count, a.file_name, 
 			   a.file_path, a.big_code, a.small_code, a.comment_group_id,
 			   a.comment_step, a.comment_indent, a.status
@@ -243,7 +243,7 @@
 		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
 			select board_seq_generator.nextval from dual
 		</selectKey>
-		insert into board (id, user_id, big_code, small_code, title, content, st6atus, 
+		insert into board (id, user_id, big_code, small_code, title, content, status, 
 						   read_count, file_name, file_size, file_path, comment_group_id, 
 						   comment_step, comment_indent, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
