@@ -18,6 +18,7 @@
         }
     }
 	</script>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -34,7 +35,7 @@
 				
 				<!-- Section2: Search Form -->
 				<div class="container col-9 justify-content-center my-5">
-					<form action="favoriteSearch" method="GET" container justify-content-center">	
+					<form action="favoriteSearch" method="GET" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
@@ -53,10 +54,11 @@
 				</div>
 									
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
+				<div class="container table-container p-4 align-items-center">
+				<div class="table-responsive">
+					<table id="userTable" class="container">
 						<thead>
-							<tr>
+							<tr class="text-center">
 								<th scope="col">순번</th>
 								<th scope="col">회원ID</th>
 								<th scope="col">이름</th>
@@ -80,6 +82,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
 				</div>
 				
 				<nav aria-label="Page navigation example ">

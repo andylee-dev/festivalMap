@@ -166,26 +166,32 @@ function initKakaoMap() {
 	}
 
 	
-   function like() {
- 	    const favorite = {
+function like() {
+    	
+    	const user_id = ${userId};
+
+        if (user_id === 0) {
+            checkUserIdAndNavigate();
+		} else {
+ 	   		const favorite = {
 			user_id : ${userId},
 			content_id: ${spot.content_id},
-		}
-		$.ajax({
-			method:"POST",
-			url:"/toggleFavoriteAjax",
-			data:JSON.stringify(favorite),
-			dataType:'json',
-			contentType: "application/json",
-			success:
-				function(result) {
-					if(result == 1) {
-						alert("찜했습니다.");
-					} else {
-						alert("찜목록에서 제외했습니다.");
-					}		
-				}
-		})
+		};
+        	$.ajax({
+                method: "POST",
+                url: "/toggleFavoriteAjax",
+                data: JSON.stringify(favorite),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (result) {
+                    if (result == 1) {
+                        alert("찜했습니다.");
+                    } else {
+                        alert("찜목록에서 제외했습니다.");
+                    }
+                }
+            });
+        }
     }
 
 </script>

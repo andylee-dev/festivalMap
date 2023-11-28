@@ -155,7 +155,7 @@ function initKakaoMap() {
     	const user_id = ${userId};
 
         if (user_id === 0) {
-            alert("로그인이 필요합니다.");
+            checkUserIdAndNavigate();
 		} else {
  	   		const favorite = {
 			user_id : ${userId},
