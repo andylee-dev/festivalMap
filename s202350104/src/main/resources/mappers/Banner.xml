@@ -85,7 +85,14 @@
 			update banner
 			set title = #{title},
 				content = #{content},
-				url = #{url}
+				url = #{url},
+				updated_at = sysdate
 			where id = #{id}
 	</update>
+	
+	<update id="bannerRecycle" parameterType="int">
+		update banner 
+		set status = 1 
+		where id = #{id}		
+	</update>	
 </mapper>

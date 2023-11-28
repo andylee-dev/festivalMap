@@ -23,4 +23,6 @@ public interface BannerDao {
 
 	int bannerUpdate(Banner banner);
 
+	int bannerRecycle(int id);
+
 }

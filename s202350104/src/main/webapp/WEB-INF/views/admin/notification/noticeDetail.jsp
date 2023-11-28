@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>배너 상세 정보</title>
+<title>communityDetail</title>
 <link rel="stylesheet" type="text/css"
 	href="/css/adminContentsDetail.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -14,8 +14,8 @@
 	        if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
 	            $.ajax({
 	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'bannerDelete',
-	                data: { id: id },
+	                url: 'noticeDelete',
+	                data: { id: id},
 	                success: function(result) {
 	                    // 성공적으로 삭제된 경우의 처리
 	                    alert('삭제되었습니다.');
@@ -36,8 +36,8 @@
 	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
 	            $.ajax({
 	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'bannerRecycle',
-	                data: { id: id },
+	                url: 'noticeRecycle',
+	                data: { id: id},
 	                success: function(result) {
 	                    // 성공적으로 복원된 경우의 처리
 	                    alert('복원되었습니다.');
@@ -54,31 +54,11 @@
 	        }
 	    }
 			
-			function approveConfirm() {
-				var contentId = Number(${banner.id});
-				var status = "${banner.status}";
-				if(confirm("승인하시겠습니까?")) {
-					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
-				}
-			}			
-			
-			function approveConfirm1() {
-				var contentId = Number(${experience.content_id});
-				var status = "${experience.status}";
-				if(confirm("반려전환 하시겠습니까?")) {
-					location.href="../content/experienceApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
-				}
-			}
-			
-			function openRejectionPopup(contentId) {
-			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
-			}
-			
 		</script>
 <style type="text/css">
 #detail-top-container {
 	position: absolute;
-	width: 200px;
+	width: 250px;
 	height: 83px;
 	border-radius: 10px;
 	border: 1px solid #000;
@@ -197,97 +177,144 @@ h3 {
 			<main class="col-10 p-0">
 				<div class="admin-header-container">
 					<div class="container m-4">
-						<i class="title-bi bi bi-pencil-square "></i> <label
-						   class="admin-header-title ">배너&nbsp;상세&nbsp;정보</label>
+						<i class="title-bi bi bi-pencil-square "></i> 
+						<c:choose>
+							<c:when test="${board.small_code eq 1 }">
+								<label class="admin-header-title ">공지사항&nbsp;상세정보</label>					
+							</c:when>
+							<c:when test="${board.small_code eq 5 }">
+								<label class="admin-header-title ">이벤트&nbsp;상세정보</label>				
+							</c:when>
+						</c:choose>						
 					</div>
 				</div>
 
+
 				<div class="container my-5" id="detail-body-container">
 					<div>
-						<h1>배너&nbsp;관리</h1>
+						<c:choose>
+							<c:when test="${board.small_code eq 1 }">
+								<h1>공지사항&nbsp;관리</h1>						
+							</c:when>
+							<c:when test="${board.small_code eq 5 }">
+								<h1>이벤트&nbsp;관리</h1>					
+							</c:when>
+
+						</c:choose>					
+
 						<hr class="hr" />
 					</div>
+					
 					<div>
-						<h3 style="color: #FF4379">배너별&nbsp;상세&nbsp;정보</h3>
+						<c:choose>
+							<c:when test="${board.small_code eq 1 }">
+								<h3 style="color: #FF4379">공지사항&nbsp;상세정보</h3>							
+							</c:when>
+							<c:when test="${board.small_code eq 5 }">
+								<h3 style="color: #FF4379">이벤트&nbsp;상세정보</h3>						
+							</c:when>
+						</c:choose>
 					</div>
+					
 					<div class="my-5">
 						<div class="" id="detail-main-container">
 							<div class="container d-flex justify-content-content"
-								 id="detail-top-container">
-								<label id="detail-top-text" style="margin-right: 4px;">배너&nbsp;ㅣ </label> 
-								<label id="detail-top-text" style="margin-right: 4px;">${banner.id}&nbsp;ㅣ</label>
+								 id="detail-top-container" style="width: 240px;">
+								 <c:choose>
+								 	<c:when test="${board.small_code eq 1}">
+										<label id="detail-top-text" style="margin-right: 4px;">공지사항&nbsp;ㅣ </label> 								 	
+								 	</c:when>
+								 	<c:when test="${board.small_code eq 5}">
+										<label id="detail-top-text" style="margin-right: 4px;">이벤트&nbsp;ㅣ </label> 								 	
+								 	</c:when>
+								 </c:choose>
+								<label id="detail-top-text" style="margin-right: 4px;">${board.id}&nbsp;ㅣ</label>
 								<c:choose>
-									<c:when test="${banner.status == 0}">
+									<c:when test="${board.status == 0}">
 										<label id="detail-top-id2" style="color: #FF4379;">미사용중</label>
 									</c:when>
-									<c:when test="${banner.status == 1}">
+									<c:when test="${board.status == 1}">
 										<label id="detail-top-id2">사용중</label>
 									</c:when>
 								</c:choose>
 							</div>
 							<div class="container p-5" id="form-container">
 								<div class="mb-3">
-									<label for="id" class="form-label">배너&nbsp;ID</label> 
-									<input type="text" class="form-control" id="id" value="${banner.id}" readonly>
+									<label for="id" class="form-label">게시판&nbsp;ID</label> 
+									<input type="text" class="form-control" id="id" value="${board.id}" readonly>
 								</div>
-
-								<div class="mb-3" id="detail-content-title">
-									<label for="type" class="form-label">배너&nbsp;종류</label> 
-									<input type="text" class="form-control" id="type" value="${banner.type}" readonly>
+								
+								<div class="mb-3">
+									<label for="name" class="form-label">작성자</label> 
+									<input type="text" class="form-control" id="name" value="${board.name}" readonly>
 								</div>
 
 								<div class="mb-3 ">
 									<label for="title" class="form-label">제목</label> 
-									<input type="text" class="form-control" id="title" value="${banner.title}" readonly>
+									<input type="text" class="form-control" id="title" value="${board.title}" readonly>
 								</div>
 
 								<div class="mb-3 ">
 									<label for="content" class="form-label">내용</label> 
-									<input type="text" class="form-control" id="content" value="${banner.content}" readonly>
+									<input type="text" class="form-control" id="content" value="${board.content}" readonly>
 								</div>
-
-								<div class="mb-3 ">
-									<label for="url" class="form-label">URL</label> 
-									<input type="text" class="form-control" id="url" value="${banner.url}" readonly>
-								</div>
-
+								
+								<c:if test="${board.small_code eq 5 }">
 								<div class="mb-3 ">
 									<label for="image" class="form-label">이미지</label><br> 
-									<img alt="${banner.image }" src="${banner.image }"
+									<img alt="${board.file_name }" src="../${board.file_path }${board.file_name}"
 										 style="width: 600px;" height="300px;">
 								</div>
-
+								</c:if>
 								<hr class="hr" />
 
 								<div class="d-flex justify-content-center">
 
 									<c:choose>
-										<c:when test="${banner.status == 0}">
-											<div class="col-3 mb-3" style="margin-right:10px;">
+										<c:when test="${board.status == 0}">
+											<div class="col-3 mb-3" style="margin-right: 10px;">
 												<button type="button" class="form-control btn btn-primary w-100"
-														onclick="confirmRestore(${banner.id})">사용&nbsp;전환</button>
+														onclick="confirmRestore(${board.id})">사용&nbsp;전환</button>
+											</div>
+
+											<div class="col-3 mb-3">
+												<c:choose>
+												<c:when test="${board.small_code eq 1 }">
+												<button type="button" class="btn btn-outline-secondary w-100"
+														onclick="location.href='../notice/notice?currentPage=1'">목록</button>												
+												</c:when>
+												<c:when test="${board.small_code eq 5 }">
+												<button type="button" class="btn btn-outline-secondary w-100"
+														onclick="location.href='../notice/event?currentPage=1'">목록</button>												
+												</c:when>
+												</c:choose>
+											</div>									
+										</c:when>
+
+										<c:when test="${board.status == 1}">
+											<div class="col-3 mb-3" style="margin-right: 10px;">
+												<button type="button"
+													class="form-control btn btn-primary2 w-100"
+													onclick="location.href='noticeUpdateForm?id=${board.id}&userId=${userId }'">수정하기</button>
+											</div>
+											
+											<div class="col-3 mb-3" style="margin-right: 10px;">
+												<button type="button" class="btn btn-outline-secondary w-100"
+														onclick="confirmDelete(${board.id})">삭제</button>
 											</div>
 											
 											<div class="col-3 mb-3">
+												<c:choose>
+												<c:when test="${board.small_code eq 1 }">
 												<button type="button" class="btn btn-outline-secondary w-100"
-													    onclick="location.href='admin/notice/banner'">목록</button>
-											</div>										
-										</c:when>
-
-										<c:when test="${banner.status == 1}">
-											<div class="col-3 mb-3" style="margin-right:10px;">
-												<button type="button"
-													class="form-control btn btn-primary2 w-100"
-													onclick="location.href='bannerUpdateForm?id=${banner.id}&currentPage=${currentPage}'">수정하기</button>
-											</div>
-											<div class="col-3 mb-3" style="margin-right:10px;">
+														onclick="location.href='../notice/notice?currentPage=1'">목록</button>												
+												</c:when>
+												<c:when test="${board.small_code eq 5 }">
 												<button type="button" class="btn btn-outline-secondary w-100"
-														onclick="confirmDelete(${banner.id})">삭제</button>
-											</div>
-											<div class="col-3 mb-3">
-												<button type="button" class="btn btn-outline-secondary w-100"
-														onclick="location.href='admin/notice/banner'">목록</button>
-											</div>
+														onclick="location.href='../notice/event?currentPage=1'">목록</button>												
+												</c:when>
+												</c:choose>
+											</div>											
 										</c:when>
 									</c:choose>
 								</div>

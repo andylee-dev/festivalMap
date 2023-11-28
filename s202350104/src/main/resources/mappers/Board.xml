@@ -36,11 +36,16 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, a.content, b.name, a.created_at, a.updated_at, 
-		        	   a.read_count, a.big_code, a.small_code
+		        	   a.read_count, a.big_code, a.small_code, a.status, a.is_deleted
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 1
-		        and a.is_deleted = 0		        
+				<if test="is_deleted != null and is_deleted != ''">
+				and a.is_deleted = #{is_deleted}
+				</if>
+				<if test="status != null and status != ''">
+				and status = #{status}
+				</if>					        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -52,11 +57,16 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, a.content, b.name, a.created_at, a.updated_at, 
-		       		   a.read_count, a.big_code, a.small_code
+		       		   a.read_count, a.big_code, a.small_code, a.status, a.is_deleted
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 2
-		        and a.is_deleted = 0		        
+				<if test="is_deleted != null and is_deleted != ''">
+				and a.is_deleted = #{is_deleted}
+				</if>
+				<if test="status != null and status != ''">
+				and status = #{status}
+				</if>								        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -68,12 +78,17 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, b.name, a.created_at, a.updated_at, a.read_count, 
-		        	   a.big_code, a.small_code, a.user_id, a.comment_indent
+		        	   a.big_code, a.small_code, a.user_id, a.comment_indent, a.status, a.is_deleted
 		       
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 3
-		        and a.is_deleted = 0
+				<if test="is_deleted != null and is_deleted != ''">
+				and a.is_deleted = #{is_deleted}
+				</if>	
+				<if test="status != null and status != ''">
+				and status = #{status}
+				</if>					
 		        and a.comment_indent = 0
 		    ) c
 		)
@@ -86,11 +101,17 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code,
-		         	   a.small_code, a.file_name, a.file_path
+		         	   a.small_code, a.file_name, a.file_path, a.status, a.is_deleted,
+		         	   a.updated_at
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 4
-		        and a.is_deleted = 0		        
+				<if test="is_deleted != null and is_deleted != ''">
+				and a.is_deleted = #{is_deleted}
+				</if>	
+				<if test="status != null and status != ''">
+				and status = #{status}
+				</if>						        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -101,11 +122,14 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code
+		        select a.id, a.title, b.name, a.created_at, a.read_count, a.big_code, a.small_code,
+		        	   a.status, a.is_deleted, a.updated_at
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 5
-		        and a.is_deleted = 0		        
+				<if test="is_deleted != null and is_deleted != ''">
+				and a.is_deleted = #{is_deleted}
+				</if>			        
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -129,7 +153,9 @@
 		               on 
 		                   	a.content_id = c.id
 		               where c.id = #{content_id}
-		               and a.is_deleted = 0 
+					   <if test="is_deleted != null and is_deleted != ''">
+					   and a.is_deleted = #{is_deleted}
+					   </if>	
 		        ) e
 		)
 		where rn between #{start} and #{end}
@@ -187,7 +213,7 @@
 		<selectKey keyProperty="id" resultType="integer" order="BEFORE">
 			select board_seq_generator.nextval from dual
 		</selectKey>
-		insert into board (id, user_id, big_code, small_code, title, content, status, 
+		insert into board (id, user_id, big_code, small_code, title, content, st6atus, 
 						   read_count, file_name, file_size, file_path, comment_group_id, 
 						   comment_step, comment_indent, created_at, is_deleted) 
 		values(#{id}, #{user_id}, #{big_code}, #{small_code}, 
@@ -260,7 +286,15 @@
 	
 	<update id="boardDeleteNew" parameterType="int">
 		update board 
-		set is_deleted = 1
+		set is_deleted = 1,
+			status = 0
+		where id = #{id} 
+	</update>
+	
+	<update id="boardRecycle" parameterType="int">
+		update board 
+		set is_deleted = 0,
+			status = 1
 		where id = #{id} 
 	</update>
 	

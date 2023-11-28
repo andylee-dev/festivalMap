@@ -71,6 +71,8 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
+		board.setIs_deleted("0");	// 삭제X 상태 지정		
+		board.setStatus("1");	// 게시 상태 지정		
 		
 		List<Board> noticAllList = boardService.getNoticAllList(board);
 		
@@ -129,6 +131,7 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
+		board.setIs_deleted("0");	// 삭제X 상태 지정	
 		
 		List<Board> magazinAllList = boardService.getMagazinAllList(board);
 		log.info("BoardController magazinAllList size : {}", magazinAllList.size());
@@ -177,6 +180,7 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
+		board.setIs_deleted("0");	// 삭제X 상태 지정	
 		
 		List<Board> freeAllList = boardService.getFreeAllList(board);
 		log.info("BoardController freeAllList size : {}", freeAllList.size());
@@ -225,6 +229,7 @@ public class BoardController {
 		PhotoPaging page = new PhotoPaging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
+		board.setIs_deleted("0");	// 삭제X 상태 지정	
 		
 		List<Board> photoAllList = boardService.getPhotoAllList(board);
 		log.info("BoardController photoAllList size : {}", photoAllList.size());
@@ -273,6 +278,7 @@ public class BoardController {
 		PhotoPaging page = new PhotoPaging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
+		board.setIs_deleted("0");	// 삭제X 상태 지정	
 		
 		List<Board> eventAllList = boardService.getEventAllList(board);
 		log.info("BoardController eventAllList size : {}", eventAllList.size());
@@ -321,6 +327,7 @@ public class BoardController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
+		board.setIs_deleted("0");	// 삭제X 상태 지정	
 		
 		List<Board> revicewAllList = boardService.getReviewAllList(board);
 		log.info("BoardController revicewAllList size : {}", revicewAllList.size());

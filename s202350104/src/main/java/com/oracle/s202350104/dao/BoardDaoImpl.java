@@ -347,4 +347,16 @@ public class BoardDaoImpl implements BoardDao {
 		log.info("BoardDao reviewCount : {}", reviewCount);
 		return reviewCount;
 	}
+	
+	@Override
+	public int boardDeleteNew(int id) {
+		int newDeleteBoard = session.update("boardDeleteNew",id);
+		return newDeleteBoard;
+	}
+	
+	@Override
+	public int boardRecycle(int id) {
+		int recycleBoard = session.update("boardRecycle",id);
+		return recycleBoard;
+	}
 }

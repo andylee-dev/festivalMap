@@ -156,5 +156,10 @@ public class BannerServiceImpl implements BannerService {
 		int updateBanner = bannerdao.bannerUpdate(banner);
 		return updateBanner;
 	}
-
+	
+	@Override
+	public int bannerRecycle(int id) {
+		int recycleBanner = bannerdao.bannerRecycle(id);
+		return recycleBanner;
+	}
 }

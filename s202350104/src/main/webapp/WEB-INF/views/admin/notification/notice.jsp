@@ -85,6 +85,10 @@
 										</c:choose>
 										<th scope="col">등록일</th>
 										<th scope="col">수정일</th>
+										<th scope="col">게시여부</th>
+										<c:if test="${bigCode eq 2 }">
+										<th scope="col">삭제여부</th>
+										</c:if>
 										<th scope="col">관리</th>
 									</tr>
 								</thead>
@@ -108,9 +112,27 @@
 														</c:otherwise>
 													</c:choose>
 												</c:otherwise>
-											</c:choose>
+											</c:choose>										
 											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
+											<c:choose>
+												<c:when test="${boards.status eq 0}">
+													<td>N</td>
+												</c:when>
+												<c:when test="${boards.status eq 1}">
+													<td>Y</td>
+												</c:when>
+											</c:choose>
+											<c:if test="${bigCode eq 2 }">																				
+											<c:choose>
+												<c:when test="${boards.is_deleted eq 0}">
+													<td>N</td>
+												</c:when>
+												<c:when test="${boards.is_deleted eq 1}">
+													<td>Y</td>
+												</c:when>
+											</c:choose>	
+											</c:if>																					
 											<c:choose>
 												<c:when test="${bigCode eq 3 }">
 <%-- 													<td><a class="detail-btn" href="../../bannerUpdateForm?id=${boards.id}&userId=${userId}">수정</a></td>		 --%>							
@@ -118,7 +140,7 @@
 <%-- 													<td><a class="detail-btn" href="../../bannerDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td>		 --%>								
 												</c:when>
 												<c:otherwise>
-													<td><a class="detail-btn" href="../../boardUpdateForm?id=${boards.id}&userId=${userId}">수정</a></td>
+													<td><a class="detail-btn" href="noticeDetail?id=${boards.id}&userId=${userId}">관리</a></td>
 <%-- 													<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td> --%>
 												</c:otherwise>
 											</c:choose>

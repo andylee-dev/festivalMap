@@ -76,7 +76,7 @@ public class AdminCommunityController {
 
 		log.info("AdminCommunityController magazinBoardList End..");
 
-		return "admin/community/freeBoard";
+		return "admin/community/communityBoard";
 	}
 
 	// 자유게시판 List Logic
@@ -125,7 +125,7 @@ public class AdminCommunityController {
 
 		log.info("AdminCommunityController freddBoardList End..");
 
-		return "admin/community/freeBoard";
+		return "admin/community/communityBoard";
 	}
 
 	// 리뷰 List Logic
@@ -173,7 +173,7 @@ public class AdminCommunityController {
 
 		log.info("AdminCommunityController reviewBoardList End..");
 
-		return "admin/community/freeBoard";
+		return "admin/community/communityBoard";
 	}
 
 	// 통합게시판 상세정보 Logic
@@ -187,7 +187,7 @@ public class AdminCommunityController {
 		
 		if(userId > 0) {
 			loginUser = us.getUserById(userId);
-			log.info("AdminCommunityController boardContent loginUser : {} ", loginUser);
+			log.info("AdminCommunityController loginUser : {} ", loginUser);
 			
 			if(loginUser.isPresent()) {
 				model.addAttribute("loginUser", loginUser.get());				

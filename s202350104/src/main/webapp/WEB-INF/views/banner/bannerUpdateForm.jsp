@@ -17,7 +17,7 @@
 		
 		#detail-top-container {
 			position: absolute;
-			width: 250px;
+			width: 200px;
 			height: 83px;
 			border-radius: 10px;
 			border: 1px solid #000;
@@ -196,14 +196,14 @@
 							
 						<hr class="hr" />			
 
-						<div class="d-flex justify-content-between">
-							<div class="col-6 mb-3" >
+						<div class="d-flex justify-content-center">
+							<div class="col-3 mb-3" style="margin-right:10px;">
 	                        	<button type="submit" class="form-control btn btn-primary2 w-100" onclick="return confirm('수정하시겠습니까?')">수정</button>
 	                        </div>
-	                        <div class="col-3 mb-3">
+	                        <div class="col-3 mb-3" style="margin-right:10px;">
 	                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
 	                        </div>
-	                        <div class="col-2 mb-3">
+	                        <div class="col-3 mb-3">
 	                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../bannerDetail?id=${banner.id}&currentPage=${currentPage}'">취소</button>
 	                        </div>
 						</div>

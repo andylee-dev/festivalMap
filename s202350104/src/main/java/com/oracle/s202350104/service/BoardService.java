@@ -41,4 +41,8 @@ public interface BoardService {
 
 	double getReviewCount(Board board);
 
+	int boardDeleteNew(int id);
+
+	int boardRecycle(int id);
+
 }

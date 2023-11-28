@@ -23,6 +23,8 @@ public interface BannerService {
 
 	int bannerUpdate(Banner banner);
 
+	int bannerRecycle(int id);
+
 
 
 }

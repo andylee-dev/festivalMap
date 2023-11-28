@@ -170,4 +170,16 @@ public class BoardServiceImpl implements BoardService {
 		return reviewCount;
 	}
 	
+	@Override
+	public int boardDeleteNew(int id) {
+		int newDeleteBoard = boardDao.boardDeleteNew(id);
+		return newDeleteBoard;
+	}
+	
+	@Override
+	public int boardRecycle(int id) {
+		int recycleBoard = boardDao.boardRecycle(id);
+		return recycleBoard;
+	}
+	
 }

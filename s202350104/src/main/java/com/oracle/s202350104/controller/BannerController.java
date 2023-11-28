@@ -166,41 +166,55 @@ public class BannerController {
 	}
 	
 	
-	// Banner 삭제 Logic
+	/*
+	 * // Banner 삭제 Logic
+	 * 
+	 * @RequestMapping(value = "/bannerDelete") public String bannerDelete(int id,
+	 * Model model) { // value 확인용 log.info("BannerController bannerDelete id : {}",
+	 * id);
+	 * 
+	 * // 원본 File 삭제 Logic Banner banner = null; String path = null; String fileName
+	 * = null; File deleteFile = null;
+	 * 
+	 * try { log.info("BannerController bannerDelete File start!"); // DB에 저장 된 파일명
+	 * 조회 banner = bannerService.bannerRead(id);
+	 * 
+	 * // 실제 경로 path = System.getProperty("user.dir") +
+	 * "\\src\\main\\webapp\\image";
+	 * 
+	 * // DB에 저장 된 파일명 가져오기 fileName = banner.getImage();
+	 * 
+	 * // 구현체 생성(실 경로 + 파일명) deleteFile = new File(path, fileName);
+	 * 
+	 * // 원본 File 삭제 deleteFile.delete(); } catch (Exception e) {
+	 * log.error("BannerController bannerDelete File : {}", e.getMessage()); }
+	 * finally { log.info("BannerController bannerDelete File End.."); }
+	 * 
+	 * // DB 삭제 Logic String redirectURL = ""; int deleteBanner = 0;
+	 * 
+	 * try { log.info("BannerController bannerDelete Start!!");
+	 * 
+	 * deleteBanner = bannerService.bannerDelete(id);
+	 * 
+	 * // 삭제 결과값에 따라 redirect 경로 지정 if (deleteBanner > 0) { redirectURL =
+	 * "redirect:/admin/notice/banner";
+	 * 
+	 * } else { model.addAttribute("msg", "삭제 실패!!, 관리자에게 문의해주세요."); redirectURL =
+	 * "redirect:/admin/notice/banner"; }
+	 * 
+	 * } catch (Exception e) { log.error("BannerController bannerDelete File : {}",
+	 * e.getMessage()); }
+	 * 
+	 * // 결과값에 따른 경로 이동 return redirectURL; }
+	 */
+	
+	// Banner 삭제 Logic(New, status로 삭제 여부)
 	@RequestMapping(value = "/bannerDelete")
 	public String bannerDelete(int id, Model model) {
 		// value 확인용
 		log.info("BannerController bannerDelete id : {}", id);
-
-		// 원본 File 삭제 Logic
-		Banner banner = null;
-		String path = null;
-		String fileName = null;
-		File deleteFile = null;
 		
-		try {
-			log.info("BannerController bannerDelete File start!");
-			// DB에 저장 된 파일명 조회
-			banner = bannerService.bannerRead(id);
-			
-			// 실제 경로 
-			path = System.getProperty("user.dir") + "\\src\\main\\webapp\\image";
-			
-			// DB에 저장 된 파일명 가져오기
-			fileName = banner.getImage();
-			
-			// 구현체 생성(실  경로 + 파일명)
-			deleteFile = new File(path, fileName);
-			
-			// 원본 File 삭제
-			deleteFile.delete();
-		} catch (Exception e) {
-			log.error("BannerController bannerDelete File : {}", e.getMessage());
-		} finally {
-			log.info("BannerController bannerDelete File End..");
-		}
-		
-		// DB 삭제 Logic
+		// 복원 Logic
 		String redirectURL = "";
 		int deleteBanner = 0;
 		
@@ -209,17 +223,49 @@ public class BannerController {
 			
 		 	deleteBanner = bannerService.bannerDelete(id);
 		 	
-		 	// 삭제 결과값에 따라 redirect 경로 지정
+		 	// 결과값에 따라 redirect 경로 지정
 			if (deleteBanner > 0) {
 				redirectURL = "redirect:/admin/notice/banner";
 				
 			} else {
-				model.addAttribute("msg", "삭제 실패!!, 관리자에게 문의해주세요.");
+				model.addAttribute("msg", "복원 실패!!, 관리자에게 문의해주세요.");
 				redirectURL = "redirect:/admin/notice/banner";
 			}
 			
 		} catch (Exception e) {
-			log.error("BannerController bannerDelete File : {}", e.getMessage());
+			log.error("BannerController bannerDelete errer : {}", e.getMessage());
+		}
+		
+		// 결과값에 따른 경로 이동
+		return redirectURL;
+	}
+	
+	// Banner 복원 Logic
+	@RequestMapping(value = "/bannerRecycle")
+	public String bannerRecycle(int id, Model model) {
+		// value 확인용
+		log.info("BannerController bannerRecycle id : {}", id);
+		
+		// 복원 Logic
+		String redirectURL = "";
+		int recycleBanner = 0;
+		
+		try {
+			log.info("BannerController bannerRecycle Start!!");
+			
+			recycleBanner = bannerService.bannerRecycle(id);
+			
+			// 결과값에 따라 redirect 경로 지정
+			if (recycleBanner > 0) {
+				redirectURL = "redirect:/admin/notice/banner";
+				
+			} else {
+				model.addAttribute("msg", "복원 실패!!, 관리자에게 문의해주세요.");
+				redirectURL = "redirect:/admin/notice/banner";
+			}
+			
+		} catch (Exception e) {
+			log.error("BannerController bannerRecycle errer : {}", e.getMessage());
 		}
 		
 		// 결과값에 따른 경로 이동

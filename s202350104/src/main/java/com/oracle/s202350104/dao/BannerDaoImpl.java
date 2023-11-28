@@ -165,10 +165,16 @@ public class BannerDaoImpl implements BannerDao {
 
 		return banner;
 	}
-	
+
 	@Override
 	public int bannerUpdate(Banner banner) {
-		int updateBanner = session.update("bannerUpdate",banner);
+		int updateBanner = session.update("bannerUpdate", banner);
 		return updateBanner;
+	}
+
+	@Override
+	public int bannerRecycle(int id) {
+		int recycleBanner = session.update("bannerRecycle", id);
+		return recycleBanner;
 	}
 }
