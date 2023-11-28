@@ -61,7 +61,7 @@
 			<%
 				} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("BIZ"))){
 			%>		
-			    <a href="/user/biz">비즈니스 페이지</a>&nbsp;
+			    <a href="/user/bizPage">비즈니스 페이지</a>&nbsp;
 				<a href="/logout">로그아웃  </a>
 			<%
 				} else if (authorities != null && authorities.stream().anyMatch(a -> a.getAuthority().contains("USER"))){

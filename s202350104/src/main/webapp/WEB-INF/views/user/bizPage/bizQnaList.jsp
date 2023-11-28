@@ -94,8 +94,10 @@ h1 {
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main >
 		<div class="d-flex">
-			<%@ include file="/WEB-INF/components/BizPageSideBar.jsp" %>
-			<div class="container border p-5">
+			<div class="col-2">
+				<%@ include file="/WEB-INF/components/BizPageSideBar.jsp"%>
+			</div>
+			<div class="container p-5 col-10">
 				<div class="container my-5">
 				
 			<!-- Section1: Title -->
