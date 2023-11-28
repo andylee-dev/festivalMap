@@ -135,8 +135,10 @@
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
 	<main >
 	<div class="d-flex">
-		<%@ include file="/WEB-INF/components/BizPageSideBar.jsp" %>
-		<div id="exTab3" class="container p-5">	
+			<div class="col-2">
+				<%@ include file="/WEB-INF/components/BizPageSideBar.jsp"%>
+			</div>
+		<div id="exTab3" class="container p-5 col-10">	
 			<nav>
 			  <div class="nav nav-tabs " id="nav-tab" role="tablist">
 			    <button class="nav-link active" id="nav-festival-tab" data-bs-toggle="tab" data-bs-target="#nav-festival" type="button" role="tab" aria-controls="nav-festival" aria-selected="true">축제</button>
