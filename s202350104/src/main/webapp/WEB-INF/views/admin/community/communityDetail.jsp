@@ -6,8 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>communityDetail</title>
-<link rel="stylesheet" type="text/css"
-	href="/css/adminContentsDetail.css">
+<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 		function confirmDelete(id) {

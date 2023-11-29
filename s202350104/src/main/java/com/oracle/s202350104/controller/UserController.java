@@ -297,6 +297,35 @@ public class UserController {
 
 		return "user/myPage/myPost";
 	}
+	
+	@RequestMapping(value = "myPage/myPostDetail")
+	public String myPostDetail(int id, Integer userId, Model model) {
+		UUID transactionId = UUID.randomUUID();
+
+		log.info("[{}]{}:{}", transactionId, "myPost", "start");
+
+		Optional<Users> loginUser = null;
+		
+		if(userId > 0) {
+			loginUser = us.getUserById(userId);
+			log.info("userController loginUser : {} ", loginUser);
+			
+			if(loginUser.isPresent()) {
+				model.addAttribute("loginUser", loginUser.get());				
+			}
+		} 		
+
+		Board boards = boardService.boardDetail(id);
+		//List<Tags> hashTags = tagsService.boardTagDetail(id);
+		
+		//log.info("AdminCommunityController boardContent hashTags.size : {} ", hashTags.size());
+		
+		model.addAttribute("board", boards);
+		//model.addAttribute("hashTag", hashTags);
+		model.addAttribute("userId", userId);
+
+		return "user/myPage/myPostDetail";
+	}
 
 	@RequestMapping(value = "myPage/qnaDetail")
 	public String qnaDetail(int user_id, int id, Model model) {
