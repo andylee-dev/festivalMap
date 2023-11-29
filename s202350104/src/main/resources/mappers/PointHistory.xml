@@ -5,12 +5,30 @@
 <mapper namespace="com.oracle.s202350104.PointHistoryMapper">
 
 	<select id="pointhistoryAll" resultType="pointhistory">
-
+		
    	 	SELECT u.name as user_name, p.title as point_title, p.point as point_point, ph.user_id, ph.point_id, ph.created_at, ph.id
     	FROM pointhistory ph, users u, point p
     	WHERE ph.user_id = u.id
     	AND ph.point_id = p.id
-
+		ORDER BY ph.created_at DESC
+		
+	</select>
+	
+	<select id="pointhistoryAll1" resultType="pointhistory">
+		
+   	 	    SELECT *
+    		FROM (
+        		SELECT rownum rn, a.*
+        		FROM (
+            SELECT u.name as user_name, p.title as point_title, p.point as point_point, ph.user_id, ph.point_id, ph.created_at, ph.id
+            FROM pointhistory ph, users u, point p
+            WHERE ph.user_id = u.id
+            AND ph.point_id = p.id
+            ORDER BY ph.created_at DESC
+       		) a
+    		)
+   		    WHERE rn BETWEEN #{start} and #{end}
+		
 	</select>
 
 	<delete id="deletePointHistory" parameterType="int">
@@ -70,18 +88,19 @@
 	
 	<select id="indexlistSearchPointHistory" resultType="pointhistory">
     SELECT *
-    FROM
-    (
-        SELECT ROWNUM rn, ph.*
-        FROM 
-        (
-            SELECT * FROM pointhistory ph
-            <if test="keyword != null">
-                WHERE id LIKE '%' || #{id} || '%'
-            </if>
-        ) ph 
-    ) a
-    WHERE a.rn BETWEEN #{start} and #{end}
+        FROM pointhistory ph, users u, point p
+        WHERE ph.user_id = u.id
+        AND ph.point_id = p.id
+        AND (
+            u.name LIKE '%' || #{keyword} || '%'
+            OR u.id LIKE '%' || #{keyword} || '%'
+            OR ph.point_id LIKE '%' || #{keyword} || '%'
+            OR p.title LIKE '%' || #{keyword} || '%'
+            OR ph.point_point LIKE '%' || #{keyword} || '%'
+            OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
+        	) a
+    		)
+   		    WHERE rn BETWEEN #{start} and #{end}
 	</select>
 
 </mapper>

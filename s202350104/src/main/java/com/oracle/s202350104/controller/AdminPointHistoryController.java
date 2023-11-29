@@ -27,23 +27,31 @@ public class AdminPointHistoryController {
 	
 	private final PointHistoryService phs;
 	
-	@GetMapping(value = "/admin/point/pointhistory")
+	@GetMapping(value = "pointhistory")
 		public String pointhistory(PointHistory pointhistory, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
-		int path = 0;
+		
 		
 		try {
+			
 			log.info("[{}]{}:{}",transactionId, "pointhistory", "start");
+			
+		int path = 0;
 		int totalpointhistory = phs.totalpointHistory();
 		
 		Paging page = new Paging(totalpointhistory, currentPage);
+		log.info("totalpointhistory{}",totalpointhistory);
+		log.info("currentPage {}",currentPage);
 
 		pointhistory.setStart(page.getStart());
+		log.info("Start {}",page.getStart());
 		pointhistory.setEnd(page.getEnd());
-		
+		log.info("End {}",page.getEnd());
 		List<PointHistory> listPointHistory = phs.listPointHistory();
+		log.info("listPointHistory {}",listPointHistory.size());
 		List<PointHistory> sortedList = phs.listPointHistorySortedByDateDesc(listPointHistory);
+		log.info("sortedList {}",sortedList.size());
 
         model.addAttribute("listPointHistory", sortedList);
         model.addAttribute("totalpointHistory", totalpointhistory);
@@ -68,6 +76,50 @@ public class AdminPointHistoryController {
 		return "redirect:/admin/point/pointhistory";
 	}
 	
+	@GetMapping(value = "/admin/point/pointhistory")
+	public String pointhistoryList(PointHistory pointhistory, String currentPage, Model model) {
+	UUID transactionId = UUID.randomUUID();
+	
+	
+	
+	try {
+		
+		log.info("[{}]{}:{}",transactionId, "pointhistory", "start");
+		
+	int path = 0;
+	int totalpointhistory = phs.totalpointHistory();
+	
+	Paging page = new Paging(totalpointhistory, currentPage);
+	log.info("totalpointhistory{}",totalpointhistory);
+	log.info("currentPage {}",currentPage);
+
+	pointhistory.setStart(page.getStart());
+	log.info("Start {}",page.getStart());
+	pointhistory.setEnd(page.getEnd());
+	log.info("End {}",page.getEnd());
+	List<PointHistory> listPointHistory = phs.listPointHistory1(pointhistory);
+	log.info("listPointHistory {}",listPointHistory.size());
+	List<PointHistory> sortedList = phs.listPointHistorySortedByDateDesc(listPointHistory);
+	log.info("sortedList {}",sortedList.size());
+
+    model.addAttribute("listPointHistory", sortedList);
+    model.addAttribute("totalpointHistory", totalpointhistory);
+    model.addAttribute("page",page);
+	model.addAttribute("path",path);
+	
+	} catch (Exception e) {
+		log.error("[{}]{}:{}",transactionId,  "admin pointhistory", e.getMessage());
+	}finally {
+		log.info("[{}]{}:{}",transactionId, "admin pointhistory", "end");
+	}
+	
+	return "admin/point/pointhistory";
+	
+	}
+	
+
+
+	
 	@GetMapping(value="/admin/point/writeFormPointHistory")
 	public String writeFormPoint(PointHistory pointhistory, Model model) {
 		
@@ -88,18 +140,18 @@ public class AdminPointHistoryController {
     	
     	try {
 			log.info("[{}]{}:{}", transactionId, "PointHistoryController pointhistorySearch", "Start");
-    	int path 			= 1;
+    	
+		int path 			= 1;
     	
     	int totalPointhistory = phs.conTotalPointHistory(pointhistory);
+    	
     	Paging page = new Paging(totalPointhistory, currentPage);
     	pointhistory.setStart(page.getStart());
     	pointhistory.setEnd(page.getEnd());
     	
         List<PointHistory> searchResult = phs.searchPointHistory(search, keyword);
-        List<PointHistory> listSearchPointHistory = phs.indexlistSearchPointHistory(pointhistory);
         
         model.addAttribute("totalPointhistory", totalPointhistory);
-        model.addAttribute("listPointhistory", listSearchPointHistory);
         model.addAttribute("listPointHistory", searchResult);
         model.addAttribute("path", path);
         model.addAttribute("page", page);

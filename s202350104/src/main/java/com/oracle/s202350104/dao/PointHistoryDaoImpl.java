@@ -96,6 +96,19 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		}
 		return indexlistSearchPointHistory;
 	}
+
+	@Override
+	public List<PointHistory> listPointHistory1(PointHistory pointhistory) {
+		List<PointHistory> listPointHistory = null;
+		try {
+			listPointHistory = session.selectList("pointhistoryAll1", pointhistory);
+			
+		} catch(Exception e) {
+			
+		}
+		
+		return listPointHistory;
+	}
 	}
 
 

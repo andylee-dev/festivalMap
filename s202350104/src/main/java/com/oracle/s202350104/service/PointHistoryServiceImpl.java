@@ -114,4 +114,16 @@ import lombok.extern.slf4j.Slf4j;
 			List<PointHistory> indexlistSearchPointHistory = phd.indexlistSearchPointHistory(pointhistory);
 			return indexlistSearchPointHistory;
 		}
+
+		@Override
+		public List<PointHistory> listPointHistory1(PointHistory pointhistory) {
+			   
+			   List<PointHistory> listPointHistory = phd.listPointHistory1(pointhistory);
+			
+			if(listPointHistory==null) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "포인트 내역 리스트가 존재하지 않습니다");
+			}
+			
+			return listPointHistory;
+		}
 }

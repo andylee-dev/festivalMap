@@ -20,4 +20,6 @@ public interface PointHistoryDao {
 
 	List<PointHistory>  indexlistSearchPointHistory(PointHistory pointhistory);
 
+	List<PointHistory>  listPointHistory1(PointHistory pointhistory);
+
 }

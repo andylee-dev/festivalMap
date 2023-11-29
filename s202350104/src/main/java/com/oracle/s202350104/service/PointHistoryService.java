@@ -23,4 +23,6 @@ public interface PointHistoryService {
 	int                     conTotalPointHistory(PointHistory pointhistory);
 
 	List<PointHistory>      indexlistSearchPointHistory(PointHistory pointhistory);
+
+	List<PointHistory>      listPointHistory1(PointHistory pointhistory);
 }
