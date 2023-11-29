@@ -157,9 +157,9 @@
 					<div class="card homeList-card-custom">
 					
 						<div class="homeList-tag-custom">
-							<div class="homeList-tag-custom2">
+<!-- 							<div class="homeList-tag-custom2">
 								<p class="tag-p">#지역태그</p>
-							</div>
+							</div> -->
 							<a href="festival/detail?contentId=${festival.content_id}&currentPage=${page.currentPage}">
 								<img src="${festival.img1}" class="card-img-top" alt="${festival.title}">
 							</a>

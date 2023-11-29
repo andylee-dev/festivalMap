@@ -212,10 +212,9 @@
 					<div class="card homeList-card-custom">
 
 						<div class="homeList-tag-custom">
-							<div class="homeList-tag-custom2">
+<!-- 							<div class="homeList-tag-custom2">
 								<p class="tag-p">#지역태그</p>
-
-							</div>
+							</div> -->
 							<a href="spot/detail?contentId=${spot.content_id}&currentPage=${page.currentPage}">
 								<img src="${spot.img1}" class="card-img-top" alt="${spot.title}">
 							</a>
