@@ -215,31 +215,6 @@
 								<label for="sponsor" class="form-label">주최</label>
 								<input type="text" class="form-control" id="sponsor" value="${festival.sponsor}">
 							</div>
-							<div class="mb-3" style="background: #F8FCF4;">
-								<div class="row">
-									<div class="col-4 md-4 mb-3">
-										<label for="validationDefault01" class="form-label">담당 부서</label>
-										<input type="text" class="form-control" id="validationDefault01" value="">
-									</div>
-									<div class="col-4 md-4 mb-3">
-										<label for="validationDefault02" class="form-label">담당자</label>
-										<input type="text" class="form-control" id="validationDefault02" value="이규현 과장">
-									</div>
-									<div class="col-4 md-4 mb-3">
-										<label for="validationDefault03" class="form-label">연락처</label>
-										<input type="text" class="form-control" id="validationDefault03" value="">
-									</div>
-									
-									<div class="col-6 md-4 mb-3">
-										<label for="validationDefault04" class="form-label">주소</label>
-										<input type="text" class="form-control" id="validationDefault04" value="">
-									</div>
-									<div class="col-6 md-4 mb-3">
-										<label for="validationDefault05" class="form-label">비고</label>
-										<input type="text" class="form-control" id="validationDefault05" value="">
-									</div>
-								</div>
-							</div>
 							<div class="mb-3">
 								<label for="eventplace" class="form-label">장소</label>
 								<div class="row">
@@ -334,6 +309,7 @@
 										<input type="text" class="form-control" id="created_at" value="<fmt:formatDate value="${festival.created_at}" type="date" pattern="YY/MM/dd"/>">
 									</div>
 								</div>
+							</div>
 							<form name="updateForm">
 								<input type="hidden" name="status" id="statusInput" value="${festival.status}">
 								<input type="hidden" name="big_code" value="${festival.big_code}">
@@ -387,7 +363,6 @@
 									</c:when>
 								</c:choose>
 							</div>
-						</div>
 						</div>
 						</div>
 					</div>

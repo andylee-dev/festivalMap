@@ -4,12 +4,12 @@
 
 <mapper namespace="com.oracle.s202350104.RecommandMapper">
 	<select id="getPopularContentsList" parameterType="int" resultType="Contents">
-		SELECT c.id, c.readcount, COUNT(b.content_id) AS review_count, AVG(b.score) AS avg_score
-		FROM contents c LEFT JOIN board b 
-		ON c.id = b.content_id 
-		AND b.big_code = 2 
-		AND b.small_code = 6
-		WHERE c.big_code = #{big_code}
+		SELECT   c.id, c.readcount, COUNT(b.content_id) AS review_count, AVG(b.score) AS avg_score
+		FROM     contents c LEFT JOIN board b 
+		ON       c.id = b.content_id 
+		AND      b.big_code = 2 
+		AND      b.small_code = 6
+		WHERE    c.big_code = #{big_code}
 		GROUP BY c.id, c.big_code, c.readcount
 		ORDER BY c.readcount DESC, review_count DESC, avg_score DESC
 	</select>

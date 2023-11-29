@@ -205,25 +205,59 @@ public class FestivalController {
 		return "festival/festivalDetail";
 	}
 	
-	// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리
-	@RequestMapping(value = "bizFestivalInsert")
+//	// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리
+//	@RequestMapping(value = "bizFestivalInsert")
+//	public String festivalInsert(FestivalsContent festival, Model model) {
+//		UUID transactionId = UUID.randomUUID();
+//				
+//		try {
+//			log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
+//					
+//			// festival을 insert한 결과를 result에 저장
+//			int result = fs.insertFestival(festival);
+//			log.info("Controller festivalInsert result => "+result);
+//
+//		} catch (Exception e) {
+//			log.error("[{}]{}:{}", transactionId, "admin festivalInsert", e.getMessage());
+//		} finally {
+//			log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "end");
+//		}		
+//				
+//		return "redirect:user/bizPage/content";
+//	}
+	
+	// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리(AJAX 연결)
+	@ResponseBody
+	@RequestMapping(value = "festival/insert")
 	public String festivalInsert(FestivalsContent festival, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		String str = "";
 				
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
 					
+//			int user_id = us.getLoggedInId();
+//			String userId = String.valueOf(user_id);
+//			festival.setUser_id(userId);
+					
 			// festival을 insert한 결과를 result에 저장
 			int result = fs.insertFestival(festival);
 			log.info("Controller festivalInsert result => "+result);
-
+					
+			// result에 따라 alert 메세지 반환
+			if(result > 0) {
+				str = "성공적으로 등록되었습니다."; 
+			} else { 
+				str = "등록에 실패하였습니다."; 
+			}
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin festivalInsert", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "end");
 		}		
 				
-		return "redirect:user/bizPage/content";
+		// alert 메세지 반환
+		return str;
 	}
 	
 	@RequestMapping(value = "festival/recommend")
