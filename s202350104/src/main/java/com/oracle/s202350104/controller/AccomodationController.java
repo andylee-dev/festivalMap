@@ -177,6 +177,7 @@ public class AccomodationController {
 	//accomodationIndex 페이지 서치
 	@RequestMapping(value = "IndexaccomodationSearch")
 	public String indexaccomodationSearch(AccomodationContent accomodation, String currentPage, Model model, HttpServletRequest request) {
+		
 		UUID transactionId = UUID.randomUUID();
 		
 		

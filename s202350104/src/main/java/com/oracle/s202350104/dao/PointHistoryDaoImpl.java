@@ -86,16 +86,15 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		return conTotalPointHistory;
 		}
 
-	@Override
-	public List<PointHistory> indexlistSearchPointHistory(PointHistory pointhistory) {
-		List<PointHistory> indexlistSearchPointHistory = null;
-		try {
-			indexlistSearchPointHistory = session.selectList("indexlistSearchPointHistory", pointhistory);
-		} catch (Exception e) {
-			 log.info("PointHistoryDaoImpl indexlistSearchPointHistory() Exception ->" + e.getMessage());
-		}
-		return indexlistSearchPointHistory;
-	}
+		/*
+		 * @Override public List<PointHistory> indexlistSearchPointHistory(PointHistory
+		 * pointhistory) { List<PointHistory> indexlistSearchPointHistory = null; try {
+		 * indexlistSearchPointHistory =
+		 * session.selectList("indexlistSearchPointHistory", pointhistory); } catch
+		 * (Exception e) {
+		 * log.info("PointHistoryDaoImpl indexlistSearchPointHistory() Exception ->" +
+		 * e.getMessage()); } return indexlistSearchPointHistory; }
+		 */
 
 	@Override
 	public List<PointHistory> listPointHistory1(PointHistory pointhistory) {
@@ -108,6 +107,17 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		}
 		
 		return listPointHistory;
+	}
+
+	@Override
+	public List<PointHistory> searchPointHistorylist(PointHistory pointhistory) {
+		List<PointHistory> searchPointHistory = null;
+		try {
+			searchPointHistory = session.selectList("searchPointHistorylist", pointhistory);
+		} catch (Exception e) {
+			 log.info("PointHistoryDaoImpl searchPointHistory() Exception ->" + e.getMessage());
+		}
+		return searchPointHistory;
 	}
 	}
 
