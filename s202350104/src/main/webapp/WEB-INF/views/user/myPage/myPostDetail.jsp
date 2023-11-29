@@ -10,6 +10,7 @@
 <title>myPostDetail</title>
 <link rel="stylesheet" type="text/css" href="/css/myPost.css">
 <link rel="stylesheet" type="text/css" href="/css/adminTable.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 function confirmDelete(id) {
     if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {

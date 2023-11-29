@@ -79,8 +79,8 @@ public class AdminCommunityController {
 
 	// 자유게시판 List Logic
 	@RequestMapping(value = "/board")
-	public String freddBoardList(Board board, String currentPage, Model model) {
-		log.info("AdminCommunityController freddBoardList Start!!");
+	public String freeBoardList(Board board, String currentPage, Model model) {
+		log.info("AdminCommunityController freeBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(3); // 분류 code 강제 지정
 		int userId = 1;
@@ -93,16 +93,16 @@ public class AdminCommunityController {
 		Paging page = new Paging(currentPage, countBoard);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-		log.info("AdminCommunityController freddBoardList before board.getStart : {} ", board.getStart());
-		log.info("AdminCommunityController freddBoardList before board.getEnd : {} ", board.getEnd());
-		log.info("AdminCommunityController freddBoardList before currentPage : {} ", currentPage);
+		log.info("AdminCommunityController freeBoardList before board.getStart : {} ", board.getStart());
+		log.info("AdminCommunityController freeBoardList before board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController freeBoardList before currentPage : {} ", currentPage);
 
 		List<Board> freeAllList = boardService.getFreeAllList(board);
 		log.info("AdminCommunityController freeAllList size : {}", freeAllList.size());
 
-		log.info("AdminCommunityController freddBoardList after board.getStart : {} ", board.getStart());
-		log.info("AdminCommunityController freddBoardList after board.getEnd : {} ", board.getEnd());
-		log.info("AdminCommunityController freddBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController freeBoardList after board.getStart : {} ", board.getStart());
+		log.info("AdminCommunityController freeBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController freeBoardList after board.getEnd : {} ", board.getEnd());
 
 		if (freeAllList.size() != 0) {
 			bigCode = freeAllList.get(0).getBig_code();
@@ -110,10 +110,10 @@ public class AdminCommunityController {
 			log.error("BoardController freeBoard 값이 없습니다.");
 		}
 
-		log.info("AdminCommunityController freddBoardList totalBoard : {} ", countBoard);
-		log.info("AdminCommunityController freddBoardList smallCode : {} ", board.getSmall_code());
-		log.info("AdminCommunityController freddBoardList page : {} ", page);
-		log.info("AdminCommunityController freddBoardList bigCode : {} ", bigCode);
+		log.info("AdminCommunityController freeBoardList totalBoard : {} ", countBoard);
+		log.info("AdminCommunityController freeBoardList smallCode : {} ", board.getSmall_code());
+		log.info("AdminCommunityController freeBoardList page : {} ", page);
+		log.info("AdminCommunityController freeBoardList bigCode : {} ", bigCode);
 
 		model.addAttribute("admin", freeAllList);
 		model.addAttribute("page", page);
@@ -121,7 +121,7 @@ public class AdminCommunityController {
 		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("userId", userId);
 
-		log.info("AdminCommunityController freddBoardList End..");
+		log.info("AdminCommunityController freeBoardList End..");
 
 		return "admin/community/communityBoard";
 	}
