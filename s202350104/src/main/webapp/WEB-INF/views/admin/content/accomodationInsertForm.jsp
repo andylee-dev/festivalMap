@@ -175,7 +175,7 @@
 								       <select name="sigungu"  class="form-select sigungu-dropdown" required="required"></select>
 								    </div>
 								    	<div class="col-6">
-										    <input type="text" class="form-control" name="address" id="address" value="${accomodation.address} " >
+										    <input type="text" class="form-control" name="address" id="address" value="${accomodation.address} " required="required" >
 								    	</div>
 								</div>
 						</div>
@@ -196,7 +196,7 @@
 						  <input type="text" class="form-control" name="homepage" id="homepage" value="${accomodaiton.homepage} ">
 						</div>
 						<div class="mb-3 ">
-						  <label for="age" class="form-label">객실수</label>
+						  <label for="room_count" class="form-label">객실수(필수)</label>
 						  <input type="text" class="form-control" name="room_count" id="room_count" value="${accomodaiton.room_count} ">
 						</div>
 						<div class="mb-3 ">
