@@ -129,7 +129,7 @@
 				<div class="col d-flex justify-content-center">
 					<select class="form-select" aria-label="Default select example" name="small_code">
 						<option value="999">코스&nbsp;테마</option>
-							<c:forEach var="small" items="${CourseListSmallCode }">
+							<c:forEach var="small" items="${courseListSmallCode }">
 								<option value="${small.small_code}"${small.small_code == small_code? 'selected':''} >${small.cd_content}</option>		
 							</c:forEach>
 					</select>

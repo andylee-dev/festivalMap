@@ -60,7 +60,7 @@ public class CourseController {
 			
 			log.info("CourseController courseListSmallCode start...");
 			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
-			log.info("CourseListSmallCode : " + courseListSmallCode);
+			log.info("courseListSmallCode : " + courseListSmallCode);
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
@@ -138,13 +138,13 @@ public class CourseController {
 			course.setEnd(page.getEnd());
 			
 			// Course의 리스트를 출력
-			log.info("CourseController courseList start...");
+			log.info("courseController courseList start...");
 			List<Course> courseList = cs.courseList(course);
 			log.info("courseList : " + courseList);
 			
-			log.info("CourseController courseListSmallCode start...");
+			log.info("courseController courseListSmallCode start...");
 			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
-			log.info("CourseListSmallCode : " + courseListSmallCode);
+			log.info("courseListSmallCode : " + courseListSmallCode);
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
