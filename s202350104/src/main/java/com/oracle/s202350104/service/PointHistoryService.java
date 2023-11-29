@@ -16,13 +16,13 @@ public interface PointHistoryService {
 
 	List<PointHistory>      listPointHistorySortedByDateDesc(List<PointHistory> listPointHistory);
 
-	List<PointHistory>      searchPointHistory(String search, String keyword);
+	List<PointHistory>      searchPointHistorylist(PointHistory pointhistory);
 
 	int                     totalpointHistory();
 
 	int                     conTotalPointHistory(PointHistory pointhistory);
 
-	List<PointHistory>      indexlistSearchPointHistory(PointHistory pointhistory);
+	/* List<PointHistory> indexlistSearchPointHistory(PointHistory pointhistory); */
 
 	List<PointHistory>      listPointHistory1(PointHistory pointhistory);
 }

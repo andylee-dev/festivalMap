@@ -74,27 +74,11 @@ import lombok.extern.slf4j.Slf4j;
 		    }
 
 		@Override
-	    public List<PointHistory> searchPointHistory(String search, String keyword) {
+	    public List<PointHistory> searchPointHistorylist(PointHistory pointhistory) {
 			
-		    List<PointHistory> listPointHistory = phd.listPointHistory(); // phd를 통해 데이터 조회
+		    List<PointHistory> searchPointHistory = phd.searchPointHistorylist(pointhistory); // phd를 통해 데이터 조회
 
-		    // 검색 로직 추가
-		    List<PointHistory> searchResult = listPointHistory.stream()
-		            .filter(ph -> {
-		                switch (search) {
-		                    case "s_id":
-		                        return String.valueOf(ph.getUser_id()).contains(keyword);
-		                    case "s_name":
-		                        return ph.getUser_name().contains(keyword);
-		                    case "s_point":
-		                        return String.valueOf(ph.getPoint_id()).contains(keyword);
-		                    default:
-		                        return false;
-		                }
-		            })
-		            .collect(Collectors.toList());
-
-		    return searchResult;
+		    return searchPointHistory;
 	}
 
 		@Override
@@ -109,11 +93,12 @@ import lombok.extern.slf4j.Slf4j;
 			return conTotalPointHistory;
 		}
 
-		@Override
-		public List<PointHistory> indexlistSearchPointHistory(PointHistory pointhistory) {
-			List<PointHistory> indexlistSearchPointHistory = phd.indexlistSearchPointHistory(pointhistory);
-			return indexlistSearchPointHistory;
-		}
+		/*
+		 * @Override public List<PointHistory> indexlistSearchPointHistory(PointHistory
+		 * pointhistory) { List<PointHistory> indexlistSearchPointHistory =
+		 * phd.indexlistSearchPointHistory(pointhistory); return
+		 * indexlistSearchPointHistory; }
+		 */
 
 		@Override
 		public List<PointHistory> listPointHistory1(PointHistory pointhistory) {

@@ -94,13 +94,11 @@ public class AdminPointHistoryController {
 	log.info("currentPage {}",currentPage);
 
 	pointhistory.setStart(page.getStart());
-	log.info("Start {}",page.getStart());
+
 	pointhistory.setEnd(page.getEnd());
-	log.info("End {}",page.getEnd());
+	
 	List<PointHistory> listPointHistory = phs.listPointHistory1(pointhistory);
-	log.info("listPointHistory {}",listPointHistory.size());
 	List<PointHistory> sortedList = phs.listPointHistorySortedByDateDesc(listPointHistory);
-	log.info("sortedList {}",sortedList.size());
 
     model.addAttribute("listPointHistory", sortedList);
     model.addAttribute("totalpointHistory", totalpointhistory);
@@ -135,7 +133,8 @@ public class AdminPointHistoryController {
 	}
 	
 	@RequestMapping("/admin/point/pointhistorySearch")
-    public String pointhistorySearch(PointHistory pointhistory, String currentPage, String search, String keyword, Model model, HttpServletRequest request) {
+    public String pointhistorySearch(PointHistory pointhistory, String currentPage, Model model, HttpServletRequest request) {
+		
     	UUID transactionId = UUID.randomUUID();
     	
     	try {
@@ -144,22 +143,34 @@ public class AdminPointHistoryController {
 		int path 			= 1;
     	
     	int totalPointhistory = phs.conTotalPointHistory(pointhistory);
+    	String keyword		= request.getParameter("keyword");
+    	String user_name  = request.getParameter("user_name");
+    	log.info("user_name {}",user_name);
+    	String point_title  = request.getParameter("point_title");
+    	String point_point  = request.getParameter("point_point");
+    	log.info("keyword {}",keyword);
     	
     	Paging page = new Paging(totalPointhistory, currentPage);
     	pointhistory.setStart(page.getStart());
+    	log.info("Start {}",page.getStart());
     	pointhistory.setEnd(page.getEnd());
+    	log.info("End {}",page.getEnd());
     	
-        List<PointHistory> searchResult = phs.searchPointHistory(search, keyword);
+        List<PointHistory> searchResult = phs.searchPointHistorylist(pointhistory);
         
         model.addAttribute("totalPointhistory", totalPointhistory);
         model.addAttribute("listPointHistory", searchResult);
         model.addAttribute("path", path);
         model.addAttribute("page", page);
+        model.addAttribute("keyword", keyword);	
+        model.addAttribute("user_name", user_name);	
+        model.addAttribute("point_title", point_title);	
+        model.addAttribute("point_point", point_point);	
         
     	} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", e.getMessage());
+			log.error("[{}]{}:{}", transactionId, "PointHistoryController pointhistorySearch", e.getMessage());
 		} finally {
-			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "end");
+			log.info("[{}]{}:{}", transactionId, "PointHistoryController pointhistorySearch", "end");
 		}	
         
         return "admin/point/pointhistory";

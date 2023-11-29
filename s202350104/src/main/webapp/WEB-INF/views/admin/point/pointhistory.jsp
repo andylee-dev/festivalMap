@@ -27,7 +27,7 @@
 				
 				<!-- Section2: Search Form -->
 				<div class="container col-9 justify-content-center mt-5">
-					<form action="pointhistorySearch" method="POST" class="container justify-content-center">	
+					<form action="pointhistorySearch" method="get" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
@@ -92,9 +92,9 @@
 										</li>
 									</c:when>
 									<c:when test="${path ==1}">
-										<li class="page-item">
-											<a href="pointhistorySearch?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
-										</li>
+    									<li class="page-item">
+        									<a href="pointhistorySearch?currentPage=${page.startPage-page.pageBlock}&keyword=${keyword}&user_name=${user_name}&point_title=${point_title}&point_point=${point_point}" class="pageblock page-link">Prev</a>
+    									</li>
 									</c:when>
 								</c:choose>
 									
@@ -108,7 +108,7 @@
 									</c:when>
 									<c:when test="${path == 1}">
 										<li class="page-item">
-											<a href="pointhistorySearch?currentPage=${i}&keyword=${keyword}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+											<a href="pointhistorySearch?currentPage=${i}&keyword=${keyword}&user_name=${user_name}&point_title=${point_title}&point_point=${point_point}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 										</li>
 									</c:when>
 								</c:choose>
@@ -122,9 +122,9 @@
 										</li>
 									</c:when>
 									<c:when test="${path ==1}">
-										<li class="page-item">
-											<a href="pointhistorySearch?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
-										</li>
+    									<li class="page-item">
+        									<a href="pointhistorySearch?currentPage=${page.startPage+page.pageBlock}&keyword=${keyword}&user_name=${user_name}&point_title=${point_title}&point_point=${point_point}" class="pageblock page-link">Next</a>
+    									</li>
 									</c:when>
 								</c:choose>
 							</c:if>

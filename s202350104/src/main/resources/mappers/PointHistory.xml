@@ -56,21 +56,6 @@
 		ORDER BY ph.created_at DESC
 
 	</select>
-	
-	    <select id="searchPointHistory" resultType="pointhistory" parameterType="pointhistory">
-        SELECT *
-        FROM pointhistory ph, users u, point p
-        WHERE ph.user_id = u.id
-        AND ph.point_id = p.id
-        AND (
-            u.name LIKE '%' || #{keyword} || '%'
-            OR u.id LIKE '%' || #{keyword} || '%'
-            OR ph.point_id LIKE '%' || #{keyword} || '%'
-            OR p.title LIKE '%' || #{keyword} || '%'
-            OR ph.point_point LIKE '%' || #{keyword} || '%'
-            OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
-        )
-    </select>
     
    <select id="PointHistoryTotal" resultType="int">
    	SELECT count(*)
@@ -79,15 +64,30 @@
     AND ph.point_id = p.id
 	</select>
 	
+	<select id="searchPointHistory" resultType="pointhistory" parameterType="pointhistory">
+         SELECT * 
+         FROM (
+         SELECT a.*, ROWNUM AS rn FROM (
+            SELECT ph.*
+            FROM pointhistory ph, users u, point p
+            WHERE ph.user_id = u.id
+            AND ph.point_id = p.id
+            AND (
+                u.name LIKE '%' || #{keyword} || '%'
+                OR u.id LIKE '%' || #{keyword} || '%'
+                OR ph.point_id LIKE '%' || #{keyword} || '%'
+                OR p.title LIKE '%' || #{keyword} || '%'
+                OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
+            )
+        ) a
+    )
+    WHERE rn BETWEEN #{start} and #{end}
+    </select>
+	
 	<select id="conTotalPointHistory" resultType="int" parameterType="pointhistory">
 		SELECT count(*)
-		FROM pointhistory ph, users u, point p
-		WHERE ph.user_id = u.id
-   		AND ph.point_id = p.id
-	</select>
-	
-	<select id="indexlistSearchPointHistory" resultType="pointhistory">
-    SELECT *
+		FROM (
+        SELECT ph.*, ROWNUM AS rn
         FROM pointhistory ph, users u, point p
         WHERE ph.user_id = u.id
         AND ph.point_id = p.id
@@ -96,11 +96,48 @@
             OR u.id LIKE '%' || #{keyword} || '%'
             OR ph.point_id LIKE '%' || #{keyword} || '%'
             OR p.title LIKE '%' || #{keyword} || '%'
-            OR ph.point_point LIKE '%' || #{keyword} || '%'
             OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
-        	) a
-    		)
-   		    WHERE rn BETWEEN #{start} and #{end}
+        )
+    )
 	</select>
+	
+	<!-- <select id="indexlistSearchPointHistory" resultType="pointhistory" parameterType="pointhistory">
+    SELECT * 
+         FROM (
+         SELECT a.*, ROWNUM AS rn FROM (
+            SELECT ph.*
+            FROM pointhistory ph, users u, point p
+            WHERE ph.user_id = u.id
+            AND ph.point_id = p.id
+            AND (
+                u.name LIKE '%' || #{keyword} || '%'
+                OR u.id LIKE '%' || #{keyword} || '%'
+                OR ph.point_id LIKE '%' || #{keyword} || '%'
+                OR p.title LIKE '%' || #{keyword} || '%'
+                OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
+            )
+        ) a
+    )
+    	WHERE rn BETWEEN #{start} and #{end}
+	</select> -->
+	
+	<select id="searchPointHistorylist" resultType="pointhistory" parameterType="pointhistory">
+    SELECT * 
+         FROM (
+         SELECT a.*, ROWNUM AS rn FROM (
+            SELECT u.name as user_name, p.title as point_title, p.point as point_point, ph.user_id, ph.point_id, ph.created_at, ph.id
+			FROM pointhistory ph, users u, point p
+			WHERE ph.user_id = u.id
+			AND (
+                u.name LIKE '%' || #{keyword} || '%'
+                OR u.id LIKE '%' || #{keyword} || '%'
+                OR ph.point_id LIKE '%' || #{keyword} || '%'
+                OR p.title LIKE '%' || #{keyword} || '%'
+                OR TO_CHAR(ph.created_at, 'YYYY/MM/DD') LIKE '%' || #{keyword} || '%'
+            	)
+        	  ) a
+    		)
+    	WHERE rn BETWEEN #{start} and #{end}
+</select>
 
 </mapper>
