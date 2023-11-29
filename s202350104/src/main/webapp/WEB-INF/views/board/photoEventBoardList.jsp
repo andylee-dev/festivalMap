@@ -140,20 +140,21 @@
 
 		<!-- 키워드, 검색창 영역 -->
 		<div class="container p-3 keyword_custom">
-			<form id="photoBoardList" action="photoBoardList" method="get">		
+		
 			<div class="row align-items-start ">
 				<!-- 포토게시판만 검색창 같이 출력 -->
 				<c:choose>
 					<c:when test="${smallCode == 4}">
 						<div class="col keyword_div_custom">
+							<form id="photoBoardList" action="photoBoardList" method="get">
 							<input class="form-control keyword_custom" type="text" name="keyword" placeholder="&nbsp;키워드를 검색해보세요.">
 							<img src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
+							</form>
 							<button class="btn btn_custom" onclick="checkUserIdAndNavigate()">글쓰기</button>
 						</div>
 					</c:when>
 				</c:choose>
 			</div>
-			</form>
 		</div>
 
 		<!-- 목록 출력 영역 -->
