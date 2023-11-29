@@ -36,6 +36,19 @@
 				AND sigungu = #{sigungu}
 			</if>
 		</if>
+		<if test="goingOn != null and goingOn != ''">
+			<choose>
+				<when test="goingOn == 'past'">
+					<![CDATA[ AND end_date < sysdate ]]>
+				</when>
+				<when test="goingOn == 'present'">
+					<![CDATA[ AND sysdate BETWEEN start_date AND end_date ]]>
+				</when>
+				<when test="goingOn == 'future'">
+					<![CDATA[ AND start_date > sysdate ]]>
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 	<select id="nhFestivalsListAll" resultType="FestivalsContent" parameterType="FestivalsContent">
@@ -89,6 +102,19 @@
 			 		</otherwise>
 			 	</choose>
 			 </if>
+			 <if test="goingOn != null and goingOn != ''">
+				<choose>
+					<when test="goingOn == 'past'">
+						<![CDATA[ AND end_date < sysdate ]]>
+					</when>
+					<when test="goingOn == 'present'">
+						<![CDATA[ AND sysdate BETWEEN start_date AND end_date ]]>
+					</when>
+					<when test="goingOn == 'future'">
+						<![CDATA[ AND start_date > sysdate ]]>
+					</when>
+				</choose>
+			</if>
 			 ) t
 		)
 		<if test="start != 0 and end != 0">

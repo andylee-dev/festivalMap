@@ -126,7 +126,8 @@
 					</select>
 				</div>
 				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
+					<select class="form-select" 
+							aria-label="Default select example">
 						<option selected>진행 기간 선택</option>
 						<option value="1">One</option>
 						<option value="2">Two</option>
@@ -134,11 +135,12 @@
 					</select>
 				</div>
 				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
+					<select class="form-select" 
+							aria-label="Default select example"  name="goingOn">
 						<option selected>진행 여부 선택</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+						<option value="past">진행완료</option>
+						<option value="present">진행중</option>
+						<option value="future">진행예정</option>
 					</select>
 				</div>
 			</div>		
@@ -187,7 +189,7 @@
 			<c:if test="${page.startPage > page.pageBlock}">
 				<li class="page-item">
 					<a href="festival?currentPage=${page.startPage-page.pageBlock}"
-					   class="pageblock page-link">[이전]</a></li>
+					   class="pageblock page-link">Prev</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 				<li class="page-item">
@@ -197,7 +199,7 @@
 			<c:if test="${page.endPage < page.totalPage}">
 				<li class="page-item">
 					<a href="festival?currentPage=${page.startPage+page.pageBlock}"
-					   class="pageblock page-link">[다음]</a></li>
+					   class="pageblock page-link">Next</a></li>
 			</c:if>
 
 		</ul>

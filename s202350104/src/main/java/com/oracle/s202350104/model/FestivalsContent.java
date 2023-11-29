@@ -60,6 +60,7 @@ public class FestivalsContent {
 	private String searchType;
 	private String keyword;
 	private String ordering; // 정렬
+	private String goingOn;  // 진행여부
 	
 	// 태그용
 	private String[]   finalTags;
