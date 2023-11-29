@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Service("PopularContentRecommendation")
 public class PopularContentRecommendation implements RecommendationStrategy {
 	/* (nh)TODO: ㅇㅇ.. */
 	private final RecommendationDao recommendationDao;
@@ -43,7 +43,7 @@ public class PopularContentRecommendation implements RecommendationStrategy {
     	
         for(Contents c : contentList) {
         	double readcount = c.getReadcount(); 		// 조회수
-        	double avg_score = c.getAvg_score();		// 리뷰평점평균
+        	double avg_score = c.getAvg_score();		// 평점평균
         	double review_count = c.getReview_count();	// 리뷰수
         	double score = (readcount * weightReadcount) + (avg_score * weightAvg_score) + (review_count * weightReview_count);
             scoredContentList.add(new ScoredContent(c, score));
