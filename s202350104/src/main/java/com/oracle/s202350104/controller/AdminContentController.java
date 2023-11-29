@@ -12,8 +12,9 @@
 	import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-	
-	import com.oracle.s202350104.model.Accomodation;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.oracle.s202350104.model.Accomodation;
 	import com.oracle.s202350104.model.AccomodationContent;
 	import com.oracle.s202350104.model.Areas;
 	import com.oracle.s202350104.model.CommonCodes;
@@ -33,7 +34,8 @@ import com.oracle.s202350104.service.Paging;
 	import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
-	import com.oracle.s202350104.model.RestaurantsContent;
+import com.oracle.s202350104.utils.FileUploadDeleteUtil;
+import com.oracle.s202350104.model.RestaurantsContent;
 	import com.oracle.s202350104.model.SpotContent;
 import com.oracle.s202350104.model.Tags;
 
@@ -1220,11 +1222,47 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "experienceInsert")
-		public String experienceInsert(ExperienceContent experience, Model model) {
+		public String experienceInsert(ExperienceContent experience, MultipartFile file, MultipartFile file1, MultipartFile file2, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			int role = us.getLoggedInUserRole();
 			String user_id = String.valueOf(us.getLoggedInId());
 			log.info("role->"+role);
+			
+			
+			String pathDB = null;
+			String fileName = null;
+			String pathDB1 = null;
+			String fileName1 = null;
+			String pathDB2 = null;
+			String fileName2 = null;
+			
+			
+			FileUploadDeleteUtil fileUpload = new FileUploadDeleteUtil();
+			
+			try {
+				log.info("experienceimgupload File Start!!");
+				String[] uploadResult = fileUpload.uploadFile(file);
+				fileName = uploadResult[0];
+				pathDB = uploadResult[1];
+				String[] uploadResult1 = fileUpload.uploadFile(file1);
+				fileName1 = uploadResult1[0];
+				pathDB1 = uploadResult1[1];
+				String[] uploadResult2 = fileUpload.uploadFile(file2);
+				fileName2 = uploadResult2[0];
+				pathDB2 = uploadResult2[1];
+				log.info("experienceimgupload fileName : {}", fileName);
+				log.info("experienceimgupload pathDB : {}", pathDB);
+
+			} catch (Exception e) {
+				log.error("experienceimgupload File upload error : {}", e.getMessage());
+			} finally {
+				log.info("experienceimgupload integratedboardInsert File End..");
+			}
+			
+			experience.setImg1(pathDB+fileName);
+			experience.setImg2(pathDB1+fileName1);
+			experience.setImg3(pathDB2+fileName2);
+			
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "start");
 				experience.setUser_id(user_id);

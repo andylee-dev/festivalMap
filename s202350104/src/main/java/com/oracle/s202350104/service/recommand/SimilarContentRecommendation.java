@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Service("SimilarContentRecommendation")
 public class SimilarContentRecommendation implements RecommendationStrategy {
 
 	private final ContentsDao contentsDao;
@@ -69,7 +69,7 @@ public class SimilarContentRecommendation implements RecommendationStrategy {
 			for(int i=0; i<target_tags.size(); i++) {
 				for(int j=0; j<tags.size(); j++) {
 					if(target_tags.get(i).getId() == tags.get(j).getId()) {
-						similarTagsCnt = similarTagsCnt++;
+						similarTagsCnt++;
 					}
 				}	
 			}
