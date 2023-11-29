@@ -233,51 +233,6 @@
 						  <input type="text" class="form-control" id="title" value="${restaurant.title} " readonly>
 						</div>
 						
-						<div class="mb-3">
-							<label for="email" class="form-label">축제기간</label>
-						 		<div class="row">
-						  			<div class="col-3">
-						  				<input type="date" class="form-control" id="1" value="">
-						  				
-						  			</div>
-						  			<div class="col-3">
-						  				<input type="date" class="form-control" id="2" value="">
-						  				
-						  			</div>
-						  			<div class="col-1 ml-50">
-						  				<input type="text" class="form-control" id="3" value="00일" readonly>
-						  			</div>
-						  		</div>
-						</div>
-						<div class="mb-3 ">
-						  <label for="email" class="form-label">주최</label>
-						  <input type="text" class="form-control" id="4" value="주최자자자자자자자자자" readonly>
-						</div>
-						<div class="mb-3" style="background: #F8FCF4;">
-						  <div class="row">
-						    <div class="col-4 md-4 mb-3">
-						      <label for="validationDefault01" class="form-label">담당 부서</label>
-						      <input type="text" class="form-control" id="validationDefault01" placeholder="First name" value="디자인협력팀" required>
-						    </div>
-						    <div class="col-4 md-4 mb-3">
-						      <label for="validationDefault02" class="form-label">담당자</label>
-						      <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="이규현팀장" required>
-						    </div>
-						    <div class="col-4 md-4 mb-3">
-						      <label for="validationDefaultUsername" class="form-label">연락처</label>
-						      <input type="text" class="form-control" id="validationDefault02" placeholder="010-0000-0000" value="010-1234-5678" required>
-						    </div>
-						  
-						  <div class="col-6 md-4 mb-3">
-						      <label for="validationDefault03" class="form-label">주소</label>
-						      <input type="text" class="form-control" id="validationDefault03" placeholder="City" required>
-						    </div>
-						    <div class="col-6 md-4 mb-3">
-						      <label for="validationDefault04" class="form-label">비고</label>
-						      <input type="text" class="form-control" id="validationDefault04" placeholder="State" required>
-						    </div>
-						  </div>
-						 </div>	
 						 <div class="mb-3 ">
 							<label for="content" class="form-label ">지역</label>
 								<div class="row">

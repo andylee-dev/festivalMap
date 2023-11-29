@@ -399,7 +399,12 @@ import lombok.RequiredArgsConstructor;
 				log.info("{}", totalRestaurant);
 				int path 			= 2;
 				log.info("{}", path);
+				String searchType   = restaurant.getSearchType();
+				String keyword      = restaurant.getKeyword();
 				int small_code      = restaurant.getSmall_code();
+				int area 			= restaurant.getArea();
+				int sigungu 		= restaurant.getSigungu();
+				String is_deleted   = restaurant.getIs_deleted();
 				int big_code        = restaurant.getBig_code();
 				contentId       = restaurant.getContent_id();
 							
@@ -412,13 +417,21 @@ import lombok.RequiredArgsConstructor;
 				
 				
 				List<RestaurantsContent> listSearchRestaurant = rs.adminListSearchRestaurant(restaurant);
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 								
 				model.addAttribute("totalRestaurant", totalRestaurant);
 				model.addAttribute("path", path);
+				model.addAttribute("searchType", searchType);
+				model.addAttribute("keyword", keyword);
+				model.addAttribute("small_code", small_code);
+				model.addAttribute("area", area);
+				model.addAttribute("sigungu", sigungu);
+				model.addAttribute("is_deleted", is_deleted);
 				model.addAttribute("status", status);
 				model.addAttribute("theme", theme);
 				model.addAttribute("page", page);
 				model.addAttribute("listRestaurant", listSearchRestaurant);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("small_code", small_code);
 				model.addAttribute("big_code", big_code);
 				model.addAttribute("currentPage", currentPage);

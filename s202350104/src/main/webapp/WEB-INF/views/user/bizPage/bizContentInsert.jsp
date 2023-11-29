@@ -429,58 +429,137 @@
 			</div>
 			<!-- 명소끝 --> 
 			 
-			  <div class="tab-pane fade" id="nav-restaurant" role="tabpanel" aria-labelledby="nav-restaurant-tab" tabindex="0">
-			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/restaurant/insert" method="post">
-						<table class="table table-striped table-sm">
-							<!-- <tr><th>콘텐츠ID</th><td><input 	type="number" 	name="contentId" 	required="required" maxlength="10" value="">
-													<input 	type="button" 	value="중복확인" 	 	onclick="chk()"> -->
-							<tr><th>분류</th>
-								<td>
-									<input type="hidden" name="small_code" value="12">[Restaurant]<br>
-									<select name="small_code">
-										<c:forEach var="listCodes" items="${listCodes}">
-											<c:if test="${listCodes.big_code == 12 && listCodes.small_code != 999 }">
-												<option value="${listCodes.small_code}">${listCodes.content}</option>
-											</c:if>
-										</c:forEach>
-									</select>
-								</td>
-							<tr><th>음식점명</th><td><input 	type="text" 	name="title" 		required="required"></td></tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-			  					</td>
-							</tr>
-							<tr><th>주소</th><td><input 		type="text"    	name="address" 		></td></tr>
-							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" 	></td></tr>
-							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}\d{4}"></td>       
-							<tr><th>대표메뉴</th><td><input 	type="text" 	name="first_menu" 	></td></tr>
-							<tr><th>추천메뉴</th><td><input 	type="text" 	name="menu" 		></td></tr>
-							<tr><th>영업시간</th><td><input 	type="text" 	name="open_time" 	></td></tr>
-							<tr><th>휴무일</th><td><input 	type="text" 	name="rest_date" 	></td></tr>
-							<tr><th>내용</th><td><textarea   rows="10" cols="60" name="content" maxlength="6000" placeholder="맛집에 대한 설명을 1000자 이내로 입력해주세요"></textarea></tr>
-							<tr><th>이미지</th><td></td></tr>
-							<tr><th>태그</th><td></td></tr>
-							<tr><th>가능여부</th>
-								<td>
-									<input type="checkbox" name="is_smoking" value="1">흡연<br>
-									<input type="checkbox" name="is_packing" value="1">포장<br>
-									<input type="checkbox" name="is_parking" value="1">주차<br>
-								</td>
-							</tr>
-							<tr><th>등록자ID</th><td></td></tr>
-							<tr><th>등록일</th><td></td></tr>
-						</table>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary"  onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까')">초기화</button>
-						</div>	
-					</form>	
+			<div class="tab-pane fade" id="nav-restaurant" role="tabpanel" aria-labelledby="nav-restaurant-tab" tabindex="0">
+			  	<div class="container-fluid">
+				<div class="row">
+				<div class="container my-5" id="detail-body-container">
+					<div>
+						<h1>맛집 등록</h1>
+						<hr class="hr" />
+					</div>
+					<div>
+						<h3 style="color: #FF4379 ">맛집정보 등록하기</h3>
+					</div>
+					<div class="my-5">
+					<div class="" id="detail-main-container">
+						<div class="container p-5" id="form-container">
+						<form action="restaurantInsert" method="post">
+							<div class="mb-3 ">
+							  <label for="title" class="form-label">맛집 이름(필수 입력)</label>
+							  <input type="text" class="form-control" name="title" id="title" value="${restaurant.title}" required="required">
+							</div>
+							<div class="mb-3" id="detail-content-title">
+							  <label for="small_code" class="form-label">맛집 종류(필수 선택)</label>
+							  	<input type="hidden" name="big_code" value="12">
+								<select class="form-select" aria-label="small_code" name="small_code" required="required">
+									<c:forEach var="smallCode" items="${listSmallCode}">
+										<c:if test="${smallCode.big_code == 12 && smallCode.small_code != 999}">
+											<option value="${smallCode.small_code}" ${smallCode.small_code == restaurant.small_code? 'selected' : '' }>${smallCode.content}</option>
+										</c:if>
+								 	</c:forEach>
+								</select>
+							</div>			
+							<div class="mb-3 ">
+								<label for="content" class="form-label ">지역(필수 선택)</label>
+									<div class="row">
+									    <div class="col-2">
+									        <select name="area" class="form-select area-dropdown"></select>
+									    </div>
+									    <div class="col-2">
+									       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+									    </div>
+									    <div class="col-8">
+									    <input type="text" class="form-control" name="address" id="address" value="${restaurant.address}" placeholder="상세주소 입력해주세요">
+									    </div>
+									</div>
+							</div>
+							<div class="mb-3 ">
+							  <label for="phone" class="form-label">전화번호</label>
+							  <input type="text" class="form-control" name="phone" id="phone" value="${restaurant.phone} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="first_menu" class="form-label">대표메뉴</label>
+							  <input type="text" class="form-control" name="first_menu" id="first_menu" value="${restaurant.first_menu} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="menu" class="form-label">추천메뉴</label>
+							  <input type="text" class="form-control" name="menu" id="menu" value="${restaurant.menu} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="content" class="form-label">개요</label>
+							  <textarea class="form-control" name="content" id="content" rows="5" >${restaurant.content}</textarea>
+							</div>		
+							<div class="mb-3 ">
+							  <label for="open_time" class="form-label">영업시간</label>
+							  <input type="text" class="form-control" name="open_time" id="open_time" value="${restaurant.open_time} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="rest_date" class="form-label">휴무일</label>
+							  <input type="text" class="form-control" name="rest_date" id="rest_date" value="${restaurant.rest_date} " >
+							</div>
+							<div class="mb-3 ">
+								 <label for="rest_time" class="form-label">태그</label>
+									<div class="tag-container">
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                      	 </div>
+				    				</div>
+			                 </div>	 
+							 				  
+							  <label for="facilities" class="form-label">부대시설</label><br>
+							<div class="col-12 d-flex justify-content-between">
+							  	<div class="col-3 form-check">
+									<input class="form-check-input" type="checkbox" name="is_smoking"
+									id="is_credit" value="1" ${restaurant.is_smoking == 1?"checked":""} > 
+									<label class="form-check-label" for="is_credit">흡연가능</label>
+								</div>
+								<div class="col-3 form-check">
+									<input class="form-check-input" type="checkbox" name="is_packing"
+									id="is_pet" value="1" ${restaurant.is_packing == 1?"checked":""} > 
+									<label class="form-check-label" for="is_packing">포장가능</label>
+								</div>
+								<div class="col-3 form-check">
+								<input class="form-check-input" type="checkbox" name="is_parking"
+									id="is_parking" value="1" ${restaurant.is_parking == 1?"checked":""} > 
+									<label class="form-check-label" for="is_parking">주차가능</label>
+								</div>
+							</div>
+																		
+							<hr class="hr" />			
+												
+							<div class="d-flex justify-content-between">
+								<div class="col-6 mb-3" >
+		                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+		                        </div>
+		                        <div class="col-3 mb-3">
+		                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+		                        </div>
+		                        <div class="col-2 mb-3">
+		                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant'">취소</button>
+		                        </div>
+							</div>
+														
+							</form>
+						</div>
+					</div>
+					</div>
 				</div>
-			   </div>
+			</div>
+			</div>
+		</div>	
+			  	
 			 
 			 
 			  <div class="tab-pane fade" id="nav-accomodation" role="tabpanel" aria-labelledby="nav-accomodation-tab" tabindex="0">

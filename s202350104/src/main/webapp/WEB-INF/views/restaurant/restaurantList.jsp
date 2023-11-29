@@ -160,7 +160,7 @@
 									<p class="tag-p">#지역태그</p>
 								</div> -->
                           	<a href="restaurant/detail?contentId=${restaurant.id}&currentPage=${page.currentPage}">
-                            	<img src="${restaurant.img1}" class="card-img-top" alt="${restaurant.title}이미지">
+                            	<img src="${restaurant.img1}" class="card-img-top" alt="${restaurant.title}">
                          	</a>
                          </div>
                          <div class="card-body">

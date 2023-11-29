@@ -139,14 +139,6 @@
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 		<main class="col-10 p-0">
-			<div class="admin-header-container">
-				<div class="container m-4">
-					<i class="title-bi bi bi-pencil-square "></i>
-				<label  class="admin-header-title ">축제 상세 정보 </label>	
-				</div>
-			</div>
-				
-				
 			<div class="container my-5" id="detail-body-container">
 				<div>
 				<h1>맛집 수정</h1>
@@ -249,7 +241,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for=created_at class="form-label">작성일</label>
-						  <input type="text" class="form-control" name="created_at" id="created_at" value="<fmt:formatDate value="${restaurant.created_at}" pattern="YYYY/MM/dd"/>" >
+						  <input type="text" class="form-control" name="created_at" id="created_at" value="<fmt:formatDate value="${restaurant.created_at}" pattern="YYYY/MM/dd"/>" readonly>
 						</div>
 						  
 						 <div class="mb-3 ">

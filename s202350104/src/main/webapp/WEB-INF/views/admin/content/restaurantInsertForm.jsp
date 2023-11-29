@@ -128,9 +128,7 @@
 	<body>
 	<div class="container-fluid">
 		<div class="row">
-			<c:if test="${role == 1 }">
-				<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
-			</c:if>
+			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 		<main class="col-10 p-0">
 			<div class="admin-header-container">
 				<div class="container m-4">
@@ -181,10 +179,6 @@
 								    <input type="text" class="form-control" name="address" id="address" value="${restaurant.address}" placeholder="상세주소 입력해주세요">
 								    </div>
 								</div>
-						</div>
-						<div class="mb-3 ">
-						  <label for="postcode" class="form-label">우편번호</label>
-						  <input type="text" class="form-control" name="postcode" id="postcode" value="${restaurant.postcode} " >
 						</div>
 						<div class="mb-3 ">
 						  <label for="phone" class="form-label">전화번호</label>

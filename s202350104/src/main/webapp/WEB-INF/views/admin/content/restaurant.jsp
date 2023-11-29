@@ -65,7 +65,7 @@
 											<option value="999">전체</option>
 											<c:forEach var="smallCode" items="${listSmallCode}">
 												<c:if test="${smallCode.small_code != 999 }">
-													<option value="${smallCode.small_code}" ${smallCode.small_code == restaurant.small_code? 'selected' : '' } disabled>${smallCode.content}</option>
+													<option value="${smallCode.small_code}" ${smallCode.small_code == restaurant.small_code? 'selected' : '' }>${smallCode.content}</option>
 												</c:if>
 											</c:forEach>
 										</select>
@@ -198,7 +198,7 @@
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>	
+								<a href="adminRestaurantSearch?searchType=${s_title}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>	
 							</li>
 						</c:when>
 					</c:choose>	
@@ -217,7 +217,7 @@
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+								<a href="adminRestaurantSearch?searchType=${s_title}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}&big_code=${big_code}&currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 							</li>
 						</c:when>
 					</c:choose>	
@@ -236,7 +236,7 @@
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+								<a href="adminRestaurantSearch?searchType=${s_title}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}&big_code=${big_code}=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
 							</li>
 						</c:when>
 					</c:choose>	

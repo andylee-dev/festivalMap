@@ -358,21 +358,7 @@ function like() {
 						<p class="text-md-custom">휴무일</p>
 						<span>${restaurant.rest_date}</span>
 					</div>
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>문의메일</p>
-						<span>꿈나라꿈나라</span>											
-					</div>
-					<div class="col text-custom">
-						<img alt="icon.jpg" src="../image/boardStatus1.png">
-						<p>홈페이지</p>	
-						<span>
-							<a href="${restaurant.homepage}">${restaurant.homepage}</a>
-						</span>										
-					</div>
-					<div class="col text-custom"></div>						
-					<div class="col text-custom"></div>						
-					
+										
 					<div class="col text-icon-custom">
 						<div class="row row-cols-6">
 								<div class="row row-cols-2 icon-custom">
