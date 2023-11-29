@@ -357,6 +357,38 @@ public class UserController {
 
 		return "user/myPage/myPostDetail";
 	}
+	
+	// 통합게시판 삭제 Logic(New, status로 삭제 여부)
+	@RequestMapping(value = "myPage/myPostDelete")
+	public String myPostDelete(int id, Model model) {
+		// value 확인용
+		log.info("userController myPostDelete id : {}", id);
+		
+		// 복원 Logic
+		String redirectURL = "";
+		int deleteDelete = 0;
+		
+		try {
+		 	log.info("userController myPostDelete Start!!");
+			
+		 	deleteDelete = boardService.boardDeleteNew(id);
+		 	
+		 	// 결과값에 따라 redirect 경로 지정
+			if (deleteDelete > 0) {
+				redirectURL = "redirect:/user/myPage/myPost";
+				
+			} else {
+				model.addAttribute("msg", "복원 실패!!, 관리자에게 문의해주세요.");
+				redirectURL = "redirect:/user/myPage/myPost";
+			}
+			
+		} catch (Exception e) {
+			log.error("userController myPostDelete errer : {}", e.getMessage());
+		}
+		
+		// 결과값에 따른 경로 이동
+		return redirectURL;
+	}
 
 	@RequestMapping(value = "myPage/qnaDetail")
 	public String qnaDetail(int user_id, int id, Model model) {

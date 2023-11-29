@@ -10,6 +10,30 @@
 <title>myPostDetail</title>
 <link rel="stylesheet" type="text/css" href="/css/myPost.css">
 <link rel="stylesheet" type="text/css" href="/css/adminTable.css">
+<script type="text/javascript">
+function confirmDelete(id) {
+    if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
+        $.ajax({
+            type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
+            url: 'myPostDelete',
+            data: { id: id },
+            success: function(result) {
+                // 성공적으로 삭제된 경우의 처리
+                alert('삭제되었습니다.');
+                location.href = '/user/myPage/myPost';
+            },
+            error: function(xhr, status, error) {
+                // 오류 발생 시의 처리
+                alert('삭제에 실패했습니다.');
+            }
+        });
+    } else {
+        // 취소 버튼을 눌렀을 때의 처리
+        // 필요한 로직을 추가하세요.
+    }
+}
+</script>
+
 </head>
 <body>
 	<main>
@@ -66,6 +90,8 @@
 							   onclick="">
 						<input class="btn btn-primary" type="button" value="목록"
 							   onclick="location.href='myPost'">
+						<input class="btn btn-primary" type="button" value="삭제"
+							   onclick="confirmDelete(${board.id})">							   
 					</div>
 				</div>
 			</div>

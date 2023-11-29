@@ -236,7 +236,7 @@ public class AdminCommunityController {
 		return "forward:communityDetail";
 	}
 	
-	// notice 삭제 Logic(New, status로 삭제 여부)
+	// 통합게시판 삭제 Logic(New, status로 삭제 여부)
 	@RequestMapping(value = "/communityDelete")
 	public String communityDelete(int id, Model model) {
 		// value 확인용
@@ -268,7 +268,7 @@ public class AdminCommunityController {
 		return redirectURL;
 	}
 	
-	// notice 복원 Logic
+	// 통합게시판 복원 Logic
 	@RequestMapping(value = "/communityRecycle")
 	public String communityRecycle(int id, Model model) {
 		// value 확인용
