@@ -150,7 +150,7 @@
 				<div class="" id="detail-main-container">
 				
 					<div class="container p-5" id="form-container">
-					<form action="experienceInsert" method="post">
+					<form action="experienceInsert" method="post" enctype="multipart/form-data">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">체험 이름(필수 입력)</label>
 						  <input type="text" class="form-control" name="title" id="title" required="required">
@@ -264,6 +264,30 @@
 							<input class="form-check-input" type="checkbox" name="is_stroller"
 								id="is_stroller" value="1" ${experience.is_stroller == 1?"checked":""}> 
 								<label class="form-check-label" for="is_stroller">유모차대여</label>
+							</div>
+						</div>
+						<div class="row row-cols-2 p-0 insert_row2_custom">
+				            <div class="form-group col img_row">
+								<label class="lable2" for="image">이미지 첨부</label> 
+							</div>
+				            <div class="form-group col">
+								<input type="file" class="form-control img_input" name="file">
+							</div>
+						</div>
+						<div class="row row-cols-2 p-0 insert_row2_custom">
+				            <div class="form-group col img_row">
+								<label class="lable2" for="image">이미지 첨부</label> 
+							</div>
+				            <div class="form-group col">
+								<input type="file" class="form-control img_input" name="file1">
+							</div>
+						</div>
+						<div class="row row-cols-2 p-0 insert_row2_custom">
+				            <div class="form-group col img_row">
+								<label class="lable2" for="image">이미지 첨부</label> 
+							</div>
+				            <div class="form-group col">
+								<input type="file" class="form-control img_input" name="file2">
 							</div>
 						</div>
 						
