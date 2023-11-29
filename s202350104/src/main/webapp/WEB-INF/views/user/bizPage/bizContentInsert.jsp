@@ -85,36 +85,40 @@
 		}
 		
 		function addTag() {
+			var newTagId;
 			var newTagName = $('.searchForm').val(); // 선택된 tag의 name을 가져옴
 			
-			// 선택된 tag의 id를 가져옴
-			for(var i = 0; i < allTags.length; i++) {
-				if(allTags[i].name == newTagName) {
-					newTagId = allTags[i].id;
+			// keyword 입력했을 때만 태그 버튼 추가
+			if(newTagName != '' && newTagName != null) {
+				// 선택된 tag의 id를 가져옴
+				for(var i = 0; i < allTags.length; i++) {
+					if(allTags[i].name == newTagName) {
+						newTagId = allTags[i].id;
+					}
 				}
-			}
 
-			var selectedTag = {
-				id: newTagId,
-				name: newTagName
-			};
-			
-			// 이미 배열에 있는 태그인지 체크
-			var isDuplicate = false;
-			for(var i = 0; i < selectedTags.length; i++) {
-				if(selectedTags[i].id == selectedTag.id) {
-					isDuplicate = true;
-					alert("이미 추가한 태그입니다.");
+				var selectedTag = {
+					id: newTagId,
+					name: newTagName
+				};
+				
+				// 이미 배열에 있는 태그인지 체크
+				var isDuplicate = false;
+				for(var i = 0; i < selectedTags.length; i++) {
+					if(selectedTags[i].id == selectedTag.id) {
+						isDuplicate = true;
+						alert("이미 추가한 태그입니다.");
+					}
 				}
+				
+				// 배열에 없었던 태그일 경우에만 추가
+				if(!isDuplicate) {
+					selectedTags.push(selectedTag); 
+					newTagBadge(selectedTag);
+				}
+				
+				$('.searchForm').value = "";
 			}
-			
-			// 배열에 없었던 태그일 경우에만 추가
-			if(!isDuplicate) {
-				selectedTags.push(selectedTag); 
-				newTagBadge(selectedTag);
-			}
-			
-			$('.searchForm').value = "";
 		}
 		<!-- 태그 코드 End -->
 		
@@ -405,11 +409,11 @@
 										</div>
 										<div class="mb-3">
 											<label for="searchType" class="form-label">태그</label>
-											<div class="col-12 mb-3">
+											<div class="col-12 mb-3 d-flex">
 												<input type="text" name="keyword" class="form-control searchForm" 
 												 placeholder="키워드를 입력해주세요." autocomplete="off" list="autoTags">
-												<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" 
-												 id="searchIcon" onclick="addTag()"/>
+												<img class="keyword-img align-self-center mx-1" src="<%=request.getContextPath()%>/image/icon_search1.png" 
+												 alt="icon_search1.png" id="searchIcon" onclick="addTag()"/>
 													<datalist id="autoTags">
 														<c:forEach var="tag" items="${listAllTags}">
 															<option id="${tag.id}" value="${tag.name}">
