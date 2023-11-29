@@ -165,6 +165,7 @@
 	width: 400px;
 	height: 280px;
 	border-radius: 10.50px;
+	object-fit: cover;
 }
 
 .homeList-tag-custom2 
@@ -314,6 +315,7 @@
 .homeDetail-basic-img-custom img {
 	width: 510px;
 	height: 640px;
+	object-fit: cover;
 }
 
 .homeDetail-basic-sideImg-custom {
