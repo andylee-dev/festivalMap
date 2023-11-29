@@ -137,7 +137,9 @@
 		<div class="container p-3">
 			<div class="row row-cols-1">
 				<div class="col img_detail_custom">
-					<img alt="${board.file_name }" src="${board.file_path }${board.file_name}">
+					<c:if test="${board.file_name != null}">
+						<img alt="${board.file_name }" src="${board.file_path }${board.file_name}">
+					</c:if>
 				</div>
 			</div>
 		</div>
