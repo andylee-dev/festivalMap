@@ -57,6 +57,7 @@ public class BoardController {
 		log.info("BoardController noticBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(1); // 분류 code 강제 지정
+		board.setIs_deleted("0");
 		
 		int userId = us.getLoggedInId();
 		log.info("BoardController noticBoardList userId : {} ", userId);
@@ -116,6 +117,7 @@ public class BoardController {
 		log.info("BoardController magazinBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(2); // 분류 code 강제 지정
+		board.setIs_deleted("0");
 		
 		int userId = us.getLoggedInId();
 		log.info("BoardController magazinBoardList userId : {} ", userId);
@@ -164,7 +166,7 @@ public class BoardController {
 		log.info("BoardController freeBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(3); // 분류 code 강제 지정
-		
+		board.setIs_deleted("0");
 		int userId = us.getLoggedInId();
 		log.info("BoardController freeBoardList userId : {} ", userId);
 		log.info("BoardController freeBoardList board : {} ", board.getSmall_code());
@@ -222,6 +224,7 @@ public class BoardController {
 		log.info("BoardController freeBoardSearchList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(3); // 분류 code 강제 지정
+		board.setIs_deleted("0");
 		
 		int userId = us.getLoggedInId();
 		log.info("BoardController freeBoardList userId : {} ", userId);
@@ -280,7 +283,8 @@ public class BoardController {
 		log.info("BoardController photoBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(4); // 분류 code 강제 지정
-
+		board.setIs_deleted("0");
+		
 		int userId = us.getLoggedInId();
 		log.info("BoardController freeBoardList userId : {} ", userId);
 
@@ -328,6 +332,7 @@ public class BoardController {
 		log.info("BoardController eventBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(5); // 분류 code 강제 지정
+		board.setIs_deleted("0");
 
 		int userId = us.getLoggedInId();
 		log.info("BoardController freeBoardList userId : {} ", userId);

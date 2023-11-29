@@ -276,6 +276,7 @@ public class UserController {
 		/* 초기 유저 ID setting */
 		int userId = us.getLoggedInId();
 		board.setUser_id(userId);
+		board.setIs_deleted("0");
 		
 		/* 멤버변수 선언을 해서 각각 paging 처리 */ 
 		int countBoard = 0;

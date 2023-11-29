@@ -10,7 +10,9 @@
 		where a.user_id = b.id
 		and a.small_code = #{small_code}
 		and a.comment_indent = 0
-		and a.is_deleted = 0
+		<if test="is_deleted != null and is_deleted != ''">
+		and a.is_deleted = #{is_deleted}
+		</if>
 		<if test="keyword != null and keyword != ''">
 		and a.title like '%' || #{keyword} || '%'
 		</if>	
