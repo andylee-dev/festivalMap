@@ -116,7 +116,8 @@ public class TagsDaoImpl implements TagsDao {
 		int result = 0;
 		
 		try {
-			
+			int groupId = session.selectOne("nhTagsSearchId", tags.getGroup_name());
+			tags.setGroup_id(groupId);
 			result = session.insert("nhTagsInsert", tags);
 			
 		} catch(Exception e) {
@@ -150,10 +151,11 @@ public class TagsDaoImpl implements TagsDao {
 		
 		try {
 			int groupId = session.selectOne("nhTagsSearchId", tags.getGroup_name());
+			log.info(""+groupId);
 			tags.setGroup_id(groupId);
 			result = session.update("nhTagsUpdate", tags);
 		} catch(Exception e) {
-			log.info("TagsDaoImpl insertTags() => " + e.getMessage());
+			log.info("TagsDaoImpl updateTags() => " + e.getMessage());
 		}
 		
 		return result;

@@ -97,6 +97,11 @@ public class AdminTagController {
 		
 		try {
 			log.info("[{}]{}:{}", transactionId, "insertTagsForm", "start");
+			// 태그 자동완성을 위한 데이터리스트
+			Tags tag = new Tags();
+			List<Tags> listAllTags = ts.listTags(tag);
+			
+			model.addAttribute("listAllTags", listAllTags);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "insertTagsForm", e.getMessage());
 		} finally {
@@ -145,7 +150,7 @@ public class AdminTagController {
 			Tags tags = ts.selectTags(id);
 			
 			Tags tag = new Tags();
-			List<Tags> listAllTags = ts.listTags(tags);
+			List<Tags> listAllTags = ts.listTags(tag);
 			
 			model.addAttribute("tags", tags);
 			model.addAttribute("listAllTags", listAllTags);
@@ -168,6 +173,7 @@ public class AdminTagController {
 			 log.info("[{}]{}:{}", transactionId, "updateTagsResult", "start");
 			 // tag 정보를 update한 결과값을 저장(1이면 성공적으로 update된 것)
 			 result = ts.updateTags(tags); 
+			 log.info("updateTagsResult=>"+result);
 		 } catch (Exception e) {
 			 log.error("[{}]{}:{}", transactionId, "updateTagsResult", e.getMessage()); 
 		 } finally { 
@@ -179,10 +185,10 @@ public class AdminTagController {
 			 return "redirect:list"; 
 		 } else if(result == -1) {		// 기존 태그와 이름이 같을 경우 다시 수정폼으로 이동
 			 model.addAttribute("msg", "이미 존재하는 태그입니다."); 
-			 return "forward:updateTagsForm"; 	
+			 return "forward:updateTagsForm?id="+tags.getId(); 	
 		 } else { 						// 등록에 실패했을 경우 다시 수정폼으로 이동
 			 model.addAttribute("msg", "등록에 실패하였습니다."); 
-			 return "forward:updateTagsForm"; 
+			 return "forward:updateTagsForm?id="+tags.getId(); 
 		 } 
 	}
 	  

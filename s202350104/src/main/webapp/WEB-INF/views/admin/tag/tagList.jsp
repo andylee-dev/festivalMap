@@ -34,12 +34,13 @@
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 							<div class="col-2">
 								<select name="searchType" class="form-select">
-									<option value="s_tagname">태그명</option>
-									<option value="s_groupname">그룹명</option>
+									<option value="s_tagname" ${param.searchType == s_tagname? 'selected':''}>태그명</option>
+									<option value="s_groupname" ${param.searchType == s_groupname? 'selected':''}>그룹명</option>
 								</select>
 							</div>
 							<div class="col-6 mx-1">
-								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요.">
+								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요."
+								 value = "${param.keyword}">
 							</div>
 							<!-- 버튼 -->
 							<div class="col-5 mx-1 d-flex justify-content-start">
