@@ -165,6 +165,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<Board> getReviewOneList(Board board) {
+		List<Board> reviewOneList = boardDao.getReviewOneList(board);
+		return reviewOneList;
+	}
+	
+	@Override
 	public double getReviewCount(Board board) {
 		double reviewCount = boardDao.getReviewCount(board); 
 		return reviewCount;

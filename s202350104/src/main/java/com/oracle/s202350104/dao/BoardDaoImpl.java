@@ -340,6 +340,14 @@ public class BoardDaoImpl implements BoardDao {
 		
 		return boardOneList;
 	}
+	
+	@Override
+	public List<Board> getReviewOneList(Board board) {
+		List<Board> reviewOneList = session.selectList("getReviewOneList", board);
+		log.info("BoardDao getReviewOneList size : {}", reviewOneList.size());		
+		
+		return reviewOneList;
+	}
 	 
 	@Override
 	public double getReviewCount(Board board) {

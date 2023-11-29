@@ -45,4 +45,6 @@ public interface BoardService {
 
 	int boardRecycle(int id);
 
+	List<Board> getReviewOneList(Board board);
+
 }

@@ -284,13 +284,15 @@ public class UserController {
 		Paging page = new Paging(countBoard, currentPage);
 		board.setStart(page.getStart());
 		board.setEnd(page.getEnd());
-
+		log.info("userController board : {}",page);
 		List<Board> oneBoardList = boardService.getBoardOneList(board);
+		List<Board> oneReviewList = boardService.getReviewOneList(board);
 
 		model.addAttribute("searchOption", board);
 		model.addAttribute("smallCode", board.getSmall_code());
 		model.addAttribute("countBoard", countBoard);
 		model.addAttribute("oneBoardList", oneBoardList);
+		model.addAttribute("oneReviewList", oneReviewList);
 		model.addAttribute("page", page);
 
 		return "user/myPage/myPost";

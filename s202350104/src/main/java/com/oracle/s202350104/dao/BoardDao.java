@@ -44,6 +44,8 @@ public interface BoardDao {
 	int boardDeleteNew(int id);
 
 	int boardRecycle(int id);
+
+	List<Board> getReviewOneList(Board board);
 	
 	
 

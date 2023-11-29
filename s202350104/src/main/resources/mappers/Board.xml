@@ -317,6 +317,24 @@
 		where rn between #{start} and #{end}		
 	</select>	
 	
+	<select id="getReviewOneList" resultType="Board">
+		select *
+		from (
+		    select rownum rn, c.*
+		    from (
+		        select a.id, a.title, a.content, b.name, a.created_at, a.read_count, 
+		        	   a.big_code, a.small_code, a.user_id, a.comment_indent
+		        from board a, users b
+		        where a.user_id = b.id
+		        and a.small_code = 6
+		        and a.is_deleted = 0
+		        and a.comment_indent = 0
+		        and a.user_id = #{user_id}
+		    ) c
+		)
+		where rn between #{start} and #{end}		
+	</select>	
+	
 	<update id="boardDeleteNew" parameterType="int">
 		update board 
 		set is_deleted = 1,

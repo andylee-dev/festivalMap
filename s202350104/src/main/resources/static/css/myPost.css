@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+h1 {
+	color: black;
+	font-size: 32px;
+	font-family: Noto Sans;
+	font-weight: 600;
+	word-wrap: break-word
+}
+
+h2 {
+	color: #FF4379;
+	font-family: Noto Sans;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	padding-bottom: 10px;
+}
+
+.col-form-label {
+	color: #000;
+	font-family: Noto Sans;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 800;
+	line-height: normal;
+}
+
+button {
+	white-space: nowrap;
+}
+
+/* 현재 선택된 검색어 */
+.autocomplete>div.active {
+	background: #EEFFC2;
+	color: black;
+}
+
+/* 전체 검색어 */
+.autocomplete>div {
+	background: #f1f3f499;
+	padding: .2rem .6rem;
+}
+
+.my-board-custom{
+	border: 1px solid black;
+	border-radius: 20px;
+}
+
+.my-first-title{
+
+}
