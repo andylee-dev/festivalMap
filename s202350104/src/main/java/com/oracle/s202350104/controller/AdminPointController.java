@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Point;
+import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.point.PointService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,11 +25,32 @@ public class AdminPointController {
 	private final PointService ps;
 	
 	@GetMapping(value = "/admin/point/point")
-		public String point(Point point, Model model) {
+		public String point(Point point, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		int path = 0;
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "pointhistory", "start");
+			
+			int totalpoint = ps.totalpoint();
+		
+			Paging page = new Paging(totalpoint, currentPage);
+
+			point.setStart(page.getStart());
+			point.setEnd(page.getEnd());
 		
 		List<Point> listPoint = ps.listPoint();
 		
 		model.addAttribute("listPoint", listPoint);
+		model.addAttribute("totalpoint",totalpoint);
+		model.addAttribute("page",page);
+		model.addAttribute("path",path);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "admin point", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "admin point", "end");
+		}
 		
 		return "admin/point/point";
 	}

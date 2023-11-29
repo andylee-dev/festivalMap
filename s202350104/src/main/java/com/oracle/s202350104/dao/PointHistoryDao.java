@@ -16,4 +16,8 @@ public interface PointHistoryDao {
 
 	int                 totalpointHistory();
 
+	int                 conTotalPointHistory(PointHistory pointhistory);
+
+	List<PointHistory>  indexlistSearchPointHistory(PointHistory pointhistory);
+
 }

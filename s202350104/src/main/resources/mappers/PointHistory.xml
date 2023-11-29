@@ -60,5 +60,28 @@
    	WHERE ph.user_id = u.id
     AND ph.point_id = p.id
 	</select>
+	
+	<select id="conTotalPointHistory" resultType="int" parameterType="pointhistory">
+		SELECT count(*)
+		FROM pointhistory ph, users u, point p
+		WHERE ph.user_id = u.id
+   		AND ph.point_id = p.id
+	</select>
+	
+	<select id="indexlistSearchPointHistory" resultType="pointhistory">
+    SELECT *
+    FROM
+    (
+        SELECT ROWNUM rn, ph.*
+        FROM 
+        (
+            SELECT * FROM pointhistory ph
+            <if test="keyword != null">
+                WHERE id LIKE '%' || #{id} || '%'
+            </if>
+        ) ph 
+    ) a
+    WHERE a.rn BETWEEN #{start} and #{end}
+	</select>
 
 </mapper>

@@ -15,4 +15,6 @@ public interface PointDao {
 	int 				getPointScoreById(int id);
 					
 	Point				getPointById(int id);
+
+	int                 totalpoint();
 }

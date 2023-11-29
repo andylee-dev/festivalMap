@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.PointHistory;
 
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,29 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 			log.info("PointHistoryDaoImpl PointHistoryTotal Exception => " + e.getMessage());
 		}
 		return totPointHistoryCount;
+	}
+
+	@Override
+	public int conTotalPointHistory(PointHistory pointhistory) {
+		int conTotalPointHistory = 0;
+		try {
+			conTotalPointHistory = session.selectOne("conTotalPointHistory", pointhistory);
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl ConTotalAccomodation() Exception ->" + e.getMessage());
+		}
+				
+		return conTotalPointHistory;
+		}
+
+	@Override
+	public List<PointHistory> indexlistSearchPointHistory(PointHistory pointhistory) {
+		List<PointHistory> indexlistSearchPointHistory = null;
+		try {
+			indexlistSearchPointHistory = session.selectList("indexlistSearchPointHistory", pointhistory);
+		} catch (Exception e) {
+			 log.info("PointHistoryDaoImpl indexlistSearchPointHistory() Exception ->" + e.getMessage());
+		}
+		return indexlistSearchPointHistory;
 	}
 	}
 

@@ -28,4 +28,8 @@ public class PointHistory {
  	private String pageNum;
  	private int    start;
  	private int    end;
+ 	
+ 	//서치 작업용
+ 	
+ 	private String keyword;
 }

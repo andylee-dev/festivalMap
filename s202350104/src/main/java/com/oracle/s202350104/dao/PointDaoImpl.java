@@ -51,4 +51,15 @@ public class PointDaoImpl implements PointDao {
 		return session.selectOne("getPoint", id);
 	}
 
+	@Override
+	public int totalpoint() {
+		int totPointCount = 0;
+		try {
+			totPointCount = session.selectOne("PointTotal");
+		} catch (Exception e) {
+			log.info("PointDaoImpl PointTotal Exception => " + e.getMessage());
+		}
+		return totPointCount;
+	}
+
 }

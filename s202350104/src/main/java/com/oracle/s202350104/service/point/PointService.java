@@ -17,4 +17,6 @@ public interface PointService {
 	void 				addPointAndHistory(int userId, int pointId);
 
 	Point  				getPointById(int id);
+
+	int                 totalpoint();
 }

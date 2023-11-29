@@ -108,7 +108,7 @@
 									</c:when>
 									<c:when test="${path == 1}">
 										<li class="page-item">
-											<a href="pointhistorySearch?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&is_deleted=${is_deleted}&status=${status}&area=${area}&sigungu=${sigungu}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+											<a href="pointhistorySearch?currentPage=${i}&keyword=${keyword}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 										</li>
 									</c:when>
 								</c:choose>

@@ -13,10 +13,15 @@ public class Point {
 	private String 	content;
 	private int		point;
 	
-	//pointhistory
+	//pointhistory 처리용
 	
 	private int 	user_id;
 	private int 	point_id;
 	private Date 	created_at;
+	
+    //페이징 작업용
+ 	private String pageNum;
+ 	private int    start;
+ 	private int    end;
 	
 }

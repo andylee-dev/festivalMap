@@ -93,5 +93,11 @@ public class PointServiceImpl implements PointService {
       
     }
 
+	@Override
+	public int totalpoint() {
+		int totalpoint = pd.totalpoint();
+		return totalpoint;
+	}
+
 	
 }

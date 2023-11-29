@@ -102,4 +102,16 @@ import lombok.extern.slf4j.Slf4j;
 			int totalpointHistory = phd.totalpointHistory();
 			return totalpointHistory;
 		}
+
+		@Override
+		public int conTotalPointHistory(PointHistory pointhistory) {
+			int conTotalPointHistory = phd.conTotalPointHistory(pointhistory);
+			return conTotalPointHistory;
+		}
+
+		@Override
+		public List<PointHistory> indexlistSearchPointHistory(PointHistory pointhistory) {
+			List<PointHistory> indexlistSearchPointHistory = phd.indexlistSearchPointHistory(pointhistory);
+			return indexlistSearchPointHistory;
+		}
 }

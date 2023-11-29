@@ -24,10 +24,10 @@
 
 	<insert id="writePoint" parameterType="point">
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
-			SELECT point_seq.NEXTVAL FROM dual
+			SELECT point_id_seq.NEXTVAL FROM dual
 		</selectKey>
 		INSERT INTO point (id, create_at, title, content, point)
-		VALUES (point_seq.NEXTVAL, SYSDATE, #{title}, #{content}, #{point})
+		VALUES (point_id_seq.NEXTVAL, SYSDATE, #{title}, #{content}, #{point})
 	</insert>
 
 	<select id="getPointScore" resultType="int" parameterType="int">
@@ -36,6 +36,13 @@
 	
 	<select id="getPoint" resultType="point" parameterType="int">
 		SELECT	point FROM point WHERE id = #{id}
+	</select>
+	
+	<select id="PointTotal" resultType="int">
+	SELECT count(*)
+	FROM point
+	ORDER BY id
+	
 	</select>
 
 </mapper>

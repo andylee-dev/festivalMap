@@ -19,4 +19,8 @@ public interface PointHistoryService {
 	List<PointHistory>      searchPointHistory(String search, String keyword);
 
 	int                     totalpointHistory();
+
+	int                     conTotalPointHistory(PointHistory pointhistory);
+
+	List<PointHistory>      indexlistSearchPointHistory(PointHistory pointhistory);
 }

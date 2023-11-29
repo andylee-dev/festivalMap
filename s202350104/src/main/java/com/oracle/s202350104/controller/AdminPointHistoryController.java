@@ -3,12 +3,15 @@ package com.oracle.s202350104.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Point;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.service.Paging;
@@ -48,9 +51,9 @@ public class AdminPointHistoryController {
 		model.addAttribute("path",path);
 		
 		} catch (Exception e) {
-			log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
+			log.error("[{}]{}:{}",transactionId,  "admin pointhistory", e.getMessage());
 		}finally {
-			log.info("[{}]{}:{}",transactionId, "admin accomodation", "end");
+			log.info("[{}]{}:{}",transactionId, "admin pointhistory", "end");
 		}
 		
 		return "admin/point/pointhistory";
@@ -79,10 +82,34 @@ public class AdminPointHistoryController {
 	    return "redirect:/admin/point/pointhistory";
 	}
 	
-    @PostMapping("/admin/point/pointhistorySearch")
-    public String pointhistorySearch(String search, String keyword, Model model) {
+	@RequestMapping("/admin/point/pointhistorySearch")
+    public String pointhistorySearch(PointHistory pointhistory, String currentPage, String search, String keyword, Model model, HttpServletRequest request) {
+    	UUID transactionId = UUID.randomUUID();
+    	
+    	try {
+			log.info("[{}]{}:{}", transactionId, "PointHistoryController pointhistorySearch", "Start");
+    	int path 			= 1;
+    	
+    	int totalPointhistory = phs.conTotalPointHistory(pointhistory);
+    	Paging page = new Paging(totalPointhistory, currentPage);
+    	pointhistory.setStart(page.getStart());
+    	pointhistory.setEnd(page.getEnd());
+    	
         List<PointHistory> searchResult = phs.searchPointHistory(search, keyword);
+        List<PointHistory> listSearchPointHistory = phs.indexlistSearchPointHistory(pointhistory);
+        
+        model.addAttribute("totalPointhistory", totalPointhistory);
+        model.addAttribute("listPointhistory", listSearchPointHistory);
         model.addAttribute("listPointHistory", searchResult);
+        model.addAttribute("path", path);
+        model.addAttribute("page", page);
+        
+    	} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "AccomodationController accomodationSearch", "end");
+		}	
+        
         return "admin/point/pointhistory";
     }
 	

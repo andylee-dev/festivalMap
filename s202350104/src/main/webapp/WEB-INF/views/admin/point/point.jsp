@@ -57,25 +57,54 @@
 					</div>
 					</div>
 				</div>
-				<nav aria-label="Page navigation example ">
-					<ul class="pagination">
-					    <c:if test="${page.startPage > page.pageBlock}">
-							<li class="page-item">
-								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">Prev</a>
-						    </li>
-					    </c:if>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-							</li>
-						</c:forEach>
-						<c:if test="${page.endPage < page.totalPage}">
-							<li class="page-item">
-								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >Next</a>
-						    </li>
-						</c:if>
+<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+							<c:if test="${page.startPage > page.pageBlock}">
+								<c:choose>
+									<c:when test="${path ==0}">
+										<li class="page-item">
+											<a href="pointhistory?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+										</li>
+									</c:when>
+									<c:when test="${path ==1}">
+										<li class="page-item">
+											<a href="pointhistorySearch?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+										</li>
+									</c:when>
+								</c:choose>
+									
+							</c:if>
+							<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+								<c:choose>
+									<c:when test="${path ==0}">
+										<li class="page-item">
+											<a href="point?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+										</li>
+									</c:when>
+									<c:when test="${path == 1}">
+										<li class="page-item">
+											<a href="pointSearch?currentPage=${i}&keyword=${keyword}&big_code=${big_code}&small_code=${small_code}&is_deleted=${is_deleted}&status=${status}&area=${area}&sigungu=${sigungu}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+										</li>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+											
+							<c:if test="${page.endPage < page.totalPage}">
+								<c:choose>
+									<c:when test="${path ==0}">
+										<li class="page-item">
+											<a href="point?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+										</li>
+									</c:when>
+									<c:when test="${path ==1}">
+										<li class="page-item">
+											<a href="pointSearch?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+										</li>
+									</c:when>
+								</c:choose>
+							</c:if>
 					</ul>
-				</nav>
+				</nav>		
 			</main>
 		</div>
 	</div>
