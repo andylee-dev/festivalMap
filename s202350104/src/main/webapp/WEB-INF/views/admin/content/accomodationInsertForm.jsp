@@ -197,7 +197,7 @@
 						</div>
 						<div class="mb-3 ">
 						  <label for="room_count" class="form-label">객실수(필수)</label>
-						  <input type="text" class="form-control" name="room_count" id="room_count" value="${accomodaiton.room_count} ">
+						  <input type="text" class="form-control" name="room_count" id="room_count" value="${accomodaiton.room_count}" required="required" ">
 						</div>
 						<div class="mb-3 ">
 						  <label for="reservation_url" class="form-label">예약처</label>

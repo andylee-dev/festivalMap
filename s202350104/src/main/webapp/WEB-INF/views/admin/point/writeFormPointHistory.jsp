@@ -110,7 +110,7 @@
 	</head>
 	<body>
     <body>
-	<div class="container-fluid">
+		<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
 		<main class="col-10 p-0">
@@ -120,21 +120,39 @@
 				<label  class="admin-header-title ">포인트 내역 등록</label>	
 				</div>
 			</div>
-    <div class="border p-3 m-3">
+			<div class="container my-5" id="detail-body-container">
+				<div>
+				<h1>포인트 수정</h1>
+				<hr class="hr" />
+				</div>
+				<div>
+				<h3 style="color: #FF4379 ">포인트 내역 등록하기</h3>
+				</div>
+				<div class="my-5">
+				<div class="" id="detail-main-container">
+				
+     <div class="container p-5" id="form-container">
        <form action="writePointHistory" method="post">
-        <label for="user_id">회원 ID</label><br>
-  	    	<input type="text" id="user_id" name="user_id"><br>
-  		<label for="point_id">포인트 번호</label><br>
-  	    	<input type="text" id="point_id" name="point_id"><br>
+       <div class="mb-3 ">
+        <label for="user_id" class="form-label">회원 ID</label>
+  	    	<input type="text" class="form-control" id="user_id" name="user_id">
+  	   </div>
+  	   <div class="mb-3 ">
+  		<label for="point_id" class="form-label">포인트 번호</label><br>
+  	    	<input type="text" class="form-control" id="point_id" name="point_id"><br>
+  	   </div>
   	   <div class="row">
     	<div class="col-1 mb-3">
         <button type="submit" class="form-control btn btn-primary w-100">등록</button>
     	</div>
    		 <div class="col-1 mb-3">
         <button type="button" class="form-control btn btn-primary w-100" onclick="location.href='../point/pointhistory'">취소</button>
-    	</div>
+		</div>
 		</div>
 		</form>
+	</div>
+	</div>
+	</div>
     </div>
     </main>
     </div>

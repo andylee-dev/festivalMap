@@ -109,7 +109,6 @@
 		</style>
 	</head>
 	<body>
-    <body>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/components/AdminSideBar.jsp" %>
@@ -120,23 +119,44 @@
 				<label  class="admin-header-title ">포인트 등록</label>	
 				</div>
 			</div>
-    <div class="border p-3 m-3">
-       <form action="writePoint" method="post">
-  		<label for="title">포인트 제목:</label><br>
-  	    	<input type="text" id="title" name="title"><br>
- 		 <label for="content">포인트 내용:</label><br>
-  			<textarea id="content" name="content"></textarea><br>
- 		 <label for="point">포인트 점수:</label><br>
-  			<input type="text" id="point" name="point"><br><br>
-  		<div class="row">
+			<div class="container my-5" id="detail-body-container">
+				<div>
+				<h1>포인트 수정</h1>
+				<hr class="hr" />
+				</div>
+				<div>
+				<h3 style="color: #FF4379 ">포인트 등록하기</h3>
+				</div>
+				<div class="my-5">
+				<div class="" id="detail-main-container">
+				
+  		 <div class="container p-5" id="form-container">
+        <form action="writePoint" method="post">
+        <div class="mb-3 ">
+            <input type="hidden" name="id" value="${point.id}" />
+            <label for="title" class="form-label">포인트 제목</label>
+            <input type="text" class="form-control" id="title" name="title" value="${point.title}">
+        </div>
+        <div class="mb-3 ">
+            <label for="content" class="form-label">포인트 내용</label>
+            <textarea class="form-control" name="content" id="content" rows="3" placeholder="포인트 설명을 입력해주세요 ">${point.content}</textarea>
+        </div>
+        <div class="mb-3 ">
+            <label for="point" class="form-label">포인트 점수</label>
+            <input type="text" class="form-control" id="point" name="point" value="${point.point}">
+        </div>
+           <div class="row">
     	<div class="col-1 mb-3">
         <button type="submit" class="form-control btn btn-primary w-100">등록</button>
     	</div>
    		 <div class="col-1 mb-3">
-        <button type="button" class="form-control btn btn-primary w-100" onclick="location.href='../point/pointhistory'">취소</button>
-    	</div>
-		</div>
+        <button type="button" class="form-control btn btn-primary w-100" onclick="location.href='../point/point'">취소</button>
+        </div>
+        </div>
 		</form>
+		</div>
+		</div>
+		</div>
 		</div>
 		</main>
 		</div>
