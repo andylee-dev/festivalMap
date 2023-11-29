@@ -324,15 +324,13 @@ String apiKey = map.getApiKey();
 		}
 	}
 	function openPopup() {
-		const width = 600;
+		const width = 400;
 		const height = 600;
 
 		// 화면 가운데 띄우기 위한 계산
 		const top = (window.screen.height - height) / 2;
 		const left = (window.screen.width - width) / 2;
-
-		window.open('/festival/test', 'PopupWindow', 'width=' + width,
-				'height=' + height, 'top=' + top, 'left=' + left);
+		window.open('/festival/test', 'PopupWindow','width=' + width+', height=' + height+',top='+top+',left='+left );
 	}
 
 	document.addEventListener("DOMContentLoaded", function() {

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>FestivalRecommed</title>
-	<script type="text/javascript">
+<script type="text/javascript">
 	//json데이터 불러오기
 	let mbtiSet = {};
 	
@@ -91,10 +91,10 @@
 
 </head>
 <body>
-	<div class="container">
-	<div class="container col-9 justify-content-center my-5">
-		<h1 class="title fs-5">나에게 맞는 축제</h1>
-	</div>
+	<div class="container-fluid" >
+		<div class="container">
+			<h1 class="title fs-5">나에게 맞는 축제</h1>
+		</div>
 		<div class="card text-bg-dark">
 
 			<div class="progress" role="progressbar" aria-label="Warning example"
@@ -109,8 +109,7 @@
 			<div class="card-img-overlay">
 				<!-- 카드 안에 내용을 넣고 싶을때, -->
 			</div>
-			<div class="flex justify-content-center">
-			</div>
+			<div class="flex justify-content-center"></div>
 		</div>
 				<button type="button" class="optionBtn btn" onclick="selectOption(event)">선택1</button>
 				<button type="button" class="optionBtn btn" onclick="selectOption(event)">선택2</button>
