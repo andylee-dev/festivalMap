@@ -123,10 +123,10 @@
 					
 				// x버튼 및 클릭시의 이벤트 생성
 				const closeButton = document.createElement('span');
-				closeButton.innerHTML = "&times";
-				closeButton.className = "close-icon";
+				closeButton.innerHTML        = "&times";
+				closeButton.className        = "close-icon";
 				closeButton.style.marginLeft = "5px";
-				closeButton.style.cursor = "pointer";
+				closeButton.style.cursor     = "pointer";
 				closeButton.addEventListener('click', (event) => {
 					event.preventDefault();
 					var deletedTag = {

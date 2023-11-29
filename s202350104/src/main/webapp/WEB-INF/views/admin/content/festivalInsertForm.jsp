@@ -145,7 +145,7 @@
 				
 				if(confirm("등록하시겠습니까?")) {
 					$.ajax({
-						url: "<%=request.getContextPath()%>/admin/content/festival/insert",
+						url: "<%=request.getContextPath()%>/festival/insert",
 						method: "POST",
 						data: insertFormData,
 						dataType: "text",

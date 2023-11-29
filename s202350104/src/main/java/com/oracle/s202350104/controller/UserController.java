@@ -252,11 +252,11 @@ public class UserController {
 		Tags tag = new Tags();
 
 		List<CommonCodes> listCodes = cs.listCommonCode();
-		List<Tags> listTags = ts.listTags(tag);
+		List<Tags> listAllTags = ts.listTags(tag);
 		// 로그인한 아이디 저장(신청자 아이디)
 		int userId = us.getLoggedInId();
-
-		model.addAttribute("listTags", listTags);
+		
+		model.addAttribute("listAllTags", listAllTags);
 		model.addAttribute("listCodes", listCodes);
 		model.addAttribute("userId", userId);
 

@@ -7,10 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- 지역 코드 넣는 코드  Start-->	
 	<script src="/js/updateArea.js"></script>
 	<script type="text/javascript">
+		let selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+		let allTags = [];      // 전체 태그 정보를 모두 가져와 저장
+		let myTagsArea;
+		
 		document.addEventListener("DOMContentLoaded", function() {
+			<!-- 지역 코드 넣는 코드  Start -->	
 			updateAreaOptions();
 			$(".area-dropdown").change(function() {
 				const selectedArea = $(this).val();
@@ -20,9 +24,125 @@
 					$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 				}
 			});
+			<!-- 지역 코드 넣는 코드  End -->
+			
+			<!-- 태그 코드 Start -->
+			myTagsArea = document.querySelector('#my_tags'); // 저장한 태그 버튼을 보여줄 박스
+			allTagOptions();
 		});
+		
+		function allTagOptions() {
+			$.ajax({
+				url: "<%=request.getContextPath()%>/getAllTags",
+				method: "GET",
+				dataType: "json",
+				success: function(tags) {
+					tags.forEach(function(tag) {
+						allTags.push({id:tag.id, name:tag.name});
+					});
+					console.log("getAllTags success");
+				},
+				error: function() {
+					console.log("전체 태그 정보를 가져오지 못했습니다.");
+				}
+			})
+		}; 
+		
+		function newTagBadge(selectedTag) {
+			// 태그 버튼 생성 
+			const newTag = document.createElement('button');
+			newTag.className = "btn btn-outline-secondary align-items-center";
+			newTag.value = selectedTag.name;
+			newTag.innerHTML = "#" +selectedTag.name;
+			newTag.id = selectedTag.id;
+			console.log(newTag);
+				
+			// x버튼 및 클릭시의 이벤트 생성
+			const closeButton = document.createElement('span');
+			closeButton.innerHTML        = "&times";
+			closeButton.className        = "close-icon";
+			closeButton.style.marginLeft = "5px";
+			closeButton.style.cursor     = "pointer";
+			closeButton.addEventListener('click', (event) => {
+				event.preventDefault();
+				var deletedTag = {
+					id: event.target.parentElement.id,
+					name: event.target.parentElement.value.substr(1) // #를 제외한 텍스트를 name으로
+				}
+					
+				// 삭제할 옵션의 인덱스 찾기 -> selectedTags를 돌면서 deletedTag의 id와 같은 요소가 있으면 삭제하고 badge도 삭제
+				for(var i = 0; i < selectedTags.length; i++) {
+					if(selectedTags[i].id == deletedTag.id) {
+						selectedTags.splice(i, 1);
+						event.target.parentElement.remove();
+						i--; // splice() 사용하면 바로 요소가 제거되고 배열의 길이가 변경되기 때문에 i--를 해준다
+					}
+				}
+			});	
+			
+			newTag.appendChild(closeButton);
+			myTagsArea.appendChild(newTag);
+		}
+		
+		function addTag() {
+			var newTagName = $('#searchForm').val(); // 선택된 tag의 name을 가져옴
+			
+			// 선택된 tag의 id를 가져옴
+			for(var i = 0; i < allTags.length; i++) {
+				if(allTags[i].name == newTagName) {
+					newTagId = allTags[i].id;
+				}
+			}
+
+			var selectedTag = {
+				id: newTagId,
+				name: newTagName
+			};
+			
+			// 이미 배열에 있는 태그인지 체크
+			var isDuplicate = false;
+			for(var i = 0; i < selectedTags.length; i++) {
+				if(selectedTags[i].id == selectedTag.id) {
+					isDuplicate = true;
+					alert("이미 추가한 태그입니다.");
+				}
+			}
+			
+			// 배열에 없었던 태그일 경우에만 추가
+			if(!isDuplicate) {
+				selectedTags.push(selectedTag); 
+				newTagBadge(selectedTag);
+			}
+			
+			$('#searchForm').value = "";
+		}
+		<!-- 태그 코드 End -->
+		
+		<!-- 축제 insert -->
+		function submitFestival() {
+			event.preventDefault();
+			
+			var insertFormData = $('#festivalInsertForm').serializeArray();
+			var finalTags = [];
+			for(var i = 0; i < selectedTags.length; i++) {
+				finalTags.push(Number(selectedTags[i].id));
+			}
+			insertFormData.push({name: 'finalTags', value: finalTags});
+			
+			if(confirm("등록하시겠습니까?")) {
+				$.ajax({
+					url: "<%=request.getContextPath()%>/festival/insert",
+					method: "POST",
+					data: insertFormData,
+					dataType: "text",
+					success: function(str) {
+						alert(str);
+						location.href="<%=request.getContextPath()%>/user/bizPage/content";
+					}
+				})
+			}
+		}
 	</script>
-	<!-- 지역 코드 넣는 코드  End-->	
 
 	<style type="text/css">
 	    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -151,123 +271,160 @@
 			<div class="tab-content" id="nav-tabContent">
 			  
 			<div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
-			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/bizFestivalInsert" method="post">
-						<input type="hidden" name="user_id" value="${userId}">
-						<table class="table table-striped table-sm">
-							<tr>
-								<th>분류</th>
-								<td>
-									<input type="hidden" name="big_code" value="11">[Festival]<br>
-									<select name="small_code">
-										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 11 && code.small_code != 999}">
-												<option value="${code.small_code}">${code.content}</option>
-											</c:if>
-										</c:forEach>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th>축제명</th>
-								<td><input type="text" name="title" required="required"></td>
-							</tr>
-							<tr>
-								<th>시작일</th>
-								<td><input type="date" name="start_date"></td>
-							</tr>
-							<tr>
-								<th>종료일</th>
-								<td><input type="date" name="end_date"></td>
-							</tr>
-							<tr>
-								<th>진행시간</th>
-								<td><input type="text" name="hours"></td>
-							</tr>
-							<tr>
-								<th>주최자</th>
-								<td><input type="text" name="sponsor"></td>
-							</tr>
-							<tr>
-								<th>전화번호</th>
-								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000"
-									pattern="\d{2,3}-\d{3,4}-\d{4}"></td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td><input type="email" name="email"></td>
-							</tr>
-							<tr>
-								<th>장소명</th>
-								<td><input type="text" name="eventplace"></td>
-							</tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-								</td>
-							</tr>
-							<tr>
-								<th>주소</th>
-								<td><%-- postcode & address --%></td>
-							</tr>
-							<tr>
-								<th>개요</th>
-								<td><textarea rows="10" cols="60" name="content" maxlength="4000" 
-									placeholder="축제에 대한 설명을 4000자 이내로 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><textarea rows="10" cols="60" name="overview" maxlength="2000" 
-									placeholder="축제 내용에 대한 설명을 2000자 이내로 입력해주세요  "></textarea></td>
-							</tr>
-							<tr>
-								<th>이용요금</th>
-								<td><input type="text" name="cost"></td>
-							</tr>
-							<tr>
-								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
-							</tr>
-							<tr>
-								<th>이미지</th>
-								<td><!-- 이미지 업로드 폼 만들기 img1 img2 img3 --></td>
-							</tr>
-							<tr>
-								<th>태그</th>
-								<td>
-									 <%-- <div class="container">
-										<div class="row mb-3 g-3">
-						      			  <div class="col-md-4">
-						         			 <select class="form-select" id="validationTagsClear" name="tagsClear[]" multiple data-allow-clear="true">
-						            			<option selected disabled hidden value="">태그를 선택해주세요.</option>
-									            <c:forEach var="tag" items="${listTags}">
-									            	<option value="${tag.id}" data-badge-style="info">${tag.name}</option>
-									            </c:forEach>
-									          </select>
-									          <div class="invalid-feedback">유효한 태그를 선택해주세요.</div>
-									        </div>
-									      </div>
-						  			</div> --%>
-								</td>
-							</tr>
-							<tr>
-								<th>가능 여부</th>
-								<td>
-									<input type="checkbox" name="is_parking" value="1">주차시설<br>
-									<input type="checkbox" name="is_stroller" value="1">유모차대여<br>
-									<input type="checkbox" name="is_wheelchair" value="1">휠체어대여<br>
-									<input type="checkbox" name="is_restroom" value="1">장애인화장실
-								</td>
-							</tr>
-						</table>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+			  	<div class="container-fluid">
+			  		<div class="row">
+			  			<div class="container my-5 detail-body-container">
+							<div>
+								<h1>축제 등록</h1>
+							</div>		  		
+							<div>
+								<hr class="hr">
+							</div>	
+							<div>
+								<h3 style="color: #FF4379">축제정보 등록하기</h3>
+							</div>
+							<div class="my-5">
+							<div class="" id="detail-main-container">
+								<div class="container p-5" id="form-container">
+			  						<form id="festivalInsertForm" action="<%=request.getContextPath()%>/bizFestivalInsert" 
+			  						 method="post" enctype="multipart/form-data">
+										<input type="hidden" name="user_id" value="${userId}">
+										<input type="hidden" name="big_code" value="11">
+										<div class="mb-3">
+											<label for="title" class="form-label">축제 이름(필수 입력)</label>
+											<input type="text" class="form-control" name="title" id="title" required>
+										</div>
+										<div class="mb-3">
+											<label for="small_code" class="form-label">축제 테마(필수 선택)</label>
+											<select class="form-select" aria-label="small_code" name="small_code" required>
+												<c:forEach var="smallCode" items="${listCodes}">
+													<c:if test="${smallCode.big_code == 11 && smallCode.small_code != 999}">
+														<option value="${smallCode.small_code}">${smallCode.content}</option>
+													</c:if>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="mb-3">
+											<div class="row">
+												<div class="col-6 md-4 mb-3">
+													<label for="start_date" class="form-label">시작일</label>
+													<input type="date" class="form-control" name="start_date" id="start_date">
+												</div>
+												<div class="col-6 md-4 mb-3">
+													<label for="end_date" class="form-label">종료일</label>
+													<input type="date" class="form-control" name="end_date" id="end_date">
+												</div>
+											</div>
+										</div>
+										<div class="mb-3">
+											<label for="sponsor" class="form-label">주최</label>
+											<input type="text" class="form-control" name="sponsor" id="sponsor">
+										</div>
+										<div class="mb-3">
+											<label for="area" class="form-label">주소(필수 선택)</label>
+											<div class="row">
+												<div class="col-2">
+													<select name="area" class="form-select area-dropdown"></select>
+												</div>
+												<div class="col-2">
+													<select name="sigungu" class="form-select sigungu-dropdown"></select>
+												</div>
+												<div class="col-4">
+													<input type="text" class="form-control" name="address" id="address" 
+													 placeholder="상세주소를 입력해주세요.(60자 이내)" maxlength="60">
+												</div>
+												<div class="col-4">
+													<input type="text" class="form-control" name="eventplace" id="eventplace" 
+													 placeholder="장소를 입력해주세요.(60자 이내)" maxlength="60">
+												</div>
+											</div>
+										</div>
+										<div class="mb-3">
+											<label for="homepage" class="form-label">홈페이지</label>
+											<input type="text" class="form-control" name="homepage" id="homepage">
+										</div>
+										<div class="mb-3">
+											<div class="row">
+												<div class="col-6">
+													<label for="phone" class="form-label">전화번호</label>
+													<input type="text" class="form-control" name="phone" id="phone" placeholder="010-0000-0000~0">
+												</div>
+												<div class="col-6">
+													<label for="email" class="form-label">이메일</label>
+													<input type="text" class="form-control" name="email" id="email">
+												</div>
+											</div>	
+										</div>
+										<div class="mb-3">
+											<label for="content" class="form-label">축제 개요</label>
+											<textarea class="form-control" name="content" id="content" rows="5" 
+											 placeholder="축제의 개요를 입력해주세요.(1200자 이내)" maxlength="1200"></textarea>
+										</div>
+										<div class="mb-3">
+											<label for="overview" class="form-label">상세 내용</label>
+											<textarea rows="5" class="form-control" name="content" id="overview"
+											 placeholder="축제의 상세 내용을 입력해주세요.(600자 이내)" maxlength="600"></textarea>
+										</div>	
+										<div class="mb-3">
+											<label for="hours" class="form-label">진행시간</label>
+											<input type="text" class="form-control" id="hours" name="hours">
+										</div>
+										<div class="mb-3">
+											<label for="cost" class="form-label">이용요금</label>
+											<input type="text" class="form-control" id="cost" value="${festival.cost}">
+										</div>
+										<div class="mb-3">
+											<label for="images" class="form-label">이미지 등록</label>
+										</div>
+										<div class="mb-3">
+											<label for="facilities" class="form-label">부대/편의 시설</label>
+											<div class="col-12 d-flex justify-content-between">
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_parking" id="is_parking" value="1">
+										  			<label class="form-check-label" for="is_parking">주차여부</label>
+										  		</div>
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_stroller" id="is_stroller" value="1">
+										  			<label class="form-check-label" for="is_stroller">유아차 대여</label>
+										  		</div>
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_wheelchair" id="is_wheelchair" value="1">
+										  			<label class="form-check-label" for="is_wheelchair">휠체어 대여</label>
+										  		</div>
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_restroom" id="is_restroom" value="1">
+										  			<label class="form-check-label" for="is_restroom">장애인 화장실</label>
+										  		</div>
+										  	</div>
+										</div>
+										<div class="mb-3">
+											<label for="searchType" class="form-label">태그</label>
+											<div class="col-9">
+												<input type="text" name="keyword" class="form-control" id="searchForm" 
+												 placeholder="키워드를 입력해주세요." autocomplete="off" list="autoTags">
+													<datalist id="autoTags">
+														<c:forEach var="tag" items="${listAllTags}">
+															<option id="${tag.id}" value="${tag.name}">
+														</c:forEach>
+													</datalist>
+											</div>
+											<!-- 버튼 -->
+											<div class="col-2 d-flex justify-content-start">
+												<button type="button" class="btn btn-primary col-2 mx-1" onclick="addTag()">저장</button>
+											</div>
+											<div id="my_tags"><!-- 태그 badge가 들어갈 곳 --></div>
+										</div>			
+										<div align="center">
+											<button type="submit" class="btn btn-outline-secondary" onclick="submitFestival()">등록</button>
+											<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+										</div>
+									</form>
+								</div>	
+							</div>
+							</div>
 						</div>
-					</form>
-				</div>	
+					</div>
+				</div>
 			</div>
 			 
 			<!-- 명소 -->			
