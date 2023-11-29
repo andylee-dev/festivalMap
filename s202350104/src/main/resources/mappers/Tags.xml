@@ -159,6 +159,13 @@
 		AND   u.user_id = #{userId}
 		ORDER BY t.name
 	</select>
+	
+	<select id="nhUserPopularTags" resultType="Tags">
+		SELECT count(tag_id) AS count, (SELECT name FROM tags WHERE tags.id = usertags.tag_id) AS name
+		FROM   usertags
+		GROUP BY tag_id
+		ORDER BY count(tag_id) DESC
+	</select>
 		
 	<insert id="nhUserTagsInsert" parameterType="Tags">
 		INSERT INTO UserTags(user_id, tag_id) VALUES(#{user_id}, #{tag_id})

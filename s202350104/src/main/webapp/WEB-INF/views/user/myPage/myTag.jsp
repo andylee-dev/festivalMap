@@ -246,10 +246,10 @@
 						<div class="col-11">
 							<div class="d-flex justify-content-between align-items-end mt-5">
 								<div class="col-3 p-1">
-									<h2>추천태그</h2>
+									<h2>인기태그</h2>
 								</div>
 								<div class="col-8 p-1" align="right">
-									<span>페스티맵에서 추천하는 태그를 선택해보세요.</span>
+									<span>페스티맵의 회원들이 가장 많이 저장한 태그를 선택해보세요.</span>
 								</div>
 							</div>	
 							<div class="container tags-container p-4 mb-4">

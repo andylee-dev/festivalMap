@@ -7,6 +7,17 @@
 		<meta charset="UTF-8">
 		<title>컨텐츠 태그</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			.badge {
+				color: white !important;
+				background-color: #FF4379 !important;
+			}
+			
+			.nav-menu {
+				background-color: #b7e24d !important;
+				border: none;
+			}
+		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/js/updateArea.js"></script>
 		<script type="text/javascript">
@@ -104,11 +115,11 @@
 				<!-- Section3: Table -->		
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
 					<div class="container col-10 d-flex justify-content-center p-0">
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=11'">축제</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=12'">맛집</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=13'">숙박</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=14'">명소</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=15'">체험</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=11'">축제</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=12'">맛집</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=13'">숙박</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=14'">명소</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='contentTag?bigCodeStr=15'">체험</button>
 					</div>
 					<div class="container table-container mt-1 p-4">
 					<div class="table-responsive">

@@ -47,6 +47,7 @@ public class Tags {
 	private String ordering;
 	
 	// 통계용(count)
+	private int count;
 	private int userCnt;
 	private int boardCnt;
 	private int contentCnt;

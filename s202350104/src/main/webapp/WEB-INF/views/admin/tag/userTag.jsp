@@ -7,6 +7,12 @@
 		<meta charset="UTF-8">
 		<title>회원 태그</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			.badge {
+				color: white !important;
+				background-color: #FF4379 !important;
+			}
+		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 		   $(document).ready(function() {			   

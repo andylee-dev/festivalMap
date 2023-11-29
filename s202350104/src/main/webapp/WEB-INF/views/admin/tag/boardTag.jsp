@@ -5,8 +5,19 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>게시판 태그</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			.badge {
+				color: white !important;
+				background-color: #FF4379 !important;
+			}
+			
+			.nav-menu {
+				background-color: #b7e24d !important;
+				border: none;
+			}
+		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 		   $(document).ready(function() {
@@ -76,11 +87,11 @@
 				<!-- Section3: Table -->		
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
 					<div class="container col-10 d-flex justify-content-center p-0">
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
 					</div>
 					<div class="container table-container mt-1 p-4">
 					<div class="table-responsive">
