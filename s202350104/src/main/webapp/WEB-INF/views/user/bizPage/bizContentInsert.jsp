@@ -27,7 +27,7 @@
 			<!-- 지역 코드 넣는 코드  End -->
 			
 			<!-- 태그 코드 Start -->
-			myTagsArea = document.querySelector('#my_tags'); // 저장한 태그 버튼을 보여줄 박스
+			myTagsArea = document.querySelector('.my-tags'); // 저장한 태그 버튼을 보여줄 박스
 			allTagOptions();
 		});
 		
@@ -85,7 +85,7 @@
 		}
 		
 		function addTag() {
-			var newTagName = $('#searchForm').val(); // 선택된 tag의 name을 가져옴
+			var newTagName = $('.searchForm').val(); // 선택된 tag의 name을 가져옴
 			
 			// 선택된 tag의 id를 가져옴
 			for(var i = 0; i < allTags.length; i++) {
@@ -114,7 +114,7 @@
 				newTagBadge(selectedTag);
 			}
 			
-			$('#searchForm').value = "";
+			$('.searchForm').value = "";
 		}
 		<!-- 태그 코드 End -->
 		
@@ -249,6 +249,12 @@
 		    color: #9BDB04;
 		}
 		
+		.tags-container {
+			border-radius: 10px;
+			border: 1px solid #000;
+			padding: 10px;
+		}
+		
 	</style>
 </head>
 <body>
@@ -317,25 +323,25 @@
 											</div>
 										</div>
 										<div class="mb-3">
-											<label for="sponsor" class="form-label">주최</label>
+											<label for="sponsor" class="form-label">주최자</label>
 											<input type="text" class="form-control" name="sponsor" id="sponsor">
 										</div>
 										<div class="mb-3">
 											<label for="area" class="form-label">주소(필수 선택)</label>
 											<div class="row">
-												<div class="col-2">
+												<div class="col-6 md-4 mb-3">
 													<select name="area" class="form-select area-dropdown"></select>
 												</div>
-												<div class="col-2">
+												<div class="col-6 md-4 mb-3">
 													<select name="sigungu" class="form-select sigungu-dropdown"></select>
 												</div>
-												<div class="col-4">
+												<div class="col-12 mb-3">
 													<input type="text" class="form-control" name="address" id="address" 
 													 placeholder="상세주소를 입력해주세요.(60자 이내)" maxlength="60">
 												</div>
-												<div class="col-4">
+												<div class="col-12">
 													<input type="text" class="form-control" name="eventplace" id="eventplace" 
-													 placeholder="장소를 입력해주세요.(60자 이내)" maxlength="60">
+													 placeholder="장소명을 입력해주세요.(60자 이내)" maxlength="60">
 												</div>
 											</div>
 										</div>
@@ -399,20 +405,18 @@
 										</div>
 										<div class="mb-3">
 											<label for="searchType" class="form-label">태그</label>
-											<div class="col-9">
-												<input type="text" name="keyword" class="form-control" id="searchForm" 
+											<div class="col-12 mb-3">
+												<input type="text" name="keyword" class="form-control searchForm" 
 												 placeholder="키워드를 입력해주세요." autocomplete="off" list="autoTags">
+												<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" 
+												 id="searchIcon" onclick="addTag()"/>
 													<datalist id="autoTags">
 														<c:forEach var="tag" items="${listAllTags}">
 															<option id="${tag.id}" value="${tag.name}">
 														</c:forEach>
 													</datalist>
 											</div>
-											<!-- 버튼 -->
-											<div class="col-2 d-flex justify-content-start">
-												<button type="button" class="btn btn-primary col-2 mx-1" onclick="addTag()">저장</button>
-											</div>
-											<div id="my_tags"><!-- 태그 badge가 들어갈 곳 --></div>
+											<div class="tags-container my-tags"><!-- 태그 badge가 들어갈 곳 --></div>
 										</div>			
 										<div align="center">
 											<button type="submit" class="btn btn-outline-secondary" onclick="submitFestival()">등록</button>
