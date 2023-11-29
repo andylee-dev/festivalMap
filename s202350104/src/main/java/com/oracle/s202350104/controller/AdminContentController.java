@@ -953,7 +953,10 @@ import lombok.RequiredArgsConstructor;
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 		}		
-		return "redirect:/admin/content/accomodation";
+		if (role == 1) {
+			return "redirect:accomodation";
+		}else 
+			return "redirect:/user/bizPage";
 	}	
 	
 	@GetMapping(value="accomodationUpdateForm")

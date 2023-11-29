@@ -577,7 +577,7 @@
 				<div class="" id="detail-main-container">
 				
 					<div class="container p-5" id="form-container">
-					<form action="<%=request.getContextPath()%>/admin/content/accomodaitonInsert" method="post">
+					<form action="<%=request.getContextPath()%>/admin/content/accomodationInsert" method="post" enctype="multipart/form-data">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">숙소 이름(필수 입력)</label>
 						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
@@ -684,9 +684,6 @@
 								<label class="form-check-label" for="is_parking">주차가능</label>
 							</div>
 						</div>
-						</form>
-						</div>
-						
 						<hr class="hr" />			
 						
 						
@@ -703,15 +700,15 @@
 	                        </div>
 	                    
 						</div>
-						
-						
-							
+						</form>
+						</div>
 						</div>
 						</div>
 					</div>
 				</div>
 				</div>
 			</div>
+
 			
 			  
 			  <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab" tabindex="0">
