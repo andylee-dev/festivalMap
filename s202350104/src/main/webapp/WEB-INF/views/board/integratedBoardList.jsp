@@ -183,6 +183,9 @@
 					<div class="col-md-6">
 						<c:if test="${boards.comment_indent > 0 }"></c:if>
 						<c:choose>
+							<c:when test="${boards.small_code eq 2 }">
+ 								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
+							</c:when>
 							<c:when test="${boards.small_code eq 3 }">
  								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
 							</c:when>
