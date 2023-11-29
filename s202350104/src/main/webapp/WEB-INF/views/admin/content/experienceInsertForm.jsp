@@ -266,31 +266,26 @@
 								<label class="form-check-label" for="is_stroller">유모차대여</label>
 							</div>
 						</div>
-						<div class="row row-cols-2 p-0 insert_row2_custom">
-				            <div class="form-group col img_row">
-								<label class="lable2" for="image">이미지 첨부</label> 
-							</div>
-				            <div class="form-group col">
-								<input type="file" class="form-control img_input" name="file">
-							</div>
+						<div class="mb-3 mt-3">
+						    <div class="row p-0 insert_row2_custom">
+						        <div class="form-group col">
+						            <label class="lable2" for="file">첫번째 이미지</label>
+						            <input type="file" class="form-control" name="file">
+						        </div>
+						        
+						        <div class="form-group col">
+						            <label class="lable2" for="file1">두번째 이미지</label>
+						            <input type="file" class="form-control" name="file1">
+						        </div>
+						        
+						        <div class="form-group col">
+						            <label class="lable2" for="file2">세번째 이미지</label>
+						            <input type="file" class="form-control" name="file2">
+						        </div>
+						    </div>
 						</div>
-						<div class="row row-cols-2 p-0 insert_row2_custom">
-				            <div class="form-group col img_row">
-								<label class="lable2" for="image">이미지 첨부</label> 
-							</div>
-				            <div class="form-group col">
-								<input type="file" class="form-control img_input" name="file1">
-							</div>
-						</div>
-						<div class="row row-cols-2 p-0 insert_row2_custom">
-				            <div class="form-group col img_row">
-								<label class="lable2" for="image">이미지 첨부</label> 
-							</div>
-				            <div class="form-group col">
-								<input type="file" class="form-control img_input" name="file2">
-							</div>
-						</div>
-						
+
+
 						<hr class="hr" />			
 						
 						

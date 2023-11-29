@@ -650,7 +650,7 @@
 				<div class="" id="detail-main-container">
 				
 					<div class="container p-5" id="form-container">
-					<form action="<%=request.getContextPath()%>/admin/content/experienceInsert" method="post">
+					<form action="<%=request.getContextPath()%>/admin/content/experienceInsert" method="post" enctype="multipart/form-data">
 						<div class="mb-3 ">
 						  <label for="title" class="form-label">체험 이름(필수 입력)</label>
 						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
@@ -766,6 +766,24 @@
 								<label class="form-check-label" for="is_stroller">유모차대여</label>
 							</div>
 						</div>
+						<div class="mb-3 mt-3">
+								    <div class="row p-0 insert_row2_custom">
+								        <div class="form-group col">
+								            <label class="lable2" for="file">첫번째 이미지</label>
+								            <input type="file" class="form-control" name="file">
+								        </div>
+								        
+								        <div class="form-group col">
+								            <label class="lable2" for="file1">두번째 이미지</label>
+								            <input type="file" class="form-control" name="file1">
+								        </div>
+								        
+								        <div class="form-group col">
+								            <label class="lable2" for="file2">세번째 이미지</label>
+								            <input type="file" class="form-control" name="file2">
+								        </div>
+								    </div>
+								</div>
 						
 						<hr class="hr" />			
 						

@@ -170,7 +170,7 @@
 								</c:choose>
 					</div>
 					<div class="container p-5" id="form-container">
-					<form action="experienceUpdate" method="post">
+					<form action="experienceUpdate" method="post" enctype="multipart/form-data">
 						<div class="mb-3">
 						  <label for="content_id" class="form-label">컨텐츠 ID</label>
 						  <input type="text" class="form-control" name="id" id="content_id" value="${experience.content_id}" readonly>
@@ -309,10 +309,24 @@
 							</div>
 						</div>
 						
-						<!-- <div class="mt-3">
-						  <label for="formFileMultiple" class="form-label">등록 이미지</label>
-						  <input class="form-control" type="file" id="formFileMultiple" multiple>
-						</div> -->	
+						<div class="mb-3 mt-3">
+						    <div class="row p-0 insert_row2_custom">
+						        <div class="form-group col">
+						            <label class="lable2" for="file">첫번째 이미지</label>
+						            <input type="file" class="form-control" name="file">
+						        </div>
+						        
+						        <div class="form-group col">
+						            <label class="lable2" for="file1">두번째 이미지</label>
+						            <input type="file" class="form-control" name="file1">
+						        </div>
+						        
+						        <div class="form-group col">
+						            <label class="lable2" for="file2">세번째 이미지</label>
+						            <input type="file" class="form-control" name="file2">
+						        </div>
+						    </div>
+						</div>
 							
 						<hr class="hr" />			
 						
