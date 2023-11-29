@@ -40,9 +40,16 @@ h2 {
 	margin-left: 6px;
 }
 
-.my-board-custom {
+.mypost-board-custom {
 	border: 1px solid black;
 	border-radius: 20px;
+	margin-bottom: -30px;
+}
+
+.mypost-review-custom {
+	border: 1px solid black;
+	border-radius: 20px;
+	margin-bottom: -30px;
 }
 
 .my-first-title {

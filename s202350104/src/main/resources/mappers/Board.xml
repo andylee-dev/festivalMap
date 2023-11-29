@@ -308,7 +308,8 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, b.name, a.created_at, a.read_count, 
-		        	   a.big_code, a.small_code, a.user_id, a.comment_indent
+		        	   a.big_code, a.small_code, a.user_id, a.comment_indent,
+		        	   a.updated_at
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 3
@@ -326,7 +327,8 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, a.content, b.name, a.created_at, a.read_count, 
-		        	   a.big_code, a.small_code, a.user_id, a.comment_indent
+		        	   a.big_code, a.small_code, a.user_id, a.comment_indent,
+		        	   a.updated_at
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 6

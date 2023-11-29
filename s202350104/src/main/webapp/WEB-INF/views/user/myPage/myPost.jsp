@@ -13,8 +13,8 @@
 </head>
 <body>
 	<main>
-		<div class="d-flex">
-			<div class="col-2">
+	<div class="container-fluid">
+		<div class="row">
 				<%@ include file="/WEB-INF/components/MyPageSideBar.jsp"%>
 			</div>
 			<div class="container p-5 col-10">
@@ -30,7 +30,7 @@
 					</div>
 
 					<c:set var="boardNum" value="${pageBoard.total-pageBoard.start+1 }" />
-					<div class="container my-board-custom">
+					<div class="container mypost-board-custom">
 						<div class="table-responsive">
 							<table id="userTable" class="table table-md text-center p-3">
 								<thead>
@@ -63,6 +63,27 @@
 						</div>
 					</div>
 				</div>
+				
+				<nav aria-label="Page navigation example ">
+				<ul class="pagination">
+					<c:if test="${pageBoard.startPage > pageBoard.pageBlock}">
+						<li class="page-item"><a
+							href="myPost?currentPage=${pageBoard.startPage-pageBoard.pageBlock}"
+							class="pageblock page-link">[이전]</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pageBoard.startPage}" end="${pageBoard.endPage}">
+						<li class="page-item"><a href="myPost?currentPage=${i}"
+							class="pageblock page-link ${pageBoard.currentPage == i ? 'active':'' }">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${pageBoard.endPage < pageBoard.totalPage}">
+						<li class="page-item"><a
+							href="myPost?currentPage=${pageBoard.startPage+pageBoard.pageBlock}"
+							class="pageblock page-link">[다음]</a></li>
+					</c:if>
+				</ul>
+				</nav>
+				
 
 
 				<!-- Section3: Table -->
@@ -70,7 +91,7 @@
 					<h2>내&nbsp;Review&nbsp;현황</h2>
 				</div>
 				<c:set var="reviewNum" value="${pageReview.total-pageReview.start+1 }" />
-				<div class="container my-board-custom">
+				<div class="container mypost-review-custom">
 					<div class="table-responsive">
 						<table id="userTable" class="table table-md text-center p-3">
 							<thead>
