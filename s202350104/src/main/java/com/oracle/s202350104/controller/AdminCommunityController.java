@@ -95,6 +95,7 @@ public class AdminCommunityController {
 		board.setEnd(page.getEnd());
 		log.info("AdminCommunityController freddBoardList before board.getStart : {} ", board.getStart());
 		log.info("AdminCommunityController freddBoardList before board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController freddBoardList before currentPage : {} ", currentPage);
 
 		List<Board> freeAllList = boardService.getFreeAllList(board);
 		log.info("AdminCommunityController freeAllList size : {}", freeAllList.size());

@@ -254,8 +254,8 @@ public class UserController {
 		List<CommonCodes> listCodes = cs.listCommonCode();
 		List<Tags> listTags = ts.listTags(tag);
 		// 로그인한 아이디 저장(신청자 아이디)
-		int userId = us.getLoggedInId(); 
-		
+		int userId = us.getLoggedInId();
+
 		model.addAttribute("listTags", listTags);
 		model.addAttribute("listCodes", listCodes);
 		model.addAttribute("userId", userId);
@@ -271,33 +271,63 @@ public class UserController {
 	@RequestMapping(value = "myPage/myPost")
 	public String myPost(Board board, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
-		Optional<Users> user = null;
-
 		log.info("[{}]{}:{}", transactionId, "myPost", "start");
-
+		
+		/* 초기 유저 ID setting */
 		int userId = us.getLoggedInId();
 		board.setUser_id(userId);
-		user = us.getUserById(userId);
-
-		int countBoard = boardService.boardCount(board);
-
-		Paging page = new Paging(countBoard, currentPage);
-		board.setStart(page.getStart());
-		board.setEnd(page.getEnd());
-		log.info("userController board : {}",page);
-		List<Board> oneBoardList = boardService.getBoardOneList(board);
-		List<Board> oneReviewList = boardService.getReviewOneList(board);
-
-		model.addAttribute("searchOption", board);
-		model.addAttribute("smallCode", board.getSmall_code());
-		model.addAttribute("countBoard", countBoard);
-		model.addAttribute("oneBoardList", oneBoardList);
-		model.addAttribute("oneReviewList", oneReviewList);
-		model.addAttribute("page", page);
-
+		
+		/* 멤버변수 선언을 해서 각각 paging 처리 */ 
+		int countBoard = 0;
+		Paging pageBoard = null;
+		Paging pageReview = null;
+		
+		List<Board> oneBoardList = null;
+		List<Board> oneReviewList = null;
+		
+		/* userId값으로 자유게시글 먼저 선점  */
+		if(userId > 0) {			
+			/* small_code & userId 값으로 전체 게시글 count */
+			board.setSmall_code(3); // 분류 code 강제 지정			
+			countBoard = boardService.boardCount(board);
+			log.info("userController countBoard : {}", countBoard);
+			
+			pageBoard = new Paging(countBoard, currentPage);
+			board.setStart(pageBoard.getStart());
+			board.setEnd(pageBoard.getEnd());
+			
+			oneBoardList = boardService.getBoardOneList(board);
+			
+			model.addAttribute("searchOption", board);
+			model.addAttribute("smallCode", board.getSmall_code());
+			model.addAttribute("countBoard", countBoard);
+			model.addAttribute("pageBoard", pageBoard);
+			model.addAttribute("oneBoardList", oneBoardList);
+			
+			/* 자유게시글 size로 리뷰게시글 핸들링  */
+			if(oneBoardList.size() > 0) {
+				/* small_code & userId 값으로 전체 게시글 count */
+				board.setSmall_code(6); // 분류 code 강제 지정
+				countBoard = boardService.boardCount(board);
+				log.info("userController countReview : {}", countBoard);
+				
+				pageReview = new Paging(countBoard, currentPage);
+				board.setStart(pageReview.getStart());
+				board.setEnd(pageReview.getEnd());
+				
+				oneReviewList = boardService.getReviewOneList(board);
+				
+				model.addAttribute("searchOption", board);
+				model.addAttribute("smallCode", board.getSmall_code());
+				model.addAttribute("countBoard", countBoard);
+				model.addAttribute("pageReview", pageReview);
+				model.addAttribute("oneReviewList", oneReviewList);
+			}			
+		}
+		
 		return "user/myPage/myPost";
 	}
-	
+
 	@RequestMapping(value = "myPage/myPostDetail")
 	public String myPostDetail(int id, Integer userId, Model model) {
 		UUID transactionId = UUID.randomUUID();
@@ -305,23 +335,24 @@ public class UserController {
 		log.info("[{}]{}:{}", transactionId, "myPost", "start");
 
 		Optional<Users> loginUser = null;
-		
-		if(userId > 0) {
+
+		if (userId > 0) {
 			loginUser = us.getUserById(userId);
 			log.info("userController loginUser : {} ", loginUser);
-			
-			if(loginUser.isPresent()) {
-				model.addAttribute("loginUser", loginUser.get());				
+
+			if (loginUser.isPresent()) {
+				model.addAttribute("loginUser", loginUser.get());
 			}
-		} 		
+		}
 
 		Board boards = boardService.boardDetail(id);
-		//List<Tags> hashTags = tagsService.boardTagDetail(id);
-		
-		//log.info("AdminCommunityController boardContent hashTags.size : {} ", hashTags.size());
-		
+		// List<Tags> hashTags = tagsService.boardTagDetail(id);
+
+		// log.info("AdminCommunityController boardContent hashTags.size : {} ",
+		// hashTags.size());
+
 		model.addAttribute("board", boards);
-		//model.addAttribute("hashTag", hashTags);
+		// model.addAttribute("hashTag", hashTags);
 		model.addAttribute("userId", userId);
 
 		return "user/myPage/myPostDetail";

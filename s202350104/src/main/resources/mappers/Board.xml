@@ -13,6 +13,9 @@
 		and a.is_deleted = 0
 		<if test="keyword != null and keyword != ''">
 		and a.title like '%' || #{keyword} || '%'
+		</if>	
+		<if test="user_id != null and user_id != ''">
+		and a.user_id = #{user_id}
 		</if>		
 	</select>
 	
