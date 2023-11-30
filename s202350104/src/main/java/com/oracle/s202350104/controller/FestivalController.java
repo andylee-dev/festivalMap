@@ -48,7 +48,8 @@ public class FestivalController {
 
 	// festival 소개 리스트 페이지로 넘어가는 logic
 	@RequestMapping(value = "festival")
-	public String festival(FestivalsContent festival, String currentPage, Model model) {
+	public String festival(FestivalsContent festival, String currentPage, String keyword, Integer area, 
+						   Integer sigungu, Integer small_code, String goingOn, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		
 		try {
@@ -75,6 +76,12 @@ public class FestivalController {
 			log.info("festival keyword=>"+festival.getKeyword());
 			log.info("festival area=>"+festival.getArea());
 			log.info("festival sigungu=>"+festival.getSigungu());
+			
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("goingOn", goingOn);
 			
 			List<CommonCodes> listCodes = ccs.listCommonCode();
 			

@@ -100,7 +100,6 @@ public class AdminTagController {
 			// 태그 자동완성을 위한 데이터리스트
 			Tags tag = new Tags();
 			List<Tags> listAllTags = ts.listTags(tag);
-			
 			model.addAttribute("listAllTags", listAllTags);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "insertTagsForm", e.getMessage());

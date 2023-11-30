@@ -105,7 +105,8 @@
 			<div class="co1 text-div">
 				<h4><strong>어느 축제로 떠나볼까요~♫</strong></h4>
 			</div>
-			<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
+			<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요."
+			 value="${keyword}">
 			<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 		</div>
 		
@@ -140,9 +141,9 @@
 					<select class="form-select" 
 							aria-label="Default select example"  name="goingOn">
 						<option selected>진행 여부 선택</option>
-						<option value="past">진행완료</option>
-						<option value="present">진행중</option>
-						<option value="future">진행예정</option>
+						<option value="past" ${goingOn eq 'past'? 'selected':''}>진행완료</option>
+						<option value="present" ${goingOn eq 'present'? 'selected':''}>진행중</option>
+						<option value="future" ${goingOn eq 'future'? 'selected':''}>진행예정</option>
 					</select>
 				</div>
 			</div>		
