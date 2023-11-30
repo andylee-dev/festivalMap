@@ -233,30 +233,50 @@ import lombok.RequiredArgsConstructor;
 		
 		// festival을 삭제
 		@RequestMapping(value = "festivalDelete")
-		public String festivalDelete(int contentId, Model model) {
+		public String festivalDelete(int contentId,String is_deleted, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			FestivalsContent festival = new FestivalsContent();
+			festival.setContent_id(contentId);
+			
+			if(is_deleted.equals("0")) {
+				festival.setIs_deleted("1");
+			} else if(is_deleted.equals("1")) {
+				festival.setIs_deleted("0");
+				log.info(festival.getIs_deleted());
+			}
+			
 			
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin festivalDelete", "start");
 				// festival 삭제
-				fs.deleteFestivals(contentId);
+				fs.deleteFestivals(festival);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin festivalDelete", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin festivalDelete", "end");
 			}	
 			
-			return "forward:festival";
+			return "redirect:festival";
 		}
 		
 		// festival 등록을 승인
 		@RequestMapping(value = "festivalApprove")
-		public String festivalApprove(int contentId, String currentPage, Model model) {
+		public String festivalApprove(int contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
+			FestivalsContent festival = new FestivalsContent();
+			festival.setContent_id(contentId);
+			
+			if(status.equals("0")) {
+				festival.setStatus("1");
+			} else if(status.equals("1")) {
+				festival.setStatus("0");
+				log.info(festival.getStatus());
+			}	
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin festivalApprove", "start");
 				// approve한 결과를 result에 저장
-				int result = fs.approveFestival(contentId);
+				int result = fs.approveFestival(festival);
 				
 				// result값에 따라 alert에서 표시될 메세지가 달라짐
 				if(result > 0) {
@@ -319,7 +339,7 @@ import lombok.RequiredArgsConstructor;
 				
 				int path = 0;
 				
-				Paging page = new Paging(totalExperience, currentPage);
+				PagingList page = new PagingList(totalExperience, currentPage);
 				experience.setStart(page.getStart());
 				experience.setEnd(page.getEnd());
 				
@@ -1357,7 +1377,7 @@ import lombok.RequiredArgsConstructor;
 				String area = request.getParameter("area");
 				String sigungu = request.getParameter("sigungu");
 				
-				Paging page = new Paging(totalSearchExperience, currentPage);
+				PagingList page = new PagingList(totalSearchExperience, currentPage);
 				experience.setStart(page.getStart());
 				experience.setEnd(page.getEnd());
 				

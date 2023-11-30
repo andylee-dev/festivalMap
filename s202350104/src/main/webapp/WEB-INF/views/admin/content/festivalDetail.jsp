@@ -123,14 +123,34 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			function deleteConfirm() {
+				var contentId = Number(${festival.content_id}); 
+				var is_deleted = "${festival.is_deleted}";
 				if(confirm("정말 삭제하시겠습니까?")) {
-					location.href="festivalDelete?contentId=${festival.content_id}";
+					location.href="../content/festivalDelete?contentId="+contentId+"&currentPage=${currentPage}&is_deleted="+is_deleted;
+				}
+			}
+			
+			function deleteConfirm1() {
+				var contentId = Number(${festival.content_id}); 
+				var is_deleted = "${festival.is_deleted}";
+				if(confirm("복원 하시겠습니까?")) {
+					location.href="../content/festivalDelete?contentId="+contentId+"&currentPage=${currentPage}&is_deleted="+is_deleted;
 				}
 			}
 			
 			function approveConfirm() {
+				var contentId = Number(${festival.content_id}); 
+				var status = "${festival.status}";
 				if(confirm("승인하시겠습니까?")) {
-					location.href="festivalApprove?contentId=${festival.content_id}&currentPage=${currentPage}";
+					location.href="festivalApprove?contentId=${festival.content_id}&currentPage=${currentPage}&status="+status;
+				}
+			}
+			
+			function approveConfirm1() {
+				var contentId = Number(${festival.content_id}); 
+				var status = "${festival.status}";
+				if(confirm("반려전환 하시겠습니까?")) {
+					location.href="festivalApprove?contentId=${festival.content_id}&currentPage=${currentPage}&status="+status;
 				}
 			}
 			
@@ -324,7 +344,7 @@
 								<c:choose>
 									<c:when test="${festival.is_deleted == 1}">
 										<div class="col-6 mb-3">
-											<button type="button" class="form-control btn btn-primary w-100" onclick="">복원</button>
+											<button type="button" class="form-control btn btn-primary w-100" onclick="deleteConfirm1()">복원</button>
 										</div>
 										<div class="col-6 mb-3">
 											<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='festival'">취소</button>
@@ -334,13 +354,10 @@
 										<div class="col-6 mb-3">
 											<button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 										</div>
-										<div class="col-2 mb-3">
+										<div class="col-3 mb-3">
 											<button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">반려(사유선택)</button>
 										</div>
-										<div class="col-2 mb-3">
-											<button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
-										</div>
-										<div class="col-1 mb-3">
+										<div class="col-3 mb-3">
 											<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='festival'">목록</button>
 										</div>
 									</c:when>
@@ -349,7 +366,7 @@
 											<button type="button" class="form-control btn btn-primary w-100" onclick="location.href='festivalUpdateForm?contentId=${festival.content_id}&currentPage=${currentPage}'">수정하기</button>
 										</div>
 										<div class="col-2 mb-3">
-											<button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
+											<button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
 										</div>
 										<div class="col-2 mb-3">
 											<button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>

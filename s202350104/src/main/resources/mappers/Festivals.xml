@@ -188,12 +188,14 @@
 	</update>
 	
 	<!-- festival 정보 delete -->	
-	<update id="nhContentsDelete" parameterType="int">
-		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
+	<update id="nhContentsDelete" parameterType="FestivalsContent">
+		UPDATE contents SET is_deleted = #{is_deleted} 
+		WHERE id = #{content_id}
 	</update>
 	
-	<update id="nhFestivalsApprove" parameterType="int">
-		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	<update id="nhFestivalsApprove" parameterType="FestivalsContent">
+		UPDATE contents SET status = #{status} 
+		WHERE id = #{content_id}
 	</update>
 	
 	<!-- contents 테이블 -->

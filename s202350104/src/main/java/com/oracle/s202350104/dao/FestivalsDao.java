@@ -12,8 +12,8 @@ public interface FestivalsDao {
 	FestivalsContent detailFestivals(int contentId);
 	int              totalFestivals(FestivalsContent festival);
 	int              insertFestival(FestivalsContent festival);
-	int              deleteFestivals(int contentId);
-	int              approveFestival(int contentId);
+	int              deleteFestivals(FestivalsContent festival);
+	int              approveFestival(FestivalsContent festival);
 	int              updateFestival(FestivalsContent festival);
 	int              readcountUp(int contentId);
 	Contents         detailContents(int contentId);

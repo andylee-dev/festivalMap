@@ -66,9 +66,9 @@ public class FestivalsServiceImpl implements FestivalsService {
 	}
 
 	@Override
-	public int deleteFestivals(int contentId) {
+	public int deleteFestivals(FestivalsContent festival) {
 		int result = 0;
-		result = fd.deleteFestivals(contentId);
+		result = fd.deleteFestivals(festival);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 삭제에 실패하였습니다.");
@@ -78,8 +78,8 @@ public class FestivalsServiceImpl implements FestivalsService {
 	}
 
 	@Override
-	public int approveFestival(int contentId) {
-		int result = fd.approveFestival(contentId);
+	public int approveFestival(FestivalsContent festival) {
+		int result = fd.approveFestival(festival);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 승인에 실패하였습니다.");

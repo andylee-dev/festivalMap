@@ -123,12 +123,12 @@ public class FestivalsDaoImpl implements FestivalsDao {
 
 	// festival 정보를 삭제 => contents 테이블에서 해당 축제의 is_deleted 값을 1로 update
 	@Override
-	public int deleteFestivals(int contentId) {
+	public int deleteFestivals(FestivalsContent festival) {
 		int result = 0;
 		
 		try {
 			
-			result = session.update("nhContentsDelete", contentId);
+			result = session.update("nhContentsDelete", festival);
 		
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl deleteFestivals Exception => " + e.getMessage());
@@ -139,12 +139,12 @@ public class FestivalsDaoImpl implements FestivalsDao {
 
 	// festival 등록 신청 승인 => contents 테이블에서 해당 축제의 status 값을 1로 update
 	@Override
-	public int approveFestival(int contentId) {
+	public int approveFestival(FestivalsContent festival) {
 		int result = 0;
 		
 		try {
 			
-			result = session.update("nhFestivalsApprove", contentId);
+			result = session.update("nhFestivalsApprove", festival);
 		
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl approveFestival Exception => " + e.getMessage());
