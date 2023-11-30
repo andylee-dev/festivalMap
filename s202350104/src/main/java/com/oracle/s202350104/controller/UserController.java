@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -321,6 +322,54 @@ public class UserController {
 		return "user/bizPage/bizContentDetail";
 	}
 
+
+	
+	@RequestMapping(value = "bizPage/contentUpdate/{contentId}")
+	public String bizContentUpdate(@PathVariable("contentId") int contentId,
+			String currentPage, 
+			ExperienceContent experienceContent,
+			FestivalsContent festivalContent,
+			MultipartFile file, 
+			MultipartFile file1, 
+			MultipartFile file2,
+			int big_code,
+			Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "bizContentUpdate", "Start");
+			log.info("big_code:{}",big_code);
+			switch (big_code) {
+			case 11:
+				int result = festivalService.updateFestival(festivalContent);
+				break;
+			case 12:
+
+
+				break;
+			case 13:
+
+				break;
+			case 14:
+
+
+				break;
+			case 15:
+
+				break;
+
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "bizContentUpdate", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "bizContentUpdate", "End");
+		}
+		return "redirect:/user/bizPage/bizContentUpdate/"+contentId;
+	}
+
+	
 	
 	@RequestMapping(value = "bizPage/content")
 	public String bizContent(Model model, Contents content, String currentPage) {

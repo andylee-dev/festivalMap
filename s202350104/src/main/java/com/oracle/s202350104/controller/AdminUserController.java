@@ -51,7 +51,7 @@ public class AdminUserController {
 			int totalUsersCount =us.totalUsers(user);
 			log.info(user.toString());
 
-			Paging page = new Paging(totalUsersCount, currentPage);
+			PagingList page = new PagingList(totalUsersCount, currentPage);
 			user.setStart(page.getStart());
 			user.setEnd(page.getEnd());
 
@@ -80,7 +80,7 @@ public class AdminUserController {
 			int totalUsersCount =us.totalUsers(user);
 			log.info(user.toString());
 
-			Paging page = new Paging(totalUsersCount, currentPage);
+			PagingList page = new PagingList(totalUsersCount, currentPage);
 			user.setStart(page.getStart());
 			user.setEnd(page.getEnd());
 
