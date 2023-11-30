@@ -138,4 +138,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return listSmallCode;
 	}
 
+	@Override
+	public int restaurantRestore(int contentId) {
+		int restaurantRestore = 0;
+		restaurantRestore = rd.restaurantRestore(contentId);
+		return restaurantRestore;
+	}
+
 }

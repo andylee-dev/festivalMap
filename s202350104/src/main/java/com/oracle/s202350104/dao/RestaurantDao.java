@@ -20,6 +20,7 @@ public interface RestaurantDao {
 	int                         deleteRestaurant(int contentId);
 	int                         approveRestaurant(RestaurantsContent restaurant);
 	List<RestaurantsContent>    listSmallCode(int big_code);
+	int                         restaurantRestore(int contentId);
 	
 	
 }

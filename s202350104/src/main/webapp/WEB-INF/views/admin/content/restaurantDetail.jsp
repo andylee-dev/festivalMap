@@ -57,29 +57,33 @@
 					location.href="../content/restaurantApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
 				}
 			}
+					
 			
-			
-			function openRejectionPopup(contentId) {
-			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
+			/* 모달에서 반려 했을 경우 동작하는 핸들러.*/
+			function submitRejectForm() {
+				// Status 0으로 만들기.
+				document.getElementById('statusInput').value = 0;
+				$(".form-input ,.check-duple").prop("disabled", false);
+
+				$('#exampleModal').modal('hide');
+				    
+				const banReason = document.getElementById('message-text').value;
+				const modalTitleText = document.getElementById('modal-title').innerText;
+				$("#ban-title").val(modalTitleText);
+				$("#ban-content").val(banReason);
+				   
+				document.getElementById('update-form').submit();
 			}
+
 			
-			
-			function submitRejectForm(formName) {
-				// $('#statusInput').value = 0;
-				formName.action = "/admin/content/insertHistory";
-				formName.method = "post";
-				$('.form-input, .check-duple').prop("disabled", false);
-				
-				$('#rejectModal').modal('hide');
-				
-				const rejectContent = document.getElementById('message-text').value;
-				const rejectTitle = document.getElementById('modal-title').innerText;		
-				$('#reject-title').val(rejectTitle);
-				$('#reject-content').val(rejectContent);
-				
-				formName.submit();
+			/* 모달에서 승인 했을 경우 동작하는 핸들러.*/
+			function submitAcceptForm() {
+				document.getElementById('statusInput').value = 1;
+				$(".form-input ,.check-duple").prop("disabled", false);
+				alert("승인처리를 했습니다.");
+				document.getElementById('update-form').submit();
 			}
-			
+						
 			
 			function getSigungu(pArea){
 				var pSigungu = ${experience.sigungu}
@@ -390,7 +394,7 @@
 						 <c:choose>
 							 <c:when test="${restaurant.is_deleted == 1}">
 							 	<div class="col-6 mb-3" >
-		                        	<button type="button" class="form-control btn btn-primary w-100" onclick="confirmRestore(${restaurant.content_id}">복원</button>
+		                        	<button type="button" class="form-control btn btn-primary w-100" onclick="confirmRestore(${restaurant.content_id})">복원</button>
 		                        </div>
 		                        <div class="col-6 mb-3">
 		                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant?currentPage=1'">취소</button>
@@ -401,7 +405,7 @@
 		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                        </div>
 		                        <div class="col-2 mb-3">
-		                                   <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${restaurant.content_id})">반려(사유선택)</button>
+		                              <button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">반려(사유선택)</button>
 		                        </div>
 		                          <div class="col-2 mb-3">
 		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
@@ -425,43 +429,7 @@
 		                          </div>		
 							 </c:when>
 						</c:choose>
-						 
-						 	
-						 	
-						 	
-						 	
-						 	
-						 	
-						 	
-						 	<%-- <c:if test="${restaurant.status == 0}">
-	                          <div class="col-6 mb-3" >
-	                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
-	                          </div>
-	                            <div class="col-2 mb-3">
-	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">대기(임시저장)</button>
-	                          </div>
-	                          <div class="col-2 mb-3">
-	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${restaurant.content_id})">반려(사유선택)</button>
-	                          </div>
-	                          <div class="col-1 mb-3">
-	                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant?currentPage=1'">삭제</button>
-	                          </div>
-	                         </c:if>
-	                         <c:if test="${restaurant.status == 1}">
-	                             <div class="col-6 mb-3">
-	                                <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${currentPage}'">수정하기</button>
-	                             </div>
-	                             <div class="col-2 mb-3">
-	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
-	                             </div>
-	                             <div class="col-2 mb-3">
-	                                <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${restaurant.content_id})">삭제</button>
-	                             </div>
-	                          <div class="col-1 mb-3">
-	                             <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant?currentPage=1'">목록</button>
-	                          </div>
-	                         </c:if> --%>
-	                      </div>
+						</div>
 							
 						</form>
 					</div>
@@ -470,7 +438,27 @@
 			</div>
 		</main>
 		</div>
-	</div>	
+	</div>
+	<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modal-title">반려 전환</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="mb-3">
+            <label class="col-form-label">반려사유</label>
+ 			<textarea class="form-control" id="message-text"></textarea>
+           </div>
+     </div>
+	   <div class="form-row d-flex justify-content-around modal-footer">
+        <button type="button" onclick="submitRejectForm()" class="btn btn-primary col-4">반려</button>
+        <button type="button" class="btn btn-outline-secondary col-4" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>	
 	</body>
 </html>					
 			

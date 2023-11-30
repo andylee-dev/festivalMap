@@ -641,6 +641,15 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		
+		@ResponseBody
+		@RequestMapping(value = "restaurantRestoreAjax")
+		public String restaurantRestoreAjax(int contentId, Model model) {
+			int result = rs.restaurantRestore(contentId);
+			String resultStr = Integer.toString(result);
+			return resultStr;	
+		}
+		
+		
 		@RequestMapping(value = "spot")
 		public String spot(SpotContent spot, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();

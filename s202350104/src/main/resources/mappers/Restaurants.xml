@@ -270,4 +270,11 @@
 		
 	</select>
 	
+	<update id="joRestaurantRestore" parameterType="int">
+		update contents c 
+		set is_deleted = 0 
+		where c.id = #{content_id}
+	</update>
+	
+	
 </mapper>

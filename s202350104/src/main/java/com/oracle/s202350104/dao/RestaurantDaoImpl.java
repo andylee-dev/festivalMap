@@ -216,5 +216,16 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		}
 		return listSmallCode;
 	}
+
+	@Override
+	public int restaurantRestore(int contentId) {
+		int restaurantRestore = 0;
+		try {
+			restaurantRestore = session.update("joRestaurantRestore",contentId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return restaurantRestore;
+	}
 	
 }
