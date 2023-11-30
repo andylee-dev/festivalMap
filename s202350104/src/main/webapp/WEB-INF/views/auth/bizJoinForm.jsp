@@ -413,11 +413,11 @@
 						<div class="card col-3 p-0 m-0">
 							<div class="row align-items-end g-0 p-0 m-0">
 								<div class="col-md-4 p-0 m-0">
-									<img src="/asset/registerUser.svg" class="img-fluid rounded-start"
+									<img src="/asset/registerBizUser.svg" class="img-fluid rounded-start"
 										alt="...">
 								</div>
 								<div class="card-body  col-md-8 p-0 m-0">
-									<h5 class="card-title p-0 m-0">일반회원</h5>
+									<h5 class="card-title p-0 m-0">비즈회원</h5>
 									<p class="card-text p-0 m-0">회원가입</p>
 								</div>
 							</div>							
