@@ -6,10 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/checkUserDuplicate.js"></script>
+<script src="/js/updateArea.js"></script>
 <script type="text/javascript">
+let selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+let allTags = [];      // 전체 태그 정보를 모두 가져와 저장
+let myTagsArea;
 document.addEventListener("DOMContentLoaded", function () {
 
 	
@@ -40,55 +43,22 @@ document.addEventListener("DOMContentLoaded", function () {
         option.text = k ;
         daySelect.appendChild(option);
     }
-
-
-
-	const badgeSelect = document.querySelector('#badgeSelect');
-	const addBadgeBtn = document.querySelector('#addBadgeBtn');
-	const badgesArea = document.querySelector('#badgesArea');
-
-	// Initialize the list of available badges
-	const availableBadges = Array.from(badgeSelect.options).map(option => option.value).filter(value => value !== '');
-
-	addBadgeBtn.addEventListener('click', () => {
-		if (badgeSelect.value !== '') {
-			// Create a new badge and add it to the page
-			const newBadge = document.createElement('span');
-			newBadge.className = 'badge bg-primary';
-			newBadge.textContent = badgeSelect.value;
-
-			const closeButton = document.createElement('button');
-			closeButton.className = 'btn-close';
-			closeButton.setAttribute('aria-label', 'Close');
-			closeButton.addEventListener('click', (event) => {
-				// When the badge is deleted, add its value back to the select box
-				const deletedBadgeValue = event.target.parentElement.textContent.trim();
-				availableBadges.push(deletedBadgeValue);
-				updateSelectOptions();
-				event.target.parentElement.remove();
-			});
-
-			newBadge.appendChild(closeButton);
-			badgesArea.appendChild(newBadge);
-
-			// Remove the added badge's value from the select box
-			availableBadges.splice(availableBadges.indexOf(badgeSelect.value), 1);
-			updateSelectOptions();
-			badgeSelect.value = '';
+	
+    <!-- 지역 코드 넣는 코드  Start -->	
+	updateAreaOptions();
+	$(".area-dropdown").change(function() {
+		const selectedArea = $(this).val();
+		if (selectedArea) {
+			updateSigunguOptions(selectedArea);
+		} else {
+			$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 		}
 	});
-
-	function updateSelectOptions() {
-		badgeSelect.innerHTML = '<option value="">Select a badge</option>';
-		availableBadges.forEach(badge => {
-			const option = document.createElement('option');
-			option.value = badge;
-			option.textContent = badge;
-			badgeSelect.appendChild(option);
-		});
-	}
-
-
+	<!-- 지역 코드 넣는 코드  End -->
+	
+	<!-- 태그 코드 Start -->
+	myTagsArea = document.querySelector('.my-tags'); // 저장한 태그 버튼을 보여줄 박스
+	allTagOptions();
 
 });
 
@@ -312,8 +282,105 @@ function checkPasswordMatch() {
     }
 }
 
+function allTagOptions() {
+	$.ajax({
+		url: "<%=request.getContextPath()%>/getAllTags",
+		method: "GET",
+		dataType: "json",
+		success: function(tags) {
+			tags.forEach(function(tag) {
+				allTags.push({id:tag.id, name:tag.name});
+			});
+			console.log("getAllTags success");
+		},
+		error: function() {
+			console.log("전체 태그 정보를 가져오지 못했습니다.");
+		}
+	})
+}; 
+
+function newTagBadge(selectedTag) {
+	// 태그 버튼 생성 
+	const newTag = document.createElement('button');
+	newTag.className = "btn btn-outline-secondary align-items-center";
+	newTag.value = selectedTag.name;
+	newTag.innerHTML = "#" +selectedTag.name;
+	newTag.id = selectedTag.id;
+	console.log(newTag);
+		
+	// x버튼 및 클릭시의 이벤트 생성
+	const closeButton = document.createElement('span');
+	closeButton.innerHTML        = "&times";
+	closeButton.className        = "close-icon";
+	closeButton.style.marginLeft = "5px";
+	closeButton.style.cursor     = "pointer";
+	closeButton.addEventListener('click', (event) => {
+		event.preventDefault();
+		var deletedTag = {
+			id: event.target.parentElement.id,
+			name: event.target.parentElement.value.substr(1) // #를 제외한 텍스트를 name으로
+		}
+			
+		// 삭제할 옵션의 인덱스 찾기 -> selectedTags를 돌면서 deletedTag의 id와 같은 요소가 있으면 삭제하고 badge도 삭제
+		for(var i = 0; i < selectedTags.length; i++) {
+			if(selectedTags[i].id == deletedTag.id) {
+				selectedTags.splice(i, 1);
+				event.target.parentElement.remove();
+				i--; // splice() 사용하면 바로 요소가 제거되고 배열의 길이가 변경되기 때문에 i--를 해준다
+			}
+		}
+	});	
+	
+	newTag.appendChild(closeButton);
+	myTagsArea.appendChild(newTag);
+}
+
+function addTag() {
+	var newTagId;
+	var newTagName = $('.searchForm').val(); // 선택된 tag의 name을 가져옴
+	
+	// keyword 입력했을 때만 태그 버튼 추가
+	if(newTagName != '' && newTagName != null) {
+		// 선택된 tag의 id를 가져옴
+		for(var i = 0; i < allTags.length; i++) {
+			if(allTags[i].name == newTagName) {
+				newTagId = allTags[i].id;
+			}
+		}
+
+		var selectedTag = {
+			id: newTagId,
+			name: newTagName
+		};
+		
+		// 이미 배열에 있는 태그인지 체크
+		var isDuplicate = false;
+		for(var i = 0; i < selectedTags.length; i++) {
+			if(selectedTags[i].id == selectedTag.id) {
+				isDuplicate = true;
+				alert("이미 추가한 태그입니다.");
+			}
+		}
+		
+		// 배열에 없었던 태그일 경우에만 추가
+		if(!isDuplicate) {
+			selectedTags.push(selectedTag); 
+			newTagBadge(selectedTag);
+		}
+		
+		$('.searchForm').value = "";
+	}
+}
+<!-- 태그 코드 End -->
+
 function submitForm(event) {
 	updateBirthday();
+	// 태그 넣기
+	var finalTags = [];
+	for(var i = 0; i < selectedTags.length; i++) {
+		finalTags.push(Number(selectedTags[i].id));
+	}
+	// TODO : 태그 insert하기!!!!
 	checkSubmitHandler(event)
 }
 </script>
@@ -388,6 +455,12 @@ function submitForm(event) {
 	font-weight: 400;
 	line-height: 20px;
 	word-wrap: break-word
+}
+
+.tags-container {
+	border-radius: 10px;
+	border: 1px solid #000;
+	padding: 10px;
 }
 </style>
 </head>
@@ -534,6 +607,7 @@ function submitForm(event) {
 											<input class="form-check-input" type="radio" name="gender" id="male"
 												value="0" checked> <label class="form-check-label" for="male">남자</label>
 										</div>
+										<div class="col-1"></div>
 										<div class="form-check">
 											<input class="form-check-input" type="radio" name="gender" id="female"
 												value="1" }> <label class="form-check-label" for="female">여자</label>
@@ -582,28 +656,45 @@ function submitForm(event) {
 									<label for="address" class="col-2 col-form-label fw-bold text-end px-3 "
 										style="font-size: 20px;">주소<SUP
 											style="color: #FF4379; font-size: 18px;">*</SUP></label>
-									<div class="col-8 px-3">
-										<input type="text" class="form-control " id="address" value="${user.address}"
-											name="address">
+									<div class="col-4 px-3">
+										<select name="area" class="form-select area-dropdown"></select>
+										<p class="helptext text-start"></p>
+									</div>
+									<div class="col-4 px-3">
+										<select name="sigungu" class="form-select sigungu-dropdown"></select>
 										<p class="helptext text-start"></p>
 									</div>
 
-									<button class="btn btn-primary form-check-btn col-2 px-3"
-										onclick="event.preventDefault();">주소찾기</button>
+									<!-- <button class="btn btn-primary form-check-btn col-2 px-3"
+										onclick="event.preventDefault();">주소찾기</button> -->
 								</div>
-								<div class="container">
-									<label for="address" class="col-2 col-form-label fw-bold text-end px-3 "
-										style="font-size: 20px;">관심사</label> <select id="badgeSelect" name="tag_id">
-										<option value="">태그를 선택해주세요.</option>
-										<c:forEach var="tag" items="${listTags}">
-											<option value="${tag.id}">${tag.name}</option>
-										</c:forEach>
-										<!-- Add more options as needed -->
-									</select>
-									<button id="addBadgeBtn">Add Badge</button>
-									<div id="badgesArea">
-										<!-- New badges will be added here -->
+								<div class="my-4 row align-items-baseline ">
+									<label for="phone_num" class="col-sm-2 col-form-label fw-bold text-end"
+										style="font-size: 20px;"></label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control " id="address" name="address"
+										 placeholder="상세주소를 입력해주세요.">
+										<p class="helptext text-start"></p>
 									</div>
+								</div>
+								<div class="my-4 row align-items-baseline ">
+									<label for="address" class="col-2 col-form-label fw-bold text-end px-3 "
+										style="font-size: 20px;">관심사</label> 
+									<div class="col-8 mb-3 d-flex">
+										<input type="text" name="keyword" class="form-control searchForm" 
+										 placeholder="키워드를 입력해주세요." autocomplete="off" list="autoTags">
+										<img class="keyword-img align-self-center mx-1" src="<%=request.getContextPath()%>/image/icon_search1.png" 
+										 alt="icon_search1.png" id="searchIcon" onclick="addTag()"/>
+											<datalist id="autoTags">
+												<c:forEach var="tag" items="${listAllTags}">
+													<option id="${tag.id}" value="${tag.name}">
+												</c:forEach>
+											</datalist>
+									</div>
+								</div>
+								<div class="container d-flex">
+									<div class="col-2 px-3"></div>
+									<div class="tags-container my-tags col-8 mb-3"><!-- 태그 badge가 들어갈 곳 --></div>
 								</div>
 
 								<div class="container row justify-content-center my-5">
