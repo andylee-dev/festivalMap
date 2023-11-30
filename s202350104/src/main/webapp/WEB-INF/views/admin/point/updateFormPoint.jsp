@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>포인트 수정</title>
+		<title>포인트 수정 </title>
 		<link rel="stylesheet" type="text/css" href="/css/adminContentsDetail.css">
 		<script src="/js/updateArea.js"></script>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -133,9 +133,10 @@
 				<div class="" id="detail-main-container">
 		
     <div class="container p-5" id="form-container">
-        <form action="updatePoint" method="post">
+        <form action="/admin/point/updatePoint" method="post">
         <div class="mb-3 ">
-            <input type="hidden" name="id" value="${point.id}" />
+            <input type="hidden" id="id" name="id" value="${point.id}">
+            
             <label for="title" class="form-label">포인트 제목</label>
             <input type="text" class="form-control" id="title" name="title" value="${point.title}">
         </div>
@@ -149,7 +150,7 @@
         </div>
            <div class="row">
     	<div class="col-1 mb-3">
-        <button type="submit" class="form-control btn btn-primary w-100">등록</button>
+        <button type="submit" class="form-control btn btn-primary w-100">수정</button>
     	</div>
    		 <div class="col-1 mb-3">
         <button type="button" class="form-control btn btn-primary w-100" onclick="location.href='../point/point'">취소</button>

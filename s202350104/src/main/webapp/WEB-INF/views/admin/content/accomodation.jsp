@@ -87,12 +87,12 @@
 									</select>
 								</div>
 						
-							<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+							<label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 								<div class="col-2 mx-2 d-flex align-items-center">
 									<select name="is_deleted" class="form-select">
 										<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
-										<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록숙소</option>
-										<option value="1" ${is_deleted == 1 ? 'selected' : ''}>삭제숙소</option>
+										<option value="0" ${is_deleted == 0 ? 'selected' : ''}>Y</option>
+										<option value="1" ${is_deleted == 1 ? 'selected' : ''}>N</option>
 									</select>
 								</div>
 						</div>

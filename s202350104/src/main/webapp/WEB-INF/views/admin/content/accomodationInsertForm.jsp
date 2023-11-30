@@ -256,6 +256,11 @@
 							</div>
 						</div>
 						
+						<div id="map" style="width:500px;height:400px; margin: 0 auto;"></div>
+						<input type="hidden" name="mapx" id="mapx_input">
+  						<input type="hidden" name="mapy" id="mapy_input">
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274&libraries=services"></script>
+						
 						<hr class="hr" />			
 						
 						
@@ -270,8 +275,55 @@
 	                        <div class="col-2 mb-3">
 	                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation'">취소</button>
 	                        </div>
-	                    
+	                                        
 						</div>
+						
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274&libraries=services"></script>
+						<script>
+						
+						var accomodation_mapx = ${accomodation.mapx};
+  						var accomodation_mapy = ${accomodation.mapy};
+  						
+						window.onload = function() {
+						    var mapContainer = document.getElementById('map'), 
+						        mapOption = {
+						            center: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx), 
+						            level: 3 
+						        };
+
+						    var map = new kakao.maps.Map(mapContainer, mapOption); 
+						    var geocoder = new kakao.maps.services.Geocoder();
+						    var marker = new kakao.maps.Marker({
+			        			  position: new kakao.maps.LatLng(accomodation_mapy, accomodation_mapx),
+			        			  map: map
+			    													});  // 마커 생성
+						    var infowindow = new kakao.maps.InfoWindow();  // 인포윈도우 생성
+						    
+						    
+
+						    document.getElementById('address').onchange = function() {  // onkeyup 대신 onchange 사용
+						        var address = this.value;
+
+						        geocoder.addressSearch(address, function(result, status) {
+						            if (status === kakao.maps.services.Status.OK) {
+						                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						                
+						        						                
+						                marker.setPosition(coords);  // 마커 위치 업데이트
+						                infowindow.setContent('<div style="width:150px;text-align:center;padding:6px 0;">우리숙소</div>');  // 인포윈도우 내용 업데이트
+						                infowindow.open(map, marker);
+						                map.setCenter(coords);
+
+						                document.getElementById("mapx_input").value = result[0].x;
+						                document.getElementById("mapy_input").value = result[0].y;
+						            } else {  // 주소 검색 실패 시 처리
+						                alert('주소 검색 결과가 없습니다.');
+						            }
+						        });
+						    };
+						};
+					        
+					</script>
 						
 						</form>
 						</div>

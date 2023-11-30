@@ -152,7 +152,7 @@
 				<hr class="hr" />
 				</div>
 				<div>
-				<h3 style="color: #FF4379 ">숙소별 상세 정보</h3>
+				<h3 style="color: #FF4379 ">숙소 정보 수정</h3>
 				</div>
 				<div class="my-5">
 				<div class="" id="detail-main-container">
@@ -314,7 +314,7 @@
 						
 						 <div class="d-flex justify-content-between">
 							<div class="col-6 mb-3" >
-	                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+	                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('수정 하시겠습니까?')">수정하기</button>
 	                        </div>
 	                        <div class="col-3 mb-3">
 	       	                 	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>

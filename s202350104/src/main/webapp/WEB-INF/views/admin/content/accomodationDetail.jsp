@@ -288,9 +288,6 @@
 								            </c:forEach>
 								        </select>
 								    </div>
-								    	<div class="col-2">
-								    		<input type="text" class="form-control" name="postcode" id="postcode" value="${accomodation.postcode}" readonly>
-								    	</div>
 								    	<div class="col-6">
 										    <input type="text" class="form-control" id="address" value="${accomodation.address} " readonly>
 								    	</div>
@@ -395,13 +392,10 @@
 							 	<div class="col-6 mb-3" >
 		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                          </div>
-		                            <div class="col-2 mb-3">
+		                          <div class="col-3 mb-3">
 		                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">반려(사유선택)</button>
 		                          </div>
-		                          <div class="col-2 mb-3">
-		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
-		                          </div>
-		                          <div class="col-1 mb-3">
+		                          <div class="col-3 mb-3">
 		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
 		                          </div>
 							 </c:when>
@@ -413,7 +407,7 @@
 		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
 		                             </div>
 		                             <div class="col-2 mb-3">
-		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="confirmDelete(${accomodation.content_id})">삭제</button>
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
 		                             </div>
 		                          <div class="col-1 mb-3">
 		                             <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/accomodation?currentPage=1'">목록</button>
@@ -456,6 +450,7 @@
 						<button type="button" class="btn btn-outline-secondary col-4" data-bs-dismiss="modal">취소</button>
 					</div>
 				</div>
+			</div>
 			</div>
 	</div>	
 	</body>

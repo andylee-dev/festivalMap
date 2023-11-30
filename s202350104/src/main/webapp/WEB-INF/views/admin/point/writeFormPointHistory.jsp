@@ -122,7 +122,7 @@
 			</div>
 			<div class="container my-5" id="detail-body-container">
 				<div>
-				<h1>포인트 수정</h1>
+				<h1>포인트 내역 등록</h1>
 				<hr class="hr" />
 				</div>
 				<div>
