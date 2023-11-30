@@ -115,12 +115,12 @@
 										</select>
 									</div>
 									
-								<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="is_deleted" class="form-select">
 											<option value = "" selected>전체</option>
-											<option value = "0">등록</option>
-											<option value = "1">삭제</option>
+											<option value = "0">Y</option>
+											<option value = "1">N</option>
 										</select><p>
 									</div>
 						</div>
