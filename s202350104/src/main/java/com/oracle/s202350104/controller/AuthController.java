@@ -90,9 +90,9 @@ public class AuthController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "userSignUp", "start");
 			Tags tag = new Tags();
-			List<Tags> listTags = ts.listTags(tag);
-			log.info("listTags"+listTags.size());
-			model.addAttribute("listTags", listTags);
+			List<Tags> listAllTags = ts.listTags(tag);
+			log.info("listAllTags"+listAllTags.size());
+			model.addAttribute("listAllTags", listAllTags);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "userSignUp", e.getMessage());
