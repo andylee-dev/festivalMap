@@ -65,12 +65,15 @@ h2 {
 											<td id="contentId">${contents.id}</td>
 											<td>${contents.title}</td>
 											<td>
+											
 												${contents.big_code==11?"축제":
 												(contents.big_code==12?"맛집":
 												(contents.big_code==13?"숙박":
-												(contents.big_code==14?"명소":`
+												(contents.big_code==14?"명소":
 												(contents.big_code==15?"체험":"N"))))
 												}
+											
+											
 											</td>
 											<td>${contents.status==1?"승인":"미승인"}</td>
 											<td>${contents.readcount}</td>
