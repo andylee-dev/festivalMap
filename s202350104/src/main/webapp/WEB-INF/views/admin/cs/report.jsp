@@ -34,7 +34,7 @@
 							<th scope="col">글제목</th>
 							<th scope="col">작성자</th>
 							<th scope="col">신고횟수</th>
-							<th scope="col">상세보기</th>
+							<th scope="col">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,7 +85,7 @@
 								</td>
 								<td>${report.name}</td>
 								<td>${report.count}</td>
-								<td><button class="btn btn-primary" onclick="location.href='reportDetail?boardId=${report.board_id}'">상세보기</button></td>
+								<td><button class="btn btn-primary" onclick="location.href='reportDetail?boardId=${report.board_id}'">관리</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
