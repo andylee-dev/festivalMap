@@ -307,6 +307,8 @@ public class AdminCourseController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "contentListAll", "start");
 			
+			int path = 0;
+			
 			// 조건에 맞는 컨텐츠의 전체 list의 수를 나타냄.
 			int contentCount = contentService.contentCount(content);
 			
@@ -322,6 +324,47 @@ public class AdminCourseController {
 			model.addAttribute("contentCount", contentCount);
 			model.addAttribute("listContents", listContents);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+
+		} catch (Exception e) {
+			log.error("ContentController contentListAll e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("ContentController contentListAll end...");
+		}
+		return "content/contentListAll";
+	}
+	
+	@RequestMapping(value = "/contentListAll1")
+	public String contentListAll(Contents content, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "contentListAll", "start");
+			
+			int path = 1;
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
+			
+			// 조건에 맞는 컨텐츠의 전체 list의 수를 나타냄.
+			int contentCount = contentService.contentCount(content);
+			
+			// 페이징 처리
+			PagingList page = new PagingList(contentCount, currentPage);
+			content.setStart(page.getStart());
+			content.setEnd(page.getEnd());
+			
+			// 조건에 맞는 컨텐츠의 list를 나타냄
+			List<Contents> listContents = contentService.listContents(content);
+			log.info("listContents : " + listContents);
+			
+			model.addAttribute("contentCount", contentCount);
+			model.addAttribute("listContents", listContents);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area" , area);
+			model.addAttribute("sigungu", sigungu);
 
 		} catch (Exception e) {
 			log.error("ContentController contentListAll e.getMessage() ->" + e.getMessage());

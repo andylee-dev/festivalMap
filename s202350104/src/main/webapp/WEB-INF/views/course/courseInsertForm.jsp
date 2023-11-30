@@ -663,14 +663,14 @@
 							<textarea class="form-control" id="course_info" name="course_info" rows="5"></textarea>
 						</div>
 						
-						<div class="form-group d-flex course-body-text col-12"
+						<!-- <div class="form-group d-flex course-body-text col-12"
 							 style="margin-bottom: 24px;">
 							<label class="form-label col-2">태그</label>
 							<select id="tagSelectBox" name="tag_id" onchange="event.preventDefault();"></select>
 								<div id="tagsArea">
-									<!-- 태그 badge가 들어갈 곳 -->
+									태그 badge가 들어갈 곳
 								</div>
-						</div>
+						</div> -->
 						
 						<div class="text-center">
 							<button type="submit" class="btn btn-primary button-submit-font button-submit-design" onclick="submitHandler()">등록</button>
