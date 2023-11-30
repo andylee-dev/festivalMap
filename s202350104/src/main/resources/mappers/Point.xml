@@ -10,6 +10,13 @@
 		ORDER BY id
 
 	</select>
+	
+	<select id="listpoint1" resultType="point" parameterType="int">
+		SELECT 	*
+		FROM 	point
+		WHERE 	id = #{id}
+	
+	</select>
 
 
 	<update id="updatePoint" parameterType="point">
