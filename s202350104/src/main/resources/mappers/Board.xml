@@ -80,7 +80,7 @@
 		    select rownum rn, c.*
 		    from (
 		        select a.id, a.title, a.content, b.name, a.created_at, a.updated_at, 
-		       		   a.read_count, a.big_code, a.small_code, a.status, a.is_deleted
+		       		   a.read_count, a.big_code, a.small_code, a.status, a.is_deleted, a.file_path, a.file_name
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 2

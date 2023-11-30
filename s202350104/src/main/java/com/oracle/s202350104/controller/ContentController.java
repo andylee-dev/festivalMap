@@ -43,6 +43,7 @@ public class ContentController {
 			Board board = new Board();
 			board.setStart(0);
 			board.setEnd(2);
+			board.setStatus("1");
 			List<Board> magazineList  = boardService.getMagazinAllList(board); 
 			model.addAttribute("magazineList", magazineList);
 			log.info("magazineList[0]:{}",magazineList.get(0));
