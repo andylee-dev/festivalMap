@@ -102,7 +102,7 @@ String apiKey = map.getApiKey();
 					dataSet=data;
 			        // 데이터를 100개 단위로 나누어 처리
 			        const chunkSize = 50;
-			        for (let i = 0; i < data.length/2; i += chunkSize) {
+			        for (let i = 0; i < data.length/3; i += chunkSize) {
 			            const chunk = data.slice(i, i + chunkSize);
 			            displayPlaces2(chunk);
 			        }
@@ -573,45 +573,27 @@ function addMarker(position, idx, title) {
 
 		<!-- Section2 -->
 		<div class="container home-chucheon-box-custom">
-			<div class="home-chucheon-batch">고민은&nbsp;NO&nbsp;!</div>
-			<div class="home-chucheon-title">
-				<h4>
-					<strong>어떤&nbsp;축제를&nbsp;가야하지?&nbsp;어떤&nbsp;코스로&nbsp;가야하지?</strong>
-				</h4>
-				<h4>
-					<strong>고민하지&nbsp;마세요.&nbsp;페스티맵이&nbsp;있잖아요!</strong>
-				</h4>
+			<div class="container mx-0 my-3 py-1">
+				<img alt="..." src="asset/gomin_nono.png">
 			</div>
-			<div class="row row-cols-3 home-chucheon-card-box">
+					<div class="row row-cols-3 home-chucheon-card-box">
 				<div class="row row-cols-2 chucheon-card">
 					<div class="col chucheon-card-se">
-						<p>내&nbsp;M.B.T.I는&nbsp;뭘까?</p>
-						<span>나의&nbsp;축제&nbsp;취향&nbsp;?!</span>
-					</div>
-					<div class="col chucheon-card-se">
-						<img alt="..." src="asset/banner_mini_01.png"
+						<img alt="..." src="asset/Banner_01.png"
 							onclick="openPopup()">
 					</div>
 
 				</div>
 				<div class="row row-cols-2 chucheon-card">
 					<div class="col chucheon-card-se">
-						<p>랜덤으로&nbsp;골라!!</p>
-						<span>페맵&nbsp;랜덤&nbsp;축제!</span>
-					</div>
-					<div class="col chucheon-card-se">
 						<a class="dropdown-item" href="/festival/recommend"> <img
-							alt="..." src="asset/banner_mini_02.png"></a>
+							alt="..." src="asset/Banner_02.png"></a>
 					</div>
 
 				</div>
 				<div class="row row-cols-2 chucheon-card">
 					<div class="col chucheon-card-se">
-						<p>한눈에&nbsp;보는&nbsp;축제!!</p>
-						<span>전국&nbsp;축제&nbsp;달력</span>
-					</div>
-					<div class="col chucheon-card-se">
-						<img alt="..." src="asset/banner_mini_03.png"
+						<img alt="..." src="asset/Banner_03.png"
 							onclick="openPopUp()">
 					</div>
 				</div>
@@ -620,16 +602,11 @@ function addMarker(position, idx, title) {
 
 		<!-- Section3 -->
 		<div class="container home-map-box-custom">
-			<div class="home-map-batch">
-				<h1>·</h1>
-				&nbsp;LIVE
-			</div>
-			<div class="home-map-title">
-				<h4>
-					<strong>지금 축제중인 지역</strong>
-				</h4>
+			<div class="container mx-0 my-3 py-1">
+				<img alt="..." src="asset/IMG_TITLE_FestNow.png">			
 			</div>
 
+	
 			<!-- Map icon 영역 -->
 			<div class="container p-5"
 				style="height: 80px; background-color: #B7E24D; position: relative;">
@@ -699,11 +676,8 @@ function addMarker(position, idx, title) {
 
 		<!-- Section4 -->
 		<div class="container home-ad-box-custom">
-			<div class="home-ad-batch">AD</div>
-			<div class="home-ad-title">
-				<h4>
-					<strong>이런 곳도 있어요!</strong>
-				</h4>
+			<div class="container mx-0 my-3 py-2">
+				<img alt="..." src="asset/IMG_TITLE_AD_banner.png">
 			</div>
 			<div>
 				<a target="_blank" href="https://www.ydp.go.kr/tour/viewTnCmmSchdulU.do?schdulNo=121&sc5=20230601&sc6=20230630&ad1=0&key=4016">

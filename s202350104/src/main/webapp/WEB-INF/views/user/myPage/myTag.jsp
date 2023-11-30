@@ -254,8 +254,9 @@
 							</div>	
 							<div class="container tags-container p-4 mb-4">
 								<div class="" id="recommend_tags">
-									<button class="btn btn-primary">#선택태그</button>
-									<button class="btn btn-outline-secondary">#미선택태그</button>
+									<c:forEach var="tag" items="${listPopularTags}" begin="0" end="14">
+										<button class="btn btn-outline-secondary" value="${tag.id}">#${tag.name}</button>
+									</c:forEach>
 								</div>
 							</div>
 						</div>

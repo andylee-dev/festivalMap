@@ -211,9 +211,6 @@
 				</div>
 				<!-- Section3: Table -->
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
-					<div class="container d-flex justify-content-end p-0">
-						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>
-					</div>
 					<div class="container table-container p-4">
 					<div class="table-responsive">
 						<table id="userTable" class="table table-md text-center p-3">

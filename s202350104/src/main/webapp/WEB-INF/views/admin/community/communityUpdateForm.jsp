@@ -11,9 +11,6 @@
 <link rel="stylesheet" type="text/css"
 	href="/css/adminContentsDetail.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript">
-
-</script>
 <style type="text/css">
 #detail-top-container {
 	position: absolute;
@@ -188,15 +185,15 @@ h3 {
 								<label id="detail-top-text" style="margin-right: 4px;">${board.id}&nbsp;ㅣ</label>
 								<c:choose>
 									<c:when test="${board.status == 0}">
-										<label id="detail-top-id2" style="color: #FF4379;">미사용중</label>
+										<label id="detail-top-id2" style="color: #FF4379;">미사용</label>
 									</c:when>
 									<c:when test="${board.status == 1}">
-										<label id="detail-top-id2">사용중</label>
+										<label id="detail-top-id2">사용</label>
 									</c:when>
 								</c:choose>
 							</div>
 							<div class="container p-5" id="form-container">
-								<form action="communityUpdate" method="post">
+								<form action="communityUpdate" method="post" enctype="multipart/form-data">
 									<div class="mb-3">
 										<label for="id" class="form-label">게시판&nbsp;ID</label> 
 										<input type="text" class="form-control" name="id" id="id"
@@ -218,11 +215,12 @@ h3 {
 										<textarea class="form-control" name="content" id="content"
 												  rows="5">${board.content}</textarea>
 									</div>
-
-									<%-- 						<div class="mb-3 ">
-						  <label for="image" class="form-label">이미지</label>
-						  <input type="text" class="form-control" name="phone" id="phone" value="${banner.image} ">
-						</div>	 --%>
+									<c:if test="${board.small_code eq 3}">
+									<div class="mb-3">
+										<label for="file" class="mypost-form-label">첨부파일&nbsp;<span>${board.file_name_custom }</span></label><br>
+										<input type="file" class="form-control img_input" name="file">
+									</div>
+								 	</c:if>
 
 									<hr class="hr" />
 
@@ -240,7 +238,6 @@ h3 {
 													onclick="location.href='../community/communityDetail?id=${board.id}&userId=${userId}'">취소</button>
 										</div>
 									</div>
-
 								</form>
 							</div>
 						</div>

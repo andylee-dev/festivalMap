@@ -8,9 +8,9 @@
 			<img src="/asset/logo.png" width="170" height="70" alt="Logo">
 		</a>
 		<ul class="list-unstyled ps-0">
-			<li class="mb-1">
+<!-- 			<li class="mb-1">
 				<button location.href='/admin'" class="btn d-inline-flex rounded border-0 ">관리자 홈</button>
-			<li class="mb-1">
+ -->			<li class="mb-1">
 				<button id="user-tab" onclick="toggleTab('user-tab')" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
 					data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">회원</button>
 				<div class="collapse" id="user-collapse">

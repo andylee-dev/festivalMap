@@ -325,6 +325,17 @@ public class TagsServiceImpl implements TagsService {
 		
 		return result;
 	}
+	
+	@Override
+	public List<Tags> userPopularTags() {
+		List<Tags> listPopularTags = td.userPopularTags();
+		
+		if(listPopularTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "태그 리스트가 존재하지 않습니다.");
+		}
+		
+		return listPopularTags;
+	}
 
 
 	
@@ -356,6 +367,8 @@ public class TagsServiceImpl implements TagsService {
 	 	
 	 	return deleteResult;
 	}
+
+
 
 
 
