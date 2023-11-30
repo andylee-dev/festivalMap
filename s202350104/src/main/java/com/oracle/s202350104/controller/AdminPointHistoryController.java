@@ -15,6 +15,7 @@ import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.Point;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.PointHistoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class AdminPointHistoryController {
 		int path = 0;
 		int totalpointhistory = phs.totalpointHistory();
 		
-		PagingList page = new Paging(totalpointhistory, currentPage);
+		PagingList page = new PagingList(totalpointhistory, currentPage);
 		log.info("totalpointhistory{}",totalpointhistory);
 		log.info("currentPage {}",currentPage);
 
@@ -89,7 +90,7 @@ public class AdminPointHistoryController {
 	int path = 0;
 	int totalpointhistory = phs.totalpointHistory();
 	
-	PagingList page = new Paging(totalpointhistory, currentPage);
+	PagingList page = new PagingList(totalpointhistory, currentPage);
 	log.info("totalpointhistory{}",totalpointhistory);
 	log.info("currentPage {}",currentPage);
 

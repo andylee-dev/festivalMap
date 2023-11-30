@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Point;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.point.PointService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class AdminPointController {
 			
 			int totalpoint = ps.totalpoint();
 		
-			PagingList page = new Paging(totalpoint, currentPage);
+			PagingList page = new PagingList(totalpoint, currentPage);
 
 			point.setStart(page.getStart());
 			point.setEnd(page.getEnd());
