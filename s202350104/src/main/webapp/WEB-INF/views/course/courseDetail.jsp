@@ -15,6 +15,8 @@
 <head>
 <meta charset="UTF-8">
 <title>CourseDetail</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <!-- 카카오 MAP -->
 <% ApplicationContext context=WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
    MapService map=context.getBean("kakaoMapSerivce", MapService.class); String apiKey=map.getApiKey(); %>
@@ -242,7 +244,7 @@
 					</c:if>
 				</c:forEach>
 				<div class="col image-custom">
-					<img alt="share_icon.png" src="../image/share_icon.png">
+					<img alt="share_icon.png" src="../image/share_icon.png" onclick="clip(); return false;">
 				</div>
 			</div>
 		</div>
@@ -332,45 +334,68 @@
 							<div class="col sideImg-custom"></div>
 						</div>
 					</div>
+				</c:if>
+			</c:forEach>
+			
 					
-					<!-- 세번째 요약 content -->
-					<div class="col homeDetail-basic-text-custom">
-						<div class="row row-cols-1">
+			<!-- 세번째 요약 content -->
+			<div class="col homeDetail-basic-text-custom">
+				<div class="row row-cols-1" style="display: flex; flex-direction: column; align-items: flex-start;">
+					<c:forEach var="courseDetail" items="${courseDetail }">
+						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
 								<img alt="icon.jpg" src="../image/boardStatus1.png">
-								<p class="text-md-custom">코스명</p>
+								<p class="text-md-custom">코 스 명</p>
 								<p>${courseDetail.course_title }</p>
 							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach var="courseDetail" items="${courseDetail }">
+						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
 								<img alt="icon.jpg" src="../image/boardStatus1.png">
 								<p class="text-md-custom">코스거리</p>
 								<p>${courseDetail.distance }</p>
 							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach var="courseDetail" items="${courseDetail }">
+						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
 								<img alt="icon.jpg" src="../image/boardStatus1.png">
 								<p class="text-md-custom">소요시간</p>
 								<p>${courseDetail.time }</p>
 							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach var="courseDetail" items="${courseDetail }">
+						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
 								<img alt="icon.jpg" src="../image/boardStatus1.png">
 								<p class="text-md-custom">위치</p>
 								<p>#</p>
 							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach var="courseDetail" items="${courseDetail }">
+						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
 								<img alt="icon.jpg" src="../image/boardStatus1.png">
 								<p class="text-md-custom">코스내용</p>
 								<p>${courseDetail.course_info }</p>
 							</div>
-							<div class="col text-custom"></div>
-							<div class="col text-custom"></div>
-							<div class="col text-custom"></div>
-							<div class="col text-custom"></div>
-							<div class="col text-custom"></div>
-							<div class="col text-icon-custom"></div>
-						</div>
-					</div>
-				</c:if>
-			</c:forEach>
+						</c:if>
+					</c:forEach>
+					<div class="col text-custom"></div>
+					<c:forEach var="courseDetail" items="${courseDetail }">
+					    <div class="col text-custom">
+					        <p class="text-md-custom" style="padding-left: 30px;">- 코스이름 : </p>
+					        <p>${courseDetail.title}</p>
+					    </div>
+					</c:forEach>
+					<div class="col text-icon-custom"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	

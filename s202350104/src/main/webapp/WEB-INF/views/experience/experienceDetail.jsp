@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>숙박 상세</title>
+<title>체험 상세</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
