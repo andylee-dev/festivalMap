@@ -233,7 +233,7 @@
 	<div id="content_title" class="container homeDetail-whiteSpace-custom"></div>
 	
 	<!-- 상단 분홍색 title 출력-->
-	<div class="homeDetail-topTitle-custom">
+	<div class="homeDetail-topTitle-custom" style="height: 120px;">
 		<div class="container homeDetail-topTitle-custom">
 			<div class="row row-cols-3">
 				<c:forEach var="courseDetail" items="${courseDetail }">
@@ -368,7 +368,7 @@
 							</div>
 						</c:if>
 					</c:forEach>
-					<c:forEach var="courseDetail" items="${courseDetail }">
+					<%-- <c:forEach var="courseDetail" items="${courseDetail }">
 						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
 								<img alt="icon.jpg" src="../image/boardStatus1.png">
@@ -376,7 +376,7 @@
 								<p>#</p>
 							</div>
 						</c:if>
-					</c:forEach>
+					</c:forEach> --%>
 					<c:forEach var="courseDetail" items="${courseDetail }">
 						<c:if test="${courseDetail.order_num == 1}">
 							<div class="col text-custom">
