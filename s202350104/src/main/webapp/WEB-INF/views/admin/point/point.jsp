@@ -50,7 +50,7 @@
 									<td>${point.content }</td>
 									<td>${point.point }</td>
 									<td><fmt:formatDate value="${point.create_at}" pattern="yyyy/MM/dd" /></td>
-									<td><input class="btn btn-primary" type="button" onclick="location.href='updateFormPoint'" value="수정"></td>
+									<td><input class="btn btn-primary" type="button" onclick="location.href='updateFormPoint?id=${point.id}'" value="수정"></td>
 								</tr>
 								</c:forEach>
 						</table>
