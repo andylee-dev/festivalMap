@@ -623,7 +623,6 @@ function addMarker(position, idx, title) {
 			</div>
 
 			<!-- Map Menu 영역 -->
-
 			<div class="container home-map-menu-custom">
 				<div id="menu_wrap" class="row row-cols-2 home-map-nav-box-custom">
 					<div class="container col home-menu-detail">

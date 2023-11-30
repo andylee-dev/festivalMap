@@ -70,17 +70,25 @@
 .home-pick-card {
 	width: 45%;
 	border: 0px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+.home-pick-card {
+	width: 45%;
+	border: 0px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.home-pick-card img{
+	height: 260px;
+	border-radius: 25px;
 }
 
 .home-pickMd-box-custom {
 	display: flex;
 	justify-content: center;
 	align-content: center;
-}
-
-.home-pick-card {
-	margin-left: 30px;
-	margin-right: 30px;
 }
 
 .home-pick-card
@@ -175,7 +183,7 @@
 
 .chucheon-card 
 .chucheon-card-se img {
-/* 	border: 2px solid black; */
+	/* 	border: 2px solid black; */
 	width: 416px;
 	height: 235px;
 	object-fit: cover;
@@ -343,7 +351,7 @@
 	margin-left: 0px;
 	background-color: transparent;
 	border: 0px;
-/* 	border-bottom: 4px solid #c0c0c0; */
+	/* 	border-bottom: 4px solid #c0c0c0; */
 }
 
 .home-card-custom img {
