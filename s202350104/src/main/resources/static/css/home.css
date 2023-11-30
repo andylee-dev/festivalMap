@@ -133,7 +133,7 @@
 
 .home-chucheon-card-box
 .chucheon-card {
-	border: 2px solid black;
+	/* 	border: 2px solid black; */
 	border-radius: 23px;
 	width: 420px;
 	height: 200px;
@@ -175,9 +175,9 @@
 
 .chucheon-card 
 .chucheon-card-se img {
-	/* 	border: 1px solid #c0c0c0; */
-	height: 180px;
-	margin-top: 10px;
+/* 	border: 2px solid black; */
+	width: 416px;
+	height: 235px;
 	object-fit: cover;
 }
 
@@ -186,7 +186,7 @@
 	/* 	border: 1px solid red; */
 	padding: 0px;
 	margin-top: 80px;
-	height: 1100px;
+	height: 760px;
 }
 
 .home-map-batch {
@@ -214,7 +214,7 @@
 }
 
 .home-map-nav-box-custom {
-	height: 800px;
+	height: 720px;
 }
 
 .home-menu-detail {
@@ -289,20 +289,19 @@
 	background-color: white;
 	border: 1px solid black;
 	border-radius: 23.50px;
-	color:#171717;
+	color: #171717;
 }
 
 .home-menu-detail
- .hashTag-custom a.active  {
+ .hashTag-custom a.active {
 	font-size: 17px;
 	font-weight: bold;
 	text-align: center;
-	background-color:#BFEE50;
+	background-color: #BFEE50;
 	border: 2px solid black;
 	border-radius: 23.50px;
-	color:#171717;
+	color: #171717;
 }
-
 
 .home-menu-detail
 .home-menu-md {
@@ -389,7 +388,7 @@
 .home-ad-box-custom {
 	/* 	border: 1px solid red; */
 	padding: 0px;
-	margin-top: 80px;
+	margin-top: 200px;
 	margin-bottom: 80px;
 }
 
