@@ -414,7 +414,7 @@ public class UserController {
 			if(oneBoardList.size() > 0) {
 				/* small_code & userId 값으로 전체 게시글 count */
 				board.setSmall_code(6); // 분류 code 강제 지정
-				countBoard = boardService.boardCount(board);
+				countBoard = boardService.adminboardCount(board);
 				log.info("userController countReview : {}", countBoard);
 				
 				pageReview = new Paging(countBoard, currentPage);

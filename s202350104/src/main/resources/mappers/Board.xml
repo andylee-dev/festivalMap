@@ -24,7 +24,10 @@
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = #{small_code}
-		and a.is_deleted = 0	
+		and a.is_deleted = 0
+		<if test="user_id != null and user_id != ''">
+		and a.user_id = #{user_id}
+		</if>			
 	</select>
 	
 	<select id="reviewBoardCount" parameterType="Board" resultType="int">
@@ -349,7 +352,6 @@
 		        where a.user_id = b.id
 		        and a.small_code = 6
 		        and a.is_deleted = 0
-		        and a.comment_indent = 0
 		        and a.user_id = #{user_id}
 		    ) c
 		)
