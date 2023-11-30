@@ -55,17 +55,30 @@ public class AdminPointController {
 		return "admin/point/point";
 	}
 	
-	@GetMapping(value="/admin/point/updateFormPoint")
-	public String updateFormPoint(Point point, Model model) {
+	@RequestMapping(value="/admin/point/updateFormPoint")
+	public String updateFormPoint(int id, Model model) {
 		
-		model.addAttribute("Point", point);
+		
+		Point point = ps.listpoint1(id);
+
+		log.info("point.getId() {}",id);
+		
+		model.addAttribute("point", point);
+		model.addAttribute("id",id);
 		
 		return "admin/point/updateFormPoint";
 	}
 	
-	@PostMapping("/admin/point/updatePoint")
-    public String updatePoint(Point point) {
+	@RequestMapping("/admin/point/updatePoint")
+    public String updatePoint(Point point, Model model) {
+		
+        int id = point.getId();
+		log.info("point.getId() {}",point.getId());
         ps.updatePoint(point);
+        
+		model.addAttribute("id",id);
+		
+		log.info("point {}",point);
         return "redirect:/admin/point/point";
     }
 	

@@ -99,5 +99,15 @@ public class PointServiceImpl implements PointService {
 		return totalpoint;
 	}
 
+	@Override
+	public Point listpoint1(int id) {
+		Point point = pd.listpoint1(id);
+		log.info("PointImpl listpoint1 Strart...");
+		if(point==null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "포인트id 정보가 존재하지 않습니다");
+		}
+		return point;
+	}
+
 	
 }

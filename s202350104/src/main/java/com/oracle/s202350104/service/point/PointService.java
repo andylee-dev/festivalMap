@@ -19,4 +19,6 @@ public interface PointService {
 	Point  				getPointById(int id);
 
 	int                 totalpoint();
+
+	Point               listpoint1(int id);
 }

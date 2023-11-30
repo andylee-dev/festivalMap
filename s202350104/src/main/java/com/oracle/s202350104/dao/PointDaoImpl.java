@@ -62,4 +62,17 @@ public class PointDaoImpl implements PointDao {
 		return totPointCount;
 	}
 
+	@Override
+	public Point listpoint1(int id) {
+		Point point = new Point();
+		try {
+			point = session.selectOne("listpoint1", id);
+			log.info("point point() point.getId ->" + point.getId());
+					
+		} catch (Exception e) {
+			log.info("accomodationsContent detailaccomodation() ->" + e.getMessage());
+		}
+		return point;
+	}
+
 }
