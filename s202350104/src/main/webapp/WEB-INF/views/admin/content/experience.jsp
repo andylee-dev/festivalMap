@@ -79,7 +79,7 @@
 				            </div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="col-form-label col-1  mx-2">분류</label>
+				            	<label for="searchType" class="col-form-label col-1  mx-2">테마</label>
 									<div class="col-2 d-flex align-items-center">
 										<select name="small_code" class="form-select">
 											<option value="999">전체</option>
