@@ -855,6 +855,23 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return result;
 	}
+	
+	@Override
+	public List<Tags> userPopularTags() {
+		List<Tags> listPopularTags = null;
+		
+		try {
+			
+			listPopularTags = session.selectList("nhUserPopularTags");
+			log.info("TagsDaoImpl listPopularTags() => " + listPopularTags.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listPopularTags() => " + e.getMessage());
+		}
+		
+		return listPopularTags;	
+	}
+
 
 
 	
@@ -885,7 +902,6 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return deleteResult;
 	}
-
 
 
 

@@ -183,7 +183,9 @@ public class UserController {
 			List<Tags> listMyTags = ts.searchUserTagsOne(userId);
 			Tags tags = new Tags();
 			List<Tags> listAllTags = ts.listTags(tags);
+			List<Tags> listPopularTags = ts.userPopularTags();
 
+			model.addAttribute("listPopularTags", listPopularTags);
 			model.addAttribute("listMyTags", listMyTags);
 			model.addAttribute("listAllTags", listAllTags);
 			model.addAttribute("userId", userId);
@@ -414,7 +416,7 @@ public class UserController {
 			if(oneBoardList.size() > 0) {
 				/* small_code & userId 값으로 전체 게시글 count */
 				board.setSmall_code(6); // 분류 code 강제 지정
-				countBoard = boardService.boardCount(board);
+				countBoard = boardService.adminboardCount(board);
 				log.info("userController countReview : {}", countBoard);
 				
 				pageReview = new Paging(countBoard, currentPage);

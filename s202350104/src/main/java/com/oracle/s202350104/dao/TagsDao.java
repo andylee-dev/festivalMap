@@ -46,6 +46,7 @@ public interface TagsDao {
 	List<Tags> searchCourseTagsList(Tags tag);
 	List<Tags> searchUserTagsOne(int userId);
 	int updateUserTags(int userId, int[] finalTags);
+	List<Tags> userPopularTags();
 
 
 

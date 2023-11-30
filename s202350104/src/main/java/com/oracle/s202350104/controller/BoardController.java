@@ -487,6 +487,8 @@ public class BoardController {
 	public String boardUpdate(Board board, int userId, MultipartFile file, Model model) {
 
 		// value 확인용
+		log.info("BoardController boardUpdate getTitle : {}", board.getTitle());
+		log.info("BoardController boardUpdate getContent : {}", board.getContent());
 		log.info("BoardController boardUpdate getFile_name : {}", board.getFile_name());
 		log.info("BoardController boardUpdate getOriginalFilename : {}", file.getOriginalFilename().length());
 
@@ -501,13 +503,14 @@ public class BoardController {
 			log.info("BoardController boardUpdate realName : {}", realName);
 			
 			// DB에 저장 된 파일명 조회
-			board = boardService.boardRead(board.getId());
-
+			Board deleteImageNameFind = boardService.boardRead(board.getId());
+			log.info("BoardController boardUpdate getTitle filePart1 : {}", board.getTitle());
 			// DB에 저장 된 파일명 가져오기
-			fileName = board.getFile_name();
+			fileName = deleteImageNameFind.getFile_name();
 			
 			// 기존 첨부파일 삭제(로컬)
-			fileUploadDeleteUtil.deleteFile(fileName);		
+			fileUploadDeleteUtil.deleteFile(fileName);	
+			log.info("BoardController boardUpdate getTitle filePart2 : {}", board.getTitle());
 			
 			// 파일 값이 있으면 저장
 			if (realName > 0) {
@@ -518,9 +521,11 @@ public class BoardController {
 				fileName = uploadResult[0];
 				pathDB = uploadResult[1];
 				realFileSize = uploadResult[2];
+				log.info("BoardController boardUpdate getTitle filePart3 : {}", board.getTitle());
 
 			} else {
-				log.info("BoardController boardUpdate File Save False! = Null!");
+				log.info("BoardController boardUpdate File errer : {}","저장 할 파일이 없습니다.");
+				log.info("BoardController boardUpdate getTitle filePart4 : {}", board.getTitle());
 			}
 
 		} catch (Exception e) {
@@ -533,7 +538,7 @@ public class BoardController {
 		int updateBoard = 0;
 		// User ID 값이 있어야만 실행
 		board.setUser_id(userId);
-
+		log.info("BoardController boardUpdate getTitle2 : {}", board.getTitle());
 		if (board.getUser_id() > 0) {
 			log.info("BoardController boardUpdate Start!!");
 			log.info("BoardController boardUpdate realName : {}", realName);
@@ -546,9 +551,11 @@ public class BoardController {
 				board.setFile_size(realFileSize);
 
 				updateBoard = boardService.boardUpdate(board);
+				log.info("BoardController boardUpdate getTitle3 : {}", board.getTitle());
 			} else {
 				log.info("BoardController boardUpdate normal Start!!");
 				updateBoard = boardService.boardUpdate(board);
+				log.info("BoardController boardUpdate getTitle4 : {}", board.getTitle());
 			}
 
 			model.addAttribute("board", updateBoard);
