@@ -47,4 +47,6 @@ public interface BoardService {
 
 	List<Board> getReviewOneList(Board board);
 
+	int adminboardCount(Board board);
+
 }

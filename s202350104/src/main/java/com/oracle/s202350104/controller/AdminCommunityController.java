@@ -83,7 +83,7 @@ public class AdminCommunityController {
 		log.info("AdminCommunityController freeBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(3); // 분류 code 강제 지정
-		board.setComment_indent(0);
+		//board.setComment_indent(0);
 		board.setIs_deleted("0");
 		int userId = 1;
 
@@ -134,10 +134,11 @@ public class AdminCommunityController {
 		log.info("AdminCommunityController reviewBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(6); // 분류 code 강제 지정
+		board.setIs_deleted("0");
 		int userId = 1;
 
 		// smallCode를 이용해 countBoard를 설정
-		int countBoard = boardService.boardCount(board);
+		int countBoard = boardService.adminboardCount(board);
 
 		// Paging 작업
 		// Parameter board page 추가

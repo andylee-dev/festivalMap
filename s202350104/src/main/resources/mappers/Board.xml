@@ -9,16 +9,22 @@
 		from board a, users b
 		where a.user_id = b.id
 		and a.small_code = #{small_code}
+		and a.is_deleted = 0
 		and a.comment_indent = 0
-		<if test="is_deleted != null and is_deleted != ''">
-		and a.is_deleted = #{is_deleted}
-		</if>
 		<if test="keyword != null and keyword != ''">
 		and a.title like '%' || #{keyword} || '%'
 		</if>	
 		<if test="user_id != null and user_id != ''">
 		and a.user_id = #{user_id}
 		</if>		
+	</select>
+	
+	<select id="adminboardCount" resultType="int">
+		select count(*)
+		from board a, users b
+		where a.user_id = b.id
+		and a.small_code = #{small_code}
+		and a.is_deleted = 0	
 	</select>
 	
 	<select id="reviewBoardCount" parameterType="Board" resultType="int">
@@ -100,16 +106,16 @@
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 3
-				<if test="is_deleted != null and is_deleted != ''">
-				and a.is_deleted = #{is_deleted}
-				</if>	
+				and a.comment_indent = 0	
+				<if test="is_deleted != null and is_deleted != ''">					
+				and a.is_deleted = 0
+				</if>
 				<if test="status != null and status != ''">
 				and a.status = #{status}
 				</if>
 				<if test="keyword != null and keyword != ''">
 				and a.title like '%' || #{keyword} || '%'
 				</if>
-				and a.comment_indent = 0
 		    ) c
 		)
 		where rn between #{start} and #{end}		

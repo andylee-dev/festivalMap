@@ -46,6 +46,8 @@ public interface BoardDao {
 	int boardRecycle(int id);
 
 	List<Board> getReviewOneList(Board board);
+
+	int adminboardCount(Board board);
 	
 	
 

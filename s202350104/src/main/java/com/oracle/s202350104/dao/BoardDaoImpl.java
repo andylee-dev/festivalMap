@@ -369,4 +369,10 @@ public class BoardDaoImpl implements BoardDao {
 		int recycleBoard = session.update("boardRecycle",id);
 		return recycleBoard;
 	}
+	
+	@Override
+	public int adminboardCount(Board board) {
+		int countAdminBoard = session.selectOne("adminboardCount", board);
+		return countAdminBoard;
+	}
 }

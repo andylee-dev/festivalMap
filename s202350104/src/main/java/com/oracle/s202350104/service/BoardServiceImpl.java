@@ -188,4 +188,10 @@ public class BoardServiceImpl implements BoardService {
 		return recycleBoard;
 	}
 	
+	@Override
+	public int adminboardCount(Board board) {
+		int countAdminBoard = boardDao.adminboardCount(board);
+		return countAdminBoard;
+	}
+	
 }
