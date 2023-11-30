@@ -820,7 +820,7 @@ import lombok.RequiredArgsConstructor;
 				int totalaccomodation = as.admintotalAccomodation();
 
 			
-				Paging page = new Paging(totalaccomodation, currentPage);
+				PagingList page = new PagingList(totalaccomodation, currentPage);
 
 				accomodationContent.setStart(page.getStart());
 				accomodationContent.setEnd(page.getEnd());
@@ -859,7 +859,7 @@ import lombok.RequiredArgsConstructor;
 			String area = request.getParameter("area");
 			String sigungu = request.getParameter("sigungu");
 			
-			Paging page = new Paging(totalSearchaccomodation, currentPage);
+			PagingList page = new PagingList(totalSearchaccomodation, currentPage);
 			
 			accomodationContent.setStart(page.getStart());
 			accomodationContent.setEnd(page.getEnd());

@@ -19,4 +19,6 @@ public interface PointDao {
 	int                 totalpoint();
 
 	Point               listpoint1(int id);
+
+	int                 deletePoint(Integer id);
 }

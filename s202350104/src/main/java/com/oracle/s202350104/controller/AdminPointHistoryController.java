@@ -40,7 +40,7 @@ public class AdminPointHistoryController {
 		int path = 0;
 		int totalpointhistory = phs.totalpointHistory();
 		
-		Paging page = new Paging(totalpointhistory, currentPage);
+		PagingList page = new Paging(totalpointhistory, currentPage);
 		log.info("totalpointhistory{}",totalpointhistory);
 		log.info("currentPage {}",currentPage);
 
@@ -89,7 +89,7 @@ public class AdminPointHistoryController {
 	int path = 0;
 	int totalpointhistory = phs.totalpointHistory();
 	
-	Paging page = new Paging(totalpointhistory, currentPage);
+	PagingList page = new Paging(totalpointhistory, currentPage);
 	log.info("totalpointhistory{}",totalpointhistory);
 	log.info("currentPage {}",currentPage);
 

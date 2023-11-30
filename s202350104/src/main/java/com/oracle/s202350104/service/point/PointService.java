@@ -21,4 +21,6 @@ public interface PointService {
 	int                 totalpoint();
 
 	Point               listpoint1(int id);
+
+	int                deletePoint(Integer id);
 }

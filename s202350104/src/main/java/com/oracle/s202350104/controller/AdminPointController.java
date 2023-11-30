@@ -35,7 +35,7 @@ public class AdminPointController {
 			
 			int totalpoint = ps.totalpoint();
 		
-			Paging page = new Paging(totalpoint, currentPage);
+			PagingList page = new Paging(totalpoint, currentPage);
 
 			point.setStart(page.getStart());
 			point.setEnd(page.getEnd());
@@ -94,6 +94,14 @@ public class AdminPointController {
 	public String writePoint(Point point) {
 	    ps.writePoint(point);
 	    return "redirect:/admin/point/point";
+	}
+	
+	@RequestMapping(value = "/admin/point/deletePoint")
+	public String deletePoint(Integer id, Model model) {
+		
+		ps.deletePoint(id);
+	   
+		return "redirect:/admin/point/point";
 	}
 
 }

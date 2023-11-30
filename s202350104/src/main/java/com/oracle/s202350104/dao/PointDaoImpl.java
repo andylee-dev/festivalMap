@@ -3,7 +3,9 @@ package com.oracle.s202350104.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.model.Point;
 
@@ -73,6 +75,18 @@ public class PointDaoImpl implements PointDao {
 			log.info("accomodationsContent detailaccomodation() ->" + e.getMessage());
 		}
 		return point;
+	}
+
+	@Override
+	public int deletePoint(Integer id) {
+		int result = 0;
+		try {
+			result = session.delete("deletePoint",id);
+		} catch (Exception e) {
+			 log.error("Error deleting point: {}", e.getMessage());
+        }
+		
+		return result;
 	}
 
 }

@@ -41,6 +41,7 @@
 									<th scope="col">포인트점수</th>
 									<th scope="col">생성날짜</th>
 									<th scope="col">수정</th>
+									<th scope="col">삭제</th>
 								</tr>
 							</thead>
 								<c:forEach var="point" items="${listPoint}">
@@ -51,6 +52,7 @@
 									<td>${point.point }</td>
 									<td><fmt:formatDate value="${point.create_at}" pattern="yyyy/MM/dd" /></td>
 									<td><input class="btn btn-primary" type="button" onclick="location.href='updateFormPoint?id=${point.id}'" value="수정"></td>
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제"  onclick="location.href='/admin/point/deletePoint?id=${point.id}'"></td>
 								</tr>
 								</c:forEach>
 						</table>

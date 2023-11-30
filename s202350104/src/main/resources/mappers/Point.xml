@@ -51,5 +51,10 @@
 	ORDER BY id
 	
 	</select>
+	
+	<delete id="deletePoint" parameterType="int">
+		DELETE FROM point
+		WHERE id = #{id} 
+	</delete>
 
 </mapper>
