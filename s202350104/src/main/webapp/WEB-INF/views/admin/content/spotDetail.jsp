@@ -40,12 +40,28 @@
 				}
 			}
 			
-			// 반려 사유 입력 팝업창 띄우기
-			function openPopup() {
-				var url = "rejectionForm?contentId=${spot.content_id}&bigCode=${spot.big_code}";
-				var option = "width=1000, height=800";
-				window.name = "spotDetail";
-				window.open(url, "rejection form popup", option);
+			/* 모달에서 반려 했을 경우 동작하는 핸들러.*/
+			function submitRejectForm() {
+				// Status 0으로 만들기.
+				document.getElementById('statusInput').value = 0;
+				$(".form-input ,.check-duple").prop("disabled", false);
+
+				$('#exampleModal').modal('hide');
+				    
+				const banReason = document.getElementById('message-text').value;
+				const modalTitleText = document.getElementById('modal-title').innerText;
+				$("#ban-title").val(modalTitleText);
+				$("#ban-content").val(banReason);
+				   
+				document.getElementById('update-form').submit();
+			}
+
+			/* 모달에서 승인 했을 경우 동작하는 핸들러.*/
+			function submitAcceptForm() {
+				document.getElementById('statusInput').value = 1;
+				$(".form-input ,.check-duple").prop("disabled", false);
+				alert("승인처리를 했습니다.");
+				document.getElementById('update-form').submit();
 			}
 			
 			function getSigungu(pArea){
@@ -224,7 +240,13 @@
 					</div>
 					<!-- Section2: Table -->
 					<div class="container p-5" id="form-container">
-					<form action="spotUpdate" method="post">
+					<form action="spotUpdate" method="post" id="update-form">
+						<input type="hidden" name="status" id="statusInput" value="${spot.status }">
+						<input type="hidden" name="big_code" value="${spot.big_code }">
+						<input type="hidden" name="small_code" value="${spot.small_code }">
+						<input type="hidden" name="target_id" value="${spot.id }">
+						<input type="hidden" name="title" id="ban-title" >
+						<input type="hidden" name="content" id="ban-content">
 						<div class="mb-3">
 						  <label for="content_id" class="form-label">컨텐츠 ID</label>
 						  <input type="text" class="form-control" id="content_id" value="${spot.content_id} " readonly>
@@ -385,7 +407,7 @@
 		                             		 <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
 		                          		</div>
 		                          		<div class="col-3 mb-3">
-		                              		<button type="button" class="btn btn-outline-secondary w-100" onclick="openPopup()">반려(사유선택)</button>
+		                              		<button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">반려(사유선택)</button>
 		                         		 </div>
 		                         		 <div class="col-3 mb-3">
 		                             		<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot?currentPage=1'">목록</button>
@@ -415,6 +437,26 @@
 			</div>
 		</main>
 		</div>
-	</div>	
+	</div>
+	<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modal-title">반려 전환</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="mb-3">
+            <label class="col-form-label">반려사유</label>
+ 			<textarea class="form-control" id="message-text"></textarea>
+           </div>
+     </div>
+	   <div class="form-row d-flex justify-content-around modal-footer">
+        <button type="button" onclick="submitRejectForm()" class="btn btn-primary col-4">반려</button>
+        <button type="button" class="btn btn-outline-secondary col-4" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>	
 	</body>
 </html>

@@ -177,23 +177,15 @@
 
 		<!-- select 영역 -->
 		<div class="container homeCommon-select-custom">
-			<div class="row g-2 text-center">
-				<div class="col d-flex justify-content-center">
+			<div class="row g-2 text-center" style="float:right;">
+				<div class="col d-flex justify-content-end">
 					<select class="form-select area-dropdown"
 							aria-label="Default select example" name="area">
 					</select>
 				</div>
-				<div class="col d-flex justify-content-center">
+				<div class="col d-flex justify-content-start">
 					<select class="form-select sigungu-dropdown"
 							aria-label="Default select example" name="sigungu">
-					</select>
-				</div>
-				<div class="col d-flex justify-content-center">
-					<select class="form-select" aria-label="Default select example">
-						<option selected>명소 테마</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
 					</select>
 				</div>
 			</div>
