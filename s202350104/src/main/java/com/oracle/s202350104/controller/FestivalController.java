@@ -16,12 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
+import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.TagsService;
@@ -42,6 +44,7 @@ public class FestivalController {
 	private final BoardService boardService;
 	private final BannerService bannerService;
 	private final UserService us;
+	private final CommonCodeService ccs;
 
 	// festival 소개 리스트 페이지로 넘어가는 logic
 	@RequestMapping(value = "festival")
@@ -51,7 +54,7 @@ public class FestivalController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "festival", "start");
 			
-			festival.setIs_deleted("0");	// 삭제X 상태 지정
+			festival.setIs_deleted("0");	// 게시O 상태 지정
 			festival.setStatus("1");		// 승인완료 상태 지정
 			
 			// 검색 조건에 따라 해당 festival의 총 데이터수를 저장
@@ -72,6 +75,12 @@ public class FestivalController {
 			log.info("festival keyword=>"+festival.getKeyword());
 			log.info("festival area=>"+festival.getArea());
 			log.info("festival sigungu=>"+festival.getSigungu());
+			
+			List<CommonCodes> listCodes = ccs.listCommonCode();
+			
+			log.info("listCodes=>"+listCodes.size());
+			
+			model.addAttribute("listCodes", listCodes);
 			
 			/*
 			 * Banner Logic 구간  --> bannerHeader, bannerFooter

@@ -23,6 +23,15 @@
 				});
 			});
 			
+			function reset() {
+				$('#searchType').value = "";
+				$('#keyword').value = "";
+				$('#area').value = "";
+				$('#sigungu').value = "";
+				$('#status').value = "";
+				$('#is_deleted').value = "";
+			}
+			
 		</script>
 	</head>
 	
@@ -47,51 +56,64 @@
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 				               <div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
-						              <option value="s_title" selected>축제명</option>
-									  <option value="s_content">내용</option>
-									  <option value="s_sponsor">주최자</option>
-									  <option value="s_eventplace">장소</option>
+						              <option value="s_title" ${searchType == 's_title'? 'selected':''}>축제명</option>
+									  <option value="s_content" ${searchType == 's_content'? 'selected':''}>내용</option>
+									  <option value="s_sponsor" ${searchType == 's_sponsor'? 'selected':''}>주최자</option>
+									  <option value="s_eventplace" ${searchType == 's_eventplace'? 'selected':''}>장소</option>
 					              </select>
 				                </div>
 				                <div class="col-5 mx-2">
 					                <input type="text" name="keyword" class="form-control" value="${keyword}"
-					                placeholder="검색어를 입력하세요.">
+					                 placeholder="검색어를 입력하세요.">
 				                </div>
 				        </div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-					            <label for="searchType" class="col-form-label col-1  mx-2"></label>
+				            	<label for="searchType" class="col-form-label col-1  mx-2">테마</label>
+				            		<div class="col-2 d-flex align-items-center">
+				            			<select id="searchType" class="form-select" name="small_code">
+											<option value="0" selected>테마 선택</option>
+											<c:forEach var="theme" items="${listCodes}">
+												<c:if test="${theme.big_code == 11 && theme.small_code != 999 }">
+													<option value="${theme.small_code}" ${theme.small_code == small_code? 'selected':''}>${theme.content}</option>
+												</c:if>
+											</c:forEach>
+										</select>
+				            		</div>
+				            	<div class="col-1"></div>
+					            <label for="searchType" class="col-form-label col-1  mx-2">지역</label>
 					            	<div class="col-2 d-flex align-items-center">
-										<select name="area" class="area-dropdown form-select"></select>
+										<select name="area" id="area" class="area-dropdown form-select"></select>
 									</div>
 									<div class="col-2 mx-2 d-flex align-items-center">
-										<select name="sigungu" class="sigungu-dropdown form-select"></select><p>
+										<select name="sigungu" id="sigungu" class="sigungu-dropdown form-select"></select><p>
 									</div>
 							</div>
 							
 							<div class="col-12 my-4 d-flex align-items-center">
-								<label for="searchType" class="col-form-label col-1  mx-2">필터링</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">승인여부</label>
 									<div class="col-2 d-flex align-items-center">
-										<select name = "status" class="form-select">
-											<option value = "" selected>승인여부</option>
-											<option value = "0">승인대기</option>
-											<option value = "1">승인완료</option>
+										<select name="status" id="status" class="form-select">
+											<option value = "" selected>전체</option>
+											<option value = "0" ${status == '0'? 'selected':''}>승인대기</option>
+											<option value = "1" ${status == '1'? 'selected':''}>승인완료</option>
 											<!-- <option>승인반려</option> -->
 										</select>
 									</div>
-									
+								<div class="col-1"></div>
+								<label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
-										<select name="is_deleted" class="form-select">
-											<option value = "" selected>삭제여부</option>
-											<option value = "0">등록</option>
-											<option value = "1">삭제</option>
+										<select name="is_deleted" id="is_deleted" class="form-select">
+											<option value = "" selected>전체</option>
+											<option value = "0" ${is_deleted == '0'? 'selected':''}>Y</option>
+											<option value = "1" ${is_deleted == '1'? 'selected':''}>N</option>
 										</select><p>
 									</div>
 							</div>
 								
 							<div class="container col-10 d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
-								<button type="reset"  class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+								<button type="reset"  class="btn btn-outline-secondary col-2 mx-3" onclick="reset()">초기화</button>
 							</div>
 					</form>
 				</div>		

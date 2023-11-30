@@ -49,6 +49,9 @@
 				</when>
 			</choose>
 		</if>
+		<if test="small_code != 0">
+			AND small_code = #{small_code}
+		</if>
 	</select>
 	
 	<select id="nhFestivalsListAll" resultType="FestivalsContent" parameterType="FestivalsContent">
@@ -114,6 +117,9 @@
 						<![CDATA[ AND start_date > sysdate ]]>
 					</when>
 				</choose>
+			</if>
+			<if test="small_code != 0">
+				AND small_code = #{small_code}
 			</if>
 			 ) t
 		)

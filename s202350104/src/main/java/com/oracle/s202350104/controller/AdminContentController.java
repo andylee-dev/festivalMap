@@ -79,9 +79,21 @@ import lombok.RequiredArgsConstructor;
 				// 조건에 맞는 festival의 list를 가져옴
 				List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 				
+				// 공통코드 list를 가져옴
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				
+				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("totalFestivals", totalFestivals);
 				model.addAttribute("listFestivals", listFestivals);
 				model.addAttribute("page", page);
+				model.addAttribute("searchType", festival.getSearchType());
+				model.addAttribute("keyword", festival.getKeyword());
+				model.addAttribute("area", festival.getArea());
+				model.addAttribute("sigungu", festival.getSigungu());
+				model.addAttribute("status", festival.getStatus());
+				model.addAttribute("is_deleted", festival.getIs_deleted());
+				model.addAttribute("small_code", festival.getSmall_code());
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin festival", e.getMessage());
 			} finally {

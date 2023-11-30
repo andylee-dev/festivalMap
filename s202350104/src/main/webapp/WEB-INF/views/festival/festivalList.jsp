@@ -127,11 +127,13 @@
 				</div>
 				<div class="col d-flex justify-content-center">
 					<select class="form-select" 
-							aria-label="Default select example">
-						<option selected>진행 기간 선택</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+							aria-label="Default select example" name="small_code">
+						<option value="0" selected>테마 선택</option>
+						<c:forEach var="theme" items="${listCodes}">
+							<c:if test="${theme.big_code == 11 && theme.small_code != 999 }">
+								<option value="${theme.small_code}" ${theme.small_code == small_code? 'selected':''}>${theme.content}</option>
+							</c:if>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="col d-flex justify-content-center">
