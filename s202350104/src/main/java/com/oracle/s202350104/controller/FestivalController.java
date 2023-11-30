@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Banner;
@@ -25,6 +26,7 @@ import com.oracle.s202350104.service.FestivalsService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
+import com.oracle.s202350104.utils.FileUploadDeleteUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -229,7 +231,7 @@ public class FestivalController {
 	// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "festival/insert")
-	public String festivalInsert(FestivalsContent festival, Model model) {
+	public String festivalInsert(FestivalsContent festival, Model model, MultipartFile file, MultipartFile file1, MultipartFile file2) {
 		UUID transactionId = UUID.randomUUID();
 		String str = "";
 				
@@ -240,6 +242,41 @@ public class FestivalController {
 //			String userId = String.valueOf(user_id);
 //			festival.setUser_id(userId);
 					
+			String pathDB = null;
+			String fileName = null;
+			String pathDB1 = null;
+			String fileName1 = null;
+			String pathDB2 = null;
+			String fileName2 = null;
+			
+			
+			FileUploadDeleteUtil fileUpload = new FileUploadDeleteUtil();
+			
+			try {
+				log.info("experienceimgupload File Start!!");
+				String[] uploadResult = fileUpload.uploadFile(file);
+				fileName = uploadResult[0];
+				pathDB = uploadResult[1];
+				String[] uploadResult1 = fileUpload.uploadFile(file1);
+				fileName1 = uploadResult1[0];
+				pathDB1 = uploadResult1[1];
+				String[] uploadResult2 = fileUpload.uploadFile(file2);
+				fileName2 = uploadResult2[0];
+				pathDB2 = uploadResult2[1];
+				log.info("experienceimgupload fileName : {}", fileName);
+				log.info("experienceimgupload pathDB : {}", pathDB);
+
+			} catch (Exception e) {
+				log.error("experienceimgupload File upload error : {}", e.getMessage());
+			} finally {
+				log.info("experienceimgupload integratedboardInsert File End..");
+			}
+			
+			festival.setImg1(pathDB+fileName);
+			festival.setImg2(pathDB1+fileName1);
+			festival.setImg3(pathDB2+fileName2);
+			
+			
 			// festival을 insert한 결과를 result에 저장
 			int result = fs.insertFestival(festival);
 			log.info("Controller festivalInsert result => "+result);

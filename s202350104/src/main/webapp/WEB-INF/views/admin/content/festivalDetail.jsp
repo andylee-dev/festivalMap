@@ -201,13 +201,10 @@
 								<label for="period" class="form-label">축제기간</label>
 									<div class="row">
 										<div class="col-3">
-											<input type="date" class="form-control" id="start_date" value="${festival.startdateStr}">
+											<input type="date" class="form-control" id="start_date" value="${festival.start_date}">
 										</div>
 										<div class="col-3">
-											~ <input type="date" class="form-control" id="start_date" value="${festival.enddateStr}">
-										</div>
-										<div class="col-1 ml-50">
-											<input type="text" class="form-control" id="period" value="${festival.enddateStr - festival.startdateStr}">일
+											<input type="date" class="form-control" id="end_date" value="${festival.end_date}">
 										</div>
 									</div>
 							</div>

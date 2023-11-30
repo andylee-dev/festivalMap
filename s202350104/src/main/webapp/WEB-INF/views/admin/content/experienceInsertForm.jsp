@@ -133,7 +133,7 @@
 			<div class="admin-header-container">
 				<div class="container m-4">
 					<i class="title-bi bi bi-pencil-square "></i>
-				<label  class="admin-header-title ">축제 정보 등록 </label>	
+				<label  class="admin-header-title ">체험 정보 등록 </label>	
 				</div>
 			</div>
 				

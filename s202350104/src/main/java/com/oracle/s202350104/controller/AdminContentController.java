@@ -133,6 +133,10 @@ import lombok.RequiredArgsConstructor;
 				// 축제 중분류를 선택할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				
+				Tags tags = new Tags();
+				List<Tags> listAllTags = ts.listTags(tags);
+				model.addAttribute("listAllTags", listAllTags);
+				
 				model.addAttribute("listCodes", listCodes);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin festivalInsertForm", e.getMessage());
@@ -154,7 +158,9 @@ import lombok.RequiredArgsConstructor;
 				FestivalsContent festival = fs.detailFestivals(contentId);
 				// 소분류를 수정할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
-
+				Tags tags = new Tags();
+				List<Tags> listAllTags = ts.listTags(tags);
+				model.addAttribute("listAllTags", listAllTags);
 //				// 시작일 보여주기 위해 형식 변환
 //				String startdate = "";
 //				if(festival.getStart_date() != null) {

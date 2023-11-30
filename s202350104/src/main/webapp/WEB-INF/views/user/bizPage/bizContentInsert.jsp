@@ -126,19 +126,21 @@
 		function submitFestival() {
 			event.preventDefault();
 			
-			var insertFormData = $('#festivalInsertForm').serializeArray();
+			var formData = new FormData($('#festivalInsertForm')[0]);
 			var finalTags = [];
 			for(var i = 0; i < selectedTags.length; i++) {
 				finalTags.push(Number(selectedTags[i].id));
 			}
-			insertFormData.push({name: 'finalTags', value: finalTags});
+			formData.append('finalTags', finalTags);
 			
 			if(confirm("등록하시겠습니까?")) {
 				$.ajax({
 					url: "<%=request.getContextPath()%>/festival/insert",
 					method: "POST",
-					data: insertFormData,
+					data: formData,
 					dataType: "text",
+					contentType: false,
+		            processData: false,
 					success: function(str) {
 						alert(str);
 						location.href="<%=request.getContextPath()%>/user/bizPage/content";
@@ -296,7 +298,7 @@
 							<div class="my-5">
 							<div class="" id="detail-main-container">
 								<div class="container p-5" id="form-container">
-			  						<form id="festivalInsertForm" action="<%=request.getContextPath()%>/bizFestivalInsert" 
+			  						<form id="festivalInsertForm" action="<%=request.getContextPath()%>/festival/insert" 
 			  						 method="post" enctype="multipart/form-data">
 										<input type="hidden" name="user_id" value="${userId}">
 										<input type="hidden" name="big_code" value="11">
@@ -384,9 +386,6 @@
 											<input type="text" class="form-control" id="cost" value="${festival.cost}">
 										</div>
 										<div class="mb-3">
-											<label for="images" class="form-label">이미지 등록</label>
-										</div>
-										<div class="mb-3">
 											<label for="facilities" class="form-label">부대/편의 시설</label>
 											<div class="col-12 d-flex justify-content-between">
 										  		<div class="col-3 form-check">
@@ -421,7 +420,25 @@
 													</datalist>
 											</div>
 											<div class="tags-container my-tags"><!-- 태그 badge가 들어갈 곳 --></div>
-										</div>			
+										</div>
+										<div class="mb-3 mt-3">
+										    <div class="row p-0 insert_row2_custom">
+										        <div class="form-group col">
+										            <label class="lable2" for="file">첫번째 이미지</label>
+										            <input type="file" class="form-control" name="file">
+										        </div>
+										        
+										        <div class="form-group col">
+										            <label class="lable2" for="file1">두번째 이미지</label>
+										            <input type="file" class="form-control" name="file1">
+										        </div>
+										        
+										        <div class="form-group col">
+										            <label class="lable2" for="file2">세번째 이미지</label>
+										            <input type="file" class="form-control" name="file2">
+										        </div>
+										    </div>
+										</div>				
 										<div align="center">
 											<button type="submit" class="btn btn-outline-secondary" onclick="submitFestival()">등록</button>
 											<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
