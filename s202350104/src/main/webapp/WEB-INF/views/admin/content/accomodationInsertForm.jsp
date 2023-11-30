@@ -255,7 +255,7 @@
 								<label class="form-check-label" for="is_parking">주차가능</label>
 							</div>
 						</div>
-						
+						<!-- 카카오맵을 통해 좌표 받기위한 로직 -->
 						<div id="map"></div>
 						<input type="hidden" name="mapx" id="mapx_input" value="${accomodation.mapx }">
   						<input type="hidden" name="mapy" id="mapy_input" value="${accomodation.mapy }">
@@ -276,7 +276,7 @@
 	                        </div>
 	                                        
 						</div>
-						
+						<!-- 카카오맵을 통해 좌표 받기위한 로직 -->
 						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274&libraries=services"></script>
 						<script>
 						
