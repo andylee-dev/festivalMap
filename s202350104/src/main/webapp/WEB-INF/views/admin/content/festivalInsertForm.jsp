@@ -366,9 +366,6 @@
 											<input type="text" class="form-control" id="cost" value="${festival.cost}">
 										</div>
 										<div class="mb-3">
-											<label for="images" class="form-label">이미지 등록</label>
-										</div>
-										<div class="mb-3">
 											<label for="facilities" class="form-label">부대/편의 시설</label>
 											<div class="col-12 d-flex justify-content-between">
 										  		<div class="col-3 form-check">
@@ -405,6 +402,7 @@
 											<div class="tags-container my-tags"><!-- 태그 badge가 들어갈 곳 --></div>
 										</div>
 										<div class="mb-3 mt-3">
+											<label for="file" class="form-label">이미지 등록</label>
 										    <div class="row p-0 insert_row2_custom">
 										        <div class="form-group col">
 										            <label class="lable2" for="file">첫번째 이미지</label>

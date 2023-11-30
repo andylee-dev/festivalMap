@@ -183,7 +183,9 @@ public class UserController {
 			List<Tags> listMyTags = ts.searchUserTagsOne(userId);
 			Tags tags = new Tags();
 			List<Tags> listAllTags = ts.listTags(tags);
+			List<Tags> listPopularTags = ts.userPopularTags();
 
+			model.addAttribute("listPopularTags", listPopularTags);
 			model.addAttribute("listMyTags", listMyTags);
 			model.addAttribute("listAllTags", listAllTags);
 			model.addAttribute("userId", userId);
