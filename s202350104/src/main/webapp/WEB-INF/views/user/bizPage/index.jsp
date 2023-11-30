@@ -501,8 +501,6 @@ h4 {
 												value="${user.address}" name="address">
 											<p class="helptext text-start"></p>
 										</div>
-										<button class="btn btn-primary col-sm-1 mx-3"
-											onclick="event.preventDefault();">주소찾기</button>
 									</div>
 									<div class="container  justify-content-start my-5">
 										<button type="submit" class="btn btn-primary col-sm-4 mx-3"

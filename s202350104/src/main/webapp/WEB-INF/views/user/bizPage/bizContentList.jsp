@@ -50,9 +50,9 @@ h2 {
 										<th scope="col">번호</th>
 										<th scope="col">제목</th>
 										<th scope="col">유형</th>
-										<th scope="col">도/시</th>
+<!-- 										<th scope="col">도/시</th>
 										<th scope="col">시/군/구</th>
-										<th scope="col">상태</th>
+ -->										<th scope="col">상태</th>
 										<th scope="col">조회수</th>
 										<th scope="col">생성일</th>
 										<th scope="col">관리</th>
@@ -76,9 +76,9 @@ h2 {
 											
 											
 											</td>
-											<td>${contents.area}</td>
+<%-- 											<td>${contents.area}</td>
 											<td>${contents.sigungu}</td>
-											<td>${contents.status==1?"승인":"미승인"}</td>
+ --%>											<td>${contents.status==1?"승인":"미승인"}</td>
 											<td>${contents.readcount}</td>
 											<td><fmt:formatDate value="${contents.created_at}" type="date" pattern="YY/MM/dd"/></td>
 											<td><a class="detail-btn" href="/user/bizPage/contentDetail/${contents.id}?currentPage=${page.currentPage}&big_code=${contents.big_code}">관리</a></td>
