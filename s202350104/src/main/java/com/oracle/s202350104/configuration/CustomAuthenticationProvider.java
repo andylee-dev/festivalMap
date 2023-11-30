@@ -37,8 +37,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			log.info("[{}]{}:{}",transactionId, "AuthenticationProvider", "start");
 	        username = authentication.getName();
 	        password = authentication.getCredentials().toString();
-	
-	        Optional<Users> user = userService.getUserById(Integer.parseInt(username));
+	        log.info("username:{}",username);
+	        Optional<Users> user = userService.getUserByEmail(username);
+	        log.info("user:{}",user);
+//	        Optional<Users> user = userService.getUserById(Integer.parseInt(username));
 	        if (user == null) {
 	            throw new BadCredentialsException("username is not found. username=" + username);
 	        }

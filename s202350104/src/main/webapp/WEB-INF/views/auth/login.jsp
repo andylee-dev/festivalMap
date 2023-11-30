@@ -81,8 +81,8 @@
 				<form action="/auth" method="post">
 					<div class="mt-5 mb-5">
 						<div class="justify-content-start pt-5 pb-3">
-							<label for="email" class="form-label mb-2">이메일</label>
-							<input type="text" class="form-control" name="username"
+							<label for="username" class="form-label mb-2">이메일</label>
+							<input type="email" class="form-control" name="username"
 								placeholder="festimap@festimap.com">						
 						</div>
 						<div class="justify-content-start pb-3">

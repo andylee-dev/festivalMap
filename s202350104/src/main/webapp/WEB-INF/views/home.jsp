@@ -555,7 +555,7 @@ function addMarker(position, idx, title) {
 			<div class="row row-cols-2  home-pickMd-box-custom">
 				<c:forEach var="magazine" items="${magazineList}" varStatus="st">
 					<div class="card col home-pick-card">
-						<img class="card-img-top" src="${magazine.file_path }${magazine.file_name }" alt="PickImage">
+						<img class="card-img-top" src="${magazine.file_path}${magazine.file_name}" alt="PickImage">
 						<div class="card-body">
 							<p class="card-text">${magazine.title}</p>
 							<p class="card-text text-custom" style="">${ magazine.content }</p>
