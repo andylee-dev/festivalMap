@@ -176,9 +176,9 @@
 .chucheon-card 
 .chucheon-card-se img {
 	/* 	border: 1px solid #c0c0c0; */
-	width: 200px;
 	height: 180px;
 	margin-top: 10px;
+	object-fit: cover;
 }
 
 /* MAP css */

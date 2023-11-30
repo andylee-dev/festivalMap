@@ -102,7 +102,7 @@ String apiKey = map.getApiKey();
 					dataSet=data;
 			        // 데이터를 100개 단위로 나누어 처리
 			        const chunkSize = 50;
-			        for (let i = 0; i < data.length; i += chunkSize) {
+			        for (let i = 0; i < data.length/2; i += chunkSize) {
 			            const chunk = data.slice(i, i + chunkSize);
 			            displayPlaces2(chunk);
 			        }
@@ -142,11 +142,11 @@ String apiKey = map.getApiKey();
 					continue;
 				const placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx);
 				
-			    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
-			    const imageSize = new kakao.maps.Size(36, 37);
+			    const imageSrc = "asset/3355_icon_map_pin-27.png";
+			    const imageSize = new kakao.maps.Size(36, 50);
 			    const imgOptions = {
-			        spriteSize: new kakao.maps.Size(36, 691),
-			        spriteOrigin: new kakao.maps.Point(0, 0 * 46 + 10),
+			        spriteSize: new kakao.maps.Size(36, 50),
+			        spriteOrigin: new kakao.maps.Point(0, 0),
 			        offset: new kakao.maps.Point(13, 37),
 			    };
 			    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
@@ -158,14 +158,14 @@ String apiKey = map.getApiKey();
 			    bounds.extend(placePosition)
  				itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 			    (function(marker, place) {
-				kakao.maps.event.addListener(marker, "mouseover", function() {
+/* 				kakao.maps.event.addListener(marker, "mouseover", function() {
 					displayInfowindow(marker, place);
 				});
-
-				kakao.maps.event.addListener(marker, "mouseout", function() {
+ */
+/* 				kakao.maps.event.addListener(marker, "mouseout", function() {
 					infowindow.close();
 				});
-				// 마커 클릭 이벤트 처리
+ */				// 마커 클릭 이벤트 처리
 				kakao.maps.event.addListener(marker, "click", function() {
 					// 클릭한 마커의 위치로 지도 확대
 					bound = new kakao.maps.LatLngBounds();
@@ -204,86 +204,6 @@ String apiKey = map.getApiKey();
 		}
 
 	}
-	/*  function displayPlaces(places) {
-		const listEl = document.getElementById("placesList"), menuEl = document
-				.getElementById("menu_wrap"), fragment = document
-				.createDocumentFragment(), bounds = new kakao.maps.LatLngBounds(), listStr = "";
-
-		// 검색 결과 목록에 추가된 항목들을 제거합니다
-		removeAllChildNods(listEl);
-
-		// 지도에 표시되고 있는 마커를 제거합니다
-		clusterer.removeMarkers(markers);
-
-		// 지도에 표시되고 있는 마커를 제거합니다
-		removeMarker();
-
-		for (var i = 0; i < places.length; i++) {
-			// 마커를 생성하고 지도에 표시합니다
-			if (!places[i].mapy || !places[i].mapx || !places[i].img1)
-				continue;
-			const placePosition = new kakao.maps.LatLng(places[i].mapy,
-					places[i].mapx);
-
-			const marker = addMarker(placePosition, i);
-			console.log("marker:" + marker);
-
-			itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-			// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-			// LatLngBounds 객체에 좌표를 추가합니다
-			 bounds.extend(placePosition);
-
-			// 마커와 검색결과 항목에 mouseover 했을때
-			// 해당 장소에 인포윈도우에 장소명을 표시합니다
-			// mouseout 했을 때는 인포윈도우를 닫습니다
- 			 (function(marker, title) {
-				kakao.maps.event.addListener(marker, "mouseover", function() {
-					displayInfowindow(marker, title);
-				});
-
-				kakao.maps.event.addListener(marker, "mouseout", function() {
-					infowindow.close();
-				});
-				// 마커 클릭 이벤트 처리
-				kakao.maps.event.addListener(marker, "click", function() {
-					// 클릭한 마커의 위치로 지도 확대
-					bound = new kakao.maps.LatLngBounds();
-					bound.extend(marker.getPosition());
-					map.setBounds(bound);
-					map.setCenter(marker.getPosition());
-				});
-
-				itemEl.onmouseover = function() {
-					displayInfowindow(marker, title);
-					map.setCenter(marker.getPosition());
-				};
-
-				itemEl.onmouseout = function() {
-					infowindow.close();
-				};
-
-				itemEl.onclick = function() {
-					bound = new kakao.maps.LatLngBounds();
-					bound.extend(marker.getPosition());
-					map.setBounds(bound);
-					map.setCenter(marker.getPosition());
-				};
-			})(marker, places[i].title); 
-			fragment.appendChild(itemEl);
-			 
-		}
- 		 clusterer.addMarkers(markers);
-
-		// 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-		listEl.appendChild(fragment);
-		menuEl.scrollTop = 0;
-
-		// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-		 map.setBounds(bounds);
-		return markers
-	}
-	*/
 	// 검색결과 항목을 Element로 반환하는 함수입니다
 	function getListItem(index, place) {
 		// 카드 요소 생성
@@ -348,11 +268,11 @@ String apiKey = map.getApiKey();
 
 // 마커를 생성하고 지도 위에 표시하는 함수
 function addMarker(position, idx, title) {
-    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
-    const imageSize = new kakao.maps.Size(36, 37);
+    const imageSrc = "asset/3355_icon_map_pin-27.png";
+    const imageSize = new kakao.maps.Size(36, 50);
     const imgOptions = {
-        spriteSize: new kakao.maps.Size(36, 691),
-        spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10),
+        spriteSize: new kakao.maps.Size(36, 50),
+        spriteOrigin: new kakao.maps.Point(0, 0),
         offset: new kakao.maps.Point(13, 37),
     };
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
@@ -633,42 +553,21 @@ function addMarker(position, idx, title) {
 			</div>
 
 			<div class="row row-cols-2  home-pickMd-box-custom">
-				<div class="card col home-pick-card">
-					<img class="card-img-top" src="../image/mdpick.png" alt="PickImage">
-					<div class="card-body">
-						<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-						<p class="card-text text-custom" style="">이제 가을 축제의 스테디 셀러로
-							자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해 에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수
-							있었던 핑크뮬리지만, 인기몰이 덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-					</div>
-				</div>
-				<div class="card col home-pick-card">
-					<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-					<div class="card-body">
-						<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-						<p class="card-text text-custom">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글
-							바로 그 갈대! 핑크뮬리가 올 해 에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만,
-							인기몰이 덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-					</div>
-				</div>
-				<div class="card col home-pick-card">
-					<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-					<div class="card-body">
-						<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-						<p class="card-text text-custom">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글
-							바로 그 갈대! 핑크뮬리가 올 해 에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만,
-							인기몰이 덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-					</div>
-				</div>
-				<div class="card col home-pick-card">
-					<img src="../image/mdpick.png" class="card-img-top" alt="PickImage">
-					<div class="card-body">
-						<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
-						<p class="card-text text-custom">이제 가을 축제의 스테디 셀러로 자리매김한 퐁실 몽글
-							바로 그 갈대! 핑크뮬리가 올 해 에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수 있었던 핑크뮬리지만,
-							인기몰이 덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
-					</div>
-				</div>
+				<c:forEach var="magazine" items="${magazineList}" varStatus="st">
+					<div class="card col home-pick-card">
+						<img class="card-img-top" src="${magazine.file_path }${magazine.file_name }" alt="PickImage">
+						<div class="card-body">
+							<p class="card-text">${magazine.title}</p>
+							<p class="card-text text-custom" style="">${ magazine.content }</p>
+
+<!-- 							<p class="card-text">인스타 감성샷 필수코스! 핑크뮬리의 계절이 돌아왔다!</p>
+							<p class="card-text text-custom" style="">이제 가을 축제의 스테디 셀러로
+								자리매김한 퐁실 몽글 바로 그 갈대! 핑크뮬리가 올 해 에도 한 가득 피었어요. 한 때에는 특정 지역에서만 볼 수
+								있었던 핑크뮬리지만, 인기몰이 덕분에 이제는 다양한 지역에서도 찾아볼 수 있게 되었는데요, 이 곳 휴애리...</p>
+ -->
+						</div>
+					</div>				
+				</c:forEach>
 			</div>
 		</div>
 
@@ -690,7 +589,7 @@ function addMarker(position, idx, title) {
 						<span>나의&nbsp;축제&nbsp;취향&nbsp;?!</span>
 					</div>
 					<div class="col chucheon-card-se">
-						<img alt="..." src="../image/chucheon_icon.png"
+						<img alt="..." src="asset/banner_mini_01.png"
 							onclick="openPopup()">
 					</div>
 
@@ -702,7 +601,7 @@ function addMarker(position, idx, title) {
 					</div>
 					<div class="col chucheon-card-se">
 						<a class="dropdown-item" href="/festival/recommend"> <img
-							alt="..." src="../image/chucheon_icon.png"></a>
+							alt="..." src="asset/banner_mini_02.png"></a>
 					</div>
 
 				</div>
@@ -712,7 +611,7 @@ function addMarker(position, idx, title) {
 						<span>전국&nbsp;축제&nbsp;달력</span>
 					</div>
 					<div class="col chucheon-card-se">
-						<img alt="..." src="../image/chucheon_icon.png"
+						<img alt="..." src="asset/banner_mini_03.png"
 							onclick="openPopUp()">
 					</div>
 				</div>
