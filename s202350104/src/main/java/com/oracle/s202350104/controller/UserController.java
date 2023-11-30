@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,26 +29,38 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oracle.s202350104.model.AccomodationContent;
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Contents;
+import com.oracle.s202350104.model.ExperienceContent;
 import com.oracle.s202350104.model.FestivalsContent;
 import com.oracle.s202350104.model.PointHistory;
 import com.oracle.s202350104.model.Qna;
+import com.oracle.s202350104.model.RestaurantsContent;
+import com.oracle.s202350104.model.SpotContent;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.model.Favorite;
+import com.oracle.s202350104.service.AccomodationService;
+import com.oracle.s202350104.service.AreaService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ContentSerivce;
+import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.PointHistoryService;
 import com.oracle.s202350104.service.QnaListService;
+import com.oracle.s202350104.service.RestaurantService;
+import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
 import com.oracle.s202350104.service.user.oAuthService;
 import com.oracle.s202350104.service.FavoriteService;
+import com.oracle.s202350104.service.FestivalsService;
+import com.oracle.s202350104.service.HistoryService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +79,16 @@ public class UserController {
 	private final BoardService boardService;
 	private final PointHistoryService pointHistoryService;
 	private final ContentSerivce contentService;
-
+	
+	private final FestivalsService festivalService;
+	private final ExperienceService es;
+	private final SpotService ss;
+	private final RestaurantService rs;
+	private final AccomodationService as;
+	private final AreaService ars;
+	private final HistoryService hs;
+	
+	
 	@RequestMapping(value = "user")
 	public String userList() {
 		return "user";
@@ -221,6 +243,83 @@ public class UserController {
 		return "user/bizPage/index";
 	}
 
+	@RequestMapping(value = "bizPage/contentDetail/{contentId}")
+	public String bizContentDetail(@PathVariable("contentId") int contentId,String currentPage, int big_code, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		try {
+			log.info("[{}]{}:{}", transactionId, "bizPage", "Start");
+			log.info("big_code:{}",big_code);
+			switch (big_code) {
+			case 11:
+				// festival 상세 정보를 담을 인스턴스 생성하여 값을 저장
+				FestivalsContent festival = festivalService.detailFestivals(contentId);
+				
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("festival", festival);
+				break;
+			case 12:
+				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
+				model.addAttribute("restaurant", restaurant);
+				model.addAttribute("listSmallCode", listSmallCode);
+				model.addAttribute("currentPage", currentPage);
+
+				break;
+			case 13:
+				AccomodationContent accomodation = as.detailAccomodation(contentId);
+				List<AccomodationContent> listSmallCode13  = as.listSmallCode(accomodation);
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(accomodation.getArea());
+				
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("accomodation", accomodation);
+				model.addAttribute("listSmallCode", listSmallCode13);
+				model.addAttribute("listAreas" , listAreas);
+				model.addAttribute("listSigungu", listSigungu);
+
+				break;
+			case 14:
+				SpotContent spot = ss.detailSpot(contentId);
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas14 = ars.listAreas();
+				List<Areas> listSigungu14 = ars.listSigungu(spot.getArea());
+				
+				model.addAttribute("listSigungu",listSigungu14);
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas14);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("spot", spot);
+
+				break;
+			case 15:
+				ExperienceContent experience = es.detailExperience(contentId);
+				List<ExperienceContent> listSmallCode15  = es.listSmallCode(experience);
+				List<Areas> listAreas15 = ars.listAreas();
+				List<Areas> listSigungu15 = ars.listSigungu(experience.getArea());
+				
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("experience", experience);
+				model.addAttribute("listSmallCode", listSmallCode15);
+				model.addAttribute("listAreas" , listAreas15);
+				model.addAttribute("listSigungu", listSigungu15);
+				break;
+
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "bizPage", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "bizPage", "End");
+		}
+		return "user/bizPage/bizContentDetail";
+	}
+
+	
 	@RequestMapping(value = "bizPage/content")
 	public String bizContent(Model model, Contents content, String currentPage) {
 		UUID transactionId = UUID.randomUUID();

@@ -66,14 +66,24 @@ h2 {
 										
 											<td id="contentId">${contents.id}</td>
 											<td>${contents.title}</td>
-											<td>${contents.big_code}</td>
+											<td>
+											
+												${contents.big_code==11?"축제":
+												(contents.big_code==12?"맛집":
+												(contents.big_code==13?"축제":
+												(contents.big_code==14?"명소":
+												(contents.big_code==15?"체험":"N"))))
+												}
+											
+											
+											</td>
 											<td>${contents.small_code}</td>
 											<td>${contents.area}</td>
 											<td>${contents.sigungu}</td>
 											<td>${contents.status}</td>
 											<td>${contents.readcount}</td>
 											<td><fmt:formatDate value="${contents.created_at}" type="date" pattern="YY/MM/dd"/></td>
-											<td><a class="detail-btn" href="userDetail/${user.id}?currentPage=${page.currentPage}">관리</a></td>
+											<td><a class="detail-btn" href="/user/bizPage/contentDetail/${contents.id}?currentPage=${page.currentPage}&big_code=${contents.big_code}">관리</a></td>
 										</tr>
 										<c:set var="num" value="${num + 1}"/>
 									</c:forEach>
@@ -82,7 +92,7 @@ h2 {
 							</div>
 						</div>
 					</div>
-					<nav aria-label="Page navigation example ">
+<%-- 					<nav aria-label="Page navigation example ">
 						<ul class="pagination">
 					    	<c:if test="${page.startPage > page.pageBlock}">
 							    <li class="page-item">
@@ -100,7 +110,7 @@ h2 {
 						    	</li>
 						    </c:if>
 						</ul>
-					</nav>
+					</nav> --%>
 			</div>
 		</div>
 	</div>
