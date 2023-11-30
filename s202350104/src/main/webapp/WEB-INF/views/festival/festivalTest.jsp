@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>FestivalRecommed</title>
+<link rel="stylesheet" type="text/css" href="/css/mbtiCss.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 	//json데이터 불러오기
 	let mbtiSet = {};
@@ -74,7 +77,10 @@
 	
 	function showResult() {
 	  const mbtiResultValue = calculateMBTI();
-	  alert('당신의 MBTI 유형은' + mbtiResultValue+'입니다.');
+	  swal({
+          title: '당신의 MBTI 유형은' + mbtiResultValue+'입니다.',
+          icon: "info"
+      })
 	}
 	
 	function calculateMBTI() {
@@ -91,31 +97,29 @@
 
 </head>
 <body>
-	<div class="container-fluid" >
-		<div class="container">
-			<h1 class="title fs-5">나에게 맞는 축제</h1>
-		</div>
+	<div class="container-fluid">
+		<img class="mbti-img-box" alt="..." src="../image/test.png">
+		<h5 class="card-title mbti-title" id="question"><strong>문제</strong></h5>
 		<div class="card text-bg-dark">
 
-			<div class="progress" role="progressbar" aria-label="Warning example"
+<%-- 			<div class="progress" role="progressbar" aria-label="Warning example"
 				aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
 				<div class="progress-bar text-bg-warning" style="width: ${1/12}%"></div>
+			</div> --%>
+		
+<!-- 			<img src="https://images.unsplash.com/photo-1468234560893-89c00b6385c8?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+				 id="questionImage" class="card-img" alt="..."> -->
+			
+<!-- 			<div class="card-img-overlay">
+				카드 안에 내용을 넣고 싶을때,
 			</div>
-
-			<h5 class="card-title" id="question">문제</h5>
-			<img
-				src="https://images.unsplash.com/photo-1468234560893-89c00b6385c8?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-				id="questionImage" class="card-img" alt="...">
-			<div class="card-img-overlay">
-				<!-- 카드 안에 내용을 넣고 싶을때, -->
-			</div>
-			<div class="flex justify-content-center"></div>
+			
+			<div class="flex justify-content-center"></div> -->
 		</div>
-				<button type="button" class="optionBtn btn" onclick="selectOption(event)">선택1</button>
-				<button type="button" class="optionBtn btn" onclick="selectOption(event)">선택2</button>
-		</div>
-
-
+		
+		<button type="button" class="optionBtn btn mbti-btn1" onclick="selectOption(event)">선택1</button>
+		<button type="button" class="optionBtn btn mbti-btn2" onclick="selectOption(event)">선택2</button>
+	</div>
 </body>
 </html>
 
