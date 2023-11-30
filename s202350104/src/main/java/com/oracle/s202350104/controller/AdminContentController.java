@@ -551,7 +551,7 @@ import lombok.RequiredArgsConstructor;
 		
 		
 		@RequestMapping(value = "restaurantUpdate")
-		public String restaurantUpdate(RestaurantsContent restaurant, Model model) {
+		public String restaurantUpdate(RestaurantsContent restaurant, Model model, String currentPage) {
 			UUID transactionId = UUID.randomUUID();
 			int id = 0;
 			
@@ -565,6 +565,8 @@ import lombok.RequiredArgsConstructor;
 				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 				
 				model.addAttribute("listSmallCode", listSmallCode);
+				model.addAttribute("id", id);
+				model.addAttribute("currentPage", currentPage);
 			
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );
@@ -573,8 +575,8 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate", "end" );
 			} 
 			
-			return "forward:restaurantDetail?contentId="+id;
-			// return "redirect:restaurant"; /admin/content/
+			return "forward:/admin/content/restaurant";
+			// "forward:/admin/content/restaurantDetail?contentId="+id;
 		}
 		
 		

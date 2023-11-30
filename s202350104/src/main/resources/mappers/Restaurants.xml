@@ -233,7 +233,7 @@
 	<update id="joUpdateRestaurant" parameterType="RestaurantsContent">
 		UPDATE	restaurants 
 		SET    	first_menu=#{first_menu}, menu=#{menu}, open_time=#{open_time}, rest_date=#{rest_date}, is_smoking=#{is_smoking}, is_packing=#{is_packing}, is_parking=#{is_parking} 
-		WHERE  	content_id=#{content_id}
+		WHERE  	content_id=#{id}
 	</update>
 		
 	
@@ -244,9 +244,12 @@
 	</insert>
 		
 	<update id="joUpdateContent" parameterType="RestaurantsContent">
-		UPDATE	contents
-		SET		small_code=#{small_code}, area=#{area}, sigungu=#{sigungu}, title=#{title}, address=#{address}, postcode=#{postcode}, phone=#{phone}, content=#{content}, img1=#{img1}, img2=#{img2}, img3=#{img3}  
-		WHERE  	id=#{content_id}
+		UPDATE contents 
+		SET  area=#{area}, sigungu=#{sigungu},small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{id}
 	</update>
 	
 	
