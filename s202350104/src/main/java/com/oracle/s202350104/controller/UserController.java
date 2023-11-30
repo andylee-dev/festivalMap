@@ -206,6 +206,12 @@ public class UserController {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}", transactionId, "bizPage", "Start");
+			int userId = us.getLoggedInId();
+			log.info("userId:{}/ userRole:{}", userId, us.getLoggedInUserRole());
+			Optional<Users> user = us.getUserById(userId);
+			if (user.isPresent()) {
+				model.addAttribute("user", user.get());
+			}
 
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "bizPage", e.getMessage());
