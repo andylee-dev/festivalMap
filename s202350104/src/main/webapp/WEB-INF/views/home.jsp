@@ -414,6 +414,11 @@ function addMarker(position, idx, title) {
 			console.log("Geolocation을 지원하지 않는 브라우저입니다.");
 		}
 	} */
+	function openPopUp() {
+		window.open('/festival/calendar',"mypopup","width=800, height=800, top=150, left=200");
+	
+	}
+	
 	function openPopup() {
 		const width = 400;
 		const height = 600;
@@ -703,8 +708,8 @@ function addMarker(position, idx, title) {
 						<span>전국&nbsp;축제&nbsp;달력</span>
 					</div>
 					<div class="col chucheon-card-se">
-						<a class="dropdown-item" href="/festival/calendar"> <img
-							alt="..." src="../image/chucheon_icon.png"></a>
+						<img alt="..." src="../image/chucheon_icon.png"
+							onclick="openPopUp()">
 					</div>
 				</div>
 			</div>
