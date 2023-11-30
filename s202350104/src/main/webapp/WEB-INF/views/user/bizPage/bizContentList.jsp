@@ -50,7 +50,6 @@ h2 {
 										<th scope="col">번호</th>
 										<th scope="col">제목</th>
 										<th scope="col">유형</th>
-										<th scope="col">세부유형</th>
 										<th scope="col">도/시</th>
 										<th scope="col">시/군/구</th>
 										<th scope="col">상태</th>
@@ -70,17 +69,16 @@ h2 {
 											
 												${contents.big_code==11?"축제":
 												(contents.big_code==12?"맛집":
-												(contents.big_code==13?"축제":
+												(contents.big_code==13?"숙박":
 												(contents.big_code==14?"명소":
 												(contents.big_code==15?"체험":"N"))))
 												}
 											
 											
 											</td>
-											<td>${contents.small_code}</td>
 											<td>${contents.area}</td>
 											<td>${contents.sigungu}</td>
-											<td>${contents.status}</td>
+											<td>${contents.status==1?"승인":"미승인"}</td>
 											<td>${contents.readcount}</td>
 											<td><fmt:formatDate value="${contents.created_at}" type="date" pattern="YY/MM/dd"/></td>
 											<td><a class="detail-btn" href="/user/bizPage/contentDetail/${contents.id}?currentPage=${page.currentPage}&big_code=${contents.big_code}">관리</a></td>
