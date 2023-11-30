@@ -59,56 +59,31 @@ h2 {
 									</tr>
 								</thead>
 								<tbody>
-									<c:set var="num" value="${page.start}"/>
 									<c:forEach var="contents" items="${contentsList}" varStatus="st">
 										<tr id="user${st.index}">
 										
 											<td id="contentId">${contents.id}</td>
 											<td>${contents.title}</td>
 											<td>
-											
 												${contents.big_code==11?"축제":
 												(contents.big_code==12?"맛집":
 												(contents.big_code==13?"숙박":
-												(contents.big_code==14?"명소":
+												(contents.big_code==14?"명소":`
 												(contents.big_code==15?"체험":"N"))))
 												}
-											
-											
 											</td>
-<%-- 											<td>${contents.area}</td>
-											<td>${contents.sigungu}</td>
- --%>											<td>${contents.status==1?"승인":"미승인"}</td>
+											<td>${contents.status==1?"승인":"미승인"}</td>
 											<td>${contents.readcount}</td>
 											<td><fmt:formatDate value="${contents.created_at}" type="date" pattern="YY/MM/dd"/></td>
 											<td><a class="detail-btn" href="/user/bizPage/contentDetail/${contents.id}?currentPage=${page.currentPage}&big_code=${contents.big_code}">관리</a></td>
 										</tr>
-										<c:set var="num" value="${num + 1}"/>
 									</c:forEach>
 								</tbody>
 							</table>
 							</div>
 						</div>
 					</div>
-<%-- 					<nav aria-label="Page navigation example ">
-						<ul class="pagination">
-					    	<c:if test="${page.startPage > page.pageBlock}">
-							    <li class="page-item">
-						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
-						    	</li>
-					    	</c:if>
-						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							    <li class="page-item">
-									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-						    	</li>
-							</c:forEach>
-						    <c:if test="${page.endPage < page.totalPage}">
-							    <li class="page-item">
-							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
-						    	</li>
-						    </c:if>
-						</ul>
-					</nav> --%>
+
 			</div>
 		</div>
 	</div>

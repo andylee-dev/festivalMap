@@ -53,8 +53,6 @@
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 						<li><a href="/admin/course/list"
 								class="link-body-emphasis d-inline-flex text-decoration-none rounded">코스리스트</a></li>
-						<li><a href="/admin/course/add"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">코스등록</a></li>
 					</ul>
 				</div>
 			</li>
