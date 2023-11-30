@@ -25,6 +25,7 @@ import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.FavoriteService;
 import com.oracle.s202350104.service.HistoryService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -239,7 +240,7 @@ public class AdminUserController {
 			int totalFavorite = fas.totalFavorite();
 			int path = 0;
 			
-			Paging page = new Paging(totalFavorite, currentPage);
+			PagingList page = new PagingList(totalFavorite, currentPage);
 			favorite.setStart(page.getStart());
 			favorite.setEnd(page.getEnd());
 			

@@ -129,7 +129,7 @@ public class UserController {
 
 			int totalMyLikeList = fs.totalFavorite1(favorite);
 
-			Paging page = new Paging(totalMyLikeList, currentPage);
+			PagingList page = new PagingList(totalMyLikeList, currentPage);
 			favorite.setStart(page.getStart());
 			favorite.setEnd(page.getEnd());
 

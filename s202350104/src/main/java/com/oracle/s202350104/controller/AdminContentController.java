@@ -368,7 +368,7 @@ import lombok.RequiredArgsConstructor;
 				int path = 0;
 				int big_code = 12;
 				
-				Paging page = new Paging(totalRestaurant, currentPage);
+				PagingList page = new PagingList(totalRestaurant, currentPage);
 				restaurant.setStart(page.getStart());
 				restaurant.setEnd(page.getEnd());
 				
@@ -598,7 +598,7 @@ import lombok.RequiredArgsConstructor;
 		
 		
 		@RequestMapping(value = "restaurantApprove")
-		public String restaurantApprove(Integer contentId, String status, String currentPage, Model model) {
+		public String restaurantApprove(int contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			
 			try {
@@ -637,7 +637,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "End");
 			}
 			
-			return "forward:restaurant";
+			return "forward:restaurantDetail";
 		}
 		
 		

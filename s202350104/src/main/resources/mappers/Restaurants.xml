@@ -16,7 +16,9 @@
 			(SELECT *
 			 FROM restaurants r, contents c
 			 WHERE r.content_id = c.id
-			 AND   c.is_deleted = 0
+			 <if test="is_deleted != null and is_deleted != ''">
+			 	and is_deleted = #{is_deleted}
+			 </if>
 			 ORDER BY content_id) t
 		) x, commoncodes y
 		WHERE rn BETWEEN #{start} and #{end}
@@ -39,7 +41,9 @@
 		SELECT count(*)
 		FROM   restaurants r, contents c
 		WHERE  r.content_id = c.id
-		AND    c.is_deleted = 0
+		<if test="is_deleted != null and is_deleted != ''">
+			and is_deleted = #{is_deleted}
+		</if>
 	</select>
 	
 	
@@ -255,7 +259,7 @@
 	<update id="joApproveRestaurant" parameterType="RestaurantsContent">
 		UPDATE contents
 		SET    status = #{status}
-		WHERE  id = #{contentId}
+		WHERE  id = #{content_id}
 	</update>
 	
 	<select id="joListSmallCode" resultType="RestaurantsContent" parameterType="int">
