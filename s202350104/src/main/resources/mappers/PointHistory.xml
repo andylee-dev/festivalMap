@@ -33,7 +33,7 @@
 
 	<delete id="deletePointHistory" parameterType="int">
 		DELETE FROM pointhistory
-		WHERE id = #{id}
+		WHERE id = #{id} 
 	</delete>
 
 	<insert id="writePointHistory" parameterType="pointhistory">

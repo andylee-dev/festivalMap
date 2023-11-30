@@ -46,9 +46,20 @@ public class PointHandlerImpl implements PointHandler {
     private void handleLogin(int userId, int pointId) {
         try {
             log.info("사용자 ID {}가 로그인하여 포인트 ID {}에 대한 포인트를 추가했습니다.", userId, pointId);
-
+            
+        LocalDateTime currentDateTime = LocalDateTime.now();
+         LocalDate currentDate = currentDateTime.toLocalDate();
+          LocalTime currentTime = currentDateTime.toLocalTime();
+          
+          // 오늘 첫 로그인 시간인 경우에만 handleLogin 호출
+          if (currentDate.isAfter(lastLoginTime.toLocalDate()) || currentTime.isBefore(LocalTime.NOON)) {
             // 포인트 추가 및 이력 기록
             pointService.addPointAndHistory(userId, pointId);
+         // 마지막 로그인 시간 갱신
+            lastLoginTime = currentDateTime;
+          } else {
+              throw new IllegalArgumentException("Invalid pointId: " + pointId);
+          }
         } catch (Exception e) {
             log.error("로그인 처리 중 오류 발생: {}", e.getMessage());
         }
@@ -100,22 +111,15 @@ public class PointHandlerImpl implements PointHandler {
         UUID transactionId = UUID.randomUUID();
         try {
             log.info("[{}]{}:{}", transactionId, "PointHandlerImpl", "start");
-            
-//            LocalDateTime currentDateTime = LocalDateTime.now();
-//            LocalDate currentDate = currentDateTime.toLocalDate();
-//            LocalTime currentTime = currentDateTime.toLocalTime();
-//            
-            // 오늘 첫 로그인 시간인 경우에만 handleLogin 호출
-//            if (currentDate.isAfter(lastLoginTime.toLocalDate()) || currentTime.isBefore(LocalTime.NOON)) {
+
                 if (handlerMap.containsKey(pointId)) {
                     handlerMap.get(pointId).accept(userId, pointId);
                     
-                    // 마지막 로그인 시간 갱신
-//                    lastLoginTime = currentDateTime;
+                    
                 } else {
                     throw new IllegalArgumentException("Invalid pointId: " + pointId);
                 }
-//            }
+
         } catch (Exception e) {
             log.error("[{}]{}:{}", transactionId, "PointHandlerImpl", e.getMessage());
         } finally {
