@@ -179,6 +179,7 @@ public class AdminUserController {
 					url= "/user/myPage";
 					break;
 				case 3:
+					url= "/user/bizPage";
 					break;
 	
 				default:

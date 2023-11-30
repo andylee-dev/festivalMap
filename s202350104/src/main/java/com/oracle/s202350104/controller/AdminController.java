@@ -18,7 +18,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "")
 	public String home() {
-		return "admin/index";
+		return "redirect:admin/user/userList?small_code=2";
 	}	
 	
 }
