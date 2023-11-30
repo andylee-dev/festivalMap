@@ -343,14 +343,13 @@
 	margin-left: 0px;
 	background-color: transparent;
 	border: 0px;
-	border-bottom: 4px solid #c0c0c0;
+/* 	border-bottom: 4px solid #c0c0c0; */
 }
 
 .home-card-custom img {
-	width: 360px;
+	width: 340px;
 	height: 200px;
-	margin-left: 10px;
-	margin-top: 10px;
+	margin: 10 0 10 8px;
 	border: 3px solid black;
 	border-radius: 23px;
 }
@@ -358,6 +357,7 @@
 .home-card-custom h5 {
 	font-size: 26px;
 	font-weight: bolder;
+	margin-bottom: 30px;
 }
 
 .home-card-custom

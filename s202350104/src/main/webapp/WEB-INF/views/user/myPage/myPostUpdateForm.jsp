@@ -61,7 +61,7 @@
 									</div>
 
 									<div class="mb-3">
-										<label for="file" class="mypost-form-label">첨부파일&nbsp;<span>${board.file_name_custom }</span></label><br>
+										<label for="file" class="mypost-form-label">기존&nbsp;첨부파일:&nbsp;<span>${board.file_name_custom }</span></label><br>
 										<input type="file" class="form-control img_input" name="file">
 									</div>
 								</c:if>
