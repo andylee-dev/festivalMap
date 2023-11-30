@@ -98,12 +98,8 @@
 <body>
 <main>
 	<!-- Top bar -->
-	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	
 	<h1>월별축제달력</h1>
 	<div id='calendar'></div>
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/components/Footer.jsp" %>
 </main>
 </body>
 </html>
