@@ -493,7 +493,7 @@ public class UserController {
 		}
 		
 		// 결과값에 따른 경로 이동
-		return redirectURL;
+		return redirectURL; 
 	}
 
 	@RequestMapping(value = "myPage/qnaDetail")

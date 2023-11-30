@@ -43,7 +43,9 @@ public class BoardDaoImpl implements BoardDao {
 	// Paging 처리용
 	@Override
 	public int boardCount(Board board) {
-
+		log.info("BoardDao boardCount getSmall_code : {}", board.getSmall_code());
+		log.info("BoardDao boardCount getComment_indent : {}", board.getComment_indent());
+		log.info("BoardDao boardCount getIs_deleted : {}", board.getIs_deleted());
 		int countBoard = 0;
 
 		try {

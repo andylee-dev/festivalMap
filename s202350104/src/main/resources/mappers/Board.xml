@@ -30,6 +30,9 @@
 		on a.content_id = c.id
 		where c.big_code = #{commBigCode}
 		and c.small_code = #{commSmallCode}
+		<if test="is_deleted != null and is_deleted != ''">
+		and a.is_deleted = #{is_deleted}
+		</if>
 	</select>
 
 	<select id="readCountUp" resultType="int">
@@ -106,8 +109,7 @@
 				<if test="keyword != null and keyword != ''">
 				and a.title like '%' || #{keyword} || '%'
 				</if>
-								
-		        and a.comment_indent = 0
+				and a.comment_indent = 0
 		    ) c
 		)
 		where rn between #{start} and #{end}		
@@ -206,6 +208,12 @@
 		        from board a, users b
 		        where a.user_id = b.id
 		        and a.small_code = 6
+				<if test="is_deleted != null and is_deleted != ''">
+				and a.is_deleted = #{is_deleted}
+				</if>
+				<if test="status != null and status != ''">
+				and a.status = #{status}
+				</if>	
 		        order by a.id desc
 		    ) c
 		)

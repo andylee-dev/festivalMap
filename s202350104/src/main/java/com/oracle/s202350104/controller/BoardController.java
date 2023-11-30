@@ -167,12 +167,15 @@ public class BoardController {
 		int bigCode = 0;
 		board.setSmall_code(3); // 분류 code 강제 지정
 		board.setIs_deleted("0");
+		board.setComment_indent(0);
+		
 		int userId = us.getLoggedInId();
 		log.info("BoardController freeBoardList userId : {} ", userId);
 		log.info("BoardController freeBoardList board : {} ", board.getSmall_code());
 		
 		// smallCode를 이용해 countBoard 설정
 		int countBoard = boardService.boardCount(board);
+		log.info("BoardController freeBoardList countBoard : {} ", countBoard);
 
 		// Paging 작업
 		// Parameter board page 추가

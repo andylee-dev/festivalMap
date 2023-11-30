@@ -83,6 +83,8 @@ public class AdminCommunityController {
 		log.info("AdminCommunityController freeBoardList Start!!");
 		int bigCode = 0;
 		board.setSmall_code(3); // 분류 code 강제 지정
+		board.setComment_indent(0);
+		board.setIs_deleted("0");
 		int userId = 1;
 
 		// smallCode를 이용해 countBoard를 설정
@@ -102,7 +104,7 @@ public class AdminCommunityController {
 
 		log.info("AdminCommunityController freeBoardList after board.getStart : {} ", board.getStart());
 		log.info("AdminCommunityController freeBoardList after board.getEnd : {} ", board.getEnd());
-		log.info("AdminCommunityController freeBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController freeBoardList after currentPage : {} ", currentPage);
 
 		if (freeAllList.size() != 0) {
 			bigCode = freeAllList.get(0).getBig_code();
@@ -144,12 +146,14 @@ public class AdminCommunityController {
 		board.setEnd(page.getEnd());
 		log.info("AdminCommunityController reviewBoardList before board.getStart : {} ", board.getStart());
 		log.info("AdminCommunityController reviewBoardList before board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController reviewBoardList before currentPage : {} ", currentPage);
 
 		List<Board> reviewAllList = boardService.getReviewAllList(board);
-		log.info("AdminCommunityController eventAllList size : {}", reviewAllList.size());
+		log.info("AdminCommunityController reviewBoardList size : {}", reviewAllList.size());
 
 		log.info("AdminCommunityController reviewBoardList after board.getStart : {} ", board.getStart());
 		log.info("AdminCommunityController reviewBoardList after board.getEnd : {} ", board.getEnd());
+		log.info("AdminCommunityController reviewBoardList after currentPage : {} ", currentPage);
 
 		if (reviewAllList.size() != 0) {
 			bigCode = reviewAllList.get(0).getBig_code();

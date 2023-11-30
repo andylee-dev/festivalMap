@@ -584,20 +584,24 @@ function addMarker(position, idx, title) {
 							alt="메인배너1">
 					</div>
 					<div class="carousel-item">
+						<a href="/boardDetail?id=580&userId=0">
 						<img src="../image/mainBanner1.png" class="d-block w-100 item-img"
-							alt="메인배너2">
+							alt="메인배너2"></a>
 					</div>
 					<div class="carousel-item">
+						<a href="/boardDetail?id=581&userId=0">
 						<img src="../image/mainBanner2.png" class="d-block w-100 item-img"
-							alt="메인배너3">
+							alt="메인배너3"></a>
 					</div>
 					<div class="carousel-item">
+						<a href="/boardDetail?id=582&userId=0">
 						<img src="../image/mainBanner3.png" class="d-block w-100 item-img"
-							alt="메인배너4">
+							alt="메인배너4"></a>
 					</div>
 					<div class="carousel-item">
+						<a href="/boardDetail?id=583&userId=0">
 						<img src="../image/mainBanner4.png" class="d-block w-100 item-img"
-							alt="메인배너5">
+							alt="메인배너5"></a>
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button"
@@ -803,8 +807,9 @@ function addMarker(position, idx, title) {
 				</h4>
 			</div>
 			<div>
+				<a target="_blank" href="https://www.ydp.go.kr/tour/viewTnCmmSchdulU.do?schdulNo=121&sc5=20230601&sc6=20230630&ad1=0&key=4016">
 				<img alt="AD_Bannder" src="../image/ADBanner.png" width="100%"
-					height="auto">
+					 height="auto"></a>
 			</div>
 		</div>
 
