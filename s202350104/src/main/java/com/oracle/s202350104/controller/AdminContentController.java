@@ -560,13 +560,38 @@ import lombok.RequiredArgsConstructor;
 		
 		
 		@RequestMapping(value = "restaurantApprove")
-		public String restaurantApprove(Integer contentId, String currentPage) {
+		public String restaurantApprove(Integer contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "Start");
-				int result = rs.approveRestaurant(contentId);
+				RestaurantsContent restaurant = new RestaurantsContent();
 				
+				restaurant.setContent_id(contentId);
+				
+				
+				log.info("contentId: {}", contentId);
+				log.info(restaurant.getStatus());
+				
+				
+				if (status.equals("0")) {
+					restaurant.setStatus("1");
+				} else if(status.equals("1")) {
+					restaurant.setStatus("0");
+				}
+				
+				log.info(restaurant.getStatus());
+				
+				int result = rs.approveRestaurant(restaurant);
+				
+				if(result > 0) {
+					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+				} else {
+					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+				}
+				
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("currentPage", currentPage);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantApprove Exception", e.getMessage());
 			

@@ -252,10 +252,10 @@
 		WHERE  id=#{contentId}
 	</update>
 	
-	<update id="joApproveRestaurant" parameterType="int">
+	<update id="joApproveRestaurant" parameterType="RestaurantsContent">
 		UPDATE contents
-		SET    status = 1
-		WHERE  id=#{contentId}
+		SET    status = #{status}
+		WHERE  id = #{contentId}
 	</update>
 	
 	<select id="joListSmallCode" resultType="RestaurantsContent" parameterType="int">

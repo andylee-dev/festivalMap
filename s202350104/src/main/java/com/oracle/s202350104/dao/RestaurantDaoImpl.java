@@ -189,12 +189,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	@Override
-	public int approveRestaurant(Integer contentId) {
+	public int approveRestaurant(RestaurantsContent restaurant) {
 		int result = 0;
 		
 		try {
 			log.info("RestaurantDaoImpl approveRestaurant start");
-			result = session.update("joApproveRestaurant", contentId);
+			result = session.update("joApproveRestaurant", restaurant);
 			log.info("RestaurantDaoImpl approveRestaurant result ->", result);
 		} catch (Exception e) {
 			log.info("[{}]{}:{}", "RestaurantDaoImpl approveRestaurant Exception", e.getMessage());

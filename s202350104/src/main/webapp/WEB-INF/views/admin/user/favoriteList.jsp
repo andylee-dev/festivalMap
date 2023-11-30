@@ -54,6 +54,7 @@
 				</div>
 									
 				<!-- Section3: Table -->
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
 				<div class="container table-container p-4 align-items-center">
 				<div class="table-responsive">
 					<table id="userTable" class="container">
@@ -82,6 +83,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
 				</div>
 				</div>
 				

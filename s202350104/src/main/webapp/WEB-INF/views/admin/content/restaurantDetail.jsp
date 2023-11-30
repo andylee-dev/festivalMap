@@ -20,16 +20,43 @@
 			
 			function approveConfirm(){
 				var contentId = Number(${restaurant.content_id});
+				var status    = "${restaurant.status}";
 				if(confirm("정말 승인하시겠습니까?")){
-					location.href="restaurantApprove?contentId="+contentId+"&currentPage=${currentPage}";
+					location.href="../content/restaurantApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
 				}
-				
+			}
+			
+			
+			function approveConfirm1() {
+				var contentId = Number(${restaurant.content_id}); 
+				var status    = "${restaurant.status}";
+				if(confirm("반려전환 변경하시겠습니까?")) {
+					location.href="../content/restaurantApprove?contentId="+contentId+"&currentPage=${currentPage}&status="+status;
+				}
 			}
 			
 			
 			function openRejectionPopup(contentId) {
 			    window.open("rejectionFoam?contentId=" + contentId, "_blank", "width=600, height=400, top=100, left=100");
 			}
+			
+			
+			function submitRejectForm(formName) {
+				// $('#statusInput').value = 0;
+				formName.action = "/admin/content/insertHistory";
+				formName.method = "post";
+				$('.form-input, .check-duple').prop("disabled", false);
+				
+				$('#rejectModal').modal('hide');
+				
+				const rejectContent = document.getElementById('message-text').value;
+				const rejectTitle = document.getElementById('modal-title').innerText;		
+				$('#reject-title').val(rejectTitle);
+				$('#reject-content').val(rejectContent);
+				
+				formName.submit();
+			}
+			
 			
 			function getSigungu(pArea){
 				var pSigungu = ${experience.sigungu}
@@ -354,15 +381,15 @@
 							 <c:when test="${restaurant.status == 0}">
 							 	<div class="col-6 mb-3" >
 		                              <button type="button" class="form-control btn btn-primary w-100" onclick="approveConfirm()">승인(게시하기)</button>
-		                          </div>
-		                            <div class="col-2 mb-3">
-		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">대기(임시저장)</button>
-		                          </div>
+		                        </div>
+		                        <div class="col-2 mb-3">
+		                               <button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">반려(사유선택)</button>
+		                        </div>
 		                          <div class="col-2 mb-3">
-		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="openRejectionPopup(${restaurant.content_id})">반려(사유선택)</button>
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>
 		                          </div>
 		                          <div class="col-1 mb-3">
-		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant?currentPage=1'">삭제</button>
+		                              <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant?currentPage=1'">목록</button>
 		                          </div>
 							 </c:when>
 							 <c:when test="${restaurant.status == 1}">
@@ -370,7 +397,7 @@
 		                                <button type="button" class="form-control btn btn-primary2 w-100" onclick="location.href='../content/restaurantUpdateForm?contentId=${restaurant.content_id}&currentPage=${currentPage}'">수정하기</button>
 		                             </div>
 		                             <div class="col-2 mb-3">
-		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="">반려전환</button>
+		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="approveConfirm1()">반려전환</button>
 		                             </div>
 		                             <div class="col-2 mb-3">
 		                                <button type="button" class="btn btn-outline-secondary w-100" onclick="deleteConfirm()">삭제</button>

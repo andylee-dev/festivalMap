@@ -151,7 +151,7 @@ public class AdminAdminController {
 	}
 	
 	
-	@RequestMapping(value = "commonCode/insert")
+	@RequestMapping(value = "commonCodeInsert")
 	public String commonCodeInsert(Model model, CommonCodes commonCode) {
 		UUID transactionId = UUID.randomUUID();
 		

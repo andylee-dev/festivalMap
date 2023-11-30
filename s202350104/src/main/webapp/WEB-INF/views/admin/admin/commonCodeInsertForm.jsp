@@ -24,7 +24,7 @@
 					
 					<!-- Section2: Table -->		
 					<div class="border p-3 m-3">
-						<form action="commonCode/insert" method="post">
+						<form action="commonCodeInsert" method="post">
 							<table class="table table-striped table-sm">
 								<tr>
 									<th>대분류</th>

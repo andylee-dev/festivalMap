@@ -117,9 +117,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public int approveRestaurant(Integer contentId) {
+	public int approveRestaurant(RestaurantsContent restaurant) {
 		int result = 0;
-		result = rd.approveRestaurant(contentId);
+		result = rd.approveRestaurant(restaurant);
 		if(result <=0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "맛집 정보 승인에 실패하였습니다.");
 		}
