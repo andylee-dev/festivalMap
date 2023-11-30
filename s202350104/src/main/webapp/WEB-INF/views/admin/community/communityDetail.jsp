@@ -53,7 +53,7 @@
 	        }
 	    }
 			
-		</script>
+</script>
 <style type="text/css">
 #detail-top-container {
 	position: absolute;

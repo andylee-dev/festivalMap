@@ -43,56 +43,63 @@ function confirmDelete(id) {
 				<%@ include file="/WEB-INF/components/MyPageSideBar.jsp"%>
 			</div>
 			<div class="container p-5 col-10">
-				
+
 				<!-- Section1: Title -->
 				<div class="container my-5">
 					<c:choose>
 						<c:when test="${board.small_code eq 6}">
-							<h1>${board.content}</h1>						
+							<h1>${board.content}</h1>
 						</c:when>
 						<c:otherwise>
-							<h1>${board.title}</h1>								
+							<h1>${board.title}</h1>
 						</c:otherwise>
-					</c:choose>		
+					</c:choose>
 					<hr class="hr" />
-					
-					<div class="container mypost-content-custom">				
+
+					<div class="container mypost-content-custom">
 						<div class="mb-3">
 							<c:choose>
 								<c:when test="${board.small_code eq 6}">
-									<label for="content" class="mypost-form-label">내용</label> 
+									<label for="content" class="mypost-form-label">내용</label>
 									<input type="text" class="form-control text-box" name="content"
-										   value="${board.content} " readonly>							
+										value="${board.content} " readonly>
 								</c:when>
 								<c:otherwise>
-									<label for="title" class="mypost-form-label">제목</label> 
+									<label for="title" class="mypost-form-label">제목</label>
 									<input type="text" class="form-control text-box" name="title"
-										   value="${board.title} " readonly>								
+										value="${board.title} " readonly>
 								</c:otherwise>
 							</c:choose>
 						</div>
-						<c:if test="${board.small_code eq 3}">						
-						<div class="mb-3">
-							<label for="content" class="mypost-form-label">내용</label>
-							<textarea class="form-control" name="content" rows="5"
-								readonly>${board.content}</textarea>
-						</div>
+						<c:if test="${board.small_code eq 3}">
+							<div class="mb-3">
+								<label for="content" class="mypost-form-label">내용</label>
+								<textarea class="form-control" name="content" rows="5" readonly>${board.content}</textarea>
+							</div>
 
 							<div class="mb-3">
 								<label for="image" class="mypost-form-label">첨부파일&nbsp;<span>${board.file_name_custom }</span></label><br>
-								<img alt="${board.file_name }" src="../${board.file_path }${board.file_name }" 
-									 name="image">
+								<img alt="${board.file_name }"
+									src="../${board.file_path }${board.file_name }" name="image">
 							</div>
 						</c:if>
 					</div>
 					<hr class="hr" />
-					<div class="text-center">
-						<input class="btn btn-primary" type="button" value="수정하기"
-							   onclick="">
-						<input class="btn btn-primary" type="button" value="목록"
-							   onclick="location.href='myPost'">
-						<input class="btn btn-primary" type="button" value="삭제"
-							   onclick="confirmDelete(${board.id})">							   
+						<div class="d-flex justify-content-center">
+						<div class="col-3 mb-3" style="margin-right: 10px;">
+							<button type="button" class="form-control btn btn-primary2 w-100"
+								onclick="location.href='myPostUpdateForm?id=${board.id}&userId=${userId }'">수정하기</button>
+						</div>
+	
+						<div class="col-3 mb-3" style="margin-right: 10px;">
+							<button type="button" class="btn btn-outline-secondary w-100"
+								onclick="confirmDelete(${board.id})">삭제</button>
+						</div>
+	
+						<div class="col-3 mb-3">
+							<button type="button" class="btn btn-outline-secondary w-100"
+								onclick="location.href='myPost'">목록</button>
+						</div>
 					</div>
 				</div>
 			</div>
