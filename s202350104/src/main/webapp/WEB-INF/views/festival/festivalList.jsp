@@ -196,7 +196,7 @@
 			</c:if>
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 				<li class="page-item">
-					<a href="festival?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+					<a href="festival?currentPage=${i}&keyword=${keyword}&area=${area}&sigungu=${sigungu}&small_code=${small_code}&goingOn=${goingOn}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 				</li>
 			</c:forEach>
 			<c:if test="${page.endPage < page.totalPage}">
