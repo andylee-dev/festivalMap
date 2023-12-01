@@ -291,10 +291,10 @@ public class AdminNoticeController {
 			log.info("BoardController boardUpdate realName : {}", realName);
 			
 			// DB에 저장 된 파일명 조회
-			board = boardService.boardRead(board.getId());
+			Board deleteImageNameFind = boardService.boardRead(board.getId());
 
 			// DB에 저장 된 파일명 가져오기
-			fileName = board.getFile_name();
+			fileName = deleteImageNameFind.getFile_name();
 			
 			// 기존 첨부파일 삭제(로컬)
 			fileUploadDeleteUtil.deleteFile(fileName);				
