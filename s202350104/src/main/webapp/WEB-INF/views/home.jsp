@@ -542,14 +542,8 @@ function addMarker(position, idx, title) {
 
 		<!-- Section1 -->
 		<div class="container home-pick-box-custom">
-			<div class="home-pick-batch">MD's&nbsp;Pick</div>
-			<div class="home-pick-title">
-				<h4>
-					<strong>나&nbsp;가을타나봐~♫</strong>
-				</h4>
-				<h4>
-					<strong>신선한&nbsp;가을&nbsp;축제의&nbsp;바람이&nbsp;불어요~♬</strong>
-				</h4>
+			<div class="container mx-0 my-3 py-1">
+				<img alt="..." src="asset/mdpick_logo.png">
 			</div>
 
 			<div class="row row-cols-2  home-pickMd-box-custom">
