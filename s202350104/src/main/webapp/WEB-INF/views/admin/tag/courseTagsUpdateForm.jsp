@@ -305,14 +305,14 @@
 									<div class="col-md-11 mb-3 px-2">
 										<label for="id" class="form-label">번호</label>
 										<input type="text" class="form-control form-input" id="contentId"
-										 name="id" value="2" disabled>
+										 name="id" value="${course.id}" disabled>
 									</div>
 								</div>
 								<div class="form-row d-flex justify-content-between">
 									<div class="col-md-11 mb-3 px-2">
 										<label for="title" class="form-label">이름</label>
 										<input type="text" class="form-control form-input" id="title"
-										 name="title" value="강릉 천년의 역사를 만나는 문화유산답사" disabled>
+										 name="title" value="${course.course_title}" disabled>
 									</div>
 								</div>
 								<div class="form-row d-flex justify-content-between">
@@ -330,11 +330,7 @@
 									</div>
 								</div>
 								<div id="form-row d-flex justify-content-between">
-									<div class="col-md-11 mb-3 px-2" id="tagsArea">
-									<button class="btn btn-outline-secondary mx-1">#역사</button>
-									<button class="btn btn-outline-secondary mx-1">#문화유산</button>
-									
-									<!-- 태그 badge가 들어갈 곳 --></div>
+									<div class="col-md-11 mb-3 px-2" id="tagsArea"><!-- 태그 badge가 들어갈 곳 --></div>
 								</div>
 								<div align="center" class="mt-3">
 									<button type="button" class="btn btn-primary" onclick="updateTags()">수정</button>

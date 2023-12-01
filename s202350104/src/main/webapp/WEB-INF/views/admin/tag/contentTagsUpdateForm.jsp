@@ -369,10 +369,7 @@
 									</div>
 								</div>
 								<div id="form-row d-flex justify-content-between">
-									<div class="col-md-11 mb-3 px-2" id="tagsArea">
-									<button class="btn btn-outline-secondary">#밤</button>
-										<button class="btn btn-outline-secondary mx-1">#달</button>
-										<button class="btn btn-outline-secondary mx-1">#정월대보름</button><!-- 태그 badge가 들어갈 곳 --></div>
+									<div class="col-md-11 mb-3 px-2" id="tagsArea"><!-- 태그 badge가 들어갈 곳 --></div>
 								</div>
 								<div align="center" class="mt-3">
 									<button type="button" class="btn btn-primary" onclick="updateTags()">수정</button>
