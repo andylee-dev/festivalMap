@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,11 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.s202350104.model.Contents;
@@ -34,22 +39,22 @@ public class RecommendationController {
     @Resource
     private Map<String, RecommendationStrategy> strategies;
 
-    @GetMapping
-    public ResponseEntity<List<Contents>> getRecommendations() {
+    @ResponseBody
+    @RequestMapping(value = "getRecommendations", method = RequestMethod.POST)
+    public ResponseEntity<List<Contents>> getRecommendations(@RequestBody Contents content) {
     	UUID transactionId = UUID.randomUUID();
     	Optional<Users> user = null;
+        List<Contents> recommendations = null;
+
         try {
         	log.info("[{}]{}:{}", transactionId, "getRecommendations()", "start");
             int userId = userService.getLoggedInId();
-//            int userId = 1;
-            Contents content = new Contents();
-            content.setBig_code(11);
             if (userId == 0) {
             	log.info("비회원 로직");
                 // 비회원일 경우의 추천 로직
                 recService.setStrategies(Arrays.asList(
-//                    new SimilarContentRecommendation(),
-                		strategies.get("popularContentRecommendation")
+                		strategies.get("popularContentRecommendation"),
+                		strategies.get("SimilarContentRecommendation")
                 ));
             } else {
                 user = userService.getUserById(userId);
@@ -66,9 +71,16 @@ public class RecommendationController {
 //                		strategies.get("popularContentRecommendation")
                 ));
             }
+            if(userId != 0) {
+            	recommendations = recService.recommend(user.get(), content);            	
+            } else {
+            	recommendations = recService.recommend(null, content);            	            	
+            }
             
-            List<Contents> recommendations = recService.recommend(user.get(),content);
-            return ResponseEntity.ok(recommendations);
+//          Top 10 추천
+            List<Contents> subList = new ArrayList<>(recommendations.subList(0,10));
+            log.info("recommendations:{}",subList);
+            return ResponseEntity.ok(subList);
         } catch (Exception e) {
         	log.error("[{}]{}:{}", transactionId, "getRecommendations()", e.getMessage());
             // 적절한 예외 처리

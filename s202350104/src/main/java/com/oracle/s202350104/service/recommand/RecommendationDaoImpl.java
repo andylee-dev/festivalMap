@@ -19,33 +19,33 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	
 	@Override
 	public List<Contents> getSearchContentsList(Contents contents) {
-		log.info("getSearchContentsList s/{}",contents);
+//		log.info("getSearchContentsList s/{}",contents);
 		List<Contents> listContent = session.selectList("getSearchContentsList", contents);
-		log.info("getSearchContentsList f/{}",listContent);
+//		log.info("getSearchContentsList f/{}",listContent);
 		return listContent;
 	}
 
 	@Override
 	public List<Contents> getPopularContentsList(Contents content) {
-		log.info("getSearchContentsList s/{}",content);
+//		log.info("getSearchContentsList s/{}",content);
 		List<Contents> listContent = session.selectList("getPopularContentsList", content);
-		log.info("getSearchContentsList f/{}",listContent);
+//		log.info("getSearchContentsList f/{}",listContent);
 		return listContent;
 	}
 
 	@Override
 	public List<Board> getUserReviews(int user_id) {
-		log.info("getUserReviews s/{}",user_id);
+//		log.info("getUserReviews s/{}",user_id);
 		List<Board> userReviews = session.selectList("getUserReviews", user_id);
-		log.info("getUserReviews f/{}",userReviews);
+//		log.info("getUserReviews f/{}",userReviews);
 		return userReviews;
 	}
 
 	@Override
 	public List<Board> getAllReviews(Contents content) {
-		log.info("getAllReviews s/{}",content);
+//		log.info("getAllReviews s/{}",content);
 		List<Board> listReviews = session.selectList("getAllReviews",content);
-		log.info("getAllReviews f/{}",listReviews);
+//		log.info("getAllReviews f/{}",listReviews);
 		return listReviews;
 	}
 
@@ -54,9 +54,9 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		Contents content =new Contents();
 		content.setUser_id(userId.toString());
 		content.setId(contentId);
-		log.info("getUserReviewForContent s/ userId:{},contentId:{}",userId, contentId);
+//		log.info("getUserReviewForContent s/ userId:{},contentId:{}",userId, contentId);
 		Board review = session.selectOne("getUserReviewForContent", content);
-		log.info("getUserReviewForContent f/{}",review);
+//		log.info("getUserReviewForContent f/{}",review);
 		return review;
 	}
 }

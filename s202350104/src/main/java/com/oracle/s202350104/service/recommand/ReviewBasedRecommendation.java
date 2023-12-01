@@ -48,10 +48,8 @@ public class ReviewBasedRecommendation implements UserBasedRecommendationStrateg
 	                Board review = recommendationDao.getUserReviewForContent(userId, c.getId());
 					if (review != null) {
 						score += userSimilarities.get(userId) * review.getScore();
-						log.info("1.score = {}",score);
 					}
 				}
-				log.info("2.score = {}",score);
 				scoredContentList.add(new ScoredContent(c, score));
 			}
 		
