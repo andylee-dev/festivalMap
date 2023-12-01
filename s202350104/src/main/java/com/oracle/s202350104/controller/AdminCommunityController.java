@@ -238,9 +238,10 @@ public class AdminCommunityController {
 		String fileName = null;
 		String realFileSize = null;
 		FileUploadDeleteUtil fileUploadDeleteUtil = new FileUploadDeleteUtil();
-		int realName = file.getOriginalFilename().length();
+		int realName = 0;
 
 		try {
+			realName = file.getOriginalFilename().length();
 			log.info("AdminCommunityController communityUpdate realName : {}", realName);
 
 			// DB에 저장 된 파일명 조회

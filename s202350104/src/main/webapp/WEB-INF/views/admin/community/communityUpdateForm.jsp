@@ -202,6 +202,7 @@ h3 {
 										<input type="hidden" name="is_deleted" value="${board.is_deleted }">
 										<input type="hidden" name="userId" value="${userId}">
 										<input type="hidden" name="name" value="${board.name}">
+										<input type="hidden" name="file" value="">
 									</div>
 
 									<div class="mb-3 ">
