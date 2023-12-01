@@ -69,10 +69,46 @@
 		    });
 		}
 	}
+	
+	
+	function getRecommendations() {
+		console.log("getRecommendations() start!")
+		const content = {
+				id:"${festival.content_id}",
+				big_code:"${festival.big_code}"
+			}
+		$.ajax({
+			url: "<%=request.getContextPath()%>/recommendations/getRecommendations",
+			method: "POST",
+			dataType: "json",
+			data: JSON.stringify(content),
+            contentType: "application/json",
+			success: function(contentList) {
+				console.log("getRecommendations() success->"+contentList.length)
+				console.log(contentList);
+	            // HTML 요소에 데이터 적용
+	            var html = '';
+	            contentList.forEach(function(content) {
+	                html += '<li class="item m-3">';
+	                html += '<img src="' + content.img1 + '" class="card-img-top" alt="image.jpg">'; // 데이터 적용
+	                html += '</li>';
+	            });
+
+	            // 생성한 HTML을 적용할 위치를 찾아 적용
+	            $('.container .wrapper .items').html(html);
+
+			},
+			error: function() {
+				console.log("getRecommendations() failed")
+			}
+		})	
+	}
+	
 
 	/* 대분류, 소분류 기능 js */
 	document.addEventListener("DOMContentLoaded", function() {
 		initKakaoMap();
+		getRecommendations();
 		updateAreaOptions();
 		$(".area-dropdown").change(
 				function() {
@@ -199,6 +235,107 @@ function like() {
     }
 	   
 </script>
+
+<style>
+$bg-color: #222;
+$margin: 20px;
+
+ul {
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
+
+.wrapper {
+	position: relative;
+	
+	// Gradient side fade
+
+	&:before,
+	&:after {
+		position: absolute;
+		top: 0;
+		z-index: 1;
+
+		content: "";
+		display: block;
+		width: $margin;
+		height: 100%;
+	}
+	
+	&:before {
+		left: 0;
+		background: linear-gradient(90deg, $bg-color, transparent);
+	}
+	
+	&:after {
+		right: 0;
+		background: linear-gradient(-90deg, $bg-color, transparent);
+	}
+}
+
+.items {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	font-size: 0;
+	cursor: pointer;
+	
+	&.active {
+		cursor: grab;
+	}
+}
+
+.item {
+	display: inline-block;
+	margin-left: $margin;
+	user-select: none;
+
+	background: tomato;
+	width: 50%;
+	height: 130px;
+	color: $bg-color;
+	font-size: 33px;
+	font-weight: bold;
+	line-height: 130px;
+	
+	&:last-child {
+		margin-right: $margin;
+	}
+}
+
+@media screen and (min-width: 500px) {
+
+	.item {
+		width: 33%;	
+	}
+}
+
+@media screen and (min-width: 800px) {
+
+	.item {
+		width: 25%;	
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	
+	.wrapper {
+		margin-left: -$margin;
+	}
+
+	.item {
+		width: 20%;	
+	}
+}
+
+</style>
+
+
 
 </head>
 
@@ -638,69 +775,89 @@ function like() {
 		<h2><strong>비슷한 축제</strong></h2>
 	</div>	
 
-	<div class="container homeList-menu-custom">
-		<div class="row row-cols-3 g-6 homeList-mdMenu-custom">
-			<div class="col d-flex justify-content-center">
-				<div class="card homeList-card-custom">
-					<div class="homeList-tag-custom">
-						<div class="homeList-tag-custom2">
-							<p class="tag-p">#지역태그</p>
-						</div>
-						<a href="">
-							<img src="../photos/aquarium1.png" class="card-img-top"
-							alt="image.jpg">
-						</a>
-					</div>
-
-					<div class="card-body">
-						<p class="card-text title-p">축제 제목</p>
-						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
-						<p class="card-text contet-p">content영역</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col d-flex justify-content-center">
-				<div class="card homeList-card-custom">
-					<div class="homeList-tag-custom">
-						<div class="homeList-tag-custom2">
-							<p class="tag-p">#지역태그</p>
-						</div>
-						<a href="">
-							<img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg">
-						</a>
-					</div>
-
-					<div class="card-body">
-						<p class="card-text title-p">축제 제목</p>
-						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
-						<p class="card-text contet-p">content영역</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col d-flex justify-content-center">
-				<div class="card homeList-card-custom">
-					<div class="homeList-tag-custom">
-						<div class="homeList-tag-custom2">
-							<p class="tag-p">#지역태그</p>
-						</div>
-						<a href="">
-							<img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg">
-						</a>
-					</div>
-
-					<div class="card-body">
-						<p class="card-text title-p">축제 제목</p>
-						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
-						<p class="card-text contet-p">content영역</p>
-					</div>
-				</div>
-			</div>						
-		</div>
+	<div class="container">
+		<div class="wrapper">
+		    <ul class="items">
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+				<li class="item m-3"><img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg"></li>
+		    </ul>
+	    </div>
 	</div>
 
+<!-- 	<div class="container homeList-menu-custom">
+		<div class="row row-cols-3 g-6 homeList-mdMenu-custom">
+
+
+ 			<div class="col d-flex justify-content-center">
+				<div class="card homeList-card-custom">
+					<div class="homeList-tag-custom">
+						<div class="homeList-tag-custom2">
+							<p class="tag-p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="../photos/aquarium1.png" class="card-img-top"alt="image.jpg">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<p class="card-text title-p">축제 제목</p>
+						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet-p">content영역</p>
+					</div>
+				</div>
+			</div> 
+		</div>
+	</div>
+-->
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
+	<script>
+let isDown = false;
+let startX;
+let scrollLeft;
+const slider = document.querySelector('.items');
+
+const end = () => {
+	isDown = false;
+  slider.classList.remove('active');
+}
+
+const start = (e) => {
+  isDown = true;
+  slider.classList.add('active');
+  startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;	
+}
+
+const move = (e) => {
+	if(!isDown) return;
+
+  e.preventDefault();
+  const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+  const dist = (x - startX);
+  slider.scrollLeft = scrollLeft - dist;
+}
+
+(() => {
+	slider.addEventListener('mousedown', start);
+	slider.addEventListener('touchstart', start);
+
+	slider.addEventListener('mousemove', move);
+	slider.addEventListener('touchmove', move);
+
+	slider.addEventListener('mouseleave', end);
+	slider.addEventListener('mouseup', end);
+	slider.addEventListener('touchend', end);
+})();
+
+</script>
 </body>
 </html>
