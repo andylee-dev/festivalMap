@@ -24,12 +24,12 @@
 			});
 			
 			function reset() {
-				$('#searchType').value = "";
-				$('#keyword').value = "";
-				$('#area').value = "";
-				$('#sigungu').value = "";
-				$('#status').value = "";
-				$('#is_deleted').value = "";
+				document.getElementById('searchType').value = null;
+				document.getElementById('keyword').value = null;
+				document.getElementById('area').value = null;
+				document.getElementById('sigungu').value = null;
+				document.getElementById('status').value = null;
+				document.getElementById('is_deleted').value = null;
 			}
 			
 		</script>
@@ -72,7 +72,7 @@
 				            	<label for="searchType" class="col-form-label col-1  mx-2">테마</label>
 				            		<div class="col-2 d-flex align-items-center">
 				            			<select id="searchType" class="form-select" name="small_code">
-											<option value="0" selected>테마 선택</option>
+											<option value="0" selected>전체</option>
 											<c:forEach var="theme" items="${listCodes}">
 												<c:if test="${theme.big_code == 11 && theme.small_code != 999 }">
 													<option value="${theme.small_code}" ${theme.small_code == small_code? 'selected':''}>${theme.content}</option>
@@ -171,17 +171,20 @@
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
 							<li class="page-item">
-								<a href="festival?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+								<a href="festival?currentPage=${page.startPage-page.pageBlock}&searchType=${searchType}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}"
+								 class="pageblock page-link">Prev</a>
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 							<li class="page-item">
-								<a href="festival?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+								<a href="festival?currentPage=${i}&searchType=${searchType}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}"
+								 class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
 							<li class="page-item">
-								<a href="festival?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+								<a href="festival?currentPage=${page.startPage+page.pageBlock}&searchType=${searchType}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}"
+								 class="pageblock page-link">Next</a>
 							</li>
 						</c:if>
 					</ul>

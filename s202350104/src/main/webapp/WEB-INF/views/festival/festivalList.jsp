@@ -191,7 +191,7 @@
 
 			<c:if test="${page.startPage > page.pageBlock}">
 				<li class="page-item">
-					<a href="festival?currentPage=${page.startPage-page.pageBlock}"
+					<a href="festival?currentPage=${page.startPage-page.pageBlock}&keyword=${keyword}&area=${area}&sigungu=${sigungu}&small_code=${small_code}&goingOn=${goingOn}"
 					   class="pageblock page-link">Prev</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
@@ -201,7 +201,7 @@
 			</c:forEach>
 			<c:if test="${page.endPage < page.totalPage}">
 				<li class="page-item">
-					<a href="festival?currentPage=${page.startPage+page.pageBlock}"
+					<a href="festival?currentPage=${page.startPage+page.pageBlock}&keyword=${keyword}&area=${area}&sigungu=${sigungu}&small_code=${small_code}&goingOn=${goingOn}"
 					   class="pageblock page-link">Next</a></li>
 			</c:if>
 
