@@ -14,5 +14,13 @@ public interface PointService {
 	
 	int 				getPointScoreById(int id);
 
-	void addPointAndHistory(int userId, int pointId);
+	void 				addPointAndHistory(int userId, int pointId);
+
+	Point  				getPointById(int id);
+
+	int                 totalpoint();
+
+	Point               listpoint1(int id);
+
+	int                deletePoint(Integer id);
 }

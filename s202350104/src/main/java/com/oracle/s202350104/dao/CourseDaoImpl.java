@@ -22,11 +22,11 @@ public class CourseDaoImpl implements CourseDao {
 	private final SqlSession session;
 
 	@Override
-	public int courseCount() {
+	public int courseCount(Course course) {
 		int courseCount = 0;
-		log.info("CourseDaoImpl courseCount start...");
+		
 		try {
-			courseCount = session.selectOne("courseCount");
+			courseCount = session.selectOne("courseCount", course);
 			log.info("CourseDaoImpl courseCount courseCount ->" + courseCount);
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseCount e.getMessage() ->" + e.getMessage());
@@ -38,7 +38,7 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public List<Course> courseList(Course course) {
 		List<Course> courseList = null;
-		log.info("CourseDaoImpl courseList start...");
+		
 		try {
 			courseList = session.selectList("courseListAll", course);
 			log.info("CourseDaoImpl courseList courseList.size() ->" + courseList.size());
@@ -53,11 +53,10 @@ public class CourseDaoImpl implements CourseDao {
 	
 	@Override
 	public List<Course> courseDetail(int course_id) {
-		log.info("course_id ->" + course_id);
 		List<Course> courseDetailList = null;
 		try {
 			courseDetailList = session.selectList("noCourseDetailList", course_id);
-			log.info("CourseDaoImpl courseDetail courseDetailList.size() ->" + courseDetailList.size());
+			log.info("CourseDaoImpl courseDetail courseDetailList.size() : " + courseDetailList.size());
 			
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseDetail e.getMessage() ->" + e.getMessage());
@@ -129,11 +128,10 @@ public class CourseDaoImpl implements CourseDao {
 
 	@Override
 	public Course courseUpdateDetail(int id) {
-		log.info("CourseDaoImpl courseContent start...");
 		Course courseUpdateDetail = null;
 		try {
 			courseUpdateDetail = session.selectOne("noCourseContent", id);
-			log.info("CourseDaoImpl courseContent courseUpdateDetail ->" + courseUpdateDetail);
+			log.info("CourseDaoImpl courseContent courseUpdateDetail : " + courseUpdateDetail);
 			
 		} catch (Exception e) {
 			log.info("CourseDaoImpl courseContent e.getMessage() ->" + e.getMessage());
@@ -239,6 +237,21 @@ public class CourseDaoImpl implements CourseDao {
 		
 		return maxOrderNum;
 	}
+
+
+	@Override
+	public List<Course> courseListSmallCode(Course course) {
+		List<Course> courseListSmallCode = null;
+		try {
+			courseListSmallCode = session.selectList("noCourseListSmallCodeAll", course);
+			
+		} catch (Exception e) {
+			log.info("CourseDaoImpl CourseDaoImpl e.getMessage() : " + e.getMessage());
+		}
+		
+		return courseListSmallCode;
+	}
+
 
 	
 //	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s202350104.model.AccomodationContent;
 import com.oracle.s202350104.model.PointHistory;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 
 	@Override
 	public List<PointHistory> listPointHistory() {
+		
 		List<PointHistory> listPointHistory = null;
 		try {
 			listPointHistory = session.selectList("pointhistoryAll");
@@ -30,10 +32,10 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 	}
 
 	@Override
-	public int deletePointHistory(int point_id) {
+	public int deletePointHistory(Integer id) {
 		int result = 0;
 		try {
-			result = session.delete("deletePointHistory",point_id);
+			result = session.delete("deletePointHistory",id);
 		} catch (Exception e) {
 			 log.error("Error deleting point history: {}", e.getMessage());
         }
@@ -61,7 +63,65 @@ public class PointHistoryDaoImpl implements PointHistoryDao {
 		return listPointHistory;
 	}
 
+	@Override
+	public int totalpointHistory() {
+		int totPointHistoryCount = 0;
+		try {
+			totPointHistoryCount = session.selectOne("PointHistoryTotal");
+		} catch (Exception e) {
+			log.info("PointHistoryDaoImpl PointHistoryTotal Exception => " + e.getMessage());
+		}
+		return totPointHistoryCount;
+	}
+
+	@Override
+	public int conTotalPointHistory(PointHistory pointhistory) {
+		int conTotalPointHistory = 0;
+		try {
+			conTotalPointHistory = session.selectOne("conTotalPointHistory", pointhistory);
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl ConTotalAccomodation() Exception ->" + e.getMessage());
+		}
+				
+		return conTotalPointHistory;
+		}
+
+		/*
+		 * @Override public List<PointHistory> indexlistSearchPointHistory(PointHistory
+		 * pointhistory) { List<PointHistory> indexlistSearchPointHistory = null; try {
+		 * indexlistSearchPointHistory =
+		 * session.selectList("indexlistSearchPointHistory", pointhistory); } catch
+		 * (Exception e) {
+		 * log.info("PointHistoryDaoImpl indexlistSearchPointHistory() Exception ->" +
+		 * e.getMessage()); } return indexlistSearchPointHistory; }
+		 */
+
+	@Override
+	public List<PointHistory> listPointHistory1(PointHistory pointhistory) {
+		List<PointHistory> listPointHistory = null;
+		try {
+			listPointHistory = session.selectList("pointhistoryAll1", pointhistory);
+			
+		} catch(Exception e) {
+			
+		}
+		
+		return listPointHistory;
+	}
+
+	@Override
+	public List<PointHistory> searchPointHistorylist(PointHistory pointhistory) {
+		List<PointHistory> searchPointHistory = null;
+		try {
+			searchPointHistory = session.selectList("searchPointHistorylist", pointhistory);
+		} catch (Exception e) {
+			 log.info("PointHistoryDaoImpl searchPointHistory() Exception ->" + e.getMessage());
+		}
+		return searchPointHistory;
+	}
+	}
+
 
 	
 
-}
+

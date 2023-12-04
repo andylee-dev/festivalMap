@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.oracle.s202350104.model.Tags;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.TagsService;
+import com.oracle.s202350104.service.point.PointEvent;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 	private final UserService us;
 	private final TagsService ts;
+	private final ApplicationEventPublisher eventPublisher;
 
 	@RequestMapping(value = "/login")
 	public String login(Model model, String error, String logout) {
@@ -87,9 +90,9 @@ public class AuthController {
 		try {
 			log.info("[{}]{}:{}",transactionId, "userSignUp", "start");
 			Tags tag = new Tags();
-			List<Tags> listTags = ts.listTags(tag);
-			log.info("listTags"+listTags.size());
-			model.addAttribute("listTags", listTags);
+			List<Tags> listAllTags = ts.listTags(tag);
+			log.info("listAllTags"+listAllTags.size());
+			model.addAttribute("listAllTags", listAllTags);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "userSignUp", e.getMessage());
@@ -148,6 +151,9 @@ public class AuthController {
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "userSignUp", "end");
 		}
+		
+		eventPublisher.publishEvent(new PointEvent(user.getId(), 1));
+		
         return "redirect:/login";
 	}
 	
@@ -157,4 +163,10 @@ public class AuthController {
 		return "redirect:/login";
 	}
 
+	
+	private void LoginPointcheck(int userId ) {
+		// 1. 현재일자를 가지고 Users TBL id조건의 LASTLOGINDATE 비교 다르면 point 증가
+		// 2. 현재일자를 가지고 Users TBL id조건의 현재일자 Update
+		
+	}
 }

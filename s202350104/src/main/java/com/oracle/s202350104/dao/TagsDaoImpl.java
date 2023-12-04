@@ -9,7 +9,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.oracle.s202350104.model.Board;
+import com.oracle.s202350104.model.Contents;
+import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.Tags;
+import com.oracle.s202350104.model.Users;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,7 +116,8 @@ public class TagsDaoImpl implements TagsDao {
 		int result = 0;
 		
 		try {
-			
+			int groupId = session.selectOne("nhTagsSearchId", tags.getGroup_name());
+			tags.setGroup_id(groupId);
 			result = session.insert("nhTagsInsert", tags);
 			
 		} catch(Exception e) {
@@ -145,11 +150,12 @@ public class TagsDaoImpl implements TagsDao {
 		int result = 0;
 		
 		try {
-			
+			int groupId = session.selectOne("nhTagsSearchId", tags.getGroup_name());
+			log.info(""+groupId);
+			tags.setGroup_id(groupId);
 			result = session.update("nhTagsUpdate", tags);
-			
 		} catch(Exception e) {
-			log.info("TagsDaoImpl insertTags() => " + e.getMessage());
+			log.info("TagsDaoImpl updateTags() => " + e.getMessage());
 		}
 		
 		return result;
@@ -194,7 +200,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhBoardTagsAll", smallCode);
 			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 			
@@ -211,7 +216,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhContentTagOne", contentId);
 			log.info("TagsDaoImpl searchContentTags() => " + listTags.size());
 			
@@ -228,7 +232,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhUserTagsAll", tags);
 			log.info("TagsDaoImpl listUserTags() => " + listTags.size());
 			
@@ -245,7 +248,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhContentTagsAll", bigCode);
 			log.info("TagsDaoImpl listContentTags() => " + listTags.size());
 			
@@ -256,14 +258,13 @@ public class TagsDaoImpl implements TagsDao {
 		return listTags;
 	}
 	
-	// course의 tags 정보들을 모두 가져옴
+	// smallCode에 따라 course의 tags 정보들을 모두 가져옴
 	@Override
-	public List<Tags> listCourseTags() {
+	public List<Tags> listCourseTags(int smallCode) {
 		List<Tags> listTags = null;
 		
 		try {
-			
-			listTags = session.selectList("nhCourseTagsAll");
+			listTags = session.selectList("nhCourseTagsAll", smallCode);
 			log.info("TagsDaoImpl listCourseTags() => " + listTags.size());
 			
 		} catch(Exception e) {
@@ -279,7 +280,6 @@ public class TagsDaoImpl implements TagsDao {
 		List<Tags> listTags = null;
 		
 		try {
-			
 			listTags = session.selectList("nhBoardTagOne", boardId);
 			log.info("TagsDaoImpl listBoardTags() => " + listTags.size());
 			
@@ -627,6 +627,252 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return courseTagsCnt;
 	}
+	
+	// 검색조건에 해당하는 user의 총 수를 반환
+	@Override
+	public int userTagsTotal(Tags tag) {
+		int totalUsers = 0;
+		
+		try {
+			totalUsers= session.selectOne("nhUserTagsTotal", tag);
+			log.info("TagsDaoImpl userTagsTotal => " + totalUsers);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl userTagsTotal => " + e.getMessage());
+		}
+		
+		return totalUsers;
+	}
+
+	// 검색조건에 해당하는 user의 리스트를 반환
+	@Override
+	public List<Tags> searchUserTagsList(Tags tag) {
+		List<Tags> listUsers = null;
+		
+		try {
+			listUsers = session.selectList("nhUserTagsList", tag);
+			log.info("TagsDaoImpl searchUserTagsList() => " + listUsers.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchUserTagsList() => " + e.getMessage());
+		}
+		
+		return listUsers;
+	}
+	
+	// 검색조건에 해당하는 board의 총 수를 반환
+	@Override
+	public int boardTagsTotal(Tags tag) {
+		int totalBoard = 0;
+		
+		try {
+			totalBoard= session.selectOne("nhBoardTagsTotal", tag);
+			log.info("TagsDaoImpl boardTagsTotal => " + totalBoard);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl boardTagsTotal => " + e.getMessage());
+		}
+		
+		return totalBoard;
+	}
+
+	// 검색조건에 해당하는 board의 리스트를 반환
+	@Override
+	public List<Tags> searchBoardTagsList(Tags tag) {
+		List<Tags> listBoard = null;
+		
+		try {
+			listBoard = session.selectList("nhBoardTagsList", tag);
+			log.info("TagsDaoImpl searchBoardTagsList() => " + listBoard.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchBoardTagsList() => " + e.getMessage());
+		}
+		
+		return listBoard;
+	}
+	
+	// 검색조건에 해당하는 content의 총 수 반환
+	@Override
+	public int contentTagsTotal(Tags tag) {
+		int totalContents = 0;
+		
+		try {
+			totalContents= session.selectOne("nhContentTagsTotal", tag);
+			log.info("TagsDaoImpl contentTagsTotal => " + totalContents);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl contentTagsTotal => " + e.getMessage());
+		}
+		
+		return totalContents;
+	}
+
+	// 검색조건에 해당하는 content의 리스트 반환
+	@Override
+	public List<Tags> searchContentTagsList(Tags tag) {
+		List<Tags> listContent = null;
+		
+		try {
+			listContent = session.selectList("nhContentTagsList", tag);
+			log.info("TagsDaoImpl searchContentTagsList() => " + listContent.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchContentTagsList() => " + e.getMessage());
+		}
+		
+		return listContent;
+	}
+	
+	// 검색조건에 해당하는 course의 총 수 반환
+	@Override
+	public int courseTagsTotal(Tags tag) {
+		int totalCourses = 0;
+		
+		try {
+			totalCourses= session.selectOne("nhCourseTagsTotal", tag);
+			log.info("TagsDaoImpl courseTagsTotal => " + totalCourses);
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl courseTagsTotal => " + e.getMessage());
+		}
+		
+		return totalCourses;
+	}
+
+	// 검색조건에 해당하는 course의 리스트 반환
+	@Override
+	public List<Tags> searchCourseTagsList(Tags tag) {
+		List<Tags> listCourse = null;
+		
+		try {
+			listCourse = session.selectList("nhCourseTagsList", tag);
+			log.info("TagsDaoImpl searchCourseTagsList() => " + listCourse.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchCourseTagsList() => " + e.getMessage());
+		}
+		
+		return listCourse;
+	}
+
+	@Override
+	public List<Tags> searchUserTagsOne(int userId) {
+		List<Tags> listMyTags = null;
+		
+		try {
+			listMyTags = session.selectList("nhUserTagOne", userId);
+			log.info("TagsDaoImpl searchUserTagsOne() => " + listMyTags.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl searchUserTagsOne() => " + e.getMessage());
+		}
+		
+		return listMyTags;
+	}
+	
+	@Override
+	public int updateUserTags(int userId, int[] finalTags) {
+		int result = 0;
+		// insert/delete를 여러 번 시행해야 할 수 있으므로 transaction 처리를 해줌 
+		TransactionStatus txStatus = 
+				transactionManager.getTransaction(new DefaultTransactionDefinition());
+		
+		try {
+			// 해당 유저가 이미 저장했던(기존에 DB에 저장되어 있던) tag 정보들을 가져와 list에 저장
+			List<Tags> oldTags = session.selectList("nhUserTagOne", userId);
+			
+			// 기존에 태그 정보 존재, 폼으로 넘어온 태그 정보 존재할 때
+			if(oldTags != null && finalTags != null) {
+				// 폼으로 넘어온 태그가 기존 DB에 이미 존재하는 정보인지 아닌지 확인하는 작업
+				boolean isHere = false;
+			
+				for(Tags tag : oldTags) {
+					for(int i = 0; i < finalTags.length; i++) {
+						if(tag.getId() == finalTags[i]) {
+							isHere = true; // 폼으로 넘어온 태그 정보가 DB에 이미 있던 태그일 때 true로 값 바꿈
+						}
+					}
+					// oldTags에는 존재하지만 finalTags에는 존재하지 않는 tag를 delete
+					if(!isHere) {
+						Tags delTag = new Tags();
+						delTag.setUser_id(userId);
+						delTag.setTag_id(tag.getId());
+						result = session.delete("nhUserTagsDelete", delTag);
+						log.info(delTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				}
+				
+				// finalTags에만 존재하는 tag를 insert
+				for(int tagId : finalTags) {
+					for(int i = 0; i < oldTags.size(); i++) {
+						if(tagId == oldTags.get(i).getTag_id()) {
+							isHere = true; // 폼으로 넘어온 태그가 DB에 없던 새로운 태그일 때 true로 값 변경
+						}
+					}
+					// oldTags에는 존재하지 않지만 finalTags에는 존재하는 tag를 insert
+					if(!isHere) {
+						Tags newTag = new Tags();
+						newTag.setUser_id(userId);
+						newTag.setTag_id(tagId);
+						result = session.delete("nhUserTagsInsert", newTag);
+						log.info(newTag.getTag_id()+"result=>"+result);
+					}
+					isHere = false;
+				} 
+				
+			  // 기존에 태그 정보는 존재하지만 폼으로 넘어온 태그 정보는 null일 때, 즉 태그를 전부 삭제했을 때
+			} else if(oldTags != null && finalTags == null) {
+				for(Tags tag : oldTags) {
+					Tags delTag = new Tags();
+					delTag.setUser_id(userId);
+					delTag.setTag_id(tag.getId());
+					result = session.delete("nhUserTagsDelete", delTag);
+					log.info(delTag.getTag_id()+"result=>"+result);
+				}
+			  
+			  // 기존에 태그 정보는 null이지만 폼으로 넘어온 태그 정보는 존재할 때, 즉 해당 게시글에 태그를 새롭게 입력했을 때
+			} else if(oldTags == null && finalTags != null) {
+				for(int i = 0; i < finalTags.length; i++) {
+					Tags newTag = new Tags();
+					newTag.setUser_id(userId);
+					newTag.setTag_id(finalTags[i]);
+					result = session.delete("nhUserTagsInsert", newTag);
+					log.info(newTag.getTag_id()+"result=>"+result);
+				}
+				
+			  // DB에 저장되어있던 태그 정보도 없고, 새로 폼으로 들어온 태그 정보도 없을 때	
+			} else result = 0;
+			// 모든 작업 하나하나가 정상적으로 실행되면 commit
+			transactionManager.commit(txStatus);
+		} catch (Exception e) {
+			// 하나의 작업이라도 실패하면 rollback
+			transactionManager.rollback(txStatus);
+			log.info("TagsDaoImpl updateUserTags => " + e.getMessage());
+			result = -1;
+		}	
+		
+		return result;
+	}
+	
+	@Override
+	public List<Tags> userPopularTags() {
+		List<Tags> listPopularTags = null;
+		
+		try {
+			
+			listPopularTags = session.selectList("nhUserPopularTags");
+			log.info("TagsDaoImpl listPopularTags() => " + listPopularTags.size());
+			
+		} catch(Exception e) {
+			log.info("TagsDaoImpl listPopularTags() => " + e.getMessage());
+		}
+		
+		return listPopularTags;	
+	}
+
+
 
 	
 	
@@ -656,5 +902,7 @@ public class TagsDaoImpl implements TagsDao {
 		
 		return deleteResult;
 	}
+
+
 
 }

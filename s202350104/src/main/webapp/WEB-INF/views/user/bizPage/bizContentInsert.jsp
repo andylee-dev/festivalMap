@@ -7,10 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- 지역 코드 넣는 코드  Start-->	
 	<script src="/js/updateArea.js"></script>
 	<script type="text/javascript">
+		let selectedTags = []; // 선택한 옵션을 저장할 배열 선언 --> 초기에 DB에 저장되어 있던 태그 모두 저장
+		let allTags = [];      // 전체 태그 정보를 모두 가져와 저장
+		let myTagsArea;
+		
 		document.addEventListener("DOMContentLoaded", function() {
+			<!-- 지역 코드 넣는 코드  Start -->	
 			updateAreaOptions();
 			$(".area-dropdown").change(function() {
 				const selectedArea = $(this).val();
@@ -20,9 +24,131 @@
 					$(".sigungu-dropdown").empty().append("<option value='0'>전체</option>");
 				}
 			});
+			<!-- 지역 코드 넣는 코드  End -->
+			
+			<!-- 태그 코드 Start -->
+			myTagsArea = document.querySelector('.my-tags'); // 저장한 태그 버튼을 보여줄 박스
+			allTagOptions();
 		});
+		
+		function allTagOptions() {
+			$.ajax({
+				url: "<%=request.getContextPath()%>/getAllTags",
+				method: "GET",
+				dataType: "json",
+				success: function(tags) {
+					tags.forEach(function(tag) {
+						allTags.push({id:tag.id, name:tag.name});
+					});
+					console.log("getAllTags success");
+				},
+				error: function() {
+					console.log("전체 태그 정보를 가져오지 못했습니다.");
+				}
+			})
+		}; 
+		
+		function newTagBadge(selectedTag) {
+			// 태그 버튼 생성 
+			const newTag = document.createElement('button');
+			newTag.className = "btn btn-outline-secondary align-items-center";
+			newTag.value = selectedTag.name;
+			newTag.innerHTML = "#" +selectedTag.name;
+			newTag.id = selectedTag.id;
+			console.log(newTag);
+				
+			// x버튼 및 클릭시의 이벤트 생성
+			const closeButton = document.createElement('span');
+			closeButton.innerHTML        = "&times";
+			closeButton.className        = "close-icon";
+			closeButton.style.marginLeft = "5px";
+			closeButton.style.cursor     = "pointer";
+			closeButton.addEventListener('click', (event) => {
+				event.preventDefault();
+				var deletedTag = {
+					id: event.target.parentElement.id,
+					name: event.target.parentElement.value.substr(1) // #를 제외한 텍스트를 name으로
+				}
+					
+				// 삭제할 옵션의 인덱스 찾기 -> selectedTags를 돌면서 deletedTag의 id와 같은 요소가 있으면 삭제하고 badge도 삭제
+				for(var i = 0; i < selectedTags.length; i++) {
+					if(selectedTags[i].id == deletedTag.id) {
+						selectedTags.splice(i, 1);
+						event.target.parentElement.remove();
+						i--; // splice() 사용하면 바로 요소가 제거되고 배열의 길이가 변경되기 때문에 i--를 해준다
+					}
+				}
+			});	
+			
+			newTag.appendChild(closeButton);
+			myTagsArea.appendChild(newTag);
+		}
+		
+		function addTag() {
+			var newTagId;
+			var newTagName = $('.searchForm').val(); // 선택된 tag의 name을 가져옴
+			
+			// keyword 입력했을 때만 태그 버튼 추가
+			if(newTagName != '' && newTagName != null) {
+				// 선택된 tag의 id를 가져옴
+				for(var i = 0; i < allTags.length; i++) {
+					if(allTags[i].name == newTagName) {
+						newTagId = allTags[i].id;
+					}
+				}
+
+				var selectedTag = {
+					id: newTagId,
+					name: newTagName
+				};
+				
+				// 이미 배열에 있는 태그인지 체크
+				var isDuplicate = false;
+				for(var i = 0; i < selectedTags.length; i++) {
+					if(selectedTags[i].id == selectedTag.id) {
+						isDuplicate = true;
+						alert("이미 추가한 태그입니다.");
+					}
+				}
+				
+				// 배열에 없었던 태그일 경우에만 추가
+				if(!isDuplicate) {
+					selectedTags.push(selectedTag); 
+					newTagBadge(selectedTag);
+				}
+				
+				$('.searchForm').value = "";
+			}
+		}
+		<!-- 태그 코드 End -->
+		
+		<!-- 축제 insert -->
+		function submitFestival() {
+			event.preventDefault();
+			
+			var formData = new FormData($('#festivalInsertForm')[0]);
+			var finalTags = [];
+			for(var i = 0; i < selectedTags.length; i++) {
+				finalTags.push(Number(selectedTags[i].id));
+			}
+			formData.append('finalTags', finalTags);
+			
+			if(confirm("등록하시겠습니까?")) {
+				$.ajax({
+					url: "<%=request.getContextPath()%>/festival/insert",
+					method: "POST",
+					data: formData,
+					dataType: "text",
+					contentType: false,
+		            processData: false,
+					success: function(str) {
+						alert(str);
+						location.href="<%=request.getContextPath()%>/user/bizPage/content";
+					}
+				})
+			}
+		}
 	</script>
-	<!-- 지역 코드 넣는 코드  End-->	
 
 	<style type="text/css">
 	    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -32,13 +158,119 @@
 	    .tab-pane.fade.show.active {
 	        background-color: #F8FCF4; /* 원하는 배경색으로 변경 */
 	    }
+	    
+		#detail-top-container {
+			position: absolute;
+			width: 250px;
+			height: 83px;
+			border-radius: 10px;
+			border: 1px solid #000;
+			flex-shrink: 0;
+			top: -35px; /* B의 상단에 A를 위치시키기 위해 top을 0으로 설정 */
+			margin: auto; /* 수평 및 수직 가운데 정렬을 위해 margin을 auto로 설정 */
+			z-index: -1; /* A를 B 뒤로 보내기 위해 z-index를 -1로 설정 */
+			background-color: black;
+		}
+		
+		#detail-top-text {
+			color: white;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+		}
+		
+		#detail-top-id{
+			color: #FF4379;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+			word-wrap: break-word;
+		}	
+		
+		#detail-top-id2{
+			color: #BDEB50;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.48px;
+			padding-top: 5px;
+			word-wrap: break-word;
+		}	
+		
+		#detail-main-container {
+			position: relative;
+			border: 1px solid #000;
+			border-radius: 10px;
+			background-color: white;
+		}
+		.detail-body-container {
+			justify-content: center;
+			padding-right: 0;
+			padding-left: 0;
+			margin-right: 0;
+			margin-left: 0;
+		}
+		.form-label{
+			color: #000;
+			font-family: Noto Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+		}
+		h1 {
+			color: black;
+			font-size: 32px;
+			font-family: Noto Sans;
+			font-weight: 600;
+			word-wrap: break-word
+		}
+		h3 {
+			color: #FF4379;
+			font-size: 24px;
+			font-family: Noto Sans;
+			font-weight: 600;
+			word-wrap: break-word
+		}
+		
+		.btn-primary2 {
+		    background-color: #9BDB04; 
+		    border-color: #9BDB04; 
+		    color: white;
+		}
+		
+		.btn-primary2:hover {
+		    background-color: #52525C ; 
+		    border-color: #52525C; 
+		    color: #9BDB04;
+		}
+		
+		.tags-container {
+			border-radius: 10px;
+			border: 1px solid #000;
+			padding: 10px;
+		}
+		
 	</style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<main >
 	<div class="d-flex">
-		<%@ include file="/WEB-INF/components/BizPageSideBar.jsp" %>
-		<div id="exTab3" class="container p-5">	
+			<div class="col-2">
+				<%@ include file="/WEB-INF/components/BizPageSideBar.jsp"%>
+			</div>
+		<div id="exTab3" class="container p-5 col-10">	
 			<nav>
 			  <div class="nav nav-tabs " id="nav-tab" role="tablist">
 			    <button class="nav-link active" id="nav-festival-tab" data-bs-toggle="tab" data-bs-target="#nav-festival" type="button" role="tab" aria-controls="nav-festival" aria-selected="true">축제</button>
@@ -50,558 +282,853 @@
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
 			  
-			  
-			  <div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
-			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/festivalInsert" method="post">
-						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
-						<table class="table table-striped table-sm">
-							<%-- <tr>
-								<th>컨텐츠 ID</th>
-								<td>${festival.content_id}</td>
-							</tr> 등록할 때 컨텐츠 번호를 확인할 수 있으면 좋을 것 같다(nextval, 입력할 때는 currval) --%>
-							<tr>
-								<th>분류</th>
-								<td>
-									<input type="hidden" name="big_code" value="11">[Festival]<br>
-									<select name="small_code">
-										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 11 && code.small_code != 999}">
-												<option value="${code.small_code}">${code.content}</option>
-											</c:if>
-										</c:forEach>
-									</select></td> <!-- select box -->
-							</tr>
-							<tr>
-								<th>축제명</th>
-								<td><input type="text" name="title" required="required"></td>
-							</tr>
-							<tr>
-								<th>시작일</th>
-								<td><input type="date" name="start_date"></td>
-							</tr>
-							<tr>
-								<th>종료일</th>
-								<td><input type="date" name="end_date"></td>
-							</tr>
-							<tr>
-								<th>진행시간</th>
-								<td><input type="text" name="hours"></td>
-							</tr>
-							<tr>
-								<th>주최자</th>
-								<td><input type="text" name="sponsor"></td>
-							</tr>
-							<tr>
-								<th>전화번호</th>
-								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000"
-									pattern="\d{2,3}-\d{3,4}-\d{4}"></td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td><input type="email" name="email"></td>
-							</tr>
-							<tr>
-								<th>장소명</th>
-								<td><input type="text" name="eventplace"></td>
-							</tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-								</td>
-							</tr>
-							<tr>
-								<th>주소</th>
-								<td><%-- postcode & address --%></td>
-							</tr>
-							<tr>
-								<th>개요</th>
-								<td><textarea rows="10" cols="60" name="content" maxlength="4000" 
-									placeholder="축제에 대한 설명을 4000자 이내로 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><textarea rows="10" cols="60" name="overview" maxlength="2000" 
-									placeholder="축제 내용에 대한 설명을 2000자 이내로 입력해주세요  "></textarea></td>
-							</tr>
-							<tr>
-								<th>이용요금</th>
-								<td><input type="text" name="cost"></td>
-							</tr>
-							<tr>
-								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
-							</tr>
-							<tr>
-								<th>이미지</th>
-								<td><!-- 이미지 업로드 폼 만들기 img1 img2 img3 --></td>
-							</tr>
-							<tr>
-								<th>태그</th>
-								<td>
-									 <div class="container">
-										<div class="row mb-3 g-3">
-						      			  <div class="col-md-4">
-						         			 <select class="form-select" id="validationTagsClear" name="tagsClear[]" multiple data-allow-clear="true">
-						            			<option selected disabled hidden value="">태그를 선택해주세요.</option>
-									            <c:forEach var="tag" items="${listTags}">
-									            	<option value="${tag.id}" data-badge-style="info">${tag.name}</option>
-									            </c:forEach>
-									          </select>
-									          <div class="invalid-feedback">유효한 태그를 선택해주세요.</div>
-									        </div>
-									      </div>
-						  			</div>
-								</td>
-							</tr>
-							<tr>
-								<th>가능 여부</th>
-								<td>
-									<input type="checkbox" name="is_parking" value="1">주차시설<br>
-									<input type="checkbox" name="is_stroller" value="1">유모차대여<br>
-									<input type="checkbox" name="is_wheelchair" value="1">휠체어대여<br>
-									<input type="checkbox" name="is_restroom" value="1">장애인화장실
-								</td>
-							</tr>
-						</table>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+			<div class="tab-pane fade show active" id="nav-festival" role="tabpanel" aria-labelledby="nav-festival-tab" tabindex="0">
+			  	<div class="container-fluid">
+			  		<div class="row">
+			  			<div class="container my-5 detail-body-container">
+							<div>
+								<h1>축제 등록</h1>
+							</div>		  		
+							<div>
+								<hr class="hr">
+							</div>	
+							<div>
+								<h3 style="color: #FF4379">축제정보 등록하기</h3>
+							</div>
+							<div class="my-5">
+							<div class="" id="detail-main-container">
+								<div class="container p-5" id="form-container">
+			  						<form id="festivalInsertForm" action="<%=request.getContextPath()%>/festival/insert" 
+			  						 method="post" enctype="multipart/form-data">
+										<input type="hidden" name="user_id" value="${userId}">
+										<input type="hidden" name="big_code" value="11">
+										<div class="mb-3">
+											<label for="title" class="form-label">축제 이름(필수 입력)</label>
+											<input type="text" class="form-control" name="title" id="title" required>
+										</div>
+										<div class="mb-3">
+											<label for="small_code" class="form-label">축제 테마(필수 선택)</label>
+											<select class="form-select" aria-label="small_code" name="small_code" required>
+												<c:forEach var="smallCode" items="${listCodes}">
+													<c:if test="${smallCode.big_code == 11 && smallCode.small_code != 999}">
+														<option value="${smallCode.small_code}">${smallCode.content}</option>
+													</c:if>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="mb-3">
+											<div class="row">
+												<div class="col-6 md-4 mb-3">
+													<label for="start_date" class="form-label">시작일</label>
+													<input type="date" class="form-control" name="start_date" id="start_date">
+												</div>
+												<div class="col-6 md-4 mb-3">
+													<label for="end_date" class="form-label">종료일</label>
+													<input type="date" class="form-control" name="end_date" id="end_date">
+												</div>
+											</div>
+										</div>
+										<div class="mb-3">
+											<label for="sponsor" class="form-label">주최자</label>
+											<input type="text" class="form-control" name="sponsor" id="sponsor">
+										</div>
+										<div class="mb-3">
+											<label for="area" class="form-label">주소(필수 선택)</label>
+											<div class="row">
+												<div class="col-6 md-4 mb-3">
+													<select name="area" class="form-select area-dropdown"></select>
+												</div>
+												<div class="col-6 md-4 mb-3">
+													<select name="sigungu" class="form-select sigungu-dropdown"></select>
+												</div>
+												<div class="col-12 mb-3">
+													<input type="text" class="form-control" name="address" id="address" 
+													 placeholder="상세주소를 입력해주세요.(60자 이내)" maxlength="60">
+												</div>
+												<div class="col-12">
+													<input type="text" class="form-control" name="eventplace" id="eventplace" 
+													 placeholder="장소명을 입력해주세요.(60자 이내)" maxlength="60">
+												</div>
+											</div>
+										</div>
+										<div class="mb-3">
+											<label for="homepage" class="form-label">홈페이지</label>
+											<input type="text" class="form-control" name="homepage" id="homepage">
+										</div>
+										<div class="mb-3">
+											<div class="row">
+												<div class="col-6">
+													<label for="phone" class="form-label">전화번호</label>
+													<input type="text" class="form-control" name="phone" id="phone" placeholder="010-0000-0000~0">
+												</div>
+												<div class="col-6">
+													<label for="email" class="form-label">이메일</label>
+													<input type="text" class="form-control" name="email" id="email">
+												</div>
+											</div>	
+										</div>
+										<div class="mb-3">
+											<label for="content" class="form-label">축제 개요</label>
+											<textarea class="form-control" name="content" id="content" rows="5" 
+											 placeholder="축제의 개요를 입력해주세요.(1200자 이내)" maxlength="1200"></textarea>
+										</div>
+										<div class="mb-3">
+											<label for="overview" class="form-label">상세 내용</label>
+											<textarea rows="5" class="form-control" name="content" id="overview"
+											 placeholder="축제의 상세 내용을 입력해주세요.(600자 이내)" maxlength="600"></textarea>
+										</div>	
+										<div class="mb-3">
+											<label for="hours" class="form-label">진행시간</label>
+											<input type="text" class="form-control" id="hours" name="hours">
+										</div>
+										<div class="mb-3">
+											<label for="cost" class="form-label">이용요금</label>
+											<input type="text" class="form-control" id="cost" value="${festival.cost}">
+										</div>
+										<div class="mb-3">
+											<label for="facilities" class="form-label">부대/편의 시설</label>
+											<div class="col-12 d-flex justify-content-between">
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_parking" id="is_parking" value="1">
+										  			<label class="form-check-label" for="is_parking">주차여부</label>
+										  		</div>
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_stroller" id="is_stroller" value="1">
+										  			<label class="form-check-label" for="is_stroller">유아차 대여</label>
+										  		</div>
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_wheelchair" id="is_wheelchair" value="1">
+										  			<label class="form-check-label" for="is_wheelchair">휠체어 대여</label>
+										  		</div>
+										  		<div class="col-3 form-check">
+										  			<input class="form-check-input" type="checkbox" name="is_restroom" id="is_restroom" value="1">
+										  			<label class="form-check-label" for="is_restroom">장애인 화장실</label>
+										  		</div>
+										  	</div>
+										</div>
+										<div class="mb-3">
+											<label for="searchType" class="form-label">태그</label>
+											<div class="col-12 mb-3 d-flex">
+												<input type="text" name="keyword" class="form-control searchForm" 
+												 placeholder="키워드를 입력해주세요." autocomplete="off" list="autoTags">
+												<img class="keyword-img align-self-center mx-1" src="<%=request.getContextPath()%>/image/icon_search1.png" 
+												 alt="icon_search1.png" id="searchIcon" onclick="addTag()"/>
+													<datalist id="autoTags">
+														<c:forEach var="tag" items="${listAllTags}">
+															<option id="${tag.id}" value="${tag.name}">
+														</c:forEach>
+													</datalist>
+											</div>
+											<div class="tags-container my-tags"><!-- 태그 badge가 들어갈 곳 --></div>
+										</div>
+										<div class="mb-3 mt-3">
+										    <div class="row p-0 insert_row2_custom">
+										        <div class="form-group col">
+										            <label class="lable2" for="file">첫번째 이미지</label>
+										            <input type="file" class="form-control" name="file">
+										        </div>
+										        
+										        <div class="form-group col">
+										            <label class="lable2" for="file1">두번째 이미지</label>
+										            <input type="file" class="form-control" name="file1">
+										        </div>
+										        
+										        <div class="form-group col">
+										            <label class="lable2" for="file2">세번째 이미지</label>
+										            <input type="file" class="form-control" name="file2">
+										        </div>
+										    </div>								
+										</div>
+										
+										<!-- 카카오맵을 실행 시키기 위한 로직 by 상엽 -->
+										<div id="map"></div>
+										<input type="hidden" name="mapx" id="mapx_input" value="${festival.mapx }">
+  										<input type="hidden" name="mapy" id="mapy_input" value="${festival.mapy }">
+  														
+										<div align="center">
+											<button type="submit" class="btn btn-outline-secondary" onclick="submitFestival()">등록</button>
+											<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+										</div>
+									</form>
+									<!-- 카카오맵을 통해 좌표 받기위한 로직 by 상엽 -->
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274&libraries=services"></script>
+						<script>
+						
+  						
+		  						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		  					    mapOption = {
+		  					        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		  					        level: 3 // 지도의 확대 레벨
+		  					    };  
+		
+		  					// 지도를 생성합니다    
+		  					var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+		  					// 주소-좌표 변환 객체를 생성합니다
+		  					var geocoder = new kakao.maps.services.Geocoder();
+		
+		  					// 주소로 좌표를 검색합니다
+		  					document.getElementById('address').onchange = function() {
+		  					  var address = this.value;
+		  					  
+		  					  // 'address' 대신 실제 주소 값을 전달하도록 수정
+		  					  geocoder.addressSearch(address, function(result, status) {
+		  					    // 정상적으로 검색이 완료됐으면 
+		  					    if (status === kakao.maps.services.Status.OK) {
+		  					      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		  					      
+		  					      // 결과값으로 받은 위치를 마커로 표시합니다
+		  					      var marker = new kakao.maps.Marker({
+		  					        map: map,
+		  					        position: coords
+		  					      });
+		
+		  					      // 인포윈도우로 장소에 대한 설명을 표시합니다
+		  					      var infowindow = new kakao.maps.InfoWindow({
+		  					        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+		  					      });
+		  					      infowindow.open(map, marker);
+		
+		  					      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		  					      map.setCenter(coords);
+		  					    document.getElementById("mapx_input").value = result[0].x;
+		  						document.getElementById("mapy_input").value = result[0].y;
+		  					    } 
+		  					  });
+		  					}
+					        
+								</script>
+								</div>	
+							</div>
+							</div>
 						</div>
-					</form>
+					</div>
 				</div>
-				
-			   </div>
+			</div>
 			 
-			 
-			 
-			  <div class="tab-pane fade" id="nav-restaurant" role="tabpanel" aria-labelledby="nav-restaurant-tab" tabindex="0">
-			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/restaurant/insert" method="post">
-						<table class="table table-striped table-sm">
-							<!-- <tr><th>콘텐츠ID</th><td><input 	type="number" 	name="contentId" 	required="required" maxlength="10" value="">
-													<input 	type="button" 	value="중복확인" 	 	onclick="chk()"> -->
-							<tr><th>분류</th>
-								<td>
-									<input type="hidden" name="small_code" value="12">[Restaurant]<br>
-									<select name="small_code">
-										<c:forEach var="listCodes" items="${listCodes}">
-											<c:if test="${listCodes.big_code == 12 && listCodes.small_code != 999 }">
-												<option value="${listCodes.small_code}">${listCodes.content}</option>
-											</c:if>
-										</c:forEach>
-									</select>
-								</td>
-							<tr><th>음식점명</th><td><input 	type="text" 	name="title" 		required="required"></td></tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-			  					</td>
-							</tr>
-							<tr><th>주소</th><td><input 		type="text"    	name="address" 		></td></tr>
-							<tr><th>우편번호</th><td><input 	type="number" 	name="postcode" 	></td></tr>
-							<tr><th>전화번호</th><td><input   type="tel"  		name="phone"        placeholder="010 - 0000 - 0000" pattern="\d{2,3}-\d{3,4}\d{4}"></td>       
-							<tr><th>대표메뉴</th><td><input 	type="text" 	name="first_menu" 	></td></tr>
-							<tr><th>추천메뉴</th><td><input 	type="text" 	name="menu" 		></td></tr>
-							<tr><th>영업시간</th><td><input 	type="text" 	name="open_time" 	></td></tr>
-							<tr><th>휴무일</th><td><input 	type="text" 	name="rest_date" 	></td></tr>
-							<tr><th>내용</th><td><textarea   rows="10" cols="60" name="content" maxlength="6000" placeholder="맛집에 대한 설명을 1000자 이내로 입력해주세요"></textarea></tr>
-							<tr><th>이미지</th><td></td></tr>
-							<tr><th>태그</th><td></td></tr>
-							<tr><th>가능여부</th>
-								<td>
-									<input type="checkbox" name="is_smoking" value="1">흡연<br>
-									<input type="checkbox" name="is_packing" value="1">포장<br>
-									<input type="checkbox" name="is_parking" value="1">주차<br>
-								</td>
-							</tr>
-							<tr><th>등록자ID</th><td></td></tr>
-							<tr><th>등록일</th><td></td></tr>
-						</table>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary"  onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까')">초기화</button>
-						</div>	
-					</form>	
+			<!-- 명소 -->			
+			 <div class="tab-pane fade" id="nav-spot" role="tabpanel" aria-labelledby="nav-spot-tab" tabindex="0">
+			  	<div class="container-fluid">
+					<div class="row">
+					<div class="container my-5" id="detail-body-container">
+					<div>
+						<h1>명소 등록</h1>
+						<hr class="hr" />
+					</div>
+					<div>
+						<h3 style="color: #FF4379 ">명소정보 등록하기</h3>
+					</div>
+					<div class="my-5">
+					<div class="" id="detail-main-container">
+						<div class="container p-5" id="form-container">
+					<form action="<%=request.getContextPath()%>/admin/content/spotInsertResult" method="post">
+						<div class="mb-3 ">
+						  <label for="title" class="form-label">명소 이름(필수 입력)</label>
+						  <input type="text" class="form-control" name="title" id="title" value="${spot.title}" required="required">
+						</div>
+						<div class="mb-3" id="detail-content-title">
+						  <label for="small_code" class="form-label">명소 종류(필수 선택)</label>
+							<input type="hidden" name="big_code" value="14">
+								<select class="form-select" aria-label="small_code" name="small_code" required="required">
+									<c:forEach var="code" items="${listCodes}">
+										<c:if test="${code.big_code == 14 && code.small_code != 999}">
+											<option value="${code.small_code}" ${code.small_code== spot.small_code? 'selected' : '' }>${code.content}</option>
+										</c:if>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="mb-3 ">
+								<label for="content" class="form-label ">지역(필수 선택)</label>
+									<div class="row">
+								   		<div class="col-2">  
+											<select name="area" class="form-select area-dropdown"></select>
+										</div>
+										<div class="col-4">
+								       		<select name="sigungu"  class="form-select sigungu-dropdown"></select>
+								   	 	</div>
+								   	 </div>
+							</div>	   	 
+							<div class="mb-3 ">
+								<label for="content" class="form-label ">주소</label>
+								   	 <div class="row">
+								   	 	<div class="col-2">
+								    		<input type="text" class="form-control" name="postcode" id="postcode" value="${spot.postcode}" placeholder="우편번호">
+								    	</div>
+								    	<div class="col-10">
+								    		<input type="text" class="form-control" name="address" id="address" value="${spot.address}" placeholder="상세주소 입력해주세요">
+								    	</div>
+								   	 </div>
+							</div>
+							<div class="mb-3 ">
+						  		<label for="content" class="form-label">개요</label>
+								<textarea rows="5" class="form-control" name="content" id="content" maxlength="4000" 
+									placeholder="명소에 대한 설명을 4000자 이내로 입력해주세요">${experience.content}</textarea>
+							</div>
+							<div class="mb-3 ">
+						 		<label for="email" class="form-label">email</label>
+						  		<input type="text" class="form-control" name="email" id="email" value="${spot.email} ">
+							</div>
+							<div class="mb-3 ">
+						 	 	<label for="phone" class="form-label">전화번호</label>
+						  		<input type="text" class="form-control" name="phone" id="phone" value="${spot.phone}" placeholder="010 - 0000 - 0000~0">
+							</div>
+							<div class="mb-3 ">
+						 		<label for="homepage" class="form-label">홈페이지</label>
+						  		<input type="text" class="form-control" name="homepage" id="homepage" value="${spot.homepage} ">
+							</div>
+							<div class="mb-3 ">
+						  		<label for="opening_hours" class="form-label">영업시간</label>
+						  		<input type="text" class="form-control" name="opening_hours" id="opening_hours" value="${spot.opening_hours} ">
+							</div>
+							<div class="mb-3 ">
+						  		<label for="rest_date" class="form-label">휴무일</label>
+						  		<input type="text" class="form-control" name="rest_date" id="rest_date" value="${spot.rest_date} ">
+							</div>
+							<div class="mb-3 ">
+						  		<label for="entrance_fee" class="form-label">입장료</label>
+								<input type="text" class="form-control" name="ntrance_fee" id="ntrance_fee" value="${spot.ntrance_fee} ">
+							</div>
+							<div class="mb-3 ">
+						 	 	<label for="img1" class="form-label">이미지</label>
+						  		<input type="text" class="form-control" name="img1" id="img1 value="${spot.img1} ">
+							</div>
+							<div class="mb-3 ">
+							 <label for="rest_time" class="form-label">태그</label>
+								<div class="tag-container">
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                       </div>
+			    				</div>
+		                   </div>
+							
+							<label for="facilities" class="form-label">부대시설</label><br>
+								<div class="col-12 d-flex justify-content-between">
+						  			<div class="col-2 form-check mx-3">
+										<input class="form-check-input" type="checkbox" name="is_wheelchair"
+										  	   id="is_wheelchair" value="1" ${experience.is_credit == 1?"checked":""}> 
+										<label class="form-check-label" for="is_wheelchair">휠체어대여</label>
+									</div>
+									<div class="col-2 form-check mx-3">
+										<input class="form-check-input" type="checkbox" name="is_restroom"
+										  	   id="is_restroom" value="1" ${experience.is_credit == 1?"checked":""}> 
+										<label class="form-check-label" for="is_restroom">장애인화장실</label>
+									</div>
+									<div class="col-2 form-check mx-3">
+										<input class="form-check-input" type="checkbox" name="is_pet"
+												  id="is_pet" value="1" ${spot.is_pet == 1?"checked":""}> 
+										<label class="form-check-label" for="is_pet">반려동물</label>
+									</div>
+									<div class="col-2 form-check mx-3">
+										<input class="form-check-input" type="checkbox" name="is_parking"
+												  id="is_parking" value="1" ${spot.is_parking == 1?"checked":""}> 
+										<label class="form-check-label" for="is_parking">주차시설</label>
+									</div>
+									<div class="col-2 form-check mx-3">
+										<input class="form-check-input" type="checkbox" name="is_stroller"
+												  id="is_stroller" value="1" ${spot.is_stroller == 1?"checked":""}> 
+										<label class="form-check-label" for="is_stroller">유모차대여</label>
+									</div>
+								</div>
+								
+								<hr class="hr" />			
+						
+								<div class="d-flex justify-content-between">
+									<div class="col-6 mb-3" >
+	                        			<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+	                        		</div>
+	                        		<div class="col-3 mb-3">
+	                        			<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+	                        		</div>
+	                        		<div class="col-2 mb-3">
+	                        			<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/spot'">취소</button>
+	                        		</div>
+								</div>
+			  			</form>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
 				</div>
-			   </div>
+			</div>
+			<!-- 명소끝 --> 
+			 
+			<div class="tab-pane fade" id="nav-restaurant" role="tabpanel" aria-labelledby="nav-restaurant-tab" tabindex="0">
+			  	<div class="container-fluid">
+				<div class="row">
+				<div class="container my-5" id="detail-body-container">
+					<div>
+						<h1>맛집 등록</h1>
+						<hr class="hr" />
+					</div>
+					<div>
+						<h3 style="color: #FF4379 ">맛집정보 등록하기</h3>
+					</div>
+					<div class="my-5">
+					<div class="" id="detail-main-container">
+						<div class="container p-5" id="form-container">
+						<form action="restaurantInsert" method="post">
+							<div class="mb-3 ">
+							  <label for="title" class="form-label">맛집 이름(필수 입력)</label>
+							  <input type="text" class="form-control" name="title" id="title" value="${restaurant.title}" required="required">
+							</div>
+							<div class="mb-3" id="detail-content-title">
+							  <label for="small_code" class="form-label">맛집 종류(필수 선택)</label>
+							  	<input type="hidden" name="big_code" value="12">
+								<select class="form-select" aria-label="small_code" name="small_code" required="required">
+									<c:forEach var="smallCode" items="${listSmallCode}">
+										<c:if test="${smallCode.big_code == 12 && smallCode.small_code != 999}">
+											<option value="${smallCode.small_code}" ${smallCode.small_code == restaurant.small_code? 'selected' : '' }>${smallCode.content}</option>
+										</c:if>
+								 	</c:forEach>
+								</select>
+							</div>			
+							<div class="mb-3 ">
+								<label for="content" class="form-label ">지역(필수 선택)</label>
+									<div class="row">
+									    <div class="col-2">
+									        <select name="area" class="form-select area-dropdown"></select>
+									    </div>
+									    <div class="col-2">
+									       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+									    </div>
+									    <div class="col-8">
+									    <input type="text" class="form-control" name="address" id="address" value="${restaurant.address}" placeholder="상세주소 입력해주세요">
+									    </div>
+									</div>
+							</div>
+							<div class="mb-3 ">
+							  <label for="phone" class="form-label">전화번호</label>
+							  <input type="text" class="form-control" name="phone" id="phone" value="${restaurant.phone} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="first_menu" class="form-label">대표메뉴</label>
+							  <input type="text" class="form-control" name="first_menu" id="first_menu" value="${restaurant.first_menu} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="menu" class="form-label">추천메뉴</label>
+							  <input type="text" class="form-control" name="menu" id="menu" value="${restaurant.menu} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="content" class="form-label">개요</label>
+							  <textarea class="form-control" name="content" id="content" rows="5" >${restaurant.content}</textarea>
+							</div>		
+							<div class="mb-3 ">
+							  <label for="open_time" class="form-label">영업시간</label>
+							  <input type="text" class="form-control" name="open_time" id="open_time" value="${restaurant.open_time} " >
+							</div>
+							<div class="mb-3 ">
+							  <label for="rest_date" class="form-label">휴무일</label>
+							  <input type="text" class="form-control" name="rest_date" id="rest_date" value="${restaurant.rest_date} " >
+							</div>
+							<div class="mb-3 ">
+								 <label for="rest_time" class="form-label">태그</label>
+									<div class="tag-container">
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                         </div>
+				                         <div class="tag-item">
+				                             <div>#MZ추천</div>
+				                      	 </div>
+				    				</div>
+			                 </div>	 
+							 				  
+							  <label for="facilities" class="form-label">부대시설</label><br>
+							<div class="col-12 d-flex justify-content-between">
+							  	<div class="col-3 form-check">
+									<input class="form-check-input" type="checkbox" name="is_smoking"
+									id="is_credit" value="1" ${restaurant.is_smoking == 1?"checked":""} > 
+									<label class="form-check-label" for="is_credit">흡연가능</label>
+								</div>
+								<div class="col-3 form-check">
+									<input class="form-check-input" type="checkbox" name="is_packing"
+									id="is_pet" value="1" ${restaurant.is_packing == 1?"checked":""} > 
+									<label class="form-check-label" for="is_packing">포장가능</label>
+								</div>
+								<div class="col-3 form-check">
+								<input class="form-check-input" type="checkbox" name="is_parking"
+									id="is_parking" value="1" ${restaurant.is_parking == 1?"checked":""} > 
+									<label class="form-check-label" for="is_parking">주차가능</label>
+								</div>
+							</div>
+																		
+							<hr class="hr" />			
+												
+							<div class="d-flex justify-content-between">
+								<div class="col-6 mb-3" >
+		                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+		                        </div>
+		                        <div class="col-3 mb-3">
+		                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+		                        </div>
+		                        <div class="col-2 mb-3">
+		                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/restaurant'">취소</button>
+		                        </div>
+							</div>
+														
+							</form>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>	
+			  	
 			 
 			 
 			  <div class="tab-pane fade" id="nav-accomodation" role="tabpanel" aria-labelledby="nav-accomodation-tab" tabindex="0">
-				<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/accomodationInsert" method="post">
-						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
-						<table class="table table-striped table-sm">
-							<%--<tr>
-								<th>컨텐츠 ID</th>
-								<td>${festival.content_id}</td>
-							</tr> 등록할 때 컨텐츠 번호를 확인할 수 있으면 좋을 것 같다(nextval, 입력할 때는 currval) --%>
-							<tr>
-								<th>분류</th>
-								<td>
-									<input type="hidden" name="big_code" value="13">[Accomodation]<br>
-									<select name="small_code">
-										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 13 && code.small_code != 999}">
-												<option value="${code.small_code}">${code.content}</option>
-											</c:if>
-										</c:forEach>
-									</select></td> <!-- select box -->
-							</tr>
-							<tr>
-								<th>숙소명</th>
-								<td><input type="text" name="title" required="required"></td>
-							</tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-			  					</td>
-							</tr>
-							<tr>
-								<th>주소</th>
-								<td><input type="text" name="address"></td>
-							</tr>
-							<tr>
-								<th>우편번호</th>
-								<td><input type="text" name="postcode"></td>
-							</tr>
-							<tr>
-								<th>전화번호</th>
-								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000"
-									pattern="\d{2,3}-\d{3,4}-\d{4}"></td>
-							</tr>
-							<tr>
-								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
-							</tr>
-							<tr>
-								<th>객실수</th>
-								<td><input type="text" name="room_count"></td>
-							</tr>
-							<tr>
-								<th>예약처</th>
-								<td><input type="text" name="reservation_url"></td>
-							</tr>
-							<tr>
-								<th>환불규정</th>
-								<td><textarea rows="10" cols="60" name="refund" maxlength="2000" 
-									placeholder="환불규정에 대한 설명을 2000자 이내로 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><textarea rows="10" cols="60" name="content" maxlength="2000" 
-									placeholder="축제 내용에 대한 설명을 2000자 이내로 입력해주세요  "></textarea></td>
-							</tr>
-							<tr>
-								<th>입실시간</th>
-								<td><input type="time" name="chcek_in"></td>
-							</tr>
-							<tr>
-								<th>퇴실시간</th>
-								<td><input type="time" name="chcek_out"></td>
-							</tr>
-							<tr>
-								<th>이미지</th>
-								<td><!-- 이미지 업로드 폼 만들기 img1 img2 img3 --></td>
-							</tr>
-							<tr>
-							<th>지도</th>
-							<td><div id="map" style="width:500px;height:400px; margin: 0 auto;"></div>
-							<input type="hidden" name="mapx" id="mapx_input">
-  							<input type="hidden" name="mapy" id="mapy_input">
-							</td>
-							</tr>
-							<tr>
-								<th>가능 여부</th>
-								<td>
-									<input type="checkbox" name="is_pickup" value="1">픽업<br>
-									<input type="checkbox" name="is_cook" value="1">조리<br>
-									<input type="checkbox" name="is_parking" value="1">주차									
-								</td>
-							</tr>
-						</table>
-						<div id="clickLatlng"></div>
-						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d40db7fe264068aa3438b9a0b8b2274"></script>
-						<script>
-  						
-						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-  						mapOption = { 
-       					center: new kakao.maps.LatLng(37.56682, 126.97865), // 지도의 중심좌표
-        				level: 3 // 지도의 확대 레벨
-  						 };
-
-					    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-						// 지도를 클릭한 위치에 표출할 마커입니다
-						var marker = new kakao.maps.Marker({ 
-   						 // 지도 중심좌표에 마커를 생성합니다 
-   						position: map.getCenter() 
-						}); 
-						// 지도에 마커를 표시합니다
-						marker.setMap(map);
-
-						// 지도에 클릭 이벤트를 등록합니다
-						// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-						kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-						    
-						    // 클릭한 위도, 경도 정보를 가져옵니다 
-						     var latlng = mouseEvent.latLng; 
-      						 var clickedLat = latlng.getLat();
-        					 var clickedLng = latlng.getLng();
-						    
-						    // 마커 위치를 클릭한 위치로 옮깁니다
-						    marker.setPosition(latlng);
-						    
-						    console.log('클릭한 위치의 위도: ' + clickedLat);
-					        console.log('클릭한 위치의 경도: ' + clickedLng);
-
-					     // 클릭한 위치의 위도와 경도를 각 input 태그에 설정합니다
-					        document.getElementById("mapx_input").value = clickedLng;
-					        document.getElementById("mapy_input").value = clickedLat;
-					    });
-
-					    // 폼을 서버에 제출하는 코드
-					    document.getElementById("accomodationForm").addEventListener("submit", function(e) {
-					        e.preventDefault(); // 폼 제출 기본 동작을 막습니다.
-
-					        var form = e.target;
-					        var formData = new FormData(form);
-					        var xhr = new XMLHttpRequest();
-					        xhr.open("POST", form.action, true);
-					        xhr.onreadystatechange = function() {
-					            if (xhr.readyState === 4 && xhr.status === 200) {
-					                console.log("데이터가 성공적으로 업데이트되었습니다.");
-					            }
-					        };
-					        xhr.send(formData);
-					    });
-					        
-					</script>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
-						</div>
-					</form>
+			  	<div class="container-fluid">
+				<div class="row">
+				<div class="container my-5" id="detail-body-container">
+				<div>
+				<h1>숙소 등록</h1>
+				<hr class="hr" />
 				</div>
+				<div>
+				<h3 style="color: #FF4379 ">숙소정보 등록하기</h3>
+				</div>
+				<div class="my-5">
+				<div class="" id="detail-main-container">
 				
-				
-				
-				
-			  	<
-			  </div>
-			  
+					<div class="container p-5" id="form-container">
+					<form action="<%=request.getContextPath()%>/admin/content/accomodationInsert" method="post" enctype="multipart/form-data">
+						<div class="mb-3 ">
+						  <label for="title" class="form-label">숙소 이름(필수 입력)</label>
+						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
+						  <input type="text" class="form-control" name="title" id="title" value="${accomodaiton.title}" required="required">
+						</div>
+						<div class="mb-3" id="detail-content-title">
+						  <label for="small_code" class="form-label">숙소 종류(필수 선택)</label>
+						  	<input type="hidden" name="big_code" value="13">
+							<select class="form-select" aria-label="small_code" name="small_code" required="required">
+								<c:forEach var="smallCode" items="${listCodes}">
+									<c:if test="${smallCode.big_code == 13 && smallCode.small_code != 999}">
+										<option value="${smallCode.small_code}" ${smallCode.small_code == accomodaiton.small_code? 'selected' : '' }>${smallCode.content}</option>
+									</c:if>
+							 	</c:forEach>
+							</select>
+						</div>			
+						<div class="mb-3 ">
+							<label for="content" class="form-label ">지역(필수 선택)</label>
+								<div class="row">
+								    <div class="col-2">
+								        <select name="area" class="form-select area-dropdown"></select>
+								    </div>
+								    <div class="col-2">
+								       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+								    </div>
+								    <div class="col-8">
+								    <input type="text" class="form-control" name="address" id="address" value="${accomodation.address}" placeholder="상세주소 입력해주세요">
+								    </div>
+								</div>
+						</div>
+						<div class="mb-3 ">
+						  <label for="content" class="form-label">개요</label>
+						  <textarea class="form-control" name="content" id="content" rows="5" placeholder="체험에 대한 설명을 4000자 이내로 입력해주세요 ">${accomodaiton.content}</textarea>
+						</div>		
+						<div class="mb-3 ">
+						  <label for="email" class="form-label">email</label>
+						  <input type="text" class="form-control" name="email" id="email" value="${accomodaiton.email} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="phone" class="form-label">전화번호</label>
+						  <input type="text" class="form-control" name="phone" id="phone" value="${accomodaiton.phone}" placeholder="010 - 0000 - 0000~0">
+						</div>
+						<div class="mb-3 ">
+						  <label for="homepage" class="form-label">홈페이지</label>
+						  <input type="text" class="form-control" name="homepage" id="homepage" value="${accomodaiton.homepage} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="age" class="form-label">객실수</label>
+						  <input type="text" class="form-control" name="room_count" id="room_count" value="${accomodaiton.room_count} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="reservation_url" class="form-label">예약처</label>
+						  <input type="text" name="reservation_url" class="form-control" id="reservation_url" value="${accomodation.reservation_url} " >
+						</div>			
+						<div class="mb-3 ">
+						  <label for="refund" class="form-label">환불규정</label>
+						  <input type="text" name="refund" class="form-control" id="refund" value="${accomodation.refund} " >
+						</div>
+						<div class="mb-3 ">
+						   <label for="check_in" class="form-label">입실시간</label>
+						  <input type="text" name="check_in" class="form-control" id="check_in" value="${accomodation.check_in} " >
+						</div>
+						<div class="mb-3 ">
+						  <label for="check_out" class="form-label">퇴실시간</label>
+						  <input type="text" name="check_out" class="form-control" id="check_out" value="${accomodation.check_out} " >
+						</div>
+						  
+						 <div class="mb-3 ">
+							 <label for="rest_time" class="form-label">태그</label>
+								<div class="tag-container">
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                       </div>
+			    				</div>
+		                   </div>	 
+						  
+						  <label for="facilities" class="form-label">부대시설</label><br>
+						<div class="col-12 d-flex justify-content-between">
+						  	<div class="col-3 form-check mx-3">
+								<input class="form-check-input" type="radio" name="is_credit"
+								id="is_cook" value="1" ${accomodation.is_cook == 1?"checked":""} > 
+								<label class="form-check-label" for="is_credit">조리가능</label>
+							</div>
+							<div class="col-3 form-check mx-3">
+								<input class="form-check-input" type="radio" name="is_pet"
+								id="is_pickup" value="1" ${accomodation.is_pickup == 1?"checked":""} > 
+								<label class="form-check-label" for="is_pet">픽업가능</label>
+							</div>
+							<div class="col-3 form-check mx-3">
+							<input class="form-check-input" type="radio" name="is_parking"
+								id="is_parking" value="1" ${accomodation.is_parking == 1?"checked":""} > 
+								<label class="form-check-label" for="is_parking">주차가능</label>
+							</div>
+						</div>
+						<hr class="hr" />			
+						
+						
+						
+						<div class="d-flex justify-content-between">
+							<div class="col-6 mb-3" >
+	                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+	                        </div>
+	                        <div class="col-3 mb-3">
+	                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+	                        </div>
+	                        <div class="col-2 mb-3">
+	                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../bizPage/content'">취소</button>
+	                        </div>
+	                    
+						</div>
+						</form>
+						</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+
+			
 			  
 			  <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab" tabindex="0">
-			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/experienceInsert" method="post">
-					<table class="table table-striped table-sm">
-							<tr>
-								<th>분류</th>
-								<td>
-									<input type="hidden" name="big_code" value="15">체험종류<br>
-									<select name="small_code">
-										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 15 && code.small_code != 999}">
-												<option value="${code.small_code}">${code.content}</option>
-											</c:if>
-										</c:forEach>
-									</select></td>
-							</tr>
-							<tr>
-								<th>체험명</th>
-								<td><input type="text" name="title" required="required"></td>
-							</tr>
-							<tr>
-								<th>개요</th>
-								<td><textarea rows="10" cols="60" name="content" maxlength="4000" 
-									placeholder="체험에 대한 설명을 4000자 이내로 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<th>주소</th>
-								<td><input type="text" name="address"></td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td><input type="email" name="email"></td>
-							</tr>
-							<tr>
-								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
-							</tr>
-							<tr>
-								<th>전화번호</th>
-								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000~0"></td>
-							</tr>
-							<tr>
-								<th>수용인원</th>
-								<td><input type="text" name="capacity"></td>
-							</tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-								</td>
-							</tr>
-							<tr>
-								<th>체험연령</th>
-								<td><input type="text" name="age"></td>
-							</tr>
-							<tr>
-								<th>체험안내</th>
-								<td><textarea rows="10" cols="60" name="inform" maxlength="4000" 
-									placeholder="체험에 대한 설명을 4000자 이내로 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<th>개장시간</th>
-								<td><input type="text" name="open_time"></td>
-							</tr>
-							<tr>
-								<th>휴무일</th>
-								<td><input type="text" name="rest_time"></td>
-							</tr>
-							<tr>
-								<th>이용요금</th>
-								<td><input type="text" name="cost"></td>
-							</tr>
-							<tr>
-								<th>이미지</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>태그</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>가능 여부</th>
-								<td>
-									<input type="checkbox" name="is_credit"   	value="1">카드여부<br>
-									<input type="checkbox" name="is_pet"   		value="1">반려동물여부<br>
-									<input type="checkbox" name="is_parking"    value="1">주차여부<br>
-									<input type="checkbox" name="is_stroller"   value="1">유모차여부
-								</td>
-							</tr>
-						</table>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
-						</div>
-					</form>
-					</div>		
+			  	<div class="container-fluid">
+		<div class="row">
+<div class="container my-5" id="detail-body-container">
+				<div>
+				<h1>체험 등록</h1>
+				<hr class="hr" />
 				</div>
-					
-			  
-			  
-			  
-			  <div class="tab-pane fade" id="nav-spot" role="tabpanel" aria-labelledby="nav-spot-tab" tabindex="0">
-			  	<div class="border p-3 m-3">
-					<form action="<%=request.getContextPath()%>/admin/content/spotInsertResult" method="post">
-						<%-- <input type="hidden" name="user_id" value="<%= loggedId %>"> --%>
-						<table class="table table-striped table-sm">
-	<%-- 						<tr>
-								<th>컨텐츠 ID</th>
-								<td>${festival.content_id}</td>
-							</tr> 등록할 때 컨텐츠 번호를 확인할 수 있으면 좋을 것 같다(nextval, 입력할 때는 currval) --%>
-							<tr>
-								<th>분류</th>
-								<td>
-									<input type="hidden" name="big_code" value="14">[spot]<br>
-									<select name="small_code">
-										<c:forEach var="code" items="${listCodes}">
-											<c:if test="${code.big_code == 14 && code.small_code != 999}">
-												<option value="${code.small_code}">${code.content}</option>
-											</c:if>
-										</c:forEach>
-									</select></td> <!-- select box -->
-							</tr>
-							<tr>
-								<th>명소명</th>
-								<td><input type="text" name="title" required="required"></td>
-							</tr>
-							<tr>
-								<th>영업시간</th>
-								<td><input type="text" name="opening_hours"></td>
-							</tr>
-							<tr>
-								<th>휴무일</th>
-								<td><input type="text" name="rest_date"></td>
-							</tr>
-							<tr>
-								<th>입장료</th>
-								<td><input type="text" name="entrance_fee"></td>
-							</tr>
-							<tr>
-								<th>전화번호</th>
-								<td><input type="tel" name="phone" placeholder="010 - 0000 - 0000"
-									pattern="\d{2,3}-\d{3,4}-\d{4}"></td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td><input type="email" name="email"></td>
-							</tr>
-							<tr>
-								<th>지역</th>
-								<td>
-									<select name="area" class="area-dropdown"></select>
-									<select name="sigungu"  class="sigungu-dropdown"></select>
-								</td>
-							</tr>
-							<tr>
-								<th>주소</th>
-								<td><input type="text" name="postcode" placeholder="우편번호"><input type="text" name="address"></td> 
-							</tr>
-							<tr>
-								<th>개요</th>
-								<td><textarea rows="10" cols="60" name="content" maxlength="4000" 
-									placeholder="명소에 대한 설명을 4000자 이내로 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<th>입장료</th>
-								<td><input type="text" name="entrance_fee"></td>
-							</tr>
-							<tr>
-								<th>홈페이지</th>
-								<td><input type="text" name="homepage"></td>
-							</tr>
-							<tr>
-								<th>이미지</th>
-								<td><!-- 이미지 업로드 폼 만들기 img1 img2 img3 --></td>
-							</tr>
-							<tr>
-								<th>태그</th>
-								<td><!-- 태그 선택란 만들기 --></td>
-							</tr>
-							<tr>
-								<th>가능 여부</th>
-								<td>
-									<input type="checkbox" name="is_parking"    value="1">주차시설<br>
-									<input type="checkbox" name="is_stroller"   value="1">유모차대여<br>
-									<input type="checkbox" name="is_wheelchair" value="1">휠체어대여<br>
-									<input type="checkbox" name="is_pet"        value="1">반려동물동반<br>
-									<input type="checkbox" name="is_restroom"   value="1">장애인화장실
-								</td>
-							</tr>
-						</table>
-						<div align="center">
-							<button type="submit" class="btn btn-outline-secondary" onclick="return confirm('등록하시겠습니까?')">등록</button>
-							<button type="reset" class="btn btn-outline-secondary" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+				<div>
+				<h3 style="color: #FF4379 ">체험정보 등록하기</h3>
+				</div>
+				<div class="my-5">
+				<div class="" id="detail-main-container">
+				
+					<div class="container p-5" id="form-container">
+					<form action="<%=request.getContextPath()%>/admin/content/experienceInsert" method="post" enctype="multipart/form-data">
+						<div class="mb-3 ">
+						  <label for="title" class="form-label">체험 이름(필수 입력)</label>
+						  <input type="hidden" class="form-control" name="user_id" id="user_id" value="${userId }">
+						  <input type="text" class="form-control" name="title" id="title" value="${experience.title}" required="required">
 						</div>
-					</form>
-				</div>	
-			  </div>
-			  
-			  
-			  
-			  
+						<div class="mb-3" id="detail-content-title">
+						  <label for="small_code" class="form-label">체험 종류(필수 선택)</label>
+						  	<input type="hidden" name="big_code" value="15">
+							<select class="form-select" aria-label="small_code" name="small_code" required="required">
+								<c:forEach var="smallCode" items="${listCodes}">
+									<c:if test="${smallCode.big_code == 15 && smallCode.small_code != 999}">
+										<option value="${smallCode.small_code}" ${smallCode.small_code == experience.small_code? 'selected' : '' }>${smallCode.content}</option>
+									</c:if>
+							 	</c:forEach>
+							</select>
+						</div>			
+						<div class="mb-3 ">
+							<label for="content" class="form-label ">지역(필수 선택)</label>
+								<div class="row">
+								    <div class="col-2">
+								        <select name="area" class="form-select area-dropdown"></select>
+								    </div>
+								    <div class="col-2">
+								       <select name="sigungu"  class="form-select sigungu-dropdown"></select>
+								    </div>
+								    <div class="col-8">
+								    <input type="text" class="form-control" name="address" id="address" value="${experience.address}" placeholder="상세주소 입력해주세요">
+								    </div>
+								</div>
+						</div>
+						<div class="mb-3 ">
+						  <label for="content" class="form-label">개요</label>
+						  <textarea class="form-control" name="content" id="content" rows="5" placeholder="체험에 대한 설명을 4000자 이내로 입력해주세요 ">${experience.content}</textarea>
+						</div>		
+						<div class="mb-3 ">
+						  <label for="email" class="form-label">email</label>
+						  <input type="text" class="form-control" name="email" id="email" value="${experience.email} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="phone" class="form-label">전화번호</label>
+						  <input type="text" class="form-control" name="phone" id="phone" value="${experience.phone}" placeholder="010 - 0000 - 0000~0">
+						</div>
+						<div class="mb-3 ">
+						  <label for="homepage" class="form-label">홈페이지</label>
+						  <input type="text" class="form-control" name="homepage" id="homepage" value="${experience.homepage} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="capacity" class="form-label">수용인원</label>
+						  <input type="text" class="form-control" name="capacity" id="capacity" value="${experience.capacity} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="age" class="form-label">체험연령</label>
+						  <input type="text" class="form-control" name="age" id="age" value="${experience.age} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="inform" class="form-label">체험안내</label>
+						  <textarea class="form-control" name="inform" id="inform" rows="5" placeholder="체험에 대한 안내을 4000자 이내로 입력해주세요 ">${experience.inform}</textarea>
+						</div>
+						<div class="mb-3 ">
+						  <label for="open_time" class="form-label">개장시간</label>
+						  <input type="text" class="form-control" name="open_time" id="open_time" value="${experience.open_time} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="rest_time" class="form-label">휴무일</label>
+						  <input type="text" class="form-control" name="rest_time" id="rest_time" value="${experience.rest_time} ">
+						</div>
+						<div class="mb-3 ">
+						  <label for="cost" class="form-label">비용안내</label>
+						  <input type="text" class="form-control" name="cost" id="cost" value="${experience.cost} ">
+						</div>
+						  
+						 <div class="mb-3 ">
+							 <label for="rest_time" class="form-label">태그</label>
+								<div class="tag-container">
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                         </div>
+			                         <div class="tag-item">
+			                             <div>#MZ추천</div>
+			                       </div>
+			    				</div>
+		                   </div>	 
+						  
+						  <label for="facilities" class="form-label">부대시설</label><br>
+						<div class="col-12 d-flex justify-content-between">
+						  	<div class="col-3 form-check mx-3">
+								<input class="form-check-input" type="checkbox" name="is_credit"
+								id="is_credit" value="1" ${experience.is_credit == 1?"checked":""}> 
+								<label class="form-check-label" for="is_credit">카드여부</label>
+							</div>
+							<div class="col-3 form-check mx-3">
+								<input class="form-check-input" type="checkbox" name="is_pet"
+								id="is_pet" value="1" ${experience.is_pet == 1?"checked":""}> 
+								<label class="form-check-label" for="is_pet">반려동물</label>
+							</div>
+							<div class="col-3 form-check mx-3">
+							<input class="form-check-input" type="checkbox" name="is_parking"
+								id="is_parking" value="1" ${experience.is_parking == 1?"checked":""}> 
+								<label class="form-check-label" for="is_parking">주차시설</label>
+							</div>
+							<div class="col-3 form-check mx-3">
+							<input class="form-check-input" type="checkbox" name="is_stroller"
+								id="is_stroller" value="1" ${experience.is_stroller == 1?"checked":""}> 
+								<label class="form-check-label" for="is_stroller">유모차대여</label>
+							</div>
+						</div>
+						<div class="mb-3 mt-3">
+								    <div class="row p-0 insert_row2_custom">
+								        <div class="form-group col">
+								            <label class="lable2" for="file">첫번째 이미지</label>
+								            <input type="file" class="form-control" name="file">
+								        </div>
+								        
+								        <div class="form-group col">
+								            <label class="lable2" for="file1">두번째 이미지</label>
+								            <input type="file" class="form-control" name="file1">
+								        </div>
+								        
+								        <div class="form-group col">
+								            <label class="lable2" for="file2">세번째 이미지</label>
+								            <input type="file" class="form-control" name="file2">
+								        </div>
+								    </div>
+								</div>
+						
+						<hr class="hr" />			
+						
+						
+						
+						<div class="d-flex justify-content-between">
+							<div class="col-6 mb-3" >
+	                        	<button type="submit" class="form-control btn btn-primary w-100" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+	                        </div>
+	                        <div class="col-3 mb-3">
+	                        	<button type="reset" class="btn btn-outline-secondary w-100" onclick="return confirm('입력하신 내용이 초기화됩니다. 정말 진행하시겠습니까?')">초기화</button>
+	                        </div>
+	                        <div class="col-2 mb-3">
+	                        	<button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='../content/experience'">취소</button>
+	                        </div>
+						</div>
+						
+						
+							
+						</form>
+					</div>
+				</div>
+				</div>
 			</div>
+
 		</div>
 	</div>
+				
+			  
+	</div>
+	</div>
+	</div>
+	</div>
+	</main>
 </body>
 </html>

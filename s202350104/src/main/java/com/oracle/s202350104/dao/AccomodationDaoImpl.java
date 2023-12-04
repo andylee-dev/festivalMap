@@ -33,7 +33,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		
 		try {
 			listAccomodation = session.selectList("accomodationAll", accomodation);
-			log.info("AccomodationDaoImpl listRestaurant AccomodationsList.size()->" + listAccomodation.size());
+			log.info("AccomodationDaoImpl listAccomodation AccomodationsList.size()->" + listAccomodation.size());
 		} catch (Exception e) {
 			log.info("AccomodationDaoImpl listAccomodation e.getMessage()->" + e.getMessage());
 		}
@@ -60,7 +60,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 		int totAccomodationCount = 0;
 		
 		try {
-			totAccomodationCount = session.selectOne("AccomodationTotal");
+			totAccomodationCount = session.selectOne("AccomodationTotalIndex");
 		} catch (Exception e) {
 			log.info("AccomodationDaoImpl totalAccomodations Exception => " + e.getMessage());
 		}
@@ -123,10 +123,10 @@ public class AccomodationDaoImpl implements AccomodationDao {
 	}
 
 	@Override
-	public int approveAccomodation(int contentId) {
+	public int approveAccomodation(AccomodationContent accomodation) {
 		int result = 0;
 		try {
-			result = session.update("AccomodationApprove", contentId);
+			result = session.update("AccomodationApprove", accomodation);
 		} catch(Exception e) {
 			log.info("AccomodationDaoImpl approveFestival Exception => " + e.getMessage());
 		}
@@ -143,7 +143,7 @@ public class AccomodationDaoImpl implements AccomodationDao {
 			listSmallCode = session.selectList("syListSmallCodeAll",accomodationContent);
 			log.info("AccomodationDaoImpl listSmallCode() => " + listSmallCode.size());
 		} catch (Exception e) {
-			// TODO: handle exception
+			 log.error("Exception in listSmallCode method: " + e.getMessage());
 		}
 		return listSmallCode;
 	}
@@ -191,10 +191,33 @@ public class AccomodationDaoImpl implements AccomodationDao {
 	public List<AccomodationContent> indexlistSearchAccomodation(AccomodationContent accomodation) {
 		List<AccomodationContent> indexlistSearchAccomodation = null;
 		try {
-			indexlistSearchAccomodation = session.selectList("indexlistSearchAccomodation", accomodation);
+			indexlistSearchAccomodation = session.selectList("IndexlistSearchAccomodation", accomodation);
 		} catch (Exception e) {
 			 log.info("AccomodationDaoImpl indexlistSearchAccomodation() Exception ->" + e.getMessage());
 		}
 		return indexlistSearchAccomodation;
+	}
+
+	@Override
+	public int admintotalAccomodation() {
+		int totAccomodationCount = 0;
+		
+		try {
+			totAccomodationCount = session.selectOne("AccomodationTotal");
+		} catch (Exception e) {
+			log.info("AccomodationDaoImpl totalAccomodations Exception => " + e.getMessage());
+		}
+		return totAccomodationCount;
+	}
+
+	@Override
+	public int accomodationRestore(int contentId) {
+		int accomodationRestore = 0;
+		try {
+			accomodationRestore = session.update("syAccomodaitonRestore",contentId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return accomodationRestore;
 	}
 }

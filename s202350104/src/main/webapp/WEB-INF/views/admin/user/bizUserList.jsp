@@ -20,7 +20,7 @@
 	            $('input[name="is_deleted"][value="'+is_deleted+'"]').attr('checked', 'checked');
 	        }
 	        if(status != '') {
-	            $('select[name="status"][value="'+status+'"]').attr('checked', 'checked');
+	            $('input[name="status"][value="'+status+'"]').attr('checked', 'checked');
 	        }
 	        if(dateOptions != '') {
 	            $('input[name="dateOptions"][value="'+dateOptions+'"]').attr('checked', 'checked');
@@ -67,6 +67,7 @@
 	    function createQueryURL(page) {
 	        const keyword = document.querySelector('input[name="keyword"]').value;
 	        const is_deleted = document.querySelector('input[name="is_deleted"]:checked') ? document.querySelector('input[name="is_deleted"]:checked').value : '';
+	        const status = document.querySelector('input[name="status"]:checked') ? document.querySelector('input[name="status"]:checked').value : '';
 	        const startDate = document.querySelector('input[name="startDate"]').value;
 	        const endDate = document.querySelector('input[name="endDate"]').value;
 	        const dateOptions = document.querySelector('input[name="dateOptions"]:checked') ? document.querySelector('input[name="dateOptions"]:checked').value : '';
@@ -76,6 +77,7 @@
 	            dateOptions: dateOptions,
 	            keyword: keyword,
 	            is_deleted: is_deleted,
+	            status: status,
 	            startDate: startDate,
 	            endDate: endDate,
 	            currentPage: page
@@ -85,6 +87,24 @@
 			        .map(([key, value]) => key+'='+value).join('&');
 	    }
 	</script>
+	
+<script>
+  // 페이지 로드 후 실행되는 JavaScript 코드
+  $(document).ready(function(){
+    // pagination의 각 페이지 버튼에 대한 클릭 이벤트 처리
+    $('.pagination .page-item a').on('click', function(e){
+      e.preventDefault(); // 기본 동작 방지
+
+      // 모든 페이지 버튼에서 active 클래스 제거
+      $('.pagination .page-item').removeClass('active');
+
+      // 클릭한 페이지 버튼에 active 클래스 추가
+      $(this).parent().addClass('active');
+    });
+  });
+</script>	
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+	
 </head>
 <body>
 	<div class="container-fluid">
@@ -100,7 +120,7 @@
 				</div>	
 
 					<!-- Section2: Search Form -->
-				<div class="container col-9 justify-content-center my-5">
+				<div class="container col-9 justify-content-center mt-5">
 					<form action="/admin/user/bizUserList" method="POST" class="container justify-content-center">
 						<input type="hidden" name="small_code" value="3">						
 						
@@ -121,7 +141,7 @@
 						
 						<!-- 기간 -->
 						<div class="col-12 my-4 d-flex align-items-center " >
-						  <label for="searchType" class="col-form-label col-2  mx-1">가입기간</label>
+						  <label  class="col-form-label col-2  mx-1">가입기간</label>
 						  <div class="col-6  mx-2 d-flex">
 						  	<input type="radio" class="btn-check" name="dateOptions" id="TO" value="TO" autocomplete="off">
 						    <label class="btn col-2 mx-1" for="TO">오늘</label>
@@ -143,9 +163,9 @@
 						  </div>	
 						</div>
 						
-						<!-- 옵션 -->
+						<!-- 옵션1 -->
 						<div class="col-12 my-4 d-flex align-items-center ">
-							 <label for="searchType" class="col-form-label col-2  mx-1">회원조회</label>
+							 <label class="col-form-label col-2  mx-1">회원조회</label>
 							<div class="form-check mx-2">
 							  <input class="form-check-input" type="radio" name="is_deleted" id="is_deleted1" value='' checked >
 							  <label class="form-check-label" for="is_deleted1">전체 회원</label>
@@ -159,78 +179,100 @@
 							  <label class="form-check-label" for="is_deleted2">탈퇴 회원</label>
 							</div>
 						</div>
+
+						<!-- 옵션2 -->
+						<div class="col-12 my-4 d-flex align-items-center ">
+							 <label  class="col-form-label col-2  mx-1">회원 상태</label>
+							<div class="form-check mx-2">
+							  <input class="form-check-input" type="radio" name="status" id="status1" value='' checked >
+							  <label class="form-check-label" for="status1">전체 회원</label>
+							</div>
+							<div class="form-check mx-2">
+							  <input class="form-check-input" type="radio" name="status" id="status2" value="1">
+							  <label class="form-check-label" for="status2">승인완료</label>
+							</div>
+							<div class="form-check mx-2">
+							  <input class="form-check-input" type="radio" name="status" id="status3" value="0">
+							  <label class="form-check-label" for="status3">미승인</label>
+							</div>
+						</div>
+
+
+
 						<div class="container col-10 d-flex justify-content-center">
 							<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
 							<button type="reset" class="btn btn-outline-secondary col-2 mx-3">초기화</button>
 						</div>
 				    </form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary mt-4">등록</button>
-				</div>
-
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table id="bizuserTable" class="table table-striped table-sm text-center mb-2">
-						<thead>
-							<tr>
-								<th scope="col">id</th>
-								<th scope="col">name</th>
-								<th scope="col">password</th>
-								<th scope="col">nickname</th>
-								<th scope="col">birthday</th>
-								<th scope="col">phone_num</th>
-								<th scope="col">email</th>
-								<th scope="col">address</th>
-								<th scope="col">status</th>
-								<th scope="col">created_at</th>
-								<th scope="col">is_deleted</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="user" items="${listUsers}" varStatus="st">
-								<tr id="user${st.index}">
-									<td>${user.id}</td>
-									<td>${user.name}</td>
-									<td>${user.password}</td>
-									<td>${user.nickname}</td>
-									<td>${user.birthday}</td>
-									<td>${user.phone_num}</td>
-									<td>${user.email}</td>
-									<td>${user.address}</td>
-									<td>${user.status}</td>
-									<td><fmt:formatDate value="${user.created_at}" type="date" pattern="YY/MM/dd"/></td>
-									<td>${user.is_deleted}</td>
-									<td><input class="btn btn-primary" type="button" value="수정"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
-								</tr>
-								<c:set var="num" value="${num + 1}"/>
-							</c:forEach>
-						</tbody>
-					</table>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container table-container p-4">
+						<div class="table-responsive">
+							<table id="userTable" class="table table-md text-center p-3">
+								<thead>
+									<tr>
+										<th scope="col">회원번호</th>
+										<th scope="col">이름</th>
+										<th scope="col">비밀번호</th>
+										<th scope="col">닉네임</th>
+										<th scope="col">생년월일</th>
+										<th scope="col">연락처</th>
+										<th scope="col">이메일</th>
+										<th scope="col">주소</th>
+										<th scope="col">가입일</th>
+										<th scope="col">상태</th>
+										<th scope="col">관리</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:set var="num" value="${page.start}"/>
+									<c:forEach var="user" items="${listUsers}" varStatus="st">
+										<tr id="user${st.index}">
+										
+											<td id="userId">${user.id}</td>
+											<td>${user.name}</td>
+											 
+											<td>${user.password.substring(0, 1)}****${user.password.substring(user.password.length() - 2)}</td>
+											<td>${user.nickname}</td>
+											<td>${user.birthday}</td>
+											<td>${user.phone_num}</td>
+											<td>${user.email}</td>
+											<td>${user.address}</td>
+											<td><fmt:formatDate value="${user.created_at}" type="date" pattern="YY/MM/dd"/></td>
+											<td>${user.is_deleted == 1?
+													"탈퇴":user.status == 1 ? 
+														"승인완료":"승인대기" }</td>
+											<td><a class="detail-btn" href="userDetail/${user.id}?currentPage=${page.currentPage}">관리</a></td>
+										</tr>
+										<c:set var="num" value="${num + 1}"/>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
-					<nav aria-label="Page navigation example ">
-						<ul class="pagination">
-					    	<c:if test="${page.startPage > page.pageBlock}">
-							    <li class="page-item">
-						        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
-						    	</li>
-					    	</c:if>
-						    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							    <li class="page-item">
-									<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
-						    	</li>
-							</c:forEach>
-						    <c:if test="${page.endPage < page.totalPage}">
-							    <li class="page-item">
-							        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
-						    	</li>
-						    </c:if>
-						</ul>
-					</nav>
+				</div>
+				
+				<!-- 4.Pagination -->
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination">
+				    	<c:if test="${page.startPage > page.pageBlock}">
+						    <li class="page-item">
+					        	<a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage-page.pageBlock})" class="pageblock page-link">[이전]</a>
+					    	</li>
+				    	</c:if>
+					    <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						    <li class="page-item">
+								<a href="javascript:void(0)" onclick="location.href=createQueryURL(${i})" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>					    
+					    	</li>
+						</c:forEach>
+					    <c:if test="${page.endPage < page.totalPage}">
+						    <li class="page-item">
+						        <a href="javascript:void(0)" onclick="location.href=createQueryURL(${page.startPage+page.pageBlock})"  class="pageblock page-link" >[다음]</a>
+					    	</li>
+					    </c:if>
+					</ul>
+				</nav>
 			</main>
 		</div>
 	</div>

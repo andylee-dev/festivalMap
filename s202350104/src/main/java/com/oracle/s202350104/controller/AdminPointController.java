@@ -1,6 +1,7 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oracle.s202350104.model.Point;
+import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.point.PointService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,26 +26,60 @@ public class AdminPointController {
 	private final PointService ps;
 	
 	@GetMapping(value = "/admin/point/point")
-		public String point(Point point, Model model) {
+		public String point(Point point, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		int path = 0;
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "pointhistory", "start");
+			
+			int totalpoint = ps.totalpoint();
+		
+			PagingList page = new PagingList(totalpoint, currentPage);
+
+			point.setStart(page.getStart());
+			point.setEnd(page.getEnd());
 		
 		List<Point> listPoint = ps.listPoint();
 		
 		model.addAttribute("listPoint", listPoint);
+		model.addAttribute("totalpoint",totalpoint);
+		model.addAttribute("page",page);
+		model.addAttribute("path",path);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}",transactionId,  "admin point", e.getMessage());
+		}finally {
+			log.info("[{}]{}:{}",transactionId, "admin point", "end");
+		}
 		
 		return "admin/point/point";
 	}
 	
-	@GetMapping(value="/admin/point/updateFormPoint")
-	public String updateFormPoint(Point point, Model model) {
+	@RequestMapping(value="/admin/point/updateFormPoint")
+	public String updateFormPoint(int id, Model model) {
 		
-		model.addAttribute("Point", point);
+		
+		Point point = ps.listpoint1(id);
+
+		log.info("point.getId() {}",id);
+		
+		model.addAttribute("point", point);
+		model.addAttribute("id",id);
 		
 		return "admin/point/updateFormPoint";
 	}
 	
-	@PostMapping("/admin/point/updatePoint")
-    public String updatePoint(Point point) {
+	@RequestMapping("/admin/point/updatePoint")
+    public String updatePoint(Point point, Model model) {
+		
+        int id = point.getId();
+		log.info("point.getId() {}",point.getId());
         ps.updatePoint(point);
+        
+		model.addAttribute("id",id);
+		
+		log.info("point {}",point);
         return "redirect:/admin/point/point";
     }
 	
@@ -58,6 +95,14 @@ public class AdminPointController {
 	public String writePoint(Point point) {
 	    ps.writePoint(point);
 	    return "redirect:/admin/point/point";
+	}
+	
+	@RequestMapping(value = "/admin/point/deletePoint")
+	public String deletePoint(Integer id, Model model) {
+		
+		ps.deletePoint(id);
+	   
+		return "redirect:/admin/point/point";
 	}
 
 }

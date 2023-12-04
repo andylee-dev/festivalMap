@@ -1,0 +1,234 @@
+{
+  "title": "나의 축제 MBTI는?",
+  "type": "MBTI",
+  "question_set": [
+    {
+      "num": 1,
+      "question": "축제 포스터를 보던 나. 내가 좀 더 관심이 가는 축제는...",
+      "img": "https://images.unsplash.com/photo-1468234560893-89c00b6385c8?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "options": [
+        {
+          "num": 1,
+          "content": "사람들과 함께 어울리는 활기찬 분위기의 축제",
+          "key": "E",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "비교적 차분한 분위기의 소규모 축제",
+          "key": "I",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 2,
+      "question": "축제에 가기로 결심한 나. 같이 갈 사람은...",
+      "img": "https://images.unsplash.com/photo-1468234560893-89c00b6385c8?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "options": [
+        {
+          "num": 1,
+          "content": "역시 축제는 떠들썩하게! 다수의 친구들과 함께 간다.",
+          "key": "E",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "차분하게 즐기는 게 좋아! 혼자 혹은 소수의 친구들과 함께 간다.",
+          "key": "I",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 3,
+      "question": "드디어 축제 전날! 나는...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "교통편, 입고갈 옷, 준비물까지! 모든 준비를 완벽하게 마쳐놓는다.",
+          "key": "J",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "자고 일어나서 내일 생각하자~! 일단 내일로 미룬다.",
+          "key": "P",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 4,
+      "question": "축제 당일! 축제 장소에 도착한 나는...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "먼저 팜플렛을 읽어보면서 동선을 정한다.",
+          "key": "J",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "일단 한바퀴 돌면서 관심 있는 곳에 가본다.",
+          "key": "P",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 5,
+      "question": "먼저 체험 부스에 가기로 한 나. 내가 하려는 체험은...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "새로운 지식을 쌓을 수 있는 과학 체험 부스",
+          "key": "T",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "힐링을 할 수 있는 공예 체험 부스",
+          "key": "F",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 6,
+      "question": "돌아다니다가 예쁘게 꾸며진 포토부스를 발견했을 때 나는...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "오~ 예쁘게 꾸몄네~ 잠시 구경하다가 지나간다.",
+          "key": "T",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "그냥 지나칠 수는 없지! 추억으로 사진을 남긴다.",
+          "key": "F",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 7,
+      "question": "축제 도중 배가 고파 먹을 것을 사러 가던 나. 그런데 가는 길에 많은 사람들이 모여있다.",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "궁금하지만 일단 계획대로 먹을 것부터 사자!",
+          "key": "J",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "무슨 일이지? 궁금하니까 음식은 나중에 사고 일단 가보자!",
+          "key": "P",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 8,
+      "question": "여러 가지 먹거리를 파는 부스에서 내가 선택한 음식은...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "안전하게 먹어본 경험이 있는 음식을 선택한다.",
+          "key": "S",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "지금껏 먹어보지 못했던 새로운 음식에 도전한다.",
+          "key": "N",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 9,
+      "question": "친구와 가고 싶은 부스가 서로 다른 상황. 시간 절약을 위해 잠시 따로 다니자는 친구의 말에 나는...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "효율적이라서 좋다! 좋은 생각이라고 동의한다",
+          "key": "T",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "그래도 같이 온 건데 따로 다니자니... 서운함을 느낀다.",
+          "key": "F",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 10,
+      "question": "기념품을 파는 부스를 발견한 나. 친구들에게 기념품을 선물하려고 하는데...",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "역시 실용적인 선물이 최고지!",
+          "key": "S",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "역시 의미가 담긴 선물이 최고지!",
+          "key": "N",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 11,
+      "question": "축제의 마무리로 퍼레이드를 보려는 나. 이때 나는... ",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "가장 앞에서 퍼레이드를 적극적으로 즐긴다.",
+          "key": "E",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "멀리서 조용히 퍼레이드를 관람한다.",
+          "key": "I",
+          "val": 1
+        }
+      ]
+    },
+    {
+      "num": 12,
+      "question": "축제가 끝나고 집으로 돌아가는 길. 다른 친구에게 오늘 축제는 어땠는지 물어보는 연락이 왔다.",
+      "img": "url",
+      "options": [
+        {
+          "num": 1,
+          "content": "오늘 무엇을 보고 무엇을 했는지 하루 일정을 설명한다.",
+          "key": "S",
+          "val": 1
+        },
+        {
+          "num": 2,
+          "content": "오늘 무엇을 생각하고 무엇을 느꼈는지 감정을 설명한다.",
+          "key": "N",
+          "val": 1
+        }
+      ]
+    }
+  ]
+}

@@ -4,8 +4,133 @@
 
 <mapper namespace="com.oracle.s202350104.Contents">
 
-	<select id="listContent" resultType="Contents">
-		SELECT * FROM contents
+	<select id="contentCount" parameterType="Contents" resultType="int">
+		SELECT Count(*) 
+		From contents
+		WHERE 1=1
+			<if test="keyword != null and keyword != ''">
+	            AND title LIKE '%' || #{keyword} || '%'
+	        </if>
+	 		<if test="big_code != null and big_code != 0 ">
+				AND	big_code = #{big_code}	
+			</if>
+	 		<if test="small_code != null and small_code != 0">
+				AND	small_code = #{small_code}	
+			</if>
+			<if test="area != 0 and area != null">
+				    AND area = #{area}
+			    <if test="sigungu != 0 and sigungu != null">
+			        AND sigungu = #{sigungu}
+			    </if>
+			    <if test="sigungu == null">
+		            AND sigungu = 0
+		        </if>
+			</if>
+			
+	</select>
+
+	<select id="listContent" parameterType="Contents" resultType="Contents">
+		<!-- SELECT a.*, cd.content cd_content
+		FROM (
+		    SELECT ROWNUM rn, c.*
+		    FROM contents c
+		    WHERE c.is_deleted = '0'
+		    <if test="keyword != null">
+		        AND title like '%' || #{keyword} || '%'
+		    </if>
+		    <if test="big_code != null and big_code != 0 ">
+		        AND big_code = #{big_code}	
+		    </if>
+		    <if test="small_code != null and small_code != 0">
+		        AND small_code = #{small_code}	
+		    </if>
+		    <if test="area != null and area != 0">
+		        AND area = #{area}	
+		    </if>
+		    <if test="sigungu != null and sigungu != 0">
+		        AND sigungu = #{sigungu}	
+		    </if>
+		    <if test="status != null">
+		        AND status = #{status}	
+		    </if>
+		    <if test="start != 0 and end != 0">
+		        AND ROWNUM BETWEEN #{start} AND #{end}
+		    </if>
+		) a, commonCodes cd
+		WHERE a.big_code = cd.big_code
+		AND cd.small_code = 999 -->		
+		
+		
+		SELECT a.*, cd.content cd_content
+		FROM (
+		    SELECT *
+		    FROM (
+		        SELECT c.*, ROW_NUMBER() OVER (ORDER BY c.id) AS rnum
+		        FROM contents c
+		        WHERE c.is_deleted = '0'
+		        <if test="keyword != null and keyword != ''">
+		            AND title LIKE '%' || #{keyword} || '%'
+		        </if>
+		        <if test="big_code != null and big_code != 0 ">
+		            AND big_code = #{big_code}    
+		        </if>
+		        <if test="small_code != null and small_code != 0">
+		            AND small_code = #{small_code}    
+		        </if>
+		        
+		        <if test="area != 0 and area != null">
+		            AND area = #{area}
+		            <if test="sigungu != 0 and sigungu != null">
+		                AND sigungu = #{sigungu}
+		            </if>
+		            <if test="sigungu == null">
+			            AND sigungu = 0
+			        </if>
+		        </if>
+		    ) c
+		    WHERE rnum BETWEEN #{start} AND #{end}
+		) a, commonCodes cd
+		WHERE a.big_code = cd.big_code
+		AND cd.small_code = 999
+		
+
+		
+		<!-- SELECT *
+		FROM
+		    (
+		    SELECT ROWNUM rn, c.*, cc.content AS cd_content
+		    FROM contents c
+		    JOIN commoncodes cc ON c.big_code = cc.big_code 
+		    AND c.small_code = cc.small_code
+		    WHERE c.is_deleted = '0'
+			<if test="keyword != null">
+				AND title like '%' || #{keyword} || '%'
+			</if>
+	 		<if test="big_code != null and big_code != 0 ">
+				AND	big_code = #{big_code}	
+			</if>
+	 		<if test="small_code != null and small_code != 0">
+				AND	small_code = #{small_code}	
+			</if>
+			<if test="area != null and area != 0">
+				AND	area = #{area}	
+			</if>
+			<if test="sigungu != null and sigungu != 0">
+				AND	sigungu = #{sigungu}	
+			</if>
+	 		<if test="status != null">
+				AND	status = #{status}	
+			</if>
+     		) 
+	 		<if test="start != 0 and end != 0">     		
+				WHERE rn between #{start} and #{end}
+			</if> -->
+			
+		<!-- SELECT * 
+		FROM 
+			(SELECT ROWNUM rn, contents.*
+			FROM contents)
+		WHERE rn between #{start} and #{end} -->
 	</select>
 
 	<select id="getSearchContentsList" resultType="Contents">
@@ -28,6 +153,9 @@
 			</if>
 	 		<if test="status != null">
 				AND	status = #{status}	
+			</if>
+	 		<if test="user_id != null">
+				AND	user_id = #{user_id}	
 			</if>
      		) 
 	 		<if test="start != 0 and end != 0">     		
@@ -53,6 +181,9 @@
 		</if>
  		<if test="status != null">
 			AND	status = #{status}	
+		</if>
+ 		<if test="user_id != null">
+			AND	user_id = #{user_id}	
 		</if>
 	</select>	
 

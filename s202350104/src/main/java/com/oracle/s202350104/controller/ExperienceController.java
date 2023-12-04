@@ -20,6 +20,7 @@ import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ExperienceService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class ExperienceController {
 	private final AreaService as;
 	private final BoardService boardService;
 	private final BannerService bannerService;
+	private final UserService us;
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
@@ -47,6 +49,8 @@ public class ExperienceController {
 			log.info("[{}]{}:{}",transactionId, "experience", "start");
 			
 			int path = 0;
+			experience.setStatus("1");
+			experience.setIs_deleted("0");
 			
 			int totalExperience = es.mainTotalExperience();
 			
@@ -108,9 +112,9 @@ public class ExperienceController {
 		log.info("ExperienceController review Start!!");
 		
 		int bigCode = 2;
-		// 분류 code 강제 지정
-		int smallCode = 6;
-		int userId = 1;
+		int smallCode = 6; // 분류 code 강제 지정
+		String reviewCurrentPage = "1";
+		int userId = us.getLoggedInId();
 		int countBoard = 0;
 		
 		// review별 count용
@@ -123,12 +127,13 @@ public class ExperienceController {
 			
 			// Paging 작업
 			// Parameter board page 추가
-			Paging page = new Paging(countBoard, currentPage);
+			Paging page = new Paging(countBoard, reviewCurrentPage);
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			double reviewCount = boardService.getReviewCount(board); 
 			
 			log.info("ExperienceController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("ExperienceController reviewBoardList before board.getEnd : {} ", board.getEnd());
@@ -148,16 +153,22 @@ public class ExperienceController {
 			log.info("ExperienceController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
-			model.addAttribute("page", page);
-			model.addAttribute("bigCode", bigCode);
-			model.addAttribute("smallCode", smallCode);
-			model.addAttribute("userId", userId);
+			model.addAttribute("reviewCount", reviewCount);			
+			//model.addAttribute("page", page);
 			
 		} catch (Exception e) {
 			log.error("ExperienceController reviewBoard error : {}", e.getMessage());
 		} finally {
 			log.info("ExperienceController reviewBoard end..");
 		}
+		
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
+		log.info("SpotController reviewBoardList bigCode : {} ", bigCode);
+		log.info("SpotController reviewBoardList smallCode : {} ", smallCode);
+		log.info("SpotController reviewBoardList userId : {} ", userId);
 		
 		return "experience/experienceDetail";
 	}

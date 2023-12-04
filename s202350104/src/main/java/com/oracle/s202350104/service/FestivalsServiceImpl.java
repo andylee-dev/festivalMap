@@ -11,6 +11,7 @@ import com.oracle.s202350104.dao.FestivalsDao;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Festivals;
 import com.oracle.s202350104.model.FestivalsContent;
+import com.oracle.s202350104.model.Tags;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,9 +66,9 @@ public class FestivalsServiceImpl implements FestivalsService {
 	}
 
 	@Override
-	public int deleteFestivals(int contentId) {
+	public int deleteFestivals(FestivalsContent festival) {
 		int result = 0;
-		result = fd.deleteFestivals(contentId);
+		result = fd.deleteFestivals(festival);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 삭제에 실패하였습니다.");
@@ -77,8 +78,8 @@ public class FestivalsServiceImpl implements FestivalsService {
 	}
 
 	@Override
-	public int approveFestival(int contentId) {
-		int result = fd.approveFestival(contentId);
+	public int approveFestival(FestivalsContent festival) {
+		int result = fd.approveFestival(festival);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 승인에 실패하였습니다.");
@@ -118,6 +119,17 @@ public class FestivalsServiceImpl implements FestivalsService {
 		}
 		
 		return contents;
+	}
+
+	@Override
+	public List<Tags> festivalsTagsOne(int contentId) {
+		List<Tags> listTags = fd.festivalsTagsOne(contentId);
+		
+		if(listTags == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 태그 정보가 존재하지 않습니다.");
+		}
+		
+		return listTags;
 	}
 
 }

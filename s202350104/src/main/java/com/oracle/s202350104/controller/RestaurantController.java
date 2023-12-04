@@ -22,6 +22,7 @@ import com.oracle.s202350104.service.BannerService;
 import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.RestaurantService;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ public class RestaurantController {
 	private final AreaService as;
 	private final BoardService boardService;
 	private final BannerService bannerService;
+	private final UserService us;
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
@@ -48,17 +50,21 @@ public class RestaurantController {
 			log.info("[{}]{}:{}", transactionId, "restaurant", "start");
 			int totalRestaurant = rs.totalRestaurant();
 			int path = 0;
+			int big_code = 12;
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
 			restaurant.setEnd(page.getEnd());
 			
 			List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
+			List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 			List<Areas> listAreas = as.listAreas();
+			
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
 			model.addAttribute("path", path);
 			model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listSmallCode", listSmallCode);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("page", page);
 			model.addAttribute("currentPage", currentPage);
@@ -140,9 +146,9 @@ public class RestaurantController {
 		log.info("RestaurantController reviewBoardList Start!!");
 		
 		int bigCode = 2;
-		// 분류 code 강제 지정
-		int smallCode = 6;
-		int userId = 1;
+		int smallCode = 6; // 분류 code 강제 지정
+		String reviewCurrentPage = "1";
+		int userId = us.getLoggedInId();
 		int countBoard = 0;
 		
 		// review별 count용
@@ -156,13 +162,14 @@ public class RestaurantController {
 			
 			// Paging 작업
 			// Parameter board page 추가
-			Paging page = new Paging(countBoard, currentPage);
+			Paging page = new Paging(countBoard, reviewCurrentPage);
 			
 			board.setStart(page.getStart());
 			board.setEnd(page.getEnd());
 			board.setContent_id(contentId);
 			
 			List<Board> reviewAllList = boardService.getReviewAllList(board); 
+			double reviewCount = boardService.getReviewCount(board); 
 			
 			log.info("RestaurantController reviewBoardList before board.getStart : {} ", board.getStart());
 			log.info("RestaurantController reviewBoardList before board.getEnd : {} ", board.getEnd());
@@ -182,16 +189,22 @@ public class RestaurantController {
 			log.info("RestaurantController reviewBoardList page : {} ", page);
 
 			model.addAttribute("reviewBoard", reviewAllList);
-			model.addAttribute("page", page);
-			model.addAttribute("bigCode", bigCode);
-			model.addAttribute("smallCode", smallCode);
-			model.addAttribute("userId", userId);
+			model.addAttribute("reviewCount", reviewCount);
+			//model.addAttribute("page", page);
 			
 		} catch (Exception e) {
 			log.error("RestaurantController reviewBoard error : {}", e.getMessage());
 		} finally {
 			log.info("RestaurantController reviewBoard end..");
 		}
+		
+		model.addAttribute("bigCode", bigCode);
+		model.addAttribute("smallCode", smallCode);
+		model.addAttribute("userId", userId);
+		
+		log.info("SpotController reviewBoardList bigCode : {} ", bigCode);
+		log.info("SpotController reviewBoardList smallCode : {} ", smallCode);
+		log.info("SpotController reviewBoardList userId : {} ", userId);
 		
 		return "restaurant/restaurantDetail";
 	}
@@ -205,25 +218,34 @@ public class RestaurantController {
 			log.info("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", "Start");
 			int totalRestaurant = rs.conTotalRestaurant(restaurant);
 			int path 			= 1;
-			String area 		= request.getParameter("area");
-			String sigungu 		= request.getParameter("sigungu");
+			
 			String small_code   = request.getParameter("small_code");
+  			int big_code     	= restaurant.getBig_code();
+  			String keyword 		= request.getParameter("keyword");
+  			String area 		= request.getParameter("area");
+			String sigungu      = request.getParameter("sigungu");
 			
 			Paging page = new Paging(totalRestaurant, currentPage);
 			restaurant.setStart(page.getStart());
 			restaurant.setEnd(page.getEnd());
 			
+			List<Areas> listAreas = as.listAreas();
+			List<RestaurantsContent> listSmallCode        = rs.listSmallCode(big_code);
 			List<RestaurantsContent> listSearchRestaurant = rs.listSearchRestaurant(restaurant);
-			// List<RestaurantsContent> listRestaurant 	  = rs.listRestaurant();
+			
 			
 			model.addAttribute("totalRestaurant", totalRestaurant);
-			model.addAttribute("path", path);
-			model.addAttribute("area", area);
-			model.addAttribute("sigungu", path);
-			model.addAttribute("small_code", small_code);
-			model.addAttribute("page", page);
 			model.addAttribute("listRestaurant", listSearchRestaurant);
-			// model.addAttribute("listRestaurant", listRestaurant);
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
+			model.addAttribute("currentPage", currentPage);
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "RestaurantController restaurantSearch", e.getMessage());

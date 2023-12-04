@@ -9,6 +9,16 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%>
+	<script>
+    function confirmDelete(userId, contentId) {
+        var result = confirm('정말로 삭제하시겠습니까?');
+        if (result) {
+            // 확인을 누르면 삭제 동작 수행
+            location.href = 'favoriteDelete?user_id=' + userId + '&content_id=' + contentId;
+        }
+    }
+	</script>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container-fluid">
@@ -25,7 +35,7 @@
 				
 				<!-- Section2: Search Form -->
 				<div class="container col-9 justify-content-center my-5">
-					<form action="favoriteSearch" method="POST" container justify-content-center">	
+					<form action="favoriteSearch" method="GET" class="container justify-content-center">	
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="form-label col-2  mx-2">검색어</label>
 							<div class="col-4">
@@ -38,57 +48,88 @@
 								<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
 								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
 							</div>
-						</div>	
+						</div>
+						<input type="hidden" name="currentPage" value="${page.currentPage}">	
 					</form>
 				</div>
-				<div class="container col-9 justify-content-center my-2">
-					<button type="button" class="btn btn-outline-secondary" onclick="location.href='favoriteInsertForm'">등록</button>
-				</div>
-					
+									
 				<!-- Section3: Table -->
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+				<div class="container table-container p-4 align-items-center">
+				<div class="table-responsive">
+					<table id="userTable" class="container">
 						<thead>
-							<tr>
+							<tr class="text-center">
+								<th scope="col">순번</th>
 								<th scope="col">회원ID</th>
 								<th scope="col">이름</th>
-								<th scope="col">컨텐츠ID</th>
+								<th scope="col">컨텐츠이름</th>
 								<th scope="col">찜한 날짜</th>
-								<th scope="col">수정</th>
 								<th scope="col">삭제</th>
 							</tr>
 						</thead>
 						<tbody>
+							<c:set var="num" value="${page.start}"/>
 							<c:forEach var="favorite" items="${listFavorite}">
 								<tr>
+									<td>${num}</td>
 									<td>${favorite.user_id}</td>
 									<td>${favorite.name}</td>
-									<td>${favorite.id}</td>
+									<td>${favorite.title}</td>
 									<td><fmt:formatDate value="${favorite.create_at}" type="date" pattern="YY/MM/dd"/></td>
-									<td><input class="btn btn-primary" type="button" value="수정"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>
+									<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="confirmDelete(${favorite.user_id}, ${favorite.content_id})"></td>
 								</tr>
+							<c:set var="num" value="${num + 1}"/>	
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
+				</div>
 				</div>
 				
 				<nav aria-label="Page navigation example ">
 				<ul class="pagination">
 					<c:if test="${page.startPage > page.pageBlock}">
-    					<li class="page-item">
-        					<a href="favoriteList?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
-    					</li>
-					</c:if>
+    					<c:choose>
+    						<c:when test="${path==0}">
+		    					<li class="page-item">
+		        					<a href="favoriteList?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+		    					</li>
+		    				</c:when>
+		    				<c:when test="${path==1}">
+		    					<li class="page-item">
+		        					<a href="favoriteSearch?search=${search}&keyword=${keyword}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+		    					</li>
+		    				</c:when>	
+    					</c:choose>
+    				</c:if>
 					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-    					<li class="page-item">
-        					<a href="favoriteList?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
-    					</li>
+    					<c:choose>
+    						<c:when test="${path==0}">
+		    					<li class="page-item">
+		        					<a href="favoriteList?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+		    					</li>
+							</c:when>
+							<c:when test="${path==1}">
+		    					<li class="page-item">
+		        					<a href="favoriteSearch?search=${search}&keyword=${keyword}&currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+		    					</li>
+							</c:when>
+						</c:choose>			    			
 					</c:forEach>
 					<c:if test="${page.endPage < page.totalPage}">
-    					<li class="page-item">
-        					<a href="favoriteList?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
-    					</li>
+    					<c:choose>
+    						<c:when test="${path==0}">
+				    			<li class="page-item">
+		        					<a href="favoriteList?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+		    					</li>
+							</c:when>
+							<c:when test="${path==1}">
+				    			<li class="page-item">
+		        					<a href="favoriteSearch?search=${search}&keyword=${keyword}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+		    					</li>
+							</c:when>
+						</c:choose>	
 					</c:if>
 				</ul>
 			</nav>

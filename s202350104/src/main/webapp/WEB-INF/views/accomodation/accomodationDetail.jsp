@@ -1,296 +1,671 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/WEB-INF/components/header.jsp"%>
-
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.Calendar" %>   
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="com.oracle.s202350104.service.map.MapService"%>
+<%@page import="com.oracle.s202350104.service.map.KakaoMapSerivce"%>    
+<%@ include file="/WEB-INF/components/header.jsp" %>
+<!-- Top bar -->
+<%@ include file="/WEB-INF/components/TobBar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>숙박 상세</title>
-<!-- jQuery 라이브러리 불러오기 -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<title>FestivalDetail</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/css/contentsDetail.css">
+<!-- 카카오 MAP -->
+<% ApplicationContext context=WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+   MapService map=context.getBean("kakaoMapSerivce", MapService.class); String apiKey=map.getApiKey(); %>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=apiKey%>&libraries=clusterer"></script>
 
+<!-- 지역 코드 넣는 코드  -->
+<script src="/js/updateArea.js"></script>
+
+<!-- script 영역 -->
 <script>
-	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
-	    console.log("showPopUp 함수가 호출되었습니다.");			
-		//창 크기 지정
-		var width = 550;
-		var height = 600;
-		
-		//pc화면기준 가운데 정렬
-		var left = (window.screen.width / 2) - (width/2);
-		var top = (window.screen.height / 4);
-		
-	    //윈도우 속성 지정
-		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
-		
-	    //연결하고싶은url
-	    const url = "../reviewBoardInsertForm?userId="+ userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
+function initKakaoMap() {
+    console.log("실행중");  
+    
+	const mappingTitle = '${accomodation.title }';
+	const latitude = ${accomodation.mapy };
+	const longitude = ${accomodation.mapx };
+    
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	 
+	// 마커를 표시할 위치와 title 객체 배열입니다 
+	var positions = [
+	    {
+	        title: mappingTitle, 
+	        latlng: new kakao.maps.LatLng(latitude, longitude)
+	    }
+	];
 	
-		//등록된 url 및 window 속성 기준으로 팝업창을 연다.
-		window.open(url, "hello popup", windowStatus);
+	// 마커 이미지의 이미지 주소입니다
+	var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png'; 
+
+	for (var i = 0; i < positions.length; i ++) {
+	    
+	    // 마커 이미지의 이미지 크기 입니다
+	    var imageSize = new kakao.maps.Size(64, 69); 
+	    
+	    // 마커 이미지를 생성합니다    
+	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+	    
+	    // 마커를 생성합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map, // 마커를 표시할 지도
+	        position: positions[i].latlng, // 마커를 표시할 위치
+	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	        image : markerImage // 마커 이미지 
+	    });
+	}
+}
+
+	/* review 생성 기능 js */
+	function showPopUp(userId, bigCode, smallCode, currentPage, contentId, commonCode) {
+	    console.log("showPopUp 함수가 호출되었습니다.");
+	    var width = 700;
+	    var height = 600;
+	    var left = (window.screen.width / 2) - (width / 2);
+	    var top = (window.screen.height / 4);
+	    var windowStatus = 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+	    const url = "../reviewBoardInsertForm?userId=" + userId + "&commonCode=" + commonCode + "&bigCode=" + bigCode + "&smallCode=" + smallCode + "&currentPage=" + currentPage + "&contentId=" + contentId;
+	
+	    // userId 값이 0이면 checkUserIdAndNavigate 함수 실행
+	    if (userId == 0) {
+	        checkUserIdAndNavigate();
+	    } else {
+	        // userId 값이 0이 아니면 팝업 창 열기
+	        window.open(url, "hello popup", windowStatus);
+	    }
 	}
 	
+	function checkUserIdAndNavigate() {
+	    // userId 값 가져오기
+	    var userId = ${userId};
+	
+	    // userId가 0인 경우 알림창 띄우기
+	    if (userId == 0) {
+	        swal({
+	            title: "로그인 후 이용해주세요.",
+	            text: "회원이 아니시면 가입 후 이용해주세요.",
+	            icon: "warning",
+	        }).then((confirmed) => {
+	            // 'OK' 누르면 로그인 화면으로 이동
+	            if (confirmed) {
+	                location.href = '../login';
+	            }
+	        });
+	    } 
+	}
+
+
+	/* 대분류, 소분류 기능 js */
+	document.addEventListener("DOMContentLoaded", function() {
+		initKakaoMap();
+		updateAreaOptions();
+		$(".area-dropdown").change(
+				function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append(
+								"<option value='0'>전체</option>");
+					}
+				});
+	});
+	
+	/* 신고 기능 js */
 	function report(boardId) {
 	    window.open("../reportBoardFoam?boardId=" + boardId, "_blank", "width=600, height=400, top=100, left=100");
 	}
-    function like() {
-        alert("찜하였습니다.");
+	
+	/* review card carousel js */
+    $(document).ready(function () {
+        $(".custom-carousel").owlCarousel({
+        	items: 1,
+            autoWidth: true,
+        });
+
+    }); 
+	
+	/* 클릭한 사진 보여주기 */
+	function clickPhoto(event){
+		console.log("실행");
+		
+		var clickedImg = event.target;
+		
+		var chooseImg = document.getElementById("photo");
+		chooseImg.setAttribute("src", clickedImg.getAttribute("src"));
+	}
+	
+	/* URL Link Share */
+	function clip() {
+	    var textarea = document.createElement("textarea");
+	    document.body.appendChild(textarea);
+	    
+	    var url = window.document.location.href;
+	    textarea.value = url;
+	    textarea.select();
+	    
+	    document.execCommand("copy");
+	    document.body.removeChild(textarea);
+	    
+	    swal({
+	        title: "URL이 복사되었습니다!!",
+	        text: url,
+	        icon: "success",
+	    })
+	}	
+	
+function like() {
+    	
+    	const user_id = ${userId};
+
+        if (user_id === 0) {
+            checkUserIdAndNavigate();
+		} else {
+ 	   		const favorite = {
+			user_id : ${userId},
+			content_id: ${accomodation.content_id},
+		};
+        	$.ajax({
+                method: "POST",
+                url: "/toggleFavoriteAjax",
+                data: JSON.stringify(favorite),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (result) {
+                    if (result == 1) {
+                        alert("찜했습니다.");
+                    } else {
+                        alert("찜목록에서 제외했습니다.");
+                    }
+                }
+            });
+        }
     }
 
-    function share() {
-        navigator.clipboard.writeText(window.location.href);
-        alert("링크를 복사하였습니다.");
-    }
 </script>
+
 </head>
+
 <body>
-
-	<%@ include file="/WEB-INF/components/TobBar.jsp"%>
-	<div class="title-container">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>${accomodation.title}</h2>
-        <div>
-        <div style="display: flex;">
-            <div style="display: flex;">
-            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;" onClick="like()">
-                <i class="bi bi-heart" ></i> 
-                <span>좋아요</span>
-            </div>
-            <div class="topbarbi" style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Noto Sans;" onClick="share()">
-                <i class="bi bi-share"></i> 
-                <span>공유하기</span>
-             </div>
-
-        	</div>
-    	</div>
+	<!-- 임시, 여백용-->
+	<div id="content_title" class="container homeDetail-whiteSpace-custom"></div>
+<!-- 	
+	keyword, title 영역	
+	<form id="festival" action="festival" method="get">
+	<div class="container homeCommon-keyword-title-custom">
+		<div class="co1 title-div">accomodation!</div>
+		<div class="co1 text-div">
+			<h4><strong>좋은 숙박을 알아볼까요~♫</strong></h4>
 		</div>
-	</div>
+		<input class="form-control keyword-input" type="text" name="keyword" placeholder="가고 싶은 축제의 이름이나 키워드를 검색해보세요.">
+		<img class="keyword-img" src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>
 	</div>
 	
-	<div class="container" style="display: flex;">
-	  <div class="hashtag-container">
-	    <div class="app-tag-container" style="position: relative;  margin-right: 10px; margin-top: 10px">
-	      <div class="app-tag" style="position: absolute;">
-	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그</div>
-	      </div>
-	    </div>
-	  </div>
-	  
-	  <div class="hashtag-container">
-	    <div class="app-tag-container" style="position: relative; margin-top: 10px">
-	      <div class="app-tag" style="position: absolute;">
-	        <div class="app-tag-text" style="font-size: 12; display: flex; align-items: center; justify-content: center;">#해시태그2</div>
-	      </div>
-	    </div>
-	  </div>
+	경계선 표현
+	<hr class="container homeCommon-top-custom">	
+		
+	select 영역
+	<div class="container homeCommon-select-custom">
+		<div class="row g-2 text-center">
+			<div class="col d-flex justify-content-center">
+				<select class="form-select area-dropdown" 
+						aria-label="Default select example" name="area">
+				</select>
+			</div>
+			<div class="col d-flex justify-content-center">
+				<select class="form-select sigungu-dropdown" 
+						aria-label="Default select example" name="sigungu">
+				</select>
+			</div>
+			<div class="col d-flex justify-content-center">
+				<select class="form-select" aria-label="Default select example">
+					<option selected>진행 기간 선택</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+			<div class="col d-flex justify-content-center">
+				<select class="form-select" aria-label="Default select example">
+					<option selected>진행 여부 선택</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+		</div>		
 	</div>
-	<div class="container border-bottem p-5"
-		style="justify-content: space-between; height: 700px; border-bottom: 3px solid black;">
-		<table>
-			<tr>
-				<td
-					style="width: 10%; height: 100%; text-align: left; margin-left: -40px;">
-					<img class="thumbnail" alt="${accomodation.title}이미지1"
-					src="${accomodation.img1}"
-					style="width: 313px; height: 525px; object-fit: cover; margin-left: 0px;"
-					align="absmiddle">
-				</td>
-				<td
-					style="width: 10%; text-align: center; vertical-align: middle; margin: 16px 0px 16px 0px;">
-					<img class="thumbnail" alt="${accomodation.title}이미지2"
-					src="${accomodation.img2}"
-					style="object-fit: cover; margin-left: -40px;" align="absmiddle">
-					<br>
-				<img class="thumbnail" alt="${accomodation.title}이미지3"
-					src="${accomodation.img3}"
-					style="object-fit: cover; margin-left: -40px;" align="absmiddle">
-				</td>
-				<td style="width: 20%; text-align: left;">
-					<ul class="custom-ul">
-						<li><span>상호명</span><span>${accomodation.title}</span></li>
-						<li><span>주소</span><span>${accomodation.address}</span></li>
-						<li><span><b>우편번호</b></span><span>${accomodation.postcode}</span></li>
-						<li><span><b>전화번호</b></span><span>${accomodation.phone}</span></li>
-						<li><span><b>홈페이지</b></span><a href="${accomodation.homepage}"><span>${accomodation.homepage}</span></a></li>
-						<li><span><b>객실수</b></span><span>${accomodation.room_count}</span></li>
-						<li><span><b>예약처</b></span><a href="${accomodation.reservation_url}"><span>${accomodation.reservation_url}</span></a></li>
-						<li><span><b>환불규정</b></span><span>${accomodation.refund}</span></li>
-						<li><span><b>입실시간</b></span><span>${accomodation.check_in}</span></li>
-						<li><span><b>퇴실시간</b></span><span>${accomodation.check_out}</span></li>
-					</ul>
-					<div style="display: flex; justify-content: flex-start; text-align: left; padding-top: 30px">
+	</form> -->
+	
+	<!-- 상단 분홍색 title 출력-->
+	<div class="homeDetail-topTitle-custom">
+		<div class="container homeDetail-topTitle-custom">
+			<div class="row row-cols-3">
+				<div class="col title-custom">
+					<p>${accomodation.title}</p>
+				</div>
+				<div class="col image-custom">
+					<img alt="favorite_icon.png" src="../image/favorite_icon.png" onclick="like()">
+				</div>
+				<div class="col image-custom">
+					<img alt="share_icon.png" src="../image/share_icon.png" onclick="clip(); return false;">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- content tag 출력-->
+	<div class="container homeDetail-topTags-custom">
+		<div class="row row-cols-6">
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>
+			<div class="col-sm-1 hashTag-custom">
+				<button value="">#해시태그</button>
+			</div>			
+		</div>
+	</div>
+
+	<!-- 이미지, 기본 정보 출력 -->
+	<div class="container homeDetail-basic-custom">
+		<div class="row row-cols-3">
+			<!-- 첫번째 큰 이미지 -->
+			<div class="col homeDetail-basic-img-custom">
+				<img id="photo" alt="${accomodation.img1}" src="${accomodation.img1}">
+			</div>
+			
+			<!-- 두번째 작은 이미지 -->
+			<div class="col homeDetail-basic-sideImg-custom">
+				<div class="row row-cols-1">
+					<c:choose>
+						<c:when test="${accomodation.img1 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${accomodation.img1}" src="${accomodation.img1}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${accomodation.img2 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${accomodation.img2}" src="${accomodation.img2}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${accomodation.img3 != null}">
+							<div class="col sideImg-custom">
+								<img alt="${accomodation.img3}" src="${accomodation.img3}" onclick="clickPhoto(event)">	
+							</div>			
+						</c:when>
+						<c:otherwise>
+							<div class="col sideImg-custom"></div>							
+						</c:otherwise>
+					</c:choose>					
+					<!-- 추가 이미지 확장용 -->
+					<div class="col sideImg-custom"></div>
+					<div class="col sideImg-custom"></div>
+				</div>
+			</div>
+			
+			<!-- 세번째 요약 content -->
+			<div class="col homeDetail-basic-text-custom">
+				<div class="row row-cols-1">
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">상호명</p>
+						<span>${accomodation.title}</span>
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-sm-custom">주소</p>
+						<span>${accomodation.address}</span>						
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>우편번호</p>
+						<span>${accomodation.postcode}</span>					
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>전화번호</p>
+						<span>${accomodation.phone}</span>			
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>홈페이지</p>	
+						<span>
+							<a href="${accomodation.homepage}">${accomodation.homepage}</a>
+						</span>	
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">객실수</p>
+						<span>${accomodation.room_count}</span>
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p class="text-md-custom">예약처</p>
+						<span>${accomodation.reservation_url}</span>
+					</div>
+	
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>환불규정</p>
+						<span>${accomodation.refund}</span>					
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>입실시간</p>
+						<span>${accomodation.check_in}</span>										
+					</div>
+					<div class="col text-custom">
+						<img alt="icon.jpg" src="../image/boardStatus1.png">
+						<p>퇴실시간</p>	
+						<span>${accomodation.check_out}</span>									
+					</div>
+					<div class="col text-icon-custom">
+						<div class="row row-cols-6">
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${accomodation.is_parking eq 1 }">
+										<img alt="packing_icon.png" src="../image/packing_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_packing_icon.png" src="../image/disabled_packing_icon.png">									
+									</c:otherwise>					
+								</c:choose>	
+								<span>주차시설</span>	
+						
+							</div>
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${accomodation.is_cook eq 1 }">
+										<img alt="restroom_icon.png" src="../image/restroom_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_restroom_icon.png" src="../image/disabled_restroom_icon.png">									
+									</c:otherwise>					
+								</c:choose>	
+								<span>조리시설</span>								
+							</div>
+							<div class="row row-cols-2 icon-custom">
+								<c:choose>
+									<c:when test="${accomodation.is_pickup eq 1 }">
+										<img alt="activate_icon.png" src="../image/activate_icon.png">									
+									</c:when>
+									<c:otherwise>
+										<img alt="disabled_icon.png" src="../image/disabled_icon.png">									
+									</c:otherwise>					
+								</c:choose>
+								<span>픽업여부</span>							
+							</div>
+							<div class="row row-cols-2 icon-custom"></div>							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 경계선 표현 -->
+	<hr class="container homeCommon-top-custom">
+	
+	<!-- 상세정보 출력 -->
+	<div class="container homeDetail-mdTitle-custom">
+		<h2><strong>OVERVIEW</strong></h2>
+	</div>
+	
+	<div class="container homeDetail-overView_custom">
+		<div class="homeDetail-overView-detail">
+			<p>개   요 : ${accomodation.content}</p>
+		</div>
+	</div>
+	
+	<!-- 경계선 표현 -->
+	<hr class="container homeCommon-top-custom">
+	
+	<!-- 리뷰 영역 -->
+	<div class="container homeDetail-mdTitle-custom">
+		<h2><strong>REVIEW</strong></h2>
+			<div class="homeDetail-reviewInsert-btn-box">
+				<button class="btn" onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${accomodation.content_id},${accomodation.big_code})">리뷰&nbsp;등록</button>
+			</div>
+	</div>
+	
+	<div class="container homeDetail-view-custom">
+		<div class="row g-2">
+			<!-- 평점 현황 -->
+			<div class="col-2 box-custom">			
+				<div class="row row-cols-1">
+					<div class="col box-col-custom">
+						<span class="cost-span">${reviewCount }&nbsp;</span>
+						<span>/ 5.0</span>
+					</div>
+					<div class="col box-col-custom">
+						<c:forEach begin="1" end="${reviewCount }">⭐</c:forEach>
+					</div>
+					<div class="col box-col-custom">
+    					<hr/>
+					</div>
+					<div class="col box-col-custom">
 						<c:choose>
-							<c:when test="${accomodation.is_pickup == 0}">
-								<div style="text-align: center; margin-right: 5px;">
-								<i class="contentyes-bi bi-car-front"></i>
-								<div style="margin-top: 10px;"><b>픽업가능</b></div>
-								</div>
-								</c:when>
-							<c:when test="${accomodation.is_pickup == 1}">
-							<div style="text-align: center; margin-right: 5px;">
-							<i class="contentno-bi bi-car-front"></i>
-							<div style="margin-top: 10px;"><b>픽업불가</b></div>
-							</div>
+							<c:when test="${reviewCount < 1.0 && reviewCount >= 0.0}">
+								<span>"비추천해요.."</span>
 							</c:when>
-						</c:choose>
-						<c:choose>
-							<c:when test="${accomodation.is_cook == 0}">
-							<div style="text-align: center; margin-right: 5px;">
-							<i class="contentyes-bi bi-egg-fried"></i>
-							<div style="margin-top: 10px;"><b>조리가능</b></div>
-							</div>
+							<c:when test="${reviewCount < 2.0 && reviewCount >= 1.0}">
+								<span>"조금 괜찮아요.."</span>
 							</c:when>
-							<c:when test="${accomodation.is_cook == 1}">
-							<div style="text-align: center; margin-right: 5px;">
-							<i class="contentno-bi bi-egg-fried"></i>
-							<div style="margin-top: 10px;"><b>조리불가</b></div>
-							</div>
+							<c:when test="${reviewCount < 3.0 && reviewCount >= 2.0}">
+								<span>"보통이에요!"</span>
 							</c:when>
-						</c:choose>
-						<c:choose>
-							<c:when test="${accomodation.is_parking == 0}">
-							<div style="text-align: center; margin-right: 0px;">
-							<i class="contentyes-bi bi-p-circle"></i>
-							<div style="margin-top: 10px;"><b>주차가능</b></div>
-							</div>
+							<c:when test="${reviewCount < 4.0 && reviewCount >= 3.0}">
+								<span>"즐거웠어요!"</span>
 							</c:when>
-							<c:when test="${accomodation.is_parking == 1}">
-							<div style="text-align: center; margin-right: 0px;">
-							<i class="contentno-bi bi-sign-no-parking"></i>
-							<div style="margin-top: 10px;"><b>주차불가</b></div>
-							</div>
-							</c:when>
+							<c:otherwise>
+								<span>"적극 추천해요!"</span>
+							</c:otherwise>
 						</c:choose>
 					</div>
+				</div>										  
+			</div>
+					
+			<!-- 전체 리뷰 현황 -->
+			<div class="col dashboardBox-custom">
+				<div class="row first-box" style="">
+					<div class="col col-sm-8">
+						<span class="common-span-font">·</span>
+						<span> 전체 리뷰 작성자 중 
+						<span class="common-span">${fn:length(reviewBoard) }</span>명이 
+							<c:forEach begin="1" end="${reviewCount }">
+								<span class="common-span">★</span>
+							</c:forEach>
+						으로 평가한 축제에요.</span>
+					</div>
+				</div>	
+							
+				<!-- 평점 높은 리뷰 생성 갯수 제한 -->
+				<c:set var="counter" value="0" />
 
+				<c:set var="currentDate" value="<%= Calendar.getInstance().getTime() %>" />					
 
-				</td>
-			</tr>
-		</table>
-	</div>
+				<div class="row row-cols-3 second-box">
 
-	<div id="overlay"></div>
-	<div id="largeImageContainer">
-		<img id="largeImage" src="" alt="Large Image">
-	</div>
-	<script>
-    const thumbnails = document.querySelectorAll('.thumbnail');
-    const largeImage = document.getElementById('largeImage');
-    const overlay = document.getElementById('overlay');
-
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function () {
-            largeImage.src = this.src;
-            largeImage.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-    });
-
-    overlay.addEventListener('click', function () {
-        largeImage.style.display = 'none';
-        overlay.style.display = 'none';
-    });
-	</script>
-	<div class="container border-bottem p-5" style="border-bottom: 3px solid black;">
-		<h2 style="color: hotpink;">개요</h2>
-		<p>${accomodation.content}
-	</div>
-	<!-- review test -->
-	<c:set var="num" value="${page.total-page.start+1 }" />
-	<div class="container border-bottem p-5" style="border-bottom: 3px solid black;">
-		<div class="d-flex justify-content-end">
-			<button class="btn btn-primary"
-				onclick="javascript:showPopUp(${userId},${bigCode},${smallCode},${currentPage},${accomodation.content_id},${accomodation.big_code})">리뷰쓰기</button>
+					<c:forEach var="dashboardReview" items="${reviewBoard}" varStatus="loop">
+					    <c:choose>					    	
+					        <c:when test="${dashboardReview.score >= 4 && currentDate.time - dashboardReview.created_at.time < (30 * 24 * 60 * 60 * 1000) && counter < 7}">
+					            <div class="col col-sm-4 third-box">
+					                <img alt="test" src="../image/reviewIcon2.png">${dashboardReview.content}
+					            </div>
+					            <c:set var="counter" value="${counter + 1}" />
+					        </c:when>
+					    </c:choose>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
-		<br>
-		<table class="table">
-			<tr class="table-primary text-center">
-				<th scope="col">구분</th>
-				<th scope="col">한줄평</th>
-				<th scope="col">작성자</th>
-				<th scope="col">작성일</th>
-				<th scope="col">평점</th>
-				<th scope="col">신고</th>
-			</tr>
-			<c:forEach var="review" items="${reviewBoard }">
-				<tr>
-					<td class="text-center">${num }</td>
-					<td class="text-center"><a
-						href="../boardDetail?id=${review.id }">${review.content }</a></td>
-					<td class="text-center">${review.name }</td>
-					<td class="text-center"><fmt:formatDate
-							value="${review.created_at }" type="date" pattern="YYYY/MM/dd" /></td>
-					<td class="text-center"><c:forEach begin="1"
-							end="${review.score }">★</c:forEach></td>
-					<td class="text-center">
-						<button class="btn btn-danger" onclick="report(${review.id})">신고</button>
-					</td>
-				</tr>
-				<c:set var="num" value="${num - 1 }" />
-			</c:forEach>
-		</table>
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center"
-				style="display: flex; list-style: none; padding: 0;">
-				<c:choose>
-					<c:when test="${smallCode eq 6}">
-						<li class="page-item"><c:if
-								test="${page.startPage > page.pageBlock }">
-								<a class="page-link"
-									href="reviewBoardList?currentPage=${page.startPage - page.pageBlock }">이전</a>
-							</c:if></li>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item"><a class="page-link"
-								href="reviewBoardList?currentPage=${i}">${i}</a></li>
-						</c:forEach>
-						<li class="page-item"><c:if
-								test="${page.endPage < page.totalPage }">
-								<a class="page-link"
-									href="reviewBoardList?currentPage=${page.startPage + page.pageBlock }">다음</a>
-							</c:if></li>
-					</c:when>
-				</c:choose>
-			</ul>
-		</nav>
 	</div>
+	
+<%-- 	<c:set var="num" value="${page.total-page.start+1 }" /> --%>
+	
+	<!-- 리뷰 카드 영역 -->
+ 	<div class="container reviewBox-custom"> 
+		<div class="owl-carousel custom-carousel owl-theme"> 	
+<!-- 		<div class="row row-cols-1 row-cols-md-1 g-4"> -->
+			<c:forEach var="review" items="${reviewBoard }">
+<!-- 				<div class="col"> -->
+					<div class="card reviewCard-custom">
+						<div class="row row-cols-2 reviewCard-md-custom">
+							
+							<div class="col col-4">
+								<img class="rounded-circle" src="../image/cuteBear.png" alt="이미지영역">
+							</div>
+							
+							<div class="col col-8">
+								<div class="row row-cols-1 reviewCard-content-custom">
+									<div class="col reportBtn-box">
+										<button class="btn" onclick="report(${review.id})">신고</button>
+									</div>
+									
+									<div class="row row-cols-2 first-content-box">
+										<div class="col content-box-first">${review.name }</div>
+										<div class="col content-box-second">${boards.user_id }</div>
+									</div>
 
-	<h2>지도</h2>
-	<div id="map" style="width: 500px; height: 400px; margin: 0 auto;"></div>
+									<div class="col first-calendar-box">
+										<fmt:formatDate value="${review.created_at }" type="date"
+														pattern="YYYY.MM.dd, hh:mm:ss" />
+									</div>
+									
+									<div class="col first-cost-box">
+										<c:forEach begin="1" end="${review.score }">⭐</c:forEach>
+									</div>
+								</div>
+							</div>
+							
+						</div>
 
-<!-- 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=API키 입력"></script>
-	<script>
-			var accomodation_mapx=[[${accomodation.mapx}]];
-			var accomodation_mapy=[[${accomodation.mapy}]];
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		    mapOption = {
-		        center: new kakao.maps.LatLng([[${accomodation.mapy}]], [[${accomodation.mapx}]]), // 지도의 중심좌표
-		        level: 3, // 지도의 확대 레벨
-		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
-		    }; 
+						<div class="card-body row row-cols-1">
+							<h5 class="card-title col">
+								<strong>${review.content }</strong>
+							</h5>
+							<p class="card-text col"></p>
+						</div>
+						
+					</div>
+			<!-- </div> -->
+			</c:forEach>
+			</div>
+		</div>
+<!-- </div> --> 	
+	
+	<!-- 경계선 표현 -->
+	<hr class="container homeCommon-top-custom">	
 
-		// 지도를 생성한다 
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
+	<!-- 찾아가기 출력 -->
+	<div class="container homeDetail-mdTitle-custom">
+		<h2><strong>찾아가기</strong></h2>
+	</div>
+	
+	<div class="container homeDetail-map-custom">
+		<div id="map" class="homeDetail-map-detail">
+		
+		</div>	
+	</div>
+	
+	<!-- 경계선 표현 -->
+	<hr class="container homeCommon-top-custom">
+	
+	<!-- 비슷한 축제 출력 -->
+	<div class="container homeDetail-mdTitle-custom">
+		<h2><strong>비슷한 축제</strong></h2>
+	</div>	
 
-		// 지도에 마커를 생성하고 표시한다
-		var marker = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng([[${accomodation.mapy}]], [[${accomodation.mapx}]]), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
+	<div class="container homeList-menu-custom">
+		<div class="row row-cols-3 g-6 homeList-mdMenu-custom">
+			<div class="col d-flex justify-content-center">
+				<div class="card homeList-card-custom">
+					<div class="homeList-tag-custom">
+						<div class="homeList-tag-custom2">
+							<p class="tag-p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="../photos/aquarium1.png" class="card-img-top"
+							alt="image.jpg">
+						</a>
+					</div>
 
-	</script> -->
-	<div align="center">
-		<button onclick="location.href='../accomodation'">목록</button>
+					<div class="card-body">
+						<p class="card-text title-p">축제 제목</p>
+						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet-p">content영역</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col d-flex justify-content-center">
+				<div class="card homeList-card-custom">
+					<div class="homeList-tag-custom">
+						<div class="homeList-tag-custom2">
+							<p class="tag-p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<p class="card-text title-p">축제 제목</p>
+						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet-p">content영역</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col d-flex justify-content-center">
+				<div class="card homeList-card-custom">
+					<div class="homeList-tag-custom">
+						<div class="homeList-tag-custom2">
+							<p class="tag-p">#지역태그</p>
+						</div>
+						<a href="">
+							<img src="../photos/aquarium1.png" class="card-img-top" alt="image.jpg">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<p class="card-text title-p">축제 제목</p>
+						<p class="card-text period-p">2023.00.00&nbsp;~&nbsp;00.00</p>
+						<p class="card-text contet-p">content영역</p>
+					</div>
+				</div>
+			</div>						
+		</div>
 	</div>
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/components/Footer.jsp"%>
-
 </body>
 </html>
-
-

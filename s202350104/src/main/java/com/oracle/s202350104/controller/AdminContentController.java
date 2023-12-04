@@ -12,8 +12,9 @@
 	import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-	
-	import com.oracle.s202350104.model.Accomodation;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.oracle.s202350104.model.Accomodation;
 	import com.oracle.s202350104.model.AccomodationContent;
 	import com.oracle.s202350104.model.Areas;
 	import com.oracle.s202350104.model.CommonCodes;
@@ -23,15 +24,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 	import com.oracle.s202350104.service.CommonCodeService;
 	import com.oracle.s202350104.service.ExperienceService;
 	import com.oracle.s202350104.model.FestivalsContent;
-	import com.oracle.s202350104.model.Point;
+import com.oracle.s202350104.model.History;
+import com.oracle.s202350104.model.Point;
 	import com.oracle.s202350104.service.FestivalsService;
-	import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.HistoryService;
+import com.oracle.s202350104.service.Paging;
 	import com.oracle.s202350104.service.PagingList;
 	import com.oracle.s202350104.service.RestaurantService;
 	import com.oracle.s202350104.service.SpotService;
 import com.oracle.s202350104.service.TagsService;
 import com.oracle.s202350104.service.user.UserService;
-	import com.oracle.s202350104.model.RestaurantsContent;
+import com.oracle.s202350104.utils.FileUploadDeleteUtil;
+import com.oracle.s202350104.model.RestaurantsContent;
 	import com.oracle.s202350104.model.SpotContent;
 import com.oracle.s202350104.model.Tags;
 
@@ -53,9 +57,10 @@ import lombok.RequiredArgsConstructor;
 		private final CommonCodeService cs;
 		private final TagsService ts;
 		private final UserService us;
+		private final HistoryService hs;
 		
 		// festival <나희>
-		// 관리자 지역정보 축제 리스트로 넘어가는 logic
+		// 관리자 지역정보 축제 리스트로 이동
 		@RequestMapping(value = "festival")
 		public String festival(FestivalsContent festival, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -74,9 +79,21 @@ import lombok.RequiredArgsConstructor;
 				// 조건에 맞는 festival의 list를 가져옴
 				List<FestivalsContent> listFestivals = fs.listFestivals(festival);
 				
+				// 공통코드 list를 가져옴
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				
+				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("totalFestivals", totalFestivals);
 				model.addAttribute("listFestivals", listFestivals);
 				model.addAttribute("page", page);
+				model.addAttribute("searchType", festival.getSearchType());
+				model.addAttribute("keyword", festival.getKeyword());
+				model.addAttribute("area", festival.getArea());
+				model.addAttribute("sigungu", festival.getSigungu());
+				model.addAttribute("status", festival.getStatus());
+				model.addAttribute("is_deleted", festival.getIs_deleted());
+				model.addAttribute("small_code", festival.getSmall_code());
+				
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin festival", e.getMessage());
 			} finally {
@@ -86,7 +103,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festival";
 		}
 		
-		// 관리자 축제 상세 페이지로 넘어가는 logic
+		// 관리자 축제 상세 페이지로 이동
 		@RequestMapping(value = "festivalDetail")
 		public String festivalDetail(String contentIdStr, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -117,7 +134,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalDetail";
 		}
 		
-		// 관리자 축제 정보 입력 폼으로 넘어가는 logic
+		// 관리자 축제 정보 입력 폼으로 이동
 		@RequestMapping(value = "festivalInsertForm")
 		public String festivalInsertForm(Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -127,6 +144,10 @@ import lombok.RequiredArgsConstructor;
 			
 				// 축제 중분류를 선택할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
+				
+				Tags tags = new Tags();
+				List<Tags> listAllTags = ts.listTags(tags);
+				model.addAttribute("listAllTags", listAllTags);
 				
 				model.addAttribute("listCodes", listCodes);
 			} catch (Exception e) {
@@ -138,41 +159,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalInsertForm";
 		}
 		
-		// 축제 정보를 입력한 후 DB(content 및 festivals 테이블)에 insert 처리하기 위한 logic(AJAX 연결)
-		@ResponseBody
-		@RequestMapping(value = "festival/insert")
-		public String festivalInsert(FestivalsContent festival, Model model) {
-			UUID transactionId = UUID.randomUUID();
-			String str = "";
-			
-			try {
-				log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "start");
-				
-				// 폼에 입력된 date 정보를 DB에 저장된 형식으로 변환
-				festival.setStart_date(festival.getStart_date().replaceAll("-", ""));
-				festival.setEnd_date(festival.getEnd_date().replaceAll("-", ""));
-				
-				// festival을 insert한 결과를 result에 저장
-				int result = fs.insertFestival(festival);
-				log.info("Controller festivalInsert result => "+result);
-				
-				// result에 따라 alert 메세지 반환
-				if(result > 0) {
-					str = "성공적으로 등록되었습니다."; 
-				} else { 
-					str = "등록에 실패하였습니다."; 
-				}
-			} catch (Exception e) {
-				log.error("[{}]{}:{}", transactionId, "admin festivalInsert", e.getMessage());
-			} finally {
-				log.info("[{}]{}:{}", transactionId, "admin festivalInsert", "end");
-			}		
-			
-			// alert 메세지 반환
-			return str;
-		}
-		
-		// 관리자 축제 정보 수정 폼으로 넘어가는 logic
+		// 관리자 축제 정보 수정 폼으로 이동
 		@RequestMapping(value = "festivalUpdateForm")
 		public String festivalUpdateForm(int contentId, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
@@ -181,12 +168,28 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin festivalUpdateForm", "start");
 				// 수정할 festival의 상세 정보를 가져와서 festival 인스턴스에 저장
 				FestivalsContent festival = fs.detailFestivals(contentId);
-				// 중분류를 수정할 수 있도록 common code의 list를 만들어서 저장
+				// 소분류를 수정할 수 있도록 common code의 list를 만들어서 저장
 				List<CommonCodes> listCodes = cs.listCommonCode();
-
-				
-				/* date 정보를 가져와서 보여주기 위한 방법 생각해서 추가하기 */
-				
+				Tags tags = new Tags();
+				List<Tags> listAllTags = ts.listTags(tags);
+				model.addAttribute("listAllTags", listAllTags);
+//				// 시작일 보여주기 위해 형식 변환
+//				String startdate = "";
+//				if(festival.getStart_date() != null) {
+//					String o_startdate = festival.getStart_date();
+//					startdate = o_startdate.substring(0,4)+"-"+o_startdate.substring(4,6)+"-"+o_startdate.substring(6,8);
+//					festival.setStart_date(startdate);
+//					log.info("startdate=>"+startdate);
+//				}
+//				
+//				// 종료일 보여주기 위해 형식 변환
+//				String enddate = "";
+//				if(festival.getEnd_date() != null) {
+//					String o_enddate = festival.getEnd_date();
+//					enddate = o_enddate.substring(0,4)+"-"+o_enddate.substring(4,6)+"-"+o_enddate.substring(6,8);
+//					festival.setEnd_date(enddate);
+//					log.info("enddate=>"+enddate);
+//				}
 				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("currentPage", currentPage);
@@ -200,7 +203,7 @@ import lombok.RequiredArgsConstructor;
 			return "admin/content/festivalUpdateForm";
 		}
 		
-		// 축제 정보를 수정한 후 DB(content 및 festivals 테이블)에 update하기 위한 logic(AJAX 연결)
+		// 축제 정보를 수정한 후 DB(content 및 festivals 테이블)에 update(AJAX 연결)
 		@ResponseBody
 		@RequestMapping(value = "festivalUpdate")
 		public String festivalUpdate(FestivalsContent festival, String currentPage, Model model) {
@@ -228,32 +231,52 @@ import lombok.RequiredArgsConstructor;
 			return str;
 		}
 		
-		// festival을 삭제하기 위한 logic
+		// festival을 삭제
 		@RequestMapping(value = "festivalDelete")
-		public String festivalDelete(int contentId, Model model) {
+		public String festivalDelete(int contentId,String is_deleted, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			FestivalsContent festival = new FestivalsContent();
+			festival.setContent_id(contentId);
+			
+			if(is_deleted.equals("0")) {
+				festival.setIs_deleted("1");
+			} else if(is_deleted.equals("1")) {
+				festival.setIs_deleted("0");
+				log.info(festival.getIs_deleted());
+			}
+			
 			
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin festivalDelete", "start");
 				// festival 삭제
-				fs.deleteFestivals(contentId);
+				fs.deleteFestivals(festival);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin festivalDelete", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}", transactionId, "admin festivalDelete", "end");
 			}	
 			
-			return "forward:festival";
+			return "redirect:festival";
 		}
 		
-		// festival 등록을 승인하기 위한 logic
+		// festival 등록을 승인
 		@RequestMapping(value = "festivalApprove")
-		public String festivalApprove(int contentId, String currentPage, Model model) {
+		public String festivalApprove(int contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
+			FestivalsContent festival = new FestivalsContent();
+			festival.setContent_id(contentId);
+			
+			if(status.equals("0")) {
+				festival.setStatus("1");
+			} else if(status.equals("1")) {
+				festival.setStatus("0");
+				log.info(festival.getStatus());
+			}	
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin festivalApprove", "start");
 				// approve한 결과를 result에 저장
-				int result = fs.approveFestival(contentId);
+				int result = fs.approveFestival(festival);
 				
 				// result값에 따라 alert에서 표시될 메세지가 달라짐
 				if(result > 0) {
@@ -274,6 +297,38 @@ import lombok.RequiredArgsConstructor;
 			return "forward:festivalDetail?contentIdStr="+contentId;
 		}
 		
+		// 등록 반려 사유 history 테이블에 insert
+		@RequestMapping(value = "insertHistory")
+		public String insertHistory(History history, Model model) {
+			UUID transactionId = UUID.randomUUID();
+					
+			try {
+				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "start");
+				int result = hs.insertHistory(history);
+			} catch (Exception e) {
+				log.error("[{}]{}:{}", transactionId, "admin insertHistory", e.getMessage());
+			} finally {
+				log.info("[{}]{}:{}", transactionId, "admin insertHistory", "end");
+			}	
+					
+			int bigCode = history.getBig_code();
+			// bigCode에 맞춰서 이동할 페이지를 적어주세요~!
+			if(bigCode == 11) {        // festival
+				return "redirect:festivalDetail?contentIdStr="+history.getTarget_id();
+			} else if(bigCode == 12) { // restaurant
+				return "";
+			} else if(bigCode == 13) { // accomodation
+				return "";
+			} else if(bigCode == 14) { // spot
+				// return "forward:spotDetail?contentIdStr="+contentId;
+				return "forward:spotDetail?contentIdStr="+history.getTarget_id();
+			} else if(bigCode == 15) { // experience
+				return "";
+			} else {
+				return "";
+			}
+		}
+		
 	
 		@RequestMapping(value = "experience")
 		public String experience(ExperienceContent experience,String currentPage, Model model) {
@@ -284,7 +339,7 @@ import lombok.RequiredArgsConstructor;
 				
 				int path = 0;
 				
-				Paging page = new Paging(totalExperience, currentPage);
+				PagingList page = new PagingList(totalExperience, currentPage);
 				experience.setStart(page.getStart());
 				experience.setEnd(page.getEnd());
 				
@@ -311,17 +366,20 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin restaurant", "start");
 				int totalRestaurant = rs.totalRestaurant();
 				int path = 0;
+				int big_code = 12;
 				
-				Paging page = new Paging(totalRestaurant, currentPage);
+				PagingList page = new PagingList(totalRestaurant, currentPage);
 				restaurant.setStart(page.getStart());
 				restaurant.setEnd(page.getEnd());
 				
 				List<RestaurantsContent> listRestaurant = rs.listRestaurant(restaurant);
 				List<Areas> listAreas = ars.listAreas();
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 				
 				model.addAttribute("totalRestaurant", totalRestaurant);
 				model.addAttribute("listRestaurant", listRestaurant);
 				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("page",page);
 				model.addAttribute("path", path);
 				model.addAttribute("currentPage", currentPage);
@@ -345,7 +403,12 @@ import lombok.RequiredArgsConstructor;
 				log.info("{}", totalRestaurant);
 				int path 			= 2;
 				log.info("{}", path);
+				String searchType   = restaurant.getSearchType();
+				String keyword      = restaurant.getKeyword();
 				int small_code      = restaurant.getSmall_code();
+				int area 			= restaurant.getArea();
+				int sigungu 		= restaurant.getSigungu();
+				String is_deleted   = restaurant.getIs_deleted();
 				int big_code        = restaurant.getBig_code();
 				contentId       = restaurant.getContent_id();
 							
@@ -358,13 +421,21 @@ import lombok.RequiredArgsConstructor;
 				
 				
 				List<RestaurantsContent> listSearchRestaurant = rs.adminListSearchRestaurant(restaurant);
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 								
 				model.addAttribute("totalRestaurant", totalRestaurant);
 				model.addAttribute("path", path);
+				model.addAttribute("searchType", searchType);
+				model.addAttribute("keyword", keyword);
+				model.addAttribute("small_code", small_code);
+				model.addAttribute("area", area);
+				model.addAttribute("sigungu", sigungu);
+				model.addAttribute("is_deleted", is_deleted);
 				model.addAttribute("status", status);
 				model.addAttribute("theme", theme);
 				model.addAttribute("page", page);
 				model.addAttribute("listRestaurant", listSearchRestaurant);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("small_code", small_code);
 				model.addAttribute("big_code", big_code);
 				model.addAttribute("currentPage", currentPage);
@@ -390,8 +461,11 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transaction, "admin restaurantDetail", "Start");
 				log.info("admin restaurantDetail -> ", contentId);
 				RestaurantsContent restaurant = rs.detailRestaurant(contentId);
-								
+				int big_code = restaurant.getBig_code();
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
 				model.addAttribute("restaurant", restaurant);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("currentPage", currentPage);
 				
 			} catch (Exception e) {
@@ -413,8 +487,12 @@ import lombok.RequiredArgsConstructor;
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				List<Areas> listAreas = ars.listAreas();
 				
+				int big_code     	= 12;				
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
+				model.addAttribute("listSmallCode", listSmallCode);
 								
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantInsertForm Exception", e.getMessage());
@@ -427,11 +505,11 @@ import lombok.RequiredArgsConstructor;
 		}		
 		
 			
-		@RequestMapping(value = "restaurant/insert")
+		@RequestMapping(value = "restaurantInsert")
 		public String restaurantInsert(Model model, RestaurantsContent restaurant) {
 			UUID transactionId = UUID.randomUUID();
 				
-			log.info("[{}]{}:{}", transactionId, "admin restaurant/insert", "start");
+			log.info("[{}]{}:{}", transactionId, "admin restaurantInsert", "start");
 			
 			int result = rs.insertRestaurant(restaurant);
 			
@@ -453,11 +531,14 @@ import lombok.RequiredArgsConstructor;
 				List<CommonCodes> listCodes = cs.listCommonCode();
 				List<Areas> listAreas = ars.listAreas();
 				List<Areas> listSigungu = ars.listSigungu(restaurant.getArea());
+				int big_code = restaurant.getBig_code();			
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
 				
 				model.addAttribute("restaurant", restaurant);
 				model.addAttribute("listCodes", listCodes);
 				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("listSigungu", listSigungu);
+				model.addAttribute("listSmallCode", listSmallCode);
 				model.addAttribute("currentPage", currentPage);
 				
 			} catch (Exception e) {
@@ -470,7 +551,7 @@ import lombok.RequiredArgsConstructor;
 		
 		
 		@RequestMapping(value = "restaurantUpdate")
-		public String restaurantUpdate(RestaurantsContent restaurant, Model model) {
+		public String restaurantUpdate(RestaurantsContent restaurant, Model model, String currentPage) {
 			UUID transactionId = UUID.randomUUID();
 			int id = 0;
 			
@@ -479,6 +560,13 @@ import lombok.RequiredArgsConstructor;
 				int result = rs.updateRestaurant(restaurant);
 				log.info("admin restaurantUpdate updateCount ->" + result);
 				id = restaurant.getContent_id();
+				
+				int big_code = restaurant.getBig_code();
+				List<RestaurantsContent> listSmallCode = rs.listSmallCode(big_code);
+				
+				model.addAttribute("listSmallCode", listSmallCode);
+				model.addAttribute("id", id);
+				model.addAttribute("currentPage", currentPage);
 			
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantUpdate Exception", e.getMessage() );
@@ -487,8 +575,8 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin restaurantUpdate", "end" );
 			} 
 			
-			return "forward:restaurantDetail?contentId="+id;
-			// return "redirect:restaurant"; /admin/content/
+			return "forward:/admin/content/restaurant";
+			// "forward:/admin/content/restaurantDetail?contentId="+id;
 		}
 		
 		
@@ -512,13 +600,38 @@ import lombok.RequiredArgsConstructor;
 		
 		
 		@RequestMapping(value = "restaurantApprove")
-		public String restaurantApprove(Integer contentId, String currentPage) {
+		public String restaurantApprove(int contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			
 			try {
 				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "Start");
-				int result = rs.approveRestaurant(contentId);
+				RestaurantsContent restaurant = new RestaurantsContent();
 				
+				restaurant.setContent_id(contentId);
+				
+				
+				log.info("contentId: {}", contentId);
+				log.info(restaurant.getStatus());
+				
+				
+				if (status.equals("0")) {
+					restaurant.setStatus("1");
+				} else if(status.equals("1")) {
+					restaurant.setStatus("0");
+				}
+				
+				log.info(restaurant.getStatus());
+				
+				int result = rs.approveRestaurant(restaurant);
+				
+				if(result > 0) {
+					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
+				} else {
+					model.addAttribute("msg", "오류가 발생하여 승인에 실패하였습니다.");
+				}
+				
+				model.addAttribute("contentId", contentId);
+				model.addAttribute("currentPage", currentPage);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}", transactionId, "admin restaurantApprove Exception", e.getMessage());
 			
@@ -526,7 +639,16 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}", transactionId, "admin restaurantApprove", "End");
 			}
 			
-			return "forward:restaurant";
+			return "forward:restaurantDetail";
+		}
+		
+		
+		@ResponseBody
+		@RequestMapping(value = "restaurantRestoreAjax")
+		public String restaurantRestoreAjax(int contentId, Model model) {
+			int result = rs.restaurantRestore(contentId);
+			String resultStr = Integer.toString(result);
+			return resultStr;	
 		}
 		
 		
@@ -568,7 +690,13 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotDetail", "start");
 				SpotContent spot = ss.detailSpot(contentId);
+				List<CommonCodes> listCodes = cs.listCommonCode();
+				List<Areas> listAreas = ars.listAreas();
+				List<Areas> listSigungu = ars.listSigungu(spot.getArea());
 				
+				model.addAttribute("listSigungu",listSigungu);
+				model.addAttribute("listCodes", listCodes);
+				model.addAttribute("listAreas", listAreas);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("contentId", contentId);
 				model.addAttribute("spot", spot);
@@ -591,7 +719,7 @@ import lombok.RequiredArgsConstructor;
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "spotUpdate", "end");
 			}
-				return "forward:spotDetail?contentIdStr="+spotContent.getContent_id();
+				return "forward:spotDetail?contentIdStr="+spotContent.getId();
 		}
 		
 		@RequestMapping(value = "spotUpdateForm")
@@ -615,7 +743,7 @@ import lombok.RequiredArgsConstructor;
 				log.info("[{}]{}:{}",transactionId, "spotUpdateForm", "end");	
 			}
 			return"admin/content/spotUpdateForm";
-			}
+			} 
 		
 		@RequestMapping(value = "spotInsertForm")
 		public String spotInsertForm(Model model) {
@@ -657,33 +785,46 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "spotDelete")
-		public String spotDelete(int contentId, Model model) {
+		public String spotDelete(int contentId,String is_deleted, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "start");
-				fs.deleteFestivals(contentId);
+				SpotContent spot = new SpotContent();
+				spot.setContent_id(contentId);
+				
+				if(is_deleted.equals("0")) {
+					spot.setIs_deleted("1");
+				} else if(is_deleted.equals("1")) {
+					spot.setIs_deleted("0");
+					log.info(spot.getIs_deleted());
+				}
+				log.info(spot.getIs_deleted());
+				ss.deletespot(spot);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin spotDelete", e.getMessage());
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin spotDelete", "end");
 			}		
-			return "forward:spot";
-		}
-		
-		@ResponseBody
-		@RequestMapping(value = "spotDeleteAjax")
-		public String spotDeleteAjax(int contentId, Model model) {
-			int result = ss.deletespot(contentId);
-			String resultStr = Integer.toString(result);
-			return resultStr;
+			return "redirect:spot";
 		}
 		
 		@RequestMapping(value = "spotApprove")
-		public String spotApprove(int contentId, String currentPage, Model model) {
+		public String spotApprove(int contentId,String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "start");
-				int result = ss.approveSpot(contentId);
+				SpotContent spot = new SpotContent();
+				spot.setContent_id(contentId);
+				
+				if(status.equals("0")) {
+					spot.setStatus("1");
+				} else if(status.equals("1")) {
+					spot.setStatus("0");
+					log.info(spot.getStatus());
+				}
+				log.info(spot.getStatus());
+					
+				int result = ss.approveSpot(spot);
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 				} else {
@@ -696,17 +837,22 @@ import lombok.RequiredArgsConstructor;
 			} finally {
 				log.info("[{}]{}:{}",transactionId, "admin spotApprove", "end");
 			}		
-			return "forward:spotDetail";
+			return "forward:spotDetail?contentIdStr="+contentId;
 		}
 		
 		@RequestMapping(value = "accomodation")
 		public String accomodation(AccomodationContent accomodationContent, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
+			
+			int path = 0;
+			
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin accomodation", "start");
-				int totalaccomodation = as.totalAccomodation();
+				int totalaccomodation = as.admintotalAccomodation();
+
 			
-				Paging page = new Paging(totalaccomodation, currentPage);
+				PagingList page = new PagingList(totalaccomodation, currentPage);
+
 				accomodationContent.setStart(page.getStart());
 				accomodationContent.setEnd(page.getEnd());
 			
@@ -717,6 +863,7 @@ import lombok.RequiredArgsConstructor;
 				model.addAttribute("totalAccomodation",totalaccomodation);
 				model.addAttribute("listAccomodation", listAccomodation);
 				model.addAttribute("page",page);
+				model.addAttribute("path",path);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId,  "admin accomodation", e.getMessage());
 			}finally {
@@ -732,6 +879,7 @@ import lombok.RequiredArgsConstructor;
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationSearch", "start");
 			int totalSearchaccomodation = as.totalSearchAccomodation(accomodationContent);
+			
 						
 			int path = 1;
 			String small_code = request.getParameter("small_code");
@@ -739,13 +887,18 @@ import lombok.RequiredArgsConstructor;
 			String is_deleted = request.getParameter("is_deleted");
 			String keyword = request.getParameter("keyword");
 			String status = request.getParameter("status");
+			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
 			
-			Paging page = new Paging(totalSearchaccomodation, currentPage);
+			PagingList page = new PagingList(totalSearchaccomodation, currentPage);
+			
 			accomodationContent.setStart(page.getStart());
 			accomodationContent.setEnd(page.getEnd());
+						
 			
 			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodationContent);
 			List<AccomodationContent> listSearchAccomodation = as.listSearchAccomodation(accomodationContent);
+			
 			
 			model.addAttribute("totalAccomodation", totalSearchaccomodation);
 			model.addAttribute("listAccomodation", listSearchAccomodation);
@@ -757,6 +910,9 @@ import lombok.RequiredArgsConstructor;
 			model.addAttribute("is_deleted" ,is_deleted);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("status", status);
+			model.addAttribute("area" , area);
+			model.addAttribute("sigungu", sigungu);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "admin accomodationSearch", e.getMessage());
 		}finally {
@@ -767,41 +923,49 @@ import lombok.RequiredArgsConstructor;
 }
 	
 	@RequestMapping(value = "accomodationDetail")
-	public String accomodationDetail(String contentIdStr, String currentPage, Model model) {
+	public String accomodationDetail(int contentId, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
-		int contentId = 0;
-		
-		if(contentIdStr == null) {
-			contentId = 0;
-		} else {
-			contentId = Integer.parseInt(contentIdStr);
-		}
-		try {	
+		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
-			log.info("accomodationDetail currentPage0=>"+currentPage);
 			AccomodationContent accomodation = as.detailAccomodation(contentId);
-			log.info("accomodationDetail currentPage1=>"+currentPage);
+			List<AccomodationContent> listSmallCode  = as.listSmallCode(accomodation);
+			List<Areas> listAreas = ars.listAreas();
+			List<Areas> listSigungu = ars.listSigungu(accomodation.getArea());
+			
 			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("contentId", contentId);
 			model.addAttribute("accomodation", accomodation);
-			log.info("accomodationDetail currentPage2=>"+currentPage);
-			log.info("contentIdStr: " + contentIdStr);
-		        
+			model.addAttribute("listSmallCode", listSmallCode);
+			model.addAttribute("listAreas" , listAreas);
+			model.addAttribute("listSigungu", listSigungu);
+			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "admin accomodationDetail", e.getMessage());
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
-		}		
+		}			
 		return "admin/content/accomodationDetail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "accomodationRestoreAjax")
+	public String accomodationRestoreAjax(int contentId, Model model) {
+		int result = as.accomodationRestore(contentId);
+		String resultStr = Integer.toString(result);
+		return resultStr;	
 	}
 	
 	@RequestMapping(value = "accomodationInsertForm")
 	public String accomodationInsertForm(Model model) {
 		UUID transactionId = UUID.randomUUID();
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsertForm", "start");
 			List<CommonCodes> listCodes = cs.listCommonCode();
 			List<Areas> listAreas = ars.listAreas();
+			int user_id = us.getLoggedInId();
+			
+			
+			model.addAttribute("userId", user_id);
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 		} catch (Exception e) {
@@ -815,8 +979,13 @@ import lombok.RequiredArgsConstructor;
 	@RequestMapping(value = "accomodationInsert")
 	public String accomodationInsert(AccomodationContent accomodation, Model model) {
 		UUID transactionId = UUID.randomUUID();
+		int role = us.getLoggedInUserRole();
+		String user_id = String.valueOf(us.getLoggedInId());
+		log.info("role->"+role);
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "start");
+			
+			accomodation.setUser_id(user_id);
 			as.insertAccomodation(accomodation);
 			
 		} catch (Exception e) {
@@ -824,7 +993,10 @@ import lombok.RequiredArgsConstructor;
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationInsert", "end");
 		}		
-		return "redirect:/admin/content/accomodation";
+		if (role == 1) {
+			return "redirect:accomodation";
+		}else 
+			return "redirect:/user/bizPage";
 	}	
 	
 	@GetMapping(value="accomodationUpdateForm")
@@ -837,10 +1009,13 @@ import lombok.RequiredArgsConstructor;
 			
 			List<CommonCodes> listCodes = cs.listCommonCode();
 			List<Areas> listAreas = ars.listAreas();
+			List<Areas> listSigungu = ars.listSigungu(accomodation.getArea());
+			
 			model.addAttribute("listCodes", listCodes);
 			model.addAttribute("listAreas", listAreas);
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", contentId);
+			model.addAttribute("listSigungu", listSigungu);
 			model.addAttribute("accomodation", accomodation);
 			
 		} catch (Exception e) {
@@ -854,11 +1029,14 @@ import lombok.RequiredArgsConstructor;
 	@RequestMapping(value = "accomodation/update")
 	public String accomodationUpdate(AccomodationContent accomodation, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
-		int id = 0;
+		int contentId = accomodation.getContent_id();
+		
+		log.info("contentId->"+contentId);
+		
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "start");
 			int result = as.updateAccomodation(accomodation);
-			id = accomodation.getContent_id();
+			
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("contentId", accomodation.getContent_id());
 		} catch (Exception e) {
@@ -866,7 +1044,7 @@ import lombok.RequiredArgsConstructor;
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationDetail", "end");
 		}		
-		return "forward:/admin/content/accomodationDetail?contentIdStr="+id;
+		return "redirect:/admin/content/accomodationDetail?contentId="+contentId;
 	}
 	
 	
@@ -904,11 +1082,30 @@ import lombok.RequiredArgsConstructor;
 	}
 	
 	@RequestMapping(value = "accomodationApprove")
-	public String accomodationApprove(int contentId, String currentPage, Model model) {
+	public String accomodationApprove(int contentId, String status, String currentPage, Model model) {
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "admin accomodationApprove", "start");
-			int result = as.approveAccomodation(contentId);
+			
+			AccomodationContent accomodation = new AccomodationContent();
+			
+			accomodation.setContent_id(contentId);
+			
+			log.info("contentId: {}",contentId);
+			log.info(accomodation.getStatus());
+			
+			if (status.equals("0")) {
+				accomodation.setStatus("1");
+
+			} else if(status.equals("1")) {
+				accomodation.setStatus("0");
+			
+			}
+			
+			log.info(accomodation.getStatus());
+			
+			int result = as.approveAccomodation(accomodation);
+			
 			if(result > 0) {
 				model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 			} else {
@@ -950,10 +1147,45 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "experienceUpdate")
-		public String experienceUpdate(ExperienceContent experienceContent, String currentPage, Model model) {
+		public String experienceUpdate(ExperienceContent experienceContent, MultipartFile file, MultipartFile file1, MultipartFile file2, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			int contentId = experienceContent.getId();
 			log.info("contentId->"+contentId);
+			
+			String pathDB = null;
+			String fileName = null;
+			String pathDB1 = null;
+			String fileName1 = null;
+			String pathDB2 = null;
+			String fileName2 = null;
+			
+			FileUploadDeleteUtil fileUpload = new FileUploadDeleteUtil();
+			
+			try {
+				log.info("experienceimgupload File Start!!");
+				String[] uploadResult = fileUpload.uploadFile(file);
+				fileName = uploadResult[0];
+				pathDB = uploadResult[1];
+				String[] uploadResult1 = fileUpload.uploadFile(file1);
+				fileName1 = uploadResult1[0];
+				pathDB1 = uploadResult1[1];
+				String[] uploadResult2 = fileUpload.uploadFile(file2);
+				fileName2 = uploadResult2[0];
+				pathDB2 = uploadResult2[1];
+				log.info("experienceimgupload fileName : {}", fileName);
+				log.info("experienceimgupload pathDB : {}", pathDB);
+
+			} catch (Exception e) {
+				log.error("experienceimgupload File upload error : {}", e.getMessage());
+			} finally {
+				log.info("experienceimgupload integratedboardInsert File End..");
+			}
+			
+			experienceContent.setImg1(pathDB+fileName);
+			experienceContent.setImg2(pathDB1+fileName1);
+			experienceContent.setImg3(pathDB2+fileName2);
+			
+			
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin festivalDetail", "start");
 				int result = es.experienceUpdate(experienceContent);
@@ -1032,11 +1264,20 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "experienceApprove")
-		public String experienceApprove(int contentId, String currentPage, Model model) {
+		public String experienceApprove(int contentId, String status, String currentPage, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceApprove", "start");
-				int result = es.experienceApprove(contentId);
+				ExperienceContent experience = new ExperienceContent();
+				experience.setContent_id(contentId);
+				
+				if (status.equals("0")) {
+					experience.setStatus("1");
+				} else if(status.equals("1")) {
+					experience.setStatus("0");
+				}
+				log.info(experience.getStatus());
+				int result = es.experienceApprove(experience);
 				if(result > 0) {
 					model.addAttribute("msg", "성공적으로 승인 처리되었습니다.");
 				} else {
@@ -1058,9 +1299,11 @@ import lombok.RequiredArgsConstructor;
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsertForm", "start");
 				List<CommonCodes> listCodes = cs.listCommonCode();
-				List<Areas> listAreas = ars.listAreas();
+				int user_id = us.getLoggedInId();
+				
+				
+				model.addAttribute("userId", user_id);
 				model.addAttribute("listCodes", listCodes);
-				model.addAttribute("listAreas", listAreas);
 			} catch (Exception e) {
 				log.error("[{}]{}:{}",transactionId, "admin experienceInsertForm", e.getMessage());
 			} finally {
@@ -1070,12 +1313,50 @@ import lombok.RequiredArgsConstructor;
 		}
 		
 		@RequestMapping(value = "experienceInsert")
-		public String experienceInsert(ExperienceContent experience, Model model) {
+		public String experienceInsert(ExperienceContent experience, MultipartFile file, MultipartFile file1, MultipartFile file2, Model model) {
 			UUID transactionId = UUID.randomUUID();
 			int role = us.getLoggedInUserRole();
+			String user_id = String.valueOf(us.getLoggedInId());
 			log.info("role->"+role);
+			
+			
+			String pathDB = null;
+			String fileName = null;
+			String pathDB1 = null;
+			String fileName1 = null;
+			String pathDB2 = null;
+			String fileName2 = null;
+			
+			
+			FileUploadDeleteUtil fileUpload = new FileUploadDeleteUtil();
+			
+			try {
+				log.info("experienceimgupload File Start!!");
+				String[] uploadResult = fileUpload.uploadFile(file);
+				fileName = uploadResult[0];
+				pathDB = uploadResult[1];
+				String[] uploadResult1 = fileUpload.uploadFile(file1);
+				fileName1 = uploadResult1[0];
+				pathDB1 = uploadResult1[1];
+				String[] uploadResult2 = fileUpload.uploadFile(file2);
+				fileName2 = uploadResult2[0];
+				pathDB2 = uploadResult2[1];
+				log.info("experienceimgupload fileName : {}", fileName);
+				log.info("experienceimgupload pathDB : {}", pathDB);
+
+			} catch (Exception e) {
+				log.error("experienceimgupload File upload error : {}", e.getMessage());
+			} finally {
+				log.info("experienceimgupload integratedboardInsert File End..");
+			}
+			
+			experience.setImg1(pathDB+fileName);
+			experience.setImg2(pathDB1+fileName1);
+			experience.setImg3(pathDB2+fileName2);
+			
 			try {
 				log.info("[{}]{}:{}",transactionId, "admin experienceInsert", "start");
+				experience.setUser_id(user_id);
 				int result = es.insertExperience(experience);
 				log.info("result"+result);
 			} catch (Exception e) {
@@ -1107,7 +1388,7 @@ import lombok.RequiredArgsConstructor;
 				String area = request.getParameter("area");
 				String sigungu = request.getParameter("sigungu");
 				
-				Paging page = new Paging(totalSearchExperience, currentPage);
+				PagingList page = new PagingList(totalSearchExperience, currentPage);
 				experience.setStart(page.getStart());
 				experience.setEnd(page.getEnd());
 				

@@ -10,7 +10,16 @@
 		SELECT count(*) FROM Tags
 		WHERE 1=1
 		<if test="keyword != null and keyword != ''">
-			AND name like '%' || #{keyword} || '%'
+			<choose>
+				<when test="searchType == 's_tagname'">
+					AND name like '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 's_groupname'">
+					AND group_id 
+					IN (SELECT id FROM tags 
+						WHERE name like '%' || #{keyword} || '%')
+				</when>
+			</choose>
 		</if>
 	</select>
 	
@@ -18,13 +27,22 @@
 		SELECT * 
 		FROM 
 		(
-			SELECT ROWNUM rn, a.*
+			SELECT ROWNUM rn, a.*, (SELECT name FROM tags t WHERE a.group_id = t.id) AS group_name
 			FROM
 			(SELECT * FROM tags 
 			 WHERE 1=1
 			 <if test="keyword != null and keyword != ''">
-				AND name like '%' || #{keyword} || '%'
-			 </if>
+				<choose>
+					<when test="searchType == 's_tagname'">
+						AND name like '%' || #{keyword} || '%'
+					</when>
+					<when test="searchType == 's_groupname'">
+						AND group_id 
+						IN (SELECT id FROM tags 
+							WHERE name like '%' || #{keyword} || '%')
+					</when>
+				</choose>
+			</if>
 			 ORDER BY id) a
 		)
 		<if test="start != 0 and end != 0">
@@ -33,15 +51,30 @@
 	</select>
 	
 	<insert id="nhTagsInsert" parameterType="Tags">
-		INSERT INTO Tags(id, name) VALUES(tags_id_seq.NEXTVAL, #{name})
+		INSERT INTO Tags(id, name, group_id) 
+		VALUES(tags_id_seq.NEXTVAL, #{name}, #{group_id})
 	</insert>
 	
 	<select id="nhTagsSelect" parameterType="int" resultType="Tags">
-		SELECT * FROM Tags WHERE id = #{id}
+		SELECT a.*, (SELECT name FROM tags t WHERE t.id = a.group_id) AS group_name 
+		FROM   Tags a 
+		WHERE  a.id = #{id}
+	</select>
+	
+	<select id="nhTagsSearchId" parameterType="String" resultType="int">
+		SELECT id FROM tags 
+		WHERE  name = #{name} 
+	</select>
+	
+	<select id="nhTagsSearchGroup" parameterType="Tags" resultType="Tags">
+		SELECT id, name FROM tags
+		WHERE  group_id = #{group_id}
 	</select>
 	
 	<update id="nhTagsUpdate" parameterType="Tags">
-		UPDATE Tags SET name = #{name} WHERE id = #{id}
+		UPDATE Tags 
+		SET    name = #{name}, group_id = #{group_id} 
+		WHERE  id = #{id}
 	</update>
 	
 	<delete id="nhTagsDelete" parameterType="Tags">
@@ -50,28 +83,65 @@
 	
 	<!-- USER TAGS -->
 	
-	<select id="nhUserTagsTotal">
+	<select id="nhUserTagsTotal" parameterType="Tags" resultType="int">
 		SELECT count(*)
-		FROM
-		users u, usertags ut, tags t
-		WHERE ut.tag_id = t.id
-		AND   ut.user_id = u.id
-		AND   u.small_code = 2
+		FROM   users u
+		WHERE  u.small_code = 2
 		<if test="keyword != null and keyword != ''">
 			<choose>
-			 	<when test="searchType == 'tagname'">
-			 		AND t.name like '%' || #{keyword} || '%'
-			 	</when>
+			 	<when test="searchType == 'tag_name'">
+				 		AND u.id IN
+				 		(SELECT user_id
+				 		 FROM   usertags ut, tags t
+				 		 WHERE  ut.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				</when>
 			 	<when test="searchType == 'user_id'">
 			 		AND u.id like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'user_name'">
+			 		AND u.name like '%' || #{keyword} || '%' 
 			 	</when>
 			</choose>
 	  	</if>
 	</select>
 	
+	<select id="nhUserTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT u.id user_id, u.name user_name, u.birthday, u.email, u.gender, u.address
+			 FROM   users u
+			 WHERE  u.small_code = 2 
+			 <if test="keyword != null and keyword != ''">
+				<choose>
+				 	<when test="searchType == 'tag_name'">
+				 		AND u.id IN
+				 		(SELECT user_id
+				 		 FROM   usertags ut, tags t
+				 		 WHERE  ut.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	</when>
+				 	<when test="searchType == 'user_id'">
+				 		AND u.id like '%' || #{keyword} || '%' 
+				 	</when>
+				 	<when test="searchType == 'user_name'">
+				 		AND u.name like '%' || #{keyword} || '%' 
+				 	</when>
+				</choose>
+			 </if> 
+			 ORDER BY u.id) a
+		)
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
+	
 	<select id="nhUserTagsAll" resultType="Tags">
 		SELECT *
-		FROM usertags u, tags t
+		FROM  usertags u, tags t
 		WHERE u.tag_id = t.id
 		ORDER BY t.name
 	</select>
@@ -84,10 +154,17 @@
 	
 	<select id="nhUserTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM usertags u, tags t
+		FROM  usertags u, tags t
 		WHERE u.tag_id = t.id
-		AND   u.user_id = #{id}
+		AND   u.user_id = #{userId}
 		ORDER BY t.name
+	</select>
+	
+	<select id="nhUserPopularTags" resultType="Tags">
+		SELECT count(tag_id) AS count, (SELECT name FROM tags WHERE tags.id = usertags.tag_id) AS name
+		FROM   usertags
+		GROUP BY tag_id
+		ORDER BY count(tag_id) DESC
 	</select>
 		
 	<insert id="nhUserTagsInsert" parameterType="Tags">
@@ -96,13 +173,75 @@
 	
 	<delete id="nhUserTagsDelete" parameterType="Tags">
 		DELETE UserTags 
-		WHERE tag_id = #{id}
+		WHERE  tag_id = #{tag_id}
 		<if test="user_id != null and user_id != 0">
 			AND user_id = #{user_id}
 		</if>
 	</delete>
 	
 	<!-- BOARD TAGS -->
+	
+	<select id="nhBoardTagsTotal" parameterType="Tags" resultType="int">
+		SELECT count(*)
+		FROM   board b
+		WHERE  1=1
+		<if test="small_code != null and small_code != 0">
+			AND b.small_code = #{small_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tag_name'">
+			 		AND b.id IN
+			 		(SELECT board_id
+			 		 FROM   boardtags bt, tags t
+			 		 WHERE  bt.tag_id = t.id
+			 		 AND    t.name like '%' || #{keyword} || '%')
+			 	</when>
+			 	<when test="searchType == 'title'">
+			 		AND b.title like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'user_id'">
+			 		AND b.user_id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhBoardTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT id board_id, title, user_id, created_at
+			 FROM  board b
+			 WHERE 1=1
+			 <if test="small_code != null and small_code != 0">
+			 	AND b.small_code = #{small_code}
+			 </if>
+			 <if test="keyword != null and keyword != ''">
+				<choose>
+					 <when test="searchType == 'tag_name'">
+				 		AND b.id IN
+				 		(SELECT board_id
+				 		 FROM   boardtags bt, tags t
+				 		 WHERE  bt.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	 </when>
+					 <when test="searchType == 'title'">
+					 	AND b.title like '%' || #{keyword} || '%' 
+					 </when>
+					 <when test="searchType == 'user_id'">
+					 	AND b.user_id like '%' || #{keyword} || '%' 
+					 </when>
+				</choose>
+			  </if>
+			  ORDER BY b.id) a
+		 )
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
 	
 	<select id="nhBoardTagsAll" resultType="Tags" parameterType="int">
 		SELECT *
@@ -129,7 +268,7 @@
 		
 	<delete id="nhBoardTagsDelete" parameterType="Tags">
 		DELETE BoardTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="board_id != null and board_id != 0">
 			AND board_id = #{board_id}
 		</if>
@@ -137,9 +276,74 @@
 	
 	<!-- CONTENT TAGS -->
 	
+	<select id="nhContentTagsTotal" parameterType="Tags" resultType="int">
+		SELECT count(*)
+		FROM   contents c
+		WHERE  1=1
+		<if test="big_code != null and big_code != 0">
+			AND c.big_code = #{big_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tag_name'">
+			 		AND c.id IN
+			 		(SELECT content_id
+			 		 FROM   contenttags ct, tags t
+			 		 WHERE  ct.tag_id = t.id
+			 		 AND    t.name like '%' || #{keyword} || '%')
+			 	</when>
+			 	<when test="searchType == 'title'">
+			 		AND c.title like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'content_id'">
+			 		AND c.id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhContentTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT id content_id, title, big_code, small_code, area, sigungu,
+					(SELECT content FROM commoncodes cc WHERE cc.big_code = c.big_code AND cc.small_code = c.small_code) scode_content,
+					(SELECT content FROM areas a WHERE a.area = c.area AND a.sigungu = 999) area_content,
+					(SELECT content FROM areas a WHERE a.area = c.area AND a.sigungu = c.sigungu) sigungu_content
+			 FROM  contents c
+			 WHERE 1=1
+			 <if test="big_code != null and big_code != 0">
+				AND c.big_code = #{big_code}
+			 </if>
+		  	 <if test="keyword != null and keyword != ''">
+				<choose>
+				 	<when test="searchType == 'tag_name'">
+				 		AND c.id IN
+				 		(SELECT content_id
+				 		 FROM   contenttags ct, tags t
+				 		 WHERE  ct.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	 </when>
+					 <when test="searchType == 'title'">
+					 	AND c.title like '%' || #{keyword} || '%' 
+					 </when>
+					 <when test="searchType == 'content_id'">
+					 	AND c.id like '%' || #{keyword} || '%' 
+					  </when>
+				</choose>
+			  </if>
+			  ORDER BY c.id) a
+		 )
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
+	
 	<select id="nhContentTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
-		FROM　ContentTags ct, Tags t, Contents c
+		FROM　  ContentTags ct, Tags t, Contents c
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = c.id
 		AND   c.big_code = #{bigCode}
@@ -148,7 +352,7 @@
 	
 	<select id="nhContentTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM ContentTags ct, Tags t
+		FROM  ContentTags ct, Tags t
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = #{contentId}
 		ORDER BY t.name
@@ -161,12 +365,13 @@
 	</select>
 	
 	<insert id="nhContentTagsInsert" parameterType="Tags">
-		INSERT INTO ContentTags(tag_id, content_id) VALUES(#{tag_id}, #{content_id})
+		INSERT INTO ContentTags(tag_id, content_id) 
+		VALUES(#{tag_id}, #{content_id})
 	</insert>
 	
 	<delete id="nhContentTagsDelete" parameterType="Tags">
 		DELETE ContentTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="content_id != null and content_id != 0">
 			AND content_id = #{content_id}
 		</if>
@@ -174,11 +379,74 @@
 	
 	<!-- COURSE TAGS -->
 	
-	<select id="nhCourseTagsAll" resultType="Tags">	
+	<select id="nhCourseTagsTotal" parameterType="Tags" resultType="int">
+		SELECT count(*)
+		FROM   courses c
+		WHERE  1=1
+		<if test="small_code != null and small_code != 0">
+			AND c.small_code = #{small_code}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			<choose>
+			 	<when test="searchType == 'tag_name'">
+			 		AND c.id IN
+			 		(SELECT course_id
+			 		 FROM   coursetags ct, tags t
+			 		 WHERE  ct.tag_id = t.id
+			 		 AND    t.name like '%' || #{keyword} || '%')
+			 	</when>
+			 	<when test="searchType == 'title'">
+			 		AND c.course_title like '%' || #{keyword} || '%' 
+			 	</when>
+			 	<when test="searchType == 'content_id'">
+			 		AND c.id like '%' || #{keyword} || '%' 
+			 	</when>
+			</choose>
+	  	</if>
+	</select>
+	
+	<select id="nhCourseTagsList" parameterType="Tags" resultType="Tags">
+		SELECT * 
+		FROM 
+		(
+			SELECT ROWNUM rn, a.*
+			FROM
+			(SELECT id AS course_id, course_title AS title, big_code, small_code
+			 FROM  courses c
+			 WHERE 1=1
+			<if test="small_code != null and small_code != 0">
+				AND c.small_code = #{small_code}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				<choose>
+				 	 <when test="searchType == 'tag_name'">
+				 		AND c.id IN
+				 		(SELECT course_id
+				 		 FROM   coursetags ct, tags t
+				 		 WHERE  ct.tag_id = t.id
+				 		 AND    t.name like '%' || #{keyword} || '%')
+				 	 </when>
+					 <when test="searchType == 'title'">
+					 	AND c.course_title like '%' || #{keyword} || '%' 
+					 </when>
+					 <when test="searchType == 'course_id'">
+					 	AND c.id like '%' || #{keyword} || '%' 
+					 </when>
+				</choose>
+			  </if>
+			  ORDER BY c.id) a
+		 )
+		<if test="start != 0 and end != 0">
+			WHERE rn BETWEEN #{start} and #{end}
+		</if>
+	</select>
+	
+	<select id="nhCourseTagsAll" resultType="Tags" parameterType="int">	
 		SELECT *
 		FROM　  CourseTags ct, Tags t, Courses c
 		WHERE ct.tag_id = t.id
 		AND   ct.course_id = c.id
+		AND   c.small_code = #{smallCode}
 		ORDER BY t.name
 	</select>
 	
@@ -197,12 +465,13 @@
 	</select>
 	
 	<insert id="nhCourseTagsInsert" parameterType="Tags">
-		INSERT INTO CourseTags(tag_id, course_id) VALUES(#{tag_id}, #{course_id})
+		INSERT INTO CourseTags(tag_id, course_id) 
+		VALUES(#{tag_id}, #{course_id})
 	</insert>
 	
 	<delete id="nhCourseTagsDelete" parameterType="Tags">
 		DELETE CourseTags 
-		WHERE tag_id = #{tag_id}
+		WHERE  tag_id = #{tag_id}
 		<if test="course_id != null and course_id != 0">
 			AND course_id = #{course_id}
 		</if>

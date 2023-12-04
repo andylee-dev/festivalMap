@@ -13,5 +13,12 @@ public interface PointDao {
 	void                writePoint(Point point);
 
 	int 				getPointScoreById(int id);
+					
+	Point				getPointById(int id);
 
+	int                 totalpoint();
+
+	Point               listpoint1(int id);
+
+	int                 deletePoint(Integer id);
 }

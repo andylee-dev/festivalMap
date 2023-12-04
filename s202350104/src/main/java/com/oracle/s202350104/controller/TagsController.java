@@ -22,7 +22,7 @@ public class TagsController {
 	private final TagsService ts;
 	
 	
-	// 하나의 컨텐츠가 가진 tag들을 모두 불러와 view단으로 넘기는 logic(contentTags)
+	// 하나의 컨텐츠가 가진 tag들을 모두 불러와 view단으로 전달(contentTags)
 	@ResponseBody
 	@RequestMapping(value = "/getMyContentTags")
 	public List<Tags> getMyContentTags(int contentId) {
@@ -41,7 +41,7 @@ public class TagsController {
 		return contentTags;
 	}
 	
-	// 하나의 게시글이 가진 tag들을 모두 불러와 view단으로 넘기는 logic(boardTags)
+	// 하나의 게시글이 가진 tag들을 모두 불러와 view단으로 전달(boardTags)
 	@ResponseBody
 	@RequestMapping(value = "/getMyBoardTags")
 	public List<Tags> getMyBoardTags(int boardId) {
@@ -60,7 +60,7 @@ public class TagsController {
 		return boardTags;
 	}
 	
-	// 하나의 코스가 가진 tag들을 모두 불러와 view단으로 넘기는 logic(courseTags)
+	// 하나의 코스가 가진 tag들을 모두 불러와 view단으로 전달(courseTags)
 	@ResponseBody
 	@RequestMapping(value = "/getMyCourseTags")
 	public List<Tags> getMyCourseTags(int courseId) {
@@ -79,7 +79,26 @@ public class TagsController {
 		return courseTags;
 	}
 	
-	// 검색 조건에 따라 해당하는 전체 태그 리스트를 불러오는 logic(AJAX 연결)
+	// 한 명의 유저가 저장한 tag들을 모두 불러와 view단으로 전달(userTags)
+	@ResponseBody
+	@RequestMapping(value = "/getMyUserTags")
+	public List<Tags> getMyUserTags(int userId) {
+		UUID transactionId = UUID.randomUUID();
+		List<Tags> userTags = null;
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "getMyUserTags", "start");
+			userTags = ts.searchUserTagsOne(userId);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "getMyUserTags", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "getMyUserTags", "end");
+		}
+		
+		return userTags;
+	}
+	
+	// 검색 조건에 따라 해당하는 전체 태그 리스트를 불러와 전달(AJAX 연결)
 	@ResponseBody
 	@RequestMapping(value = "/getAllTags")
 	public List<Tags> getAllTags() {

@@ -29,9 +29,15 @@ public class FestivalsDaoImpl implements FestivalsDao {
 	public List<FestivalsContent> listFestivals(FestivalsContent festival) {
 		List<FestivalsContent> listFestivals = null;
 		
-		try {
-			
+		try {		
 			listFestivals = session.selectList("nhFestivalsListAll", festival);
+			// 각 festival의 tags 리스트를 저장
+			for(FestivalsContent festi : listFestivals) {
+				List<Tags> listTags = session.selectList("nhFestivalTagOne", festi.getContent_id());
+				if(listTags != null) {
+					festi.setMyTags(listTags);
+				}
+			}
 			log.info("FestivalsDaoImpl listFestivals() => " + listFestivals.size());
 		
 		} catch(Exception e) {
@@ -117,12 +123,12 @@ public class FestivalsDaoImpl implements FestivalsDao {
 
 	// festival 정보를 삭제 => contents 테이블에서 해당 축제의 is_deleted 값을 1로 update
 	@Override
-	public int deleteFestivals(int contentId) {
+	public int deleteFestivals(FestivalsContent festival) {
 		int result = 0;
 		
 		try {
 			
-			result = session.update("nhContentsDelete", contentId);
+			result = session.update("nhContentsDelete", festival);
 		
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl deleteFestivals Exception => " + e.getMessage());
@@ -133,12 +139,12 @@ public class FestivalsDaoImpl implements FestivalsDao {
 
 	// festival 등록 신청 승인 => contents 테이블에서 해당 축제의 status 값을 1로 update
 	@Override
-	public int approveFestival(int contentId) {
+	public int approveFestival(FestivalsContent festival) {
 		int result = 0;
 		
 		try {
 			
-			result = session.update("nhFestivalsApprove", contentId);
+			result = session.update("nhFestivalsApprove", festival);
 		
 		} catch(Exception e) {
 			log.info("FestivalsDaoImpl approveFestival Exception => " + e.getMessage());
@@ -280,6 +286,21 @@ public class FestivalsDaoImpl implements FestivalsDao {
 		}
 		
 		return contents;
+	}
+
+	// contentId에 해당하는 festival의 tags 리스트를 가져옴
+	@Override
+	public List<Tags> festivalsTagsOne(int contentId) {
+		List<Tags> listTags = null;
+		
+		try {
+			listTags = session.selectList("nhFestivalTagOne", contentId);
+			log.info("FestivalsDaoImpl festivalsTagsOne => " + listTags.size());
+		} catch(Exception e) {
+			log.info("FestivalsDaoImpl festivalsTagsOne => " + e.getMessage());
+		}
+		
+		return listTags;
 	}
 	
 }

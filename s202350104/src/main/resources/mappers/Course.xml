@@ -4,37 +4,90 @@
 
 	<mapper namespace="com.oracle.s202350104.CourseMapper">
 	
-		<select id="courseCount" resultType="int">
-			select Count(*) from courses
+		<select id="courseCount" parameterType="Course" resultType="int">
+			SELECT COUNT(*) 
+			FROM courses
+			WHERE 1=1
+			<if test="keyword != null and keyword != ''">
+			    <choose>
+			        <when test="searchType == null or searchType == 's_title'">
+			            AND course_title LIKE '%' || #{keyword} || '%'
+			        </when>
+			        <when test="searchType == 's_content'">
+			            AND course_info LIKE '%' || #{keyword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			<if test="big_code != null and big_code != 0">
+				And big_code = #{big_code}
+			</if>
+			<if test="area != 0 and area != null">
+				    AND area = #{area}
+			    <if test="sigungu != 0 and sigungu != null">
+			        AND sigungu = #{sigungu}
+			    </if>
+			    <if test="sigungu == null">
+		            AND sigungu = 0
+		        </if>
+			</if>
+			<if test="small_code != null and small_code != 0 and small_code != 999">
+				AND small_code = #{small_code}  
+	   		</if>
 		</select>
 		
 		<select id="courseListAll" parameterType="Course" resultType="Course">
-			<!-- select * from courses -->
-			
-			SELECT * 
-			FROM
-			(
-				SELECT ROWNUM rn, aa.*
-				FROM
-				    (SELECT *
-				    FROM   courseContents a
-				    JOIN   courses b
-				    ON     a.course_id = b.id
-				    JOIN   contents c
-				    ON     a.content_id = c.id
-				    WHERE  a.order_num = 1
-				    ORDER  by b.id ASC) aa
+			SELECT *
+			FROM (
+			    SELECT ROWNUM rn, aa.course_id, aa.content_id, aa.order_num, aa.id, 
+			    	aa.area, aa.sigungu, aa.distance, aa.course_info, aa.time, aa.schedule, 
+			    	aa.course_title, aa.big_code, aa.small_code, aa.title, aa.content, 
+			    	aa.img1, aa.img2, aa.img3, aa.address, aa.mapx, aa.mapy, aa.email, 
+			    	aa.homepage, aa.phone, aa.readcount, aa.created_at, aa.updated_at,
+			        (SELECT content FROM areas ar WHERE aa.area = ar.area AND ar.sigungu = 999) AS area_content,
+			        (SELECT content FROM areas ar WHERE aa.area = ar.area AND aa.sigungu = ar.sigungu) AS sigungu_content
+			    FROM (
+			        SELECT a.course_id, a.content_id, a.order_num, b.id, b.area, b.sigungu, 
+			        b.distance, b.course_info, b.time, b.schedule, b.course_title, c.big_code, 
+			        c.small_code, c.title, c.content, c.img1, c.img2, c.img3, c.address, c.mapx, 
+			        c.mapy, c.email, c.homepage, c.phone, c.readcount, c.created_at, c.updated_at
+			        FROM courseContents a
+			        JOIN courses b ON a.course_id = b.id
+			        JOIN contents c ON a.content_id = c.id
+			        WHERE a.order_num = 1
+			        <if test="keyword != null and keyword != ''">
+			            <choose>
+			                <when test="searchType == null or searchType == 's_title'">
+			                    AND b.course_title LIKE '%' || #{keyword} || '%'
+			                </when>
+			                <when test="searchType == 's_content'">
+			                    AND b.course_info LIKE '%' || #{keyword} || '%'
+			                </when>
+			            </choose>
+			        </if>
+			        <if test="area != 0 and area != null">
+			            AND b.area = #{area}
+			            <if test="sigungu != 0 and sigungu != null">
+			                AND b.sigungu = #{sigungu}
+			            </if>
+			            <if test="sigungu == null">
+				            AND sigungu = 0
+				        </if>
+			        </if>
+			        <if test="small_code != null and small_code !=0">
+						<choose>
+	 	 					<when test="big_code = 16 and small_code != 999">
+		    					AND c.small_code = #{small_code}  
+		   	 				</when>
+		 	 				<when test="big_code = 16 and small_code = 999">
+		    				</when>
+	  					</choose>
+					</if>
+			        ORDER BY b.id ASC
+			    ) aa
 			)
-			WHERE rn BETWEEN #{start} and #{end}
-			
-			<!-- SELECT *
-			FROM   courseContents a
-			JOIN   courses b
-			ON     a.course_id = b.id
-			JOIN   contents c
-			ON     a.content_id = c.id
-			WHERE  a.order_num = 1
-			ORDER  by b.id ASC -->
+			<if test="start != 0 and end != 0">     
+			    WHERE rn BETWEEN #{start} AND #{end}
+			</if>
 			
 		</select>
 		
@@ -43,14 +96,36 @@
 		</select>
 		
 		<select id="noCourseDetailList" parameterType="int" resultType="Course">
+			<!-- SELECT aa.*,
+		        (SELECT content FROM areas ar
+		         WHERE aa.area = ar.area AND ar.sigungu = 999) AS area_content,
+		        (SELECT content FROM areas ar
+		         WHERE aa.area = ar.area AND aa.sigungu = ar.sigungu) AS sigungu_content,
+		        (SELECT content FROM CommonCodes cc
+		         WHERE aa.big_code = cc.big_code AND cc.small_code = 999) AS bcode_content,
+		        (SELECT content FROM CommonCodes cc
+		         WHERE aa.big_code = cc.big_code AND aa.small_code = cc.small_code) AS scode_content
+		    FROM
+		         (SELECT a.course_id, a.content_id, a.order_num, b.id, b.area, b.sigungu, 
+		                b.distance, b.course_info, b.time, b.schedule, b.course_title, 
+		                c.big_code, c.small_code, c.title, c.content, c.img1, c.img2, 
+		                c.img3, c.address, c.mapx, c.mapy, c.email, c.homepage, 
+		                c.phone, c.readcount, c.created_at, c.updated_at
+		         FROM   courseContents a
+		         JOIN   courses b ON a.course_id = b.id
+		         JOIN   contents c ON a.content_id = c.id
+		         WHERE  a.course_id = #{course_id}
+		         ORDER  by b.id ASC) aa  -->
+			
+		
 			SELECT 	a.*,cd.content cd_content
 			FROM(
 			    		SELECT cc.*, c.*, cs.course_info, cs.course_title, cs.distance, cs.time
 			    		FROM courseContents cc, contents c, courses cs
-			    		WHERE cc.course_id= #{course_id}
+			    		WHERE cc.course_id = #{course_id}
 				    	AND cc.content_id = c.id
 				    	AND cc.course_id = cs.id
-			)		a, commonCodes cd
+				)a, commonCodes cd
 			WHERE 	a.big_code = cd.big_code
 			AND   	cd.small_code = 999
 			ORDER 	BY a.order_num ASC
@@ -63,14 +138,24 @@
 			ON     a.content_id = c.id
 			WHERE  a.course_id = #{course_id}
 			ORDER  by b.id ASC -->
-			
 		</select>
 		
 		<select id="noCourseContentList" parameterType="CourseContent" resultType="CourseContent">
-			SELECT *
+			SELECT a.*, cd.content cd_content
+			FROM
+			    (
+			    SELECT *
+			    FROM   coursecontents cc, contents c
+			    WHERE  cc.content_id = c.id
+			    AND    cc.course_id = #{id}
+			    )a, commonCodes cd
+			WHERE a.big_code = cd.big_code
+			AND   cd.small_code = 999
+			
+			<!-- SELECT *
 			FROM   coursecontents a, contents b
 			WHERE  a.content_id = b.id
-			AND    a.course_id = #{id}
+			AND    a.course_id = #{id} -->
 			
 			<!-- SELECT * FROM courseContents WHERE course_id = #{id} -->
 			
@@ -78,7 +163,7 @@
 		
 		<insert id="noCourseInsert" parameterType="Course">
 			INSERT into Courses 
-			values (COURSES_ID_SEQ.nextval, 16, 2, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
+			values (COURSES_ID_SEQ.nextval, #{big_code}, #{small_code}, #{area}, #{sigungu}, #{distance}, #{course_info}, #{time}, '기타', #{course_title})	
 			<selectKey keyProperty="id" resultType="Integer" order="AFTER">
 				SELECT COURSES_ID_SEQ.currval FROM dual
 			</selectKey>
@@ -109,7 +194,9 @@
 		</delete>
 		
 		<update id="noCourseUpdate" parameterType="Course">
-			UPDATE COURSES SET  distance=#{distance}, course_title=#{course_title},
+			UPDATE COURSES SET  big_code=#{big_code}, small_code=#{small_code},
+								area=#{area}, sigungu=#{sigungu},
+								distance=#{distance}, course_title=#{course_title},
 								time=#{time}, course_info=#{course_info}
 			WHERE id = #{id}
 			
@@ -133,5 +220,13 @@
 			FROM CourseContents
 			WHERE course_id = #{id}
 	    </select>
-		
+	    
+	    <select id="noCourseListSmallCodeAll" parameterType="Course" resultType="Course">
+	    	<![CDATA[
+	        select small_code, content cd_content
+			from commoncodes 
+			where big_code = 16
+			and small_code < 999
+	       ]]>
+	    </select>
 	</mapper>

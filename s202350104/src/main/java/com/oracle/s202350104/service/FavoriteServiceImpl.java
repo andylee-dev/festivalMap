@@ -55,47 +55,41 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return listSearchFavorite;
 	}
 
-	@Override
-	public List<Favorite> getMyLikeList(Favorite favorite) {
-		List<Favorite> getMyLikeList = fad.getMyLikeList(favorite);
-		
-		if(getMyLikeList == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "내 찜 목록 리스트가 존재하지 않습니다.");
-		}
-		
-		return getMyLikeList;
-	}
 
 	@Override
-	public int totalMyLikeList() {
-		int totalMyLikeList = 0; 
-		totalMyLikeList = fad.totalMyLikeList();
-		
-		return totalMyLikeList;
-	}
-
-	@Override
-	public int deleteMyLikeList(int id) {
+	public int deleteFavorite(Favorite favorite) {
 		int result = 0;
-		result = fad.deleteMyLikeList(id);
+		result = fad.deleteFavorite(favorite);
 		
 		if(result <= 0) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록  삭제를 실패하였습니다.");
 		}
-		
 		return result;
 	}
 
+	
+	@Override
+	public Favorite getMyFavoriteOne(Favorite favorite) {
+		return fad.getMyFavoriteOne(favorite);
+	}
+
+	
 	@Override
 	public int insertFavorite(Favorite favorite) {
 		int result = 0;
 		result = fad.insertFavorite(favorite);
 		
 		if(result <= 0) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜목록  업데이트에 실패하였습니다.");
 		}
-		
 		return result;
 	}
 
-}
+	@Override
+	public int totalFavorite1(Favorite favorit) {
+		int totalFavorite1 = 0;
+		totalFavorite1 = fad.totalFavorite1(favorit);
+		return totalFavorite1;
+	}
+	
+	}	

@@ -151,7 +151,7 @@ public class AdminAdminController {
 	}
 	
 	
-	@RequestMapping(value = "commonCode/insert")
+	@RequestMapping(value = "commonCodeInsert")
 	public String commonCodeInsert(Model model, CommonCodes commonCode) {
 		UUID transactionId = UUID.randomUUID();
 		
@@ -206,6 +206,26 @@ public class AdminAdminController {
 		
 		return "admin/admin/commonCodeUpdateForm";	
 	} 
+	
+	
+	@RequestMapping(value = "commonCodeUpdate")
+	public String commonCodeUpdate(Model model, String currentPage, CommonCodes commonCode) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeUpdate", "Start");
+			int result = ccs.updateCommonCode(commonCode);
+			log.info("admin commonCodeUpdate result ->" + result);			
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin commonCodeUpdate Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin commonCodeUpdate", "End");
+		}
+		
+		return "redirect:/admin/admin/commonCode";	
+	} 
+
 
 	
 	@RequestMapping(value = "/areaCode")
@@ -346,7 +366,23 @@ public class AdminAdminController {
 		}
 		return "admin/admin/areaCodeUpdateForm";
 	}
+	
+	
+	@RequestMapping(value = "areaCodeUpdate")
+	public String areaCodeUpdaete(Model model, Areas area, String currentPage) {
+		UUID transactionId = UUID.randomUUID();
 		
-		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeUpdate", "start" );
+			int result = as.updateAreaCode(area);
+			log.info("admin areaCodeUpdate result ->" + result);
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin areaCodeUpdate Exception", e.getMessage());
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin areaCodeUpdate", "end");
+		}
+		return "redirect:/admin/admin/areaCode";
+	}
+				
 	
 }

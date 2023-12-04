@@ -36,21 +36,58 @@
 				</div>
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center mt-5">
-					<form action="favoriteSearch" method="POST" class="container justify-content-center">	
-						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
-							<div class="col-4">
-								<select name="search" class="form-select">
-									<option value="s_name">제목조회</option>
-								</select> 
-							</div>
-							<div class="col-5 mx-2 d-flex justify-content-center">	
-								<input type="text" name="keyword" class="form-control" placeholder="keyword를 입력하세요">
-								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
-							</div>
-						</div>	
-					</form>
+					<c:choose>
+						<c:when test="${smallCode eq 1}">
+							<form action="notice" method="POST" class="container justify-content-center">	
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-4">
+										<select name="search" class="form-select">
+											<option value="s_name">제목</option>
+										</select> 
+									</div>
+									<div class="col-5 mx-2 d-flex justify-content-center">	
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="keyword를 입력하세요">
+										<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+									</div>
+								</div>	
+							</form>						
+						</c:when>
+						<c:when test="${smallCode eq 5}">
+							<form action="event" method="POST" class="container justify-content-center">	
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-4">
+										<select name="search" class="form-select">
+											<option value="s_name">제목</option>
+										</select> 
+									</div>
+									<div class="col-5 mx-2 d-flex justify-content-center">	
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="keyword를 입력하세요">
+										<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+									</div>
+								</div>	
+							</form>						
+						</c:when>
+						<c:when test="${bigCode eq 3}">
+							<form action="banner" method="POST" class="container justify-content-center">	
+								<div class="col-12 my-4 d-flex align-items-center">
+									<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+									<div class="col-4">
+										<select name="search" class="form-select">
+											<option value="s_name">제목</option>
+										</select> 
+									</div>
+									<div class="col-5 mx-2 d-flex justify-content-center">	
+										<input type="text" name="keyword" class="form-control" value="${keyword}" placeholder="keyword를 입력하세요">
+										<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
+									</div>
+								</div>	
+							</form>						
+						</c:when>
+					</c:choose>
 				</div>
+				
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
 					<div class="container d-flex justify-content-end p-0">
 						<c:choose>
@@ -80,12 +117,16 @@
 											</c:when>
 											<c:otherwise>
 												<th scope="col">타입</th>
+												<th scope="col">상태</th>
 											</c:otherwise>
 										</c:choose>
 										<th scope="col">등록일</th>
 										<th scope="col">수정일</th>
-										<th scope="col">수정</th>
-										<th scope="col">삭제</th>
+										<th scope="col">게시여부</th>
+										<c:if test="${bigCode eq 2 }">
+										<th scope="col">삭제여부</th>
+										</c:if>
+										<th scope="col">관리</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -99,17 +140,45 @@
 												</c:when>
 												<c:otherwise>
 													<td>${boards.content }</td>
+													<c:choose>
+														<c:when test="${boards.status eq 0}">
+															<td>미사용중</td>															
+														</c:when>
+														<c:otherwise>
+															<td>사용중</td>																
+														</c:otherwise>
+													</c:choose>
 												</c:otherwise>
-											</c:choose>
+											</c:choose>										
 											<td><fmt:formatDate value="${boards.created_at }" type="date" pattern="YY/MM/dd"/></td>
 											<td><fmt:formatDate value="${boards.updated_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td><input class="btn btn-primary" onclick="location.href='../../boardUpdateForm?id=${boards.id}&userId=${userId}'" type="button" value="수정 "></td>
+											<c:choose>
+												<c:when test="${boards.status eq 0}">
+													<td>N</td>
+												</c:when>
+												<c:when test="${boards.status eq 1}">
+													<td>Y</td>
+												</c:when>
+											</c:choose>
+											<c:if test="${bigCode eq 2 }">																				
+											<c:choose>
+												<c:when test="${boards.is_deleted eq 0}">
+													<td>N</td>
+												</c:when>
+												<c:when test="${boards.is_deleted eq 1}">
+													<td>Y</td>
+												</c:when>
+											</c:choose>	
+											</c:if>																					
 											<c:choose>
 												<c:when test="${bigCode eq 3 }">
-													<td><input class="btn btn-outline-secondary" onclick="location.href='../../bannerDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>										
+<%-- 													<td><a class="detail-btn" href="../../bannerUpdateForm?id=${boards.id}&userId=${userId}">수정</a></td>		 --%>							
+													<td><a class="detail-btn" href="../../bannerDetail?id=${boards.id}&smallCode=${boards.small_code }">관리</a></td>										
+<%-- 													<td><a class="detail-btn" href="../../bannerDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td>		 --%>								
 												</c:when>
 												<c:otherwise>
-													<td><input class="btn btn-outline-secondary" onclick="location.href='../../boardDelete?id=${boards.id}&userId=${userId}&smallCode=${boards.small_code }'" type="button" value="삭제"></td>
+													<td><a class="detail-btn" href="noticeDetail?id=${boards.id}&userId=${userId}">관리</a></td>
+<%-- 													<td><a class="detail-btn" href="../../boardDelete?id=${boards.id}&userId=${userId }&smallCode=${boards.small_code }">삭제</a></td> --%>
 												</c:otherwise>
 											</c:choose>
 										</tr>
@@ -133,7 +202,7 @@
 										</c:if>
 										<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 											<li class="page-item">
-											<a href="notice?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+											<a href="notice?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 											</li>
 										</c:forEach>
 										<c:if test="${page.endPage < page.totalPage}">
@@ -150,7 +219,7 @@
 										</c:if>
 										<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 											<li class="page-item">
-											<a href="event?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+											<a href="event?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 											</li>
 										</c:forEach>
 										<c:if test="${page.endPage < page.totalPage}">
@@ -169,7 +238,7 @@
 								</c:if>
 								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 									<li class="page-item">
-									<a href="banner?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+									<a href="banner?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 									</li>
 								</c:forEach>
 								<c:if test="${page.endPage < page.totalPage}">

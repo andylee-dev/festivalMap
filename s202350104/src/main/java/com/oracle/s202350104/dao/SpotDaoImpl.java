@@ -94,10 +94,10 @@ public class SpotDaoImpl implements SpotDao {
 	}
 
 	@Override
-	public int deleteSpot(int contentId) {
+	public int deleteSpot(SpotContent spot) {
 		int result = 0;
 		try {
-			result = session.update("dhContentsDelete", contentId);
+			result = session.update("dhContentsDelete", spot);
 		} catch(Exception e) {
 			log.info("QnaListDaoImpl deleteSpot Exception => " + e.getMessage());
 		}
@@ -106,10 +106,10 @@ public class SpotDaoImpl implements SpotDao {
 	}
 
 	@Override
-	public int approveSpot(int contentId) {
+	public int approveSpot(SpotContent spot) {
 		int result = 0;
 		try {
-			result = session.update("dhSpotApprove", contentId);
+			result = session.update("dhSpotApprove", spot);
 		} catch(Exception e) {
 			log.info("QnaListDaoImpl approveSpot Exception => " + e.getMessage());
 		}

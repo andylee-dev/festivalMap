@@ -7,6 +7,12 @@
 		<meta charset="UTF-8">
 		<title>회원 태그</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			.badge {
+				color: white !important;
+				background-color: #FF4379 !important;
+			}
+		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 		   $(document).ready(function() {			   
@@ -53,17 +59,18 @@
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 							<div class="col-2">
 								<select name="searchType" class="form-select">
-									<option value="tagname">태그명</option>
+									<option value="tag_name">태그명</option>
 									<option value="user_id">회원번호</option>
+									<option value="user_name">회원이름</option>
 								</select>
 							</div>
-							<div class="col-5 mx-2">
+							<div class="col-6 mx-1">
 					        	<input type="text" name="keyword" class="form-control" value="${keyword}"
 					        	 placeholder="검색어를 입력하세요.">
 				            </div>
-							<div class="col-4 mx-1 d-flex justify-content-center">						
-								<button type="submit" class="btn btn-primary  col-3 mx-1">검색</button>
-								<button type="reset" class="btn btn-outline-secondary col-3 mx-1">초기화</button>
+							<div class="col-5 mx-1 d-flex justify-content-start">						
+								<button type="submit" class="btn btn-primary  col-2 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
 							</div>
 						</div>
 					</form>
@@ -77,11 +84,11 @@
 							<thead>
 								<tr>
 									<th scope="col">순번</th>
-									<th scope="col">회원ID</th>
+									<th scope="col">회원번호</th>
 									<th scope="col">이름</th>
-									<th scope="col">닉네임</th>
-									<th scope="col">생년월일</th>
 									<th scope="col">성별</th>
+									<th scope="col">생년월일</th>
+									<th scope="col">이메일</th>
 									<th scope="col">주소</th>
 									<th scope="col">태그명</th>
 								</tr>
@@ -91,14 +98,14 @@
 								<c:forEach var="user" items="${listUsers}" varStatus="st">
 									<tr>
 										<td>${num}</td>
-										<td><input type="hidden" id="user_id${st.index}" value="${user.id}">${user.email}</td>
-										<td>${user.name}</td>
-										<td>${user.nickname}</td>
-										<td>${user.birthday}</td>
+										<td><input type="hidden" id="user_id${st.index}" value="${user.user_id}">${user.user_id}</td>
+										<td>${user.user_name}</td>
 										<td>
 											<c:if test="${user.gender == 0}">남</c:if>
 											<c:if test="${user.gender == 1}">여</c:if>
 										</td>
+										<td>${user.birthday}</td>
+										<td>${user.email}</td>
 										<td>${user.address}</td>
 										<td id="tag_name${st.index}"></td>
 									</tr>

@@ -64,9 +64,8 @@ public class SpotServiceImpl implements SpotService {
 	}
 
 	@Override
-	public int deletespot(int contentId) {
-		int result = 0;
-		result = sd.deleteSpot(contentId);
+	public int deletespot(SpotContent spot) {
+		int result = sd.deleteSpot(spot);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"명소 정보 삭제에 실패하였습니다. ");
@@ -75,8 +74,8 @@ public class SpotServiceImpl implements SpotService {
 	}
 
 	@Override
-	public int approveSpot(int contentId) {
-		int result = sd.approveSpot(contentId);
+	public int approveSpot(SpotContent spot) {
+		int result = sd.approveSpot(spot);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"명소 정보 승인에 실패하였습니다. ");

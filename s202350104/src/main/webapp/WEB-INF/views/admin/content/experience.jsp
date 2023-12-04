@@ -34,28 +34,6 @@
 	        }
 	    }
 		
-		function confirmRestore(contentId) {
-	        if (confirm('정말로 이 항목을 복원하시겠습니까?')) {
-	            $.ajax({
-	                type: 'POST', // 또는 'POST' 등의 HTTP 메서드 사용 가능
-	                url: 'experienceRestoreAjax',
-	                data: { contentId: contentId },
-	                success: function(result) {
-	                    // 성공적으로 복원된 경우의 처리
-	                    alert('복원되었습니다.');
-	                    location.reload();
-	                },
-	                error: function(xhr, status, error) {
-	                    // 오류 발생 시의 처리
-	                    alert('복원에 실패했습니다.');
-	                }
-	            });
-	        } else {
-	            // 취소 버튼을 눌렀을 때의 처리
-	            // 필요한 로직을 추가하세요.
-	        }
-	    }
-		
 		document.addEventListener("DOMContentLoaded", function() {
 			updateAreaOptions();
 			$(".area-dropdown").change(function() {
@@ -101,7 +79,7 @@
 				            </div>
 				            
 				            <div class="col-12 my-4 d-flex align-items-center">
-				            	<label for="searchType" class="col-form-label col-1  mx-2">분류</label>
+				            	<label for="searchType" class="col-form-label col-1  mx-2">테마</label>
 									<div class="col-2 d-flex align-items-center">
 										<select name="small_code" class="form-select">
 											<option value="999">전체</option>
@@ -127,17 +105,17 @@
 									<div class="col-2 d-flex align-items-center">
 										<select name="status" class="form-select">
 											<option value="2" ${status == 2 ? 'selected' : ''}>전체</option>
-											<option value="1" ${status == 1 ? 'selected' : ''}>활성화</option>
-											<option value="0" ${status == 0 ? 'selected' : ''}>비활성화</option>
+											<option value="1" ${status == 1 ? 'selected' : ''}>승인완료</option>
+											<option value="0" ${status == 0 ? 'selected' : ''}>승인대기</option>
 										</select>
 									</div>				            
 				            	
-					            <label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+					            <label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 					            	<div class="col-2 mx-2 d-flex align-items-center">
 						            	<select name="is_deleted" class="form-select">
 											<option value="2" ${is_deleted == 2 ? 'selected' : ''}>전체</option>
-											<option value="0" ${is_deleted == 0 ? 'selected' : ''}>등록체험</option>
-											<option value="1" ${is_deleted == 1 ? 'selected' : ''}>삭제체험</option>
+											<option value="0" ${is_deleted == 0 ? 'selected' : ''}>Y</option>
+											<option value="1" ${is_deleted == 1 ? 'selected' : ''}>N</option>
 										</select>
 									</div>			
 							</div>
@@ -167,7 +145,7 @@
 									<th scope="col">작성자</th>
 									<th scope="col">신청일</th>
 									<th scope="col">승인여부</th>
-									<th scope="col">삭제여부</th>
+									<th scope="col">게시</th>
 									<th scope="col">관리</th>
 								</tr>
 							</thead>
@@ -193,8 +171,8 @@
 											<!-- 승인반려됐을 경우 status -->
 										</td>
 										<td>
-											<c:if test="${experience.is_deleted == 0}">N</c:if>
-											<c:if test="${experience.is_deleted == 1}">Y</c:if>
+											<c:if test="${experience.is_deleted == 0}">Y</c:if>
+											<c:if test="${experience.is_deleted == 1}">N</c:if>
 										</td>
 										<td>
 										<a href="experienceDetail?contentId=${experience.id}&currentPage=${page.currentPage}" class="detail-link">관리</a>

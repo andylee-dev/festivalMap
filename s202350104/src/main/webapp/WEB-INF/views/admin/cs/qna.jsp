@@ -198,8 +198,7 @@
 							<th scope="col">등록일</th>
 							<th scope="col">수정일</th>
 							<th scope="col">답변여부</th>
-							<th scope="col">수정</th>
-							<th scope="col">삭제</th>  
+							<th scope="col">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -219,8 +218,7 @@
 								<td><c:if test="${qna.status == 0}">답변대기</c:if>
 									<c:if test="${qna.status == 1}">답변완료</c:if>
 								</td>
-								<td><input class="btn btn-primary" type="button"onclick="location.href='qnaUpdate?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
-								<td><input class="btn btn-outline-secondary" type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
+								<td><a class="detail-btn" href="qnaUpdate?user_id=${qna.user_id}&id=${qna.id}">관리</a></td>
 							</tr>
 							<c:set var="num" value="${num + 1}"/>
 						</c:forEach>

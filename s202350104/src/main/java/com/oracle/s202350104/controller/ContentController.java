@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.s202350104.model.Banner;
+import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.service.BannerService;
+import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.PagingList;
 
@@ -23,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ContentController {
-	
+	private final BoardService boardService;
 	private final BannerService bannerService;
 	private final ContentSerivce contentService;
 	
@@ -38,7 +40,13 @@ public class ContentController {
 			log.info("[{}]{}:{}",transactionId, "home", "start");
 			List<Banner> bannerFooter = bannerService.getFooterBanner();	
 			model.addAttribute("bannerFooter", bannerFooter); 
-		
+			Board board = new Board();
+			board.setStart(0);
+			board.setEnd(2);
+			board.setStatus("1");
+			List<Board> magazineList  = boardService.getMagazinAllList(board); 
+			model.addAttribute("magazineList", magazineList);
+			log.info("magazineList[0]:{}",magazineList.get(0));
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "home", e.getMessage());
 		} finally {
@@ -47,15 +55,16 @@ public class ContentController {
 		
 		return "home";
 	}
-
+	
+	
 	@ResponseBody
     @RequestMapping(value = "/api/content", method = RequestMethod.GET)
-    public List<Contents> getContentsList() {
+    public List<Contents> getContentsList(Contents content) {
 		UUID transactionId = UUID.randomUUID();
 		List<Contents> contentList =null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "getContentsList", "start");
-	        contentList = contentService.listContents();
+	        contentList = contentService.listContents(content);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "getContentsList", e.getMessage());
 		} finally {
@@ -65,19 +74,12 @@ public class ContentController {
     }
 
 	@ResponseBody
-	@RequestMapping(value = "/api/searchContents", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/searchContents", method = RequestMethod.POST)
     public List<Contents> searchContentsList(@RequestBody Contents contents, String currentPage) {
 		UUID transactionId = UUID.randomUUID();
 		List<Contents> contentList =null;
 		try {
 			log.info("[{}]{}:{}",transactionId, "searchContentsList", "start");
-			log.info("{}",contents.toString());
-//			int totalContents = contentService.getTotalSearchCount(contents);
-//			log.info("totalContents:{}",totalContents);
-//			PagingList page = new PagingList(totalContents, currentPage);
-//			contents.setStart(page.getStart());
-//			contents.setEnd(page.getEnd());
-//			contents.setPageList(page);
 			contentList = contentService.getSearchContentsList(contents);
 			log.info("contentList.size():{}",contentList.size());
 			

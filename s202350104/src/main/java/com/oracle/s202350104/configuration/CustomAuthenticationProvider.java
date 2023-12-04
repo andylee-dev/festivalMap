@@ -37,8 +37,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			log.info("[{}]{}:{}",transactionId, "AuthenticationProvider", "start");
 	        username = authentication.getName();
 	        password = authentication.getCredentials().toString();
-	
-	        Optional<Users> user = userService.getUserById(Integer.parseInt(username));
+	        log.info("username:{}",username);
+	        Optional<Users> user = userService.getUserByEmail(username);
+	        log.info("user:{}",user);
+//	        Optional<Users> user = userService.getUserById(Integer.parseInt(username));
 	        if (user == null) {
 	            throw new BadCredentialsException("username is not found. username=" + username);
 	        }
@@ -54,6 +56,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	        authorities.add(new SimpleGrantedAuthority("ROLE_"+Role.getValueByKey(user.get().getSmall_code())));	
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId, "AuthenticationProvider", e.getMessage());
+			 throw e;  // 추가된 부분
 		} finally {
 			log.info("[{}]{}:{}",transactionId, "AuthenticationProvider", "end");
 		}	        

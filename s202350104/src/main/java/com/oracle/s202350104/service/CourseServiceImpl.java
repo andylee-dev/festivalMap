@@ -23,18 +23,15 @@ public class CourseServiceImpl implements CourseService {
 	private final CourseDao cd;
 
 	@Override
-	public int courseCount() {
-		int courseCount = 0;
-		courseCount = cd.courseCount();
-		log.info("CourseServiceImpl courseCount courseCount ->" + courseCount);
+	public int courseCount(Course course) {
+		int courseCount = cd.courseCount(course);
 		
 		return courseCount;
 	}
 
 	@Override
 	public List<Course> courseList(Course course) {
-		List<Course> courseList = null;
-		courseList = cd.courseList(course);
+		 List<Course> courseList = cd.courseList(course);
 		
 		if(courseList == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "코스 리스트가 없습니다.");
@@ -45,7 +42,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Course> courseDetail(int course_id) {
-		log.info("course_id ->" + course_id);
 		List<Course> courseDetailList = cd.courseDetail(course_id);
 		
 		if(courseDetailList == null) {
@@ -60,10 +56,8 @@ public class CourseServiceImpl implements CourseService {
 		int courseInsert = cd.courseInsert(course);
 		log.info("CourseServiceImpl courseCount courseInsert ->" + courseInsert);
 		
-		
 		return courseInsert;
 	}
-
 
 	@Override
 	public int courseContentInsert(List<CourseContent> courseContentList) {
@@ -94,7 +88,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course courseUpdateDetail(int id) {
-		log.info("CourseServiceImpl courseContent start...");
 		Course courseUpdateDetail = cd.courseUpdateDetail(id);
 		
 		return courseUpdateDetail;
@@ -136,5 +129,13 @@ public class CourseServiceImpl implements CourseService {
 		
 		return maxOrderNum;
 	}
+
+	@Override
+	public List<Course> courseListSmallCode(Course course) {
+		List<Course> courseListSmallCode = cd.courseListSmallCode(course);
+		
+		return courseListSmallCode;
+	}
+	
 
 }

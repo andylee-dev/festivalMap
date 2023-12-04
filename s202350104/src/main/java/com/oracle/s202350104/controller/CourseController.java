@@ -1,18 +1,24 @@
 package com.oracle.s202350104.controller;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
 import com.oracle.s202350104.model.Banner;
 import com.oracle.s202350104.model.Board;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
 import com.oracle.s202350104.service.BannerService;
+import com.oracle.s202350104.service.BoardService;
 import com.oracle.s202350104.service.CourseService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,23 +35,38 @@ public class CourseController {
 	 * by.엄민용
 	 */ 
 	
+	// Course 유저 리스트 페이지로 넘어가는 logic
 	@RequestMapping(value = "course")
 	public String courses(Course course, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
 		try {
-			log.info("CourseController courses start...");
-			int courseCount = cs.courseCount();
-			log.info("CourseController courses courseCount ->" + courseCount);
+			log.info("[{}]{}:{}",transactionId, "Course", "start");
 			
+			int path = 0;
+			
+			// 코스의 전체 list의 수를 나타냄.
+			int courseCount = cs.courseCount(course);
+			
+			// 페이징 처리
 			Paging page = new Paging(courseCount, currentPage);
 			course.setStart(page.getStart());
 			course.setEnd(page.getEnd());
 			
+			// Course의 리스트를 출력
+			log.info("CourseController courseList start...");
 			List<Course> courseList = cs.courseList(course);
-			log.info("CourseController courses courseList.size() ->" + courseList.size());
+			log.info("courseList : " + courseList);
+			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("courseListSmallCode : " + courseListSmallCode);
 			
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
+			model.addAttribute("courseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
 			
 			/*
 			 * Banner Logic 구간 
@@ -58,9 +79,9 @@ public class CourseController {
 			model.addAttribute("bannerFooter", bannerFooter);
 			
 		} catch (Exception e) {
-			log.error("CourseController courses e.getMessage() ->" + e.getMessage());
+			log.error("CourseController course e.getMessage() ->" + e.getMessage());
 		} finally {
-			log.info("CourseController courses end");
+			log.info("CourseController course end");
 		}
 		
 		return "course/courseList";
@@ -70,18 +91,78 @@ public class CourseController {
 	@RequestMapping(value = "course/detail")
 	public String courseDetail(Course course, Model model) {
 		try {
-			log.info("CourseController courseDetail course.getCourse_id() ->" + course.getCourse_id());
+			log.info("course : " + course);
+			log.info("CourseController courseDetail course.getCourse_id() : " + course.getCourse_id());
 			
+			// 상세정보 Logic 구간
 			List<Course> courseDetailList = cs.courseDetail(course.getCourse_id());
 			log.info("CourseController courseDetail courseDetail ->" + courseDetailList.size());
+			log.info("courseDetailList : " + courseDetailList);
 			
 			model.addAttribute("courseDetail", courseDetailList);
+
+			Gson gson = new Gson();
+			String json = gson.toJson(courseDetailList);
+			model.addAttribute("courseDetailJson", json);
+			log.info("json:{}",json);
 		} catch (Exception e) {
 			log.error("CourseController courseDetail e.getMessage() ->" + e.getMessage());
 		} finally {
-			log.info("CourseController courseDetai end");
+			log.info("CourseController courseDetail end");
+		}
+
+		return "course/courseDetail";
+	}
+	
+	
+	@RequestMapping(value = "course1")
+	public String ListSearch(Course course, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "course", "start");
+			
+			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
+			
+			// 코스의 전체 list의 수를 나타냄.
+			int courseCount = cs.courseCount(course);
+			
+			// 페이징 처리
+			Paging page = new Paging(courseCount, currentPage);
+			course.setStart(page.getStart());
+			course.setEnd(page.getEnd());
+			
+			// Course의 리스트를 출력
+			log.info("courseController courseList start...");
+			List<Course> courseList = cs.courseList(course);
+			log.info("courseList : " + courseList);
+			
+			log.info("courseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("courseListSmallCode : " + courseListSmallCode);
+			
+			model.addAttribute("courseCount", courseCount);
+			model.addAttribute("courseList", courseList);
+			model.addAttribute("courseListSmallCode", courseListSmallCode);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area", area);
+			model.addAttribute("sigungu", sigungu);
+			
+		} catch (Exception e) {
+			log.error("CourseController courses1 e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("CourseController course1 end");
 		}
 		
-		return "course/courseDetail";
+		return "course/courseList";
 	}
 }

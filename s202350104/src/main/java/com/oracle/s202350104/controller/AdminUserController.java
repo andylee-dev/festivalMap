@@ -1,7 +1,10 @@
 package com.oracle.s202350104.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -15,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.configuration.Role;
+import com.oracle.s202350104.model.Areas;
 import com.oracle.s202350104.model.Favorite;
+import com.oracle.s202350104.model.History;
 import com.oracle.s202350104.model.Users;
 import com.oracle.s202350104.service.FavoriteService;
+import com.oracle.s202350104.service.HistoryService;
 import com.oracle.s202350104.service.Paging;
+import com.oracle.s202350104.service.PagingList;
 import com.oracle.s202350104.service.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +39,7 @@ public class AdminUserController {
 
 	private final UserService us;
 	private final FavoriteService fas;
+	private final HistoryService hs;
 
 	@RequestMapping(value = "userList")
 	public String userList(Model model, Users user, String currentPage ) {
@@ -43,7 +51,7 @@ public class AdminUserController {
 			int totalUsersCount =us.totalUsers(user);
 			log.info(user.toString());
 
-			Paging page = new Paging(totalUsersCount, currentPage);
+			PagingList page = new PagingList(totalUsersCount, currentPage);
 			user.setStart(page.getStart());
 			user.setEnd(page.getEnd());
 
@@ -72,7 +80,7 @@ public class AdminUserController {
 			int totalUsersCount =us.totalUsers(user);
 			log.info(user.toString());
 
-			Paging page = new Paging(totalUsersCount, currentPage);
+			PagingList page = new PagingList(totalUsersCount, currentPage);
 			user.setStart(page.getStart());
 			user.setEnd(page.getEnd());
 
@@ -80,7 +88,14 @@ public class AdminUserController {
 			if(listUsers == null) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 리스트가 존재하지 않습니다.");
 			}
+			
+			History pHistory = new History();
+			pHistory.setBig_code(user.getBig_code());
+			pHistory.setTarget_id(user.getId());
+			History history = hs.getLatestHistory(pHistory);
+
 			model.addAttribute("listUsers", listUsers);
+			model.addAttribute("history", history);
 			model.addAttribute("page", page);
 			model.addAttribute("searchOption",user);
 		} catch (Exception e) {
@@ -98,6 +113,16 @@ public class AdminUserController {
 			log.info("[{}]{}:{}",transactionId, "userDetail", "start");	
 			Users user = us.getUserById(id)
 			  .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+			log.info("user : {}", user);
+			
+			History pHistory = new History();
+			pHistory.setBig_code(user.getBig_code());
+			pHistory.setTarget_id(user.getId());
+			History history = hs.getLatestHistory(pHistory);
+			if( history != null) {
+				log.info("history : {}", history);				
+			}
+			model.addAttribute("history", history);
 			model.addAttribute("user", user);
 		} catch (Exception e) {
 			log.error("[{}]{}:{}",transactionId,  "userDetail", e.getMessage());
@@ -126,28 +151,40 @@ public class AdminUserController {
     }
 	
 	@RequestMapping("/updateUser")
-    public String updateUser( Users user, Model model) {
+    public String updateUser( Users user,History history, Model model) {
         String url = "";
 		UUID transactionId = UUID.randomUUID();
 		try {
 			log.info("[{}]{}:{}",transactionId, "updateUser", "start");	
 			log.info("user:{}",user.toString());
-			us.updateUser(user);
+			int result = us.updateUser(user);
+			if(result  == 1) {
+				log.info("history:{}",history.toString());
+				if(history.getTitle() != null && history.getTitle() != "") {
+					int hsResult = hs.insertHistory(history);
+					log.info("history insert result:{}",hsResult);
+				}
+			}
+			log.info("result : {}",result);
 			model.addAttribute("user", user);
+			
 
 			/* 1:ADMIN 2:USER 3:BIZ */
-			switch (us.getLoggedInUserRole()) {
+			int role = us.getLoggedInUserRole();
+			log.info("role:{}",role);
+			switch (role) {
 				case 1: 
-					
+					url ="/admin/user/userDetail/"+user.getId();
 					break;
 				case 2: 
 					url= "/user/myPage";
 					break;
 				case 3:
-					
+					url= "/user/bizPage";
 					break;
 	
 				default:
+					url ="/admin/user/userDetail/"+user.getId();
 					break;
 			}
 			
@@ -201,14 +238,16 @@ public class AdminUserController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin favorite", "start");
 			int totalFavorite = fas.totalFavorite();
+			int path = 0;
 			
-			Paging page = new Paging(totalFavorite, currentPage);
+			PagingList page = new PagingList(totalFavorite, currentPage);
 			favorite.setStart(page.getStart());
 			favorite.setEnd(page.getEnd());
 			
 			List<Favorite> listFavorite = fas.listFavorite(favorite);
 						
 			model.addAttribute("totalFavorite", totalFavorite);
+			model.addAttribute("path", path);
 			model.addAttribute("page",page);
 			model.addAttribute("listFavorite", listFavorite);
 			model.addAttribute("currentPage", currentPage);
@@ -230,6 +269,9 @@ public class AdminUserController {
 		try {
 			log.info("[{}]{}:{}", transactionId, "admin favoriteSearch", "start");
 			int totalFavorite = fas.condTotalFavorite(favorite);
+			int path = 1;
+			String search = favorite.getSearch();
+			String keyword = favorite.getKeyword();
 			
 			Paging page = new Paging(totalFavorite, currentPage);
 			favorite.setStart(page.getStart());
@@ -238,8 +280,13 @@ public class AdminUserController {
 			List<Favorite> listSearchFavorite = fas.listSearchFavorite(favorite);
 						
 			model.addAttribute("totalFavorite", totalFavorite);
+			model.addAttribute("path", path);
+			model.addAttribute("search",search);
+			model.addAttribute("keyword",keyword);
 			model.addAttribute("page",page);
 			model.addAttribute("listFavorite", listSearchFavorite);
+			model.addAttribute("currentPage", currentPage);
+			
 			
 		} catch (Exception e) {
 			log.error("[{}]{}:{}", transactionId, "admin favoriteSearch", e.getMessage());
@@ -248,24 +295,6 @@ public class AdminUserController {
 		}
 				
 		return "admin/user/favoriteList";
-	}
-	
-	
-	@RequestMapping(value = "favoriteInsertForm")
-	public String favoriteInsertForm() {
-		UUID transactionId = UUID.randomUUID();
-		
-		try {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteInsertForm", "Start");
-			
-		} catch (Exception e) {
-			log.error("[{}]{}:{}", transactionId, "admin favoriteInsertForm Exception", e.getMessage());
-		
-		} finally {
-			log.info("[{}]{}:{}", transactionId, "admin favoriteInsertForm", "End");
-		}
-			
-		return "admin/user/favoriteInsertForm";
 	}
 	
 	
@@ -281,9 +310,28 @@ public class AdminUserController {
 			model.addAttribute("msg", "입력실패 확인해보세요");
 			return "forward:favoriteInsertForm";
 		}
-			
 	}
 	
 	
+	@RequestMapping(value = "favoriteDelete")
+	public String favoriteDelete(Favorite favorite, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "admin favoriteDelete", "start");
+			log.info("user_id ->" + favorite.getUser_id());
+			log.info("content_id ->" + favorite.getContent_id());
+			int result = fas.deleteFavorite(favorite);
+		
+		} catch (Exception e) {
+			log.error("[{}]{}:{}", transactionId, "admin favoriteDelete Exception", e.getMessage());
+		
+		} finally {
+			log.info("[{}]{}:{}", transactionId, "admin favoriteDelete", "end");
+		}
+		
+		return "redirect:favoriteList";	
+	} 
+
 	
 }

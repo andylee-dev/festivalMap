@@ -7,6 +7,9 @@
 	<select id="bannerCount" resultType="int">
 		select count(*)
 		from banner
+		<if test="keyword != null and keyword != ''">
+		where title like '%' || #{keyword} || '%'
+		</if>	
 	</select>
 
 	<select id="bannerAllList" resultType="Banner">
@@ -14,11 +17,15 @@
 		from (
 		    select rownum rn, c.*
 		    from (
-                    select distinct a.id, a.title, b.content, a.created_at, a.updated_at, a.big_code
+                    select distinct a.id, a.title, b.content, a.created_at, a.updated_at, a.big_code,
+                    	   a.status                    				
                     from banner a
                     join commoncodes b
                     on a.small_code = b.small_code 
                     where b.big_code = 3
+	 				<if test="keyword != null and keyword != ''">
+					and a.title like '%' || #{keyword} || '%'
+					</if>	                   
 		    ) c
 		)
 		where rn between #{start} and #{end}
@@ -49,7 +56,7 @@
 		insert into banner (id, big_code, small_code, title, status, 
 							content, url, created_at) 
 		values(#{id}, #{big_code}, #{small_code}, #{title}, 
-			   0, #{content}, #{url}, sysdate)		
+			   1, #{content}, #{url}, sysdate)		
 	</insert>
 	
 	<insert id="bannerImageInsert" parameterType="Banner">
@@ -59,18 +66,39 @@
 		insert into banner (id, big_code, small_code, title, status, 
 							content, url, image, created_at) 
 		values(#{id}, #{big_code}, #{small_code}, #{title}, 
-			   0, #{content}, #{url}, #{image}, sysdate)		
+			   1, #{content}, #{url}, #{image}, sysdate)		
 	</insert>	
-
 	
-	<delete id="bannerDelete" parameterType="int">
-		delete from banner
-		where id = #{id}	
-	</delete>
+	<update id="bannerDelete" parameterType="int">
+		update banner 
+		set status = 0 
+		where id = #{id}		
+	</update>
 	
-	<select id="bannerImageRead" parameterType="int" resultType="Banner">
-		select *
-		from banner
-		where id = #{id}
+	<select id="bannerRead" parameterType="int" resultType="Banner">
+		    select rownum rn, c.*
+		    from (
+                    select distinct a.*, b.content type
+                    from banner a
+                    join commoncodes b
+                    on a.small_code = b.small_code 
+                    where b.big_code = 3
+		    ) c
+            where c.id = #{id}
 	</select>
+	
+	<update id="bannerUpdate" parameterType="Banner">
+			update banner
+			set title = #{title},
+				content = #{content},
+				url = #{url},
+				updated_at = sysdate
+			where id = #{id}
+	</update>
+	
+	<update id="bannerRecycle" parameterType="int">
+		update banner 
+		set status = 1 
+		where id = #{id}		
+	</update>	
 </mapper>

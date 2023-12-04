@@ -3,6 +3,9 @@ package com.oracle.s202350104.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +19,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.oracle.s202350104.dao.ContentDaoImpl;
+import com.oracle.s202350104.model.Areas;
+import com.oracle.s202350104.model.CommonCodes;
 import com.oracle.s202350104.model.Contents;
 import com.oracle.s202350104.model.Course;
 import com.oracle.s202350104.model.CourseContent;
+import com.oracle.s202350104.service.AreaService;
+import com.oracle.s202350104.service.CommonCodeService;
 import com.oracle.s202350104.service.ContentSerivce;
 import com.oracle.s202350104.service.CourseService;
+import com.oracle.s202350104.service.Paging;
 import com.oracle.s202350104.service.PagingList;
 
 import lombok.RequiredArgsConstructor;
@@ -35,33 +43,96 @@ public class AdminCourseController {
 
 	private final CourseService cs;
 	private final ContentSerivce contentService;
+	private final CommonCodeService ccs;
+	private final AreaService ars;
 	
 	/* 전체적으로 각 Method들이 무슨 기능을 하고 있는지 간략하게 주석을 남겨주시면 다른 분들도 이해하기 좋을 것  같아요.
 	 * by.엄민용
 	 */ 
-
+	
+	// 관리자 코스정보 리스트 이동
 	@RequestMapping(value = "/list")
 	public String courseList(Course course, String currentPage, Model model) {
+		UUID transactionId = UUID.randomUUID();
+		
 		try {
-			log.info("AdminCourseController courseList start");
+			log.info("[{}]{}:{}", transactionId, "admin Course", "start");
 			
-			int courseCount = cs.courseCount();			
-			log.info("AdminCourseController courseList courseCount ->" + courseCount);
-
+			int path = 0;
+			
+			// 조건에 맞는 Course의 총 개수를 가져옴
+			int courseCount = cs.courseCount(course);
+			
+			// 페이징 처리
 			PagingList page = new PagingList(courseCount, currentPage);
 			course.setStart(page.getStart());
 			course.setEnd(page.getEnd());
-			System.out.println("page.getStart() ->" + page.getStart());
-			System.out.println("page.getEnd() ->" + page.getEnd());
-
-			log.info("AdminCourseController courseList course ->" + course);
 			
+			// 조건에 맞는 Course의 list를 가져옴
 			List<Course> courseList = cs.courseList(course);
-			log.info("AdminCourseController courseList courseList.size() ->" + courseList.size());
+			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("CourseListSmallCode : " + courseListSmallCode);
+			
+			log.info("course : " +courseList);
 
 			model.addAttribute("courseCount", courseCount);
 			model.addAttribute("courseList", courseList);
+			model.addAttribute("CourseListSmallCode", courseListSmallCode);
 			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			
+		} catch (Exception e) {
+			log.error("AdminCourseController courseList e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("AdminCourseController courseList end");
+		}
+
+		return "admin/course/list";
+	}
+	
+	@RequestMapping(value = "/list1")
+	public String courseList(Course course, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}", transactionId, "CourseList1", "start");
+			
+			int path = 1;
+			String small_code = request.getParameter("small_code");
+			String big_code = request.getParameter("big_code");
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
+			
+			// 조건에 맞는 Course의 총 개수를 가져옴
+			int courseCount = cs.courseCount(course);
+			
+			// 페이징 처리
+			PagingList page = new PagingList(courseCount, currentPage);
+			course.setStart(page.getStart());
+			course.setEnd(page.getEnd());
+			
+			// 조건에 맞는 Course의 list를 가져옴
+			List<Course> courseList = cs.courseList(course);
+			
+			log.info("CourseController courseListSmallCode start...");
+			List<Course> courseListSmallCode = cs.courseListSmallCode(course);
+			log.info("CourseListSmallCode : " + courseListSmallCode);
+			
+			log.info("course : " +courseList);
+
+			model.addAttribute("courseCount", courseCount);
+			model.addAttribute("courseList", courseList);
+			model.addAttribute("CourseListSmallCode", courseListSmallCode);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("small_code", small_code);
+			model.addAttribute("big_code", big_code);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area" , area);
+			model.addAttribute("sigungu", sigungu);
 			
 		} catch (Exception e) {
 			log.error("AdminCourseController courseList e.getMessage() ->" + e.getMessage());
@@ -76,23 +147,33 @@ public class AdminCourseController {
 	public String courseUpdateForm(int id, String currentPage, Model model) {
 		log.info("AdminCourseController courseUpdateForm start...");
 		try {
-			log.info("AdminCourseController courseUpdateForm id ->" + id);
+			log.info("AdminCourseController courseUpdateForm id : " + id);
 		
 			Course course = cs.courseUpdateDetail(id);
-			log.info("AdminCourseController courseUpdateForm courseContent ->" + course);
 
 			List<CourseContent> courseContentList = cs.courseContentList(id);
-			log.info("AdminCourseController courseUpdateForm courseContentList.size() ->" + courseContentList.size());
-
+			log.info("AdminCourseController courseUpdateForm courseContentList.size() : " + courseContentList.size());
+			
+			List<CommonCodes> listCodes = ccs.listCommonCode();
+			log.info("listCodes : " + listCodes);
+			
+			List<Areas> listAreas = ars.listAreas();
+			log.info("listAreas : " + listAreas);
+			List<Areas> listSigungu = ars.listSigungu(course.getArea());
+			log.info("listSigungu : " + listSigungu);
+			
 //			List<Course> courseDetailContent = cs.courseDetail(course.getCourse_id());
 //			log.info("AdminCourseController courseUpdateForm course ->" + courseDetailContent.size());
 
 			model.addAttribute("course", course);
 			model.addAttribute("courseContentList", courseContentList);
+			model.addAttribute("listCodes", listCodes);
+			model.addAttribute("listAreas", listAreas);
+			model.addAttribute("listSigungu", listSigungu);
 //			model.addAttribute("courseContent", courseContent);
 
 		} catch (Exception e) {
-			log.error("AdminCourseController courseUpdateForm e.getMessage() ->" + e.getMessage());
+			log.error("AdminCourseController courseUpdateForm e.getMessage() : " + e.getMessage());
 		} finally {
 			log.info("AdminCourseController courseUpdateForm end...");
 		}
@@ -173,16 +254,21 @@ public class AdminCourseController {
 	public String courseInsertForm(Course Course, Contents contents, Model model) {
 		log.info("AdminCourseController courseInsertForm start...");
 		log.info("AdminCourseController courseInsertForm contents.getId() -> {}", contents.getId());
-
+		
+		List<CommonCodes> listCodes = ccs.listCommonCode();
+		
+		model.addAttribute("listCodes", listCodes);
+		
 		return "course/courseInsertForm";
 	}
 
 	@RequestMapping(value = "/courseInsert")
-	public String courseInsert(Course course, @RequestParam List<String> contents, Model model) {
+	public String courseInsert(Course course, @RequestParam(value = "contents") List<String> contents, Model model) {
 		
 		try {
 			log.info("AdminCourseController courseInsert start...");
 			log.info("AdminCourseController courseInsert course ->" + course);
+			log.info("AdminCourseController courseInsert course ->" + contents);
 
 			/* TODO: Course정보를 INSERT. */
 			int newCourseId = cs.courseInsert(course);
@@ -194,11 +280,11 @@ public class AdminCourseController {
 			for (int i = 0; i < contents.size(); i++) {
 				CourseContent cc = new CourseContent();
 				cc.setContent_id(Integer.parseInt(contents.get(i)));
-				log.info("setContent_id newCourseId ->" + (contents.get(i)));
+				log.info("setContent_id newContent_id ->" + (contents.get(i)));
 				cc.setCourse_id(newCourseId);
-				log.info("setCourse_id newCourseId ->" + newCourseId);
+				log.info("setCourse_id newCourse_id ->" + newCourseId);
 				cc.setOrder_num(i + 1);
-				log.info("setCourse_id newCourseId ->" + i + 1);
+				log.info("setCourse_id newOrder_num ->" + i);
 				courseContentList.add(cc);
 			}
 			
@@ -216,14 +302,69 @@ public class AdminCourseController {
 
 	@RequestMapping(value = "/contentListAll")
 	public String contentListAll(Contents content, String currentPage, Model model) {
-		log.info("AdminCourseController contentListAll start...");
+		UUID transactionId = UUID.randomUUID();
 		
 		try {
-			List<Contents> listContents = contentService.listContents();
+			log.info("[{}]{}:{}",transactionId, "contentListAll", "start");
 			
-			log.info("ContentController contentListAll listContents.size() ->" + listContents.size());
-
+			int path = 0;
+			
+			// 조건에 맞는 컨텐츠의 전체 list의 수를 나타냄.
+			int contentCount = contentService.contentCount(content);
+			
+			// 페이징 처리
+			PagingList page = new PagingList(contentCount, currentPage);
+			content.setStart(page.getStart());
+			content.setEnd(page.getEnd());
+			
+			// 조건에 맞는 컨텐츠의 list를 나타냄
+			List<Contents> listContents = contentService.listContents(content);
+			log.info("listContents : " + listContents);
+			
+			model.addAttribute("contentCount", contentCount);
 			model.addAttribute("listContents", listContents);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+
+		} catch (Exception e) {
+			log.error("ContentController contentListAll e.getMessage() ->" + e.getMessage());
+		} finally {
+			log.info("ContentController contentListAll end...");
+		}
+		return "content/contentListAll";
+	}
+	
+	@RequestMapping(value = "/contentListAll1")
+	public String contentListAll(Contents content, String currentPage, Model model, HttpServletRequest request) {
+		UUID transactionId = UUID.randomUUID();
+		
+		try {
+			log.info("[{}]{}:{}",transactionId, "contentListAll", "start");
+			
+			int path = 1;
+			String keyword = request.getParameter("keyword");
+			String area = request.getParameter("area");
+			String sigungu = request.getParameter("sigungu");
+			
+			// 조건에 맞는 컨텐츠의 전체 list의 수를 나타냄.
+			int contentCount = contentService.contentCount(content);
+			
+			// 페이징 처리
+			PagingList page = new PagingList(contentCount, currentPage);
+			content.setStart(page.getStart());
+			content.setEnd(page.getEnd());
+			
+			// 조건에 맞는 컨텐츠의 list를 나타냄
+			List<Contents> listContents = contentService.listContents(content);
+			log.info("listContents : " + listContents);
+			
+			model.addAttribute("contentCount", contentCount);
+			model.addAttribute("listContents", listContents);
+			model.addAttribute("page", page);
+			model.addAttribute("path", path);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("area" , area);
+			model.addAttribute("sigungu", sigungu);
 
 		} catch (Exception e) {
 			log.error("ContentController contentListAll e.getMessage() ->" + e.getMessage());

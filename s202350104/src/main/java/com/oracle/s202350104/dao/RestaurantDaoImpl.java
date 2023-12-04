@@ -71,6 +71,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		int conTotalRestaurant = 0;
 		try {
 			conTotalRestaurant = session.selectOne("joConTotalRestaurant", restaurant);
+			log.info("RestaurantDaoImpl joConTotalRestaurant ->" + conTotalRestaurant);
 		} catch (Exception e) {
 			log.info("RestaurantDaoImpl joConTotalRestaurant() Exception ->" + e.getMessage());
 		}
@@ -83,6 +84,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		List<RestaurantsContent> listSearchRestaurant = null;
 		try {
 			listSearchRestaurant = session.selectList("joListSearchRestaurant", restaurant);
+			log.info("RestaurantDaoImpl listSearchRestaurant.size() -> " + listSearchRestaurant.size());
 		} catch (Exception e) {
 			 log.info("RestaurantDaoImpl joListSearchRestaurant() Exception ->" + e.getMessage());
 		}
@@ -187,12 +189,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	@Override
-	public int approveRestaurant(Integer contentId) {
+	public int approveRestaurant(RestaurantsContent restaurant) {
 		int result = 0;
 		
 		try {
 			log.info("RestaurantDaoImpl approveRestaurant start");
-			result = session.update("joApproveRestaurant", contentId);
+			result = session.update("joApproveRestaurant", restaurant);
 			log.info("RestaurantDaoImpl approveRestaurant result ->", result);
 		} catch (Exception e) {
 			log.info("[{}]{}:{}", "RestaurantDaoImpl approveRestaurant Exception", e.getMessage());
@@ -201,4 +203,29 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		return result;
 	}
 
+	@Override
+	public List<RestaurantsContent> listSmallCode(int big_code) {
+		List<RestaurantsContent> listSmallCode = null;
+		
+		try {
+			log.info("RestaurantDaoImpl listSmallCode Start");
+			listSmallCode = session.selectList("joListSmallCode", big_code);
+			log.info("RestaurantDaoImpl listSmallCode.size() -> " + listSmallCode.size()); 
+		} catch (Exception e) {
+			log.info("RestaurantDaoImpl listSmallCode Exception ->" + e.getMessage());
+		}
+		return listSmallCode;
+	}
+
+	@Override
+	public int restaurantRestore(int contentId) {
+		int restaurantRestore = 0;
+		try {
+			restaurantRestore = session.update("joRestaurantRestore",contentId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return restaurantRestore;
+	}
+	
 }

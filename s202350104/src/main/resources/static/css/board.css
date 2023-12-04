@@ -1,8 +1,5 @@
 @charset "UTF-8";
-/* @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
- */
 /* 공통 css*/
 a {
 	text-decoration: none;
@@ -18,13 +15,13 @@ a {
 }
 
 .header_title_custom h1 {
-	font-size: 60px;
+	font-size: 56px;
 }
 
 /* 중간네비게이션 css */
 .md_nav_custom {
 	text-align: center;
-	font-size: 34px;
+	font-size: 30px;
 	font-weight: bolder;
 	border-top: 3px solid black;
 	border-bottom: 3px solid black;
@@ -85,7 +82,7 @@ a {
 .btn_custom {
 	width: 100px;
 	height: 40px;
-	border-radius: 23.50px;
+	border-radius: 10px;
 	position: absolute;
 	right: 1px;
 	top: 50%;
@@ -108,17 +105,47 @@ a {
 	background-color: #FF4379;
 	text-align: center;
 	color: white;
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: bold;
 }
 
-.list_custom {
+.list-board-custom {
 	text-align: center;
-	font-size: 26px;
+	font-size: 22px;
 	font-weight: bold;
-	border-bottom: 3px solid #747474;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	border-bottom: 2px solid #747474;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.list-board-custom .coll-btn-custom {
+
+}
+
+.list-board-custom .coll-btn-custom button{
+	width: 640px;
+	height: 40px;
+	background-color: transparent;
+	color: black;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	border: 0px;
+}
+
+.list-coll-custom {
+	width: 90%;
+	margin-left: 90px;
+	margin-top: 6px;
+	margin-bottom: 0px;
+}
+
+.list-content-custom p{
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	margin-bottom: 0px;
+	border: 0px;
 }
 
 /* 포토게시판, 이벤트 */
@@ -147,7 +174,7 @@ a {
 }
 
 .cardList_custom .card_custom .card_body_custom {
-	padding-top: 0px;
+	padding: 10px;
 }
 
 .cardList_custom .card_custom .card_body_custom img {
@@ -199,6 +226,7 @@ a {
 	font-size: 20px;
 	font-weight: bold;
 	line-height: 40px;
+	text-align: center;
 }
 
 .tags_detail_custom {
@@ -219,18 +247,36 @@ a {
 
 }
 
-.btn_border_custom{
-	margin-left: -12px;
-	margin-right: 24px;
+.detail-btn-custom{
+	margin-left: -26px;
+	margin-right: -18px;
  
 }
 
-.btn_detail_custom {
+.detail-btn-custom button{
 	width: 100px;
-	height: 36px;
-	border-radius: 23.50px;
+	height: 40px;
+	border-radius: 10px;
 	background-color: #FF4379;
 	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 20px;
+}
+
+.detail-report-custom {
+	width: 990px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.detail-report-custom button{
+	width: 100px;
+	height: 40px;
+	border-radius: 10px;
+	background-color: #ffffff;
+	color: #FF4379;
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
@@ -281,7 +327,7 @@ a {
 	font-size: 30px;
 	font-weight: bold;
 	text-align: left;
-	width: 100px;
+	width: 120px;
 	height: 80px;
 	margin-left: 0px;
 	margin-bottom: 20px;
@@ -347,6 +393,11 @@ a {
 	font-size: 22px;	
 }
 
+.insert_row_custom .insert_row2_custom .radio-custom{
+	font-size: 26px;
+	font-weight: bold;	
+}
+
 .insert_row_custom .insert_row2_custom .tag_row{
 	width: 200px;
 }
@@ -361,7 +412,7 @@ a {
 .insert_row_custom .insert_row2_custom .tag_row2 label{
 	font-size: 18px;
 	font-weight: bold;
-	width: 100px;
+	width: 130px;
 	height: 40px;
 	text-align: center;
 	margin-left: 12px;
@@ -380,4 +431,199 @@ a {
 .insert_row_custom .insert_row2_custom .btn_row {
 	text-align: right;
 	margin-left: -50px;
+}
+
+.comment-custom{
+	background-color: #F8FCF4;
+	
+}
+
+.comment-custom .comment-title {
+	width: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 20px;	
+	padding-right: 0px;	
+}
+
+.comment-custom .comment-title p{
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+.comment-custom .comment-input {
+	width: 700px;
+	border-radius: 10.50px;
+}
+
+.comment-custom .comment-input input {
+	width: 940px;
+	height: 50px;
+	border: 2px solid black;
+	border-radius: 10.50px;
+}
+
+.comment-custom .comment-btn {
+	width: 340px;
+	height: 50px;
+	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.comment-custom .comment-btn button{
+	width: 100px;
+	height: 40px;
+	border-radius: 10px;
+	background-color: #FF4379;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	margin-right: -42px;
+}
+
+.comments-custom{
+	border-top: 3px solid #BDBDBD;
+}
+
+.comments-custom .comments-nickname{
+	width: 120px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.comments-custom .comments-nickname p{
+	width: 120px;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 0px;
+	margin-top: 6px;
+	text-align: center;
+}
+
+.comments-custom .comments-content{
+	width: 980px;
+	display: flex;
+	justify-content: flex-start
+	align-items: center;
+}
+
+.comments-custom .comments-content button{
+	background-color: transparent;
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+	border: 0px;
+}
+
+.comments-custom .comments-content p{
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 0px;
+	margin-bottom: 10px;
+}
+
+.comments-custom .comments-collapse-custom {
+	width: 90%;
+	height: 80px;
+	background-color: transparent;
+	margin-left: 140px;
+}
+
+.comments-collapse-custom .comments-body-custom {
+	width: 90%;
+	height: 76px;
+	background-color: transparent;
+	padding-top: 0px;
+	border: 0px;
+}
+
+.comment-custom .comment-md-title {
+	width: 100px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding-left: 20px;	
+	padding-right: 0px;	
+	margin-left: -30px;
+}
+
+.comment-custom .comment-md-title p{
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+.comment-custom .comment-md-input {
+	width: 200px;
+	border-radius: 10.50px;
+	justify-content: flex-start;
+	align-items: center;
+	padding-top: 2px;
+}
+
+.comment-custom .comment-md-input input {
+	width: 300px;
+	height: 46px;
+	border: 2px solid black;
+	border-radius: 10.50px;
+}
+
+.comment-custom .comment-md-btn {
+	width: 200px;
+	height: 50px;
+	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-left: 0px;
+}
+
+.comment-custom .comment-md-btn button{
+	width: 100px;
+	height: 40px;
+	border-radius: 10px;
+	background-color: #FF4379;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	margin-right: -30px;
+}
+
+.report-btn{
+	width: 100px;
+	height: 40px;
+	border: 1px solid #FF4379;
+	border-radius: 10px;
+	background-color: white;
+	color: #FF4379;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	margin-left: 4px;
+	margin-right: 10px;
+	margin-top: 5px;
+}
+
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink-effect 2s step-end infinite;
+
+  /*
+  animation-name: blink-effect;
+  animation-duration: 1s;
+  animation-iteration-count:infinite;
+  animation-timing-function:step-end;
+  */
 }

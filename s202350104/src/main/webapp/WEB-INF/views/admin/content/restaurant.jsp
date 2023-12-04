@@ -10,6 +10,23 @@
 		<title>Restaurant content</title>
 		<%-- <%@ include file="/WEB-INF/components/AdminUpdateAreas.jsp"%> --%>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/updateArea.js"></script>
+		<script type="text/javascript">
+
+			document.addEventListener("DOMContentLoaded", function() {
+				updateAreaOptions();
+				$(".area-dropdown").change(function() {
+					const selectedArea = $(this).val();
+					if (selectedArea) {
+						updateSigunguOptions(selectedArea);
+					} else {
+						$(".sigungu-dropdown").empty().append("<option value='0'>시군구</option>");
+					}
+				});
+			});
+			
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -32,7 +49,7 @@
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 								<div class="col-4">
 					              <select id="searchType" name="searchType" class="form-select">
-						              <option value="s_title" selected>전체</option>
+						              <option value="s_title" selected>음식점명</option>
 					              </select>
 				                </div>
 				                <div class="col-5 mx-2">
@@ -46,13 +63,11 @@
 									<div class="col-2 d-flex align-items-center">
 										<select name="small_code" id="small_code" class="form-select">
 											<option value="999">전체</option>
-											<option value="1" ${small_code == 1? 'selected':''}>한식</option>
-											<option value="2" <c:if test="${small_code =='2'}">selected="selected"</c:if>>양식</option>
-											<option value="3" <c:if test="${small_code =='3'}">selected="selected"</c:if>>일식</option>
-											<option value="4" <c:if test="${small_code =='4'}">selected="selected"</c:if>>중식</option>
-											<option value="5" <c:if test="${small_code =='5'}">selected="selected"</c:if>>이색음식점</option>
-											<option value="6" <c:if test="${small_code =='6'}">selected="selected"</c:if>>카페</option>
-											<option value="7" <c:if test="${small_code =='7'}">selected="selected"</c:if>>클럽</option>
+											<c:forEach var="smallCode" items="${listSmallCode}">
+												<c:if test="${smallCode.small_code != 999 }">
+													<option value="${smallCode.small_code}" ${smallCode.small_code == restaurant.small_code? 'selected' : '' }>${smallCode.content}</option>
+												</c:if>
+											</c:forEach>
 										</select>
 									</div>
 								
@@ -77,12 +92,12 @@
 										</select> 
 									</div>
 										
-								<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="is_deleted" id="is_deleted" class="form-select">
 											<option value="2">전체</option>
-											<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>Y</option>
-											<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>N</option>
+											<option value="1" <c:if test="${is_deleted == '1'}">selected="selected"</c:if>>N</option>
+											<option value="0" <c:if test="${is_deleted == '0'}">selected="selected"</c:if>>Y</option>
 										</select>
 									</div>
 							</div>
@@ -113,11 +128,12 @@
 								<th scope="col">분류</th>
 								<th scope="col">음식점명</th>
 								<th scope="col">주소</th>
-								<th scope="col">메뉴</th>
+								<th scope="col">대표메뉴</th>
+								<th scope="col">작성자</th>
 								<th scope="col">신청일</th>
-								<th scope="col">진행상황</th>
+								<th scope="col">승인여부</th>
+								<th scope="col">게시여부</th>
 								<th scope="col">관리</th>
-								<th scope="col">삭제여부</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -129,14 +145,19 @@
 							  <!-- 	<td><a href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">${restaurant.title}</a></td> -->
 									<td>${restaurant.title}</td>
 									<td>${restaurant.address}</td>
-									<td>${restaurant.menu}</td>
+									<td>${restaurant.first_menu.split(',')[0]}</td>
+									<td></td>
 						 			<td><fmt:formatDate value="${restaurant.created_at}" type="date" pattern="YY/MM/dd"/></td>
 						 			<td>
 						 			<!-- <c:if test="${restaurant.status == 0 }">대&emsp;기</c:if>
 										<c:if test="${restaurant.status == 1 }">완&emsp;료</c:if> -->
-										<c:if test="${restaurant.status == 0 }">대기</c:if>
-										<c:if test="${restaurant.status == 1 }">완료</c:if> 
+										<c:if test="${restaurant.status == 0 }">승인대기</c:if>
+										<c:if test="${restaurant.status == 1 }">승인완료</c:if> 
 									</td>
+									<td>
+										<c:if test="${restaurant.is_deleted ==0 }">Y</c:if>								 	
+										<c:if test="${restaurant.is_deleted ==1 }">N</c:if>
+									</td>			
 									<td><a class="detail-btn" 
 									href="restaurantDetail?contentId=${restaurant.content_id}&currentPage=${page.currentPage}">관리</a></td>
 							  <!-- <td><c:if test="${restaurant.status == 1 }">
@@ -153,14 +174,12 @@
 											<c:when test="${restaurant.is_deleted == 1 }"></c:when>
 										</c:choose>
 										</c:if></td> -->
-										
-									<td><c:if test="${restaurant.is_deleted ==1 }">Y</c:if></td>			
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>
 						</tbody>
 					</table>
-		총 건수: ${totalRestaurant}
+		</div>
 		</div>
 		</div>	
 		
@@ -180,7 +199,7 @@
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>	
+								<a href="adminRestaurantSearch?searchType=${s_title}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}&big_code=${big_code}&currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>	
 							</li>
 						</c:when>
 					</c:choose>	
@@ -199,7 +218,7 @@
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+								<a href="adminRestaurantSearch?searchType=${s_title}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}&big_code=${big_code}&currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
 							</li>
 						</c:when>
 					</c:choose>	
@@ -218,7 +237,7 @@
 						</c:when>
 						<c:when test="${path==2}">
 							<li class="page-item">
-								<a href="adminRestaurantSearch?status=${status}&small_code=${small_code}&big_code=${big_code}&currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+								<a href="adminRestaurantSearch?searchType=${s_title}&keyword=${keyword}&small_code=${small_code}&area=${area}&sigungu=${sigungu}&status=${status}&is_deleted=${is_deleted}&big_code=${big_code}=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
 							</li>
 						</c:when>
 					</c:choose>	

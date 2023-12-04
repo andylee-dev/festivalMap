@@ -1,6 +1,7 @@
 package com.oracle.s202350104.model;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -33,8 +34,8 @@ public class FestivalsContent {
 	// Festivals 컬럼
 	private int    content_id;
 	private String hours;
-	private String start_date;
-	private String end_date;
+	private Date   start_date;
+	private Date   end_date;
 	private String sponsor;
 	private String eventplace;
 	private String cost;
@@ -59,8 +60,14 @@ public class FestivalsContent {
 	private String searchType;
 	private String keyword;
 	private String ordering; // 정렬
+	private String goingOn;  // 진행여부
 	
-	// 태그 입력용
-	private String[] finalTags;
-	private int      tag_id;
+	// 태그용
+	private String[]   finalTags;
+	private int        tag_id;
+	private List<Tags> myTags;
+	
+	// date가 str로 필요할 때
+	private String startdateStr;
+	private String enddateStr;
 }

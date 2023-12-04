@@ -118,4 +118,15 @@ public class AreaServiceImpl implements AreaService {
 		return areaCode;
 	}
 
+	@Override
+	public int updateAreaCode(Areas area) {
+		int result = ad.updateAreaCode(area);
+		
+		if(result <= 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		
+		return result;
+	}
+
 }

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>myQnaList</title>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 h1 {
 	color: black;
@@ -17,35 +18,6 @@ h1 {
 }
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-<script type="text/javascript">
-	function getQnaDelete(pIndex){
-		alert("실행")
-		var seluser_id = $('#user_id'+pIndex).val();
-		var selid	   = $('#id'+pIndex).val();
-		alert(seluser_id);
-		alert(selid);
-		$.ajax(
-				{
-					url:"<%=request.getContextPath()%>/user/deleteQnaPro",
-					data:{	user_id : seluser_id
-						,	id		: selid
-						 },
-					dataType:'text',
-					success:function(data){
-						alert(".ajax getdeletQna data->"+data);
-						if(data == '1'){
-							$('#qna'+pIndex).remove();
-							
-							alert("성공적으로 삭제 되었습니다.")
-						}else{
-							alert("삭제되지않았습니다.다시 시도하세요")
-						}
-					}
-				}		
-		);
-	}	
-</script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -120,7 +92,7 @@ h1 {
 <body>
 	<!-- Top bar -->
 	<%@ include file="/WEB-INF/components/TobBar.jsp" %>
-	<main >
+	<main>
 		<div class="d-flex">
 			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
 			<div class="container border p-5">
@@ -177,57 +149,59 @@ h1 {
 			<!-- Section3: Table -->		
 			<div class="container col-9 justify-content-center my-2">
 				<button type="button" class="btn btn-outline-secondary mt-4" onclick="location.href='insertQnaForm'">등록</button>
-				</div>
-				<div class="container col-9 justify-content-center my-2 border p-2">
-					<table class="table table-striped table-sm text-center mb-2">
-						<thead>
-							<tr>
-								<th scope="col">순번</th>
-								<th scope="col">문의제목</th>
-								<th scope="col">문의내용</th>
-								<th scope="col">작성일</th>
-								<th scope="col">진행상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="num" value="${page.start}"/>
-							<c:forEach var="qna" items="${listQnaList}" varStatus="status">
-								<input type="hidden" name="user_id" value="${qna.user_id}" id="user_id${status.index}">
-								<input type="hidden" name="id" value="${qna.id}" id="id${status.index}">
-									<tr id="qna${status.index}">
-										<td>${num}</td>
-										<td><a href="qnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
-										<td>${qna.question_content}</td>
-										<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
-										<td><c:if test="${qna.status == 0}">답변대기</c:if>
-											<c:if test="${qna.status == 1}">답변완료</c:if>
-										<td><input class="btn btn-primary" type="button" onclick="location.href='updateQnaForm?user_id=${qna.user_id}&id=${qna.id}'" value="수정"></td>
-										<td><input class="btn btn-outline-secondary" type="button" onclick="getQnaDelete(${status.index})" value="삭제"></td>
-									</tr>
-									<c:set var="num" value="${num + 1}"/>
-								</c:forEach>
-						</tbody>
+			</div>
+				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
+					<div class="container table-container p-4">
+						<div class="table-responsive">	
+						<table id="userTable" class="table table-md text-center p-3">
+							<thead>
+								<tr>
+									<th scope="col">순번</th>
+									<th scope="col">문의제목</th>
+									<th scope="col">작성일</th>
+									<th scope="col">진행상태</th>
+									<th scope="col">관리</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:set var="num" value="${page.start}"/>
+								<c:forEach var="qna" items="${listQnaList}" varStatus="status">
+									<input type="hidden" name="user_id" value="${qna.user_id}" id="user_id${status.index}">
+									<input type="hidden" name="id" value="${qna.id}" id="id${status.index}">
+										<tr id="qna${status.index}">
+											<td>${num}</td>
+											<td><a href="qnaDetail?user_id=${qna.user_id}&id=${qna.id}"><c:if test="${qna.status == 1}">[답변완료]</c:if>${qna.question_title}</a></td>
+											<td><fmt:formatDate value="${qna.created_at}" type="date" pattern="YY/MM/dd"/></td>
+											<td><c:if test="${qna.status == 0}">답변대기</c:if>
+												<c:if test="${qna.status == 1}">답변완료</c:if>
+											<td><a class="detail-btn" href="updateQnaForm?user_id=${qna.user_id}&id=${qna.id}">관리</a></td>
+										</tr>
+										<c:set var="num" value="${num + 1}"/>
+									</c:forEach>
+							</tbody>
 						</table>
 						</div>
-						<nav aria-label="Page navigation example ">
-							<ul class="pagination">
-								<c:if test="${page.startPage > page.pageBlock}">
-									<li class="page-item">
-										<a href="qnaList?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
-									</li>
-								</c:if>
-								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-									<li class="page-item">
-										<a href="qnaList?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
-									</li>
-								</c:forEach>
-								<c:if test="${page.endPage < page.totalPage}">
-									<li class="page-item">
-										<a href="qnaList?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
-									</li>
-								</c:if>
-							</ul>
-						</nav>	
+					</div>
+				</div>
+					<nav aria-label="Page navigation example ">
+						<ul class="pagination">
+							<c:if test="${page.startPage > page.pageBlock}">
+								<li class="page-item">
+									<a href="qnaList?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">[이전]</a>
+								</li>
+							</c:if>
+							<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+								<li class="page-item">
+									<a href="qnaList?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? "active":"" }">${i}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${page.endPage < page.totalPage}">
+								<li class="page-item">
+									<a href="qnaList?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">[다음]</a>
+								</li>
+							</c:if>
+						</ul>
+					</nav>	
 				</div>
 			</div>	
 		</div>		

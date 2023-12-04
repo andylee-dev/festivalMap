@@ -19,7 +19,7 @@
 	<select id="getAreaList" resultType="Areas" >
 		SELECT *
 		FROM areas
-		WHERE sigungu = '999'	
+		WHERE sigungu = '999'
 		AND content IS NOT NULL
 	</select>
 
@@ -83,5 +83,11 @@
 		FROM   areas
 		WHERE  area = #{area} AND sigungu = #{sigungu}
 	</select>
+	
+	<update id="joUpdateAreaCode" parameterType="Areas">
+		UPDATE areas 
+		SET    content = #{content}
+		WHERE  area = #{area} AND sigungu = #{sigungu}
+	</update>
 	
 </mapper>

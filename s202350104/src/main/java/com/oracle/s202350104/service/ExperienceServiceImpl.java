@@ -78,8 +78,8 @@ public class ExperienceServiceImpl implements ExperienceService {
 	}
 
 	@Override
-	public int experienceApprove(int contentId) {
-		int result = ed.experienceApprove(contentId);
+	public int experienceApprove(ExperienceContent experienceContent) {
+		int result = ed.experienceApprove(experienceContent);
 		
 		if(result <= 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "축제 정보 승인에 실패하였습니다.");

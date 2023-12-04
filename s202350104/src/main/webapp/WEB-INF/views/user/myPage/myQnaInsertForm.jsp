@@ -1,38 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/components/AdminHeader.jsp" %>
+<%@ include file="/WEB-INF/components/header.jsp" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-		<div class="container-fluid">
-		<div class="row">
-			<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+		<%@ include file="/WEB-INF/components/TobBar.jsp" %>
+	<main>	
 		<div class="d-flex">
-			<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+		<%@ include file="/WEB-INF/components/MyPageSideBar.jsp" %>
+			<div class="container border p-5">
+				<div class="container my-5">	
 			
 				<!-- Section1: Title -->
-				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="border">1:1문의 상세내역</h1>
-				</div>
-				<div class="container border p-4 mb-4">
+				<h1>1:1 문의 등록</h1>
+				<hr class="hr" />
 					<c:if test="${msg != null}">${msg}</c:if>
 						<form action="insertQnaResult" method="post">
-							제목 <input type="text" name="question_title"><br>
-							내용 <input type="text" name="question_content"><br>
-						   	   <input type="submit" value="등록">
-						</form>
+						<div class="mb-3 ">
+							<label for="content_id" class="form-label">제목:</label>
+							<input type="text" class="form-control" name="question_title" required >
+							
+						</div>	
+						<div class="mb-3 ">
+							 <label for="content_id" class="form-label">내용:</label>
+						 	<textarea class="form-control" name="question_content" rows="5" required></textarea>
+						</div>
+						<div class="text-center">
+							<input class="btn btn-primary" type="submit" value="등록">
+							<input class="btn btn-primary" type="button" value="목록" onclick="location.href='qnaList'">
+						</div>
+					</form>
 				</div>
-				<div class="text-center">
-					<input type="button" value="목록" onclick="location.href='qnaList'">
-				</div>
-			</main>
+			</div>
 		</div>
-		</div>
-		</div>
+	</main>
 	</body>
 </html>

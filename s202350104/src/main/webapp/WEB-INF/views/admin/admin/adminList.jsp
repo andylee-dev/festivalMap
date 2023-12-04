@@ -94,17 +94,15 @@
 				
 				<!-- Section3: Table -->
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
-					<div class="container d-flex justify-content-end p-0">
+<!-- 					<div class="container d-flex justify-content-end p-0">
 						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>
 					</div>
-				<div class="container table-container p-4">
+ -->				<div class="container table-container p-4">
 				<div class="table-responsive">	
 					<table id="adminTable" class="table table-md text-center p-3">
 						<thead>
 							<tr>
 								<th scope="col">순번</th>
-								<th scope="col">대분류</th>
-								<th scope="col">소분류</th>
 								<th scope="col">이름</th>
 								<th scope="col">비밀번호</th>
 								<th scope="col">별명</th>
@@ -112,8 +110,6 @@
 								<th scope="col">전화번호</th>
 								<th scope="col">이메일</th>
 								<th scope="col">주소</th>
-								<th scope="col">수정</th>
-								<th scope="col">삭제</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -121,8 +117,6 @@
 							<c:forEach var="adminList" items="${listUser}">
 								<tr>
 									<td>${num}</td>
-									<td>${adminList.big_code}</td>
-									<td>${adminList.small_code}</td>
 									<td>${adminList.name}</td>
 									<td>${adminList.password}</td>
 									<td>${adminList.nickname}</td>
@@ -130,8 +124,6 @@
 									<td>${adminList.phone_num}</td>
 									<td>${adminList.email}</td>
 									<td>${adminList.address}</td>
-						 			<td><input class="btn btn-primary" type="button" value="수정"></td>
-									<td><input class="btn btn-outline-secondary" type="button" value="삭제"></td>					
 								 </tr>
 								 <c:set var="num" value="${num + 1}"/>
 							</c:forEach>

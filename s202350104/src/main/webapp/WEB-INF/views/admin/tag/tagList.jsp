@@ -9,28 +9,6 @@
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
-			// 행별로 데이터 삭제
-			function tagDelete(pIndex) {
-				var deleteId = $('#id'+pIndex).val();
-				if(confirm("정말 삭제하시겠습니까?")) {
-					$.ajax({
-								method:"POST",
-								url:"<%=request.getContextPath()%>/admin/tag/deleteTags",
-								data:{id : deleteId},
-								dataType:'text',
-								success:
-									function(result) {
-											if(result == '1') {
-												$('#tag'+pIndex).remove();
-												alert("성공적으로 삭제되었습니다.");
-												location.reload();
-											} else {
-												alert("삭제에 실패하였습니다.");
-											}		
-									}
-							})
-				}
-			}
 		</script>
 	</head>
 	<body>
@@ -53,12 +31,19 @@
 						
 						<!-- 검색어 -->
 						<div class="col-12 my-4 d-flex align-items-center">
-							<label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
+							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
+							<div class="col-2">
+								<select name="searchType" class="form-select">
+									<option value="s_tagname" ${param.searchType == s_tagname? 'selected':''}>태그명</option>
+									<option value="s_groupname" ${param.searchType == s_groupname? 'selected':''}>그룹명</option>
+								</select>
+							</div>
 							<div class="col-6 mx-1">
-								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요.">
+								<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력해주세요."
+								 value = "${param.keyword}">
 							</div>
 							<!-- 버튼 -->
-							<div class="col-5 mx-1 d-flex justify-content-center">
+							<div class="col-5 mx-1 d-flex justify-content-start">
 								<button type="submit" class="btn btn-primary col-2 mx-1">검색</button>
 								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
 							</div>
@@ -78,27 +63,32 @@
 							<thead>
 								<tr>
 									<th scope="col">순번</th>
+									<th scope="col">그룹명</th>
 									<th scope="col">태그명</th>
 									<th scope="col">회원태그</th>
 									<th scope="col">게시판태그</th>
 									<th scope="col">컨텐츠태그</th>
 									<th scope="col">코스태그</th>
-									<th scope="col">수정</th>
-									<th scope="col">삭제</th>
+									<th scope="col">총합</th>
+									<th scope="col"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:set var="num" value="${page.start}"/>
-								<c:forEach var="tag" items="${listTags}" varStatus="st">
-									<tr id="tag${st.index}">
-										<td><input type="hidden" value="${tag.id}" id="id${st.index}">${num}</td>
-										<td>${tag.name}</td>
+								<c:forEach var="tag" items="${listTags}">
+									<tr>
+										<td>${num}</td>
+										<td>
+											<c:if test="${tag.group_name == null || tag.group_name == ''}">-</c:if>
+											<c:if test="${tag.group_name != null && tag.group_name != ''}">${tag.group_name}</c:if>
+										</td>
+										<td style="font-weight: bold; color: #FF4379;">${tag.name}</td>
 										<td>${tag.userCnt}</td>
 										<td>${tag.boardCnt}</td>
 										<td>${tag.contentCnt}</td>
 										<td>${tag.courseCnt}</td>
-										<td><input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateTagsForm?id=${tag.id}'"></td>
-										<td><input class="btn btn-outline-secondary" type="button" value="삭제" onclick="tagDelete(${st.index})"></td>
+										<td>${tag.userCnt + tag.boardCnt + tag.contentCnt + tag.courseCnt}</td>
+										<td><a href="updateTagsForm?id=${tag.id}" class="detail-link">관리</a></td>
 									</tr>
 									<c:set var="num" value="${num + 1}"/>
 								</c:forEach>

@@ -86,7 +86,7 @@
 			        .map(([key, value]) => key+'='+value).join('&');
 	    }
 	    
-		function userDeleteAjax(index) {
+/* 		function userDeleteAjax(index) {
 			const table = document.getElementById("userTable");
 			const row = table.rows[ index + 1 ];
 			const userId = row.querySelector("#userId").textContent;
@@ -111,8 +111,8 @@
 					}		
 				)
 			}
-		}			
-	    
+		}	 */		
+		
 	</script>
 <script>
   // 페이지 로드 후 실행되는 JavaScript 코드
@@ -129,90 +129,7 @@
     });
   });
 </script>
-<style type="text/css">
-#userTable td, .detail-btn {
-    white-space: nowrap; /* 줄바꿈을 방지 */
-}
-
-.detail-btn{
-	color: #FF4379;
-	font-size:15;
-	font-family: Noto Sans;
-	font-style: normal;
-	font-weight: 800;
-	line-height: 18px; /* 138.462% */
-	text-decoration: none;
-}
-table td {
-    text-align: center; 
-    vertical-align: middle;
-}
-table {
-  border-collapse: collapse;
-}
-table td {
-  border: 1px solid #D9D9D9; 
-}
-table th {
-  border: 1px solid #D9D9D9; 
-}
-
-
-table tr:first-child td {
-  border-top: 0;
-}
-table tr td:first-child {
-  border-left: 0;
-}
-table tr:last-child td {
-  border-bottom: 0;
-}
-table tr td:last-child {
-  border-right: 0;
-}
-
-
-table tr:first-child th {
-  border-top: 0;
-}
-table tr th:first-child {
-  border-left: 0;
-}
-table tr th:last-child {
-  border-right: 0;
-}
-
-.col-form-label{
-color: #000;
-
-font-family: Noto Sans;
-font-size: 16px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
-}
-
-.table-container{
-border-radius: 10px;
-border: 1px solid #000;
-}
-
-#userTable {
-    width: 100%; /* 테이블의 너비를 컨테이너의 너비에 맞게 조정 */
-}
-
-#regist-btn {
-	display: flex;
-	width: 69px;
-	height: 29px;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
-	flex-shrink: 0;
-	border-radius: 10px;
-}
-
-</style>
+<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
 </head>
 <body >
 	<div class="container-fluid">
@@ -294,9 +211,6 @@ border: 1px solid #000;
 				</div>
 				<!-- Section3: Table -->
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
-					<div class="container d-flex justify-content-end p-0">
-						<button id="regist-btn" type="button" class="btn btn-primary btn-sm mb-4">등록</button>
-					</div>
 					<div class="container table-container p-4">
 					<div class="table-responsive">
 						<table id="userTable" class="table table-md text-center p-3">

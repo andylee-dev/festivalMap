@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Beta List Page</title>
+
 </head>
 <body>
 	<!-- 임시, 여백용-->

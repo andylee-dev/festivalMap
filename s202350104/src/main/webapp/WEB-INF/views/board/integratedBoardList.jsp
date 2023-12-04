@@ -9,9 +9,39 @@
 <head>
 <meta charset="UTF-8">
 <title>integratedBoard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 
+	function checkUserIdAndNavigate() {
+	    // userId 값 가져오기
+	    var userId = ${userId};
+	
+	    // userId가 0인 경우 알림창 띄우기
+	    if (userId == 0) {
+	        swal({
+	            title: "로그인 후 이용해주세요.",
+	            text: "회원이 아니시면 가입 후 이용해주세요.",
+	            icon: "warning",
+	        }).then((confirmed) => {
+	            // 'OK' 누르면 로그인 화면으로 이동
+	            if (confirmed) {
+	                location.href = '../login';
+	            }
+	        });
+	    } else {
+	        // userId가 0보다 큰 경우 페이지 이동
+	        location.href = 'integratedBoardInsertForm?userId=${userId}&bigCode=${bigCode}&smallCode=${smallCode}';
+	    }
+	}
+	
+	// 서치이미지를 클릭할 때 폼을 제출하는 함수
+	$(document).ready(function () {
+    	$("#searchIcon").click(function () {
+       		$("#freeBoardSearchList").submit();
+    	});
+	});
 </script>
 
 </head>
@@ -118,9 +148,11 @@
 				<c:choose>
 					<c:when test="${smallCode == 3}">
 						<div class="col keyword_div_custom">
-							<input class="form-control keyword_custom" type="text" placeholder="&nbsp;키워드를 검색해보세요.">
-							<img src="../image/icon_search1.png" alt="test" />
-							<button class="btn btn_custom" onclick="location.href='integratedBoardInsertForm?userId=${userId }&bigCode=${bigCode }&smallCode=${smallCode }'">글쓰기</button>		
+							<form id="freeBoardList" action="freeBoardList" method="get">
+								<input class="form-control keyword_custom" type="text" name="keyword" placeholder="&nbsp;키워드를 검색해보세요.">
+								<img src="../image/icon_search1.png" alt="icon_search1.png" id="searchIcon" onclick="submitForm()"/>																						
+							</form>
+							<button class="btn btn_custom" onclick="checkUserIdAndNavigate()">글쓰기</button>		
 						</div>
 					</c:when>
 				</c:choose>			
@@ -140,24 +172,52 @@
 		
 		<!-- 목록 출력 영역 -->
 		<div class="container p-3 list_container_custom">
+		<c:if test="${board.size() == 0}">해당하는 정보가 없습니다.</c:if>				
 			<c:forEach var="boards" items="${board }">
-				<div class="row row-cols-5 align-items-center list_custom">
+				<div class="row row-cols-5 align-items-center list-board-custom">
 					<!-- 글번호 Date -->		
 					<div class="col-md-1">${num }</div>
+					<c:set var="num" value="${num -1 }"/>	
+									
 					<!-- 게시판 제목 -->
 					<div class="col-md-6">
-						<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>
+						<c:if test="${boards.comment_indent > 0 }"></c:if>
+						<c:choose>
+							<c:when test="${boards.small_code eq 2 }">
+ 								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
+							</c:when>
+							<c:when test="${boards.small_code eq 3 }">
+ 								<a href="boardDetail?id=${boards.id }&userId=${userId}">${boards.title }</a>						
+							</c:when>
+							<c:otherwise>
+								<p class="d-inline-flex gap-1 coll-btn-custom m-0">
+								  <button class="btn mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#contentCall${boards.id }"
+								  		  aria-expanded="false" aria-controls="collapseExample">
+								    ${boards.title }
+								  </button>
+								</p>							
+							</c:otherwise>
+						</c:choose>
 					</div>
+					
 					<!-- 게시물 작성자 -->
 					<div class="col-md-2">${boards.name }</div>
+					
 					<!-- 게시물 작성일(최초 생성일) -->
 					<div class="col-md-2">		
 						<fmt:formatDate value="${boards.created_at }" type="date"
 										pattern="YYYY/MM/dd"/>
 					</div>
+					
 					<!-- 게시물 조회수 -->
-					<div class="col-md-1">${boards.read_count }</div>				
-				</div>		
+					<div class="col-md-1">${boards.read_count }</div>
+				</div>
+				
+				<div class="collapse list-coll-custom" id="contentCall${boards.id }">
+					<div class="card card-body list-content-custom border-0">
+						<p>${boards.content }</p>
+					</div>
+				</div>
 			</c:forEach>
 		</div>		
 		
@@ -202,21 +262,42 @@
 					</c:when>
 
 					<c:when test="${smallCode eq 3}">
-						<c:if test="${page.startPage > page.pageBlock}">
-							<li class="page-item"><a
-								href="freeBoardList?currentPage=${page.startPage-page.pageBlock}"
-								class="pageblock page-link">[이전]</a></li>
-						</c:if>
-						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item"><a href="freeBoardList?currentPage=${i}"
-								class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
-							</li>
-						</c:forEach>
-						<c:if test="${page.endPage < page.totalPage}">
-							<li class="page-item"><a
-								href="freeBoardList?currentPage=${page.startPage+page.pageBlock}"
-								class="pageblock page-link">[다음]</a></li>
-						</c:if>
+						<c:choose>
+							<c:when test="${listSearch eq 1}">
+								<c:if test="${page.startPage > page.pageBlock}">
+									<li class="page-item"><a
+										href="freeBoardSearchList?currentPage=${page.startPage-page.pageBlock}"
+										class="pageblock page-link">[이전]</a></li>
+								</c:if>
+								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+									<li class="page-item"><a href="freeBoardSearchList?currentPage=${i}"
+										class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</li>
+								</c:forEach>
+								<c:if test="${page.endPage < page.totalPage}">
+									<li class="page-item"><a
+										href="freeBoardSearchList?currentPage=${page.startPage+page.pageBlock}"
+										class="pageblock page-link">[다음]</a></li>
+								</c:if>		
+							</c:when>
+							<c:otherwise>
+								<c:if test="${page.startPage > page.pageBlock}">
+									<li class="page-item"><a
+										href="freeBoardList?currentPage=${page.startPage-page.pageBlock}"
+										class="pageblock page-link">[이전]</a></li>
+								</c:if>
+								<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+									<li class="page-item"><a href="freeBoardList?currentPage=${i}"
+										class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</li>
+								</c:forEach>
+								<c:if test="${page.endPage < page.totalPage}">
+									<li class="page-item"><a
+										href="freeBoardList?currentPage=${page.startPage+page.pageBlock}"
+										class="pageblock page-link">[다음]</a></li>
+								</c:if>							
+							</c:otherwise>
+						</c:choose>	
 					</c:when>
 					
 					<c:when test="${smallCode eq 6}">

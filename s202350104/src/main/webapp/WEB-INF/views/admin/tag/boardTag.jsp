@@ -5,14 +5,25 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>게시판 태그</title>
 		<link href="/css/adminTable.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			.badge {
+				color: white !important;
+				background-color: #FF4379 !important;
+			}
+			
+			.nav-menu {
+				background-color: #b7e24d !important;
+				border: none;
+			}
+		</style>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 		   $(document).ready(function() {
 			   const urlParams = new URL(location.href).searchParams;
 			   const smallCodeStr = urlParams.get('smallCodeStr');
-			   
+			   // 행별로 저장된 태그를 가져와서 뱃지로 표시
 			   $.ajax({
 						   method:"POST",
 						   url:"<%=request.getContextPath()%>/admin/tag/getBoardTags",
@@ -27,7 +38,7 @@
 										   str += " ";
 									   }
 								   }	   
-								   $("#tag_name"+i).append(str);   
+								   $("#tag_name"+i).append(str);  
 							   }
 						   }
 				})
@@ -51,22 +62,23 @@
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
 					<form action="boardTag" method="GET" class="container justify-content-center">
+						<input type="hidden" name="smallCodeStr" value="${smallCode}">
 						<div class="col-12 my-4 d-flex align-items-center">
 							<label for="searchType" class="col-form-label col-1  mx-2">검색어</label>
 							<div class="col-2">
-								<select name="search" class="form-select">
-									<option value="tagname">태그명</option>
+								<select name="searchType" class="form-select">
+									<option value="tag_name">태그명</option>
 									<option value="title">제목</option>
-									<option value="name">작성자</option>
+									<option value="user_id">작성자</option>
 								</select>
 							</div>
-							<div class="col-5 mx-2">
+							<div class="col-6 mx-1">
 					     		<input type="text" name="keyword" class="form-control" value="${keyword}"
 					         	 placeholder="검색어를 입력하세요.">
 				            </div>
-							<div class="col-4 mx-1 d-flex justify-content-center">					
-								<button type="submit" class="btn btn-primary  col-3 mx-1">검색</button>
-								<button type="reset" class="btn btn-outline-secondary col-3 mx-1">초기화</button>
+							<div class="col-5 mx-1 d-flex justify-content-start">					
+								<button type="submit" class="btn btn-primary  col-2 mx-1">검색</button>
+								<button type="reset" class="btn btn-outline-secondary col-2 mx-1">초기화</button>
 							</div>
 						</div>
 					</form>
@@ -75,11 +87,11 @@
 				<!-- Section3: Table -->		
 				<div class="container col-9 justify-content-center align-items-center mb-2 p-3 pt-0">
 					<div class="container col-10 d-flex justify-content-center p-0">
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
-						<button type="button" class="btn btn-primary col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=2'">매거진</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=3'">자유게시판</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=4'">포토게시판</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=5'">이벤트게시판</button>
+						<button type="button" class="btn btn-primary nav-menu col-2 mx-1" onclick="location.href='boardTag?smallCodeStr=6'">리뷰</button>
 					</div>
 					<div class="container table-container mt-1 p-4">
 					<div class="table-responsive">
@@ -91,8 +103,8 @@
 									<th scope="col">제목</th>
 									<th scope="col">작성자</th>
 									<th scope="col">작성일</th>
-									<th scope="col">조회수</th>
 									<th scope="col">태그명</th>
+									<th scope="col">상세</th>
 									<th scope="col"></th>
 								</tr>
 							</thead>
@@ -101,14 +113,14 @@
 								<c:forEach var="board" items="${listBoard}" varStatus="st">
 									<tr>
 										<td>${num}</td>
-										<td><input type="hidden" id="board_id${st.index}" value="${board.id}">
-											${board.id}</td>
+										<td><input type="hidden" id="board_id${st.index}" value="${board.board_id}">
+											${board.board_id}</td>
 										<td>${board.title}</td>
 										<td>${board.name}</td>
 										<td><fmt:formatDate value="${board.created_at}" type="date" pattern="YY/MM/dd"/></td>
-										<td>${board.read_count}</td>
 										<td id="tag_name${st.index}"></td>
-										<td><a href='boardTagsUpdateForm?boardIdStr=${board.id}&currentPage=${page.currentPage}' class="detail-link">관리</a></td>
+										<td><a class="detail-link">이동</a></td>
+										<td><a href='boardTagsUpdateForm?boardIdStr=${board.board_id}&currentPage=${page.currentPage}' class="detail-link">관리</a></td>
 									</tr>
 									<c:set var="num" value="${num + 1}"/>
 								</c:forEach>

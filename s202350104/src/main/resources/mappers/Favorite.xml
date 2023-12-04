@@ -7,12 +7,21 @@
 	<select id="joFavoriteListAll" resultType="Favorite" parameterType="Favorite">
 		SELECT *
 		FROM   
-			   (
-			   	SELECT ROWNUM rn, f.*, u.name
-			 	FROM   favorite f, users u
-			 	WHERE  f.user_id = u.id
-				) 
-		WHERE rn BETWEEN #{start} and #{end}
+		(
+			   	SELECT ROWNUM rn, a.*
+			   	FROM
+			   	(
+			   		SELECT f.*, c.title, u.name
+			 		FROM   favorite f, contents c, users u
+			 		WHERE  f.content_id = c.id
+			 		AND    f.user_id = u.id	
+			 		<if test="user_id != null and user_id != 0">
+			 			AND	f.user_id = #{user_id}
+			 		</if>
+			 		ORDER BY create_at desc
+		 		) a
+		 ) 
+		 WHERE rn BETWEEN #{start} and #{end}
 	</select>
 		
 		
@@ -22,18 +31,28 @@
 	</select>
 	
 	
+	<select id="shFavoriteTotal" parameterType="Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE user_id = #{user_id}
+	</select>
+	
+	
+	
 	<select id="joCondTotalFavorite" resultType="int" parameterType="Favorite">
-		SELECT count(*) FROM favorite
-		
+		SELECT count(*) 
+		FROM   favorite f, users u
+		WHERE  f.user_id = u.id
+			
 		<choose>
 			<when test="search == 's_id'">
-				WHERE user_id like '%' || #{keyword} || '%'
+				AND f.user_id like '%' || #{keyword} || '%'
 			</when>
 			<when test="search == 's_name'">
-				WHERE name like '%' || #{keyword} || '%'
+				AND u.name like '%' || #{keyword} || '%'
 			</when>
 			<otherwise>
-				WHERE user_id like '%'
+				AND f.user_id like '%'
 			</otherwise>
 		</choose>
 	</select>
@@ -44,49 +63,50 @@
 		SELECT *
 		FROM
 		(
-			SELECT rownum rn, f.*, u.name
-			FROM   favorite f, users u
-			WHERE  f.user_id = u.id		
+			SELECT rownum rn, f.*, u.name, c.title
+			FROM   favorite f, users u, contents c
+			WHERE  f.user_id = u.id	
+			AND    f.content_id = c.id
+		<choose>
+			<when test="search == 's_id'">
+				AND f.user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				AND u.name like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				AND f.user_id like '%'
+			</otherwise>
+		</choose>	
+				
 		)
 		WHERE rn BETWEEN #{start} and #{end}
 		
-		<choose>
-			<when test="search == 's_id'">
-				AND user_id like '%' || #{keyword} || '%'
-			</when>
-			<when test="search == 's_name'">
-				AND name like '%' || #{keyword} || '%'
-			</when>
-			<otherwise>
-				AND user_id like '%'
-			</otherwise>
-		</choose>
+		
 			
 	</select>
-	
-	<select id="joGetMyLikeList" parameterType="Favorite" resultType="Favorite">
-		SELECT *
-		FROM
-		(
-			SELECT rownum rn, f.id, c.title, f.create_at
-			FROM   contents c, favorite f
-			WHERE  f.user_id = '1003'
-			AND    f.id = c.id
-		)
-		WHERE rn between #{start} and #{end}
-		
-	</select>
-
-	<select id="joTotalMyLikeList" parameterType="Favorite" resultType="int">
-		SELECT COUNT(*)
-		FROM   favorite f  
-		WHERE  f.user_id = 1003
-    </select>
-    
-    <delete id="joDeleteMyLike" parameterType="int">
+	    
+	    
+    <delete id="joDeleteFavorite" parameterType="favorite">
 		DELETE FROM favorite 
-		WHERE  user_id = '1003' 
-		AND    id = #{id}
+		WHERE  user_id = #{user_id} 
+		AND    content_id = #{content_id}
+		
     </delete>
     
+        
+    <select id="getMyFavoriteOne" parameterType="Favorite" resultType="Favorite">
+		SELECT *
+		FROM   favorite f  
+		WHERE  f.user_id = #{user_id} 
+		AND f.content_id = #{content_id} 
+    </select>
+  
+  
+     <insert id="joInsertFavorite" parameterType="Favorite" >
+    	INSERT INTO favorite(user_id, content_id ,create_at) 
+    	VALUES(#{user_id}, #{content_id}, sysdate)
+    </insert>
+  
+  
 </mapper>

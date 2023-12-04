@@ -35,31 +35,31 @@
 				<div class="admin-header-container">
 					<div class="container m-4">
 						<i class="title-bi bi bi-image-fill "></i>
-						<label  class="admin-header-title ">코스리스트 </label>					
+						<label  class="admin-header-title ">코스 정보 관리 </label>					
 					</div>
 				</div>
 		
 				<!-- Section2: Search Form -->		
 				<div class="container col-9 justify-content-center my-5">
-				    <form action="" method="POST" class="container justify-content-center">
+				    <form action="list1" method="get" class="container justify-content-center">
 				    
 				    <!-- 검색어 -->
 			            <div class="col-12 my-4 d-flex align-items-center">
 			                <label for="searchType" class="col-form-label col-2  mx-2">검색어</label>
-			                <div class="col-4">
+			                <div class="col-3">
 				                <select id="searchType" name="searchType" class="form-select">
-				                    <option selected value="">코스명</option>
-				                    <option selected value="">지역</option>
-				                    <option selected value="">코스내용</option>
+				                    <option selected value="s_title">코스명</option>
+				                    <option value="s_content">코스내용</option>
 				                </select>
 			                </div>
-			                <div class="col-5 mx-2">
-				                <input type="text" name="keyword" class="form-control" value="${keyword}">
+			                <div class="col-6 mx-2">
+				                <input type="text" name="keyword" class="form-control" value="${keyword}"
+				                placeholder="검색어를 입력하세요.">
 			                </div>
 			            </div>
 			            
 			            <div class="col-12 my-4 d-flex align-items-center">
-					    	<label for="searchType" class="col-form-label col-2  mx-2">지역</label>
+					    	<label for="searchType" class="col-form-label col-2 mx-2">지역</label>
 						        <div class="col-3 d-flex align-items-center">
 									<select name="area" class="area-dropdown form-select"></select>
 								</div>
@@ -102,8 +102,8 @@
 											<td>${course.distance }</td>
 											<td>${course.time }</td>
 											<td><fmt:formatDate value="${course.created_at }" type="date" pattern="YY/MM/dd"/></td>
-											<td>-</td>
-											<td><a href="courseUpdateForm?id=${course.course_id}" class="detail-link">관리${course.course_id}</a></td>
+											<td>${course.area_content } ${course.sigungu_content }</td>
+											<td><a href="courseUpdateForm?id=${course.course_id}" class="detail-link">관리</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -115,19 +115,49 @@
 				<nav aria-label="Page navigation example ">
 					<ul class="pagination">
 						<c:if test="${page.startPage > page.pageBlock}">
-							<li class="page-item">
-								<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
-							</li>
+							<c:choose>
+								<c:when test="${path == 0}">
+									<li class="page-item">
+										<a href="list?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+									</li>
+								</c:when>
+								<c:when test="${path == 1}">
+									<li class="page-item">
+										<a href="list1?currentPage=${page.startPage-page.pageBlock}" class="pageblock page-link">Prev</a>
+									</li>
+								</c:when>
+							</c:choose>
+							
 						</c:if>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-							<li class="page-item">
-								<a href="list?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
-							</li>
+							<c:choose>
+								<c:when test="${path == 0}">
+									<li class="page-item">
+										<a href="list?currentPage=${i}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</li>
+								</c:when>
+								<c:when test="${path == 1}">
+									<li class="page-item">
+										<a href="list1?currentPage=${i}&keyword=${keyword}&area=${area}&sigungu=${sigungu}" class="pageblock page-link ${page.currentPage == i ? 'active':'' }">${i}</a>
+									</li>
+								</c:when>
+							</c:choose>
+							
 						</c:forEach>
 						<c:if test="${page.endPage < page.totalPage}">
-							<li class="page-item">
-								<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
-							</li>
+							<c:choose>
+								<c:when test="${path == 0}">
+									<li class="page-item">
+										<a href="list?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+									</li>
+								</c:when>
+								<c:when test="${path == 1}">
+									<li class="page-item">
+										<a href="list1?currentPage=${page.startPage+page.pageBlock}" class="pageblock page-link">Next</a>
+									</li>
+								</c:when>
+							</c:choose>
+							
 						</c:if>
 					</ul>
 				</nav>

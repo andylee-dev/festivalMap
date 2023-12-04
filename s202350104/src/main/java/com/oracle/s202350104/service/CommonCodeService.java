@@ -13,4 +13,5 @@ public interface CommonCodeService {
 	int               insertCommonCode(CommonCodes commonCode);
 	int               deleteCommonCode(CommonCodes commonCode);
 	CommonCodes       detailCommonCode(CommonCodes commonCode);
+	int               updateCommonCode(CommonCodes commonCode);
 }

@@ -32,19 +32,24 @@ public class BoardDaoImpl implements BoardDao {
 	
 	@Override
 	public int boardCount2(Board board) {
-		int countBoardResult = session.selectOne("boardCount2", board);
+		
+		int countBoardResult = session.selectOne("reviewBoardCount", board);
+		
 		log.info("BoardDao boardCount2 countBoardResult : {}", countBoardResult);
+		
 		return countBoardResult;
 	}
 
 	// Paging 처리용
 	@Override
-	public int boardCount(int smallCode) {
-
+	public int boardCount(Board board) {
+		log.info("BoardDao boardCount getSmall_code : {}", board.getSmall_code());
+		log.info("BoardDao boardCount getComment_indent : {}", board.getComment_indent());
+		log.info("BoardDao boardCount getIs_deleted : {}", board.getIs_deleted());
 		int countBoard = 0;
 
 		try {
-			countBoard = session.selectOne("boardCount", smallCode);
+			countBoard = session.selectOne("boardCount", board);
 		} catch (Exception e) {
 			log.error("BoardDao boardCount Exception : {}", e.getMessage());
 		}
@@ -218,10 +223,10 @@ public class BoardDaoImpl implements BoardDao {
 		
 		try {
 			if(board.getFile_name() == null) {
-				log.info("BoardDao noboardUpdate normal Start!!");				
+				log.info("BoardDao boardUpdate normal Start!!");				
 				updateBoard = session.update("boardUpdate2", board);
 			} else {
-				log.info("BoardDao noboardUpdate image Start!!");				
+				log.info("BoardDao boardUpdate image Start!!");				
 				updateBoard = session.update("boardUpdate", board);
 			}	
 
@@ -241,7 +246,9 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 			log.info("BoardDao boardDelete Start!!");
 			
-			deleteBoard = session.delete("boardDelete", boardId);
+			//deleteBoard = session.delete("boardDelete", boardId);
+			
+			deleteBoard = session.update("boardDeleteNew", boardId);
 		} catch (Exception e) {
 			log.error("BoardDao boardDelete Exception : {}", e.getMessage());
 		} finally {
@@ -272,4 +279,100 @@ public class BoardDaoImpl implements BoardDao {
 		return board;
 	}
 	
+	@Override
+	public void commentInsert(Board board) {
+		log.info("BoardDao commentInsert Start!!");
+		
+		int comment_group_id = 0;
+		int comment_step = 0;
+		int comment_indent = 0; 
+		
+		commentShape(board);
+		
+		board.setComment_group_id(board.getComment_group_id());
+		board.setComment_step(board.getComment_step() + 1);
+		board.setComment_indent(board.getComment_indent() + 1);
+		
+
+		comment_group_id = board.getComment_group_id();
+		comment_step = board.getComment_step();
+		comment_indent = board.getComment_indent();
+		
+		log.info("BoardDao commentInsert getId : {}", board.getId());
+		log.info("BoardDao commentInsert getUser_id : {}", board.getUser_id());
+		log.info("BoardDao commentInsert getBig_code : {}", board.getBig_code());
+		log.info("BoardDao commentInsert getSmall_code : {}", board.getSmall_code());
+		log.info("BoardDao commentInsert getComment_group_id : {}", comment_group_id);
+		log.info("BoardDao commentInsert getComment_step : {}", comment_step);
+		log.info("BoardDao commentInsert getComment_indent : {}", comment_indent);
+		
+		session.insert("commentInsert", board);
+
+	}
+
+	private void commentShape(Board board) {
+		log.info("BoardDao commentShape Start!!");	
+		
+		int comment_group_id = 0;
+		int comment_step = 0; 
+		
+		comment_group_id = board.getComment_group_id();
+		comment_step = board.getComment_step();
+		
+		log.info("BoardDao commentInsert comment_group_id : {}", comment_group_id);
+		log.info("BoardDao commentInsert comment_step : {}", comment_step);		
+		
+		session.update("commentInsertTest", board);
+		
+	}
+	
+	@Override
+	public List<Board> commentDetail(int id) {
+		
+		List<Board> comments = session.selectList("commentDetail", id);
+		log.info("BoardDao comments size : {}", comments.size());		
+		return comments;
+	}
+	
+	@Override
+	public List<Board> getBoardOneList(Board board) {
+		
+		List<Board> boardOneList = session.selectList("getBoardOneList", board);
+		log.info("BoardDao getBoardOneList size : {}", boardOneList.size());		
+		
+		return boardOneList;
+	}
+	
+	@Override
+	public List<Board> getReviewOneList(Board board) {
+		List<Board> reviewOneList = session.selectList("getReviewOneList", board);
+		log.info("BoardDao getReviewOneList size : {}", reviewOneList.size());		
+		
+		return reviewOneList;
+	}
+	 
+	@Override
+	public double getReviewCount(Board board) {
+		double reviewCount = session.selectOne("test",board); 
+		log.info("BoardDao reviewCount : {}", reviewCount);
+		return reviewCount;
+	}
+	
+	@Override
+	public int boardDeleteNew(int id) {
+		int newDeleteBoard = session.update("boardDeleteNew",id);
+		return newDeleteBoard;
+	}
+	
+	@Override
+	public int boardRecycle(int id) {
+		int recycleBoard = session.update("boardRecycle",id);
+		return recycleBoard;
+	}
+	
+	@Override
+	public int adminboardCount(Board board) {
+		int countAdminBoard = session.selectOne("adminboardCount", board);
+		return countAdminBoard;
+	}
 }

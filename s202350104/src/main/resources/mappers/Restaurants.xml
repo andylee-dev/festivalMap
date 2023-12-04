@@ -16,6 +16,9 @@
 			(SELECT *
 			 FROM restaurants r, contents c
 			 WHERE r.content_id = c.id
+			 <if test="is_deleted != null and is_deleted != ''">
+			 	and is_deleted = #{is_deleted}
+			 </if>
 			 ORDER BY content_id) t
 		) x, commoncodes y
 		WHERE rn BETWEEN #{start} and #{end}
@@ -38,15 +41,36 @@
 		SELECT count(*)
 		FROM   restaurants r, contents c
 		WHERE  r.content_id = c.id
+		<if test="is_deleted != null and is_deleted != ''">
+			and is_deleted = #{is_deleted}
+		</if>
 	</select>
 	
 	
 	<select id="joConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
-		SELECT count(*)
-		FROM   restaurants r, (SELECT id
-							   FROM   contents
-							   WHERE  area = #{area} AND sigungu = #{sigungu}) c	
-		WHERE   r.content_id = c.id  
+		SELECT 	COUNT(*)
+		FROM   	contents
+		WHERE 	big_code = #{big_code}
+		AND   	status = 1
+		AND   	is_deleted = 0
+		<if test = "keyword != null">
+			AND title like '%' || #{keyword} || '%'
+		</if>
+		<if test="small_code != null">
+			<choose>
+ 	 			<when test="small_code != 999">
+	    			AND small_code = #{small_code}  
+	   			</when>
+	 			<when test="small_code = 999">
+	    		</when>    
+  			</choose>
+		</if>
+		<if test="area != 0">
+			and area = #{area}
+				<if test=" sigungu != 0">
+					and sigungu = #{sigungu}
+				</if>
+		</if>
 	</select>
 	
 	
@@ -57,48 +81,77 @@
 	
 	<select id="joListSearchRestaurant" resultType="RestaurantsContent" parameterType="RestaurantsContent">
 		SELECT *
-		FROM   
-		(		
-				SELECT ROWNUM rn, t.*,
-									  (SELECT content FROM areas a
-				 					   WHERE t.area = a.area AND a.sigungu = 999) AS area_content,
-									  (SELECT content FROM areas a
-				 					   WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
-				
-				 FROM
-			    		(SELECT  *
-						 FROM    restaurants r, (SELECT *
-							   		   			 FROM   contents
-							   		   			 WHERE  area = #{area} AND sigungu = #{sigungu} AND small_code = #{small_code}) c	
-				 		 WHERE    r.content_id = c.id
-				 		 ORDER BY content_id) t
-		  )		 		 
-		WHERE   rn between #{start} and #{end}  		  
-	</select>
-	
+		FROM
+		(
+			SELECT ROWNUM rn, c.*
+			FROM 
+			(
+				SELECT *
+				FROM   contents
+				WHERE big_code = #{big_code}
+				AND   status = 1
+				AND   is_deleted = 0
+				<if test = "keyword != null">
+					AND title like '%' || #{keyword} || '%'
+				</if>
+				<if test="small_code != null">
+					<choose>
+ 	 					<when test="small_code != 999">
+	    					AND small_code = #{small_code}  
+	   	 				</when>
+	 	 				<when test="small_code = 999">
+	    				</when>    
+  					</choose>
+				</if>
+				<if test="area != 0">
+					and area = #{area}
+					<if test=" sigungu != 0">
+					and sigungu = #{sigungu}
+					</if>
+				</if>) c
+			)
+			WHERE rn BETWEEN #{start} and #{end}					
+	</select>	
+		
+		
+		
+		
 	
 	<select id="joAdminConTotalRestaurant" resultType="int" parameterType="RestaurantsContent">
-		SELECT COUNT(*)
+		SELECT  COUNT(*)
 		FROM	
 				(
 					SELECT c.*
 	 				FROM   restaurants r, contents c
 	 				WHERE  r.content_id = c.id
-	 				<if test="status != null">
-	 					<choose>
-	 						<when test="status != 2">	 					
-	 							AND c.status = #{status} 
-	 						</when>
-	 						<when test="status = 2">
-	 						</when>
-	 					</choose>
-	 				</if>
+	 				<if test="searchType == 's_title'" >
+						AND c.title like '%' || #{keyword} || '%'
+					</if>
 	 				<if test="small_code != null">
 	 					<choose>
 	 						<when test="small_code != 999">
 				 				AND c.small_code = #{small_code} 
 	 						</when>
 	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				<if test="area != 0">
+	 					AND c.area = #{area}
+	 					<choose>
+	 						<when test="sigungu != 0">
+	 							AND c.sigungu = #{sigungu}
+	 						</when>
+	 						<when test="sigungu = 0">
+	 						</when>
+	 					</choose>
+	 				</if>	
+	 				</if>
+	 				<if test="status != null">
+	 					<choose>
+	 						<when test="status != 2">	 					
+	 							AND c.status = #{status} 
+	 						</when>
+	 						<when test="status = 2">
 	 						</when>
 	 					</choose>
 	 				</if>
@@ -111,7 +164,8 @@
 	 						</when>
 	 					</choose>
 	 				</if>
-	 			)
+	 			 ) x, commoncodes y
+		WHERE   x.big_code = y.big_code AND x.small_code = y.small_code
 	</select>	
 	
 		
@@ -122,21 +176,34 @@
 					SELECT ROWNUM rn, c.*
 	 				FROM   restaurants r, contents c
 	 				WHERE  r.content_id = c.id
-	 				<if test="status != null">
-	 					<choose>
-	 						<when test="status != 2">	 					
-	 							AND c.status = #{status} 
-	 						</when>
-	 						<when test="status =2">
-	 						</when>
-	 					</choose>
-	 				</if>
+	 				<if test="searchType == 's_title'" >
+						AND c.title like '%' || #{keyword} || '%'
+					</if>
 	 				<if test="small_code != null">
 	 					<choose>
 	 						<when test="small_code != 999">
 				 				AND c.small_code = #{small_code} 
 	 						</when>
 	 						<when test="small_code = 999">
+	 						</when>
+	 					</choose>
+	 				<if test="area != 0">
+	 					AND c.area = #{area}
+	 					<choose>
+	 						<when test="sigungu != 0">
+	 							AND c.sigungu = #{sigungu}
+	 						</when>
+	 						<when test="sigungu = 0">
+	 						</when>
+	 					</choose>
+	 				</if>	
+	 				</if>
+	 				<if test="status != null">
+	 					<choose>
+	 						<when test="status != 2">	 					
+	 							AND c.status = #{status} 
+	 						</when>
+	 						<when test="status = 2">
 	 						</when>
 	 					</choose>
 	 				</if>
@@ -152,6 +219,8 @@
 	 			 ) x, commoncodes y
 		WHERE rn BETWEEN #{start} and #{end}
 		AND   x.big_code = y.big_code AND x.small_code = y.small_code
+						
+		
 	</select>	
 	
 	
@@ -164,7 +233,7 @@
 	<update id="joUpdateRestaurant" parameterType="RestaurantsContent">
 		UPDATE	restaurants 
 		SET    	first_menu=#{first_menu}, menu=#{menu}, open_time=#{open_time}, rest_date=#{rest_date}, is_smoking=#{is_smoking}, is_packing=#{is_packing}, is_parking=#{is_parking} 
-		WHERE  	content_id=#{content_id}
+		WHERE  	content_id=#{id}
 	</update>
 		
 	
@@ -175,9 +244,12 @@
 	</insert>
 		
 	<update id="joUpdateContent" parameterType="RestaurantsContent">
-		UPDATE	contents
-		SET		small_code=#{small_code}, area=#{area}, sigungu=#{sigungu}, title=#{title}, address=#{address}, postcode=#{postcode}, phone=#{phone}, content=#{content}, img1=#{img1}, img2=#{img2}, img3=#{img3}  
-		WHERE  	id=#{content_id}
+		UPDATE contents 
+		SET  area=#{area}, sigungu=#{sigungu},small_code=#{small_code}, 
+		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
+		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
+		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
+		WHERE id = #{id}
 	</update>
 	
 	
@@ -187,10 +259,25 @@
 		WHERE  id=#{contentId}
 	</update>
 	
-	<update id="joApproveRestaurant" parameterType="int">
+	<update id="joApproveRestaurant" parameterType="RestaurantsContent">
 		UPDATE contents
-		SET    status = 1
-		WHERE  id=#{contentId}
+		SET    status = #{status}
+		WHERE  id = #{content_id}
 	</update>
+	
+	<select id="joListSmallCode" resultType="RestaurantsContent" parameterType="int">
+		SELECT * 
+		FROM   commoncodes
+		WHERE  big_code = #{big_code}
+		AND    small_code != 999
+		
+	</select>
+	
+	<update id="joRestaurantRestore" parameterType="int">
+		update contents c 
+		set is_deleted = 0 
+		where c.id = #{content_id}
+	</update>
+	
 	
 </mapper>

@@ -38,4 +38,12 @@ public class Contents {
 	private int    end;
 	
 	private PagingList pageList;
+	
+	private String keyword;
+	
+	private int review_count; // 리뷰 수
+	private double avg_score; // 리뷰 평점평균
+	
+	// commonCodes content 조회용
+	private String cd_content;
 }

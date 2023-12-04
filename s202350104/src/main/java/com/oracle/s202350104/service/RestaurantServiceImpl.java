@@ -117,14 +117,32 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public int approveRestaurant(Integer contentId) {
+	public int approveRestaurant(RestaurantsContent restaurant) {
 		int result = 0;
-		result = rd.approveRestaurant(contentId);
+		result = rd.approveRestaurant(restaurant);
 		if(result <=0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "맛집 정보 승인에 실패하였습니다.");
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<RestaurantsContent> listSmallCode(int big_code) {
+		List<RestaurantsContent> listSmallCode = null;
+		listSmallCode = rd.listSmallCode(big_code);
+		
+		if(listSmallCode == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "small_code 리스트가 존재하지 않습니다");
+		}
+		return listSmallCode;
+	}
+
+	@Override
+	public int restaurantRestore(int contentId) {
+		int restaurantRestore = 0;
+		restaurantRestore = rd.restaurantRestore(contentId);
+		return restaurantRestore;
 	}
 
 }

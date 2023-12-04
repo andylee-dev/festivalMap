@@ -21,6 +21,7 @@ public class Banner {
 	// 조회용
 	private int start;
 	private int end;
+	private String keyword;
 	private String pageNum;
-	
+	private String type;
 }

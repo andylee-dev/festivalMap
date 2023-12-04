@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class RestaurantsContent {
 	// Contents 컬럼
+	private int    id;
 	private int    area;
 	private int    sigungu;
 	private int    big_code;
@@ -53,5 +54,9 @@ public class RestaurantsContent {
 	// join용
 	private String area_content;
 	private String sigungu_content;
+	
+	// 검색용
+	private String searchType;
+	private String keyword;
 	
 }

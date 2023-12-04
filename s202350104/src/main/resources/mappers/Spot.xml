@@ -62,6 +62,12 @@
              	  and c.big_code = #{big_code}
              	  and c.small_code = #{small_code}
              	 </if>
+             	 <if test="is_deleted != null and is_deleted != ''">
+			 		and c.is_deleted = #{is_deleted}
+			 	</if>
+			 	<if test="status != null and status != ''">
+			 		and c.status = #{status}
+			 	</if>
              	 and c.big_code = cc.big_code
              	 and c.small_code = cc.small_code
              	 <if test="keyword != null">
@@ -118,12 +124,12 @@
 			 WHERE c.area = a.area AND c.sigungu = a.sigungu) AS sigungu_content 
 	FROM   	spot s , contents c 
 	WHERE	s.content_id = c.id
-	AND  	s.content_id = #{content_id}
+	AND  	s.content_id = #{contentId}
 	</select>
 	
 	<insert id="dhContentInsert" parameterType="SpotContent">
 	INSERT INTO contents(id,area,sigungu,big_code,small_code,title,content,status,img1,img2,img3,address,postcode,mapx,mapy,email,phone,homepage,readcount,user_id,created_at)
-	VALUES(contents_id_seq.nextval,#{area},#{sigungu},#{big_code},#{small_code},#{title},#{content},#{status},#{img1},#{img2},#{img3},#{address},#{postcode},#{mapx},#{mapy},#{email},#{phone},#{homepage},#{readcount},#{user_id},sysdate)
+	VALUES(contents_id_seq.nextval,#{area},#{sigungu},#{big_code},#{small_code},#{title},#{content},'0',#{img1},#{img2},#{img3},#{address},#{postcode},#{mapx},#{mapy},#{email},#{phone},#{homepage},#{readcount},#{user_id},sysdate)
 	</insert>
 	
 		<insert id="dhSpotInsert" parameterType="SpotContent">
@@ -131,20 +137,20 @@
 	VALUES(contents_id_seq.currval,#{opening_hours},#{rest_date},#{entrance_fee},#{is_restroom},#{is_elevator},#{is_wheelchair},#{is_stroller},#{is_pet},#{is_parking})
 	</insert>
 	<!-- seq.currval-> 현재 번호 확인  -->	
-	<update id="dhContentsDelete" parameterType="int">
-		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
+	<update id="dhContentsDelete" parameterType="SpotContent">
+		UPDATE contents SET is_deleted = #{is_deleted} WHERE id = #{content_id}
 	</update>
-	<update id="dhSpotApprove" parameterType="int">
-		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	<update id="dhSpotApprove" parameterType="SpotContent">
+		UPDATE contents SET status = #{status} WHERE id = #{content_id}
 	</update>
 	
 	<update id="dhContentsUpdate" parameterType="SpotContent">
 	UPDATE contents
-	SET	area=#{area}, sigungu=#{sigungu}, big_code=#{big_code}, small_code=#{small_code}, 
+	SET	area=#{area}, sigungu=#{sigungu}, small_code=#{small_code}, 
 		title=#{title}, content=#{content}, status=#{status}, img1=#{img1}, img2=#{img2}, img3=#{img3},
 		address=#{address}, postcode=#{postcode}, mapx=#{mapx}, mapy=#{mapy}, email=#{email}, phone=#{phone},
 		homepage=#{homepage}, user_id=#{user_id}, updated_at=sysdate 
-		WHERE id = #{content_id}
+		WHERE id = #{id}
 	
 	</update>
 	
@@ -152,7 +158,7 @@
 	UPDATE spot
 	SET	opening_hours=#{opening_hours}, rest_date=#{rest_date}, entrance_fee=#{entrance_fee}, is_restroom=#{is_restroom}, 
 		is_elevator=#{is_elevator}, is_wheelchair=#{is_wheelchair}, is_stroller=#{is_stroller}, is_pet=#{is_pet}, is_parking=#{is_parking}
-		WHERE content_id = #{content_id}
+		WHERE content_id = #{id}
 	
 	</update>
 	

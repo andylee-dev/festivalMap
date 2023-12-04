@@ -11,14 +11,18 @@ public interface BannerDao {
 
 	List<Banner> getHeaderBanner();
 
-	List<Banner> getBannerAllList(Board board);
+	List<Banner> getBannerAllList(Banner banner);
 
-	int bannerCount();
+	int bannerCount(Banner banner);
 
 	int bannerInsert(Banner banner);
 
 	int bannerDelete(int id);
 
 	Banner bannerRead(int id);
+
+	int bannerUpdate(Banner banner);
+
+	int bannerRecycle(int id);
 
 }

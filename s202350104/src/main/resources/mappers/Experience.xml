@@ -179,7 +179,7 @@
         select small_code, content 
 		from commoncodes 
 		where big_code = 15
-		and small_code <999
+		and small_code < 999
        ]]>	        
 	</select>
 	
@@ -199,8 +199,8 @@
 		WHERE content_id = #{id}
 	</update>
 	
-	<update id="shExperienceApprove" parameterType="int">
-		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	<update id="shExperienceApprove" parameterType="ExperienceContent">
+		UPDATE contents SET status = #{status} WHERE id = #{content_id}
 	</update>
 	
 	<insert id="shContentsInsert" parameterType="ExperienceContent">

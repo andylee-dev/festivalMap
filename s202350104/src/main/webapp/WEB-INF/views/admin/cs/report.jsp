@@ -34,7 +34,7 @@
 							<th scope="col">글제목</th>
 							<th scope="col">작성자</th>
 							<th scope="col">신고횟수</th>
-							<th scope="col">상세보기</th>
+							<th scope="col">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -42,18 +42,50 @@
 							<tr>
 								<td>${report.board_id}</td>
 								<td>
-								<c:choose>
-									<c:when test="${report.title eq null}">
-										리뷰작성글입니다
-									</c:when>
-									<c:otherwise>
-										${report.title}
-									</c:otherwise> 
-								</c:choose>	
+								<c:if test="${report.small_code eq 3}">
+									<c:choose>
+										<c:when test="${report.comment_indent eq 0 }">
+											[자유게시판] ${report.title}
+										</c:when>
+										<c:otherwise>
+											[자유게시판] 리뷰글입니다 
+										</c:otherwise>
+									</c:choose>	
+								</c:if>
+								<c:if test="${report.small_code eq 4}">
+									<c:choose>
+										<c:when test="${report.comment_indent eq 0 }">
+											[포토게시판] ${report.title}
+										</c:when>
+										<c:otherwise>
+											[포토게시판] 리뷰글입니다 
+										</c:otherwise>
+									</c:choose>	
+								</c:if>
+								<c:if test="${report.small_code eq 5}">
+									<c:choose>
+										<c:when test="${report.comment_indent eq 0 }">
+											[이벤트게시판] ${report.title}
+										</c:when>
+										<c:otherwise>
+											[이벤트게시판] 댓글입니다 
+										</c:otherwise>
+									</c:choose>	
+								</c:if>
+								<c:if test="${report.small_code eq 6}">
+									<c:choose>
+										<c:when test="${report.comment_indent eq 0 }">
+											[컨텐츠 게시글] 리뷰글입니다
+										</c:when>
+										<c:otherwise>
+											[컨텐츠 게시글 리뷰] 댓글입니다 
+										</c:otherwise>
+									</c:choose>	
+								</c:if>
 								</td>
 								<td>${report.name}</td>
 								<td>${report.count}</td>
-								<td><button class="btn btn-primary" onclick="location.href='reportDetail?boardId=${report.board_id}'">상세보기</button></td>
+								<td><button class="btn btn-primary" onclick="location.href='reportDetail?boardId=${report.board_id}'">관리</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

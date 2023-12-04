@@ -32,13 +32,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int getLoggedInId() {
-		int userId = 0;
+		Users user =new Users();
+		user.setId(0);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && !authentication.getName().equals("anonymousUser") ){
-			userId = Integer.parseInt(authentication.getName());
-			log.info("로그인아이디:{}",userId);
+			user = ud.getUserByEmail(authentication.getName());
+			
+			
+			log.info("로그인아이디:{}",user.getId());
+			return user.getId();
 		}
-		return userId;
+		return user.getId();
 	}
 	
 	/**
@@ -60,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	                return Role.USER.getKey();
 	            }
 	        })
-	        .orElse(null);
+	        .orElse(0);
 		return role;
 	}
 	
@@ -93,9 +97,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<Users> getUserByEmail(String email) {
-		Users user = null;
-		user = ud.getUserByEmail(email);
-		return Optional.of(user);
+	    Users user = ud.getUserByEmail(email);
+	    return Optional.ofNullable(user);
 	}
 
 	@Override
@@ -107,11 +110,12 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public void  updateUser(Users user) {
+	public int  updateUser(Users user) {
 		int result = ud.updateUser(user);
-	    if (result == 0) {
+	    if (result == 0) {	
 	        throw new UserNotFoundException("해당하는 사용자가 데이터베이스에 존재하지 않습니다.");
 	    }
+	    return result;
 	}
 
 	@Override

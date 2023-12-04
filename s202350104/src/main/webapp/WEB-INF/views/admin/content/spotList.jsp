@@ -115,19 +115,19 @@
 										</select>
 									</div>
 									
-								<label for="searchType" class="col-form-label col-1  mx-2">삭제여부</label>
+								<label for="searchType" class="col-form-label col-1  mx-2">게시여부</label>
 									<div class="col-2 mx-2 d-flex align-items-center">
 										<select name="is_deleted" class="form-select">
 											<option value = "" selected>전체</option>
-											<option value = "0">등록</option>
-											<option value = "1">삭제</option>
+											<option value = "0">Y</option>
+											<option value = "1">N</option>
 										</select><p>
 									</div>
 						</div>
 	
 						<div class="container col-10 d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary  col-2 mx-3">검색</button>
-								<button type="reset"  class="btn btn-outline-secondary col-2 mx-3">초기화</button>
+								<button type="reset"  class="btn btn-outline-secondary col-2 mx-3" onclick="location.href='../content/spot?currentPage=1'">초기화</button>
 						</div>
 					</form>
 				</div>			
@@ -149,6 +149,7 @@
 									<th scope="col">작성자</th>
 									<th scope="col">신청일</th>
 									<th scope="col">승인여부</th>
+									<th scope="col">게시</th>
 									<th scope="col">관리</th>
 								</tr>
 							</thead>
@@ -165,7 +166,10 @@
 										<td>
 											<c:if test="${spot.status == 0}">승인대기</c:if>
 											<c:if test="${spot.status == 1}">승인완료</c:if>
-											<!-- 승인반려됐을 경우 status -->
+										</td>
+										<td>
+											<c:if test="${spot.is_deleted == 0}">Y</c:if>
+											<c:if test="${spot.is_deleted == 1}">N</c:if>
 										</td>
 										<td><a class="detail-btn" 
 										href="spotDetail?contentIdStr=${spot.content_id}&currentPage=${page.currentPage}">관리</a></td>

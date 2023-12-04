@@ -44,7 +44,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         	Optional<Users> user = us.getUserByEmail("fdsas@dads.com");
         	if (user.isPresent()) {
         	    log.info("loggined Id:{}/{}",user.get().getId());
-        	     eventPublisher.publishEvent(new PointEvent(user.get().getId(), 1));
+        	     eventPublisher.publishEvent(new PointEvent(user.get().getId(), 9));
         	} else {
         	    throw new NoSuchElementException("No user found with email: fdsas@dads.com");
         	}

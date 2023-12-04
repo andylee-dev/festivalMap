@@ -27,9 +27,9 @@ public class BoardServiceImpl implements BoardService {
 
 	// paging 처리용
 	@Override
-	public int boardCount(int smallCode) {
+	public int boardCount(Board board) {
 
-		int countBoard = boardDao.boardCount(smallCode);
+		int countBoard = boardDao.boardCount(board);
 
 		return countBoard;
 	}
@@ -118,7 +118,7 @@ public class BoardServiceImpl implements BoardService {
 	// 통합게시판 수정
 	@Override
 	public int boardUpdate(Board board) {
-
+		log.info("boardService boardUpdate getTitle : {}", board.getTitle());
 		int updateBoard = boardDao.boardUpdate(board);
 
 		return updateBoard;
@@ -141,5 +141,57 @@ public class BoardServiceImpl implements BoardService {
 
 		return board;
 	}
-
+	
+	// 댓글 기능
+	@Override
+	public void commentInsert(Board board) {
+		
+		boardDao.commentInsert(board);
+		
+	}
+	
+	@Override
+	public List<Board> commentDetail(int id) {
+		List<Board> comments = boardDao.commentDetail(id);
+		return comments; 
+	}
+	
+	@Override
+	public List<Board> getBoardOneList(Board board) {
+		
+		List<Board> boardOneList = boardDao.getBoardOneList(board);
+		
+		return boardOneList;
+	}
+	
+	@Override
+	public List<Board> getReviewOneList(Board board) {
+		List<Board> reviewOneList = boardDao.getReviewOneList(board);
+		return reviewOneList;
+	}
+	
+	@Override
+	public double getReviewCount(Board board) {
+		double reviewCount = boardDao.getReviewCount(board); 
+		return reviewCount;
+	}
+	
+	@Override
+	public int boardDeleteNew(int id) {
+		int newDeleteBoard = boardDao.boardDeleteNew(id);
+		return newDeleteBoard;
+	}
+	
+	@Override
+	public int boardRecycle(int id) {
+		int recycleBoard = boardDao.boardRecycle(id);
+		return recycleBoard;
+	}
+	
+	@Override
+	public int adminboardCount(Board board) {
+		int countAdminBoard = boardDao.adminboardCount(board);
+		return countAdminBoard;
+	}
+	
 }

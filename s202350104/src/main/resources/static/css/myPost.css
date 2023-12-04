@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+h1 {
+	color: black;
+	font-size: 32px;
+	font-family: Noto Sans;
+	font-weight: 600;
+	word-wrap: break-word
+}
+
+h2 {
+	color: #FF4379;
+	font-family: Noto Sans;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	padding-bottom: 10px;
+}
+
+.mypost-content-custom {
+	margin-top: 20px;
+}
+
+.mypost-form-label {
+	font-size: 20px;
+	font-weight: bolder;
+	margin-bottom: 6px;
+}
+
+.mypost-form-label
+.text-box {
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.mb-3 img {
+	width: 600px;
+	height: 300px;
+	margin-left: 6px;
+}
+
+.mypost-board-custom {
+	border: 1px solid black;
+	border-radius: 20px;
+	margin-bottom: -30px;
+}
+
+.mypost-review-custom {
+	border: 1px solid black;
+	border-radius: 20px;
+	margin-bottom: -30px;
+}
+
+.my-first-title {
+	
+}
+
+.btn-primary2 {
+	background-color: #FF4379;
+    border-color: #FF4379;
+    color: white;
+}
+	

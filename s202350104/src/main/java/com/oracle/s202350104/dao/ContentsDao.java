@@ -5,7 +5,9 @@ import java.util.List;
 import com.oracle.s202350104.model.Contents;
 
 public interface ContentsDao {
-	List<Contents> 		listContent();
+	int contentCount(Contents content);
+	
+	List<Contents> listContent(Contents content);
 
 	List<Contents> getSearchContentsList(Contents contents);
 

@@ -36,6 +36,22 @@
 				AND sigungu = #{sigungu}
 			</if>
 		</if>
+		<if test="goingOn != null and goingOn != ''">
+			<choose>
+				<when test="goingOn == 'past'">
+					<![CDATA[ AND end_date < sysdate ]]>
+				</when>
+				<when test="goingOn == 'present'">
+					<![CDATA[ AND sysdate BETWEEN start_date AND end_date ]]>
+				</when>
+				<when test="goingOn == 'future'">
+					<![CDATA[ AND start_date > sysdate ]]>
+				</when>
+			</choose>
+		</if>
+		<if test="small_code != 0">
+			AND small_code = #{small_code}
+		</if>
 	</select>
 	
 	<select id="nhFestivalsListAll" resultType="FestivalsContent" parameterType="FestivalsContent">
@@ -48,7 +64,7 @@
 				(SELECT content FROM areas a
 				 WHERE t.area = a.area AND t.sigungu = a.sigungu) AS sigungu_content
 			FROM
-			(SELECT *
+			(SELECT f.*, c.*, TO_CHAR(start_date, 'YYYY-MM-DD') as startdateStr, TO_CHAR(end_date, 'YYYY-MM-DD') as enddateStr
 			 FROM festivals f, contents c
 			 WHERE f.content_id = c.id
 			 <if test="is_deleted != null and is_deleted != ''">
@@ -89,6 +105,22 @@
 			 		</otherwise>
 			 	</choose>
 			 </if>
+			 <if test="goingOn != null and goingOn != ''">
+				<choose>
+					<when test="goingOn == 'past'">
+						<![CDATA[ AND end_date < sysdate ]]>
+					</when>
+					<when test="goingOn == 'present'">
+						<![CDATA[ AND sysdate BETWEEN start_date AND end_date ]]>
+					</when>
+					<when test="goingOn == 'future'">
+						<![CDATA[ AND start_date > sysdate ]]>
+					</when>
+				</choose>
+			</if>
+			<if test="small_code != 0">
+				AND small_code = #{small_code}
+			</if>
 			 ) t
 		)
 		<if test="start != 0 and end != 0">
@@ -156,12 +188,14 @@
 	</update>
 	
 	<!-- festival 정보 delete -->	
-	<update id="nhContentsDelete" parameterType="int">
-		UPDATE contents SET is_deleted = 1 WHERE id = #{contentId}
+	<update id="nhContentsDelete" parameterType="FestivalsContent">
+		UPDATE contents SET is_deleted = #{is_deleted} 
+		WHERE id = #{content_id}
 	</update>
 	
-	<update id="nhFestivalsApprove" parameterType="int">
-		UPDATE contents SET status = 1 WHERE id = #{contentId}
+	<update id="nhFestivalsApprove" parameterType="FestivalsContent">
+		UPDATE contents SET status = #{status} 
+		WHERE id = #{content_id}
 	</update>
 	
 	<!-- contents 테이블 -->
@@ -178,7 +212,7 @@
 	
 	<select id="nhFestivalTagOne" resultType="Tags" parameterType="int">
 		SELECT *
-		FROM ContentTags ct, Tags t
+		FROM  ContentTags ct, Tags t
 		WHERE ct.tag_id = t.id
 		AND   ct.content_id = #{festivalKey}
 		ORDER BY t.name
