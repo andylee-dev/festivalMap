@@ -47,11 +47,11 @@ public class PointHandlerImpl implements PointHandler {
         try {
             log.info("사용자 ID {}가 로그인하여 포인트 ID {}에 대한 포인트를 추가했습니다.", userId, pointId);
             
-        LocalDateTime currentDateTime = LocalDateTime.now();
-         LocalDate currentDate = currentDateTime.toLocalDate();
-          LocalTime currentTime = currentDateTime.toLocalTime();
+        LocalDateTime currentDateTime = LocalDateTime.now(); //현재 시간을 가져온다
+         LocalDate currentDate = currentDateTime.toLocalDate(); //현재 날짜를 가져온다
+          LocalTime currentTime = currentDateTime.toLocalTime(); //현재 시간을 사져온다
           
-          // 오늘 첫 로그인 시간인 경우에만 handleLogin 호출
+          // 사용자가 오늘 처음으로 로그인했거나, 현재 시간이 정오 이전인 경우에만 포인트를 부여합니다.
           if (currentDate.isAfter(lastLoginTime.toLocalDate()) || currentTime.isBefore(LocalTime.NOON)) {
             // 포인트 추가 및 이력 기록
             pointService.addPointAndHistory(userId, pointId);
